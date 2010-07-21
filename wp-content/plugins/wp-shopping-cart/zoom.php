@@ -1,0 +1,2 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>Zoom</title></head><body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0" bgcolor=white style="margin: 0px; padding:0px"><a href="/" OnClick="self.close();"><img src='<?php $_GET['id'];?>' border=0 width=<?php $_GET['w'];?> height=<?php $_GET['h'];?> alt="" ></a></body></html>
