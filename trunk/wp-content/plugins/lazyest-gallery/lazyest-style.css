@@ -1,0 +1,216 @@
+/* ===========================
+ * Lazyest Gallery Style Sheet
+ * =========================== */
+
+/* Main IDs and Classes */
+#gallery {
+	text-align: left;
+}
+#gallery .al-left {
+	float:left;
+	padding-left: 0px;
+}
+#gallery .al-right {
+	float: right;
+	padding-right: 0px;
+}
+#gallery a {
+	text-decoration:none;
+}
+
+/* ========================
+ * The top folder navigator
+ * ======================== */
+#gallery .top_navigator {
+	padding-left:5px;
+	/* Uncomment this if you want to hide the gallery navigator bar */
+	/* display:none; */
+}
+
+/* ==========================
+ * The navigator (prev, next)
+ * ========================== */
+#gallery #lazyest_navigator {
+	border: 1px solid #a9a9a9;
+	margin: 6px 0px 6px 0px;
+	padding: 4px 4px 0px 4px;
+	height: 20px;
+}
+#gallery #lazyest_navigator .alignleft {
+	float: left;
+}
+#gallery #lazyest_navigator .alignright {
+	float: right;
+}
+
+/* ====================================
+ * Pagination (page by page, next prev)
+ * ==================================== */
+#gallery #pagination {
+	text-align: center;
+	padding-bottom:5px;
+}
+
+/* =================
+ * Folders and Icons
+ * ================= */
+
+/* Where the folders are listed */
+#gallery .folders {
+	margin: 6px 0px 6px 0px;
+}
+/* Where the folder icon is shown */
+#gallery .folder {
+	text-align:left;
+	padding:5px;
+	padding-bottom:20px;
+	/* Uncomment this if you want to hide the folder icon */
+	/* display:none; */
+}
+/* Captions of the folders */
+#gallery .folder_caption {
+	padding:5px;
+}
+/* Icons Style */
+#gallery .icon {
+	vertical-align:middle;
+	border:none !important;
+}
+
+/* =============
+ * Gallery Views
+ * ============= */
+
+/* Directory listing (TABLE)*/
+#gallery .dir_view {
+	width:100%;
+	text-align:center;
+}
+#gallery .category_icon {
+	vertical-align:middle;
+	padding:2px;
+}
+
+/* Image's Thumbnails */
+#gallery .lazyest_thumb_view {
+	margin:0 auto;
+	text-align:center;
+	padding-bottom:5px;
+}
+#gallery .lazyest_thumb_view img {
+	margin: 6px 6px 6px 6px;
+	padding: 2px;
+}
+#gallery .lazyest_thumb_view img:hover, .lazyest_thumb_view img:focus {
+	background-color: #a9a9a9;
+}
+
+/* Slide view follow... */
+#gallery .lazyest_image {
+	margin:0 auto;
+	text-align: center;
+}
+#gallery .lazyest_image img {
+	border: 1px solid #a9a9a9;
+	margin: 6px 6px 6px 6px;
+	padding: 2px;
+}
+#gallery .lazyest_image img:hover, .lazyest_image img:focus {
+	background-color: #a9a9a9;
+}
+
+	/* Where exif data are displayed */
+	#gallery .imageData {
+		border: 1px solid #a9a9a9;
+		margin: 0px auto;
+		padding: 3px;
+		font-family: Verdana, Geneva, Arial, sans-serif;
+		background-color: #EFEFEF;
+		color: #333333;
+		padding-bottom: 15px;
+		padding-left: 20px;
+	}
+	#gallery .imageDataTable tr, th, td{
+		background-color: transparent;
+		vertical-align: top;
+		padding: 1px;
+		padding-left: 5px;
+	}
+	#gallery .imageSubTable {
+		background-color: transparent;
+	}
+	#gallery .imageSubTable th{
+		width: 180px;
+	}
+	#gallery .imageSubTable td{
+		background-color: transparent;
+		font-style: italic;
+		color: #336699;
+	}
+
+	/* Where captions are shown*/
+	#gallery .caption {
+		border: solid 1px #a9a9a9;
+		background-color: #EFEFEF;
+		font-family: Verdana, Geneva, Arial, sans-serif;
+		padding: 3px;
+		padding-left: 20px;
+		text-align: left;
+		color: #333333;
+	}
+
+/* ...ends here (slides) */
+
+/* ===============
+ * The admin links
+ * =============== */
+
+#gallery .lg_admin {
+	border-bottom: dashed 1px #a9a9a9;
+	/* border-left: solid 3px #a9a9a9; */
+	padding: 3px;
+	text-align: left;
+	font-size: xx-small;
+}
+
+/* ================
+ * Footer Copyright
+ * ================ */
+
+#lg_powered {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	/* Uncomment this if you want to hide the gallery footer */
+	/* display:none; */
+}
+
+#lg_powered .lgpow {
+	font-size:xx-small;
+	border: solid 1px #a9a9a9;
+	padding:3px;
+	padding-right: 20px;
+	color: #333333;
+	background: #fff;
+	background-image: url('images/powered_bg.gif');
+	background-repeat: no-repeat;
+	text-align: right;
+}
+
+/* ===============
+ * Sidebar related
+ * =============== */
+
+#lazyest_sidebox {
+	padding: 2px;
+	text-align:center;
+}
+
+#lazyest_sidebox img {
+	border: 1px solid #ccc;
+	vertical-align:middle;
+	padding:2px;
+}
+
+#lazyest_sidebox a:hover img {
+	border:1px solid #757575;
+}

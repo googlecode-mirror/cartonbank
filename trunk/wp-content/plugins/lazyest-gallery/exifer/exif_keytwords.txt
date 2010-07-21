@@ -1,0 +1,62 @@
+Author: Keytwo
+
+[Development purpose only]
+Here you find a complete list of ExIF array Keywords.
+Indented voices are subarrays of the main voice upon 'em.
+
+VerboseOutput
+Errors
+ValidJpeg
+ValidJFIFData
+JFIF
+	Size
+	Identifier
+	ExtensionCode
+	Data
+ValidEXIFData
+APP1Size
+Endien
+IFD0NumTags
+IFD0
+	Orientation
+	xResolution
+	yResolution
+	ResolutionUnit
+	Software
+	DateTime
+	ExifOffset
+IFD1Offset
+SubIFDNumTags
+SubIFD
+	ColorSpace
+	ExifImageWidth
+	ExifImageHeight
+IFD1NumTags
+IFD1
+	Compression
+	xResolution
+	yResolution
+	ResolutionUnit
+	JpegIFOffset
+	JpegIFByteCount
+	ExifOffset
+
+Array Keys
+
+Array (
+	[0] => VerboseOutput
+	[1] => Errors
+	[2] => ValidJpeg
+	[3] => ValidJFIFData
+	[4] => JFIF						Array
+	[5] => ValidEXIFData
+	[6] => APP1Size
+	[7] => Endien
+	[8] => IFD0NumTags
+	[9] => IFD0
+	[10] => IFD1Offset
+	[11] => SubIFDNumTags
+	[12] => SubIFD					Array
+	[13] => IFD1NumTags
+	[14] => IFD1					Array
+)

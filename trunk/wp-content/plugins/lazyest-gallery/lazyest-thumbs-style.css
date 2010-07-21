@@ -1,0 +1,52 @@
+/*
+ * This is the Lazyest Gallery
+ * Post Thumbnails Style Sheet
+ */
+
+div.thumb {
+	margin-bottom: .5em;
+	border-style: solid;
+	border-color:transparent;
+	width: auto;
+}
+div.thumb div {
+	border: 1px solid #ccc;
+	padding: 3px !important;
+	background-color: #f9f9f9;
+	font-size: 94%;
+	text-align: center;
+}
+div.thumb div a img {
+	border: 1px solid #ccc;
+}
+div.thumb div div.thumbcaption {
+	color:black;
+	border: none;
+	text-align: left;
+	line-height: 1.4em;
+	padding: .3em 0 .1em 0;
+}
+div.gallerylink {
+	float: right;
+	border: none !important;
+	background: none !important;
+}
+div.gallerylink a, div.gallerylink img {
+	display: block;
+	border: none !important;
+	background: none !important;
+}
+div.tright {
+	clear: right;
+	float: right;
+	border-width: .5em 0 .8em 1.4em;
+}
+div.tleft {
+	clear:left;
+	float: left;
+	margin-right: .5em;
+	border-width: .5em 1.4em .8em 0;
+}
+div.tcenter {
+	border-width: .5em 1.4em .8em 0;
+}
