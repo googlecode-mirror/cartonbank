@@ -37,7 +37,7 @@
 		<li><a href="?page_id=73">Авторам</a></li>
 		<!--<li><a href="?page_id=38">Авторы</a></li>-->
 		<li><a href="?page_id=97">Клиентам</a></li>
-		<!--<li><a href="?page_id=2">Ответы</a></li>-->
+		<li><a href="?page_id=2">Ответы</a></li>
 		<?php //wp_list_pages('title_li=&depth=1&exclude=3,4,5,6,7,8,9'); ?>
 	</ul>
 </div>
