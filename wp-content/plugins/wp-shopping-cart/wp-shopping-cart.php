@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
 Plugin Name:WP Shopping Cart
 Plugin URI: http://www.instinct.co.nz
@@ -2166,11 +2166,11 @@ function nzshpcrt_getvariationform($variation_id)
 
 function nzshpcrt_submit_checkout()
   {
- /*
-  * This is the function used for handling the submitted checkout page
-  */
-  global $wpdb, $nzshpcrt_gateways;
-  session_start();
+/*
+* This is the function used for handling the submitted checkout page
+*/
+global $wpdb, $nzshpcrt_gateways;
+session_start();
   if(get_option('permalink_structure') != '')
   {
   $seperator ="?";

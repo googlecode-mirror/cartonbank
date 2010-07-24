@@ -3,8 +3,9 @@ $category_data = null;
 
 // add product
 if($_POST['submit_action'] == 'add') {  
-
   $basepath = str_replace("/wp-admin", "" , getcwd());
+  $basepath = str_replace("\wp-admin", "" , getcwd());
+
   $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
   $product_images = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
   $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
@@ -47,7 +48,7 @@ if($_POST['submit_action'] == 'add') {
 				$resample_quality = 85; //image quality
 
 				al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality);	
-				$wm = "/home/www/z58365/htdocs/cb3/wp-content/plugins/wp-shopping-cart/images/watermark.gif";
+				$wm = $basepath."/wp-content/plugins/wp-shopping-cart/images/watermark.gif";
 				wtrmark($thatdir.$file,$wm);
 
 				// ales here we replace thumbs to that from LG 
@@ -597,15 +598,8 @@ if($product_list != null)
       }
       else
         {
-			//echo "../wp-content/plugins/wp-shopping-cart/images/".$product['image'];
-			//echo "<br>_SERVER[SERVER_NAME]=".$_SERVER['SERVER_NAME'];
-			//echo  "<br>imagedir=". $imagedir;
-			//echo "<br><img src='".$_SERVER['SERVER_NAME']."cb3/wp-content/plugins/wp-shopping-cart/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='35' height='35'  /><br>";
-
 					echo "<br><img src='http://".$_SERVER['SERVER_NAME']."/cb3/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='35' height='35'  /><br>";
-
-        echo "<img src='../wp-content/plugins/wp-shopping-cart/no-image-uploaded.gif' title='".$product['name']."' alt='".$product['name']."' width='35' height='35'  />";
-          }
+		  }
     echo "            </td>\n\r";
     
     echo "            <td style='font-size:10px;'>\n\r";

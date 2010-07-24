@@ -220,10 +220,12 @@ function nzshpcrt_display_categories_groups()
            else if ($catid == 0)
              {
 			   // placeholder for the slide preview
-			   echo "<div id='bigpic' style='float:left'></div>";
-			   echo "<div id='bigpictext' style='float:left;padding-left:4px;width:140px;'></div>";
+			   echo "<div id='bigpictopstrip'></div>";
+			   echo "<div id='bigpictext'></div>";
+			   echo "<div id='bigpic'></div>";
 			   echo "<div style='clear:both;'></div>";
-             //echo "<strong class='cattitles'>Все картинки";
+			   echo "<div id='bigpicbottomstrip'></div>";
+
              }
 			 else
              {
@@ -307,7 +309,7 @@ function nzshpcrt_display_categories_groups()
 				}
 				$output .= "</br></div>";
 
-				echo $output;
+				echo "<div style='clear:both;'>".$output."</div>";
              }
          }
      }

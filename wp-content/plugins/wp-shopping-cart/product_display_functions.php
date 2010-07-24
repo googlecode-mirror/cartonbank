@@ -52,28 +52,36 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 
 	$vstavka = "document.getElementById('bigpic').innerHTML = '<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>';";
 
-$descr =$product['description'];
 
-
-	$vstavka .=  "document.getElementById('bigpictext').innerHTML ='<u>Номер изображения:</u> #".$product['id']."<br><u>Название:</u> ".$product['name']."<br><u>Автор:</u> ".$product['brand']."<br><u>Описание:</u> ".stripslashes($descr)."<br><u>Тэги:</u> ".nl2br(stripslashes($product['additional_description'])) ."<br><u>Размер изображения:</u> ".$product['width']."px X ".$product['height']."px;' ;";
+	//$vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='<b>Название:</b>" .$product['name']."---------<b>#".$product['id']."/".$product['brand']."</b>";
 
 
 
-	//$output .= "<a href=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\"  onclick=\"".$vstavka."\">";
+	//$vstavka .=  "document.getElementById('bigpictext').innerHTML ='<u>Номер изображения:</u> #".$product['id']."<br><u>Название:</u> ".$product['name']."<br><u>Автор:</u> ".$product['brand']."<br><u>Описание:</u> ".stripslashes($descr)."<br><u>Тэги:</u> ".nl2br(stripslashes($product['additional_description'])) ."<br><u>Размер изображения:</u> ".$product['width']."px X ".$product['height']."px;' ;";
 	
+	$_number = $product['id'];
+	$_description = nl2br(stripslashes($product['description']));
+	$_tags = nl2br(stripslashes($product['additional_description']));
+	$_size = $product['width']."px X ".$product['height']."px;";
+	$_author = $product['brand'];
+	$_name = $product['name'];
 
+	$_bigpicstrip = "<b>№&nbsp;".$_number."/".$_author."</b>";
+	$_bigpictext = "<b>Название: </b>" .$_name."<br><br><b>Стиль: </b> карикатура<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b> ".$_tags."<br><br><b>Размер изображения: </b> ".$_size;
+    $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
+
+$_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form onsubmit=\'submitform(this);return false;\' action=\'http://cartoonbank.ru/cb3/?page_id=29&amp;category=\' method=\'POST\'>Выбор лицензии: <input type=\'radio\' name=\'\'>ограниченная <input type=\'radio\' name=\'\'>стандартная <input type=\'radio\' name=\'\'>расширенная&nbsp;&nbsp;&nbsp;&nbsp;<input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'>Купить: <input border=\'0\' type=\'image\' value=\'В корзину\' name=\'Buy\' src=\'http://cartoonbank.ru/cb3/img/cart.gif\'></form></div>";
+
+
+
+	$vstavka = "document.getElementById('bigpic').innerHTML ='".$_bigpic."';";
+	$vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
+	$vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='".$_bigpicstrip."';";
+	$vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
+	
 	$output .= "<a href=\"#\"  onclick=\"".$vstavka."\">";
 	
-	//$output .="<img src=\"http://cartoonbank.ru/cb3/wp-content/plugins/wp-shopping-cart/product_images/ch159.jpg\">";
-	//$output .="'<div>some  text</div>'\";";
-
-	//$output .= "return false;\">";
-
-	//$output .=";return(false);window.open(this.href, 'CartoonBank', 'width=$image_size[0]+15,height=$image_size[1]+15,scrollbars=0,resizable=1'); return false;\">";
-
 $fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['image'];
-
-//echo $fiilename.'<br>';
 
 if (file_exists($fiilename))
 {
@@ -145,7 +153,7 @@ else
 						/*pop-up*/
 						
 						$output .= "<div class='lev2' id='description".$product['id']."'>";
-							$output .= "[#".$product['id']. "] <b>" . stripslashes($product['name'])."</b>";
+							$output .= "№&nbsp;".$product['id']. " <b>" . stripslashes($product['name'])."</b>";
 						    $output .= "<br><span id='size'>".$product['width']."px X ".$product['height']."px</span><br>";
 						    $output .= "<span id='title'><i>".stripslashes($product['brand'])."</i></span><br>";
 							$output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_GET['category']."' onsubmit='submitform(this);return false;' >";
