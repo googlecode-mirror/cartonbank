@@ -3,15 +3,13 @@
 Plugin Name:WP Shopping Cart
 Plugin URI: http://www.instinct.co.nz
 Description: A plugin that provides a WordPress Shopping Cart. Contact <a href='http://www.instinct.co.nz/?p=16#support'>Instinct Entertainment</a> for support.
-Version: 3.3 beta
+Version: 3.4.6 beta
 Author: Thomas Howard of Instinct Entertainment
 Author URI: http://www.instinct.co.nz
 */
 
 ### This next line needs to point at your desired language file ###
 
-echo ("bbbbb");
-exit();
 
 if(get_option('language_setting') != '')
   {
@@ -58,6 +56,7 @@ $GLOBALS['nzshpcrt_imagesize_info'] = TXT_WPSC_IMAGESIZEINFO;
 $nzshpcrt_log_states[0]['name'] = TXT_WPSC_RECEIVED;
 $nzshpcrt_log_states[1]['name'] = TXT_WPSC_PROCESSING;
 $nzshpcrt_log_states[2]['name'] = TXT_WPSC_PROCESSED;
+
 class wp_shopping_cart
   {
   function wp_shopping_cart()
@@ -151,14 +150,17 @@ class wp_shopping_cart
 
 function nzshpcrt_install()
    {
-   global $wpdb, $user_level, $wp_rewrite;
+   global $wpdb, $user_level, $wp_rewrite, $wp_version;
    $table_name = $wpdb->prefix . "product_list";
    //$log_table_name = $wpdb->prefix . "sms_log";
-   get_currentuserinfo();
-   if($user_level < 8)
+   if($wp_version < 2.1)
      {
-     return;
-     }
+     get_currentuserinfo();
+     if($user_level < 8)
+       {
+       return;
+       }
+    }
   $first_install = false;
   $result = mysql_list_tables(DB_NAME);
   $tables = array();
@@ -171,37 +173,37 @@ function nzshpcrt_install()
     $first_install = true;
     }
 $itemtable = "CREATE TABLE ".$table_name." (
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-`name` TEXT NOT NULL ,
-`description` LONGTEXT NOT NULL ,
-`additional_description` LONGTEXT NOT NULL ,
-`price` VARCHAR( 20 ) NOT NULL ,
-`pnp` VARCHAR( 20 ) NOT NULL ,
-`international_pnp` VARCHAR( 20 ) NOT NULL ,
-`file` BIGINT UNSIGNED NOT NULL ,
-`image` TEXT NOT NULL ,
-`category` BIGINT UNSIGNED NOT NULL ,
-`brand` BIGINT UNSIGNED NOT NULL ,
-`quantity_limited` VARCHAR( 1 ) NOT NULL,
-`quantity` INT UNSIGNED NOT NULL,
-`special` VARCHAR( 1 ) NOT NULL ,
-`special_price` VARCHAR( 20 ) NOT NULL,
-`notax` VARCHAR( 1 ) DEFAULT '0' NOT NULL ,
-`active` VARCHAR( 1 ) DEFAULT '1' NOT NULL ,
-PRIMARY KEY ( `id` )
-) TYPE = MYISAM ;";
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `name` TEXT NOT NULL ,
+  `description` LONGTEXT NOT NULL ,
+  `additional_description` LONGTEXT NOT NULL ,
+  `price` VARCHAR( 20 ) NOT NULL ,
+  `pnp` VARCHAR( 20 ) NOT NULL ,
+  `international_pnp` VARCHAR( 20 ) NOT NULL ,
+  `file` BIGINT UNSIGNED NOT NULL ,
+  `image` TEXT NOT NULL ,
+  `category` BIGINT UNSIGNED NOT NULL ,
+  `brand` BIGINT UNSIGNED NOT NULL ,
+  `quantity_limited` VARCHAR( 1 ) NOT NULL,
+  `quantity` INT UNSIGNED NOT NULL,
+  `special` VARCHAR( 1 ) NOT NULL ,
+  `special_price` VARCHAR( 20 ) NOT NULL,
+  `notax` VARCHAR( 1 ) DEFAULT '0' NOT NULL ,
+  `active` VARCHAR( 1 ) DEFAULT '1' NOT NULL ,
+  PRIMARY KEY ( `id` )
+  ) TYPE = MYISAM ;";
 
 
 $categorytable = "CREATE TABLE `".$wpdb->prefix."product_categories` (
-`id` BIGINT NOT NULL AUTO_INCREMENT ,
-`name` TEXT NOT NULL ,
-`description` TEXT NOT NULL ,
-`image` TEXT NOT NULL,
-`fee` VARCHAR( 1 ) DEFAULT '0' NOT NULL ,
-`active` VARCHAR( 1 ) DEFAULT '1' NOT NULL ,
-`order` BIGINT UNSIGNED NOT NULL ,
-PRIMARY KEY ( `id` )
-) TYPE=MyISAM;";
+  `id` BIGINT NOT NULL AUTO_INCREMENT ,
+  `name` TEXT NOT NULL ,
+  `description` TEXT NOT NULL ,
+  `image` TEXT NOT NULL,
+  `fee` VARCHAR( 1 ) DEFAULT '0' NOT NULL ,
+  `active` VARCHAR( 1 ) DEFAULT '1' NOT NULL ,
+  `order` BIGINT UNSIGNED NOT NULL ,
+  PRIMARY KEY ( `id` )
+  ) TYPE=MyISAM;";
 
 
 $category_assoc_table = "CREATE TABLE `".$wpdb->prefix."item_category_associations` (
@@ -210,77 +212,77 @@ $category_assoc_table = "CREATE TABLE `".$wpdb->prefix."item_category_associatio
   `category_id` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `product_id` (`product_id`,`category_id`)
-) TYPE=MyISAM;";
+  ) TYPE=MyISAM;";
 
 $brandstable = "CREATE TABLE `".$wpdb->prefix."product_brands` (
-`id` BIGINT NOT NULL AUTO_INCREMENT ,
-`name` TEXT NOT NULL ,
-`description` TEXT NOT NULL ,
-`active` VARCHAR( 1 ) DEFAULT '1' NOT NULL ,
-`order` BIGINT UNSIGNED NOT NULL ,
-PRIMARY KEY ( `id` )
-) TYPE=MyISAM;";
-  
+  `id` BIGINT NOT NULL AUTO_INCREMENT ,
+  `name` TEXT NOT NULL ,
+  `description` TEXT NOT NULL ,
+  `active` VARCHAR( 1 ) DEFAULT '1' NOT NULL ,
+  `order` BIGINT UNSIGNED NOT NULL ,
+  PRIMARY KEY ( `id` )
+  ) TYPE=MyISAM;";
+    
 $logtable = "CREATE TABLE `".$wpdb->prefix."purchase_logs` (
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-`totalprice` MEDIUMINT NOT NULL ,
-`statusno` SMALLINT NOT NULL ,
-`sessionid` VARCHAR( 255 ) NOT NULL,
-`transactid` VARCHAR( 255 ) NOT NULL,
-`authcode` VARCHAR( 255 ) NOT NULL,
-`firstname` TEXT NOT NULL ,
-`lastname` TEXT NOT NULL ,
-`email` VARCHAR( 90 ) NOT NULL ,
-`address` TEXT NOT NULL ,
-`phone` VARCHAR( 90 ) NOT NULL,
-`downloadid` BIGINT UNSIGNED NOT NULL,
-`processed` BIGINT UNSIGNED NOT NULL DEFAULT '1',
-`date` VARCHAR( 255 ) NOT NULL ,
-`gateway` VARCHAR( 64 ) NOT NULL ,
-`shipping_country` CHAR( 6 ) NOT NULL,
-PRIMARY KEY ( `id` ),
-INDEX ( `gateway` ),
-UNIQUE KEY `sessionid` (`sessionid`)
-) TYPE=MyISAM;";
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `totalprice` MEDIUMINT NOT NULL ,
+  `statusno` SMALLINT NOT NULL ,
+  `sessionid` VARCHAR( 255 ) NOT NULL,
+  `transactid` VARCHAR( 255 ) NOT NULL,
+  `authcode` VARCHAR( 255 ) NOT NULL,
+  `firstname` TEXT NOT NULL ,
+  `lastname` TEXT NOT NULL ,
+  `email` VARCHAR( 90 ) NOT NULL ,
+  `address` TEXT NOT NULL ,
+  `phone` VARCHAR( 90 ) NOT NULL,
+  `downloadid` BIGINT UNSIGNED NOT NULL,
+  `processed` BIGINT UNSIGNED NOT NULL DEFAULT '1',
+  `date` VARCHAR( 255 ) NOT NULL ,
+  `gateway` VARCHAR( 64 ) NOT NULL ,
+  `shipping_country` CHAR( 6 ) NOT NULL,
+  PRIMARY KEY ( `id` ),
+  INDEX ( `gateway` ),
+  UNIQUE KEY `sessionid` (`sessionid`)
+  ) TYPE=MyISAM;";
 
 $carttable = "CREATE TABLE `".$wpdb->prefix."cart_contents` (
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-`prodid` BIGINT UNSIGNED NOT NULL ,
-`purchaseid` BIGINT UNSIGNED NOT NULL ,
-`price` VARCHAR( 128 ) NOT NULL ,
-`pnp` VARCHAR( 128 ) NOT NULL ,
-`gst` VARCHAR( 128 ) NOT NULL ,
-`quantity` INT UNSIGNED NOT NULL ,
-PRIMARY KEY ( `id` )
-) TYPE=MyISAM;";
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `prodid` BIGINT UNSIGNED NOT NULL ,
+  `purchaseid` BIGINT UNSIGNED NOT NULL ,
+  `price` VARCHAR( 128 ) NOT NULL ,
+  `pnp` VARCHAR( 128 ) NOT NULL ,
+  `gst` VARCHAR( 128 ) NOT NULL ,
+  `quantity` INT UNSIGNED NOT NULL ,
+  PRIMARY KEY ( `id` )
+  ) TYPE=MyISAM;";
 
 $cart_variations_table = "CREATE TABLE `".$wpdb->prefix."cart_item_variations` (
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-`cart_id` BIGINT UNSIGNED NOT NULL ,
-`variation_id` BIGINT UNSIGNED NOT NULL ,
-`venue_id` BIGINT UNSIGNED NOT NULL ,
-PRIMARY KEY ( `id` )
-) TYPE=MyISAM;";
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `cart_id` BIGINT UNSIGNED NOT NULL ,
+  `variation_id` BIGINT UNSIGNED NOT NULL ,
+  `venue_id` BIGINT UNSIGNED NOT NULL ,
+  PRIMARY KEY ( `id` )
+  ) TYPE=MyISAM;";
 
 $downloadtable = "CREATE TABLE `".$wpdb->prefix."download_status` (
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`fileid` BIGINT UNSIGNED NOT NULL ,
-`purchid` BIGINT UNSIGNED NOT NULL ,
-`downloads` INT NOT NULL ,
-`active` VARCHAR( 1 ) NOT NULL DEFAULT '0',
-`datetime` DATETIME NOT NULL
- ) TYPE = MYISAM ;";
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `fileid` BIGINT UNSIGNED NOT NULL ,
+  `purchid` BIGINT UNSIGNED NOT NULL ,
+  `downloads` INT NOT NULL ,
+  `active` VARCHAR( 1 ) NOT NULL DEFAULT '0',
+  `datetime` DATETIME NOT NULL
+  ) TYPE = MYISAM ;";
 
 $filetable = "CREATE TABLE `".$wpdb->prefix."product_files` (
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`filename` VARCHAR( 255 ) NOT NULL ,
-`mimetype` VARCHAR( 128 ) NOT NULL ,
-`idhash` VARCHAR( 45 ) NOT NULL ,
-`date` VARCHAR( 255 ) NOT NULL
-) TYPE = MYISAM ;";
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `filename` VARCHAR( 255 ) NOT NULL ,
+  `mimetype` VARCHAR( 128 ) NOT NULL ,
+  `idhash` VARCHAR( 45 ) NOT NULL ,
+  `date` VARCHAR( 255 ) NOT NULL
+  ) TYPE = MYISAM ;";
 require "currency_list.php";
 
-$currencytable = "CREATE TABLE `".$wpdb->prefix."currency_list` (
+$currencytable = "CREATE TABLE `".$wpdb->prefix."currency_list`  (
   `id` bigint(20) unsigned NOT NULL auto_increment,
   `country` varchar(255) NOT NULL default '',
   `isocode` char(2) default NULL,
@@ -288,15 +290,17 @@ $currencytable = "CREATE TABLE `".$wpdb->prefix."currency_list` (
   `symbol` varchar(10) NOT NULL default '',
   `symbol_html` varchar(10) NOT NULL default '',
   `code` char(3) NOT NULL default '',
+  `has_regions` char(1) NOT NULL default '0',
+  `tax` varchar(8) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;";
+) TYPE=MyISAM ;";
 
 $purchase_statuses_table = "CREATE TABLE `".$wpdb->prefix."purchase_statuses` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
   `name` VARCHAR( 128 ) NOT NULL ,
   `active` VARCHAR( 1 ) NOT NULL ,
   `colour` VARCHAR( 6 ) NOT NULL
-) TYPE = MYISAM ;";
+  ) TYPE = MYISAM ;";
 
 
 
@@ -307,63 +311,63 @@ $product_rating_table = "CREATE TABLE `".$wpdb->prefix."product_rating` (
   `rated` tinyint(1) NOT NULL default '0',
   `time` BIGINT UNSIGNED NOT NULL,
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;";
+  ) TYPE=MyISAM;";
 
 
 
 $product_variations_table = "CREATE TABLE `".$wpdb->prefix."product_variations` (
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-`name` VARCHAR( 128 ) NOT NULL ,
-`variation_association` BIGINT UNSIGNED NOT NULL ,
-PRIMARY KEY ( `id` ) ,
-INDEX ( `variation_association` )
-);";
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR( 128 ) NOT NULL ,
+  `variation_association` BIGINT UNSIGNED NOT NULL ,
+  PRIMARY KEY ( `id` ) ,
+  INDEX ( `variation_association` )
+  );";
 
 $variation_values_table = "CREATE TABLE `".$wpdb->prefix."variation_values` (
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-`name` VARCHAR( 128 ) NOT NULL ,
-`variation_id` BIGINT UNSIGNED NOT NULL ,
-PRIMARY KEY ( `id` ) ,
-INDEX ( `variation_id` )
-);";
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR( 128 ) NOT NULL ,
+  `variation_id` BIGINT UNSIGNED NOT NULL ,
+  PRIMARY KEY ( `id` ) ,
+  INDEX ( `variation_id` )
+  );";
 
 $variation_associations_table = "CREATE TABLE `".$wpdb->prefix."variation_associations` (
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-`type` VARCHAR( 64 ) NOT NULL ,
-`name` VARCHAR( 128 ) NOT NULL ,
-`associated_id` BIGINT UNSIGNED NOT NULL ,
-`variation_id` BIGINT UNSIGNED NOT NULL,
-PRIMARY KEY ( `id` ) ,
-INDEX ( `associated_id` ) ,
-INDEX ( `variation_id` )
-);";
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `type` VARCHAR( 64 ) NOT NULL ,
+  `name` VARCHAR( 128 ) NOT NULL ,
+  `associated_id` BIGINT UNSIGNED NOT NULL ,
+  `variation_id` BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY ( `id` ) ,
+  INDEX ( `associated_id` ) ,
+  INDEX ( `variation_id` )
+  );";
 
 $variation_values_associations_table = "CREATE TABLE `".$wpdb->prefix."variation_values_associations` (
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-`product_id` BIGINT UNSIGNED NOT NULL ,
-`value_id` BIGINT UNSIGNED NOT NULL ,
-`quantity` INT NOT NULL ,
-`price` VARCHAR( 32 ) NOT NULL ,
-`visible` VARCHAR( 1 ) NOT NULL ,
-`variation_id` BIGINT UNSIGNED NOT NULL ,
-PRIMARY KEY ( `id` ) ,
-INDEX ( `product_id` , `value_id` , `variation_id` )
-);";
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `product_id` BIGINT UNSIGNED NOT NULL ,
+  `value_id` BIGINT UNSIGNED NOT NULL ,
+  `quantity` INT NOT NULL ,
+  `price` VARCHAR( 32 ) NOT NULL ,
+  `visible` VARCHAR( 1 ) NOT NULL ,
+  `variation_id` BIGINT UNSIGNED NOT NULL ,
+  PRIMARY KEY ( `id` ) ,
+  INDEX ( `product_id` , `value_id` , `variation_id` )
+  );";
 
 
 
 $collected_data_table = "CREATE TABLE `".$wpdb->prefix."collect_data_forms` (
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-`name` VARCHAR( 255 ) NOT NULL ,
-`type` VARCHAR( 64 ) NOT NULL ,
-`mandatory` VARCHAR( 1 ) NOT NULL ,
-`display_log` char(1) NOT NULL DEFAULT '0',
-`default` VARCHAR( 128 ) NOT NULL ,
-`active` VARCHAR( 1 ) DEFAULT '1' NOT NULL,
-`order` INT UNSIGNED NOT NULL,
-PRIMARY KEY ( `id` ) ,
-INDEX ( `order` )
-);";
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR( 255 ) NOT NULL ,
+  `type` VARCHAR( 64 ) NOT NULL ,
+  `mandatory` VARCHAR( 1 ) NOT NULL ,
+  `display_log` char(1) NOT NULL DEFAULT '0',
+  `default` VARCHAR( 128 ) NOT NULL ,
+  `active` VARCHAR( 1 ) DEFAULT '1' NOT NULL,
+  `order` INT UNSIGNED NOT NULL,
+  PRIMARY KEY ( `id` ) ,
+  INDEX ( `order` )
+  );";
 
 $submitted_data_table = "CREATE TABLE `".$wpdb->prefix."submited_form_data` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -372,10 +376,27 @@ $submitted_data_table = "CREATE TABLE `".$wpdb->prefix."submited_form_data` (
   `value` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `log_id` (`log_id`,`form_id`))";
+
+$product_order_table = "CREATE TABLE `".$wpdb->prefix."product_order` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `category_id` bigint(20) unsigned NOT NULL default '0',
+  `product_id` bigint(20) unsigned NOT NULL default '0',
+  `order` bigint(20) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `category_id` (`category_id`,`product_id`),
+  KEY `order` (`order`)
+) TYPE=MyISAM ;";
   
- //$coldata  = $db->GetAll("SHOW FULL COLUMNS FROM `$tablename` LIKE '$col'");
- 
-  //$addcolsql = "ALTER TABLE `$tablename` ADD `$col` TEXT NOT NULL $after\n\r";
+  
+$region_tax_table = "CREATE TABLE `".$wpdb->prefix."region_tax` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `country_id` bigint(20) unsigned NOT NULL default '0',
+  `name` varchar(64) NOT NULL default '',
+  `tax` float NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  KEY `country_id` (`country_id`)
+) TYPE=MyISAM;";
+  
 
   require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
   maybe_create_table($table_name,$itemtable);
@@ -397,6 +418,11 @@ $submitted_data_table = "CREATE TABLE `".$wpdb->prefix."submited_form_data` (
   maybe_create_table(($wpdb->prefix."collect_data_forms"),$collected_data_table);
   maybe_create_table(($wpdb->prefix."submited_form_data"),$submitted_data_table);
   maybe_create_table(($wpdb->prefix."item_category_associations"),$category_assoc_table);
+  maybe_create_table(($wpdb->prefix."product_order"),$product_order_table);
+  maybe_create_table(($wpdb->prefix."region_tax"),$region_tax_table);
+ 
+
+
  
   /*
   Updates from old versions, 
@@ -428,6 +454,12 @@ $submitted_data_table = "CREATE TABLE `".$wpdb->prefix."submited_form_data` (
     {
     $wpdb->query("ALTER TABLE `".$wpdb->prefix."purchase_logs` ADD `shipping_country` CHAR( 6 ) NOT NULL AFTER `gateway`;");
     }
+  
+  $add_shipping_region  = $wpdb->get_results("SHOW FULL COLUMNS FROM `".$wpdb->prefix."purchase_logs` LIKE 'shipping_region'",ARRAY_A);
+  if($add_shipping_region == null)
+    {
+    $wpdb->query("ALTER TABLE `".$wpdb->prefix."purchase_logs` ADD `shipping_region` CHAR( 6 ) NOT NULL AFTER `shipping_country`;");
+    }
 
   $add_initial_category = $wpdb->get_results("SELECT COUNT(*) AS `count` FROM `".$wpdb->prefix."product_categories`",ARRAY_A);
   if($add_initial_category[0]['count'] == 0)
@@ -439,6 +471,18 @@ $submitted_data_table = "CREATE TABLE `".$wpdb->prefix."submited_form_data` (
   if($add_display_frontpage == null)
     {
     $wpdb->query("ALTER TABLE `".$wpdb->prefix."product_list` ADD `display_frontpage` VARCHAR( 1 ) NOT NULL AFTER `special_price`;");
+    }
+  
+  $add_currency_tax  = $wpdb->get_results("SHOW FULL COLUMNS FROM `".$wpdb->prefix."currency_list` LIKE 'tax'",ARRAY_A);
+  if($add_currency_tax == null)
+    {
+    $wpdb->query("ALTER TABLE `".$wpdb->prefix."currency_list` ADD `tax` VARCHAR( 8 ) NOT NULL AFTER `code`");
+    }
+  
+  $add_currency_has_regions  = $wpdb->get_results("SHOW FULL COLUMNS FROM `".$wpdb->prefix."currency_list` LIKE 'has_regions'",ARRAY_A);
+  if($add_currency_has_regions == null)
+    {
+    $wpdb->query("ALTER TABLE `".$wpdb->prefix."currency_list` ADD `has_regions` VARCHAR( 8 ) NOT NULL AFTER `code`");
     }
         
   $check_category_assoc = $wpdb->get_results("SELECT COUNT(*) AS `count` FROM `".$wpdb->prefix."item_category_associations`",ARRAY_A);
@@ -452,8 +496,8 @@ $submitted_data_table = "CREATE TABLE `".$wpdb->prefix."submited_form_data` (
       }
     }
 
-  $currency_data  = $wpdb->get_results("SELECT COUNT(*) AS `count` FROM `".$wpdb->prefix."currency_list`",ARRAY_A);
-  if($currency_data[0]['count'] == 0)
+  $currency_data  = $wpdb->get_var("SELECT COUNT(*) AS `count` FROM `".$wpdb->prefix."currency_list`");
+  if($currency_data == 0)
     {
     $currency_array = explode("\n",$currency_sql);
     foreach($currency_array as $currency_row)
@@ -480,6 +524,82 @@ $submitted_data_table = "CREATE TABLE `".$wpdb->prefix."submited_form_data` (
     $wpdb->query("ALTER TABLE `".$wpdb->prefix."product_categories` ADD INDEX ( `category_parent` )");
     }
     
+    
+    
+    
+  
+  $add_regions = $wpdb->get_var("SELECT COUNT(*) AS `count` FROM `".$wpdb->prefix."region_tax`");
+  // exit($add_regions);
+  if($add_regions < 1)
+    {
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Alberta', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'British Columbia', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Manitoba', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'New Brunswick', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Newfoundland', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Northwest Territories', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Nova Scotia', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Nunavut', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Ontario', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Prince Edward Island', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Quebec', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Saskatchewan', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Yukon', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Alabama', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Alaska', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Arizona', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Arkansas', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'California', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Colorado', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Connecticut', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Delaware', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Florida', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Georgia', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Hawaii', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Idaho', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Illinois', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Indiana', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Iowa', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Kansas', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Kentucky', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Louisiana', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Maine', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Maryland', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Massachusetts', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Michigan', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Minnesota', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Mississippi', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Missouri', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Montana', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Nebraska', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Nevada', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'New Hampshire', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'New Jersey', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'New Mexico', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'New York', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'North Carolina', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'North Dakota', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Ohio', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Oklahoma', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Oregon', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Pennsylvania', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Rhode Island', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'South Carolina', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'South Dakota', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Tennessee', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Texas', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Utah', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Vermont', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Virginia', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Washington', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Washington DC', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'West Virginia', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Wisconsin', '0.00')");
+    $wpdb->query("INSERT INTO `".$wpdb->prefix."region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Wyoming', '0.00')");
+    }
+    
+    
+    
 $data_forms = $wpdb->get_results("SELECT COUNT(*) AS `count` FROM `".$wpdb->prefix."collect_data_forms`",ARRAY_A);
 if($data_forms[0]['count'] == 0)
   {
@@ -494,7 +614,7 @@ if($data_forms[0]['count'] == 0)
   $email_form_id  = $wpdb->get_results("SELECT `id` FROM `".$wpdb->prefix."collect_data_forms` WHERE `name` = '".TXT_WPSC_EMAIL."' AND `type` = 'country' LIMIT 1",ARRAY_A);
   update_option('country_form_field', $country_form_id[0]['id']);
   update_option('email_form_field', $email_form_id[0]['id']);
-  $wpdb->query("INSERT INTO `wp_collect_data_forms` VALUES ('', '".TXT_WPSC_PHONE."', 'text', '1', '0', '', '1', '8');");
+  $wpdb->query("INSERT INTO `".$wpdb->prefix."collect_data_forms` VALUES ('', '".TXT_WPSC_PHONE."', 'text', '1', '0', '', '1', '8');");
   }
   
   
@@ -503,8 +623,7 @@ if($product_brands_data[0]['count'] == 0)
   {
   $wpdb->query("INSERT INTO `".$wpdb->prefix."product_brands` (`id`, `name`, `description`, `active`, `order`) VALUES (NULL, '".TXT_WPSC_EXAMPLEBRAND."','".TXT_WPSC_EXAMPLEDETAILS."', '1', '0');");
   }
-
- 
+  
   add_option('show_thumbnails', 1, TXT_WPSC_SHOWTHUMBNAILS, "yes");
 
   add_option('product_image_width', '', TXT_WPSC_PRODUCTIMAGEWIDTH, 'yes');
@@ -616,10 +735,21 @@ if($product_brands_data[0]['count'] == 0)
           {
           $post_parent = $first_id;
           }
-      $sql ="INSERT INTO ".$wpdb->posts."
-      (post_author, post_date, post_date_gmt, post_content, post_content_filtered, post_title, post_excerpt,  post_status, comment_status, ping_status, post_password, post_name, to_ping, pinged, post_modified, post_modified_gmt, post_parent, menu_order)
-      VALUES
-      ('1', '$post_date', '$post_date_gmt', '".$page['tag']."', '', '".$page['title']."', '', 'static', 'open', 'open', '', '".$page['name']."', '', '', '$post_date', '$post_date_gmt', '$post_parent', '0')";
+      
+      if($wp_version >= 2.1)
+        {
+        $sql ="INSERT INTO ".$wpdb->posts."
+        (post_author, post_date, post_date_gmt, post_content, post_content_filtered, post_title, post_excerpt,  post_status, comment_status, ping_status, post_password, post_name, to_ping, pinged, post_modified, post_modified_gmt, post_parent, menu_order, post_type)
+        VALUES
+        ('1', '$post_date', '$post_date_gmt', '".$page['tag']."', '', '".$page['title']."', '', 'publish', 'open', 'open', '', '".$page['name']."', '', '', '$post_date', '$post_date_gmt', '$post_parent', '0', 'page')";
+        }
+        else
+        {      
+        $sql ="INSERT INTO ".$wpdb->posts."
+        (post_author, post_date, post_date_gmt, post_content, post_content_filtered, post_title, post_excerpt,  post_status, comment_status, ping_status, post_password, post_name, to_ping, pinged, post_modified, post_modified_gmt, post_parent, menu_order)
+        VALUES
+        ('1', '$post_date', '$post_date_gmt', '".$page['tag']."', '', '".$page['title']."', '', 'static', 'open', 'open', '', '".$page['name']."', '', '', '$post_date', '$post_date_gmt', '$post_parent', '0')";
+        }
       $wpdb->query($sql);
       $post_id = $wpdb->insert_id;
       if($i == 0)
@@ -636,6 +766,45 @@ if($product_brands_data[0]['count'] == 0)
     {
     wp_cache_delete('all_page_ids', 'pages');
     $wp_rewrite->flush_rules();
+    }
+    
+  /*
+   * Moves images to thumbnails directory
+   */
+  $basepath =  str_replace("/wp-admin", "" , getcwd());
+  $image_dir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
+  $product_images = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
+  $product_thumbnails = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/thumbnails/";
+  if(!is_dir($product_thumbnails))
+    {
+    mkdir($product_thumbnails, 0775);
+    }
+  $product_list = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_list` WHERE `image` != ''",ARRAY_A);
+  foreach((array)$product_list as $product)
+    {
+    if(!glob($product_thumbnails.$product['image']))
+      {
+      $new_filename = $product['id']."_".$product['image'];
+      if(glob($image_dir.$product['image']))
+        {
+        copy($image_dir.$product['image'], $product_thumbnails.$new_filename);
+        copy($product_images.$product['image'], $product_images.$new_filename);
+        $wpdb->query("UPDATE `".$wpdb->prefix."product_list` SET `image` = '".$new_filename."' WHERE `id`='".$product['id']."' LIMIT 1");
+        }        
+        else
+          {
+          $imagedir = $product_thumbnails;
+          $name = $new_filename;
+          $new_image_path = $product_images.$product['image'];
+          $imagepath = $product['image'];
+          $height = get_option('product_image_height');
+          $width  = get_option('product_image_width');
+          include("extra_image_processing.php");
+          copy($product_images.$product['image'], $product_images.$new_filename);
+          $wpdb->query("UPDATE `".$wpdb->prefix."product_list` SET `image` = '".$new_filename."' WHERE `id`='".$product['id']."' LIMIT 1");
+          echo $product['image']." not found <br/>";
+          }
+      }
     }
   }
 
@@ -672,8 +841,8 @@ function nzshpcrt_javascript()
 	{
   $siteurl = get_option('siteurl'); 
 	?>
-<link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/product_rater.css' rel="stylesheet" type="text/css" />
-<link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/lightbox.css' rel="stylesheet" type="text/css" />
+<!-- <link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/product_rater.css' rel="stylesheet" type="text/css" />
+<link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/lightbox.css' rel="stylesheet" type="text/css" /> -->
 <script language='JavaScript' type='text/javascript'>
 /* base url */
 var base_url = "<?php echo $siteurl; ?>";
@@ -686,7 +855,8 @@ var borderSize = 10;  //if you adjust the padding in the CSS, you will need to u
 </script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/ajax.js" language='JavaScript' type="text/javascript"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/prototype.js" language='JavaScript' type="text/javascript"></script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/scriptaculous.js?load=effects" language='JavaScript' type="text/javascript"></script>
+<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/effects.js" language='JavaScript' type="text/javascript"></script>
+<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/dragdrop.js" language='JavaScript' type="text/javascript"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/lightbox.js" language='JavaScript' type="text/javascript"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/user.js" language='JavaScript' type="text/javascript">
 </script>
@@ -697,8 +867,8 @@ function nzshpcrt_css()
 	{
   $siteurl = get_option('siteurl'); 
 	?>
-<link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/lightbox.css' rel="stylesheet" type="text/css" />
-<link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/admin.css' rel="stylesheet" type="text/css" />
+<!-- <link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/lightbox.css' rel="stylesheet" type="text/css" />
+<link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/admin.css' rel="stylesheet" type="text/css" /> -->
 
 <script language='JavaScript' type='text/javascript'>
 /* base url */
@@ -745,6 +915,7 @@ require_once('admin.js');
 </script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/prototype.js" language='JavaScript' type="text/javascript"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/scriptaculous.js?load=effects" language='JavaScript' type="text/javascript"></script>
+<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/scriptaculous.js?load=dragdrop" language='JavaScript' type="text/javascript"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/lightbox.js" language='JavaScript' type="text/javascript"></script>
 <?php
 	}
@@ -798,6 +969,10 @@ function nzshpcrt_products_page($content = '')
     $nzshpcrt = new wp_shopping_cart;
     $GLOBALS['nzshpcrt_activateshpcrt'] = true;
     $output = $nzshpcrt->products_page();
+    if(function_exists('drag_and_drop_cart'))
+      { 
+      add_action('wp_footer', 'drag_and_drop_cart');
+      }
     return preg_replace("/\[productspage\]/",$output, $content);
     }
     else
@@ -983,6 +1158,8 @@ function nzshpcrt_submit_ajax()
           echo nzshpcrt_getvariationform($_POST['variation_id']);
           exit();
           }
+          
+  
   if(($_POST['ajax'] == "true") && is_numeric($_POST['currencyid']))
     {
     $currency_data = $wpdb->get_results("SELECT `symbol`,`symbol_html`,`code` FROM `".$wpdb->prefix."currency_list` WHERE `id`='".$_POST['currencyid']."' LIMIT 1",ARRAY_A) ;
@@ -998,6 +1175,8 @@ function nzshpcrt_submit_ajax()
     echo $currency_sign;
     exit();
     }
+  
+  
   /* rate item */    
   if(($_POST['ajax'] == "true") && ($_POST['rate_item'] == "true") && is_numeric($_POST['product_id']) && is_numeric($_POST['rating']))
     {
@@ -1067,7 +1246,48 @@ function nzshpcrt_submit_ajax()
     if($user_level >= 7)
      {
      $wpdb->query("UPDATE `".$wpdb->prefix."collect_data_forms` SET `active` = '0' WHERE `id` ='".$_POST['form_id']."' LIMIT 1 ;");
+     exit();
      }
+    }
+    
+  if(($_POST['ajax'] == "true") && ($_POST['remove_form_field'] == "true") && is_numeric($_POST['form_id']))
+    {
+    if($user_level >= 7)
+     {
+     $wpdb->query("UPDATE `".$wpdb->prefix."collect_data_forms` SET `active` = '0' WHERE `id` ='".$_POST['form_id']."' LIMIT 1 ;");
+     exit();
+     }
+    }
+    
+  if(($_POST['ajax'] == "true") && ($_POST['user'] == "true") && ($_POST['drag_and_drop_cart'] == "true"))
+    {
+    drag_and_drop_cart_contents();
+    exit();
+    }
+  
+  if(($_POST['ajax'] == "true") && ($_POST['get_country_tax'] == "true") && preg_match("/[a-zA-Z]{2,4}/",$_POST['country_id']))  
+    {
+    $country_id = $_POST['country_id'];
+    $region_list = $wpdb->get_results("SELECT `".$wpdb->prefix."region_tax`.* FROM `".$wpdb->prefix."region_tax`, `".$wpdb->prefix."currency_list`  WHERE `".$wpdb->prefix."currency_list`.`isocode` IN('".$country_id."') AND `".$wpdb->prefix."currency_list`.`id` = `".$wpdb->prefix."region_tax`.`country_id`",ARRAY_A) ;
+    if($region_list != null)
+      {
+      echo "<select name='base_region'>\n\r";
+      foreach($region_list as $region)
+        {
+        if(get_option('base_region')  == $region['id'])
+          {
+          $selected = "selected='true'";
+          }
+          else
+            {
+            $selected = "";
+            }
+        echo "<option value='".$region['id']."' $selected>".$region['name']."</option>\n\r";
+        }
+      echo "</select>\n\r";    
+      }
+      else { echo "&nbsp;"; }
+    exit();
     }
     
    if(isset($_POST['language_setting']) && ($_GET['page'] = 'wp-shopping-cart/options.php'))
@@ -1337,7 +1557,7 @@ function nzshpcrt_getproductform($prodid)
   $output .= TXT_WPSC_PRODUCTDESCRIPTION.": ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<textarea name='description' cols='40' rows='8' >".stripslashes($product['description'])."</textarea>";
+  $output .= "<textarea name='description' cols='40' rows='2' >".stripslashes($product['description'])."</textarea>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   
@@ -1346,7 +1566,7 @@ function nzshpcrt_getproductform($prodid)
   $output .= TXT_WPSC_ADDITIONALDESCRIPTION.": ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<textarea name='additional_description' cols='40' rows='8' >".stripslashes($product['additional_description'])."</textarea>";
+  $output .= "<textarea name='additional_description' cols='40' rows='2' >".stripslashes($product['additional_description'])."</textarea>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   
@@ -1355,7 +1575,7 @@ function nzshpcrt_getproductform($prodid)
   $output .= TXT_WPSC_PRICE.": ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<input type='text' name='price' size='10' value='".number_format($product['price'], 2, '.', '')."' />";
+  //$output .= "<input type='text' name='price' size='10' value='".number_format($product['price'], 2, '.', '')."' />";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
@@ -1546,17 +1766,17 @@ function nzshpcrt_getproductform($prodid)
     {
     if($product['image'] != '')
       {
-      $basepath = "C:/Projects/cb"; // str_replace("/wp-admin", "" , getcwd());
-      $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
+      $basepath =  str_replace("/wp-admin", "" , getcwd());
+      $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/thumbnails/";
       $imagepath = $imagedir . $product['image'];
       include('getimagesize.php');
       $output .= "          <tr>\n\r";
       $output .= "            <td>\n\r";
       $output .= TXT_WPSC_RESIZEIMAGE.": <br />";
       
-      $basepath = "C:/Projects/cb"; // str_replace("/wp-admin", "" , getcwd());
-      $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
-      $image_size = getimagesize($imagedir.$product['image']);
+      $basepath =  str_replace("/wp-admin", "" , getcwd());
+      $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/thumbnails/";
+      $image_size = @getimagesize($imagedir.$product['image']);
       $output .= "<span class='image_size_text'>".$image_size[0]."x".$image_size[1]."</span>";
       //
       //
@@ -1795,7 +2015,7 @@ function nzshpcrt_getcategoryform($catid)
     {
     if($product['image'] != '')
       {
-      $basepath = "C:/Projects/cb"; // str_replace("/wp-admin", "" , getcwd());
+      $basepath =  str_replace("/wp-admin", "" , getcwd());
       $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/category_images/";
       $imagepath = $imagedir . $product['image'];
       include('getimagesize.php');
@@ -2055,8 +2275,8 @@ function nzshpcrt_submit_checkout()
       }
     $sessionid = (mt_rand(100,999).time());
     
-    $sql = "INSERT INTO `".$wpdb->prefix."purchase_logs` ( `id` , `totalprice` , `sessionid` , `firstname`, `lastname`, `email`, `address`, `phone`, `date`, `shipping_country` )
-VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid."', '".$wpdb->escape($_POST['firstname'])."', '".$wpdb->escape($_POST['lastname'])."', '".$_POST['email']."', '".$wpdb->escape($_POST['address'])."', '".$wpdb->escape($_POST['phone'])."' , '".time()."', '".$_SESSION['selected_country']."')";
+    $sql = "INSERT INTO `".$wpdb->prefix."purchase_logs` ( `id` , `totalprice` , `sessionid` , `firstname`, `lastname`, `email`, `address`, `phone`, `date`, `shipping_country`,`shipping_region` )
+VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid."', '".$wpdb->escape($_POST['firstname'])."', '".$wpdb->escape($_POST['lastname'])."', '".$_POST['email']."', '".$wpdb->escape($_POST['address'])."', '".$wpdb->escape($_POST['phone'])."' , '".time()."', '".$_SESSION['selected_country']."', '".$_SESSION['selected_region']."')";
    $wpdb->query($sql) ;
    
    $selectsql = "SELECT * FROM `".$wpdb->prefix."purchase_logs` WHERE `sessionid` LIKE '".$sessionid."' LIMIT 1";
@@ -2086,30 +2306,39 @@ VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid
           {
           $price_modifier = 0;
           }
-        if($product_data[0]['notax'] == 1)
+    
+    $price = ($product_data['price'] - $price_modifier);
+    if($product_list[0]['notax'] != 1)
+      {
+      $price = nzshpcrt_calculate_tax($price, $_SESSION['selected_country'], $_SESSION['selected_region']);
+      if(get_option('base_country') == $_SESSION['selected_country'])
+        {
+        $country_data = $wpdb->get_row("SELECT * FROM `".$wpdb->prefix."currency_list` WHERE `isocode` IN('".get_option('base_country')."') LIMIT 1",ARRAY_A);
+        if(($country_data['has_regions'] == 1))
           {
-          $price = ($product_data['price'] - $price_modifier);
+          if(get_option('base_region') == $_SESSION['selected_region'])
+            {
+            $region_data = $wpdb->get_row("SELECT `".$wpdb->prefix."region_tax`.* FROM `".$wpdb->prefix."region_tax` WHERE `".$wpdb->prefix."region_tax`.`country_id` IN('".$country_data['id']."') AND `".$wpdb->prefix."region_tax`.`id` IN('".get_option('base_region')."') ",ARRAY_A) ;
+            }
+          $gst =  $region_data['tax'];
           }
           else
             {
-            $price = (($product_data['price'] - $price_modifier) * get_option('gst_rate'));
+            $gst =  $country_data['tax'];
             }
+          }
+      }
+      else { $gst = 0; }
+        
             
     $country = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."submited_form_data` WHERE `log_id`=".$getid[0]['id']." AND `form_id` = '".get_option('country_form_field')."' LIMIT 1",ARRAY_A);
     $country = $country[0]['value'];
-    if($country == get_option('base_country'))
-      {
-      $base_shipping = get_option('base_local_shipping');
-      $additional_shipping = $product_list[0]['pnp'];
-      }
-      else
-        {
-        $base_shipping = get_option('base_international_shipping');
-        $additional_shipping = $product_list[0]['international_pnp'];
-        }
      
-     $shipping = $base_shipping + ($additional_shipping * $quantity);
-     $cartsql = "INSERT INTO `".$wpdb->prefix."cart_contents` ( `id` , `prodid` , `purchaseid`, `price`, `pnp`,`quantity` ) VALUES ('', '".$row."', '".$getid[0]['id']."','".$price."','".$shipping."','".$quantity."')";
+     $country_data = $wpdb->get_row("SELECT * FROM `".$wpdb->prefix."currency_list` WHERE `isocode` IN('".get_option('base_country')."') LIMIT 1",ARRAY_A);
+     
+     // $shipping = $base_shipping + ($additional_shipping * $quantity);
+     $shipping = 0;
+     $cartsql = "INSERT INTO `".$wpdb->prefix."cart_contents` ( `id` , `prodid` , `purchaseid`, `price`, `pnp`, `gst`, `quantity` ) VALUES ('', '".$row."', '".$getid[0]['id']."','".$price."','".$shipping."', '".$gst."','".$quantity."')";
     
   
      
@@ -2284,13 +2513,13 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
   switch(get_option('cart_location'))
     {
     case 1:
-    $output .= "<h2>".TXT_WPSC_SHOPPINGCART."</h2>";
+    $output .= "<h2>".TXT_WPSC_SHOPPINGCART."</h2>&nbsp;<img src='http://cartoonbank.ru/cb3/img/cart.gif'>";
     $output .="<span id='alt_loadingindicator'><img id='alt_loadingimage' src='". get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/indicator.gif' alt='Loading' title='Loading' /> ".TXT_WPSC_UDPATING."...</span></strong><br />";
     $spacing = "<br/><br />";
     break;
     
     case 3:
-    $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>";
+    $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>&nbsp;<img src='http://cartoonbank.ru/cb3/img/cart.gif'>";
     $spacing = "<br/><br />";
     break;
     
@@ -2299,7 +2528,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     break;
     
     default:
-    $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>";
+    $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>&nbsp;<img src='http://cartoonbank.ru/cb3/img/cart.gif'>";
     $spacing = "<br/><br />";
     break;
     }  
@@ -2319,7 +2548,8 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     //exit("<pre>".print_r($_SERVER,true)."</pre>");
 
     $output .= "<table class='shoppingcart'>";
-    $output .= "<tr><th>".TXT_WPSC_PRODUCT."</th><th>".TXT_WPSC_QUANTITY_SHORT."</th><th>".TXT_WPSC_PRICE."</th></tr>";
+    //$output .= "<tr><th>".TXT_WPSC_PRODUCT."</th><th>".TXT_WPSC_QUANTITY_SHORT."</th><th>".TXT_WPSC_PRICE."</th></tr>"; 
+	$output .= "<tr><td><u>".TXT_WPSC_PRODUCT."</u></td><td><u>".TXT_WPSC_QUANTITY_SHORT."</u></td></tr>"; 
     foreach($cart as $cart_item)
       {
       $product_id = $cart_item->product_id;
@@ -2334,27 +2564,34 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
           {
           $price_modifier = 0;
           }
-      $price = nzshpcrt_currency_display(($quantity * ($product[0]['price']-$price_modifier)), $product[0]['notax'],false,false,true);
+       
+      $price = $quantity * ($product[0]['price']-$price_modifier);
+      if($product[0]['notax'] != 1)
+        {
+        $price = nzshpcrt_calculate_tax($price, $_SESSION['selected_country'], $_SESSION['selected_region']);
+        }
+        
       if($_SESSION['selected_country'] != null)
         {        
         $total_shipping += nzshpcrt_determine_item_shipping($product[0]['id'], $quantity, $_SESSION['selected_country']);
         }
       $total += $price;
-      $output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td><td>".nzshpcrt_currency_display($price, 1)."</td></tr>";
+      //$output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td><td>".nzshpcrt_currency_display($price, 1)."</td></tr>";
+	  $output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td></tr>";
       //$output .=   .": ". nzshpcrt_currency_display($price, 1) . "<br />";
       }
     $output .= "</table>";
-    if($_SESSION['selected_country'] != null)
-      {
-      $total_shipping = nzshpcrt_determine_base_shipping($total_shipping, $_SESSION['selected_country']);
-      $output .= "<strong>".TXT_WPSC_SUBTOTAL.":</strong> &nbsp;&nbsp;".nzshpcrt_currency_display(($total), 1)."<br />";
-      $output .= "<strong>".TXT_WPSC_POSTAGE.":</strong> &nbsp;&nbsp;".nzshpcrt_currency_display($total_shipping, 1)."<br />";
-      $output .= "<strong>".TXT_WPSC_TOTAL.":</strong> &nbsp;&nbsp;".nzshpcrt_currency_display(($total+$total_shipping), 1)."<br /><br />";
-      }
-      else
-        {
-        $output .= "<strong>".TXT_WPSC_TOTAL.":</strong> &nbsp;&nbsp;".nzshpcrt_currency_display($total, 1)." + ".TXT_WPSC_POSTAGE."<br /><br />";
-        }
+//    if($_SESSION['selected_country'] != null)
+//      {
+//      $total_shipping = nzshpcrt_determine_base_shipping($total_shipping, $_SESSION['selected_country']);
+//      $output .= "<strong>".TXT_WPSC_SUBTOTAL.":</strong> &nbsp;&nbsp;".nzshpcrt_currency_display(($total), 1)."<br />";
+//      $output .= "<strong>".TXT_WPSC_POSTAGE.":</strong> &nbsp;&nbsp;".nzshpcrt_currency_display($total_shipping, 1)."<br />";
+//        $output .= "<strong>".TXT_WPSC_TOTAL.":</strong> &nbsp;&nbsp;".nzshpcrt_overall_total_price($_SESSION['selected_country'],true)."<br /><br />";
+//      }
+//      else
+//        {
+//        $output .= "<strong>".TXT_WPSC_TOTAL.":</strong> &nbsp;&nbsp;".nzshpcrt_overall_total_price($_SESSION['selected_country'],true)."<br /><br />";
+//        }
     if(get_option('permalink_structure') != '')
       {
       $seperator ="?";
@@ -2390,7 +2627,7 @@ function nzshpcrt_download_file()
       $file_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_files` WHERE `id`='".$download_data['fileid']."' LIMIT 1",ARRAY_A) ;
       $file_data = $file_data[0];
       $wpdb->query("UPDATE `".$wpdb->prefix."download_status` SET `downloads` = '".($download_data['downloads']-1)."' WHERE `id` = '$id' LIMIT 1");
-      $basepath = "C:/Projects/cb"; // getcwd();
+      $basepath =  getcwd();
       $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
       //http://192.168.11.35/emptywp/?downloadid=1
       header('Content-Type: '.$file_data['mimetype']);      
@@ -2411,8 +2648,26 @@ function nzshpcrt_download_file()
           {
           $file_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_files` WHERE `id`='".$product_data[0]['file']."' LIMIT 1",ARRAY_A) ;
           $file_data = $file_data[0];
-          $basepath = "C:/Projects/cb"; // str_replace('/wp-admin','',getcwd());
+          $basepath =  str_replace('/wp-admin','',getcwd());
           $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
+
+/*
+	header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename='.basename($file));
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($file));
+    ob_clean();
+    flush();
+*/
+
+	header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+
+
           header('Content-Type: '.$file_data['mimetype']);      
           //header('Content-Length: '.filesize($filedir.$file_data['idhash']));
           if($_GET['preview_track'] != 'true')
@@ -2423,6 +2678,15 @@ function nzshpcrt_download_file()
             {
             header('Content-Disposition: inline; filename="'.$file_data['filename'].'"');
             }
+
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Pragma: public');
+
+    ob_clean();
+    flush();
+
           readfile($filedir.$file_data['idhash']);
           exit();
           }
@@ -2437,7 +2701,7 @@ function nzshpcrt_display_preview_image()
     {
      if(function_exists("getimagesize"))
       {
-      $basepath = "C:/Projects/cb"; // str_replace("/wp-admin", "" , getcwd());
+      $basepath =  str_replace("/wp-admin", "" , getcwd());
       $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
 
       $imagesql = "SELECT `image` FROM `".$wpdb->prefix."product_list` WHERE `id`='".$_GET['productid']."' LIMIT 1";
@@ -2445,7 +2709,7 @@ function nzshpcrt_display_preview_image()
 
       $imagepath = $imagedir . $imagedata[0]['image'];
       
-      $image_size = getimagesize($imagepath);
+      $image_size = @getimagesize($imagepath);
       if(is_numeric($_GET['height']) && is_numeric($_GET['width']))
         {
         $height = $_GET['height'];
@@ -2647,6 +2911,40 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
       }
     return $output;
     }
+  
+  function nzshpcrt_region_list($selected_country = null, $selected_region = null)
+    {
+    global $wpdb;
+    if($selected_region == null)
+      {
+      $selected_region = get_option('base_region');
+      }
+    $output = "";
+    $region_list = $wpdb->get_results("SELECT `".$wpdb->prefix."region_tax`.* FROM `".$wpdb->prefix."region_tax`, `".$wpdb->prefix."currency_list`  WHERE `".$wpdb->prefix."currency_list`.`isocode` IN('".$selected_country."') AND `".$wpdb->prefix."currency_list`.`id` = `".$wpdb->prefix."region_tax`.`country_id`",ARRAY_A) ;
+    if($region_list != null)
+      {
+      $output .= "<select name='base_region'>\n\r";
+      $output .= "<option value=''>None</option>";
+      foreach($region_list as $region)
+        {
+        if($selected_region == $region['id'])
+          {
+          $selected = "selected='true'";
+          }
+          else
+            {
+            $selected = "";
+            }
+        $output .= "<option value='".$region['id']."' $selected>".$region['name']."</option>\n\r";
+        }
+      $output .= "</select>\n\r";    
+      }
+      else
+        {
+        $output .= "<select name='base_region' disabled='true'><option value=''>None</option></select>\n\r";
+        }
+    return $output;
+    }
     
   function nzshpcrt_form_field_list($selected_field = null)
     {
@@ -2682,7 +2980,7 @@ function get_brand($brand_id)
   }
 
 
-function filter_input($input)
+function filter_input_wp($input)
   {
   // if the input is numeric, then its probably safe
   if(is_numeric($input))
@@ -2744,8 +3042,11 @@ $nzshpcrt_merchant_list = nzshpcrt_listdir($gateway_directory);
 $num=0;
 foreach($nzshpcrt_merchant_list as $nzshpcrt_merchant)
   {
-  require("merchants/".$nzshpcrt_merchant);
-  $num++;
+    if (strcmp($nzshpcrt_merchant,'.svn'))
+    {
+      require("merchants/".$nzshpcrt_merchant);
+      $num++;
+    } 
   }
 /* 
  * and ends here

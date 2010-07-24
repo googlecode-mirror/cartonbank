@@ -48,7 +48,9 @@ a:hover{
 	padding: 10px 0px 10px 0px;
 	text-align: center;
 	border-top: 5px solid #658DB5;
-    text-transform: uppercase;
+    border-bottom: 5px solid #658DB5;
+    
+	text-transform: uppercase;
 	}
 	
 #header a {
@@ -76,7 +78,7 @@ a:hover{
 	padding: 10px 0px 10px 0px;
 	text-align: center;
 	border-top: 1px solid #C0C0C0;
-	border-bottom: 1px solid #C0C0C0;
+	border-bottom: 5px solid #658DB5;
 	}
 	
 #navbar li {
@@ -217,9 +219,9 @@ blockquote{
 	
 #contentmiddle {
 	float: left;
-	width: 660px;
+	width: 750px;
 	margin: 0px 0px 0px 0px;
-	padding: 20px 20px 10px 20px;
+	padding: 10px 10px 10px 10px;
 	}
 	
 #contentmiddle p img{
@@ -325,23 +327,49 @@ blockquote{
 	color: #507AA5;
 	text-decoration: underline;
 	}
+
+#item {
+text-align:center;
+}
 	
-#items
-{
-width:700px;
+#items {
+float:right;
+width:750px;
 margin-top: 2px;
+text-align: right;
 }
 
+#bigpicbottomstrip
+{
+width:750px;
+float:right;
+background-color: white;
+padding-top:4px;
+padding-bottom:6px;
+text-align: right;
+font-size:14px;
+}
+
+#bigpictopstrip
+{
+width:750px;
+float:right;
+background-color: white;
+padding-bottom:4px;
+text-align: right;
+font-size:14px;
+}
 #bigpictext
 {
 width:200px;
 float:left;
-padding-left:4px;
+background-color: white;
+font-size:14px;
 }
 
 #bigpic
 {
-float:left;
+float:right;
 }
 
 #producttext
