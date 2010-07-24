@@ -257,10 +257,14 @@ function nzshpcrt_display_categories_groups()
 				$items_on_page = get_option('posts_per_page');
 
 				// SEARCH
-				if($_POST['cs']!= '')
+				if($_POST['cs']!= '' or $_GET['cs']!= '')
 				{
-					$keywords = strtolower(trim($_POST['cs']));
-
+					if($_POST['cs']!= ''){
+						$keywords = strtolower(trim($_POST['cs']));
+					}
+					if($_GET['cs']!= ''){
+						$keywords = strtolower(trim($_GET['cs']));
+					}
 					// count found results
 					$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND (name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
 
@@ -310,6 +314,7 @@ function nzshpcrt_display_categories_groups()
 				$output .= "</br></div>";
 
 				echo "<div style='clear:both;'>".$output."</div>";
+				
              }
          }
      }
