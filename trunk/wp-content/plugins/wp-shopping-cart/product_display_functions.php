@@ -61,10 +61,21 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	
 	$_number = $product['id'];
 	$_description = nl2br(stripslashes($product['description']));
-	$_tags = nl2br(stripslashes($product['additional_description']));
 	$_size = $product['width']."px X ".$product['height']."px;";
 	$_author = $product['brand'];
 	$_name = $product['name'];
+
+
+	$_tags = nl2br(stripslashes($product['additional_description']));
+	$_tags_array = explode(',',$_tags);
+		//$i=0;
+		foreach ($_tags_array as $key => $value)
+		{
+			$_tags_array[$key] = "<a href=\'http://cartoonbank.ru/cb3/?page_id=29&cs=".trim($_tags_array[$key])."\'>".trim($_tags_array[$key])."</a>";
+		}
+	$_tags_imploded = implode(", ", $_tags_array);
+	$_tags = $_tags_imploded;
+
 
 	$_bigpicstrip = "<b>№&nbsp;".$_number."/".$_author."</b>";
 	$_bigpictext = "<b>Название: </b>" .$_name."<br><br><b>Стиль: </b> карикатура<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b> ".$_tags."<br><br><b>Размер изображения: </b> ".$_size;
