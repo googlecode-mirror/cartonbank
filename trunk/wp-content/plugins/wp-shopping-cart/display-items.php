@@ -531,9 +531,9 @@ $num = 1;
 				}
 				$output .= "</br></div>";
 
-echo "    <table id='productpage' border='3'>\n\r";
+echo "    <table id='productpage'>\n\r";
 echo "      <tr><td valign='top'>\n\r";
-echo "        <table id='itemlist'>\n\r";
+echo "        <table id='itemlist' style='width:200px;background-color:#FFFFFF;'>\n\r";
 echo "          <tr>\n\r";
 echo "            <td colspan='6' style='text-align: left;'>\n\r";
 $from_num = $offset+1;
@@ -554,7 +554,8 @@ echo "#";
 echo "            </td>\n\r";
 
 echo "            <td>\n\r";
-echo TXT_WPSC_IMAGE;
+//echo TXT_WPSC_IMAGE;
+
 echo "            </td>\n\r";
 
 echo "            <td>\n\r";
@@ -566,15 +567,16 @@ echo "            </td>\n\r";
 //echo "            </td>\n\r";
 
 echo "            <td>\n\r";
-echo TXT_WPSC_CATEGORY;
+//echo TXT_WPSC_CATEGORY;
 echo "            </td>\n\r";
 
 echo "            <td>\n\r";
-echo TXT_WPSC_EDIT;
+//echo TXT_WPSC_EDIT;
+echo "Ред.";
 echo "            </td>\n\r";
 
 echo "            <td>\n\r";
-echo "del";
+//echo "del";
 echo "            </td>\n\r";
 
 echo "          </tr>\n\r";
@@ -584,11 +586,11 @@ if($product_list != null)
     {
     echo "          <tr>\n\r";
 
-    echo "            <td>\n\r";
+    echo "            <td style='background-color:#DFEFCF;'>\n\r";
     echo $num+$offset;
     echo "            </td>\n\r";
 
-	echo "            <td>\n\r";
+	echo "            <td style='background-color:#DFEFCF;'>\n\r";
     $basepath = str_replace("/wp-admin", "" , getcwd());
 
     $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
@@ -602,24 +604,26 @@ if($product_list != null)
 		  }
     echo "            </td>\n\r";
     
-    echo "            <td style='font-size:10px;'>\n\r";
-    echo "".stripslashes($product['name'])."";
+    echo "            <td style='font-size:10px;background-color:#DFEFCF;'>\n\r";
+	echo "№ ".$product['id']." ";
+    echo "<b>".stripslashes($product['name'])."</b> (".$category_data[$product['category_id']].")";
     echo "            </td>\n\r";
 
     //echo "            <td>\n\r";
     //echo nzshpcrt_currency_display($product['price'], 1);
     //echo "            </td>\n\r";
     
-    echo "            <td style='font-size:10px;'>\n\r";
-    echo "".$category_data[$product['category_id']]."";
+    echo "            <td style='font-size:10px;background-color:#DFEFCF;'>\n\r";
+    //echo "".$category_data[$product['category_id']]."";
     echo "            </td>\n\r";
 
-    echo "            <td style='font-size:10px;'>\n\r";
+    echo "            <td style='font-size:10px;background-color:#DFEFCF;'>\n\r";
     echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'>".TXT_WPSC_EDIT."</a>";
-    echo "            </td>\n\r";
+    echo "<br><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>";
+	echo "            </td>\n\r";
 
 	echo "            <td style='font-size:10px;'>\n\r";
-    echo "<a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>";
+    //echo "<a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>";
     echo "            </td>\n\r";
     
     echo "          </tr>\n\r";
@@ -627,8 +631,11 @@ if($product_list != null)
     }
   }
 echo "        </table>\n\r";
-echo "      </td><td class='secondcol'>\n\r";
-echo "        <div id='productform' style='background-color:#CCFFFF;'>";
+echo "      </td><td class='secondcol' valign='top' style='width:370px;background-color:#FFFF99'>\n\r";
+?>
+<div style='color:#660066'><b>Это форма для отправки новой картинки и правки старой</b></div>
+<?
+echo "        <div id='productform' style='background-color:#FFFF99;'>";
 echo "<form method='POST'  enctype='multipart/form-data' name='editproduct$num'>";
 echo "        <table class='producttext'>\n\r";;    
 
