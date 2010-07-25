@@ -67,7 +67,7 @@ define('TXT_WPSC_SELECTACATEGORY', 'Выберите категорию');
 define('TXT_WPSC_SELECTABRAND', 'Выберите автора');
 define('TXT_WPSC_PRODUCTNAME', 'Имя картинки');
 define('TXT_WPSC_PRODUCTDESCRIPTION', 'Описание картинки (текстовое)');
-define('TXT_WPSC_ADDITIONALDESCRIPTION', 'Ключевые слова');
+define('TXT_WPSC_ADDITIONALDESCRIPTION', 'Ключевые слова, разделённые запятыми');
 define('TXT_WPSC_PRICE', 'Цена');
 define('TXT_WPSC_TAXALREADYINCLUDED', 'Налоги включены'); // this text has changed and needs updating
 define('TXT_WPSC_SPECIAL', 'Специальная цена'); // this text has changed and needs updating
