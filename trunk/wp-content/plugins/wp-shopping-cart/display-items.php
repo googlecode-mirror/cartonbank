@@ -4,7 +4,7 @@ $category_data = null;
 // add product
 if($_POST['submit_action'] == 'add') {  
   $basepath = str_replace("/wp-admin", "" , getcwd());
-  $basepath = str_replace("\wp-admin", "" , getcwd());
+  $basepath = str_replace("\wp-admin", "" , $basepath);
 
   $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
   $product_images = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
@@ -16,6 +16,9 @@ if($_POST['submit_action'] == 'add') {
 		  //ales default upload
 		if(!is_dir($product_images))
 		  {
+
+		  exit("<pre>".$product_images."<br>".print_r($_POST,true)."</pre>");
+	  
 		  mkdir($product_images);
 		  }
 		if(function_exists("getimagesize"))
