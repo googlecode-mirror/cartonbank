@@ -1640,6 +1640,7 @@ function nzshpcrt_getproductform($prodid)
       {
       $checked = "";
       }
+/*
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
   $output .= TXT_WPSC_LIMITED_STOCK.": ";
@@ -1659,7 +1660,7 @@ function nzshpcrt_getproductform($prodid)
   $output .= "              </div>\n\r";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
-  
+*/
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
   $output .= TXT_WPSC_CATEGORY.": ";
@@ -1678,90 +1679,90 @@ function nzshpcrt_getproductform($prodid)
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   
-  
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_DISPLAY_FRONT_PAGE.": ";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
-  if($product['display_frontpage'] == 1)
-    {
-    $output .= "<input type='checkbox' checked='true' value='yes' name='display_frontpage'/>";
-    }
-    else
-      {
-      $output .= "<input type='checkbox' value='yes' name='display_frontpage'/>";
-      }
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+/*  
+	  $output .= "          <tr>\n\r";
+	  $output .= "            <td>\n\r";
+	  $output .= TXT_WPSC_DISPLAY_FRONT_PAGE.": ";
+	  $output .= "            </td>\n\r";
+	  $output .= "            <td>\n\r";
+	  if($product['display_frontpage'] == 1)
+		{
+		$output .= "<input type='checkbox' checked='true' value='yes' name='display_frontpage'/>";
+		}
+		else
+		  {
+		  $output .= "<input type='checkbox' value='yes' name='display_frontpage'/>";
+		  }
+	  $output .= "            </td>\n\r";
+	  $output .= "          </tr>\n\r";
 
-  $output .= "    <tr>\n\r";
-  $output .= "      <td colspan='2'>\n\r";
-  $output .= "        <strong class='form_group'>".TXT_WPSC_SHIPPING_DETAILS."</strong>\n\r";
-  $output .= "      </td>\n\r";
-  $output .= "    </tr>\n\r";
-  
-  $output .= "    <tr>\n\r";
-  $output .= "      <td>";
-  $output .= TXT_WPSC_LOCAL_PNP;
-  $output .= "      </td>\n\r";
-  $output .= "      <td>\n\r";
-  $output .= "        <input type='text' size='10' name='pnp' value='".$product['pnp']."' />\n\r";
-  $output .= "      </td>\n\r";
-  $output .= "    </tr>\n\r";
-  
-  $output .= "    <tr>\n\r";
-  $output .= "      <td>";
-  $output .= TXT_WPSC_INTERNATIONAL_PNP;
-  if($product['international_pnp'] == 0)
-    {
-    $product['international_pnp'] = "0.00";
-    }
-  $output .= "      </td>\n\r";
-  $output .= "      <td>\n\r";
-  $output .= "        <input type='text' size='10' name='international_pnp' value='".$product['international_pnp']."' />\n\r";
-  $output .= "      </td>\n\r";
-  $output .= "    </tr>\n\r";
-    
-  $output .= "          <tr>\n\r";
-  $output .= "            <td colspan='2'>\n\r";
-  $output .= "<br /><strong class='form_group'>".TXT_WPSC_PRODUCT_VARS."</strong>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
-  
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_ADD_VAR.": ";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= variationslist();
-  //$output .= variationslist();
-  $output .= "<div id='edit_product_variations'>";
+	  $output .= "    <tr>\n\r";
+	  $output .= "      <td colspan='2'>\n\r";
+	  $output .= "        <strong class='form_group'>".TXT_WPSC_SHIPPING_DETAILS."</strong>\n\r";
+	  $output .= "      </td>\n\r";
+	  $output .= "    </tr>\n\r";
+	  
+	  $output .= "    <tr>\n\r";
+	  $output .= "      <td>";
+	  $output .= TXT_WPSC_LOCAL_PNP;
+	  $output .= "      </td>\n\r";
+	  $output .= "      <td>\n\r";
+	  $output .= "        <input type='text' size='10' name='pnp' value='".$product['pnp']."' />\n\r";
+	  $output .= "      </td>\n\r";
+	  $output .= "    </tr>\n\r";
+	  
+	  $output .= "    <tr>\n\r";
+	  $output .= "      <td>";
+	  $output .= TXT_WPSC_INTERNATIONAL_PNP;
+	  if($product['international_pnp'] == 0)
+		{
+		$product['international_pnp'] = "0.00";
+		}
+	  $output .= "      </td>\n\r";
+	  $output .= "      <td>\n\r";
+	  $output .= "        <input type='text' size='10' name='international_pnp' value='".$product['international_pnp']."' />\n\r";
+	  $output .= "      </td>\n\r";
+	  $output .= "    </tr>\n\r";
+		
+	  $output .= "          <tr>\n\r";
+	  $output .= "            <td colspan='2'>\n\r";
+	  $output .= "<br /><strong class='form_group'>".TXT_WPSC_PRODUCT_VARS."</strong>";
+	  $output .= "            </td>\n\r";
+	  $output .= "          </tr>\n\r";
+	  
+	  $output .= "          <tr>\n\r";
+	  $output .= "            <td>\n\r";
+	  $output .= TXT_WPSC_ADD_VAR.": ";
+	  $output .= "            </td>\n\r";
+	  $output .= "            <td>\n\r";
+	  $output .= variationslist();
+	  //$output .= variationslist();
+	  $output .= "<div id='edit_product_variations'>";
 
-  $output .= "</div>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
-    
-  $check_variation_values = $wpdb->get_results("SELECT COUNT(*) as `count` FROM `".$wpdb->prefix."variation_values_associations` WHERE `product_id` = '".$product['id']."'",ARRAY_A);
-  $check_variation_value_count = $check_variation_values[0]['count'];
-  if($check_variation_value_count > 0)
-    {
-    $output .= "          <tr>\n\r";
-    $output .= "            <td>\n\r";
-    $output .= TXT_WPSC_EDIT_VAR.": ";
-    $output .= "            </td>\n\r";
-    $output .= "            <td>\n\r";
-    $variations_procesor = new nzshpcrt_variations;
-    $output .= $variations_procesor->display_attached_variations($product['id']);
-    $output .= "            </td>\n\r";
-    $output .= "          </tr>\n\r";
-    }
-  $output .= "          <tr>\n\r";
-  $output .= "            <td colspan='2'>\n\r";
-  $output .= "<br /><strong class='form_group'>".TXT_WPSC_PRODUCTIMAGE."</strong>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
- 
+	  $output .= "</div>";
+	  $output .= "            </td>\n\r";
+	  $output .= "          </tr>\n\r";
+		
+	  $check_variation_values = $wpdb->get_results("SELECT COUNT(*) as `count` FROM `".$wpdb->prefix."variation_values_associations` WHERE `product_id` = '".$product['id']."'",ARRAY_A);
+	  $check_variation_value_count = $check_variation_values[0]['count'];
+	  if($check_variation_value_count > 0)
+		{
+		$output .= "          <tr>\n\r";
+		$output .= "            <td>\n\r";
+		$output .= TXT_WPSC_EDIT_VAR.": ";
+		$output .= "            </td>\n\r";
+		$output .= "            <td>\n\r";
+		$variations_procesor = new nzshpcrt_variations;
+		$output .= $variations_procesor->display_attached_variations($product['id']);
+		$output .= "            </td>\n\r";
+		$output .= "          </tr>\n\r";
+		}
+	  $output .= "          <tr>\n\r";
+	  $output .= "            <td colspan='2'>\n\r";
+	  $output .= "<br /><strong class='form_group'>".TXT_WPSC_PRODUCTIMAGE."</strong>";
+	  $output .= "            </td>\n\r";
+	  $output .= "          </tr>\n\r";
+*/
   if(function_exists("getimagesize"))
     {
     if($product['image'] != '')
@@ -1802,7 +1803,7 @@ function nzshpcrt_getproductform($prodid)
       $output .= "<input type='radio' name='image_resize' value='1' id='image_resize1' class='image_resize' /> <label for='image_resize1'>".TXT_WPSC_USEDEFAULTHEIGHTANDWIDTH." (".get_option('product_image_height') ."x".get_option('product_image_width').")";
       $output .= "    </td>";
       $output .= "  </tr>";
-
+/*
       $output .= "  <tr>";
       $output .= "    <td>";
       $output .= "
@@ -1813,24 +1814,29 @@ function nzshpcrt_getproductform($prodid)
       <input onclick='checkimageresize()' id='image_width' type='text' size='4' name='width' value='' /><label for='image_resize2'>".TXT_WPSC_PXWIDTH."</label>";
       $output .= "    </td>";
       $output .= "  </tr>";
+*/
       $output .= "</table>";
       $output .= "    </td>";
 
       $output .= "    <td>";
       //exit($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']);
-      if(file_exists($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']))
-        {
-        $image_location = "product_images/".$product['image'];
-        }
-        else
-          {
-          $image_location = "images/".$product['image'];
-          }
-      
-      $image_link = "index.php?productid=".$product['id']."&width=".$image_size[0]."&height=".$image_size[1]."";
-      $output .= "<a id='preview_link' onmouseover='update_preview_url(".$product['id'].");' href='".$image_link."' rel='lightbox' class='lightbox_links'><img id='previewimage' src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/$image_location' alt='".TXT_WPSC_PREVIEW."' title='".TXT_WPSC_PREVIEW."' /></a>";
-      //<div id='preview_button'><a id='preview_button' href='#'>".TXT_WPSC_PREVIEW."</a></div>
-       // onclick='return display_preview_image(".$product['id'].")' 
+
+		if(file_exists($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']))
+				{
+				$image_location = "product_images/".$product['image'];
+				}
+				else
+				  {
+				  $image_location = "images/".$product['image'];
+				  }
+		$preview_location = "product_images/".$product['image'];
+		$icon_location = "images/".$product['image'];
+
+		$m_image_link = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/".$preview_location;
+
+		$output .= "<a href='".$m_image_link."' target=_blank><img id='previewimage' src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/$icon_location' alt='".TXT_WPSC_PREVIEW."' title='".TXT_WPSC_PREVIEW."' /></a>";
+
+
       $output .= "    </td>";
       $output .= "  </tr>";
 
