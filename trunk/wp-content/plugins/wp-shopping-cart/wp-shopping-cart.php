@@ -1587,7 +1587,7 @@ function nzshpcrt_getproductform($prodid)
       {
       $checked = "";
       }
-
+/*
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<input id='tax' type='checkbox' name='notax' value='yes' $checked />&nbsp;<label for='tax'>".TXT_WPSC_TAXALREADYINCLUDED."</label>";
@@ -1631,7 +1631,10 @@ function nzshpcrt_getproductform($prodid)
 
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r"; 
-  
+  */
+
+/*
+
   if($product['quantity_limited'] == 1)
     {
     $checked = "checked='true'";
@@ -1640,7 +1643,6 @@ function nzshpcrt_getproductform($prodid)
       {
       $checked = "";
       }
-/*
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
   $output .= TXT_WPSC_LIMITED_STOCK.": ";
