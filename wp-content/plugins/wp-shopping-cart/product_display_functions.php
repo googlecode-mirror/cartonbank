@@ -13,11 +13,15 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	{
 		if ($_GET['brand'] == '')
 		{
-		$sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` $group_sql ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
+        $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`name` AS brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
+        
+		//$sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` $group_sql ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
 		}
 		else
 		{ 
-		$sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` $group_sql ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
+        $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
+        
+		//$sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` $group_sql ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
 		}
 	}
 
@@ -64,7 +68,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	$_size = $product['width']."px X ".$product['height']."px;";
 	$_author = $product['brand'];
 	$_name = $product['name'];
-
+    $_category = $product['kategoria'];
 
 	$_tags = nl2br(stripslashes($product['additional_description']));
 	$_tags_array = explode(',',$_tags);
@@ -78,7 +82,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 
 
 	$_bigpicstrip = "<b>№&nbsp;".$_number."/".$_author."</b>";
-	$_bigpictext = "<b>Название: </b>" .$_name."<br><br><b>Стиль: </b> карикатура<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b> ".$_tags."<br><br><b>Размер изображения: </b> ".$_size;
+	$_bigpictext = "<b>Название: </b>" .$_name."<br><br><b>Категория: </b> ".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b> ".$_tags."<br><br><b>Размер изображения: </b> ".$_size;
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
 
 $_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form onsubmit=\'submitform(this);return false;\' action=\'http://cartoonbank.ru/cb3/?page_id=29&amp;category=\' method=\'POST\'>Выбор лицензии: <input type=\'radio\' name=\'\'>ограниченная <input type=\'radio\' name=\'\'>стандартная <input type=\'radio\' name=\'\'>расширенная&nbsp;&nbsp;&nbsp;&nbsp;<input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'>Купить: <input border=\'0\' type=\'image\' value=\'В корзину\' name=\'Buy\' src=\'http://cartoonbank.ru/cb3/img/cart.gif\'></form></div>";
