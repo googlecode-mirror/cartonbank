@@ -13,7 +13,10 @@ if($_POST['submit_action'] == 'add') {
   $image = '';
 
   if($_FILES['file']['name'] != null)  {
-		  //ales default upload
+      //rename the file  
+      $_FILES['file']['name'] = com_create_guid().$_FILES['file']['name'];
+		//$_FILES['file']['name'] = 'blah-blah'.$_FILES['file']['name'];
+        //ales default upload
 		if(!is_dir($product_images))
 		  {
 
