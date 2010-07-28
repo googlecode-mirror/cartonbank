@@ -344,6 +344,35 @@ function createNavigation(){
 	echo '</div>';
 }
 
+function rus2translit($string){  
+    $converter = array(  
+        'а' => 'a',   'б' => 'b',   'в' => 'v',  
+        'г' => 'g',   'д' => 'd',   'е' => 'e',  
+        'ё' => 'e',   'ж' => 'zh',  'з' => 'z',  
+        'и' => 'i',   'й' => 'y',   'к' => 'k',  
+        'л' => 'l',   'м' => 'm',   'н' => 'n',  
+        'о' => 'o',   'п' => 'p',   'р' => 'r',  
+        'с' => 's',   'т' => 't',   'у' => 'u',  
+        'ф' => 'f',   'х' => 'h',   'ц' => 'c',  
+        'ч' => 'ch',  'ш' => 'sh',  'щ' => 'sch',  
+        'ь' => "'",  'ы' => 'y',   'ъ' => "'",  
+        'э' => 'e',   'ю' => 'yu',  'я' => 'ya',  
+  
+        'А' => 'A',   'Б' => 'B',   'В' => 'V',  
+        'Г' => 'G',   'Д' => 'D',   'Е' => 'E',  
+        'Ё' => 'E',   'Ж' => 'Zh',  'З' => 'Z',  
+        'И' => 'I',   'Й' => 'Y',   'К' => 'K',  
+        'Л' => 'L',   'М' => 'M',   'Н' => 'N',  
+        'О' => 'O',   'П' => 'P',   'Р' => 'R',  
+        'С' => 'S',   'Т' => 'T',   'У' => 'U',  
+        'Ф' => 'F',   'Х' => 'H',   'Ц' => 'C',  
+        'Ч' => 'Ch',  'Ш' => 'Sh',  'Щ' => 'Sch',  
+        'Ь' => "'",  'Ы' => 'Y',   'Ъ' => "'",  
+        'Э' => 'E',   'Ю' => 'Yu',  'Я' => 'Ya',  
+    );  
+    return strtr($string, $converter);  
+} 
+
 function get_imgfiles ($dir = ''){
 	global $gallery_root, $currentdir;
 
@@ -358,6 +387,45 @@ function get_imgfiles ($dir = ''){
 		// Removing eventual trailing slash
 		$category = ($dir{strlen($dir)-1} == '/')? substr($dir, 0, (strlen($dir) -1)) : $dir;
 	}
+
+	// each start we will be scan and transliterate
+	// Warning! Source file should be saved in Windows-1251 encoding!
+	$notSupportFilesFound = false;
+        $filesList = array();
+	if (file_exists($location)){
+		if ($dir_contenta = opendir($location)) {
+			while (false !== ($dir_filea = readdir($dir_contenta))) {
+				if (is_readable($location.'/'.$dir_filea) &&
+  					eregi('^.*\.(jpg|gif|png|jpeg)$', $dir_filea))
+				{
+					$result = rename($location.'/'.$dir_filea, $location.'/'.'~'.$dir_filea.'~'); 
+					$purified = rus2translit($dir_filea);  
+					$result = rename($location.'/'.'~'.$dir_filea.'~', $location.'/'.$purified);
+				} 
+				else
+				{
+					if ($dir_filea != '.' && $dir_filea != '..' && !is_dir($location.'/'.$dir_filea))
+					{
+						$notSupportFilesFound = true;
+						$filesList[] = $dir_filea; 
+					}
+				} 
+			}
+		}
+	}
+	// Output error message & delete files
+	if ($notSupportFilesFound)
+	{
+		echo iconv('Windows-1251', 'UTF-8', "<span style='color:red'>Вы загрузили неподдерживаемые типы файлов, отличные от gif, jpeg и png. Эти файлы были удалены.</br>
+		Исправьте ошибку и повторите загрузку.</br></span> 
+		Список удаленных файлов:</br>");
+		foreach($filesList as $filex){  
+			echo '<span style="font-weight:bold">'.$filex.'</span></br>';
+			unlink($location.'/'.$filex);
+		}
+        
+	}
+	// end  
 
 	$folders = explode('/', $category);
 	$temp_category = $folders[count($folders)-1];
