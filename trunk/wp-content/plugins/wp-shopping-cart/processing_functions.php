@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 function nzshpcrt_overall_total_price($country_code = null, $for_display = false)
     {
     /*
