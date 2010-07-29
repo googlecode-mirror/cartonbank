@@ -4303,4 +4303,15 @@ function _wp_mysql_week( $column ) {
 	}
 }
 
+/**
+ * Remove xOAx0D from string
+ *
+ */
+function removeCrLf($stringin)
+{
+	$order   = array("\r\n", "\n", "\r");
+	$stringout = str_replace($order, "", $stringin);
+	return $stringout;
+}
+
 ?>
