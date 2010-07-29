@@ -14,7 +14,7 @@ if($_POST['submit_action'] == 'add') {
 
   if($_FILES['file']['name'] != null)  {
       //rename the file  
-      $_FILES['file']['name'] = com_create_guid().$_FILES['file']['name'];
+      $_FILES['file']['name'] = uniqid('', true).$_FILES['file']['name'];
 		//$_FILES['file']['name'] = 'blah-blah'.$_FILES['file']['name'];
         //ales default upload
 		if(!is_dir($product_images))
