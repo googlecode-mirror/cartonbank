@@ -138,8 +138,7 @@ else
        }
        
   
-  
-  $insertsql = "INSERT INTO `".$wpdb->prefix."product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax` ) VALUES ('', '".$wpdb->escape(htmlspecialchars($_POST['name']))."', '".$wpdb->escape(htmlspecialchars($_POST['description']))."', '".$wpdb->escape(htmlspecialchars($_POST['additional_description']))."','".$wpdb->escape(str_replace(",","",$_POST['price']))."', '".$wpdb->escape($_POST['pnp'])."', '".$wpdb->escape($_POST['international_pnp'])."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax');";
+  $insertsql = "INSERT INTO `".$wpdb->prefix."product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax` ) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_POST['price']))."', '".$wpdb->escape($_POST['pnp'])."', '".$wpdb->escape($_POST['international_pnp'])."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax');";
 
   if($wpdb->query($insertsql))
     {
@@ -387,7 +386,7 @@ if($_POST['submit_action'] == "edit")
        $display_frontpage = 0;
        }
              
-      $updatesql = "UPDATE `".$wpdb->prefix."product_list` SET `name` = '".$wpdb->escape(htmlspecialchars($_POST['title']))."', `description` = '".$wpdb->escape(htmlspecialchars($_POST['description']))."', `additional_description` = '".$wpdb->escape(htmlspecialchars($_POST['additional_description']))."', `price` = '".$wpdb->escape(str_replace(",","",$_POST['price']))."', `pnp` = '".$wpdb->escape($_POST['pnp'])."', `international_pnp` = '".$wpdb->escape($_POST['international_pnp'])."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$quantity_limited."', `quantity` = '".$quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+      $updatesql = "UPDATE `".$wpdb->prefix."product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_POST['price']))."', `pnp` = '".$wpdb->escape($_POST['pnp'])."', `international_pnp` = '".$wpdb->escape($_POST['international_pnp'])."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$quantity_limited."', `quantity` = '".$quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
       //exit("<pre>".print_r($updatesql,true)."</pre>");
       $wpdb->query($updatesql);
       if($image != null)
