@@ -389,6 +389,9 @@ if($_POST['submit_action'] == "edit")
        $display_frontpage = 0;
        }
 
+	$visible = '0';
+	if ($_POST['visible'] == 'on')
+		$visible = '1'; 
 
       $updatesql = "UPDATE `".$wpdb->prefix."product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_POST['price']))."', `pnp` = '".$wpdb->escape($_POST['pnp'])."', `international_pnp` = '".$wpdb->escape($_POST['international_pnp'])."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$quantity_limited."', `quantity` = '".$quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
       //exit("<pre>".print_r($updatesql,true)."</pre>");
