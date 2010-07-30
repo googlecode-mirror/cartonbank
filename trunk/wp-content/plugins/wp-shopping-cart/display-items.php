@@ -617,7 +617,7 @@ if($product_list != null)
       }
       else
         {
-					echo "<br><img src='http://".$_SERVER['SERVER_NAME']."/cb3/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='35' height='35'  /><br>";
+					echo "<br><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='35' height='35'  /><br>";
 		  }
     echo "            </td>\n\r";
     
@@ -873,7 +873,8 @@ function al_watermark($path)
 	if($filetype == ".jpg")  $image = @imagecreatefromjpeg($imagesource);  
 	if($filetype == ".png")  $image = @imagecreatefrompng($imagesource);  
 	if (!$image) die();
-	$watermark = @imagecreatefromgif('/homepages/35/d89900836/htdocs/cb3/wp-content/plugins/wp-shopping-cart/images/watermark.gif');
+	$watermarkpath = $basepath."/wp-content/plugins/wp-shopping-cart/images/watermark.gif";
+	$watermark = @imagecreatefromgif($watermarkpath);
 	$imagewidth = imagesx($image);
 	$imageheight = imagesy($image);  
 	$watermarkwidth =  imagesx($watermark);

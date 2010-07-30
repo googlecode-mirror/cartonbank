@@ -1,11 +1,11 @@
 <br>
 Эта страница зарезервирована под описание правил работы с банком.
 <p>
-<a href="http://cartoonbank.ru/cb3/?page_id=79" target=_blank>Правила работы с Банком для участников проекта.</a> 
+<a href="<?get_option('siteurl');?>/?page_id=79" target=_blank>Правила работы с Банком для участников проекта.</a> 
 </p>
 
 <p>
-<a href="http://cartoonbank.ru/cb3/?page_id=229" target=_blank>Отправка изображения через форму.</a> 
+<a href="<?get_option('siteurl');?>/?page_id=229" target=_blank>Отправка изображения через форму.</a> 
 </p>
 
 <!-- <p>
