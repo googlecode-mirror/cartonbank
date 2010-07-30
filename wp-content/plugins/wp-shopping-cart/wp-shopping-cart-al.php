@@ -744,9 +744,9 @@ require_once('admin.js');
 ?>
 /* custom admin functions end*/
 </script>
-<script src="http://ant.cartoonist.name/cb3/wp-content/plugins/wp-shopping-cart/js/prototype.js" language='JavaScript' type="text/javascript"></script>
-<script src="http://bat.cartoonist.name/cb3/wp-content/plugins/wp-shopping-cart/js/scriptaculous.js?load=effects" language='JavaScript' type="text/javascript"></script>
-<script src="http://cat.cartoonist.name/cb3/wp-content/plugins/wp-shopping-cart/js/lightbox.js" language='JavaScript' type="text/javascript"></script>
+<script src="<?get_option('siteurl');?>/wp-content/plugins/wp-shopping-cart/js/prototype.js" language='JavaScript' type="text/javascript"></script>
+<script src="<?get_option('siteurl');?>/wp-content/plugins/wp-shopping-cart/js/scriptaculous.js?load=effects" language='JavaScript' type="text/javascript"></script>
+<script src="<?get_option('siteurl');?>/wp-content/plugins/wp-shopping-cart/js/lightbox.js" language='JavaScript' type="text/javascript"></script>
 <?php
 	}
 

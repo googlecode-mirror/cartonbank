@@ -2531,13 +2531,13 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
   switch(get_option('cart_location'))
     {
     case 1:
-    $output .= "<h2>".TXT_WPSC_SHOPPINGCART."</h2>&nbsp;<img src='http://cartoonbank.ru/cb3/img/cart.gif'>";
+    $output .= "<h2>".TXT_WPSC_SHOPPINGCART."</h2>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
     $output .="<span id='alt_loadingindicator'><img id='alt_loadingimage' src='". get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/indicator.gif' alt='Loading' title='Loading' /> ".TXT_WPSC_UDPATING."...</span></strong><br />";
     $spacing = "<br/><br />";
     break;
     
     case 3:
-    $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>&nbsp;<img src='http://cartoonbank.ru/cb3/img/cart.gif'>";
+    $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
     $spacing = "<br/><br />";
     break;
     
@@ -2546,7 +2546,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     break;
     
     default:
-    $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>&nbsp;<img src='http://cartoonbank.ru/cb3/img/cart.gif'>";
+    $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
     $spacing = "<br/><br />";
     break;
     }  

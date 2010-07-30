@@ -198,7 +198,8 @@ function nzshpcrt_currency_display($price_in, $tax_status, $nohtml = false, $id 
       }
     }
 
-  $price_out =  number_format($price_in, 2, '.', '');
+// ales commented - crashes the site
+//$price_out =  number_format($price_in, 2, '.', '');
 
   if($currency_data[0]['symbol'] != '')
     {    
