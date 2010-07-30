@@ -136,16 +136,9 @@ else
        {
        $display_frontpage = 0;
        }
-   if($_POST['colored']==1)
-   {
-       $color = 1;
-   }
-   else
-   {
-       $color = 0;
-   }
+       
   
-  $insertsql = "INSERT INTO `".$wpdb->prefix."product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, 'color' ) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_POST['price']))."', '".$wpdb->escape($_POST['pnp'])."', '".$wpdb->escape($_POST['international_pnp'])."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax','$color');";
+  $insertsql = "INSERT INTO `".$wpdb->prefix."product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax` ) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_POST['price']))."', '".$wpdb->escape($_POST['pnp'])."', '".$wpdb->escape($_POST['international_pnp'])."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax');";
 
   if($wpdb->query($insertsql))
     {
@@ -392,17 +385,8 @@ if($_POST['submit_action'] == "edit")
        {
        $display_frontpage = 0;
        }
-   
-   if($_POST['colored']==1)
-       {
-           $color = 1;
-       }
-       else
-       {
-           $color = 0;
-       }
-                 
-      $updatesql = "UPDATE `".$wpdb->prefix."product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_POST['price']))."', `pnp` = '".$wpdb->escape($_POST['pnp'])."', `international_pnp` = '".$wpdb->escape($_POST['international_pnp'])."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$quantity_limited."', `quantity` = '".$quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `color`='$color'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+             
+      $updatesql = "UPDATE `".$wpdb->prefix."product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_POST['price']))."', `pnp` = '".$wpdb->escape($_POST['pnp'])."', `international_pnp` = '".$wpdb->escape($_POST['international_pnp'])."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$quantity_limited."', `quantity` = '".$quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
       //exit("<pre>".print_r($updatesql,true)."</pre>");
       $wpdb->query($updatesql);
       if($image != null)
@@ -448,8 +432,6 @@ if(is_numeric($_GET['deleteid']))
  */
 
 $items_on_page = 10;
-
-
 if(is_numeric($_GET['offset']))
 	{
 		$offset = $_GET['offset'];
@@ -458,35 +440,27 @@ if(is_numeric($_GET['offset']))
 	{
 		$offset = 0;
 	}
-if($_GET['color'] == "0")
-{
-      $onlyblackandwhite = " AND `wp_product_list`.`color`='0' ";
-}
-else
-{
-    $onlyblackandwhite = '';
-}
-    
+
 if(is_numeric($_GET['catid']))
   {
   // if we are getting items from only one category
-  $sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$onlyblackandwhite." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
+  $sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
-   $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$onlyblackandwhite." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."'",ARRAY_A);
+   $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."'",ARRAY_A);
    }
    else if (is_numeric($_GET['brand']))
    {
 		// if we are getting items from only one brand
-		$sql = "SELECT `wp_product_list`.* FROM `wp_product_list`  WHERE `wp_product_list`.`active`='1' ".$onlyblackandwhite." AND `wp_product_list`.`brand`='".$_GET['brand']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
+		$sql = "SELECT `wp_product_list`.* FROM `wp_product_list`  WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`brand`='".$_GET['brand']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
-		$category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list` WHERE ".$onlyblackandwhite." `wp_product_list`.`active`='1' AND `wp_product_list`.`brand`='".$_GET['brand']."'",ARRAY_A);
+		$category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`brand`='".$_GET['brand']."'",ARRAY_A);
    }
   else
     {
     // if not, get everything that is not deleted (denoted by the active column, 1 = present, 0 = deleted, no real deletion because that would screw up the product log)
-    $sql = "SELECT `wp_product_list`.*, `wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$onlyblackandwhite." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
+    $sql = "SELECT `wp_product_list`.*, `wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
-	$category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$onlyblackandwhite." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`;",ARRAY_A);
+	$category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`;",ARRAY_A);
 
     }
 $product_list = $wpdb->get_results($sql,ARRAY_A) ;
@@ -510,7 +484,6 @@ $product_list = $wpdb->get_results($sql,ARRAY_A) ;
 
 №:<input type="text" value="000" id='editpicid' style="width:60px;">
 <a href="#" class="button add-new-h2" onclick="var editpicid=document.getElementById('editpicid').value;filleditform(editpicid);return false;">Редактировать по номеру</a>
-<a href="../wp-admin/admin.php?page=wp-shopping-cart/display-items.php&color=0" class="button add-new-h2">Все чёрно-белые</a>
 
   <script language='javascript' type='text/javascript'>
 function conf()
@@ -759,16 +732,6 @@ if(function_exists('add_multiple_image_form'))
       </td>
     </tr>
 
-    <tr>
-      <td>
-        цвет:
-      </td>
-      <td>
-        <input id='colored' type='checkbox' name='colored' value='yes' $checked />&nbsp;<label for='tax'>цветная</label>
-      </td>
-    </tr>
-
-    
     <tr>
       <td>
       </td>

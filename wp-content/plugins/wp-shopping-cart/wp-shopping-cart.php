@@ -1568,10 +1568,8 @@ function nzshpcrt_getproductform($prodid)
   $output .= "            <td>\n\r";
   $output .= "<textarea name='additional_description' cols='40' rows='2' >".stripslashes($product['additional_description'])."</textarea>";
   $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";         
+  $output .= "          </tr>\n\r";
   
-  
-/*   
   $output .= "          <tr>\n\r";
   $output .= "            <td rowspan='2'>\n\r";
   $output .= TXT_WPSC_PRICE.": ";
@@ -1581,9 +1579,6 @@ function nzshpcrt_getproductform($prodid)
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
-
-  
-  
   if($product['notax'] == 1)
     {
     $checked = "checked='true'";
@@ -1592,7 +1587,7 @@ function nzshpcrt_getproductform($prodid)
       {
       $checked = "";
       }
-
+/*
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<input id='tax' type='checkbox' name='notax' value='yes' $checked />&nbsp;<label for='tax'>".TXT_WPSC_TAXALREADYINCLUDED."</label>";
@@ -1685,25 +1680,6 @@ function nzshpcrt_getproductform($prodid)
   $output .= brandslist($product['brand']);
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
-
-  
-  if($product['color'] == '1')
-    {
-    $checked = "checked='true'";
-    }
-  else
-      {
-      $checked = "";
-      }
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "            цвет:\n\r";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "<input id='colored' type='checkbox' name='colored' value='yes' $checked />&nbsp;<label for='tax'>цвет</label>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
-
   
 /*  
 	  $output .= "          <tr>\n\r";

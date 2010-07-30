@@ -1332,9 +1332,7 @@ function nzshpcrt_getproductform($prodid)
   $output .= "<input type='text' name='title' value='".stripslashes($product['name'])."' />";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
-?>
-666
-<?  
+  
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
   $output .= TXT_WPSC_PRODUCTDESCRIPTION.": ";
@@ -2322,18 +2320,18 @@ function al_your_download_limit(){
 			case 7:
 			case 8:
 			case 9:
-				return "<br><br>Ваш лимит скачивания:<br>".$limit." картинок (оплачено)";
+				return "<br><br>Р’Р°С€ Р»РёРјРёС‚ СЃРєР°С‡РёРІР°РЅРёСЏ:<br>".$limit." РєР°СЂС‚РёРЅРѕРє (РѕРїР»Р°С‡РµРЅРѕ)";
 				break;
 			case 1:
-				return "<br><br>Ваш лимит скачивания:<br>".$limit." картинка (оплачено)";
+				return "<br><br>Р’Р°С€ Р»РёРјРёС‚ СЃРєР°С‡РёРІР°РЅРёСЏ:<br>".$limit." РєР°СЂС‚РёРЅРєР° (РѕРїР»Р°С‡РµРЅРѕ)";
 				break;
 			case 2:
 			case 3:
-				return "<br><br>Ваш лимит скачивания:<br>".$limit." картинки (оплачено)";
+				return "<br><br>Р’Р°С€ Р»РёРјРёС‚ СЃРєР°С‡РёРІР°РЅРёСЏ:<br>".$limit." РєР°СЂС‚РёРЅРєРё (РѕРїР»Р°С‡РµРЅРѕ)";
 				break;
 			}
 
-			//return "<br><br>Ваш лимит скачивания:<br>".$limit." картинок";
+			//return "<br><br>Р’Р°С€ Р»РёРјРёС‚ СЃРєР°С‡РёРІР°РЅРёСЏ:<br>".$limit." РєР°СЂС‚РёРЅРѕРє";
 		}
 	}
 }
