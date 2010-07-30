@@ -1569,16 +1569,26 @@ function nzshpcrt_getproductform($prodid)
   $output .= "<textarea name='additional_description' cols='40' rows='2' >".stripslashes($product['additional_description'])."</textarea>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
+
+$visible = "";
+if ($product['visible'] == '1')
+	$visible = " checked='checked'";
+
+
   
+   
   $output .= "          <tr>\n\r";
-  $output .= "            <td rowspan='2'>\n\r";
-  $output .= TXT_WPSC_PRICE.": ";
+  $output .= "            <td>\n\r";
+  $output .= "Отображать в магазине:";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  //$output .= "<input type='text' name='price' size='10' value='".number_format($product['price'], 2, '.', '')."' />";
+  $output .= "<input type='checkbox' name='visible'".$visible."/>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
-
+  
+/*
+  
+  
   if($product['notax'] == 1)
     {
     $checked = "checked='true'";

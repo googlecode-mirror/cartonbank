@@ -11,7 +11,7 @@ function nszhpcrt_homepage_products($content = '')
       {
       $seperator ="&amp;";
       }
-  $sql = "SELECT * FROM `".$wpdb->prefix."product_list` WHERE `display_frontpage` IN('1') ORDER BY `id` DESC";
+  $sql = "SELECT * FROM `".$wpdb->prefix."product_list` WHERE `display_frontpage` IN('1')  AND `visible`='1' ORDER BY `id` DESC";
   $product_list = $wpdb->get_results($sql,ARRAY_A);
     
   $output = "<div id='homepage_products'>\n\r";
