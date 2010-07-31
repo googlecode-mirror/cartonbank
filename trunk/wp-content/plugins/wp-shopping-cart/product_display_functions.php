@@ -392,6 +392,7 @@ function product_display_default($product_list, $group_type, $group_sql = '', $s
 function single_product_display($product_id)
   {
   global $wpdb;
+  $output = null;
   $siteurl = get_option('siteurl');
   if(get_option('permalink_structure') != '')
     {
@@ -411,11 +412,12 @@ function single_product_display($product_id)
     {
     //$output .= "<strong class='cattitles'>".$product_list[0]['name']."</strong>"; 
     $output .= "<table class='productdisplay'>";
+	$num = 0;
     foreach((array)$product_list as $product)
       {
       $num++;
       $output .= "<tr class='productdisplay'>";
-      if($category_data[0]['fee'] == 0)
+      if(isset($category_data[0]['fee']) and $category_data[0]['fee'] == 0)
         {
         $output .= "<td class='imagecol' style='vertical-align: top;'>";
         if(get_option('show_thumbnails') == 1)
@@ -441,8 +443,19 @@ function single_product_display($product_id)
       $output .= "<td style='productdisplay'>";
 	  $output .= "<div class='producttext'><u>Автор:</u><br>".$product_list[0]['artist']."<br>";
 	  $output .= "<u>Название:</u><br>".$product_list[0]['name'];
-      $output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_GET['category']."' onsubmit='submitform(this);return false;' >";
-      $output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
+      
+	  if (isset($_GET['category']))
+	  {
+		  $cate = $_GET['category'];
+	  }
+	  else
+	  {
+		  $cate = '';
+	  }
+
+	  $output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$cate."' onsubmit='submitform(this);return false;' >";
+      
+	  $output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
       $imagedir = ABSPATH."wp-content/plugins/wp-shopping-cart/product_images/";
       if(($product['image'] != '') && (file_exists($imagedir.$product['image']) === true) && function_exists("getimagesize"))
         {

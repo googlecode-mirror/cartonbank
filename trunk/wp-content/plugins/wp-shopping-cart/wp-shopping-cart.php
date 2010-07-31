@@ -30,7 +30,7 @@ require_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/classes/cart.class.php
  * if session is initialised before cart.class.php is called, then the object name of each cart item will be __PHP_Incomplete_Class
  */
 $use_serialized_cart = false;
-if($_SESSION['nzshpcrt_cart'] != null)
+if(isset($_SESSION['nzshpcrt_cart']) and $_SESSION['nzshpcrt_cart'] != null)
   {
   foreach($_SESSION['nzshpcrt_cart'] as $key => $item)
     {
@@ -42,7 +42,7 @@ if($_SESSION['nzshpcrt_cart'] != null)
   }
   else
     {
-    if($_SESSION['nzshpcrt_serialized_cart'] != null)
+    if(isset($_SESSION['nzshpcrt_cart']) and $_SESSION['nzshpcrt_serialized_cart'] != null)
       {
       $use_serialized_cart = true;
       }
@@ -54,7 +54,7 @@ if($use_serialized_cart === true)
 
 $GLOBALS['nzshpcrt_imagesize_info'] = TXT_WPSC_IMAGESIZEINFO;
 $nzshpcrt_log_states[0]['name'] = TXT_WPSC_RECEIVED;
-$nzshpcrt_log_states[1]['name'] = TXT_WPSC_PROCESSING;
+$nzshpcrt_log_states[1]['name'] = 'some name'; //TXT_WPSC_PROCESSING;
 $nzshpcrt_log_states[2]['name'] = TXT_WPSC_PROCESSED;
 
 class wp_shopping_cart
@@ -983,6 +983,7 @@ function nzshpcrt_products_page($content = '')
 
 function nzshpcrt_shopping_cart($content = '')
   {
+	$output = null;
   if(preg_match("/\[shoppingcart\]/",$content))
     {
     $nzshpcrt = new wp_shopping_cart;
@@ -1051,7 +1052,7 @@ function nzshpcrt_submit_ajax()
       }
    
   /* update shopping cart*/    
-  if(($_GET['ajax'] == "true") && ($_GET['user'] == "true") && is_numeric($_POST['prodid']))
+  if(isset($_GET['ajax']) and ($_GET['ajax'] == "true") && ($_GET['user'] == "true") && is_numeric($_POST['prodid']))
     {
     $sql = "SELECT * FROM `".$wpdb->prefix."product_list` WHERE `id`='".$_POST['prodid']."' LIMIT 1";
     $item_data = $wpdb->get_results($sql,ARRAY_A) ;
@@ -1062,7 +1063,7 @@ function nzshpcrt_submit_ajax()
     
     
     $item_quantity = 0;
-    if($_SESSION['nzshpcrt_cart'] != null)
+    if(isset($_SESSION['nzshpcrt_cart']) and $_SESSION['nzshpcrt_cart'] != null)
       { 
       foreach($_SESSION['nzshpcrt_cart'] as $cart_key => $cart_item)
         {
@@ -1129,7 +1130,7 @@ function nzshpcrt_submit_ajax()
     echo nzshpcrt_shopping_basket_internals($cart,$quantity_limit);
     exit();
     }
-    else if(($_POST['ajax'] == "true") && ($_POST['user'] == "true") && ($_POST['emptycart'] == "true"))
+    else if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['user'] == "true") && ($_POST['emptycart'] == "true"))
       {
       $_SESSION['nzshpcrt_cart'] = '';
       $_SESSION['nzshpcrt_cart'] = Array();
@@ -1138,29 +1139,29 @@ function nzshpcrt_submit_ajax()
       }
       
   /* fill product form */    
-  if(($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && is_numeric($_POST['prodid']))
+  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && is_numeric($_POST['prodid']))
     {
     echo nzshpcrt_getproductform($_POST['prodid']);
     exit();
     }  /* fill category form */   
-    else if(($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && is_numeric($_POST['catid']))
+    else if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && is_numeric($_POST['catid']))
       {
       echo nzshpcrt_getcategoryform($_POST['catid']);
       exit();
       }  /* fill brand form */ 
-      else if(($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && is_numeric($_POST['brandid']))
+      else if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && is_numeric($_POST['brandid']))
         {  
         echo nzshpcrt_getbrandsform($_POST['brandid']);
         exit();
         }
-        else if(($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && is_numeric($_POST['variation_id']))
+        else if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && is_numeric($_POST['variation_id']))
           {  
           echo nzshpcrt_getvariationform($_POST['variation_id']);
           exit();
           }
           
   
-  if(($_POST['ajax'] == "true") && is_numeric($_POST['currencyid']))
+  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && is_numeric($_POST['currencyid']))
     {
     $currency_data = $wpdb->get_results("SELECT `symbol`,`symbol_html`,`code` FROM `".$wpdb->prefix."currency_list` WHERE `id`='".$_POST['currencyid']."' LIMIT 1",ARRAY_A) ;
     $price_out = null;
@@ -1178,7 +1179,7 @@ function nzshpcrt_submit_ajax()
   
   
   /* rate item */    
-  if(($_POST['ajax'] == "true") && ($_POST['rate_item'] == "true") && is_numeric($_POST['product_id']) && is_numeric($_POST['rating']))
+  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['rate_item'] == "true") && is_numeric($_POST['product_id']) && is_numeric($_POST['rating']))
     {
     $nowtime = time();
     $prodid = $_POST['product_id'];
@@ -1211,7 +1212,7 @@ function nzshpcrt_submit_ajax()
     exit();
     }
     
-  if(($_POST['ajax'] == "true") && ($_POST['get_rating_count'] == "true") && is_numeric($_POST['product_id']))
+  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['get_rating_count'] == "true") && is_numeric($_POST['product_id']))
     {
     $prodid = $_POST['product_id'];
     $data = $wpdb->get_results("SELECT COUNT(*) AS `count` FROM `".$wpdb->prefix."product_rating` WHERE `productid` = '".$prodid."'",ARRAY_A) ;
@@ -1219,7 +1220,7 @@ function nzshpcrt_submit_ajax()
     exit();
     }
     
-  if(($_POST['ajax'] == "true") && ($_POST['remove_variation_value'] == "true") && is_numeric($_POST['variation_value_id']))
+  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['remove_variation_value'] == "true") && is_numeric($_POST['variation_value_id']))
     {
     if($user_level >= 7)
      {
@@ -1229,7 +1230,7 @@ function nzshpcrt_submit_ajax()
      }
     }
     
-  if(($_POST['ajax'] == "true") && ($_POST['list_variation_values'] == "true") && is_numeric($_POST['variation_id']))
+  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['list_variation_values'] == "true") && is_numeric($_POST['variation_id']))
     {
     if($user_level >= 7)
      {
@@ -1241,7 +1242,7 @@ function nzshpcrt_submit_ajax()
      }
     }
     
-  if(($_POST['ajax'] == "true") && ($_POST['remove_form_field'] == "true") && is_numeric($_POST['form_id']))
+  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['remove_form_field'] == "true") && is_numeric($_POST['form_id']))
     {
     if($user_level >= 7)
      {
@@ -1250,7 +1251,7 @@ function nzshpcrt_submit_ajax()
      }
     }
     
-  if(($_POST['ajax'] == "true") && ($_POST['remove_form_field'] == "true") && is_numeric($_POST['form_id']))
+  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['remove_form_field'] == "true") && is_numeric($_POST['form_id']))
     {
     if($user_level >= 7)
      {
@@ -1259,13 +1260,13 @@ function nzshpcrt_submit_ajax()
      }
     }
     
-  if(($_POST['ajax'] == "true") && ($_POST['user'] == "true") && ($_POST['drag_and_drop_cart'] == "true"))
+  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['user'] == "true") && ($_POST['drag_and_drop_cart'] == "true"))
     {
     drag_and_drop_cart_contents();
     exit();
     }
   
-  if(($_POST['ajax'] == "true") && ($_POST['get_country_tax'] == "true") && preg_match("/[a-zA-Z]{2,4}/",$_POST['country_id']))  
+  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['get_country_tax'] == "true") && preg_match("/[a-zA-Z]{2,4}/",$_POST['country_id']))  
     {
     $country_id = $_POST['country_id'];
     $region_list = $wpdb->get_results("SELECT `".$wpdb->prefix."region_tax`.* FROM `".$wpdb->prefix."region_tax`, `".$wpdb->prefix."currency_list`  WHERE `".$wpdb->prefix."currency_list`.`isocode` IN('".$country_id."') AND `".$wpdb->prefix."currency_list`.`id` = `".$wpdb->prefix."region_tax`.`country_id`",ARRAY_A) ;
@@ -1307,7 +1308,7 @@ function nzshpcrt_submit_ajax()
     }
     
     
-  if(($_GET['rss'] == "true") && ($_GET['rss_key'] == 'key') && ($_GET['action'] == "purchase_log"))
+  if(isset($_GET['rss']) and ($_GET['rss'] == "true") && ($_GET['rss_key'] == 'key') && ($_GET['action'] == "purchase_log"))
     {
     $sql = "SELECT * FROM `".$wpdb->prefix."purchase_logs` WHERE `date`!='' ORDER BY `date` DESC";
     $purchase_log = $wpdb->get_results($sql,ARRAY_A);
@@ -1339,9 +1340,8 @@ function nzshpcrt_submit_ajax()
     exit();
     }
   
-    
-    
-  if(($_GET['rss'] == "true") && ($_GET['action'] == "product_list"))
+       
+  if(isset($_GET['rss']) and ($_GET['rss'] == "true") && ($_GET['action'] == "product_list"))
     {
     $sql = "SELECT * FROM `".$wpdb->prefix."product_list` WHERE `active` IN('1')";
     $product_list = $wpdb->get_results($sql,ARRAY_A);
@@ -1373,7 +1373,7 @@ function nzshpcrt_submit_ajax()
     exit();
     }
   
-  if(($_GET['purchase_log_csv'] == "true") && ($_GET['rss_key'] == 'key') && is_numeric($_GET['start_timestamp']) && is_numeric($_GET['end_timestamp']))
+  if(isset($_GET['purchase_log_csv']) and ($_GET['purchase_log_csv'] == "true") && ($_GET['rss_key'] == 'key') && is_numeric($_GET['start_timestamp']) && is_numeric($_GET['end_timestamp']))
     {
     $form_sql = "SELECT * FROM `".$wpdb->prefix."collect_data_forms` WHERE `active` = '1' AND `display_log` = '1';";
     $form_data = $wpdb->get_results($form_sql,ARRAY_A);
@@ -1452,7 +1452,7 @@ function nzshpcrt_submit_ajax()
     exit();
     }
   
-    if(is_numeric($_GET['remove']) && ($_SESSION['nzshpcrt_cart'] != null))
+    if(isset($_GET['remove']) and is_numeric($_GET['remove']) && ($_SESSION['nzshpcrt_cart'] != null))
       {
       $key = $_GET['remove'];
       if(is_object($_SESSION['nzshpcrt_cart'][$key]))
@@ -1462,13 +1462,13 @@ function nzshpcrt_submit_ajax()
       unset($_SESSION['nzshpcrt_cart'][$key]);
       }
     
-    if($_GET['cart']== 'empty')
+    if(isset($_GET['cart']) and $_GET['cart']== 'empty')
       {
       $_SESSION['nzshpcrt_cart'] = '';
       $_SESSION['nzshpcrt_cart'] = Array();
       }
       
-    if(is_numeric($_POST['quantity']) && is_numeric($_POST['key']))
+    if(isset($_POST['quantity']) and is_numeric($_POST['quantity']) && is_numeric($_POST['key']))
       {
       $quantity = $_POST['quantity'];
       $key = $_POST['key'];
@@ -2197,7 +2197,7 @@ session_start();
     {
     $seperator ="&";
     }
-  if(($_POST['submitwpcheckout'] == 'true'))
+  if(isset($_POST['submitwpcheckout']) and ($_POST['submitwpcheckout'] == 'true'))
     {
     //exit("<pre>".print_r($_POST,true)."</pre>");
     $returnurl = "Location: ".get_option('checkout_url').$seperator."total=".$_GET['total'];
@@ -2408,7 +2408,7 @@ VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid
       }
     //require_once("merchants.php");
     }
-    else if($_GET['termsandconds'] === 'true')
+    else if(isset($_GET['termsandconds']) and $_GET['termsandconds'] === 'true')
       {
       echo stripslashes(get_option('terms_and_conditions'));
       exit();
@@ -2418,6 +2418,7 @@ VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid
 function nzshpcrt_shopping_basket($input = null)
   {
   global $wpdb;
+  $dont_add_input = null;
   if(get_option('cart_location') == 1)
     {
     if($input != '')
@@ -2430,7 +2431,14 @@ function nzshpcrt_shopping_basket($input = null)
     }
     else if((get_option('cart_location') == 3) || (get_option('cart_location') == 4))
       {
-      $cart = $_SESSION['nzshpcrt_cart'];
+		if (isset ($_SESSION['nzshpcrt_cart']))
+			{
+				$cart = $_SESSION['nzshpcrt_cart'];
+      		}
+			else
+			{
+				$cart = null;
+			}
       if(get_option('cart_location') == 4)
         {
         echo $input;
@@ -2527,6 +2535,7 @@ function nzshpcrt_shopping_basket($input = null)
 function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $title='')
   {
   global $wpdb;
+  $output = '';
   $current_url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
   switch(get_option('cart_location'))
     {
@@ -2635,7 +2644,7 @@ function nzshpcrt_download_file()
   {
   global $wpdb,$user_level,$wp_rewrite; 
   get_currentuserinfo();
-  if(is_numeric($_GET['downloadid']))
+  if(isset($_GET['downloadid']) and is_numeric($_GET['downloadid']))
     {
     $id = $_GET['downloadid'];
     $download_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."download_status` WHERE `id`='".$id."' AND `downloads` > '0' AND `active`='1' LIMIT 1",ARRAY_A) ;
@@ -2657,7 +2666,7 @@ function nzshpcrt_download_file()
     }
     else
       {
-      if(($_GET['admin_preview'] == "true") && is_numeric($_GET['product_id']))
+      if(isset($_GET['admin_preview']) and ($_GET['admin_preview'] == "true") && is_numeric($_GET['product_id']))
         {
         $product_id = $_GET['product_id'];
         $product_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_list` WHERE `id` = '$product_id' LIMIT 1",ARRAY_A);
@@ -2715,7 +2724,7 @@ function nzshpcrt_download_file()
 function nzshpcrt_display_preview_image()
   {
   global $wpdb;
-  if(is_numeric($_GET['productid']))
+  if(isset($_GET['productid']) and is_numeric($_GET['productid']))
     {
      if(function_exists("getimagesize"))
       {
@@ -3101,7 +3110,7 @@ add_filter('the_content', 'nszhpcrt_homepage_products');
 add_action('wp_head', 'nzshpcrt_style');
 
 add_action('admin_head', 'nzshpcrt_css');
-if($_GET['page'] == "wp-shopping-cart/display-log.php")
+if(isset($_GET['page']) and $_GET['page'] == "wp-shopping-cart/display-log.php")
   {
   add_action('admin_head', 'nzshpcrt_product_log_rss_feed');
   }
@@ -3146,7 +3155,10 @@ switch(get_option('cart_location'))
  */  
 function serialize_shopping_cart()
   {
-  $_SESSION['nzshpcrt_serialized_cart'] = serialize($_SESSION['nzshpcrt_cart']);
+	  if (isset($_SESSION['nzshpcrt_cart']))
+	  {
+		  $_SESSION['nzshpcrt_serialized_cart'] = serialize($_SESSION['nzshpcrt_cart']);
+	  }
   return true;
   }  
 register_shutdown_function("serialize_shopping_cart");
