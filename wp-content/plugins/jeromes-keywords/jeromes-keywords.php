@@ -130,7 +130,7 @@ class JeromesKeywords {
     function initRewrite() {
         global $wp_rewrite;
         /* detect permalink type & construct base URL for local links */
-        $this->base_url = get_settings('home') . '/';
+        $this->base_url = get_option('home') . '/';
         if (isset($wp_rewrite) && $wp_rewrite->using_permalinks()) {
             $this->rewriteon = true;                    // using rewrite rules
             $this->base_url .= $wp_rewrite->root;		// set to "index.php/" if using that style
