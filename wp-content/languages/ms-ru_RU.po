@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress 3.0\n"
+"Project-Id-Version: WordPress 3.0.1\n"
 "Report-Msgid-Bugs-To: wp-polyglots@lists.automattic.com\n"
-"POT-Creation-Date: 2010-06-15 20:34+0000\n"
-"PO-Revision-Date: 2010-06-20 00:55+0300\n"
+"POT-Creation-Date: 2010-07-29 20:35+0000\n"
+"PO-Revision-Date: 2010-07-30 00:27+0100\n"
 "Last-Translator: Sergey Biryukov <sergeybiryukov.ru@gmail.com>\n"
 "Language-Team: ru.wordpress.org <sergeybiryukov.ru@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -139,15 +139,15 @@ msgstr ""
 msgid "[%s] New Admin Email Address"
 msgstr "[%s] Новый адрес администратора"
 
-#: wp-admin/includes/ms.php:323
+#: wp-admin/includes/ms.php:324
 msgid "<strong>ERROR</strong>: The e-mail address isn't correct."
 msgstr "<strong>ОШИБКА</strong>: Некорректный адрес e-mail."
 
-#: wp-admin/includes/ms.php:328
+#: wp-admin/includes/ms.php:329
 msgid "<strong>ERROR</strong>: The e-mail address is already used."
 msgstr "<strong>ОШИБКА</strong>: Этот адрес e-mail уже используется."
 
-#: wp-admin/includes/ms.php:340
+#: wp-admin/includes/ms.php:341
 msgid ""
 "Dear user,\n"
 "\n"
@@ -179,7 +179,7 @@ msgstr ""
 "Команда сайта «###SITENAME###»\n"
 "###SITEURL###"
 
-#: wp-admin/includes/ms.php:360
+#: wp-admin/includes/ms.php:361
 #, php-format
 msgid "[%s] New Email Address"
 msgstr "[%s] Новый адрес"
@@ -202,7 +202,7 @@ msgstr "МБ"
 #: wp-admin/includes/ms.php:482
 #, php-format
 msgid "Used: %1s%% of %2s"
-msgstr "Использовано: %1s%% из %2s"
+msgstr "Занято: %1s%% из %2s"
 
 #: wp-admin/includes/ms.php:503
 msgid "Storage Space"
@@ -215,7 +215,7 @@ msgstr "<a href=\"%1$s\" title=\"Управление файлами\" class=\"m
 
 #: wp-admin/includes/ms.php:508
 msgid "Space Allowed"
-msgstr "Доступно"
+msgstr "Выделено"
 
 #: wp-admin/includes/ms.php:515
 #, php-format
@@ -224,7 +224,7 @@ msgstr "<a href=\"%1$s\" title=\"Управление файлами\" class=\"m
 
 #: wp-admin/includes/ms.php:516
 msgid "Space Used"
-msgstr "Использовано"
+msgstr "Занято"
 
 #: wp-admin/includes/ms.php:534
 msgid "Site Upload Space Quota "
@@ -234,65 +234,65 @@ msgstr "Пространство для файлов"
 msgid "MB (Leave blank for network default)"
 msgstr "МБ (оставьте пустым для значения по умолчанию)"
 
-#: wp-admin/includes/ms.php:607
+#: wp-admin/includes/ms.php:606
 msgid "You don&#8217;t have permission to view this site. Please contact the system administrator."
 msgstr "У вас нет прав на просмотр этого сайта. Свяжитесь с системным администратором."
 
-#: wp-admin/includes/ms.php:656
+#: wp-admin/includes/ms.php:655
 msgid "American English"
 msgstr "Американский английский"
 
-#: wp-admin/includes/ms.php:660
+#: wp-admin/includes/ms.php:659
 msgid "British English"
 msgstr "Британский английский"
 
-#: wp-admin/includes/ms.php:670
+#: wp-admin/includes/ms.php:669
 msgid "English"
 msgstr "Английский"
 
-#: wp-admin/includes/ms.php:690
+#: wp-admin/includes/ms.php:689
 msgid "Warning! WordPress encrypts user cookies, but you must add the following lines to <strong>wp-config.php</strong> for it to be more secure."
 msgstr "Внимание! WordPress шифрует файлы cookie, однако вы должны добавить следующие строки в файл <strong>wp-config.php</strong> для повышения безопасности."
 
-#: wp-admin/includes/ms.php:691
+#: wp-admin/includes/ms.php:690
 msgid "Before the line <code>/* That's all, stop editing! Happy blogging. */</code> please add this code:"
 msgstr "Перед строкой <code>/* Это всё, дальше не редактируем. Успехов! */</code> добавьте следующий код:"
 
-#: wp-admin/includes/ms.php:722
+#: wp-admin/includes/ms.php:721
 msgid "Read More"
 msgstr "Читать далее"
 
-#: wp-admin/includes/ms.php:725
+#: wp-admin/includes/ms.php:724
 #, php-format
 msgid "Your feed at %s is empty."
 msgstr "RSS-лента по адресу %s пуста."
 
-#: wp-admin/includes/ms.php:735
+#: wp-admin/includes/ms.php:734
 #, php-format
 msgid "Thank you for Updating! Please visit the <a href=\"%s\">Update Network</a> page to update all your sites."
 msgstr "Благодарим за установку свежей версии! Пожалуйста, перейдите на страницу <a href=\"%s\">&laquo;Обновить сеть&raquo;</a>, чтобы обновить все сайты."
 
 #. translators: My sites label
-#: wp-admin/includes/ms.php:768
+#: wp-admin/includes/ms.php:766
 msgid "Primary Site"
 msgstr "Основной сайт"
 
-#: wp-admin/includes/ms.php:802
+#: wp-admin/includes/ms.php:800
 #: wp-admin/ms-admin.php:47
 msgid "Create a New Site"
 msgstr "Создать новый сайт"
 
-#: wp-admin/includes/ms.php:815
+#: wp-admin/includes/ms.php:813
 #, php-format
 msgid "Warning! The current theme supports Featured Images. You must enable image uploads on <a href='%s'>the options page</a> for it to work."
 msgstr "Внимание! Текущая тема поддерживает миниатюры записей. Нужно разрешить загрузку изображений на <a href='%s'>странице настроек</a>."
 
-#: wp-admin/includes/ms.php:825
+#: wp-admin/includes/ms.php:823
 #, php-format
 msgid "The <code>%1$s</code> file is deprecated. Please remove it and update your server rewrite rules to use <code>%2$s</code> instead."
 msgstr "Файл <code>%1$s</code> считается устаревшим. Пожалуйста, удалите его и обновите правила перезаписи на сервере, чтобы использовался <code>%2$s</code>."
 
-#: wp-admin/includes/ms.php:836
+#: wp-admin/includes/ms.php:834
 #, php-format
 msgid "The plugins page is not visible to normal users. It must be activated first. %s"
 msgstr "Страница плагинов не видна обычным пользователям. Сначала нужно её активировать. %s"
@@ -312,21 +312,22 @@ msgstr "Поддержка сети не включена."
 #: wp-admin/ms-edit.php:29
 #: wp-admin/ms-edit.php:143
 #: wp-admin/ms-edit.php:208
-#: wp-admin/ms-edit.php:321
-#: wp-admin/ms-edit.php:335
-#: wp-admin/ms-edit.php:376
-#: wp-admin/ms-edit.php:387
-#: wp-admin/ms-edit.php:398
-#: wp-admin/ms-edit.php:409
-#: wp-admin/ms-edit.php:420
-#: wp-admin/ms-edit.php:430
-#: wp-admin/ms-edit.php:440
-#: wp-admin/ms-edit.php:494
-#: wp-admin/ms-edit.php:515
-#: wp-admin/ms-edit.php:573
-#: wp-admin/ms-edit.php:603
+#: wp-admin/ms-edit.php:322
+#: wp-admin/ms-edit.php:336
+#: wp-admin/ms-edit.php:377
+#: wp-admin/ms-edit.php:388
+#: wp-admin/ms-edit.php:399
+#: wp-admin/ms-edit.php:410
+#: wp-admin/ms-edit.php:421
+#: wp-admin/ms-edit.php:431
+#: wp-admin/ms-edit.php:441
+#: wp-admin/ms-edit.php:495
+#: wp-admin/ms-edit.php:516
+#: wp-admin/ms-edit.php:574
+#: wp-admin/ms-edit.php:604
 #: wp-admin/ms-options.php:16
 #: wp-admin/ms-sites.php:16
+#: wp-admin/ms-sites.php:111
 #: wp-admin/ms-themes.php:13
 #: wp-admin/ms-upgrade-network.php:32
 #: wp-admin/ms-users.php:16
@@ -523,41 +524,41 @@ msgstr "[%s] Создан новый сайт"
 msgid "You probably need to go back to the <a href=\"%s\">sites page</a>"
 msgstr "Вероятно, вам нужно вернуться на <a href=\"%s\">страницу сайтов</a>"
 
-#: wp-admin/ms-edit.php:362
-#: wp-admin/ms-edit.php:463
+#: wp-admin/ms-edit.php:363
+#: wp-admin/ms-edit.php:464
 msgid "You are not allowed to change the current site."
 msgstr "Вам не разрешено менять текущий сайт."
 
-#: wp-admin/ms-edit.php:468
+#: wp-admin/ms-edit.php:469
 msgid "WordPress &rsaquo; Confirm your action"
 msgstr "WordPress MU &rsaquo; Подтвердите ваше действие"
 
-#: wp-admin/ms-edit.php:484
+#: wp-admin/ms-edit.php:485
 msgid "Confirm"
 msgstr "Подтверждаю"
 
-#: wp-admin/ms-edit.php:540
+#: wp-admin/ms-edit.php:541
 #, php-format
 msgid "Warning! User cannot be modified. The user %s is a network administrator."
 msgstr "Внимание! Невозможно изменить пользователя. Пользователь %s &#8212; администратор сети."
 
-#: wp-admin/ms-edit.php:606
+#: wp-admin/ms-edit.php:607
 msgid "Cannot create an empty user."
 msgstr "Невозможно создать пустого пользователя."
 
-#: wp-admin/ms-edit.php:609
+#: wp-admin/ms-edit.php:610
 msgid "Missing username and email."
 msgstr "Отсутствуют логин и e-mail."
 
-#: wp-admin/ms-edit.php:611
+#: wp-admin/ms-edit.php:612
 msgid "Missing username."
 msgstr "Отсутствует логин."
 
-#: wp-admin/ms-edit.php:613
+#: wp-admin/ms-edit.php:614
 msgid "Missing email."
 msgstr "Отсутствует e-mail."
 
-#: wp-admin/ms-edit.php:619
+#: wp-admin/ms-edit.php:620
 msgid "Duplicated username or email address."
 msgstr "Логин или e-mail повторяется."
 
@@ -958,245 +959,245 @@ msgstr "Сайт восстановлен из спама."
 msgid "Site marked as spam."
 msgstr "Сайт помечен как спам."
 
-#: wp-admin/ms-sites.php:115
+#: wp-admin/ms-sites.php:118
 msgid "Edit Site"
 msgstr "Редактировать сайт"
 
-#: wp-admin/ms-sites.php:121
+#: wp-admin/ms-sites.php:124
 msgid "Site info (wp_blogs)"
 msgstr "Информация о сайте (wp_blogs)"
 
-#: wp-admin/ms-sites.php:125
-#: wp-admin/ms-sites.php:474
-#: wp-admin/ms-sites.php:716
-#: wp-admin/ms-sites.php:718
+#: wp-admin/ms-sites.php:128
+#: wp-admin/ms-sites.php:477
+#: wp-admin/ms-sites.php:719
+#: wp-admin/ms-sites.php:721
 msgid "Domain"
 msgstr "Домен"
 
-#: wp-admin/ms-sites.php:140
+#: wp-admin/ms-sites.php:143
 msgid "Update <code>siteurl</code> and <code>home</code> as well."
 msgstr "Обновить также параметры <code>siteurl</code> и <code>home</code>."
 
-#: wp-admin/ms-sites.php:144
-#: wp-admin/ms-sites.php:479
+#: wp-admin/ms-sites.php:147
+#: wp-admin/ms-sites.php:482
 msgctxt "site"
 msgid "Registered"
 msgstr "Зарегистрирован"
 
-#: wp-admin/ms-sites.php:148
-#: wp-admin/ms-sites.php:478
+#: wp-admin/ms-sites.php:151
+#: wp-admin/ms-sites.php:481
 msgid "Last Updated"
 msgstr "Последнее обновление"
 
-#: wp-admin/ms-sites.php:154
-#: wp-admin/ms-sites.php:520
+#: wp-admin/ms-sites.php:157
+#: wp-admin/ms-sites.php:523
 msgid "Archived"
 msgstr "Заархивирован"
 
-#: wp-admin/ms-sites.php:155
-#: wp-admin/ms-sites.php:520
-#: wp-admin/ms-sites.php:593
+#: wp-admin/ms-sites.php:158
+#: wp-admin/ms-sites.php:523
+#: wp-admin/ms-sites.php:596
 msgctxt "site"
 msgid "Spam"
 msgstr "Спам"
 
-#: wp-admin/ms-sites.php:156
-#: wp-admin/ms-sites.php:520
+#: wp-admin/ms-sites.php:159
+#: wp-admin/ms-sites.php:523
 msgid "Deleted"
 msgstr "Удалён"
 
-#: wp-admin/ms-sites.php:158
-#: wp-admin/ms-sites.php:520
+#: wp-admin/ms-sites.php:161
+#: wp-admin/ms-sites.php:523
 msgid "Mature"
 msgstr "Для&nbsp;взрослых"
 
-#: wp-admin/ms-sites.php:172
-#: wp-admin/ms-sites.php:218
-#: wp-admin/ms-sites.php:254
-#: wp-admin/ms-sites.php:296
-#: wp-admin/ms-sites.php:326
-#: wp-admin/ms-sites.php:336
+#: wp-admin/ms-sites.php:175
+#: wp-admin/ms-sites.php:221
+#: wp-admin/ms-sites.php:257
+#: wp-admin/ms-sites.php:299
+#: wp-admin/ms-sites.php:329
+#: wp-admin/ms-sites.php:339
 msgid "Update Options"
 msgstr "Обновить настройки"
 
-#: wp-admin/ms-sites.php:177
+#: wp-admin/ms-sites.php:180
 #, php-format
 msgid "Site options (%soptions)"
 msgstr "Настройки сайта (%soptions)"
 
-#: wp-admin/ms-sites.php:240
+#: wp-admin/ms-sites.php:243
 msgid "Active"
 msgstr "Активна"
 
-#: wp-admin/ms-sites.php:248
+#: wp-admin/ms-sites.php:251
 msgid "Site Themes"
 msgstr "Темы сайта"
 
-#: wp-admin/ms-sites.php:250
+#: wp-admin/ms-sites.php:253
 msgid "Activate the themename of an existing theme and hit \"Update Options\" to allow the theme for this site."
 msgstr "Активируйте существующую тему и нажмите кнопку &laquo;Обновить настройки&raquo;, чтобы разрешить использование этой темы на сайте."
 
-#: wp-admin/ms-sites.php:261
+#: wp-admin/ms-sites.php:264
 msgid "Site Users"
 msgstr "Пользователи сайта"
 
-#: wp-admin/ms-sites.php:263
+#: wp-admin/ms-sites.php:266
 msgid "User"
 msgstr "Пользователь"
 
-#: wp-admin/ms-sites.php:289
+#: wp-admin/ms-sites.php:292
 msgid "Click to remove user"
 msgstr "Нажмите, чтобы удалить пользователя"
 
-#: wp-admin/ms-sites.php:291
+#: wp-admin/ms-sites.php:294
 msgid "N/A"
 msgstr "Н/Д"
 
-#: wp-admin/ms-sites.php:302
+#: wp-admin/ms-sites.php:305
 msgid "Add a new user"
 msgstr "Добавить нового пользователя"
 
-#: wp-admin/ms-sites.php:304
+#: wp-admin/ms-sites.php:307
 msgid "Enter the username of an existing user and hit &#8220;Update Options&#8221; to add the user."
 msgstr "Введите логин существующего пользователя и нажмите кнопку &laquo;Обновить настройки&raquo;, чтобы добавить его."
 
-#: wp-admin/ms-sites.php:307
+#: wp-admin/ms-sites.php:310
 msgid "User&nbsp;Login:"
 msgstr "Логин&nbsp;пользователя:"
 
-#: wp-admin/ms-sites.php:331
+#: wp-admin/ms-sites.php:334
 msgid "Misc Site Actions"
 msgstr "Разные действия"
 
-#: wp-admin/ms-sites.php:418
+#: wp-admin/ms-sites.php:421
 msgctxt "sites"
 msgid "Add New"
 msgstr "Добавить новый"
 
-#: wp-admin/ms-sites.php:429
+#: wp-admin/ms-sites.php:432
 msgid "Search Site by"
 msgstr "Поиск сайтов по параметру"
 
-#: wp-admin/ms-sites.php:432
-#: wp-admin/ms-sites.php:476
+#: wp-admin/ms-sites.php:435
+#: wp-admin/ms-sites.php:479
 #: wp-admin/ms-users.php:175
 msgid "ID"
 msgstr "ID"
 
-#: wp-admin/ms-sites.php:433
+#: wp-admin/ms-sites.php:436
 msgid "IP address"
 msgstr "IP-адрес"
 
-#: wp-admin/ms-sites.php:445
-#: wp-admin/ms-sites.php:696
+#: wp-admin/ms-sites.php:448
+#: wp-admin/ms-sites.php:699
 msgctxt "site"
 msgid "Mark as Spam"
 msgstr "Пометить как спам"
 
-#: wp-admin/ms-sites.php:446
-#: wp-admin/ms-sites.php:591
-#: wp-admin/ms-sites.php:697
+#: wp-admin/ms-sites.php:449
+#: wp-admin/ms-sites.php:594
+#: wp-admin/ms-sites.php:700
 msgctxt "site"
 msgid "Not Spam"
 msgstr "Не спам"
 
-#: wp-admin/ms-sites.php:565
+#: wp-admin/ms-sites.php:568
 #, php-format
 msgctxt "%1$s: site name. %2$s: site tagline."
 msgid "%1$s &#8211; <em>%2$s</em>"
 msgstr "%1$s &#8212; <em>%2$s</em>"
 
-#: wp-admin/ms-sites.php:578
+#: wp-admin/ms-sites.php:581
 msgid "Backend"
 msgstr "Панель"
 
-#: wp-admin/ms-sites.php:581
+#: wp-admin/ms-sites.php:584
 #, php-format
 msgid "You are about to activate the site %s"
 msgstr "Вы собираетесь активировать сайт &laquo;%s&raquo;"
 
-#: wp-admin/ms-sites.php:583
+#: wp-admin/ms-sites.php:586
 #, php-format
 msgid "You are about to deactivate the site %s"
 msgstr "Вы собираетесь деактивировать сайт &laquo;%s&raquo;"
 
-#: wp-admin/ms-sites.php:586
+#: wp-admin/ms-sites.php:589
 #, php-format
 msgid "You are about to unarchive the site %s."
 msgstr "Вы собираетесь разархивировать сайт &laquo;%s&raquo;."
 
-#: wp-admin/ms-sites.php:586
+#: wp-admin/ms-sites.php:589
 msgid "Unarchive"
 msgstr "Из&nbsp;архива"
 
-#: wp-admin/ms-sites.php:588
+#: wp-admin/ms-sites.php:591
 #, php-format
 msgid "You are about to archive the site %s."
 msgstr "Вы собираетесь заархивировать сайт &laquo;%s&raquo;."
 
-#: wp-admin/ms-sites.php:588
+#: wp-admin/ms-sites.php:591
 msgctxt "verb; site"
 msgid "Archive"
 msgstr "В&nbsp;архив"
 
-#: wp-admin/ms-sites.php:591
+#: wp-admin/ms-sites.php:594
 #, php-format
 msgid "You are about to unspam the site %s."
 msgstr "Вы собираетесь пометить сайт &laquo;%s&raquo; как не спам."
 
-#: wp-admin/ms-sites.php:593
+#: wp-admin/ms-sites.php:596
 #, php-format
 msgid "You are about to mark the site %s as spam."
 msgstr "Вы собираетесь пометить сайт &laquo;%s&raquo; как спам."
 
-#: wp-admin/ms-sites.php:595
+#: wp-admin/ms-sites.php:598
 #, php-format
 msgid "You are about to delete the site %s."
 msgstr "Вы собираетесь удалить сайт &laquo;%s&raquo;."
 
-#: wp-admin/ms-sites.php:598
+#: wp-admin/ms-sites.php:601
 #: wp-admin/my-sites.php:95
 msgid "Visit"
 msgstr "Перейти"
 
-#: wp-admin/ms-sites.php:616
+#: wp-admin/ms-sites.php:619
 msgid "Never"
 msgstr "Никогда"
 
-#: wp-admin/ms-sites.php:639
+#: wp-admin/ms-sites.php:642
 msgid "Only showing first 5 users."
 msgstr "Первые 5 пользователей."
 
-#: wp-admin/ms-sites.php:639
+#: wp-admin/ms-sites.php:642
 msgid "More"
 msgstr "Больше"
 
-#: wp-admin/ms-sites.php:678
+#: wp-admin/ms-sites.php:681
 msgid "No sites found."
 msgstr "Сайтов не найдено."
 
-#: wp-admin/ms-sites.php:708
-#: wp-admin/ms-sites.php:737
+#: wp-admin/ms-sites.php:711
+#: wp-admin/ms-sites.php:740
 msgid "Add Site"
 msgstr "Добавить сайт"
 
-#: wp-admin/ms-sites.php:713
+#: wp-admin/ms-sites.php:716
 msgid "Site Address"
 msgstr "Адрес сайта"
 
-#: wp-admin/ms-sites.php:720
+#: wp-admin/ms-sites.php:723
 msgid "Only the characters a-z and 0-9 recommended."
 msgstr "Рекомендуются только символы a&#8212;z и 0&#8212;9."
 
-#: wp-admin/ms-sites.php:729
+#: wp-admin/ms-sites.php:732
 msgid "Admin Email"
 msgstr "E-mail администратора"
 
-#: wp-admin/ms-sites.php:733
+#: wp-admin/ms-sites.php:736
 msgid "A new user will be created if the above email address is not in the database."
 msgstr "Если указанный адрес e-mail отсутствует в базе, будет создан новый пользователь."
 
-#: wp-admin/ms-sites.php:733
+#: wp-admin/ms-sites.php:736
 msgid "The username and password will be mailed to this email address."
 msgstr "На этот адрес e-mail будут отправлены логин и пароль."
 
@@ -1717,118 +1718,119 @@ msgid "<strong>Conflicting values for the constants VHOST and SUBDOMAIN_INSTALL.
 msgstr "<strong>Конфликт значений VHOST и SUBDOMAIN_INSTALL.</strong> В качестве параметра режима субдоменов будет использовано значение константы SUBDOMAIN_INSTALL."
 
 #: wp-includes/ms-functions.php:213
+#: wp-includes/ms-functions.php:257
 msgid "That user does not exist."
 msgstr "Такого пользователя не существует."
 
-#: wp-includes/ms-functions.php:282
+#: wp-includes/ms-functions.php:285
 msgid "Error: Site URL already taken."
 msgstr "Ошибка: URL сайта уже занят."
 
-#: wp-includes/ms-functions.php:289
+#: wp-includes/ms-functions.php:292
 msgid "Error: problem creating site entry."
 msgstr "Ошибка: при создании сайта возникла проблема."
 
-#: wp-includes/ms-functions.php:422
+#: wp-includes/ms-functions.php:426
 msgid "Only the lowercase letters a-z and numbers allowed"
 msgstr "Разрешены только латинские буквы в нижнем регистре и цифры"
 
-#: wp-includes/ms-functions.php:429
+#: wp-includes/ms-functions.php:433
 msgid "Please enter a username"
 msgstr "Пожалуйста, введите логин"
 
-#: wp-includes/ms-functions.php:437
+#: wp-includes/ms-functions.php:441
 msgid "That username is not allowed"
 msgstr "Это имя пользователя недопустимо"
 
-#: wp-includes/ms-functions.php:440
+#: wp-includes/ms-functions.php:444
 msgid "You cannot use that email address to signup. We are having problems with them blocking some of our email. Please use another email provider."
 msgstr "Этот почтовый адрес нельзя использовать для регистрации. Некоторые из наших писем блокируются данной почтовой службой. Пожалуйста, используйте другую службу."
 
-#: wp-includes/ms-functions.php:443
+#: wp-includes/ms-functions.php:447
 msgid "Username must be at least 4 characters"
 msgstr "Логин должен быть не короче 4 символов"
 
-#: wp-includes/ms-functions.php:446
+#: wp-includes/ms-functions.php:450
 msgid "Sorry, usernames may not contain the character &#8220;_&#8221;!"
 msgstr "Извините, логин не может содержать символ &laquo;_&raquo;!"
 
-#: wp-includes/ms-functions.php:452
+#: wp-includes/ms-functions.php:456
 msgid "Sorry, usernames must have letters too!"
 msgstr "Извините, но логин должен содержать также и буквы!"
 
-#: wp-includes/ms-functions.php:455
+#: wp-includes/ms-functions.php:459
 msgid "Please enter a correct email address"
 msgstr "Пожалуйста, введите правильный адрес e-mail"
 
-#: wp-includes/ms-functions.php:461
+#: wp-includes/ms-functions.php:465
 msgid "Sorry, that email address is not allowed!"
 msgstr "Извините, этот адрес e-mail недопустим!"
 
-#: wp-includes/ms-functions.php:466
+#: wp-includes/ms-functions.php:470
 msgid "Sorry, that username already exists!"
 msgstr "Извините, такой логин уже существует!"
 
-#: wp-includes/ms-functions.php:470
+#: wp-includes/ms-functions.php:474
 msgid "Sorry, that email address is already used!"
 msgstr "Извините, этот адрес e-mail уже используется!"
 
-#: wp-includes/ms-functions.php:482
+#: wp-includes/ms-functions.php:486
 msgid "That username is currently reserved but may be available in a couple of days."
 msgstr "Этот логин в настоящее время зарезервирован, но может стать доступным через несколько дней."
 
-#: wp-includes/ms-functions.php:485
+#: wp-includes/ms-functions.php:489
 msgid "username and email used"
 msgstr "логин и e-mail используются"
 
-#: wp-includes/ms-functions.php:495
+#: wp-includes/ms-functions.php:499
 msgid "That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing."
 msgstr "Этот адрес уже используется. Пожалуйста, поищите в своей почте письмо об активации. Если вы ничего не сделаете, адрес снова станет доступен через пару дней."
 
-#: wp-includes/ms-functions.php:522
+#: wp-includes/ms-functions.php:526
 msgid "Please enter a site name"
 msgstr "Пожалуйста, введите название сайта"
 
-#: wp-includes/ms-functions.php:527
+#: wp-includes/ms-functions.php:531
 msgid "Only lowercase letters and numbers allowed"
 msgstr "Разрешены только буквы в нижнем регистре и цифры"
 
-#: wp-includes/ms-functions.php:530
+#: wp-includes/ms-functions.php:534
 msgid "That name is not allowed"
 msgstr "Это название недопустимо"
 
-#: wp-includes/ms-functions.php:533
+#: wp-includes/ms-functions.php:537
 msgid "Site name must be at least 4 characters"
 msgstr "Название сайта должно быть не короче 4 символов"
 
-#: wp-includes/ms-functions.php:536
+#: wp-includes/ms-functions.php:540
 msgid "Sorry, site names may not contain the character &#8220;_&#8221;!"
 msgstr "Извините, название сайта не может содержать символ &laquo;_&raquo;!"
 
-#: wp-includes/ms-functions.php:540
+#: wp-includes/ms-functions.php:544
 msgid "Sorry, you may not use that site name."
 msgstr "Извините, это название сайта нельзя использовать."
 
-#: wp-includes/ms-functions.php:546
+#: wp-includes/ms-functions.php:550
 msgid "Sorry, site names must have letters too!"
 msgstr "Извините, название сайта должно содержать также и буквы!"
 
-#: wp-includes/ms-functions.php:553
+#: wp-includes/ms-functions.php:557
 msgid "Please enter a site title"
 msgstr "Пожалуйста, введите название сайта"
 
-#: wp-includes/ms-functions.php:564
+#: wp-includes/ms-functions.php:568
 msgid "Sorry, that site already exists!"
 msgstr "Извините, такой сайт уже существует."
 
-#: wp-includes/ms-functions.php:568
+#: wp-includes/ms-functions.php:572
 msgid "Sorry, that site is reserved!"
 msgstr "Извините, этот сайт зарезервирован!"
 
-#: wp-includes/ms-functions.php:579
+#: wp-includes/ms-functions.php:583
 msgid "That site is currently reserved but may be available in a couple days."
 msgstr "Этот сайт в настоящее время зарезервирован, но может стать доступным через несколько дней."
 
-#: wp-includes/ms-functions.php:653
+#: wp-includes/ms-functions.php:657
 #, php-format
 msgid ""
 "To activate your blog, please click the following link:\n"
@@ -1851,12 +1853,12 @@ msgstr ""
 "\n"
 "%s"
 
-#: wp-includes/ms-functions.php:655
+#: wp-includes/ms-functions.php:659
 #, php-format
-msgid "[%1s] Activate %2s"
-msgstr "[%1s] Активация %2s"
+msgid "[%1$s] Activate %2$s"
+msgstr "[%1$s] Активация %2$s"
 
-#: wp-includes/ms-functions.php:670
+#: wp-includes/ms-functions.php:674
 #, php-format
 msgid ""
 "To activate your user, please click the following link:\n"
@@ -1873,31 +1875,31 @@ msgstr ""
 "После активации вы получите *другое письмо* с вашим логином.\n"
 "\n"
 
-#: wp-includes/ms-functions.php:683
+#: wp-includes/ms-functions.php:687
 msgid "Invalid activation key."
 msgstr "Неверный ключ активации."
 
-#: wp-includes/ms-functions.php:686
+#: wp-includes/ms-functions.php:690
 msgid "The site is already active."
 msgstr "Этот сайт уже активирован."
 
-#: wp-includes/ms-functions.php:701
+#: wp-includes/ms-functions.php:705
 msgid "Could not create user"
 msgstr "Не удалось создать пользователя"
 
-#: wp-includes/ms-functions.php:709
+#: wp-includes/ms-functions.php:713
 msgid "That username is already activated."
 msgstr "Этот логин уже активирован."
 
-#: wp-includes/ms-functions.php:774
+#: wp-includes/ms-functions.php:778
 msgid "Site already exists."
 msgstr "Сайт уже существует."
 
-#: wp-includes/ms-functions.php:780
+#: wp-includes/ms-functions.php:784
 msgid "Could not create site."
 msgstr "Не удалось создать сайт."
 
-#: wp-includes/ms-functions.php:822
+#: wp-includes/ms-functions.php:826
 #, php-format
 msgid ""
 "New Site: %1s\n"
@@ -1912,12 +1914,12 @@ msgstr ""
 "\n"
 "Отключить эти уведомления: %4s"
 
-#: wp-includes/ms-functions.php:829
+#: wp-includes/ms-functions.php:833
 #, php-format
 msgid "New Site Registration: %s"
 msgstr "Регистрация нового сайта: %s"
 
-#: wp-includes/ms-functions.php:845
+#: wp-includes/ms-functions.php:849
 #, php-format
 msgid ""
 "New User: %1s\n"
@@ -1930,53 +1932,53 @@ msgstr ""
 "\n"
 "Отключить эти уведомления: %3s"
 
-#: wp-includes/ms-functions.php:851
+#: wp-includes/ms-functions.php:855
 #, php-format
 msgid "New User Registration: %s"
 msgstr "Регистрация нового пользователя: %s"
 
-#: wp-includes/ms-functions.php:885
+#: wp-includes/ms-functions.php:889
 msgid "<h1>Already Installed</h1><p>You appear to have already installed WordPress. To reinstall please clear your old database tables first.</p>"
 msgstr "<h1>Уже установлен</h1><p>Вы уже установили WordPress. Для переустановки, пожалуйста, сначала очистите старые таблицы в базе данных.</p>"
 
-#: wp-includes/ms-functions.php:972
+#: wp-includes/ms-functions.php:976
 #, php-format
 msgid "New %1$s Site: %2$s"
 msgstr "В сети «%1$s» новый сайт: %2$s"
 
-#: wp-includes/ms-functions.php:1005
+#: wp-includes/ms-functions.php:1009
 #, php-format
 msgid "New %1$s User: %2$s"
 msgstr "В сети «%1$s» новый пользователь: %2$s"
 
-#: wp-includes/ms-functions.php:1119
+#: wp-includes/ms-functions.php:1123
 msgid "Sorry, you have used your space allocation. Please delete some files to upload more files."
 msgstr "С сожалению, вы использовали всё доступное пространство. Пожалуйста, удалите несколько файлов, чтобы загрузить новые."
 
-#: wp-includes/ms-functions.php:1239
+#: wp-includes/ms-functions.php:1243
 #, php-format
 msgid "This file is too big. Files must be less than %d KB in size."
 msgstr "Файл слишком велик. Размер файлов должен быть менее %d КБ."
 
-#: wp-includes/ms-functions.php:1261
+#: wp-includes/ms-functions.php:1265
 msgid "Please try again!"
 msgstr "Пожалуйста, попробуйте ещё раз!"
 
-#: wp-includes/ms-functions.php:1291
+#: wp-includes/ms-functions.php:1295
 #, php-format
 msgid "An error occurred adding you to this site. Back to the <a href=\"%s\">homepage</a>."
 msgstr "При добавлении вас к этому сайту произошла ошибка. Назад на <a href=\"%s\">главную</a>."
 
-#: wp-includes/ms-functions.php:1293
+#: wp-includes/ms-functions.php:1297
 #, php-format
 msgid "You have been added to this site. Please visit the <a href=\"%s\">homepage</a> or <a href=\"%s\">login</a> using your username and password."
 msgstr "Вас добавили к этому сайту. Можно перейти на <a href=\"%s\">главную страницу</a> или <a href=\"%s\">авторизоваться</a>, используя свой логин и пароль."
 
-#: wp-includes/ms-functions.php:1293
+#: wp-includes/ms-functions.php:1297
 msgid "Success"
 msgstr "Поздравляем"
 
-#: wp-includes/ms-functions.php:1389
+#: wp-includes/ms-functions.php:1390
 msgid ""
 "Dear User,\n"
 "\n"
@@ -2052,176 +2054,176 @@ msgstr "Адрес&nbsp;e-mail:"
 msgid "We send your registration email to this address. (Double-check your email address before continuing.)"
 msgstr "На этот адрес будет отправлено письмо для подтверждения. (Внимательно проверьте адрес e-mail, перед тем как продолжить.)"
 
-#: wp-signup.php:168
+#: wp-signup.php:169
 #, php-format
 msgid "Get <em>another</em> %s site in seconds"
 msgstr "Получите <em>ещё один</em> сайт на &laquo;%s&raquo; за считанные секунды"
 
-#: wp-signup.php:171
+#: wp-signup.php:172
 msgid "There was a problem, please correct the form below and try again."
 msgstr "Что-то не получилось. Пожалуйста, исправьте данные в этой форме и попробуйте ещё раз."
 
-#: wp-signup.php:174
+#: wp-signup.php:175
 #, php-format
 msgid "Welcome back, %s. By filling out the form below, you can <strong>add another site to your account</strong>. There is no limit to the number of sites you can have, so create to your heart&#8217;s content, but write responsibly!"
 msgstr "Добро пожаловать обратно, %s. Заполнив форму ниже, вы сможете <strong>добавить ещё один сайт к вашей учётной записи</strong>. Нет никаких ограничений на количество сайтов, которые у вас могут быть, так что создавайте по велению сердца, но к написанию подходите ответственно."
 
-#: wp-signup.php:180
+#: wp-signup.php:181
 msgid "Sites you are already a member of:"
 msgstr "Сайты, участником которых вы являетесь:"
 
-#: wp-signup.php:189
+#: wp-signup.php:190
 msgid "If you&#8217;re not going to use a great site domain, leave it for a new user. Now have at it!"
 msgstr "Если вы не собираетесь использовать отличный домен, оставьте его для новых пользователей. А теперь приступайте!"
 
-#: wp-signup.php:194
+#: wp-signup.php:195
 msgid "Create Site"
 msgstr "Создать сайт"
 
-#: wp-signup.php:224
+#: wp-signup.php:225
 #, php-format
 msgid "The site %s is yours."
 msgstr "Сайт &laquo;%s&raquo; &#8212; ваш."
 
-#: wp-signup.php:226
+#: wp-signup.php:227
 #, php-format
 msgid "<a href=\"http://%1$s\">http://%2$s</a> is your new site.  <a href=\"%3$s\">Log in</a> as &#8220;%4$s&#8221; using your existing password."
 msgstr "<a href=\"http://%1$s\">http://%2$s</a> &#8212; ваш новый сайт. <a href=\"%3$s\">Войдите</a> как &laquo;%4$s&raquo;, используя ваш пароль."
 
-#: wp-signup.php:253
+#: wp-signup.php:254
 #, php-format
 msgid "Get your own %s account in seconds"
 msgstr "Получите вашу собственную учётную запись на сайте &laquo;%s&raquo; за считанные секунды"
 
-#: wp-signup.php:266
+#: wp-signup.php:267
 msgid "Gimme a site!"
 msgstr "Дайте мне сайт!"
 
-#: wp-signup.php:269
+#: wp-signup.php:270
 msgid "Just a username, please."
 msgstr "Только логин, пожалуйста."
 
-#: wp-signup.php:273
+#: wp-signup.php:274
 msgid "Next"
 msgstr "Далее"
 
-#: wp-signup.php:300
+#: wp-signup.php:301
 #, php-format
 msgid "%s is your new username"
 msgstr "%s &#8212 ваш новый логин"
 
-#: wp-signup.php:301
+#: wp-signup.php:302
 msgid "But, before you can start using your new username, <strong>you must activate it</strong>."
 msgstr "Но перед тем, как вы начнёте использовать ваше новое имя пользователя, <strong>нужно его активировать</strong>."
 
-#: wp-signup.php:302
+#: wp-signup.php:303
 #, php-format
 msgid "Check your inbox at <strong>%1$s</strong> and click the link given."
 msgstr "Проверьте почтовый ящик <strong>%1$s</strong> и перейдите по полученной ссылке."
 
-#: wp-signup.php:303
+#: wp-signup.php:304
 msgid "If you do not activate your username within two days, you will have to sign up again."
 msgstr "Если вы не активируете ваше имя учётной записи в течение двух дней, вам придётся регистрироваться заново."
 
-#: wp-signup.php:329
+#: wp-signup.php:330
 msgid "Signup"
 msgstr "Зарегистрироваться"
 
-#: wp-signup.php:363
+#: wp-signup.php:364
 #, php-format
 msgid "Congratulations! Your new site, %s, is almost ready."
 msgstr "Поздравляем! Ваш новый сайт, %s, почти готов."
 
-#: wp-signup.php:365
+#: wp-signup.php:366
 msgid "But, before you can start using your site, <strong>you must activate it</strong>."
 msgstr "Но прежде чем вы сможете пользоваться своим сайтом, <strong>нужно активировать его</strong>."
 
-#: wp-signup.php:366
+#: wp-signup.php:367
 #, php-format
 msgid "Check your inbox at <strong>%s</strong> and click the link given."
 msgstr "Проверьте почтовый ящик <strong>%s</strong> и перейдите по полученной ссылке."
 
-#: wp-signup.php:367
+#: wp-signup.php:368
 msgid "If you do not activate your site within two days, you will have to sign up again."
 msgstr "Если вы не активируете ваш сайт в течение двух дней, вам придётся регистрироваться заново."
 
-#: wp-signup.php:368
+#: wp-signup.php:369
 msgid "Still waiting for your email?"
 msgstr "Всё ещё ждёте письмо?"
 
-#: wp-signup.php:370
+#: wp-signup.php:371
 msgid "If you haven&#8217;t received your email yet, there are a number of things you can do:"
 msgstr "Если вы ещё не получили письмо со ссылкой для активации, можно сделать несколько вещей:"
 
-#: wp-signup.php:372
+#: wp-signup.php:373
 msgid "Wait a little longer. Sometimes delivery of email can be delayed by processes outside of our control."
 msgstr "Подождите ещё немного. Иногда доставка электронного письма может задержаться по независящим от нас причинам."
 
-#: wp-signup.php:373
+#: wp-signup.php:374
 msgid "Check the junk or spam folder of your email client. Sometime emails wind up there by mistake."
 msgstr "Проверьте корзину или папку для спама в вашем почтовом клиенте. Иногда письма по ошибке оказываются там."
 
-#: wp-signup.php:374
+#: wp-signup.php:375
 #, php-format
 msgid "Have you entered your email correctly?  You have entered %s, if it&#8217;s incorrect, you will not receive your email."
 msgstr "Вы правильно указали свой e-mail? У нас он записан как %s, но если это неправильный адрес, письмо не придёт."
 
-#: wp-signup.php:389
+#: wp-signup.php:390
 msgctxt "Multisite active signup type"
 msgid "all"
 msgstr "все"
 
-#: wp-signup.php:390
+#: wp-signup.php:391
 msgctxt "Multisite active signup type"
 msgid "none"
 msgstr "нет"
 
-#: wp-signup.php:391
+#: wp-signup.php:392
 msgctxt "Multisite active signup type"
 msgid "blog"
 msgstr "блоги"
 
-#: wp-signup.php:392
+#: wp-signup.php:393
 msgctxt "Multisite active signup type"
 msgid "user"
 msgstr "пользователи"
 
-#: wp-signup.php:395
+#: wp-signup.php:396
 #, php-format
 msgid "Greetings Site Administrator! You are currently allowing &#8220;%s&#8221; registrations. To change or disable registration go to your <a href=\"%s\">Options page</a>."
 msgstr "Приветствуем администратора сайта! Текущий режим регистрации: &laquo;%s&raquo;. Чтобы изменить его или запретить регистрацию, перейдите на вашу <a href=\"%s\">страницу настроек</a>."
 
-#: wp-signup.php:401
+#: wp-signup.php:402
 msgid "Registration has been disabled."
 msgstr "Регистрация отключена."
 
-#: wp-signup.php:408
+#: wp-signup.php:409
 #, php-format
 msgid "You must first <a href=\"%s\">log in</a>, and then you can create a new site."
 msgstr "Вы должны <a href=\"%s\">авторизоваться</a>, чтобы создать новый сайт."
 
-#: wp-signup.php:416
+#: wp-signup.php:417
 msgid "User registration has been disabled."
 msgstr "Регистрация пользователей отключена."
 
-#: wp-signup.php:422
+#: wp-signup.php:423
 msgid "Site registration has been disabled."
 msgstr "Регистрация сайтов отключена."
 
-#: wp-signup.php:436
+#: wp-signup.php:437
 msgid "Sorry, new registrations are not allowed at this time."
 msgstr "Извините, в настоящий момент регистрация закрыта."
 
-#: wp-signup.php:438
+#: wp-signup.php:439
 msgid "You are logged in already. No need to register again!"
 msgstr "Вы уже вошли на сайт. Нет нужды регистрироваться снова!"
 
-#: wp-signup.php:444
+#: wp-signup.php:445
 #, php-format
 msgid "<p><em>The site you were looking for, <strong>%s</strong> does not exist, but you can create it now!</em></p>"
 msgstr "<p><em>Сайта, который вы ищете, <strong>%s</strong>, не существует. Но его можно создать прямо сейчас!</em></p>"
 
-#: wp-signup.php:446
+#: wp-signup.php:447
 #, php-format
 msgid "<p><em>The site you were looking for, <strong>%s</strong>, does not exist.</em></p>"
 msgstr "<p><em>Сайта, который вы ищете, <strong>%s</strong>, не существует.</em></p>"
@@ -2262,47 +2264,47 @@ msgid "This site has been archived or suspended."
 msgstr "Этот сайт заархивирован или заморожен."
 
 #. Not gettexted string WP_I18N_BLOG_DOESNT_EXIST
-#: wp-includes/ms-load.php:187
+#: wp-includes/ms-load.php:186
 msgid "That site does not exist. Please try <a href=\"%s\">%s</a>."
 msgstr "Такого сайта не существует. Попробуйте <a href=\"%s\">%s</a>."
 
 #. Not gettexted string WP_I18N_NO_SITE_DEFINED
-#: wp-includes/ms-load.php:189
-msgid "No site defined on this host. If you are the owner of this site, please check <a href=\"http://codex.wordpress.org/Debugging_WPMU\">Debugging WPMU</a> for help."
-msgstr "Этому адресу не соответствует ни один сайт. Если вы администратор этого сайта, обратитесь к статье <a href=\"http://codex.wordpress.org/Debugging_WPMU\">&laquo;Отладка WPMU&raquo;</a>."
+#: wp-includes/ms-load.php:188
+msgid "No site defined on this host. If you are the owner of this site, please check <a href=\"http://codex.wordpress.org/Debugging_a_WordPress_Network\">Debugging a WordPress Network</a> for help."
+msgstr "Этому адресу не соответствует ни один сайт. Если вы владелец этого сайта, обратитесь к статье <a href=\"http://codex.wordpress.org/Debugging_a_WordPress_Network\">&laquo;Отладка сети WordPress&raquo;</a>."
 
 #. Not gettexted string WP_I18N_FATAL_ERROR
-#: wp-includes/ms-load.php:205
+#: wp-includes/ms-load.php:202
 msgid "Error establishing database connection"
 msgstr "Ошибка установки соединения с базой данных"
 
 #. Not gettexted string WP_I18N_CONTACT_OWNER
-#: wp-includes/ms-load.php:209
+#: wp-includes/ms-load.php:206
 msgid "If your site does not display, please contact the owner of this network."
 msgstr "Если ваш сайт не отображается, свяжитесь с администратором этой сети."
 
 #. Not gettexted string WP_I18N_CHECK_MYSQL
-#: wp-includes/ms-load.php:210
+#: wp-includes/ms-load.php:207
 msgid "If you are the owner of this network please check that MySQL is running properly and all tables are error free."
 msgstr "Если вы администратор сети &#8212; убедитесь, что MySQL работает и в таблицах нет ошибок."
 
 #. Not gettexted string WP_I18N_TABLES_MISSING_LONG
-#: wp-includes/ms-load.php:212
+#: wp-includes/ms-load.php:209
 msgid "<strong>Database tables are missing.</strong> This means that MySQL is not running, WordPress was not installed properly, or someone deleted <code>%s</code>. You really should look at your database now."
 msgstr "<strong>В базе данных отсутствуют таблицы.</strong> Это значит, что MySQL не запущен, WordPress неправильно установлен, либо кто-то удалил <code>%s</code>. Стоит проверить базу данных."
 
 #. Not gettexted string WP_I18N_NO_SITE_FOUND
-#: wp-includes/ms-load.php:214
+#: wp-includes/ms-load.php:211
 msgid "<strong>Could not find site <code>%1$s</code>.</strong> Searched for table <code>%2$s</code> in database <code>%3$s</code>. Is that right?"
 msgstr "<strong>Не удалось найти сайт <code>%1$s</code>.</strong> Поиск выполнялся в таблице <code>%2$s</code> базы данных <code>%3$s</code>. Это правильно?"
 
 #. Not gettexted string WP_I18N_RTFM
-#: wp-includes/ms-load.php:216
-msgid "Read the <a target=\"_blank\" href=\"http://codex.wordpress.org/Debugging_WPMU\">bug report</a> page. Some of the guidelines there may help you figure out what went wrong."
-msgstr "Прочтите страницу для <a target=\"_blank\" href=\"http://codex.wordpress.org/Debugging_WPMU\">сообщения об ошибках</a>. Некоторые рекомендации могут помочь вам понять, что нужно исправить."
+#: wp-includes/ms-load.php:213
+msgid "Read the <a target=\"_blank\" href=\"http://codex.wordpress.org/Debugging_a_WordPress_Network\">bug report</a> page. Some of the guidelines there may help you figure out what went wrong."
+msgstr "Прочтите страницу для <a target=\"_blank\" href=\"http://codex.wordpress.org/Debugging_a_WordPress_Network\">сообщения об ошибках</a>. Некоторые рекомендации могут помочь вам понять, что нужно исправить."
 
 #. Not gettexted string WP_I18N_STUCK
-#: wp-includes/ms-load.php:217
+#: wp-includes/ms-load.php:214
 msgid "If you&#8217;re still stuck with this message, then check that your database contains the following tables:"
 msgstr "Если вы по-прежнему видите это сообщение &#8212; убедитесь, что в базе данных содержатся следующие таблицы:"
 
