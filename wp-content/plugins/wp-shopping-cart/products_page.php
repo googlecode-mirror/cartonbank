@@ -298,7 +298,7 @@ function nzshpcrt_display_categories_groups()
 			 //pagination links
 
 				$output = "<div id='pagination' class='width:470px;clear:both;'><br>";
-				$output .= TXT_WPSC_TOTAL_ITEMS.": ".$items_count. "<br>";
+				$output .= TXT_WPSC_TOTAL_ITEMS.": ".$items_count. "<br><br>";
 
 				if($offset >= $items_on_page*2)
 				{
@@ -313,7 +313,7 @@ function nzshpcrt_display_categories_groups()
 				}
 				$output .= "</br></div>";
 
-				echo "<div style='clear:both;'>".$output."</div>";
+				echo "<div style='clear:both;'>".$output."<br></div>";
 				
              }
          }
