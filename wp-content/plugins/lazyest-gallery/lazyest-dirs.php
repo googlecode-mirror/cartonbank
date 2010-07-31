@@ -38,7 +38,7 @@ function showDirs() {					// Builds folders view page
 						<div class="folders">'."\n".'
 							<table summary="Categories" class="dir_view">'."\n".'
 								<tr>'."\n".'
-									<td colspan="'. $columns .'" class="folder"><img src="'.get_settings('siteurl').'/wp-content/plugins/lazyest-gallery/images/folders.png" alt="Folders" class="icon" /> &raquo; '. __("Folders", $lg_text_domain) .'</td>'."\n".'
+									<td colspan="'. $columns .'" class="folder"><img src="'.get_option('siteurl').'/wp-content/plugins/lazyest-gallery/images/folders.png" alt="Folders" class="icon" /> &raquo; '. __("Folders", $lg_text_domain) .'</td>'."\n".'
 								</tr>'."\n".'
 								<tr>';
 					$runonce = true;

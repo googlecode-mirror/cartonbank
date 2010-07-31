@@ -39,7 +39,7 @@ function lg_build_editcss_form() {
 		<!-- Shortcuts-->
 		<div style="padding:5px;display:block;background:#efefef;border:1px solid #ccc;height:20px;">
 			<a onClick="history.go(-1)" style="cursor:pointer;float:left">&laquo; <?php _e('Back', $lg_text_domain); ?></a>
-			<a href="<?php echo get_settings('siteurl'); ?>/wp-admin/<?php echo LG_ADM_PAGE; ?>" style="float:right">&laquo; <?php _e('Admin page', $lg_text_domain); ?></a>
+			<a href="<?php echo get_option('siteurl'); ?>/wp-admin/<?php echo LG_ADM_PAGE; ?>" style="float:right">&laquo; <?php _e('Admin page', $lg_text_domain); ?></a>
 		</div>
 		<!-- End of Shortcuts-->
 

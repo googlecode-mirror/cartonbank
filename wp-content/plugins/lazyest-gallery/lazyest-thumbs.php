@@ -240,7 +240,7 @@ function showThumbs() {					// Builds thumbnails view page
 			if (strlen($currentdir) !=0){
 				if ($user_level >= 8) {
 					echo "<div class='lg_admin'>";
-						echo "<a href='".get_settings('siteurl')."/wp-admin/".LG_FLM_PAGE."&amp;captions=".$currdir."'>";
+						echo "<a href='".get_option('siteurl')."/wp-admin/".LG_FLM_PAGE."&amp;captions=".$currdir."'>";
 						echo "&raquo; ";
 						_e("Write captions for images in ", $lg_text_domain);
 						echo " ".substr($currentdir, 0, strlen($currentdir)-1);

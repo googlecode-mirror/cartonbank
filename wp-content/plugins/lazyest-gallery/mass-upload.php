@@ -56,7 +56,7 @@ function al_build_captions_form(){
 	$folder = $gallery_root.$capdir;
 
 	// $_POST['upload_folder'];
-	$allowed_types = explode(' ', trim(strtolower(get_settings('lg_fileupload_allowedtypes'))));
+	$allowed_types = explode(' ', trim(strtolower(get_option('lg_fileupload_allowedtypes'))));
 
 	if ($_POST['upload']) {
 		$action = 'upload';
@@ -102,7 +102,7 @@ function al_build_captions_form(){
 					$img2_name = $img2_name[count($img2_name)-1];
 				}
 				if (file_exists($pathtofile) && !strlen($imgalt)) {
-					$i = explode(' ', get_settings('lg_fileupload_allowedtypes'));
+					$i = explode(' ', get_option('lg_fileupload_allowedtypes'));
 					$i = implode(', ',array_slice($i, 1, count($i)-2));
 					$moved = move_uploaded_file($img1, $pathtofile2);
 
@@ -124,7 +124,7 @@ function al_build_captions_form(){
 						<p><?php _e('Confirm or rename:') ?></p>
 
 						<form action="<?php echo AL_FLM_PAGE; ?>&amp;captions=<?php echo $capdir; ?>" method="post" enctype="multipart/form-data">
-							<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo  get_settings('lg_fileupload_maxk') *1024 ?>" />
+							<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo  get_option('lg_fileupload_maxk') *1024 ?>" />
 							<input type="hidden" name="img1_type" value="<?php echo $img1_type;?>" />
 							<input type="hidden" name="img1_name" value="<?php echo $img2_name;?>" />
 							<input type="hidden" name="img1_size" value="<?php echo $img1_size;?>" />
@@ -414,7 +414,7 @@ function al_build_captions_form(){
 				<br><br><a href="<?php echo AL_FLM_PAGE ?>&amp;captions=<?php echo str_replace(" ", "%20", $act_current); ?>&amp;file_to_delete=<?php echo $righturl ?>" class="button" style="width:50px;display:block;"><?php _e('Delete', $lg_text_domain); ?></a>
 				<?
 			} else { // otherwise
-				$righturl = str_replace(" ", "%20", get_settings('siteurl')."/wp-content/plugins/lazyest-gallery/".basename(__FILE__).".php?file=". $act_current.$img."&amp;thumb=1");
+				$righturl = str_replace(" ", "%20", get_option('siteurl')."/wp-content/plugins/lazyest-gallery/".basename(__FILE__).".php?file=". $act_current.$img."&amp;thumb=1");
 				echo "<img src='".$righturl."' alt='".$img."' title='".$title."' />";
 			}
 

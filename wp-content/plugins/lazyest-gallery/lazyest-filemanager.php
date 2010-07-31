@@ -107,7 +107,7 @@ function lg_build_captions_form(){
 	$folder = $gallery_root.$capdir;
 
 	// $_POST['upload_folder'];
-	$allowed_types = explode(' ', trim(strtolower(get_settings('lg_fileupload_allowedtypes'))));
+	$allowed_types = explode(' ', trim(strtolower(get_option('lg_fileupload_allowedtypes'))));
 
 	if ($_POST['upload']) {
 		$action = 'upload';
@@ -154,7 +154,7 @@ function lg_build_captions_form(){
 				}
 
 				if (file_exists($pathtofile) && !strlen($imgalt)) {
-					$i = explode(' ', get_settings('lg_fileupload_allowedtypes'));
+					$i = explode(' ', get_option('lg_fileupload_allowedtypes'));
 					$i = implode(', ',array_slice($i, 1, count($i)-2));
 					$moved = move_uploaded_file($img1, $pathtofile2);
 
@@ -176,7 +176,7 @@ function lg_build_captions_form(){
 						<p><?php _e('Confirm or rename:') ?></p>
 
 						<form action="<?php echo LG_FLM_PAGE; ?>" method="post" enctype="multipart/form-data">
-							<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo  get_settings('lg_fileupload_maxk') *1024 ?>" />
+							<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo  get_option('lg_fileupload_maxk') *1024 ?>" />
 							<input type="hidden" name="img1_type" value="<?php echo $img1_type;?>" />
 							<input type="hidden" name="img1_name" value="<?php echo $img2_name;?>" />
 							<input type="hidden" name="img1_size" value="<?php echo $img1_size;?>" />
@@ -475,7 +475,7 @@ function lg_build_captions_form(){
 				$righturl = str_replace(" ", "%20", $gallery_address.$act_current.get_option('lg_thumb_folder').$img);
 				echo '<img src="'.$righturl.'" alt="'.$img.'"  title="'. $title . '" />';
 			} else { // otherwise
-				$righturl = str_replace(" ", "%20", get_settings('siteurl')."/wp-content/plugins/lazyest-gallery/lazyest-img.php?file=". $act_current.$img."&amp;thumb=1");
+				$righturl = str_replace(" ", "%20", get_option('siteurl')."/wp-content/plugins/lazyest-gallery/lazyest-img.php?file=". $act_current.$img."&amp;thumb=1");
 				echo "<img src='".$righturl."' alt='".$img."' title='".$title."' />";
 			}
 
@@ -705,10 +705,10 @@ function upload_page($upload) {
 
 	$folder = $gallery_root.$upload;
 
-	if ( !get_settings('lg_fileupload_minlevel') )
+	if ( !get_option('lg_fileupload_minlevel') )
 		die (__("You are not allowed to upload files", $lg_text_domain));
 
-	$allowed_types = explode(' ', trim(strtolower(get_settings('lg_fileupload_allowedtypes'))));
+	$allowed_types = explode(' ', trim(strtolower(get_option('lg_fileupload_allowedtypes'))));
 
 	foreach ($allowed_types as $type) {
 		$type_tags[] = "<code>$type</code>";
@@ -717,12 +717,12 @@ function upload_page($upload) {
 	$i = implode(', ', $type_tags);
 
 	?>
-	<p><?php printf(__('You can upload files with the extension %1$s as long as they are no larger than %2$s <abbr title="Kilobytes">KB</abbr>.', $lg_text_domain), $i, get_settings('lg_fileupload_maxk')); ?></p>
+	<p><?php printf(__('You can upload files with the extension %1$s as long as they are no larger than %2$s <abbr title="Kilobytes">KB</abbr>.', $lg_text_domain), $i, get_option('lg_fileupload_maxk')); ?></p>
 	<form action="<?php echo LG_FLM_PAGE; ?>"  method="post" enctype="multipart/form-data">
 		<p>
 			<label for="img1"><?php _e('File:', $lg_text_domain) ?></label>
 			<br />
-			<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo get_settings('lg_fileupload_maxk') * 1024 ?>" />
+			<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo get_option('lg_fileupload_maxk') * 1024 ?>" />
 			<input type="file" name="img1" id="img1" size="100" />
 			<input type="hidden" name="upload_folder" value="<?php echo $upload; ?>"/>
 		</p>

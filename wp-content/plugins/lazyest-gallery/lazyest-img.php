@@ -5,7 +5,7 @@ generateImg($_GET['file'], $_GET['thumb']);
 
 function generateImg($img, $thumb) {
 
-	$gallery_root = ABSPATH.get_settings('lg_gallery_folder');
+	$gallery_root = ABSPATH.get_option('lg_gallery_folder');
 
 	// this will prevent some unshown thumb
 	$mem = get_option('lg_buffer_size');

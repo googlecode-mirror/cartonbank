@@ -549,12 +549,12 @@ if ($user_level == 10) {
 						<table width="100%" cellspacing="2" cellpadding="5" class="editform">
 							<tr>
 								<th scope="row"><?php _e('Maximum size:', $lg_text_domain) ?> </th>
-								<td><input name="fileupload_maxk" type="text" id="fileupload_maxk" value="<?php echo get_settings('lg_fileupload_maxk'); ?>" size="4" />
+								<td><input name="fileupload_maxk" type="text" id="fileupload_maxk" value="<?php echo get_option('lg_fileupload_maxk'); ?>" size="4" />
 								<?php _e('Kilobytes (KB)') ?></td>
 							</tr>
 							<tr>
 								<th valign="top" scope="row"><?php _e('Allowed file extensions:', $lg_text_domain) ?></th>
-									<td><input name="fileupload_allowedtypes" type="text" id="fileupload_allowedtypes" value="<?php echo get_settings('lg_fileupload_allowedtypes'); ?>" size="40" />
+									<td><input name="fileupload_allowedtypes" type="text" id="fileupload_allowedtypes" value="<?php echo get_option('lg_fileupload_allowedtypes'); ?>" size="40" />
 									<br />
 									<?php _e('Recommended: <code>jpg jpeg png gif</code>. Separate by [spaces] (" ").', $lg_text_domain) ?>
 								</td>
@@ -565,7 +565,7 @@ if ($user_level == 10) {
 									<select name="fileupload_minlevel" id="fileupload_minlevel">
 									<?php
 										for ($i = 1; $i < 11; $i++) {
-											if ($i == get_settings('lg_fileupload_minlevel')) $selected = " selected='selected'";
+											if ($i == get_option('lg_fileupload_minlevel')) $selected = " selected='selected'";
 											else $selected = '';
 											echo "\n\t<option value='$i' $selected>$i</option>";
 										}

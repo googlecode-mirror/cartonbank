@@ -16,7 +16,7 @@
 
 		<title><?php echo $_GET['image'] ?></title>
 
-		<link rel="stylesheet" href="<?php get_settings('home'); ?>/wp-content/plugins/lazyest-gallery/lazyest-style.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="<?php get_option('home'); ?>/wp-content/plugins/lazyest-gallery/lazyest-style.css" type="text/css" media="screen" />
 		<style type="text/css">
 			body {
 				text-align:center;
