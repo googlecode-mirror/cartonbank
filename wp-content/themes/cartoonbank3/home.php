@@ -1,3 +1,8 @@
+<?php
+$redirecturl = get_option('siteurl')."/?page_id=29";
+   header("Location: $redirecturl"); 
+?> 
+
 <?php get_header(); ?>
 
 <div id="content">
