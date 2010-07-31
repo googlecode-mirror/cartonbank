@@ -219,10 +219,41 @@ function nzshpcrt_display_categories_groups()
            }
            else if ($catid == 0)
              {
+    //global $wpdb;
+    //$sql = "SELECT `wp_product_list`.* FROM `wp_product_list` WHERE `active`='1' AND `visible`='1' ORDER BY RAND(NOW()) LIMIT 1";
+    $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY RAND(NOW()) LIMIT 1"; 
+    
+    $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
+                
+                $_number = $product[0]['id'];
+                $_description = nl2br(stripslashes($product[0]['description']));
+                $_size = $product[0]['width']."px X ".$product[0]['height']."px;";
+                $_author = $product[0]['brand'];
+                $_name = $product[0]['name'];
+                $_category = $product[0]['kategoria'];
+
+                $_tags = nl2br(stripslashes($product[0]['additional_description']));
+                $_tags_array = explode(',',$_tags);
+                    //$i=0;
+                    foreach ($_tags_array as $key => $value)
+                    {
+                        $_tags_array[$key] = "<a href=\"".get_option('siteurl')."/?page_id=29&cs=".trim($_tags_array[$key])."\">".trim($_tags_array[$key])."</a>";
+                    }
+                $_tags_imploded = implode(", ", $_tags_array);
+                $_tags = $_tags_imploded;
+
+                $_bigpicstrip = "<div style=\"float:left;\"><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;".$_number."&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$product[0]['brandid']."\">".$_author."</a></b></div>";
+                $_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size;
+                $siteurl = get_option('siteurl');
+                $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
+
+    
+    
+                 
 			   // placeholder for the slide preview
-			   echo "<div id='bigpictopstrip'></div>";
-			   echo "<div id='bigpictext'></div>";
-			   echo "<div id='bigpic'></div>";
+			   echo "<div id='bigpictopstrip'>".$_bigpicstrip."</div>";
+			   echo "<div id='bigpictext'>".$_bigpictext."</div>";
+			   echo "<div id='bigpic'>".$_bigpic."</div>";
 			   echo "<div style='clear:both;'></div>";
 			   echo "<div id='bigpicbottomstrip'></div>";
 
