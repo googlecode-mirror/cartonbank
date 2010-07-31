@@ -19,15 +19,6 @@
 
 	<div id="contentbody">
 		<?php the_content(__('Читать дальше'));?>
-				<!-- ales -->
-					<?
-					//global $id;
-					//$product_id = get_product_id($id);
-					?>					
-
-					<!-- <form name='<?php echo $product_id ?>' method='post' action='http://localhost/cb/?page_id=3category=' onsubmit='submitform(this);return false;'><input name='prodid' value='<?php echo $product_id ?>' type='hidden'><div class='producttext'><input name='item' value='<?php echo $product_id ?>' type='hidden'><input name='Buy' value='Add To Cart' type='submit'></div></form> -->
-				<!-- //ales -->
-
 	</div>
 
 	<?php endwhile; else: ?>

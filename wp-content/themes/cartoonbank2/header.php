@@ -10,7 +10,7 @@
 <meta name="generator" content="WordPress <?php bloginfo('version'); ?>" />
 <!-- leave this for stats please -->
 
-<link rel="Shortcut Icon" href="<?php echo get_settings('home'); ?>/wp-content/themes/cartoonbank2/images/favicon.ico" type="image/x-icon" />
+<link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank2/images/favicon.ico" type="image/x-icon" />
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url'); ?>" />
 <link rel="alternate" type="text/xml" title="RSS .92" href="<?php bloginfo('rss_url'); ?>" />
 <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<?php bloginfo('atom_url'); ?>" />
@@ -25,8 +25,8 @@
 <body>
 
 <div id="header">
-	<!-- <a href="<?php echo get_settings('home'); ?>/"><?php bloginfo('name'); ?></a><br /> -->
-	<a href="<?php echo get_settings('home'); ?>/"><img src="<?php echo get_settings('home'); ?>/wp-admin/images/cb-logo.gif" border="0"></a><br />
+	<!-- <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a><br /> -->
+	<a href="<?php echo get_option('home'); ?>/"><img src="<?php echo get_option('home'); ?>/wp-admin/images/cb-logo.gif" border="0"></a><br />
 	<?php bloginfo('description'); ?>
 </div>
 
