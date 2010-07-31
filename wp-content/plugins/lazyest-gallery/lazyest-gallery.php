@@ -47,7 +47,7 @@ define('LG_ADM_PAGE', 'admin.php?page=lazyest-gallery/lazyest-admin.php');
 define('LG_FLM_PAGE', 'admin.php?page=lazyest-gallery/lazyest-filemanager.php');
 
 // Localization domain
-load_plugin_textdomain('lazyestgallery','wp-content/plugins/lazyest-gallery/');
+load_plugin_textdomain('lazyestgallery',false,'wp-content/plugins/lazyest-gallery/');
 $lg_text_domain = "lazyestgallery";
 
 // Initialize all variables
@@ -87,7 +87,7 @@ function showGallery() { 				// Builds main gallery page
 		echo "</p>";
 		echo "<p>". __('Check your settings', $lg_text_domain);
 		if ($user_level >= 8) {
-			echo "<a href='".get_settings('siteurl')."/wp-admin/". LG_ADM_PAGE ."'>";
+			echo "<a href='".get_option('siteurl')."/wp-admin/". LG_ADM_PAGE ."'>";
 			_e('here', $lg_text_domain);
 			echo "</a>";
 
@@ -110,7 +110,7 @@ function showGallery() { 				// Builds main gallery page
 
 	if ($user_level >= 8) {
 		echo "<div class='lg_admin'>";
-			echo "<a href='".get_settings('siteurl')."/wp-admin/". LG_ADM_PAGE ."'>";
+			echo "<a href='".get_option('siteurl')."/wp-admin/". LG_ADM_PAGE ."'>";
 			_e('&raquo; Administrate Gallery', $lg_text_domain);
 			echo "</a>";
 		echo "</div>";
@@ -166,10 +166,10 @@ function lazyestInit() {					// Define variables values
 			$gallery_page_name = $np->post_name;
 		}
 	}
-	if (strlen(get_settings('permalink_structure')) == 0){
-		$gallery_temp_uri = get_settings('home')."/index.php?page_id=". $gallery_ID;
+	if (strlen(get_option('permalink_structure')) == 0){
+		$gallery_temp_uri = get_option('home')."/index.php?page_id=". $gallery_ID;
 	} else {
-		$gallery_temp_uri = get_settings('home')."/index.php/". $gallery_page_name."/";
+		$gallery_temp_uri = get_option('home')."/index.php/". $gallery_page_name."/";
 	}
 
 	if(!$gallery_address){
@@ -259,8 +259,8 @@ function lazyestInit() {					// Define variables values
 	}
 
 	// Re-define right values for the most important vars
-	$gallery_root = str_replace("\\", "/", ABSPATH.get_settings('lg_gallery_folder'));
-	$gallery_address = get_settings('siteurl')."/".get_settings('lg_gallery_folder');
+	$gallery_root = str_replace("\\", "/", ABSPATH.get_option('lg_gallery_folder'));
+	$gallery_address = get_option('siteurl')."/".get_option('lg_gallery_folder');
 }
 
 function setCurrentdir() {
@@ -328,7 +328,7 @@ function createNavigation(){
 
 	$path = pathinfo($file);
 
-	echo '<div class="top_navigator">'. __('Now Viewing:', $lg_text_domain) .' <a href="'. get_settings('siteurl') .'">'. __('Home', $lg_text_domain) .'</a> &raquo; <a href="'.get_option('lg_gallery_uri').'">'. __('Gallery', $lg_text_domain) .'</a> ';
+	echo '<div class="top_navigator">'. __('Now Viewing:', $lg_text_domain) .' <a href="'. get_option('siteurl') .'">'. __('Home', $lg_text_domain) .'</a> &raquo; <a href="'.get_option('lg_gallery_uri').'">'. __('Gallery', $lg_text_domain) .'</a> ';
 
 	foreach ($nav as $n) {
 		$current .= $n.'/';
@@ -398,9 +398,11 @@ function get_imgfiles ($dir = ''){
 				if (is_readable($location.'/'.$dir_filea) &&
   					eregi('^.*\.(jpg|gif|png|jpeg)$', $dir_filea))
 				{
+					$guid = com_create_guid();
+
 					$result = rename($location.'/'.$dir_filea, $location.'/'.'~'.$dir_filea.'~'); 
 					$purified = rus2translit($dir_filea);  
-					$result = rename($location.'/'.'~'.$dir_filea.'~', $location.'/'.$purified);
+					$result = rename($location.'/'.'~'.$dir_filea.'~', $location.'/'.$guid.$purified);
 				} 
 				else
 				{
@@ -495,7 +497,7 @@ function gallery_add_pages() {		// Calls the admin panel file
 	global $user_level;
 
 	// gallery_add_pages() is the sink function for the 'admin_menu' hook
-	$upload_level = get_settings('lg_fileupload_minlevel');
+	$upload_level = get_option('lg_fileupload_minlevel');
 	if ($user_level >= $upload_level) {
 		add_menu_page('Lazyest Gallery', 'Lazyest Gallery', $upload_level, 'lazyest-gallery/lazyest-admin.php');
 		add_submenu_page('lazyest-gallery/lazyest-admin.php', 'Lazyest Gallery', 'File Manager', $upload_level, 'lazyest-gallery/lazyest-filemanager.php', lg_build_captions_form);
