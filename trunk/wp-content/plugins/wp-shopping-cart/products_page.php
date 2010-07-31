@@ -335,9 +335,16 @@ function nzshpcrt_display_categories_groups()
 				{
 					// echo "Previous page" link
 					$offset_back = $offset-$items_on_page*2;
-					$output .= "<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a>&nbsp;|&nbsp;";
+					$output .= "<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a>&nbsp;";
 				}
-				if($offset < $items_count)
+                $pagenum = 1;
+                for ($i=0; $i<$items_count; $i=$i+$items_on_page)
+                    {
+                       $output .= " [<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$i."'>".$pagenum ."</a>] ";
+                       $pagenum++;
+                    }
+                
+				if($offset < $items_count) 
 				{
 					// echo "Next page" link
 					$output .= "<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$offset."'>".TXT_WPSC_NEXT_PAGE." >></a>";
