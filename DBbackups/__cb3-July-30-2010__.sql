@@ -18,8 +18,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `z58365_cbru3`
 --
-CREATE DATABASE `z58365_cbru3` DEFAULT CHARACTER SET cp1251 COLLATE cp1251_general_ci;
-USE `z58365_cbru3`;
+-- CREATE DATABASE `z58365_cbru3` DEFAULT CHARACTER SET cp1251 COLLATE cp1251_general_ci;
+-- USE `z58365_cbru3`;
 
 -- --------------------------------------------------------
 
