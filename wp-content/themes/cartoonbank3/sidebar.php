@@ -91,14 +91,14 @@
     echo $options;
     echo "</div>";
 ?>
-
+<div style="float:right;">
 	<br><h2>Вход</h2>
-		<ul>
+		<ul style="text-align:right;">
 		<?php wp_register(); ?>
 		<?php wp_loginout(); ?>
 		<?php wp_meta(); ?>
 		</ul>
-
+</div>
 </div>
 
 <!-- end sidebar -->
