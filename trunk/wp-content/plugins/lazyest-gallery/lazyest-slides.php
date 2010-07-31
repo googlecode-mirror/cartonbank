@@ -116,7 +116,7 @@ function showSlide($slidefile) {		// Builds slides view page
 
 			if(get_option('lg_use_slides_popup') == "TRUE") {
 				// Popup
-				echo '<a href="javascript:void(window.open(\''. get_settings('home') .'/wp-content/plugins/lazyest-gallery/lazyest-popup.php?image='.$slide.'&folder='.$currentdir.'\',\'\',\'resizable=no,location=no,menubar=no,scrollbars=no,status=no,toolbar=no,fullscreen=no,dependent=yes,width='.$xsize.',height='.$ysize.',left=50,top=50\'))"><img src="'.$gallery_address.$currentdir.$slidesfolder.$slide .'" alt="'.$slide.'" title="'. $title .'"/></a>';
+				echo '<a href="javascript:void(window.open(\''. get_option('home') .'/wp-content/plugins/lazyest-gallery/lazyest-popup.php?image='.$slide.'&folder='.$currentdir.'\',\'\',\'resizable=no,location=no,menubar=no,scrollbars=no,status=no,toolbar=no,fullscreen=no,dependent=yes,width='.$xsize.',height='.$ysize.',left=50,top=50\'))"><img src="'.$gallery_address.$currentdir.$slidesfolder.$slide .'" alt="'.$slide.'" title="'. $title .'"/></a>';
 			} else {
 
 				if( file_exists($gallery_root.$currentdir.'captions.xml')){
@@ -209,7 +209,7 @@ function showSlide($slidefile) {		// Builds slides view page
 			if (strlen($currentdir) !=0){
 				if ($user_level >= 8) {
 					echo "<div class='lg_admin'>";
-					echo "<a href='".get_settings('siteurl')."/wp-admin/".LG_FLM_PAGE."&amp;captions=".$currdir."'>";
+					echo "<a href='".get_option('siteurl')."/wp-admin/".LG_FLM_PAGE."&amp;captions=".$currdir."'>";
 					echo "&raquo; ". __('Write a caption for ', $lg_text_domain) . $slide;
 					echo "</a>";
 					echo "</div>";

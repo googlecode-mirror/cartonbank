@@ -64,16 +64,16 @@ function lg_wizard_form() {
 		<form style="padding-top:20px;" action=""  method="post" enctype="multipart/form-data">
 			<table summary="wizard">
 				<tr>
-					<td><?php _e('Username:', $lg_text_domain); ?> </td><td><input type="text" name="wizard_username" value="<?php echo get_settings('lg_wizard_user'); ?>"  size="25" class="code" /></td>
+					<td><?php _e('Username:', $lg_text_domain); ?> </td><td><input type="text" name="wizard_username" value="<?php echo get_option('lg_wizard_user'); ?>"  size="25" class="code" /></td>
 				</tr>
 				<tr>
-					<td><?php _e('Password:', $lg_text_domain); ?> </td><td><input type="password" name="wizard_password" value="<?php echo get_settings('lg_wizard_password'); ?>"  size="25" class="code" /></td>
+					<td><?php _e('Password:', $lg_text_domain); ?> </td><td><input type="password" name="wizard_password" value="<?php echo get_option('lg_wizard_password'); ?>"  size="25" class="code" /></td>
 				</tr>
 				<tr>
 					<td style="vertical-align:middle"><?php _e('Download Registry File:', $lg_text_domain); ?> &raquo;</td>
 					<td style="text-align:center;">
-						<a href="<?php echo get_settings('home'); ?>/wp-content/plugins/lazyest-gallery/lazyest-wizard.php?step=reg">
-							<img src="<?php echo get_settings('home'); ?>/wp-content/plugins/lazyest-gallery/images/reg.jpg" alt="Windows Registry File" />
+						<a href="<?php echo get_option('home'); ?>/wp-content/plugins/lazyest-gallery/lazyest-wizard.php?step=reg">
+							<img src="<?php echo get_option('home'); ?>/wp-content/plugins/lazyest-gallery/images/reg.jpg" alt="Windows Registry File" />
 						</a>
 					</td>
 				</tr>
