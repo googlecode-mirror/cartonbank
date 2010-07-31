@@ -256,6 +256,7 @@ class nzshpcrt_variations
   function display_product_variations($product_id,$no_label = false, $no_br = false )
     {
      global $wpdb;
+	 $output = null;
     $variation_assoc_sql = "SELECT * FROM `".$wpdb->prefix."variation_associations` WHERE `type` IN ('product') AND `associated_id` IN ('$product_id')";
     $variation_assoc_data = $wpdb->get_results($variation_assoc_sql,ARRAY_A);
     if($variation_assoc_data != null)
