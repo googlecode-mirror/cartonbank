@@ -15,7 +15,7 @@
 */
 
 body {
-	/*background: #FFFFFF url(images/content5.gif) top center repeat-y;*/
+	background: #FFFFFF url(images/content6.gif) top center repeat-y;
 	color: #333333;
 	font-size: 11px;
 	font-family: Verdana, Helvetica, Sans-Serif;
@@ -95,7 +95,7 @@ a:hover{
 	
 #navbar ul li a {
 	font-family: Times New Roman, Helvetica, Sans-Serif;
-	font-size: 22px;
+	font-size: 18px;
 	color: #333333;
 	padding: 0px 10px 0px 10px;
 	margin: 0px;
@@ -113,10 +113,10 @@ a:hover{
 
 #sidebar      {
 	float: left;
-	width: 190px;
+	width: 180px;
 	margin: 0px 20px 0px 0px;
 	padding: 20px 0px 0px 0px;
-    text-align: left;
+    text-align: right;
 	}
 	
 #sidebar ul {
@@ -221,7 +221,7 @@ blockquote{
 	float: left;
 	width: 750px;
 	margin: 0px 0px 0px 0px;
-	padding: 10px 10px 10px 10px;
+	padding: 0px 0px 0px 0px;
 	}
 	
 #contentmiddle p img{
@@ -295,10 +295,10 @@ blockquote{
 
 #contentright {
 	float: right;
-	width: 190px;
-	margin: 0px 0px 0px 0px;
+	width: 180px;
+	margin: 8px 0px 0px 0px;
 	padding: 10px 0px 0px 0px;
-	text-align: left;
+	text-align: right;
 	}
 
 #contentright p{
@@ -311,6 +311,7 @@ blockquote{
 	list-style: none;
 	margin: 0px;
 	padding: 0px 0px 20px 0px;
+	float:left;
 	}
 	
 #contentright ul li {
@@ -330,13 +331,15 @@ blockquote{
 
 #item {
 text-align:center;
+margin-right:6px;
+float:right;
 }
 	
 #items {
 float:right;
 width:750px;
-margin-top: 2px;
-text-align: right;
+margin-top: 15px;
+text-align: justify;
 }
 
 #bigpicbottomstrip
@@ -344,10 +347,9 @@ text-align: right;
 width:750px;
 float:right;
 background-color: white;
-padding-top:4px;
-padding-bottom:6px;
+padding-top:15px;
+padding-bottom:15px;
 text-align: right;
-font-size:14px;
 border-bottom: 5px solid #658DB5;
 }
 
@@ -356,16 +358,15 @@ border-bottom: 5px solid #658DB5;
 width:750px;
 float:right;
 background-color: white;
-padding-bottom:4px;
+padding-bottom:15px;
 text-align: right;
 font-size:14px;
 }
 #bigpictext
 {
-width:150px;
+width:135px;
 float:left;
-background-color: white;
-font-size:14px;
+/*padding-right:15px;*/
 }
 
 #bigpic
@@ -510,3 +511,17 @@ p.comments_link  img{
 	border-bottom-style: none;
 	border-left-style: none;
 	}
+
+#shoppingcartcontents
+{
+	float:right;
+	text-align: right;
+	border: 1px solid #C0C0C0;
+}
+#sideshoppingcart
+{
+	float:right;
+	text-align: right;
+	width:168px;
+	padding:0px;
+}
