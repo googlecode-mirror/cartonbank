@@ -81,11 +81,11 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	$_tags = $_tags_imploded;
 
 
-	$_bigpicstrip = "<b>№&nbsp;".$_number."/".$_author."</b>";
-	$_bigpictext = "<b>Название: </b>" .$_name."<br><br><b>Категория: </b> ".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b> ".$_tags."<br><br><b>Размер изображения: </b> ".$_size;
+	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;".$_number."&nbsp;<b>".$_author."</b></div>";
+	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size;
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
 
-$_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29&amp;category=\' method=\'POST\'>Выбор лицензии: <input type=\'radio\' name=\'\'>ограниченная <input type=\'radio\' name=\'\'>стандартная <input type=\'radio\' name=\'\'>расширенная&nbsp;&nbsp;&nbsp;&nbsp;<input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'>Купить: <input border=\'0\' type=\'image\' value=\'В корзину\' name=\'Buy\' src=\'http://cartoonbank.ru/cb3/img/cart.gif\'></form></div>";
+$_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29&amp;category=\' method=\'POST\'>Выбор лицензии: <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=238\'>ограниченная</a> <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=242\'>стандартная</a> <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=245\'>расширенная</a>&nbsp;&nbsp;&nbsp;&nbsp;<input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'><input id=\'searchsubmit\' value=\'Купить\' type=\'submit\'></form></div>";
 
 
 
