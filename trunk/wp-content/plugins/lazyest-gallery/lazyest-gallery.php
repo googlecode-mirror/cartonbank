@@ -398,7 +398,7 @@ function get_imgfiles ($dir = ''){
 				if (is_readable($location.'/'.$dir_filea) &&
   					eregi('^.*\.(jpg|gif|png|jpeg)$', $dir_filea))
 				{
-					$guid = com_create_guid();
+					$guid = uniqid('', true);
 
 					$result = rename($location.'/'.$dir_filea, $location.'/'.'~'.$dir_filea.'~'); 
 					$purified = rus2translit($dir_filea);  
