@@ -2,9 +2,21 @@
 //ales
 function product_display_paginated($product_list, $group_type, $group_sql = '', $search_sql = '', $offset, $items_on_page)
 	{
+        
 	 global $wpdb;
 	 $siteurl = get_option('siteurl');
 	//todo: remove special
+    $andcategory = "";
+   
+    if (isset($_GET['category']))
+    {
+        $andcategory = " AND `wp_product_categories`.`id`=".$_GET['category']." ";
+    }
+    else
+    {
+        $andcategory = "";
+    }
+   
 	if ($search_sql != '')
 	{
 		$sql = $search_sql;
@@ -13,15 +25,11 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	{
 		if ($_GET['brand'] == '')
 		{
-        $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` AS brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
-        
-		//$sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` $group_sql ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
-		}
+        $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` AS brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
+       	}
 		else
 		{ 
-        $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
-        
-		//$sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` $group_sql ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
+        $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
 		}
 	}
 
@@ -42,12 +50,8 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
  
 				  // thumbs output
 				  if ($preview_mode==1)
-					  // Popup 
-					  //onclick="zoom('/zoom.html?FID=210g0q9zrfn7kcrt',640,480,'210g0q9zrfn7kcrt'); return false;"
 					{
 					  $output .= "<div id='item' class='item'>"; // start item
-//					  $output .= "[#".$product['id']. "] <b>" . stripslashes($product['name'])."</b>";
-	// WORKS: $output .= "<a href=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product-images/".$product['image']."\"  onclick=\"window.open(this.href, 'cartoon', 'width=400,height=400,scrollbars=0,resizable=0'); return false;\">";
 
 	$addtocart = "<form name=$num method=POST action=".get_option('product_list_url')." onsubmit=submitform(this);return false; >";
 	$addtocart .= "<input type=hidden name=prodid value=".$product['id'].">";
@@ -56,13 +60,8 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 
 	$vstavka = "document.getElementById('bigpic').innerHTML = '<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>';";
 
-
-	//$vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='<b>Название:</b>" .$product['name']."---------<b>#".$product['id']."/".$product['brand']."</b>";
-
-
-
-	//$vstavka .=  "document.getElementById('bigpictext').innerHTML ='<u>Номер изображения:</u> #".$product['id']."<br><u>Название:</u> ".$product['name']."<br><u>Автор:</u> ".$product['brand']."<br><u>Описание:</u> ".stripslashes($descr)."<br><u>Тэги:</u> ".nl2br(stripslashes($product['additional_description'])) ."<br><u>Размер изображения:</u> ".$product['width']."px X ".$product['height']."px;' ;";
-	
+    // here we prepare data for the BIGPIC preview
+    
 	$_number = $product['id'];
 	$_description = nl2br(stripslashes($product['description']));
 	$_size = $product['width']."px X ".$product['height']."px;";
@@ -86,7 +85,6 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
 
 $_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29&amp;category=\' method=\'POST\'>Выбор лицензии: <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=238\'>ограниченная</a> <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=242\'>стандартная</a> <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=245\'>расширенная</a>&nbsp;&nbsp;&nbsp;&nbsp;<input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'><input id=\'searchsubmit\' value=\'Купить\' type=\'submit\'></form></div>";
-
 
 
 	$vstavka = "document.getElementById('bigpic').innerHTML ='".$_bigpic."';";
@@ -184,6 +182,7 @@ else
 		  $output .= "</div>";
 		  return $output;
   }
+  // end function output first page
 }
 /// ales
 
