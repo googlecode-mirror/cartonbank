@@ -8,22 +8,22 @@ var getresults=function(results)
   document.getElementById('formcontent').innerHTML = results;
   document.getElementById('additem').style.display = 'none';
   document.getElementById('productform').style.display = 'block';
-  document.getElementById('loadingindicator_span').style.display = 'none';
+  //document.getElementById('loadingindicator_span').style.display = 'none';
   initLightbox();
   }
 
 function filleditform(prodid)
    {
    ajax.post("index.php",getresults,"ajax=true&admin=true&prodid="+prodid);
-   document.getElementById('loadingimage').src = '../wp-content/plugins/wp-shopping-cart/images/indicator.gif';
-   document.getElementById('loadingindicator_span').style.display = 'inline';
+   //document.getElementById('loadingimage').src = '../wp-content/plugins/wp-shopping-cart/images/indicator.gif';
+   //document.getElementById('loadingindicator_span').style.display = 'inline';
    }
    
 function fillvariationform(variation_id)
   {
   ajax.post("index.php",getresults,"ajax=true&admin=true&variation_id="+variation_id);
-  document.getElementById('loadingimage').src = '../wp-content/plugins/wp-shopping-cart/images/indicator.gif';
-  document.getElementById('loadingindicator_span').style.display = 'inline';
+  //document.getElementById('loadingimage').src = '../wp-content/plugins/wp-shopping-cart/images/indicator.gif';
+  //document.getElementById('loadingindicator_span').style.display = 'inline';
   }
    
 function showaddform()
