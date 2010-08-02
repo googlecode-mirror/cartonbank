@@ -8,7 +8,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	//todo: remove special
     $andcategory = "";
    
-    if (isset($_GET['category']))
+    if (isset($_GET['category']) and is_numeric($_GET['category']))
     {
         $andcategory = " AND `wp_product_categories`.`id`=".$_GET['category']." ";
     }
