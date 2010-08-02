@@ -4338,7 +4338,8 @@ function rus2translit($string){
         'Ф' => 'F',   'Х' => 'H',   'Ц' => 'C',  
         'Ч' => 'Ch',  'Ш' => 'Sh',  'Щ' => 'Sch',  
         'Ь' => "'",  'Ы' => 'Y',   'Ъ' => "'",  
-        'Э' => 'E',   'Ю' => 'Yu',  'Я' => 'Ya',  
+        'Э' => 'E',   'Ю' => 'Yu',  'Я' => 'Ya', 
+        ' ' => '_',
     );  
     return strtr($string, $converter);  
 } 
