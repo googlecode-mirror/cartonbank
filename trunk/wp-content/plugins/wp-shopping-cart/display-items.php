@@ -1,11 +1,9 @@
-<?php
+<?php 
 $category_data = null;
-
+$basepath = str_replace("/wp-admin", "" , getcwd()); 
+$basepath = str_replace("\\wp-admin", "" , $basepath);
 // add product
-if($_POST['submit_action'] == 'add') {  
-  $basepath = str_replace("/wp-admin", "" , getcwd());
-  $basepath = str_replace("\wp-admin", "" , $basepath);
-
+if($_POST['submit_action'] == 'add') {
   $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
   $product_images = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
   $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
@@ -13,6 +11,8 @@ if($_POST['submit_action'] == 'add') {
   $image = '';
 
   if($_FILES['file']['name'] != null)  {
+      //transliterate file
+      $_FILES['file']['name'] = rus2translit($_FILES['file']['name']); 
       //rename the file  
       $_FILES['file']['name'] = uniqid('', true).$_FILES['file']['name'];
 		//$_FILES['file']['name'] = 'blah-blah'.$_FILES['file']['name'];
@@ -141,7 +141,7 @@ $visible = '0';
 if ($_POST['visible'] == 'on')
 	$visible = '1';  
 
-$insertsql = "INSERT INTO `".$wpdb->prefix."product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible` ) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_POST['price']))."', '".$wpdb->escape($_POST['pnp'])."', '".$wpdb->escape($_POST['international_pnp'])."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible');";
+  $insertsql = "INSERT INTO `".$wpdb->prefix."product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible` ) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_POST['price']))."', '".$wpdb->escape($_POST['pnp'])."', '".$wpdb->escape($_POST['international_pnp'])."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible');";
 
   if($wpdb->query($insertsql))
     {
@@ -234,7 +234,7 @@ if($_POST['submit_action'] == "edit")
 		{
 		$var = edit_extra_images($id);
 		}
-	  $basepath = str_replace("/wp-admin", "" , getcwd());
+	  //$basepath = str_replace("/wp-admin", "" , getcwd()); this defined at the top of the page
 	  $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
 	  $product_images = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
 	  $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
@@ -608,7 +608,7 @@ if($product_list != null)
     echo "            </td>\n\r";
 
 	echo "            <td style='background-color:#DFEFCF;'>\n\r";
-    $basepath = str_replace("/wp-admin", "" , getcwd());
+    //$basepath = str_replace("/wp-admin", "" , getcwd());  this defined at the top of the page
 
     $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
     if(file_exists($imagedir.$product['image']))
@@ -872,7 +872,7 @@ function al_watermark($path)
 	if($filetype == ".gif")  $image = @imagecreatefromgif($imagesource);  
 	if($filetype == ".jpg")  $image = @imagecreatefromjpeg($imagesource);  
 	if($filetype == ".png")  $image = @imagecreatefrompng($imagesource);  
-	if (!$image) die();
+	if (!$image) die(); 
 	$watermarkpath = $basepath."/wp-content/plugins/wp-shopping-cart/images/watermark.gif";
 	$watermark = @imagecreatefromgif($watermarkpath);
 	$imagewidth = imagesx($image);
