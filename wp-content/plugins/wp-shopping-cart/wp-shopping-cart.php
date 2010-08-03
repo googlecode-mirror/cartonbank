@@ -784,7 +784,7 @@ if($product_brands_data[0]['count'] == 0)
     {
     if(!glob($product_thumbnails.$product['image']))
       {
-      $new_filename = $product['id']."_".$product['image'];
+      $new_filename = $product['image']; //$new_filename = $product['id']."_".$product['image'];
       if(glob($image_dir.$product['image']))
         {
         copy($image_dir.$product['image'], $product_thumbnails.$new_filename);
