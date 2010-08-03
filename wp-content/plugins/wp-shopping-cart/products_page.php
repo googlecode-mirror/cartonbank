@@ -29,7 +29,7 @@ if(is_numeric($_GET['brand']) || (is_numeric(get_option('default_brand')) && (ge
       else
         {
         //$catid = get_option('default_category');
-		$catid = 0;
+		$catid = '';
         }
 		if ($catid==0)
 		{
