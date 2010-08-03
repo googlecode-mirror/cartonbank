@@ -221,7 +221,7 @@ function nzshpcrt_display_categories_groups()
              {
     //global $wpdb;
     //$sql = "SELECT `wp_product_list`.* FROM `wp_product_list` WHERE `active`='1' AND `visible`='1' ORDER BY RAND(NOW()) LIMIT 1";
-    $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY RAND(NOW()) LIMIT 1"; 
+    $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY RAND(NOW()) LIMIT 1"; 
     
     // список картинок
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
@@ -231,7 +231,9 @@ function nzshpcrt_display_categories_groups()
                 $_size = $product[0]['width']."px X ".$product[0]['height']."px;";
                 $_author = $product[0]['brand'];
                 $_name = $product[0]['name'];
-                $_category = $product[0]['kategoria'];
+                //$_category = $product[0]['kategoria'];
+                $_category = "<a href=\'".get_option('product_list_url')."&category=".$product[0]['category_id']."\'>".$product[0]['kategoria']."</a>";
+
 
                 $_tags = nl2br(stripslashes($product[0]['additional_description']));
                 $_tags_array = explode(',',$_tags);
@@ -249,19 +251,13 @@ function nzshpcrt_display_categories_groups()
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
 
     
-    
+    //placeholder for the slide preview wAS HERE
                  
-			   // placeholder for the slide preview
-			   echo "<div id='bigpictopstrip'>".$_bigpicstrip."</div>";
-			   echo "<div id='bigpictext'>".$_bigpictext."</div>";
-			   echo "<div id='bigpic'>".$_bigpic."</div>";
-			   echo "<div style='clear:both;'></div>";
-			   echo "<div id='bigpicbottomstrip'></div>";
 
              }
 			 else
              {
-             echo "<strong class='cattitles'>".$category_data[0]['name']."";
+             //echo "Категория: <strong class='cattitles'>".$category_data[0]['name']."";
              }
 
 //		 echo "<span id='loadingindicator'><img id='loadingimage' src='$siteurl/wp-content/plugins/wp-shopping-cart/images/indicator.gif' alt='Loading' title='Loading' /> ".TXT_WPSC_UDPATING."...</span>";
@@ -276,7 +272,18 @@ function nzshpcrt_display_categories_groups()
 			 // ales: product page starts here
 					// old code to call all items at once
 					// echo product_display_default($product_list, $group_type, $group_sql, $search_sql);
+               // placeholder for the slide preview
+               
+               $_bigpictext = str_ireplace("\\'","\"",$_bigpictext);
+                
+               echo "<div id='bigpictopstrip'>".$_bigpicstrip."</div>";
+               echo "<div id='bigpictext'>".$_bigpictext."</div>";
+               echo "<div id='bigpic'>".$_bigpic."</div>";
+               echo "<div style='clear:both;'></div>";
+               echo "<div id='bigpicbottomstrip'></div>";
 
+                    
+                    
 				if (is_numeric($_GET['offset']))
 				 {
 					$offset = $_GET['offset'];
@@ -338,19 +345,19 @@ function nzshpcrt_display_categories_groups()
 				{
 					// echo "Previous page" link
 					$offset_back = $offset-$items_on_page*2;
-					$output .= "<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a>&nbsp;";
+					$output .= "<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$offset_back."&cs=".$keywords."'><< ".TXT_WPSC_PREV_PAGE."</a>&nbsp;";
 				}
                 $pagenum = 1;
                 for ($i=0; $i<$items_count; $i=$i+$items_on_page)
                     {
-                       $output .= " [<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$i."'>".$pagenum ."</a>] ";
+                       $output .= " [<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$i."&cs=".$keywords."'>".$pagenum ."</a>] ";
                        $pagenum++;
                     }
                 
 				if($offset < $items_count) 
 				{
 					// echo "Next page" link
-					$output .= "<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$offset."'>".TXT_WPSC_NEXT_PAGE." >></a>";
+					$output .= "<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$offset."&cs=".$keywords."'>".TXT_WPSC_NEXT_PAGE." >></a>";
 				}
 				$output .= "</br></div>";
 
