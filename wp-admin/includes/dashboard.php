@@ -1,5 +1,5 @@
 <?php
-header( 'Location: http://cartoonbank.ru/cb3/wp-admin/profile.php' ) ;
+header( 'Location: '.get_option('siteurl').'/wp-admin/profile.php' ) ;
 /**
  * WordPress Dashboard Widget Administration Panel API
  *
