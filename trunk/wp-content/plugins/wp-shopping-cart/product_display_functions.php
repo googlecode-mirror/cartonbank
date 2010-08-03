@@ -7,10 +7,13 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	 $siteurl = get_option('siteurl');
 	//todo: remove special
     $andcategory = "";
+    $category='';
    
-    if (isset($_GET['category']) and is_numeric($_GET['category']))
+    if (isset($_GET['category']) and is_numeric($_GET['category']) and ($_GET['category'] != 0))
     {
         $andcategory = " AND `wp_product_categories`.`id`=".$_GET['category']." ";
+        
+        $category=$_GET['category'];
     }
     else
     {
@@ -25,11 +28,11 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	{
 		if ($_GET['brand'] == '')
 		{
-        $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` AS brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
+        $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
        	}
 		else
 		{ 
-        $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
+        $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
 		}
 	}
 
@@ -37,12 +40,14 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 
 	  if($product_list != null)
 	  {
+		  
 		  $preview_mode=1; // display as popup window
  //		  $preview_mode=0; // display as Lightbox slideshow
 		  $output = "<div id='items' class='items'>";
+		  $counter = 0;
 		  foreach($product_list as $product)
 		  {
-			  if($product['image'] !=null)
+			  if(($product['image'] !=null) and ($counter < $items_on_page))
 				{
 				  $imagedir = ABSPATH."wp-content/plugins/wp-shopping-cart/product_images/";
 				  $image_size = @getimagesize($imagedir.$product['image']);
@@ -53,59 +58,59 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 					{
 					  $output .= "<div id='item' class='item'>"; // start item
 
-	$addtocart = "<form name=$num method=POST action=".get_option('product_list_url')." onsubmit=submitform(this);return false; >";
-	$addtocart .= "<input type=hidden name=prodid value=".$product['id'].">";
-	$addtocart .= "Добавить в заказ: <input type=image border=0 src=".get_option('siteurl')."/img/cart.gif name=Buy value=".TXT_WPSC_ADDTOCART." />";
-	$addtocart .= "</form>" ;
+						$addtocart = "<form name=$num method=POST action=".get_option('product_list_url')." onsubmit=submitform(this);return false; >";
+						$addtocart .= "<input type=hidden name=prodid value=".$product['id'].">";
+						$addtocart .= "Добавить в заказ: <input type=image border=0 src=".get_option('siteurl')."/img/cart.gif name=Buy value=".TXT_WPSC_ADDTOCART." />";
+						$addtocart .= "</form>" ;
 
-	$vstavka = "document.getElementById('bigpic').innerHTML = '<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>';";
+						$vstavka = "document.getElementById('bigpic').innerHTML = '<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>';";
 
-    // here we prepare data for the BIGPIC preview
-    
-	$_number = $product['id'];
-	$_description = nl2br(stripslashes($product['description']));
-	$_size = $product['width']."px X ".$product['height']."px;";
-	$_author = "<a href=\'".$siteurl."/?page_id=29&brand=".$product['brandid']."\'>".$product['brand']."</a>";//$product['brand'];
-	$_name = $product['name'];
-    $_category = $product['kategoria'];
+						// here we prepare data for the BIGPIC preview
+						
+						$_number = $product['id'];
+						$_description = nl2br(stripslashes($product['description']));
+						$_size = $product['width']."px X ".$product['height']."px;";
+						$_author = "<a href=\'".$siteurl."/?page_id=29&brand=".$product['brandid']."\'>".$product['brand']."</a>";//$product['brand'];
+						$_name = $product['name'];
+						$_category = "<a href=\'".get_option('product_list_url')."&category=".$product['category_id']."\'>".$product['kategoria']."</a>";
+					//$options .= "<a href='".get_option('product_list_url')."/&category=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
 
-	$_tags = nl2br(stripslashes($product['additional_description']));
-	$_tags_array = explode(',',$_tags);
-		//$i=0;
-		foreach ($_tags_array as $key => $value)
-		{
-			$_tags_array[$key] = "<a href=\'".get_option('siteurl')."/?page_id=29&cs=".trim($_tags_array[$key])."\'>".trim($_tags_array[$key])."</a>";
-		}
-	$_tags_imploded = implode(", ", $_tags_array);
-	$_tags = $_tags_imploded;
-
-
-	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;".$_number."&nbsp;<b>".$_author."</b></div>";
-	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size;
-    $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
-
-$_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29&amp;category=\' method=\'POST\'>Выбор лицензии: <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=238\'>ограниченная</a> <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=242\'>стандартная</a> <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=245\'>расширенная</a>&nbsp;&nbsp;&nbsp;&nbsp;<input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'><input id=\'searchsubmit\' value=\'Купить\' type=\'submit\'></form></div>";
+						$_tags = nl2br(stripslashes($product['additional_description']));
+						$_tags_array = explode(',',$_tags);
+							//$i=0;
+							foreach ($_tags_array as $key => $value)
+							{
+								$_tags_array[$key] = "<a href=\'".get_option('siteurl')."/?page_id=29&cs=".trim($_tags_array[$key])."\'>".trim($_tags_array[$key])."</a>";
+							}
+						$_tags_imploded = implode(", ", $_tags_array);
+						$_tags = $_tags_imploded;
 
 
-	$vstavka = "document.getElementById('bigpic').innerHTML ='".$_bigpic."';";
-	$vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
-	$vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='".$_bigpicstrip."';";
-	$vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
-	
-	$output .= "<a href=\"#\"  onclick=\"".$vstavka."\">";
-	
-$fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['image'];
+						$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;".$_number."&nbsp;<b>".$_author."</b></div>";
+						
+						$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size;
+						$_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
 
-if (file_exists($fiilename))
-{
-		  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' class='thumb' />";
-}
-else
-{
-		  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/icon-rest.gif' class='thumb' />";
-}
+					$_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29&amp;category=\' method=\'POST\'>Выбор лицензии: <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=238\'>ограниченная</a> <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=242\'>стандартная</a> <input type=\'radio\' name=\'\'><a target=\'_blank\'href=\'http://cartoonbank.ru/cb3/?page_id=245\'>расширенная</a>&nbsp;&nbsp;&nbsp;&nbsp;<input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'><input id=\'searchsubmit\' value=\'Купить\' type=\'submit\'></form></div>";
 
-					  //$output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' class='thumb' />";
+
+						$vstavka = "document.getElementById('bigpic').innerHTML ='".$_bigpic."';";
+						$vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
+						$vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='".$_bigpicstrip."';";
+						$vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
+						
+						$output .= "<a href=\"#\"  onclick=\"".$vstavka."\">";
+						
+					$fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['image'];
+
+					if (file_exists($fiilename))
+					{
+							  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' class='thumb' />";
+					}
+					else
+					{
+							  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/icon-rest.gif' class='thumb' />";
+					}
 					  $output .= "</a>";
 					}
 					else
@@ -116,50 +121,7 @@ else
 					  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' class='thumb' />";
 					  $output .= "</a>";
 					}
-/*
-				  // form for purchase
-					$output .= "<table class='productcart'><tr><td><form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_GET['category']."' onsubmit='submitform(this);return false;' >";
-					$output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
-					$output .= "<input type='image' border='0' src='http://cartoonbank.ru/cb/img/cart.gif' name='Buy' value='".TXT_WPSC_ADDTOCART."'  />";
-					$output .= "</form></td>"; 
 
-
-				  //title
-				  $output .= "<td><span id='size'>".$product['width']."px X ".$product['height']."px</span><br>";
-				  $output .= "<span id='title'><i>".stripslashes($product['brand'])."</i></span><br>";
-
-				  // extra info about cartoon
-				  if($product['description'] != '')
-					{
-					
-					$output .= "<a href='#' class='additional_description_link' onclick='return show_additional_description(\"description".$product['id']."\",\"link_icon".$product['id']."\");'>";
-					$output .= "<img id='link_icon".$product['id']."' style='margin-right: 3px;border:0;' src='$siteurl/wp-content/plugins/wp-shopping-cart/images/icon_window_expand.gif' title='".$product['name']."' alt='".$product['name']."' />";
-					$output .= TXT_WPSC_DETAILS."</a>";
-					
-						//$output .= "<span class='additional_description' id='description".$product['id']."'><br />";
-					$output .= "<div class='lev2' id='description".$product['id']."'><br />";
-					$output .= nl2br(stripslashes($product['description'])) . " <br />";
-						//$output .= "</span><br />";
-						
-						//$output .= "<a href='#' class='additional_description_link' onclick='return show_additional_description(\"additionaldescription".$product['id']."\",\"link_icon".$product['id']."\");'>";
-						//$output .= "<img id='link_icon".$product['id']."' style='margin-right: 3px;border:0;' src='$siteurl/wp-content/plugins/wp-shopping-cart/images/icon_window_expand.gif' title='".$product['name']."' alt='".$product['name']."' />";
-						//$output .= TXT_WPSC_MOREDETAILS."</a>";
-						
-						//$output .= "<span class='additional_description' id='additionaldescription".$product['id']."'><br />";
-					if ($product['additional_description'] != '')
-						{
-							$output .= " [".nl2br(stripslashes($product['additional_description'])) . "]";
-						}
-					$output .= "</div>";
-					}
-
-//				  // form for purchase
-//					$output .= "<form name='$num' method='POST' action='".get_option('product_list_url').$seperator."category=".$_GET['category']."' onsubmit='submitform(this);return false;' >";
-//					$output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
-//					$output .= "<input type='submit' class='buy' name='Buy' value='".TXT_WPSC_ADDTOCART."'  />";
-//					$output .= "</form>";
-					$output .= "</td></tr></table></div>"; // stop item
-*/
 					$output .= "<a href='#' class='additional_description_link' onclick='return show_additional_description(\"description".$product['id']."\",\"link_icon".$product['id']."\");'>";
 					$output .= "<img id='link_icon".$product['id']."' style='margin-right: 3px;border:0;' src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/icon_window_expand.gif' title='".$product['name']."' alt='".$product['name']."' />";
 					$output .= TXT_WPSC_DETAILS."</a>";
@@ -178,6 +140,7 @@ else
 						$output .= nl2br(stripslashes($product['description'])) . " <br /></div>";
 					$output .= "</div>"; // stop item
 				}
+				$counter = $counter+1;
 		  }
 		  $output .= "</div>";
 		  return $output;
