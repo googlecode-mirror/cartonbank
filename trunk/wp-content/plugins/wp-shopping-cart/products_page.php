@@ -221,7 +221,50 @@ function nzshpcrt_display_categories_groups()
              {
     //global $wpdb;
     //$sql = "SELECT `wp_product_list`.* FROM `wp_product_list` WHERE `active`='1' AND `visible`='1' ORDER BY RAND(NOW()) LIMIT 1";
-    $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY RAND(NOW()) LIMIT 1"; 
+    //$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY RAND(NOW()) LIMIT 1"; 
+    $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT 1"; 
+    
+    
+    
+    
+                // SEARCH
+                if($_POST['cs']!= '' or $_GET['cs']!= '')
+                {
+                    if($_POST['cs']!= ''){
+                        $keywords = strtolower(trim($_POST['cs']));
+                    }
+                    if($_GET['cs']!= ''){
+                        $keywords = strtolower(trim($_GET['cs']));
+                    }
+                    // search request
+                    // count found results
+                    $search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
+
+                    $items_count = $GLOBALS['wpdb']->get_results($search_sql,ARRAY_A);
+
+                    if (is_numeric($items_count[0]['count']))
+                    {
+                        $items_count = $items_count[0]['count'];
+                        // search request
+                        //$search_sql = "SELECT * FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' AND (name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')"; 
+
+                        $search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND (LOWER(`wp_product_list`.`name`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`id`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`description`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`additional_description`) LIKE '%".$keywords."%') AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand`"; 
+                    }
+                    else
+                    {
+                        $items_count = 0;
+                        $search_sql ='';
+                    }
+                    $sql = $search_sql;
+                }
+                else 
+                    {
+                        $keywords = '';
+                    }
+    
+    
+    
+    
     
     // список картинок
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
@@ -295,39 +338,6 @@ function nzshpcrt_display_categories_groups()
 
 				$items_on_page = get_option('posts_per_page');
 
-				// SEARCH
-				if($_POST['cs']!= '' or $_GET['cs']!= '')
-				{
-					if($_POST['cs']!= ''){
-						$keywords = strtolower(trim($_POST['cs']));
-					}
-					if($_GET['cs']!= ''){
-						$keywords = strtolower(trim($_GET['cs']));
-					}
-                    // search request
-					// count found results
-					$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
-
-					$items_count = $GLOBALS['wpdb']->get_results($search_sql,ARRAY_A);
-
-					if (is_numeric($items_count[0]['count']))
-					{
-						$items_count = $items_count[0]['count'];
-						// search request
-						//$search_sql = "SELECT * FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' AND (name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')"; 
-
-						$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND (LOWER(`wp_product_list`.`name`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`id`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`description`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`additional_description`) LIKE '%".$keywords."%') AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand`"; 
-					}
-					else
-					{
-						$items_count = 0;
-						$search_sql ='';
-					}
-				}
-				else 
-					{
-						$keywords = '';
-					}
 
 			 // FIRST PAGE OUTPUT
 			 echo product_display_paginated($product_list, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
