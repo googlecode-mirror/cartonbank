@@ -370,7 +370,15 @@ function nzshpcrt_display_categories_groups()
                 $pagenum = 1;
                 for ($i=0; $i<$items_count; $i=$i+$items_on_page)
                     {
-                       $output .= " [<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$i."&cs=".$keywords."'>".$pagenum ."</a>] ";
+                        $current_page_num = $offset /  $items_on_page;
+                        if ($pagenum == $current_page_num)
+                        {
+                            $output .= " <a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$i."&cs=".$keywords."'><span style='background: #C0C0FF; color: black !important; cursor: default; font-weight: 400; padding: 0.15em 0.3em; text-decoration: none;'>".$pagenum ."</span></a> ";
+                        }
+                         else
+                        {
+                           $output .= " <a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$i."&cs=".$keywords."'>[".$pagenum ."]</a> ";
+                        }
                        $pagenum++;
                     }
                 
