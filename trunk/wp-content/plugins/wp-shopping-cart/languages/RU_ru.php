@@ -196,7 +196,7 @@ define('TXT_WPSC_REMOVE_SET', 'Удалить эти опции'); //this needs 
 
 define('TXT_WPSC_SELECT_PARENT', 'Select Parent');
 define('TXT_WPSC_PRODUCTHASBEENEDITED', 'The product has been edited.');
-define('TXT_WPSC_ADDPRODUCT', 'Добавить новую изображение в базу данных (очистить форму)');
+define('TXT_WPSC_ADDPRODUCT', 'Добавить новое изображение в базу данных (очистить форму)');
 define('TXT_WPSC_DISPLAYPRODUCTS', 'Показать картинки');
 define('TXT_WPSC_PLEASESELECTACATEGORY', 'Выберите раздел');
 define('TXT_WPSC_STOCK', 'Stock');
