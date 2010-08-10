@@ -486,7 +486,7 @@ $product_list = $wpdb->get_results($sql,ARRAY_A) ;
 
 <div class="wrap">
   <h2><?php echo TXT_WPSC_DISPLAYPRODUCTS;?></h2>
-  <a href="" onclick="return showaddform()" class="add_item_link"><img src="../wp-content/plugins/wp-shopping-cart/images/package_add.png" alt="Добавить в базу данных" title="Добавить в базу данных">&nbsp;<span>Добавить новую изображение в базу данных (очистить форму)</span></a><br>
+  <a href="" onclick="return showaddform()" class="add_item_link"><img src="../wp-content/plugins/wp-shopping-cart/images/package_add.png" alt="Добавить в базу данных" title="Добавить в базу данных">&nbsp;<span>Добавить новое изображение в базу данных (очистить форму)</span></a><br>
   
   <?php
   echo topcategorylist($offset);
@@ -652,6 +652,7 @@ echo "      </td><td class='secondcol' valign='top' style='width:370px;backgroun
 ?>
 <div style='color:#660066'><b>Это форма для отправки новой картинки и правки старой</b></div>
 <?
+
 echo "        <div id='productform' style='background-color:#FFFF99;'>";
 echo "<form method='POST'  enctype='multipart/form-data' name='editproduct$num'>";
 echo "        <table class='producttext'>\n\r";;    
@@ -668,6 +669,7 @@ echo "        <div id='formcontent'>\n\r";
 echo "        </div>\n\r";
 echo "</form>";
 echo "        </div>";
+
 ?>
 <div id='additem'>
   <form method='POST' enctype='multipart/form-data'>
