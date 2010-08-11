@@ -1487,14 +1487,8 @@ function nzshpcrt_submit_ajax()
        }
   }
   
-function nzshpcrt_getproductform($prodid)
-  {
-  global $wpdb,$nzshpcrt_imagesize_info;
- /*
-  * makes the product form
-  * has functions inside a function
-  */ 
-  function brandslist($current_brand = '')
+
+    function brandslist($current_brand = '')
     {
     global $wpdb;
     $options = "";
@@ -1537,18 +1531,34 @@ function nzshpcrt_getproductform($prodid)
     $concat .= "<select name='variations' onChange='variation_value_list(this.options[this.selectedIndex].value)'>".$options."</select>\r\n";
     return $concat;
     }
-  
+
+  function nzshpcrt_getproductform($prodid)
+  {
+  global $wpdb,$nzshpcrt_imagesize_info;
+ /*
+  * makes the product form
+  * has functions inside a function
+  */ 
   $sql = "SELECT * FROM `".$wpdb->prefix."product_list` WHERE `id`=$prodid LIMIT 1";
   $product_data = $wpdb->get_results($sql,ARRAY_A) ;
   $product = $product_data[0];
   
   $output .= "        <table>\n\r";
   $output .= "          <tr>\n\r";
-  $output .= "            <td class='itemfirstcol'>\n\r";
-  $output .= TXT_WPSC_PRODUCTNAME.": ";
+  $output .= "            <td>\n\r";
+  $output .= TXT_WPSC_BRAND.": ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<input type='text' name='title' value='".stripslashes($product['name'])."' />";
+  $output .= brandslist($product['brand']);
+  $output .= "            </td>\n\r";
+  $output .= "          </tr>\n\r";
+  
+  $output .= "          <tr>\n\r";
+  $output .= "            <td>\n\r";
+  $output .= TXT_WPSC_PRODUCTNAME." (".$product['id']."): ";
+  $output .= "            </td>\n\r";
+  $output .= "            <td>\n\r";
+  $output .= "<input type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' />";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   
@@ -1557,26 +1567,24 @@ function nzshpcrt_getproductform($prodid)
   $output .= TXT_WPSC_PRODUCTDESCRIPTION.": ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<textarea name='description' cols='40' rows='2' >".stripslashes($product['description'])."</textarea>";
+  $output .= "<textarea name='description' cols='40' rows='3' >".stripslashes($product['description'])."</textarea>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
   $output .= TXT_WPSC_ADDITIONALDESCRIPTION.": ";
+
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<textarea name='additional_description' cols='40' rows='2' >".stripslashes($product['additional_description'])."</textarea>";
+  $output .= "<textarea name='additional_description' cols='40' rows='3' >".stripslashes($product['additional_description'])."</textarea>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
 $visible = "";
 if ($product['visible'] == '1')
 	$visible = " checked='checked'";
-
-
-  
-   
+ 
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
   $output .= "Отображать в магазине:";
@@ -1675,21 +1683,32 @@ if ($product['visible'] == '1')
 */
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_CATEGORY.": ";
+
+
+    if(file_exists($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']))
+            {
+            $image_location = "product_images/".$product['image'];
+            }
+            else
+              {
+              $image_location = "images/".$product['image'];
+              }
+    $preview_location = "product_images/".$product['image'];
+    $icon_location = "images/".$product['image'];
+
+    $m_image_link = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/".$preview_location;
+
+    $output .= "<a href='".$m_image_link."' target=_blank><img id='previewimage' src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/$icon_location' alt='".TXT_WPSC_PREVIEW."' title='".TXT_WPSC_PREVIEW."' /></a>";
+
+
+  
+  //$output .= TXT_WPSC_CATEGORY.": ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= categorylist($product['id']);
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
-  
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_BRAND.": ";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= brandslist($product['brand']);
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+
   
 /*  
 	  $output .= "          <tr>\n\r";
@@ -1774,7 +1793,7 @@ if ($product['visible'] == '1')
 	  $output .= "<br /><strong class='form_group'>".TXT_WPSC_PRODUCTIMAGE."</strong>";
 	  $output .= "            </td>\n\r";
 	  $output .= "          </tr>\n\r";
-*/
+
   if(function_exists("getimagesize"))
     {
     if($product['image'] != '')
@@ -1791,8 +1810,6 @@ if ($product['visible'] == '1')
       $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/thumbnails/";
       $image_size = @getimagesize($imagedir.$product['image']);
       $output .= "<span class='image_size_text'>".$image_size[0]."x".$image_size[1]."</span>";
-      //
-      //
       
       $output .= "            </td>\n\r";  
       
@@ -1815,25 +1832,14 @@ if ($product['visible'] == '1')
       $output .= "<input type='radio' name='image_resize' value='1' id='image_resize1' class='image_resize' /> <label for='image_resize1'>".TXT_WPSC_USEDEFAULTHEIGHTANDWIDTH." (".get_option('product_image_height') ."x".get_option('product_image_width').")";
       $output .= "    </td>";
       $output .= "  </tr>";
-/*
-      $output .= "  <tr>";
-      $output .= "    <td>";
-      $output .= "
-      <input type='radio' name='image_resize' value='2' id='image_resize2' class='image_resize'  /> <label for='image_resize2'>".TXT_WPSC_USE." </label>
+
       
-      <input onclick='checkimageresize()' id='image_height' type='text' size='4' name='height' value='' /><label for='image_resize2'>".TXT_WPSC_PXHEIGHTBY." </label>
-      
-      <input onclick='checkimageresize()' id='image_width' type='text' size='4' name='width' value='' /><label for='image_resize2'>".TXT_WPSC_PXWIDTH."</label>";
-      $output .= "    </td>";
-      $output .= "  </tr>";
-*/
       $output .= "</table>";
       $output .= "    </td>";
 
       $output .= "    <td>";
-      //exit($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']);
-
-		if(file_exists($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']))
+ 
+ 		if(file_exists($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']))
 				{
 				$image_location = "product_images/".$product['image'];
 				}
@@ -1857,16 +1863,7 @@ if ($product['visible'] == '1')
       $output .= "          </tr>\n\r";
       }
     }
-  
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_UPLOADNEWIMAGE.": ";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "<input type='file' name='image' value='' />";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
-  
+    
   if(function_exists("getimagesize"))
     {
     if($product['image'] == '')
@@ -1891,21 +1888,14 @@ if ($product['visible'] == '1')
       $output .= "          </tr>\n\r";
       }
     }
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_DELETEIMAGE.": ";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "<input type='checkbox' name='deleteimage' value='1' />";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
-
 
   if(function_exists('edit_multiple_image_form'))
     {
     $output .= edit_multiple_image_form($product['id']); 
     }
-    
+  
+  */
+  // download original image  
   if($product['file'] > 0)
     {
     $output .= "          <tr>\n\r";
@@ -1950,12 +1940,16 @@ if ($product['visible'] == '1')
   $output .= "            <td>\n\r";
   $output .= "<input type='hidden' name='prodid' value='".$product['id']."' />";
   $output .= "<input type='hidden' name='submit_action' value='edit' />";
-  $output .= "<input class='edit_button' type='submit' name='submit' value='".TXT_WPSC_EDIT."' />";
-  $output .= "<a class='delete_button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >".TXT_WPSC_DELETE_PRODUCT."</a>";
+  $output .= "<input class='edit_button' type='submit' name='submit' value='Сохранить изменения' />";
+  $output .= "<br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >".TXT_WPSC_DELETE_PRODUCT."</a>";
   $output .= "            <td>\n\r";
   $output .= "          </tr>\n\r";
   
   $output .= "        </table>\n\r";
+  
+  // TODO: Remove before upload to the server! temp! local debug only!
+  //$outp = Utf8ToWin($output);
+  
   return $output;
   }
 
@@ -3149,6 +3143,77 @@ switch(get_option('cart_location'))
   add_action('the_content', 'nzshpcrt_shopping_basket');
   break;
   }
+
+function rus2uni($str,$isTo = true)
+    {
+        $arr = array('ё'=>'&#x451;','Ё'=>'&#x401;');
+        for($i=192;$i<256;$i++)
+            $arr[chr($i)] = '&#x4'.dechex($i-176).';';
+        $str =preg_replace(array('@([а-я]) @i','@ ([а-я])@i'),array('$1&#x0a0;','&#x0a0;$1'),$str);
+        return strtr($str,$isTo?$arr:array_flip($arr));
+    }
+
+function Utf8ToWin($fcontents) {
+
+    $out = $c1 = '';
+
+    $byte2 = false;
+
+    for ($c = 0;$c < strlen($fcontents);$c++) {
+
+        $i = ord($fcontents[$c]);
+
+        if ($i <= 127) {
+
+            $out .= $fcontents[$c];
+
+        }
+
+        if ($byte2) {
+
+            $new_c2 = ($c1 & 3) * 64 + ($i & 63);
+
+            $new_c1 = ($c1 >> 2) & 5;
+
+            $new_i = $new_c1 * 256 + $new_c2;
+
+            if ($new_i == 1025) {
+
+                $out_i = 168;
+
+            } else {
+
+                if ($new_i == 1105) {
+
+                    $out_i = 184;
+
+                } else {
+
+                    $out_i = $new_i - 848;
+
+                }
+
+            }
+
+            $out .= chr($out_i);
+
+            $byte2 = false;
+
+        }
+
+        if (($i >> 5) == 6) {
+
+            $c1 = $i;
+
+            $byte2 = true;
+
+        }
+
+    }
+
+    return $out;
+
+}
   
 /*
  * This serializes the shopping cart variable as a backup in case the unserialized one gets butchered by various things
