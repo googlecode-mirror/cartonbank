@@ -18,7 +18,8 @@ function categorylist($product_id = '')
         $selected = "checked='true'";
 		}
       }
-    $output .= "<input type='checkbox' $selected name='category[]' value='".$option['id']."'><label>".$option['name']."</label><br />";
+    //$output .= "<input type='checkbox' $selected name='category[]' value='".$option['id']."'><label>".$option['name']."</label><br />";
+    $output .= "<input type='radio' $selected name='category[]' value='".$option['id']."'><label>".$option['name']."</label><br />";
     $selected = "";
     }
   return $output;
