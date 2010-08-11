@@ -2,15 +2,20 @@
 $category_data = null;
 $basepath = str_replace("/wp-admin", "" , getcwd()); 
 $basepath = str_replace("\\wp-admin", "" , $basepath);
+
+$imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
+$product_images = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
+$filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
+$preview_clips_dir = $basepath."/wp-content/plugins/wp-shopping-cart/preview_clips/";
+$image = '';
+
 // add product
 if($_POST['submit_action'] == 'add') {
-  $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
-  $product_images = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
-  $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
-  $preview_clips_dir = $basepath."/wp-content/plugins/wp-shopping-cart/preview_clips/";
-  $image = '';
 
   if($_FILES['file']['name'] != null)  {
+  
+      //upload_and_resize_and_watermark_images();    
+      
       //transliterate file
       $_FILES['file']['name'] = rus2translit($_FILES['file']['name']); 
       //rename the file  
@@ -19,10 +24,7 @@ if($_POST['submit_action'] == 'add') {
         //ales default upload
 		if(!is_dir($product_images))
 		  {
-
-		  exit("<pre>".$product_images."<br>".print_r($_POST,true)."</pre>");
-	  
-		  mkdir($product_images);
+		    mkdir($product_images);
 		  }
 		if(function_exists("getimagesize"))
 		  {
@@ -54,7 +56,7 @@ if($_POST['submit_action'] == 'add') {
 				$resample_quality = 85; //image quality
 
 				al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality);	
-				$wm = $basepath."/wp-content/plugins/wp-shopping-cart/images/watermark.gif";
+				$wm = $basepath."/wp-content/plugins/wp-shopping-cart/images/watermark.png";
 				wtrmark($thatdir.$file,$wm);
 
 				// ales here we replace thumbs to that from LG 
@@ -221,8 +223,12 @@ if($_GET['submit_action'] == "remove_set")
 // edit product 
 if($_POST['submit_action'] == "edit")
   {
-	  //exit("<pre>".print_r($_POST,true)."</pre>");
-	  $id = $_POST['prodid'];
+      //transliterate file
+      $_FILES['file']['name'] = rus2translit($_FILES['file']['name']); 
+      //rename the file  
+      $_FILES['file']['name'] = uniqid('', true).$_FILES['file']['name'];
+      
+      $id = $_POST['prodid'];
 	  if(function_exists('edit_submit_extra_images'))
 		{
 		if(($_FILES['extra_image'] != null))
@@ -253,34 +259,58 @@ if($_POST['submit_action'] == "edit")
 
 			if(!is_dir($product_images))
 			  {
-			  mkdir($product_images);
+			    mkdir($product_images);
 			  }
 			if(function_exists("getimagesize"))
 			  {
-				switch($_POST['image_resize'])	{
-					case 0:
-					$height = get_option('product_image_height');
-					$width  = get_option('product_image_width');
-					break;
+				switch($_POST['image_resize'])	
+                    {
+                    case 2:
+                    $height = $_POST['height'];
+                    $width  = $_POST['width'];
+                    break;
 
-					case 1:
-					$height = get_option('product_image_height');
-					$width  = get_option('product_image_width');
-					break;
+                    default:
+                    $height = get_option('product_image_height');
+                    $width  = get_option('product_image_width');
+                    break;
+                    }
+              copy($_FILES['file']['tmp_name'], $product_images.$_FILES['file']['name']);
+              copy($_FILES['file']['tmp_name'], $imagedir.$_FILES['file']['name']);
 
-					case 2:
-					$height = $_POST['height'];
-					$width  = $_POST['width'];
-					break;
-				}
-			  copy($_FILES['file']['tmp_name'], ($product_images.$_FILES['file']['name']));
-				//ales
 					$imgsize = getimagesize($product_images.$_FILES['file']['name']);
 					$file_w = $imgsize[0];
 					$file_h = $imgsize[1];
-				///ales
-			  }
-			  include("image_processing.php");
+
+                //ales here we replace slides to that from LG
+                $chwidth = get_option('lg_pictwidth'); // crop size
+                $chheight = get_option('lg_pictheight'); // crop size
+                $thatdir = $product_images; //destination dir
+                $ifolder = ''; //subfolder for artist
+                $file = $_FILES['file']['name']; //
+                $resample_quality = 85; //image quality
+
+                al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality);    
+                $wm = $basepath."/wp-content/plugins/wp-shopping-cart/images/watermark.png";
+                wtrmark($thatdir.$file,$wm);
+
+                // ales here we replace thumbs to that from LG 
+                $chwidth = $width; // crop size
+                $chheight = $height; // crop size
+                $thatdir = $imagedir; //destination dir
+
+                al_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality);      
+                $image = $wpdb->escape($_FILES['file']['name']);
+
+                /// ales 
+
+                    
+              }
+              else {
+                move_uploaded_file($_FILES['file']['tmp_name'], ($imagedir.$_FILES['file']['name']));
+                $image = $wpdb->escape($_FILES['file']['name']);
+          }
+			  //include("image_processing.php");
 
 		if(move_uploaded_file($_FILES['file']['tmp_name'],($filedir.$idhash)))
 		  {
@@ -348,7 +378,6 @@ if($_POST['submit_action'] == "edit")
     
    if(is_numeric($_POST['quantity']) && ($_POST['quantity_limited'] == "yes"))
      {
-     //exit("<pre>".print_r($_POST,true)."</pre>");
      $quantity_limited = 1;
      $quantity = $_POST['quantity'];
      }
@@ -657,13 +686,6 @@ echo "        <div id='productform' style='background-color:#FFFF99;'>";
 echo "<form method='POST'  enctype='multipart/form-data' name='editproduct$num'>";
 echo "        <table class='producttext'>\n\r";;    
 
-//echo "          <tr>\n\r";
-//echo "            <td colspan='2'>\n\r";
-//echo "<a href='' onclick='return showaddform()' class='add_item_link'><img src='../wp-content/plugins/wp-shopping-cart/images/package_add.png' alt='".TXT_WPSC_ADD."' title='".TXT_WPSC_ADD."' />&nbsp;<span>".TXT_WPSC_ADDPRODUCT."</span></a>";
-//echo "<strong class='form_group'>".TXT_WPSC_PRODUCTDETAILS." <span>".TXT_WPSC_ENTERPRODUCTDETAILSHERE."</span></strong>";
-//echo "            </td>\n\r";
-//echo "          </tr>\n\r";
-
 echo "        </table>\n\r";
 echo "        <div id='formcontent'>\n\r";
 echo "        </div>\n\r";
@@ -673,29 +695,32 @@ echo "        </div>";
 ?>
 <div id='additem'>
   <form method='POST' enctype='multipart/form-data'>
-  <table class='additem'>
+  <table class='additem' width='500'>
   <?
 if(function_exists('add_multiple_image_form'))
   {
   echo add_multiple_image_form(); 
   }
 ?>
-    <!-- <tr>
-      <td colspan='2'>
-		<a href='' onclick='return showaddform()' class='add_item_link'><img src='../wp-content/plugins/wp-shopping-cart/images/package_add.png' alt='<?php echo TXT_WPSC_ADD; ?>' title='<?php echo TXT_WPSC_ADD; ?>' />&nbsp;<span><?php echo TXT_WPSC_ADDPRODUCT;?></span></a>
+	<tr>
+      <td>
+        <?php echo TXT_WPSC_CHOOSEABRAND;?>:
       </td>
-    </tr> -->
-    <tr>
+      <td>
+        <?php echo brandslist(); ?>
+      </td>
+    </tr>
+	<tr>
       <td colspan='2'>
-        <strong class='form_group'><?php echo TXT_WPSC_PRODUCTDOWNLOAD;?></strong>
+        <strong class='form_group'><?php echo TXT_WPSC_PRODUCTDOWNLOAD;//Файл для печати?></strong>
       </td>
     </tr>
     <tr>
       <td>
-        <?php echo TXT_WPSC_DOWNLOADABLEPRODUCT;?>:
+        <?php echo TXT_WPSC_DOWNLOADABLEPRODUCT;//kartinka?>:
       </td>
       <td>
-        <input type='file' name='file' value='' /> <!-- <span class='small'><br /><?php echo TXT_WPSC_FILETOBEPRODUCT;?></span> -->
+        <input type='file' name='file' value='' />
       </td>
     </tr>
 
@@ -745,15 +770,6 @@ if(function_exists('add_multiple_image_form'))
         <?php echo categorylist(); ?>
       </td>
     </tr>
-	<tr>
-      <td>
-        <?php echo TXT_WPSC_CHOOSEABRAND;?>:
-      </td>
-      <td>
-        <?php echo brandslist(); ?>
-      </td>
-    </tr>
-
     <tr>
       <td>
       </td>
@@ -797,6 +813,8 @@ function topcategorylist($offset)
   return $concat;
   }
 
+/*
+//redeclared in wp-shopping-cart.php
 function brandslist($current_brand = '')
   {
   global $wpdb;
@@ -815,6 +833,7 @@ function brandslist($current_brand = '')
   $concat .= "<select name='brand'>".$options."</select>\r\n";
   return $concat;
   }
+*/
 
 function al_brandslist($current_brand = '')
   {
@@ -835,7 +854,10 @@ function al_brandslist($current_brand = '')
   $concat .= "<select name='brand' onChange='categorylist(this.options[this.selectedIndex].value)'>".$options."</select>\r\n";
   return $concat;
   }
-  
+
+
+/*
+// redeclared in wp-shopping-cart.php  
 function variationslist($current_variation = '')
 
     {
@@ -860,7 +882,9 @@ function variationslist($current_variation = '')
     $concat .= "<select name='variations' onChange='add_variation_value_list(this.options[this.selectedIndex].value)'>".$options."</select>\r\n";
     return $concat;
  }
-function al_watermark($path)
+*/
+ 
+ function al_watermark($path)
  {
 	// this script creates a watermarked image from an image file - can be a .jpg .gif or .png file
 	// where watermark.gif is a mostly transparent gif image with the watermark - goes in the same directory as this script
@@ -1070,13 +1094,12 @@ function wtrmark($sourcefile, $watermarkfile) {
    # $watermarkfile = Filename of the 24-bit PNG watermark file.
    #
   
-   //Get the resource ids of the pictures
-   //$watermarkfile_id = imagecreatefrompng($watermarkfile);
-   $watermarkfile_id = imagecreatefromgif($watermarkfile);
-  
-   imageAlphaBlending($watermarkfile_id, false);
+   $watermarkfile_id = imagecreatefrompng($watermarkfile);
+
+   imageAlphaBlending($watermarkfile_id, true);
    imageSaveAlpha($watermarkfile_id, true);
 
+   
    $fileType = strtolower(substr($sourcefile, strlen($sourcefile)-3));
 
    switch($fileType) {
@@ -1091,6 +1114,9 @@ function wtrmark($sourcefile, $watermarkfile) {
        default:
            $sourcefile_id = imagecreatefromjpeg($sourcefile);
    }
+      imageAlphaBlending($sourcefile_id, true);
+      imageSaveAlpha($sourcefile_id, true);
+
 
    //Get the sizes of both pix 
   $sourcefile_width=imageSX($sourcefile_id);
@@ -1114,9 +1140,13 @@ function wtrmark($sourcefile, $watermarkfile) {
        $sourcefile_id = $tempimage;
    }
 
-   imagecopy($sourcefile_id, $watermarkfile_id, $dest_x, $dest_y, 0, 0,
-                       $watermarkfile_width, $watermarkfile_height);
+   //imagecopy($sourcefile_id, $watermarkfile_id, $dest_x, $dest_y, 0, 0,
+    //                   $watermarkfile_width, $watermarkfile_height);
 
+    
+    $opacity = 50;
+   ImageCopyMerge($sourcefile_id, $watermarkfile_id, $dest_x, $dest_y, 0, 0, $watermarkfile_width, $watermarkfile_height, $opacity);
+                       
    //Create a jpeg out of the modified picture 
    switch($fileType) {
   
