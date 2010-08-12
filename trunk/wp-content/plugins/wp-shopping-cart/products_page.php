@@ -3,6 +3,11 @@ global $wpdb;
 $siteurl = get_option('siteurl');
 $_SESSION['selected_country'] = '';
 $brandid = '';
+$_bigpictext = '';
+$_bigpicstrip = '';
+$_bigpic = '';
+$keywords = '';
+
 if (isset($_GET['brand'])){$_brand = $_GET['brand'];}else{$_brand = '';}
 if (isset($_GET['category'])){$_category = $_GET['category'];}else{$_category = '';}
 
@@ -244,10 +249,10 @@ function nzshpcrt_display_categories_groups()
                 // SEARCH
                 if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
                 {
-                    if($_POST['cs']!= ''){
+                    if(isset($_POST['cs']) && $_POST['cs']!= ''){
                         $keywords = strtolower(trim($_POST['cs']));
                     }
-                    if($_GET['cs']!= ''){
+                    if(isset($_GET['cs']) && $_GET['cs']!= ''){
                         $keywords = strtolower(trim($_GET['cs']));
                     }
                     // search request
@@ -282,7 +287,8 @@ function nzshpcrt_display_categories_groups()
     
     // список картинок
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
-                
+     if ($product!=null)
+     {           
                 $_number = $product[0]['id'];
                 $_description = nl2br(stripslashes($product[0]['description']));
                 $_size = $product[0]['width']."px X ".$product[0]['height']."px;";
@@ -307,7 +313,7 @@ function nzshpcrt_display_categories_groups()
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
 
-    
+     }
     //placeholder for the slide preview wAS HERE
                  
 
