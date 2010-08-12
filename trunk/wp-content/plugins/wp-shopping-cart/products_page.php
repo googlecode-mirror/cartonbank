@@ -221,7 +221,7 @@ function nzshpcrt_display_categories_groups()
            {
            echo "<strong class='cattitles'>".TXT_WPSC_SEARCH_FOR." : ".$_GET['product_search']."</strong>";
            }
-           else if ($catid == 0)
+           else if ($_category == 0)
              {
     //global $wpdb;
     //$sql = "SELECT `wp_product_list`.* FROM `wp_product_list` WHERE `active`='1' AND `visible`='1' ORDER BY RAND(NOW()) LIMIT 1";
