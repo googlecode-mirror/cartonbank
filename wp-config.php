@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Основные параметры WordPress.
  *
@@ -17,7 +17,7 @@
 // ** Настройки MySQL: Эту информацию можно получить у вашего хостинг-провайдера ** //
 /** Имя базы данных для WordPress 
 define('DB_NAME', 'database_name_here');*/
-define('DB_NAME', 'z58365_cbru3');
+define('DB_NAME', 'z58365_cbru3utf');
 
 /** Имя пользователя MySQL 
 define('DB_USER', 'username_here');*/
@@ -80,7 +80,7 @@ define ('WPLANG', 'ru_RU');
  * Настоятельно рекомендуется, чтобы разработчики плагинов и тем использовали WP_DEBUG
  * в своём рабочем окружении.
  */
-define('WP_DEBUG', false);
+define('WP_DEBUG', true);
 
 /* Это всё, дальше не редактируем. Успехов! */
 

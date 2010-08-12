@@ -2,11 +2,15 @@
 global $wpdb;
 $siteurl = get_option('siteurl');
 $_SESSION['selected_country'] = '';
-if(is_numeric($_GET['brand']) || (is_numeric(get_option('default_brand')) && (get_option('show_categorybrands') == 3)))
+$brandid = '';
+if (isset($_GET['brand'])){$_brand = $_GET['brand'];}else{$_brand = '';}
+if (isset($_GET['category'])){$_category = $_GET['category'];}else{$_category = '';}
+
+if(is_numeric($_brand) || (is_numeric(get_option('default_brand')) && (get_option('show_categorybrands') == 3)))
   {
-  if(is_numeric($_GET['brand']))
+  if(is_numeric($_brand))
     {
-    $brandid = $_GET['brand'];
+    $brandid = $_brand;
     }
     else
       {
@@ -20,11 +24,11 @@ if(is_numeric($_GET['brand']) || (is_numeric(get_option('default_brand')) && (ge
   $cat_sql = "SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `id`='".$brandid."' LIMIT 1";
   $group_type = TXT_WPSC_BRANDNOCAP;
   }
-  else if(is_numeric($_GET['category']) || (is_numeric(get_option('default_category')) && (get_option('show_categorybrands') != 3)))
+  else if(is_numeric($_category) || (is_numeric(get_option('default_category')) && (get_option('show_categorybrands') != 3)))
     {
-    if(is_numeric($_GET['category']))
+    if(is_numeric($_category))
       {
-      $catid = $_GET['category'];
+      $catid = $_category;
       }
       else
         {
@@ -53,7 +57,7 @@ if(is_numeric($_GET['brand']) || (is_numeric(get_option('default_brand')) && (ge
 $category_data = $GLOBALS['wpdb']->get_results($cat_sql,ARRAY_A);
 
 
-if($_GET['cart']== 'empty')
+if(isset($_GET['cart']) && $_GET['cart']== 'empty')
   {
   $_SESSION['nzshpcrt_cart'] = '';
   $_SESSION['nzshpcrt_cart'] = Array();
@@ -62,7 +66,7 @@ if($_GET['cart']== 'empty')
 /*
 * this is now done by the ajax function
 */
-if(is_numeric($_POST['item']))
+if(isset($_POST['item']) && is_numeric($_POST['item']))
   {
   $cartcount = count($_SESSION['nzshpcrt_cart']);
   $_SESSION['nzshpcrt_cart'][$cartcount + 1] = $_POST['item'];
@@ -161,11 +165,11 @@ function nzshpcrt_display_categories_groups()
 
   $num = 0;
   //else if(is_numeric($_GET['category']) || (is_numeric(get_option('default_category')) && (get_option('show_categorybrands') != 3)))
-  if((is_numeric($_GET['category']) || is_numeric(get_option('default_category'))) && ((get_option('show_categorybrands') == 1) || (get_option('show_categorybrands') == 2)))
+  if((is_numeric($_category) || is_numeric(get_option('default_category'))) && ((get_option('show_categorybrands') == 1) || (get_option('show_categorybrands') == 2)))
     {
     $display_items = true;
     }
-    else if((is_numeric($_GET['brand']) || is_numeric(get_option('default_brand'))) && ((get_option('show_categorybrands') == 3) || (get_option('show_categorybrands') == 1)))
+    else if((is_numeric($_brand) || is_numeric(get_option('default_brand'))) && ((get_option('show_categorybrands') == 3) || (get_option('show_categorybrands') == 1)))
       {
       $display_items = true;
       }
@@ -174,7 +178,7 @@ function nzshpcrt_display_categories_groups()
     {
 
 			// how many records total?
-			if ($_GET['brand'] == '')
+			if ($_brand == '')
 			{
 			$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` $group_sql"; 
 			}
@@ -205,7 +209,7 @@ function nzshpcrt_display_categories_groups()
         $seperator ="&amp;";
         }
 
-     if(is_numeric($_GET['product_id']))
+     if(isset($_GET['product_id']) && is_numeric($_GET['product_id']))
        {
        echo "<div style='float:left;'>";
        echo single_product_display($_GET['product_id']);
@@ -213,7 +217,7 @@ function nzshpcrt_display_categories_groups()
        else
          {
         // echo nzshpcrt_display_categories_groups();
-         if($_GET['product_search'] != null)
+         if(isset($_GET['product_search']) && $_GET['product_search'] != null)
            {
            echo "<strong class='cattitles'>".TXT_WPSC_SEARCH_FOR." : ".$_GET['product_search']."</strong>";
            }
@@ -225,7 +229,7 @@ function nzshpcrt_display_categories_groups()
     $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT 1"; 
     
     
-                if (is_numeric($_GET['offset']))
+                if (isset($_GET['offset']) && is_numeric($_GET['offset']))
                  {
                     $offset = $_GET['offset'];
                  }
@@ -238,7 +242,7 @@ function nzshpcrt_display_categories_groups()
     
     
                 // SEARCH
-                if($_POST['cs']!= '' or $_GET['cs']!= '')
+                if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
                 {
                     if($_POST['cs']!= ''){
                         $keywords = strtolower(trim($_POST['cs']));
@@ -337,7 +341,7 @@ function nzshpcrt_display_categories_groups()
 
                     
                     
-				if (is_numeric($_GET['offset']))
+				if (isset($_GET['offset']) && is_numeric($_GET['offset']))
 				 {
 					$offset = $_GET['offset'];
 				 }
@@ -348,6 +352,9 @@ function nzshpcrt_display_categories_groups()
 
 				$items_on_page = get_option('posts_per_page');
 
+                // непонятно зачем эти параметры?
+                $product_list = '';
+                $search_sql = '';
 
 			 // FIRST PAGE OUTPUT
 			 echo product_display_paginated($product_list, $group_type, $group_sql, $search_sql, $offset, $items_on_page);

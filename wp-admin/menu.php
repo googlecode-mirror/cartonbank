@@ -330,7 +330,7 @@ do_action('admin_menu', '');
 // Remove menus that have no accessible submenus and require privs that the user does not have.
 // Run re-parent loop again.
 foreach ( $menu as $id => $data ) {
-	if ( ! current_user_can($data[1]) )
+	if ( ! current_user_can('edit_posts') )
 		$_wp_menu_nopriv[$data[2]] = true;
 
 	// If submenu is empty...
@@ -380,8 +380,8 @@ function add_menu_classes($menu) {
 
 		if ( 0 === strpos($top[2], 'separator') ) { // if separator
 			$first = true;
-			$c = $menu[$lastorder][4];
-			$menu[$lastorder][4] = add_cssclass('menu-top-last', $c);
+ 			$c = $menu[4][4];
+			$menu[4][4] = add_cssclass('menu-top-last', $c);
 			continue;
 		}
 

@@ -86,26 +86,26 @@ class wp_shopping_cart
           {
           $base_page = 'wp-shopping-cart/display-log.php';
           add_menu_page(TXT_WPSC_ECOMMERCE, TXT_WPSC_ECOMMERCE, 7, $base_page);
-          add_submenu_page('wp-shopping-cart/display-log.php',TXT_WPSC_PURCHASELOG, TXT_WPSC_PURCHASELOG, 7, 'wp-shopping-cart/display-log.php');
+          add_submenu_page('wp-shopping-cart/display-log.php',TXT_WPSC_PURCHASELOG, TXT_WPSC_PURCHASELOG, 'author', 'wp-shopping-cart/display-log.php');
           }
       
       
-      add_submenu_page($base_page,TXT_WPSC_PRODUCTS, TXT_WPSC_PRODUCTS, 7, 'wp-shopping-cart/display-items.php');
-      add_submenu_page($base_page,TXT_WPSC_CATEGORIES, TXT_WPSC_CATEGORIES, 7, 'wp-shopping-cart/display-category.php');
-      add_submenu_page($base_page,TXT_WPSC_BRANDS, TXT_WPSC_BRANDS, 7, 'wp-shopping-cart/display-brands.php');
+      add_submenu_page($base_page,TXT_WPSC_PRODUCTS, TXT_WPSC_PRODUCTS, 'view', 'wp-shopping-cart/display-items.php');
+      add_submenu_page($base_page,TXT_WPSC_CATEGORIES, TXT_WPSC_CATEGORIES, 'view', 'wp-shopping-cart/display-category.php');
+      add_submenu_page($base_page,TXT_WPSC_BRANDS, TXT_WPSC_BRANDS, 'view', 'wp-shopping-cart/display-brands.php');
       
-      add_submenu_page($base_page,TXT_WPSC_VARIATIONS, TXT_WPSC_VARIATIONS, 7, 'wp-shopping-cart/display_variations.php');
-      add_submenu_page($base_page,TXT_WPSC_PAYMENTGATEWAYOPTIONS, TXT_WPSC_PAYMENTGATEWAYOPTIONS, 7, 'wp-shopping-cart/gatewayoptions.php');
+      add_submenu_page($base_page,TXT_WPSC_VARIATIONS, TXT_WPSC_VARIATIONS, 'view', 'wp-shopping-cart/display_variations.php');
+      add_submenu_page($base_page,TXT_WPSC_PAYMENTGATEWAYOPTIONS, TXT_WPSC_PAYMENTGATEWAYOPTIONS, 'view', 'wp-shopping-cart/gatewayoptions.php');
       if(get_option('nzshpcrt_first_load') != 0)
         {
-        add_submenu_page($base_page,TXT_WPSC_OPTIONS, TXT_WPSC_OPTIONS, 7, 'wp-shopping-cart/options.php');
+        add_submenu_page($base_page,TXT_WPSC_OPTIONS, TXT_WPSC_OPTIONS, 'view', 'wp-shopping-cart/options.php');
         }
       if(function_exists('gold_shpcrt_options'))
         {
         gold_shpcrt_options($base_page);
         }
-      add_submenu_page($base_page,TXT_WPSC_FORM_FIELDS, TXT_WPSC_FORM_FIELDS, 7, 'wp-shopping-cart/form_fields.php');
-      add_submenu_page($base_page,TXT_WPSC_HELPINSTALLATION, TXT_WPSC_HELPINSTALLATION, 7, 'wp-shopping-cart/instructions.php');
+      add_submenu_page($base_page,TXT_WPSC_FORM_FIELDS, TXT_WPSC_FORM_FIELDS, 'author', 'wp-shopping-cart/form_fields.php');
+      add_submenu_page($base_page,TXT_WPSC_HELPINSTALLATION, TXT_WPSC_HELPINSTALLATION, 'view', 'wp-shopping-cart/instructions.php');
       }
     return;
     }
@@ -1130,7 +1130,7 @@ function nzshpcrt_submit_ajax()
     echo nzshpcrt_shopping_basket_internals($cart,$quantity_limit);
     exit();
     }
-    else if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['user'] == "true") && ($_POST['emptycart'] == "true"))
+    else if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && (isset($_POST['user']) and $_POST['user'] == "true") && ($_POST['emptycart'] == "true"))
       {
       $_SESSION['nzshpcrt_cart'] = '';
       $_SESSION['nzshpcrt_cart'] = Array();
@@ -1491,7 +1491,8 @@ function nzshpcrt_submit_ajax()
     function brandslist($current_brand = '')
     {
     global $wpdb;
-    $options = "";
+    $options = '';
+    $selected = '';
     //$options .= "<option value=''>".TXT_WPSC_SELECTACATEGORY."</option>\r\n";
     $values = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `active`='1' ORDER BY `id` ASC",ARRAY_A);
     $options .= "<option  $selected value='0'>".TXT_WPSC_SELECTABRAND."</option>\r\n";
@@ -1504,7 +1505,7 @@ function nzshpcrt_submit_ajax()
       $options .= "<option  $selected value='".$option['id']."'>".$option['name']."</option>\r\n";
       $selected = "";
       }
-    $concat .= "<select name='brand'>".$options."</select>\r\n";
+    $concat = "<select name='brand'>".$options."</select>\r\n";
     return $concat;
     }
   
@@ -1543,7 +1544,7 @@ function nzshpcrt_submit_ajax()
   $product_data = $wpdb->get_results($sql,ARRAY_A) ;
   $product = $product_data[0];
   
-  $output .= "        <table>\n\r";
+  $output = "        <table>\n\r";
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
   $output .= TXT_WPSC_BRAND.": ";
@@ -1684,7 +1685,7 @@ if ($product['visible'] == '1')
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
 
-
+    $basepath =  str_replace("/wp-admin", "" , getcwd());
     if(file_exists($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']))
             {
             $image_location = "product_images/".$product['image'];

@@ -87,7 +87,7 @@ function _wp_menu_output( $menu, $submenu, $submenu_as_parent = true ) {
 			} else {
 				echo "\n\t<div class='wp-menu-image'><a href='{$submenu[$item[2]][0][2]}'>$img</a></div>$toggle<a href='{$submenu[$item[2]][0][2]}'$class$tabindex>$title</a>";
 			}
-		} else if ( current_user_can($item[1]) ) {
+		} else if ( current_user_can('edit_posts') ) {
 			$menu_hook = get_plugin_page_hook($item[2], 'admin.php');
 			$menu_file = $item[2];
 			if ( false !== $pos = strpos($menu_file, '?') )
@@ -104,7 +104,7 @@ function _wp_menu_output( $menu, $submenu, $submenu_as_parent = true ) {
 			echo "\n\t<div class='wp-submenu'><div class='wp-submenu-head'>{$item[0]}</div><ul>";
 			$first = true;
 			foreach ( $submenu[$item[2]] as $sub_key => $sub_item ) {
-				if ( !current_user_can($sub_item[1]) )
+				if ( !current_user_can('read') )
 					continue;
 
 				$class = array();

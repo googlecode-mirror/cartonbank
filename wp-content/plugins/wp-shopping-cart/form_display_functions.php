@@ -2,6 +2,8 @@
 function categorylist($product_id = '')
   {
   global $wpdb;
+  $selected = '';
+  $output = '';
   $values = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `active`='1' ORDER BY `id` ASC",ARRAY_A);
   foreach($values as $option)
     {

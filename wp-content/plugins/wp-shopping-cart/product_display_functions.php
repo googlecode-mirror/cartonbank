@@ -8,12 +8,15 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	//todo: remove special
     $andcategory = "";
     $category='';
-   
-    if (isset($_GET['category']) and is_numeric($_GET['category']) and ($_GET['category'] != 0))
+    $num = 0;
+    if (isset($_GET['category'])){$_category = $_GET['category'];}else{$_category = '';}
+
+    
+    if (isset($_category) and is_numeric($_category) and ($_category != 0))
     {
-        $andcategory = " AND `wp_product_categories`.`id`=".$_GET['category']." ";
+        $andcategory = " AND `wp_product_categories`.`id`=".$_category." ";
         
-        $category=$_GET['category'];
+        $category=$_category;
     }
     else
     {
@@ -26,7 +29,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	}
 	else
 	{
-		if ($_GET['brand'] == '')
+		if (isset($_GET['brand']) && $_GET['brand'] == '')
 		{
         $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
        	}
@@ -131,7 +134,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 							$output .= "№&nbsp;".$product['id']. " <b>" . stripslashes($product['name'])."</b>";
 						    $output .= "<br><span id='size'>".$product['width']."px X ".$product['height']."px</span><br>";
 						    $output .= "<span id='title'><i>".stripslashes($product['brand'])."</i></span><br>";
-							$output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_GET['category']."' onsubmit='submitform(this);return false;' >";
+							$output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_category."' onsubmit='submitform(this);return false;' >";
 							$output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
 							$output .= "Добавить в заказ: <input type='image' border='0' src='".get_option('siteurl')."/img/cart.gif' name='Buy' value='".TXT_WPSC_ADDTOCART."'  />";
 							$output .= "</form>" ;
@@ -221,7 +224,7 @@ function product_display_default($product_list, $group_type, $group_sql = '', $s
           {
           $special = "";
           }
-      $output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_GET['category']."' onsubmit='submitform(this);return false;' >";
+      $output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_category."' onsubmit='submitform(this);return false;' >";
       $output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
       
       $imagedir = ABSPATH."wp-content/plugins/wp-shopping-cart/product_images/";
@@ -406,9 +409,9 @@ function single_product_display($product_id)
 	  $output .= "<div class='producttext'><u>Автор:</u><br>".$product_list[0]['artist']."<br>";
 	  $output .= "<u>Название:</u><br>".$product_list[0]['name'];
       
-	  if (isset($_GET['category']))
+	  if (isset($_category))
 	  {
-		  $cate = $_GET['category'];
+		  $cate = $_category;
 	  }
 	  else
 	  {

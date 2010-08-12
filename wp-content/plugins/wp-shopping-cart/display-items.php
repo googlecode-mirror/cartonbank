@@ -10,7 +10,7 @@ $preview_clips_dir = $basepath."/wp-content/plugins/wp-shopping-cart/preview_cli
 $image = '';
 
 // add product
-if($_POST['submit_action'] == 'add') {
+if(isset($_POST['submit_action']) && $_POST['submit_action'] == 'add') {
 
   if($_FILES['file']['name'] != null)  {
   
@@ -200,7 +200,7 @@ if ($_POST['visible'] == 'on')
     }
  }
 
-if($_GET['submit_action'] == "remove_set")
+if(isset($_GET['submit_action']) && $_GET['submit_action'] == "remove_set")
   {
   if(is_numeric($_GET['product_id']) && is_numeric($_GET['variation_assoc_id']))
     {
@@ -221,7 +221,7 @@ if($_GET['submit_action'] == "remove_set")
   }
 
 // edit product 
-if($_POST['submit_action'] == "edit")
+if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
   {
       //transliterate file
       $_FILES['file']['name'] = rus2translit($_FILES['file']['name']); 
@@ -246,7 +246,7 @@ if($_POST['submit_action'] == "edit")
 	  $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
 	  $preview_clips_dir = $basepath."/wp-content/plugins/wp-shopping-cart/preview_clips/"; 
 
-  if($_FILES['file']['name'] != null)
+  if(($_FILES['file']['tmp_name'] != null) && ($_FILES['file']['name'] != null))
    {
     $id = $_POST['prodid'];
     $fileid_data = $wpdb->get_results("SELECT `file` FROM `".$wpdb->prefix."product_list` WHERE `id` = '$id' LIMIT 1",ARRAY_A);
@@ -263,7 +263,7 @@ if($_POST['submit_action'] == "edit")
 			  }
 			if(function_exists("getimagesize"))
 			  {
-				switch($_POST['image_resize'])	
+				switch(isset ($_POST['image_resize']) && $_POST['image_resize'])	
                     {
                     case 2:
                     $height = $_POST['height'];
@@ -320,7 +320,7 @@ if($_POST['submit_action'] == "edit")
 
   if(is_numeric($_POST['prodid']))
     {
-    if(($_POST['image_resize'] > 0) && ($image === ''))
+    if(isset($_POST['image_resize']) && ($_POST['image_resize'] > 0) && ($image === ''))
       {
       $imagesql = "SELECT `image` FROM `".$wpdb->prefix."product_list` WHERE `id`=".$_POST['prodid']." LIMIT 1";
       $imagedata = $wpdb->get_results($imagesql,ARRAY_A);
@@ -376,7 +376,7 @@ if($_POST['submit_action'] == "edit")
       $wpdb->query("DELETE FROM `".$wpdb->prefix."item_category_associations` WHERE `product_id`= '$id' AND `category_id` NOT IN (".$item_list.")"); 
       }
     
-   if(is_numeric($_POST['quantity']) && ($_POST['quantity_limited'] == "yes"))
+   if(isset($_POST['quantity']) && is_numeric($_POST['quantity']) && ($_POST['quantity_limited'] == "yes"))
      {
      $quantity_limited = 1;
      $quantity = $_POST['quantity'];
@@ -386,8 +386,9 @@ if($_POST['submit_action'] == "edit")
        $quantity_limited = 0;
        $quantity = 0;
        }
+     
        
-    if($_POST['special'] == 'yes') {
+    if(isset($_POST['special']) && $_POST['special'] == 'yes') {
 		  $special = 1;
 		 if(is_numeric($_POST['special_price']))
 		   {
@@ -399,7 +400,7 @@ if($_POST['submit_action'] == "edit")
 			$special_price = '';
         }
   
-    if($_POST['notax'] == 'yes')
+    if(isset($_POST['notax']) && $_POST['notax'] == 'yes')
       {
       $notax = 1;
       }
@@ -408,8 +409,9 @@ if($_POST['submit_action'] == "edit")
         $notax = 0;
         }
 
+     
       
-   if($_POST['display_frontpage'] == "yes")
+   if(isset($_POST['display_frontpage']) && $_POST['display_frontpage'] == "yes")
      {
      $display_frontpage = 1;
      }
@@ -419,10 +421,16 @@ if($_POST['submit_action'] == "edit")
        }
 
 	$visible = '0';
-	if ($_POST['visible'] == 'on')
+	if (isset($_POST['visible']) && $_POST['visible'] == 'on')
 		$visible = '1'; 
 
-      $updatesql = "UPDATE `".$wpdb->prefix."product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_POST['price']))."', `pnp` = '".$wpdb->escape($_POST['pnp'])."', `international_pnp` = '".$wpdb->escape($_POST['international_pnp'])."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$quantity_limited."', `quantity` = '".$quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+        if (isset($_POST['price'])){$_price=$_POST['price'];}else{$_price='';}
+        if (isset($_POST['pnp'])){$_pnp=$_POST['pnp'];}else{$_pnp='';}
+        if (isset($_POST['international_pnp'])){$_international_pnp=$_POST['international_pnp'];}else{$_international_pnp='';}
+        if (isset($_POST['quantity_limited'])){$_quantity_limited=$_POST['quantity_limited'];}else{$_quantity_limited=0;}
+        if (isset($_POST['quantity'])){$_quantity=$_POST['quantity'];}else{$_quantity=1;}
+        
+      $updatesql = "UPDATE `".$wpdb->prefix."product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
       //exit("<pre>".print_r($updatesql,true)."</pre>");
       $wpdb->query($updatesql);
       if($image != null)
@@ -430,24 +438,24 @@ if($_POST['submit_action'] == "edit")
         $updatesql2 = "UPDATE `".$wpdb->prefix."product_list` SET `image` = '".$image."' WHERE `id`='".$_POST['prodid']."' LIMIT 1";
         $wpdb->query($updatesql2);
         }
-      if($_POST['deleteimage'] == 1)
+      if(isset($_POST['deleteimage']) && $_POST['deleteimage'] == 1)
         {
         $updatesql2 = "UPDATE `".$wpdb->prefix."product_list` SET `image` = ''  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
         $wpdb->query($updatesql2);
         }
      
      $variations_procesor = new nzshpcrt_variations;
-     if($_POST['variation_values'] != null)
+     if(isset($_POST['variation_values']) && $_POST['variation_values'] != null)
        {
        $variations_procesor->add_to_existing_product($_POST['prodid'],$_POST['variation_values']); 
        }
      
-     if($_POST['edit_variation_values'] != null)
+     if(isset($_POST['edit_variation_values']) && $_POST['edit_variation_values'] != null)
        {
        $variations_procesor->edit_product_values($_POST['prodid'],$_POST['edit_variation_values']);
        }
      
-     if($_POST['edit_add_variation_values'] != null)
+     if(isset($_POST['edit_add_variation_values']) && $_POST['edit_add_variation_values'] != null)
        {
        $variations_procesor->edit_add_product_values($_POST['prodid'],$_POST['edit_add_variation_values']);
        }
@@ -456,7 +464,7 @@ if($_POST['submit_action'] == "edit")
      }
   }
 
-if(is_numeric($_GET['deleteid']))
+if(isset($_GET['deleteid']) && is_numeric($_GET['deleteid']))
   {
   $deletesql = "UPDATE `".$wpdb->prefix."product_list` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
   $wpdb->query($deletesql);
@@ -468,7 +476,7 @@ if(is_numeric($_GET['deleteid']))
  */
 
 $items_on_page = 10;
-if(is_numeric($_GET['offset']))
+if(isset($_GET['offset']) && is_numeric($_GET['offset']))
 	{
 		$offset = $_GET['offset'];
 	}
@@ -482,14 +490,14 @@ if(current_user_can('publish_posts'))
 else
 	$visiblesql = " AND `wp_product_list`.`visible`='1' ";
 
-if(is_numeric($_GET['catid']))
+if(isset($_GET['catid']) && is_numeric($_GET['catid']))
   {
   // if we are getting items from only one category
   $sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
    $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."'",ARRAY_A);
    }
-   else if (is_numeric($_GET['brand']))
+   else if (isset($_GET['catid']) && is_numeric($_GET['brand']))
    {
 		// if we are getting items from only one brand
 		$sql = "SELECT `wp_product_list`.* FROM `wp_product_list`  WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`brand`='".$_GET['brand']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
@@ -540,16 +548,16 @@ function conf()
     }
   }
 <?php
-if(is_numeric($_POST['prodid']))
+if(isset($_POST['prodid']) && is_numeric($_POST['prodid']))
   {
   echo "filleditform(".$_POST['prodid'].");";
   }
-  else if(is_numeric($_GET['product_id']))
+  else if(isset ($_GET['product_id']) && is_numeric($_GET['product_id']))
     {
     echo "filleditform(".$_GET['product_id'].");";
     }
   
-echo $display_added_product ;
+//echo $display_added_product ;
 ?>
 </script>
   <?php
@@ -559,6 +567,9 @@ if($product_list != null){
 }
 
 $num = 1;
+if (isset($_GET['brand'])){$_brand = $_GET['brand'];}else{$_brand = '';}
+if (isset($_GET['catid'])){$_category = $_GET['catid'];}else{$_category = '';}
+
 			 //pagination links
 				$output = "<span id='pagination'><br>";
 				$from_num = 0;
@@ -573,7 +584,7 @@ $num = 1;
 				{
 					// "Next page" link
 					$offset_forw = $offset + $items_on_page;
-					$output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_GET['brand']."&category=".$_GET['catid']."&offset=".$offset_forw."'>".TXT_WPSC_NEXT_PAGE." >></a>";
+					$output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_brand."&category=".$_category."&offset=".$offset_forw."'>".TXT_WPSC_NEXT_PAGE." >></a>";
 				}
 				$output .= "</br></div>";
 
@@ -796,12 +807,13 @@ function topcategorylist($offset)
   $values = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `active`='1' ORDER BY `id` ASC",ARRAY_A);
   $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=wp-shopping-cart/display-items.php&offset=0";
   $options .= "<option value='$url'>".TXT_WPSC_ALLCATEGORIES."</option>\r\n";
+  $selected = '';
   if($values != null)
     {
     foreach($values as $option)
       {
       $category_data[$option['id']] = $option['name'];
-      if($_GET['catid'] == $option['id'])
+      if(isset($_GET['catid']) && $_GET['catid'] == $option['id'])
         {
         $selected = "selected='selected'";
         }
@@ -809,7 +821,7 @@ function topcategorylist($offset)
       $selected = "";
       }
     }
-  $concat .= "<select name='category' onChange='categorylist(this.options[this.selectedIndex].value)'>".$options."</select>\r\n";
+  $concat = "<select name='category' onChange='categorylist(this.options[this.selectedIndex].value)'>".$options."</select>\r\n";
   return $concat;
   }
 
@@ -842,16 +854,17 @@ function al_brandslist($current_brand = '')
   $values = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
   $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=wp-shopping-cart/display-items.php&offset=0";
   $options .= "<option value='$url'>".TXT_WPSC_SELECTABRAND."</option>\r\n";
+  $selected = '';
   foreach($values as $option)
     {
-    if($_GET['brand'] == $option['id'])
+    if(isset($_GET['brand']) && $_GET['brand'] == $option['id'])
       {
       $selected = "selected='selected'";
        }
       $options .= "<option $selected value='$url&amp;brand=".$option['id']."'>".$option['name']."</option>\r\n";
       $selected = "";
     }
-  $concat .= "<select name='brand' onChange='categorylist(this.options[this.selectedIndex].value)'>".$options."</select>\r\n";
+  $concat = "<select name='brand' onChange='categorylist(this.options[this.selectedIndex].value)'>".$options."</select>\r\n";
   return $concat;
   }
 
