@@ -148,7 +148,7 @@ function execphp_scan_for_old_style()
 	foreach ($s as $i)
 	{
 		$content_has_old_style = preg_match($g_execphp_old_style_pattern, $i->post_content);
-		$excpert_has_old_style = preg_match($g_execphp_old_style_pattern, $i->post_excerpt);
+		$excerpt_has_old_style = preg_match($g_execphp_old_style_pattern, $i->post_excerpt);
 		if ($content_has_old_style || $excerpt_has_old_style)
 		{
 			$has_old_style += $content_has_old_style + $excerpt_has_old_style;
@@ -255,7 +255,7 @@ function execphp_init_admin()
 	execphp_install();
 
 	add_submenu_page('options-general.php', __('Exec-PHP', EXECPHP_PLUGIN_ID),
-		__('Exec-PHP', EXECPHP_PLUGIN_ID), 10, __FILE__, 'execphp_config_page');
+		__('Exec-PHP', EXECPHP_PLUGIN_ID), 'author', __FILE__, 'execphp_config_page');
 }
 
 // --------------------------------------------------------------------------

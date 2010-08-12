@@ -466,12 +466,12 @@ function some_thickbox_plugin() {
 
 function gallery_add_pages() {		// Calls the admin panel file
 	global $user_level;
-
+    
 	// gallery_add_pages() is the sink function for the 'admin_menu' hook
 	$upload_level = get_option('lg_fileupload_minlevel');
 	if ($user_level >= $upload_level) {
 		add_menu_page('Lazyest Gallery', 'Lazyest Gallery', $upload_level, 'lazyest-gallery/lazyest-admin.php');
-		add_submenu_page('lazyest-gallery/lazyest-admin.php', 'Lazyest Gallery', 'File Manager', $upload_level, 'lazyest-gallery/lazyest-filemanager.php', lg_build_captions_form);
+		add_submenu_page('lazyest-gallery/lazyest-admin.php', 'Lazyest Gallery', 'File Manager','read', 'lazyest-gallery/lazyest-filemanager.php', 'lg_build_captions_form');
 	}
 	if (get_option('lg_enable_mwp_support') == "TRUE") {
 		add_submenu_page('lazyest-gallery/lazyest-admin.php', 'Lazyest Gallery', 'Wizard', 10, 'lazyest-gallery/lazyest-wizard.php', lg_wizard_form);
