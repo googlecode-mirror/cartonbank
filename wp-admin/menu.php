@@ -104,6 +104,7 @@ $menu[4] = array( '', 'read', 'separator1', '', 'wp-menu-separator' );
 	$submenu['link-manager.php'][10] = array( _x('Add New', 'link'), 'manage_links', 'link-add.php' );
 	$submenu['link-manager.php'][15] = array( __('Link Categories'), 'manage_categories', 'edit-link-categories.php' );
 
+if ( is_super_admin() ){    
 $menu[20] = array( __('Pages'), 'edit_pages', 'edit.php?post_type=page', '', 'menu-top menu-icon-page', 'menu-pages', 'div' );
 	$submenu['edit.php?post_type=page'][5] = array( __('Pages'), 'edit_pages', 'edit.php?post_type=page' );
 	/* translators: add new page */
@@ -116,7 +117,7 @@ $menu[20] = array( __('Pages'), 'edit_pages', 'edit.php?post_type=page', '', 'me
 		$submenu['edit.php?post_type=page'][$i++] = array( esc_attr( $tax->labels->name ), $tax->cap->manage_terms, 'edit-tags.php?taxonomy=' . $tax->name );
 	}
 	unset($tax);
-
+}
 ///$menu[25] = array( sprintf( __('Comments %s'), "<span id='awaiting-mod' class='count-$awaiting_mod'><span class='pending-count'>" . number_format_i18n($awaiting_mod) . "</span></span>" ), 'edit_posts', 'edit-comments.php', '', 'menu-top menu-icon-comments', 'menu-comments', 'div' );
 
 $_wp_last_object_menu = 25; // The index of the last top-level menu in the object menu group
@@ -154,17 +155,17 @@ unset($ptype, $ptype_obj);
 
 $menu[59] = array( '', 'read', 'separator2', '', 'wp-menu-separator' );
 
-if ( current_user_can( 'switch_themes') ) {
+if ( is_super_admin()) {
 	$menu[60] = array( __('Appearance'), 'switch_themes', 'themes.php', '', 'menu-top menu-icon-appearance', 'menu-appearance', 'div' );
 		$submenu['themes.php'][5]  = array(__('Themes'), 'switch_themes', 'themes.php');
 		if ( current_theme_supports( 'menus' ) || current_theme_supports( 'widgets' ) )
 			$submenu['themes.php'][10] = array(__('Menus'), 'edit_theme_options', 'nav-menus.php');
-} else {
+} /*else {
 	$menu[60] = array( __('Appearance'), 'edit_theme_options', 'themes.php', '', 'menu-top menu-icon-appearance', 'menu-appearance', 'div' );
 		$submenu['themes.php'][5]  = array(__('Themes'), 'edit_theme_options', 'themes.php');
 		if ( current_theme_supports( 'menus' ) || current_theme_supports( 'widgets' ) )
 			$submenu['themes.php'][10] = array(__('Menus'), 'edit_theme_options', 'nav-menus.php' );
-}
+}   */
 
 // Add 'Editor' to the bottom of the Appearence menu.
 add_action('admin_menu', '_add_themes_utility_last', 101);
@@ -188,11 +189,15 @@ if ( is_super_admin() || ( is_multisite() && isset($menu_perms['plugins']) && $m
 }
 unset($menu_perms, $update_plugins, $update_count);
 
+    $menu[70] = array( __('Profile'), 'read', 'profile.php', '', 'menu-top menu-icon-users', 'menu-users', 'div' );
+
+if ( is_super_admin() ){
+
 if ( current_user_can('list_users') )
 	$menu[70] = array( __('Users'), 'list_users', 'users.php', '', 'menu-top menu-icon-users', 'menu-users', 'div' );
 else
 	$menu[70] = array( __('Profile'), 'read', 'profile.php', '', 'menu-top menu-icon-users', 'menu-users', 'div' );
-
+}
 if ( current_user_can('list_users') ) {
 	$_wp_real_parent_file['profile.php'] = 'users.php'; // Back-compat for plugins adding submenus to profile.php.
 	$submenu['users.php'][5] = array(__('Users'), 'list_users', 'users.php');
@@ -213,7 +218,8 @@ if ( current_user_can('list_users') ) {
 		$submenu['tools.php'][25] = array( __('Delete Site'), 'manage_options', 'ms-delete-site.php' );
 	if ( ( ! is_multisite() || defined( 'MULTISITE' ) ) && defined('WP_ALLOW_MULTISITE') && WP_ALLOW_MULTISITE && is_super_admin() )
 		$submenu['tools.php'][50] = array(__('Network'), 'manage_options', 'network.php');
-
+ 
+ if ( is_super_admin() ){
 $menu[80] = array( __('Settings'), 'manage_options', 'options-general.php', '', 'menu-top menu-icon-settings', 'menu-settings', 'div' );
 	$submenu['options-general.php'][10] = array(_x('General', 'settings screen'), 'manage_options', 'options-general.php');
 	$submenu['options-general.php'][15] = array(__('Writing'), 'manage_options', 'options-writing.php');
@@ -222,7 +228,7 @@ $menu[80] = array( __('Settings'), 'manage_options', 'options-general.php', '', 
 	$submenu['options-general.php'][30] = array(__('Media'), 'manage_options', 'options-media.php');
 	$submenu['options-general.php'][35] = array(__('Privacy'), 'manage_options', 'options-privacy.php');
 	$submenu['options-general.php'][40] = array(__('Permalinks'), 'manage_options', 'options-permalink.php');
-
+ }
 $_wp_last_utility_menu = 80; // The index of the last top-level menu in the utility menu group
 
 $menu[99] = array( '', 'read', 'separator-last', '', 'wp-menu-separator-last' );
@@ -343,6 +349,10 @@ foreach ( $menu as $id => $data ) {
 }
 unset($id, $data);
 
+// todo remove e-commerce        e-Commerce
+if (! is_super_admin() ) {
+unset($menu[101]);
+}
 // Remove any duplicated seperators
 $seperator_found = false;
 foreach ( $menu as $id => $data ) {
