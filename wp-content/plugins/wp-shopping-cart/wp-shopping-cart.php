@@ -1953,10 +1953,10 @@ if ($product['visible'] == '1')
   $output .= "        </table>\n\r";
   
   // TODO: Remove before upload to the server! temp! local debug only!
-  $outp = Utf8ToWin($output);
-  return $outp;
+  //$outp = Utf8ToWin($output);
+  //return $outp;
   
-  //return $output;
+  return $output;
   }
 
 function nzshpcrt_getcategoryform($catid)
