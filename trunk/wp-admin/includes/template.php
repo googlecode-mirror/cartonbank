@@ -3644,10 +3644,12 @@ function screen_meta($screen) {
 	?>
 	</div>
 
+<?if (is_super_admin()){?>
 <div id="screen-meta-links">
 <div id="contextual-help-link-wrap" class="hide-if-no-js screen-meta-toggle">
 <a href="#contextual-help" id="contextual-help-link" class="show-settings"><?php _e('Help') ?></a>
 </div>
+<?}?>
 <?php if ( $show_screen ) { ?>
 <div id="screen-options-link-wrap" class="hide-if-no-js screen-meta-toggle">
 <a href="#screen-options" id="show-settings-link" class="show-settings"><?php _e('Screen Options') ?></a>
