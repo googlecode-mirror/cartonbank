@@ -1505,7 +1505,7 @@ function nzshpcrt_submit_ajax()
       $options .= "<option  $selected value='".$option['id']."'>".$option['name']."</option>\r\n";
       $selected = "";
       }
-    $concat = "<select name='brand'>".$options."</select>\r\n";
+    $concat = "<select name='brand' id='brandslist'>".$options."</select>\r\n";
     return $concat;
     }
   
@@ -1559,7 +1559,7 @@ function nzshpcrt_submit_ajax()
   $output .= TXT_WPSC_PRODUCTNAME." (".$product['id']."): ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<input type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' />";
+  $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' />";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   
@@ -1568,7 +1568,7 @@ function nzshpcrt_submit_ajax()
   $output .= TXT_WPSC_PRODUCTDESCRIPTION.": ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<textarea name='description' cols='40' rows='3' >".stripslashes($product['description'])."</textarea>";
+  $output .= "<textarea id='productdescredit' name='description' cols='40' rows='3' >".stripslashes($product['description'])."</textarea>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   
@@ -1578,7 +1578,7 @@ function nzshpcrt_submit_ajax()
 
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<textarea name='additional_description' cols='40' rows='3' >".stripslashes($product['additional_description'])."</textarea>";
+  $output .= "<textarea id='tagsedit' name='additional_description' cols='40' rows='3' >".stripslashes($product['additional_description'])."</textarea>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
@@ -1941,7 +1941,11 @@ if ($product['visible'] == '1')
   $output .= "            <td>\n\r";
   $output .= "<input type='hidden' name='prodid' value='".$product['id']."' />";
   $output .= "<input type='hidden' name='submit_action' value='edit' />";
-  $output .= "<input class='edit_button' type='submit' name='submit' value='Сохранить изменения' />";
+  //$output .= "<input class='edit_button' type='submit' name='submit' value='Сохранить изменения' />";
+  
+  
+  $output .= "<br><input type=\"button\" class='edit_button' name='sendit' value='Сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
+
   $output .= "<br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >".TXT_WPSC_DELETE_PRODUCT."</a>";
   $output .= "            <td>\n\r";
   $output .= "          </tr>\n\r";
@@ -1949,9 +1953,10 @@ if ($product['visible'] == '1')
   $output .= "        </table>\n\r";
   
   // TODO: Remove before upload to the server! temp! local debug only!
-  //$outp = Utf8ToWin($output);
+  $outp = Utf8ToWin($output);
+  return $outp;
   
-  return $output;
+  //return $output;
   }
 
 function nzshpcrt_getcategoryform($catid)

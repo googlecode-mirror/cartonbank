@@ -97,7 +97,109 @@ function update_preview_url(prodid)
   return false;
   }
 
+function checkthefields()
+{
+	var brandselect = document.getElementById("brandslist");
+	var fileupload = document.getElementById("fileupload")
+	var radio = document.getElementsByName('category[]');
+	var picturename = document.getElementById('picturename');
+	var picturedescription = document.getElementById('picturedescription');
+	var tags = document.getElementById('tags');
 
+	$message = '';
+	if (brandselect.options[brandselect.selectedIndex].value == 0)
+	{
+		$message += 'Надо бы указать автора.\n';
+	}
+	if (fileupload.value.length == 0)
+	{
+		$message += 'Не забудьте выбрать файл для отправки.\n';
+	}
+
+	$selectedradiobutton = null;
+			for (var ii = 0; ii < radio.length; ii++)
+            {
+                if (radio[ii].checked)
+                    $selectedradiobutton = radio[ii].value;
+            }
+
+	if ($selectedradiobutton == null) //todo
+	{
+		$message += 'Кликните категорию.\n';
+	}
+	if (picturename.value == '' | picturename.value == '***') 
+	{
+		$message += 'Надо назвать картинку.\n';
+	}
+	if (picturedescription.value == '') 
+	{
+		$message += 'Дайте краткое описание.\n';
+	}
+	if (tags.value == '') 
+	{
+		$message += 'Укажите ключевые слова.\n';
+	}
+
+	if ($message.length > 0)
+	{
+		alert ($message);
+	}
+	else
+	{
+		//submit form if validation ok:
+		document.forms["editproductform"].submit();
+		return true;
+	}
+}
+
+function checkthefieldsEditForm()
+{
+	var brandselect = document.getElementById("brandslist");
+	var fileupload = document.getElementById("fileupload")
+	var radio = document.getElementsByName('category[]');
+	var picturename = document.getElementById('productnameedit');
+	var picturedescription = document.getElementById('productdescredit');
+	var tags = document.getElementById('tagsedit');
+
+	$message = '';
+	if (brandselect.options[brandselect.selectedIndex].value == 0)
+	{
+		$message += 'Надо бы указать автора.\n';
+	}
+	$selectedradiobutton = null;
+			for (var ii = 0; ii < radio.length; ii++)
+            {
+                if (radio[ii].checked)
+                    $selectedradiobutton = radio[ii].value;
+            }
+	if ($selectedradiobutton == null) //todo
+	{
+		$message += 'Кликните категорию.\n';
+	}
+	if (picturename.value == '' | picturename.value == '***') 
+	{
+		$message += 'Надо назвать картинку.\n';
+	}
+	if (picturedescription.value == '') 
+	{
+		$message += 'Дайте краткое описание.\n';
+	}
+	if (tags.value == '') 
+	{
+		$message += 'Укажите ключевые слова.\n';
+	}
+
+	if ($message.length > 0)
+	{
+		alert ($message);
+	}
+	else
+	{
+		//submit form if validation ok:
+		document.forms["editproductformtop"].submit();
+		return true;
+	}
+}
 
 
 function checkimageresize()

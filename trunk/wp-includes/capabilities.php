@@ -1064,7 +1064,7 @@ function current_user_can( $capability ) {
 	$args = array_slice( func_get_args(), 1 );
 	$args = array_merge( array( $capability ), $args );
 
-    $args[0]='read';
+    //$args[0]='read';
     
 	return call_user_func_array( array( &$current_user, 'has_cap' ), $args );
 }

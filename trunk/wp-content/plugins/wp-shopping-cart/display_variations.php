@@ -284,7 +284,7 @@ echo "        </div>";
         <input type='text' name='variation_values[]' value='' />
         <a class='image_link' href='#' onclick='remove_variation_value_field("variation_value_2")'><img src='../wp-content/plugins/wp-shopping-cart/images/trash.gif' alt='<?php echo TXT_WPSC_DELETE; ?>' title='<?php echo TXT_WPSC_DELETE; ?>' /></a><br />
         </span></div>
-       <a href='#' onclick='return add_variation_value("add")'><?php echo TXT_WPSC_ADD;?></a>
+       <a href='#' return add_variation_value("add")'><?php echo TXT_WPSC_ADD;?></a>
       </td>
     </tr>
     <tr>
