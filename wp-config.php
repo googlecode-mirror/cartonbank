@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Основные параметры WordPress.
  *
@@ -17,7 +17,7 @@
 // ** Настройки MySQL: Эту информацию можно получить у вашего хостинг-провайдера ** //
 /** Имя базы данных для WordPress 
 define('DB_NAME', 'database_name_here');*/
-define('DB_NAME', 'z58365_cbru3utf');
+define('DB_NAME', 'z58365_cbru3');
 
 /** Имя пользователя MySQL 
 define('DB_USER', 'username_here');*/
