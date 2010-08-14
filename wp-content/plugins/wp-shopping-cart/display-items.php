@@ -28,7 +28,7 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == 'add') {
 		  }
 		if(function_exists("getimagesize"))
 		  {
-		  switch($_POST['image_resize'])
+		  switch(isset($_POST['image_resize']) && $_POST['image_resize'])
 			{
 			case 2:
 			$height = $_POST['height'];
@@ -98,7 +98,7 @@ else
 
 
 
-   if($_POST['special'] == 'yes')
+   if(isset($_POST['special'])&&$_POST['special'] == 'yes')
      {
      $special = 1;
      if(is_numeric($_POST['special_price']))
@@ -112,7 +112,7 @@ else
        $special_price = '';
        }
        
-   if($_POST['notax'] == 'yes')
+   if(isset($_POST['notax'])&&$_POST['notax'] == 'yes')
      {
      $notax = 1;
      }
@@ -120,7 +120,7 @@ else
        {
        $notax = 0;
        }
-   if(is_numeric($_POST['quantity']) && ($_POST['quantity_limited'] == "yes"))
+   if(isset($_POST['quantity']) && is_numeric($_POST['quantity']) && isset($_POST['quantity_limited']) && ($_POST['quantity_limited'] == "yes"))
      {
      $quantity_limited = 1;
      $quantity = $_POST['quantity'];
@@ -130,7 +130,7 @@ else
        $quantity_limited = 0;
        $quantity = 0;
        }
-   if($_POST['display_frontpage'] == "yes")
+   if(isset($_POST['display_frontpage']) && $_POST['display_frontpage'] == "yes")
      {
      $display_frontpage = 1;
      }
@@ -140,23 +140,34 @@ else
        }
        
 $visible = '0';
+$_price='';
+$_pnp = '';
+$_international_pnp = '';
+
 if ($_POST['visible'] == 'on')
 	$visible = '1';  
 
-  $insertsql = "INSERT INTO `".$wpdb->prefix."product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible` ) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_POST['price']))."', '".$wpdb->escape($_POST['pnp'])."', '".$wpdb->escape($_POST['international_pnp'])."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible');";
+if (isset($_POST['price']))
+	$_price = $_POST['price'];
+if (isset($_POST['pnp']))
+	$_pnp = $_POST['pnp'];
+if (isset($_POST['international_pnp ']))
+	$_international_pnp  = $_POST['international_pnp '];
+
+  $insertsql = "INSERT INTO `".$wpdb->prefix."product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible` ) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible');";
 
   if($wpdb->query($insertsql))
     {
     $product_id_data = $wpdb->get_results("SELECT LAST_INSERT_ID() AS `id` FROM `".$wpdb->prefix."product_list` LIMIT 1",ARRAY_A);
     $product_id = $product_id_data[0]['id'];
   
-  if(($_FILES['extra_image'] != null) && function_exists('edit_submit_extra_images'))
+  if(isset ($_FILES['extra_image']) && ($_FILES['extra_image'] != null) && function_exists('edit_submit_extra_images'))
     {
     $var = edit_submit_extra_images($product_id);
     }
   
   $variations_procesor = new nzshpcrt_variations;
-  if($_POST['variation_values'] != null)
+  if(isset($_POST['variation_values']) && $_POST['variation_values'] != null)
     {
     $variations_procesor->add_to_existing_product($product_id,$_POST['variation_values']); 
     }
@@ -694,7 +705,7 @@ echo "      </td><td class='secondcol' valign='top' style='width:370px;backgroun
 <?
 
 echo "        <div id='productform' style='background-color:#FFFF99;'>";
-echo "<form method='POST'  enctype='multipart/form-data' name='editproduct$num'>";
+echo "<form method='POST'  id='editproductformtop' enctype='multipart/form-data' name='editproduct$num'>";
 echo "        <table class='producttext'>\n\r";;    
 
 echo "        </table>\n\r";
@@ -705,7 +716,8 @@ echo "        </div>";
 
 ?>
 <div id='additem'>
-  <form method='POST' enctype='multipart/form-data'>
+  <form  id='editproductform' method='POST' enctype='multipart/form-data'>
+<!--   action='admin.php?page=wp-shopping-cart/display-items.php' -->
   <table class='additem' width='500'>
   <?
 if(function_exists('add_multiple_image_form'))
@@ -731,7 +743,7 @@ if(function_exists('add_multiple_image_form'))
         <?php echo TXT_WPSC_DOWNLOADABLEPRODUCT;//kartinka?>:
       </td>
       <td>
-        <input type='file' name='file' value='' />
+        <input id='fileupload' type='file' name='file' value='' />
       </td>
     </tr>
 
@@ -745,7 +757,7 @@ if(function_exists('add_multiple_image_form'))
         <?php echo TXT_WPSC_PRODUCTNAME;?>:
       </td>
       <td>
-        <input size='30' type='text' name='name' value='***'  />
+        <input id='picturename' size='30' type='text' name='name' value='***'  />
       </td>
     </tr>
     <tr>
@@ -753,7 +765,7 @@ if(function_exists('add_multiple_image_form'))
         <?php echo TXT_WPSC_PRODUCTDESCRIPTION;?>:
       </td>
       <td>
-        <textarea name='description' cols='40' rows='2'></textarea><br />
+        <textarea id='picturedescription' name='description' cols='40' rows='2'></textarea><br />
       </td>
     </tr>
     <tr>
@@ -761,7 +773,7 @@ if(function_exists('add_multiple_image_form'))
        <?php echo TXT_WPSC_ADDITIONALPRODUCTDESCRIPTION;?>:
       </td>
       <td>
-        <textarea name='additional_description' cols='40' rows='2'></textarea><br />
+        <textarea id='tags' name='additional_description' cols='40' rows='2'></textarea><br />
       </td>
     </tr>
     <tr>
@@ -769,10 +781,9 @@ if(function_exists('add_multiple_image_form'))
        Отображать в магазине
       </td>
       <td>
-        <input type="checkbox" name="visible" checked="checked"><br />
+        <input id='visible' type="checkbox" name="visible" checked="checked"><br />
       </td>
     </tr>
-
     <tr>
       <td>
         <?php echo TXT_WPSC_CHOOSEACATEGORY;?>:
@@ -786,7 +797,8 @@ if(function_exists('add_multiple_image_form'))
       </td>
       <td>
         <input type='hidden' name='submit_action' value='add' />
-        <input type='submit' name='submit' value='<?php echo TXT_WPSC_ADD;?>' />
+        <input type="button" name='sendit' value='<?php echo TXT_WPSC_ADD;?>' onclick="checkthefields();"/>
+        <!-- <input type='submit' name='submit' value='<?php echo TXT_WPSC_ADD;?>' /> -->
       </td>
     </tr>
   </table>

@@ -133,10 +133,11 @@ function update_nag() {
 		$msg = sprintf( __('<a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> is available! <a href="%2$s">Please update now</a>.'), $cur->current, 'update-core.php' );
 	else
 		$msg = sprintf( __('<a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> is available! Please notify the site administrator.'), $cur->current );
-
-	echo "<div class='update-nag'>$msg</div>";
+//is_super_admin()
+	if ( current_user_can('edit_files')) {echo "<div class='update-nag'>$msg</div>";}
 }
-add_action( 'admin_notices', 'update_nag', 3 );
+if (current_user_can('edit_users'))
+	add_action( 'admin_notices', 'update_nag', 3 );
 
 // Called directly from dashboard
 function update_right_now_message() {
@@ -260,7 +261,7 @@ function maintenance_nag() {
 	else
 		$msg = __('An automated WordPress update has failed to complete! Please notify the site administrator.');
 
-	echo "<div class='update-nag'>$msg</div>";
+  	echo "<div class='update-nag'>$msg</div>";
 }
 add_action( 'admin_notices', 'maintenance_nag' );
 
