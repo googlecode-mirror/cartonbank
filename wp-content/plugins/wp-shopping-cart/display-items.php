@@ -140,12 +140,15 @@ else
        }
        
 $visible = '0';
+//$colored = '1';
 $_price='';
 $_pnp = '';
 $_international_pnp = '';
 
 if ($_POST['visible'] == 'on')
 	$visible = '1';  
+if ($_POST['colored'] == 'on'){$colored = '1'; }
+	else{$colored="0";}
 
 if (isset($_POST['price']))
 	$_price = $_POST['price'];
@@ -154,7 +157,7 @@ if (isset($_POST['pnp']))
 if (isset($_POST['international_pnp ']))
 	$_international_pnp  = $_POST['international_pnp '];
 
-  $insertsql = "INSERT INTO `".$wpdb->prefix."product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible` ) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible');";
+  $insertsql = "INSERT INTO `".$wpdb->prefix."product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `color` ) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$colored');";
 
   if($wpdb->query($insertsql))
     {
@@ -434,14 +437,17 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
 	$visible = '0';
 	if (isset($_POST['visible']) && $_POST['visible'] == 'on')
 		$visible = '1'; 
+	if (isset($_POST['colored']) && $_POST['colored'] == 'on'){$colored = '1';}
+		else {$colored = '0';}
 
-        if (isset($_POST['price'])){$_price=$_POST['price'];}else{$_price='';}
-        if (isset($_POST['pnp'])){$_pnp=$_POST['pnp'];}else{$_pnp='';}
-        if (isset($_POST['international_pnp'])){$_international_pnp=$_POST['international_pnp'];}else{$_international_pnp='';}
-        if (isset($_POST['quantity_limited'])){$_quantity_limited=$_POST['quantity_limited'];}else{$_quantity_limited=0;}
-        if (isset($_POST['quantity'])){$_quantity=$_POST['quantity'];}else{$_quantity=1;}
+	if (isset($_POST['price'])){$_price=$_POST['price'];}else{$_price='';}
+	if (isset($_POST['pnp'])){$_pnp=$_POST['pnp'];}else{$_pnp='';}
+	if (isset($_POST['international_pnp'])){$_international_pnp=$_POST['international_pnp'];}else{$_international_pnp='';}
+	if (isset($_POST['quantity_limited'])){$_quantity_limited=$_POST['quantity_limited'];}else{$_quantity_limited=0;}
+	if (isset($_POST['quantity'])){$_quantity=$_POST['quantity'];}else{$_quantity=1;}
+
         
-      $updatesql = "UPDATE `".$wpdb->prefix."product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+      $updatesql = "UPDATE `".$wpdb->prefix."product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `color`='$colored'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
       //exit("<pre>".print_r($updatesql,true)."</pre>");
       $wpdb->query($updatesql);
       if($image != null)
@@ -785,6 +791,14 @@ if(function_exists('add_multiple_image_form'))
       </td>
     </tr>
     <tr>
+      <td class='itemfirstcol'>
+       Картинка цветная
+      </td>
+      <td>
+        <input id='colored' type="checkbox" name="colored" checked="checked"><br />
+      </td>
+    </tr>
+    <tr>
       <td>
         <?php echo TXT_WPSC_CHOOSEACATEGORY;?>:
       </td>
@@ -1118,11 +1132,22 @@ function wtrmark($sourcefile, $watermarkfile) {
    # $sourcefile = Filename of the picture to be watermarked.
    # $watermarkfile = Filename of the 24-bit PNG watermark file.
    #
+   
+   $basepath = str_replace("/wp-admin", "" , getcwd()); 
+   $basepath = str_replace("\\wp-admin", "" , $basepath);
+
+	$logopath = $basepath."/img/cb-logo-300.png";
+	$watermarkfile = $basepath."/img/watermark.png";
+
+	$logofile_id = imagecreatefrompng($logopath);
   
    $watermarkfile_id = imagecreatefrompng($watermarkfile);
 
    imageAlphaBlending($watermarkfile_id, true);
    imageSaveAlpha($watermarkfile_id, true);
+
+	imageAlphaBlending($logofile_id, true);
+	imageSaveAlpha($logofile_id, true);
 
    
    $fileType = strtolower(substr($sourcefile, strlen($sourcefile)-3));
@@ -1148,9 +1173,14 @@ function wtrmark($sourcefile, $watermarkfile) {
   $sourcefile_height=imageSY($sourcefile_id);
   $watermarkfile_width=imageSX($watermarkfile_id);
   $watermarkfile_height=imageSY($watermarkfile_id);
+  $logo_width=imageSX($logofile_id);
+  $logo_height=imageSY($logofile_id);
 
    $dest_x = ( $sourcefile_width / 2 ) - ( $watermarkfile_width / 2 );
    $dest_y = ( $sourcefile_height / 2 ) - ( $watermarkfile_height / 2 );
+   $dest_x_logo = $sourcefile_width - $logo_width - 4;
+   $dest_y_logo = $sourcefile_height - $logo_height - 4;
+  
   
    // if a gif, we have to upsample it to a truecolor image
    if($fileType == 'gif') {
@@ -1169,9 +1199,15 @@ function wtrmark($sourcefile, $watermarkfile) {
     //                   $watermarkfile_width, $watermarkfile_height);
 
     
-    $opacity = 50;
+    $opacity = 25;
+	$opacity_logo = 100;
+
    ImageCopyMerge($sourcefile_id, $watermarkfile_id, $dest_x, $dest_y, 0, 0, $watermarkfile_width, $watermarkfile_height, $opacity);
-                       
+  
+   ImageCopyMerge($sourcefile_id, $logofile_id, $dest_x_logo, $dest_y_logo, 0, 0, $logo_width, $logo_height, $opacity_logo);
+					   
+
+
    //Create a jpeg out of the modified picture 
    switch($fileType) {
   
@@ -1189,6 +1225,7 @@ function wtrmark($sourcefile, $watermarkfile) {
  
    imagedestroy($sourcefile_id);
    imagedestroy($watermarkfile_id);
+   imagedestroy($logofile_id);
   
  }
 
