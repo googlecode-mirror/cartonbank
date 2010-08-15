@@ -1582,10 +1582,13 @@ function nzshpcrt_submit_ajax()
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
-$visible = "";
-if ($product['visible'] == '1')
+  $visible = "";
+  if ($product['visible'] == '1')
 	$visible = " checked='checked'";
  
+  $output .= "          <tr>\n\r";
+  $output .= "          </tr>\n\r";
+
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
   $output .= "Отображать в магазине:";
@@ -1594,7 +1597,20 @@ if ($product['visible'] == '1')
   $output .= "<input type='checkbox' name='visible'".$visible."/>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
-  
+
+  $colored = "";
+  if ($product['color'] == '1')
+	$colored = " checked='checked'";
+
+  $output .= "          <tr>\n\r";
+  $output .= "            <td>\n\r";
+  $output .= "Картинка цветная:";
+  $output .= "            </td>\n\r";
+  $output .= "            <td>\n\r";
+  $output .= "<input type='checkbox' name='colored'".$colored."/>";
+  $output .= "            </td>\n\r";
+  $output .= "          </tr>\n\r";
+   
 /*
   
   
