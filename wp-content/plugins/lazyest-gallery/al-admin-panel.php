@@ -1,11 +1,11 @@
 <br>
 На это странице описание правил работы с картунбанком, отправки и редактирования изображений.
 <p>
-<a href="<?get_option('siteurl');?>/?page_id=79" target=_blank>Правила работы с Банком для участников проекта.</a> 
+<a href="<?get_option('siteurl');?>/cb3/?page_id=79" target=_blank>Правила работы с Банком для участников проекта.</a> 
 </p>
 
 <p>
-<a href="<?get_option('siteurl');?>/?page_id=229" target=_blank>Отправка изображения через форму.</a> 
+<a href="<?get_option('siteurl');?>/cb3/?page_id=229" target=_blank>Отправка изображения через форму.</a> 
 </p>
 
 <!-- <p>
