@@ -1792,7 +1792,7 @@ function _page_rows( &$children_pages, &$count, $parent, $level, $pagenum, $per_
  * @param int $numposts Optional. Post count to display for this user.  Defaults to zero, as in, a new user has made zero posts.
  * @return string
  */
-function user_row( $user_object, $style = '', $role = '', $numposts = 0 ) {
+function user_row( $user_object, $style = '', $role = '', $numposts = '0.00' ) {
 	global $wp_roles;
 
 	$current_user = wp_get_current_user();

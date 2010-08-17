@@ -369,7 +369,7 @@ define('TXT_WPSC_PRODUCTDOWNLOAD', 'Download Prodotto');
 define('TXT_WPSC_SHOWTHUMBNAILS', 'Mostra Thumbnails');
 define('TXT_WPSC_ADD_ADDITIONAL_IMAGE', 'Aggiungi Immagine Addizionale');
 define('TXT_WPSC_DELETE_IMAGE', 'Cancella Immagine');
-define('TXT_WPSC_GOLD_OPTIONS', 'Opzioni Carrello Gold');
+define('TXT_WPSC_EXT_OPTIONS', 'Opzioni Carrello Ext');
 define('TXT_WPSC_ACTIVATE_SETTINGS', 'Settaggio d\'attivazione');
 define('TXT_WPSC_ACTIVATION_KEY', 'Chiave d\'attivazione');
 define('TXT_WPSC_THANKSACTIVATED', 'Grazie, il Carrello GOld e\' stato attivato.');

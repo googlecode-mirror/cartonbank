@@ -56,7 +56,7 @@ $GLOBALS['nzshpcrt_imagesize_info'] = TXT_WPSC_IMAGESIZEINFO;
 $nzshpcrt_log_states[0]['name'] = TXT_WPSC_RECEIVED;
 $nzshpcrt_log_states[1]['name'] = 'some name'; //TXT_WPSC_PROCESSING;
 $nzshpcrt_log_states[2]['name'] = TXT_WPSC_PROCESSED;
-
+ 
 class wp_shopping_cart
   {
   function wp_shopping_cart()
@@ -100,9 +100,9 @@ class wp_shopping_cart
         {
         add_submenu_page($base_page,TXT_WPSC_OPTIONS, TXT_WPSC_OPTIONS, 'view', 'wp-shopping-cart/options.php');
         }
-      if(function_exists('gold_shpcrt_options'))
+      if(function_exists('ext_shpcrt_options'))
         {
-        gold_shpcrt_options($base_page);
+        ext_shpcrt_options($base_page);
         }
       add_submenu_page($base_page,TXT_WPSC_FORM_FIELDS, TXT_WPSC_FORM_FIELDS, 'author', 'wp-shopping-cart/form_fields.php');
       add_submenu_page($base_page,TXT_WPSC_HELPINSTALLATION, TXT_WPSC_HELPINSTALLATION, 'view', 'wp-shopping-cart/instructions.php');
@@ -1790,7 +1790,7 @@ function nzshpcrt_submit_ajax()
 	  $output .= "</div>";
 	  $output .= "            </td>\n\r";
 	  $output .= "          </tr>\n\r";
-		
+*/		
 	  $check_variation_values = $wpdb->get_results("SELECT COUNT(*) as `count` FROM `".$wpdb->prefix."variation_values_associations` WHERE `product_id` = '".$product['id']."'",ARRAY_A);
 	  $check_variation_value_count = $check_variation_values[0]['count'];
 	  if($check_variation_value_count > 0)
@@ -1810,7 +1810,7 @@ function nzshpcrt_submit_ajax()
 	  $output .= "<br /><strong class='form_group'>".TXT_WPSC_PRODUCTIMAGE."</strong>";
 	  $output .= "            </td>\n\r";
 	  $output .= "          </tr>\n\r";
-
+ /*
   if(function_exists("getimagesize"))
     {
     if($product['image'] != '')
@@ -2204,6 +2204,7 @@ function nzshpcrt_submit_checkout()
 * This is the function used for handling the submitted checkout page
 */
 global $wpdb, $nzshpcrt_gateways;
+$bad_input_message = ""; // Undefined variable creasysee
 session_start();
   if(get_option('permalink_structure') != '')
   {
@@ -2216,7 +2217,9 @@ session_start();
   if(isset($_POST['submitwpcheckout']) and ($_POST['submitwpcheckout'] == 'true'))
     {
     //exit("<pre>".print_r($_POST,true)."</pre>");
-    $returnurl = "Location: ".get_option('checkout_url').$seperator."total=".$_GET['total'];
+    $returnurl = "Location: ".get_option('checkout_url');
+    if (isset($_GET['total']))
+        $returnurl = "Location: ".get_option('checkout_url').$seperator."total=".$_GET['total'];
     $_SESSION['collected_data'] = $_POST['collected_data'];
     $any_bad_inputs = false;
     foreach($_POST['collected_data'] as $value_id => $value)
@@ -2309,8 +2312,8 @@ session_start();
       }
     $sessionid = (mt_rand(100,999).time());
     
-    $sql = "INSERT INTO `".$wpdb->prefix."purchase_logs` ( `id` , `totalprice` , `sessionid` , `firstname`, `lastname`, `email`, `address`, `phone`, `date`, `shipping_country`,`shipping_region` )
-VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid."', '".$wpdb->escape($_POST['firstname'])."', '".$wpdb->escape($_POST['lastname'])."', '".$_POST['email']."', '".$wpdb->escape($_POST['address'])."', '".$wpdb->escape($_POST['phone'])."' , '".time()."', '".$_SESSION['selected_country']."', '".$_SESSION['selected_region']."')";
+    $sql = "INSERT INTO `".$wpdb->prefix."purchase_logs` ( `id` , `totalprice` , `sessionid` , `firstname`, `lastname`, `email`, `date`, `shipping_country` )
+VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid."', '".$wpdb->escape($_POST['collected_data']['1'])."', '".$wpdb->escape($_POST['collected_data']['2'])."', '".$_POST['collected_data']['3']."', '".time()."', '".$_SESSION['selected_country']."')";
    $wpdb->query($sql) ;
    
    $selectsql = "SELECT * FROM `".$wpdb->prefix."purchase_logs` WHERE `sessionid` LIKE '".$sessionid."' LIMIT 1";
@@ -2341,7 +2344,8 @@ VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid
           $price_modifier = 0;
           }
     
-    $price = ($product_data['price'] - $price_modifier);
+    $price = ($product_data['price'] - $price_modifier); 
+    /*  
     if($product_list[0]['notax'] != 1)
       {
       $price = nzshpcrt_calculate_tax($price, $_SESSION['selected_country'], $_SESSION['selected_region']);
@@ -2362,11 +2366,11 @@ VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid
             }
           }
       }
-      else { $gst = 0; }
+      else { */$gst = 0; /*}*/
         
             
-    $country = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."submited_form_data` WHERE `log_id`=".$getid[0]['id']." AND `form_id` = '".get_option('country_form_field')."' LIMIT 1",ARRAY_A);
-    $country = $country[0]['value'];
+    //$country = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."submited_form_data` WHERE `log_id`=".$getid[0]['id']." AND `form_id` = '".get_option('country_form_field')."' LIMIT 1",ARRAY_A);
+    $country = '';//$country[0]['value'];
      
      $country_data = $wpdb->get_row("SELECT * FROM `".$wpdb->prefix."currency_list` WHERE `isocode` IN('".get_option('base_country')."') LIMIT 1",ARRAY_A);
      
@@ -2388,7 +2392,7 @@ VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid
        }
      }
 
-   $curgateway = get_option('payment_gateway');
+   $curgateway = $_POST['payment_method'];
    
   if(get_option('permalink_structure') != '')
     {
@@ -2398,20 +2402,8 @@ VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid
       {
       $seperator ="&";
       }
-  if(($_POST['payment_method'] == 2) && (get_option('payment_method') == 2))
-    {
-    foreach($nzshpcrt_gateways as $gateway)
-      {
-      if($gateway['internalname'] == 'testmode' )
-        {
-        $gateway_used = $gateway['internalname'];
-        $wpdb->query("UPDATE `".$wpdb->prefix."purchase_logs` SET `gateway` = '".$gateway_used."' WHERE `id` = '".$getid[0]['id']."' LIMIT 1 ;");
-        $gateway['function']($seperator, $sessionid);
-        }
-      }
-    }
-    else
-      {
+
+      
       foreach($nzshpcrt_gateways as $gateway)
         {
         if($gateway['internalname'] == $curgateway )
@@ -2421,7 +2413,7 @@ VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid
           $gateway['function']($seperator, $sessionid);
           }
         }
-      }
+      
     //require_once("merchants.php");
     }
     else if(isset($_GET['termsandconds']) and $_GET['termsandconds'] === 'true')
@@ -2593,6 +2585,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     $output .= "<table class='shoppingcart'>";
     //$output .= "<tr><th>".TXT_WPSC_PRODUCT."</th><th>".TXT_WPSC_QUANTITY_SHORT."</th><th>".TXT_WPSC_PRICE."</th></tr>"; 
 	$output .= "<tr><td><u>".TXT_WPSC_PRODUCT."</u></td><td><u>".TXT_WPSC_QUANTITY_SHORT."</u></td></tr>"; 
+    $total = 0;
     foreach($cart as $cart_item)
       {
       $product_id = $cart_item->product_id;
@@ -2609,15 +2602,18 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
           }
        
       $price = $quantity * ($product[0]['price']-$price_modifier);
+      /*
       if($product[0]['notax'] != 1)
         {
         $price = nzshpcrt_calculate_tax($price, $_SESSION['selected_country'], $_SESSION['selected_region']);
         }
-        
+      */  
+      /*
       if($_SESSION['selected_country'] != null)
         {        
         $total_shipping += nzshpcrt_determine_item_shipping($product[0]['id'], $quantity, $_SESSION['selected_country']);
         }
+        */
       $total += $price;
       //$output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td><td>".nzshpcrt_currency_display($price, 1)."</td></tr>";
 	  $output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td></tr>";
@@ -2643,7 +2639,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
          {
          $seperator ="&amp;";
          }
-    $output .= "<a href='".get_option('product_list_url').$seperator."category=".$_GET['category']."&amp;cart=empty' onclick='emptycart();return false;'>".TXT_WPSC_EMPTYYOURCART."</a><br />";
+    //$output .= "<a href='".get_option('product_list_url').$seperator."category=".$_GET['category']."&amp;cart=empty' onclick='emptycart();return false;'>".TXT_WPSC_EMPTYYOURCART."</a><br />";
     $output .= "<a href='".get_option('shopping_cart_url')."'>".TXT_WPSC_GOTOCHECKOUT."</a><br />";
     //$output .= "<a href='".get_option('product_list_url')."'>".TXT_WPSC_CONTINUESHOPPING."</a>";
     }
@@ -3085,7 +3081,7 @@ $nzshpcrt_merchant_list = nzshpcrt_listdir($gateway_directory);
 $num=0;
 foreach($nzshpcrt_merchant_list as $nzshpcrt_merchant)
   {
-    if (strcmp($nzshpcrt_merchant,'.svn'))
+    if (strcmp($nzshpcrt_merchant,'.svn') && strcmp($nzshpcrt_merchant,'library'))
     {
       require("merchants/".$nzshpcrt_merchant);
       $num++;
@@ -3101,9 +3097,9 @@ if(get_option('cart_location') == 4)
   
 $nzshpcrt_basepath =  str_replace("/wp-admin", "" , getcwd());
 $nzshpcrt_basepath = $nzshpcrt_basepath."/wp-content/plugins/wp-shopping-cart/";
-if(file_exists($nzshpcrt_basepath.'gold_shopping_cart.php'))
+if(file_exists($nzshpcrt_basepath.'ext_shopping_cart.php'))
   {
-  require_once('gold_shopping_cart.php');
+  require_once('ext_shopping_cart.php');
   }
 require_once("currency_converter.inc.php"); 
 require_once("form_display_functions.php"); 

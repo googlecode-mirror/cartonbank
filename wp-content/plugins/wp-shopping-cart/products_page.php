@@ -91,9 +91,9 @@ function nzshpcrt_display_categories_groups()
 ?>
 <div class="wrap">
 <?php
-  if(function_exists('gold_shpcrt_search_form'))
+  if(function_exists('ext_shpcrt_search_form'))
     {
-    echo gold_shpcrt_search_form();
+    echo ext_shpcrt_search_form();
     }
 ?>
 <?php
@@ -204,7 +204,7 @@ function nzshpcrt_display_categories_groups()
 				$items_count = 0;
 			}
 
-
+$search_sql = NULL;
     if(get_option('permalink_structure') != '')
       {
       $seperator ="?";
@@ -328,7 +328,7 @@ function nzshpcrt_display_categories_groups()
              
          if(function_exists('product_display_list') && (get_option('product_view') == 'list'))
            {
-           echo product_display_list($product_list, $group_type, $group_sql, $search_sql);
+           echo product_display_list($product/* not used, but generate notice $product_list*/, $group_type, $group_sql, $search_sql);
            }
            else
              {
@@ -363,7 +363,7 @@ function nzshpcrt_display_categories_groups()
                 $search_sql = '';
 
 			 // FIRST PAGE OUTPUT
-			 echo product_display_paginated($product_list, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
+			 echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
 			 
              // PAGINATION
              $offset = $offset + $items_on_page;

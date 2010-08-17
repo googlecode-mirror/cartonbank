@@ -9,7 +9,7 @@
 </p>
 
 <!-- <p>
-<a href="http://cartoonbank.ru/cb3/?page_id=71" target=_blank>Старые правила работы с Банком для участников проекта.</a> 
+<a href="<?get_option('siteurl');?>/?page_id=71" target=_blank>Старые правила работы с Банком для участников проекта.</a> 
 </p> -->
 
 

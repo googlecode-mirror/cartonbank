@@ -368,7 +368,7 @@ define('TXT_WPSC_PRODUCTDOWNLOAD', 'Product Download');
 define('TXT_WPSC_SHOWTHUMBNAILS', 'Show Thumbnails');
 define('TXT_WPSC_ADD_ADDITIONAL_IMAGE', 'Add Additional Image');
 define('TXT_WPSC_DELETE_IMAGE', 'Delete Image');
-define('TXT_WPSC_GOLD_OPTIONS', 'Gold Cart Options');
+define('TXT_WPSC_EXT_OPTIONS', 'Ext Cart Options');
 define('TXT_WPSC_ACTIVATE_SETTINGS', 'Activation Settings');
 define('TXT_WPSC_ACTIVATION_KEY', 'Activation Key');
 define('TXT_WPSC_THANKSACTIVATED', 'Thanks, the gold shopping cart has been activated.');

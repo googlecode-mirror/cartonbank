@@ -261,6 +261,15 @@ else
 	<td><input type="text" name="last_name" id="last_name" value="<?php echo esc_attr($profileuser->last_name) ?>" class="regular-text" /></td>
 </tr>
 
+<tr>
+    <th><label for="wallet"><?php _e('Wallet'); ?> </span></label></th>
+    <td><input type="text" name="wallet" id="wallet" value="<?php echo esc_attr($profileuser->wallet) ?>" 
+<?php if (IS_PROFILE_PAGE) { ?> 
+         readonly="true"
+<?php } ?>
+    class="regular-text" /></td>
+</tr>
+
 <!-- <tr>
 	<th><label for="nickname"><?php _e('Nickname'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
 	<td><input type="text" name="nickname" id="nickname" value="<?php echo esc_attr($profileuser->nickname) ?>" class="regular-text" /></td>

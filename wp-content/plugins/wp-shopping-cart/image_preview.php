@@ -67,7 +67,7 @@ function watermark($path)
 	if($filetype == ".jpg")  $image = @imagecreatefromjpeg($imagesource);  
 	if($filetype == ".png")  $image = @imagecreatefrompng($imagesource);  
 	if (!$image) die();
-	$watermark = @imagecreatefromgif('/homepages/35/d89900836/htdocs/cb3/wp-content/plugins/wp-shopping-cart/images/watermark.gif');
+	$watermark = @imagecreatefromgif($basepath.'/wp-content/plugins/wp-shopping-cart/images/watermark.gif');
 	$imagewidth = imagesx($image);
 	$imageheight = imagesy($image);  
 	$watermarkwidth =  imagesx($watermark);

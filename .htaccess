@@ -9,3 +9,9 @@ AddCharset utf-8 *
 CharsetSourceEnc utf-8
 CharsetDefault utf-8
 </IfModule>
+
+<Files ~ "^.*\.([Ll][Oo][Gg]|[bB][aA][kK])">
+ Order allow,deny
+ Deny from all
+ Satisfy All
+</Files>

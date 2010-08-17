@@ -1,5 +1,6 @@
 <?php
 global $wpdb;
+/*
 if($_POST['country'] != null)
   {
   $_SESSION['selected_country'] = $_POST['country'];
@@ -8,6 +9,7 @@ if($_POST['country'] != null)
     {
     $_SESSION['selected_country'] = get_option('base_country');
     }
+*/    
 if(get_option('permalink_structure') != '')
   {
   $seperator ="?";
@@ -95,11 +97,11 @@ function country_list($selected_country = null)
     echo "<tr class='product_row'>\n\r";
     
     echo "  <td class='firstcol'>\n\r";
-	//$imagepath = $imagedir . $imagedata[0]['image'];
-	$basepath = get_option('siteurl');
-	$imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
-	$previewdir = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
-	echo ("<a href='".$previewdir.$product_list[0]['image']."'><img border='0' src='".$imagedir.$product_list[0]['image']."'></a>");
+    //$imagepath = $imagedir . $imagedata[0]['image'];
+    $basepath = get_option('siteurl');
+    $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
+    $previewdir = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
+    echo ("<a href='".$previewdir.$product_list[0]['image']."'><img border='0' src='".$imagedir.$product_list[0]['image']."'></a>");
     echo "  </td>\n\r";
     echo "  <td>\n\r";
     echo $product_list[0]['name'] . $variation_list;
@@ -116,19 +118,19 @@ function country_list($selected_country = null)
 //      }
 //      else
 //        {
-//        $price_modifier = 0;
+        $price_modifier = 0;
 //        }
 //        
 //    echo nzshpcrt_currency_display(($number * ($product_list[0]['price']-$price_modifier)), $product_list[0]['notax']);
 //    
-//    if($product_list[0]['notax'] == 1)
-//      {
-//      $total += $number * ($product_list[0]['price']-$price_modifier);
-//      }
-//      else
-//        {
-//        $total += $number * ($product_list[0]['price']-$price_modifier) * get_option('gst_rate');
-//        }
+    if($product_list[0]['notax'] == 1)
+      {
+      $total += $number * ($product_list[0]['price']-$price_modifier);
+      }
+      else
+        {
+        $total += $number * ($product_list[0]['price']-$price_modifier) * get_option('gst_rate');
+        }
 //    
 //    echo "  </td>\n\r";
 //    $shipping = nzshpcrt_determine_item_shipping($product_id, $number, $_SESSION['selected_country']);
@@ -182,7 +184,7 @@ function country_list($selected_country = null)
 global $user_identity;
 if ($user_identity == '')
 {
-	echo ("<h2>Продолжить оплату и скачать изображение большого размера можно только после <a href='wp-register.php'>регистрации</a>.</h2>");
+    echo ("<h2>Продолжить оплату и скачать изображение большого размера можно только после <a href='wp-register.php'>регистрации</a>.</h2>");
 }
 else
 {

@@ -100,9 +100,9 @@ class wp_shopping_cart
         {
         add_submenu_page($base_page,TXT_WPSC_OPTIONS, TXT_WPSC_OPTIONS, 7, 'wp-shopping-cart/options.php');
         }
-      if(function_exists('gold_shpcrt_options'))
+      if(function_exists('ext_shpcrt_options'))
         {
-        gold_shpcrt_options($base_page);
+        ext_shpcrt_options($base_page);
         }
       add_submenu_page($base_page,TXT_WPSC_FORM_FIELDS, TXT_WPSC_FORM_FIELDS, 7, 'wp-shopping-cart/form_fields.php');
       add_submenu_page($base_page,TXT_WPSC_HELPINSTALLATION, TXT_WPSC_HELPINSTALLATION, 7, 'wp-shopping-cart/instructions.php');
@@ -1799,6 +1799,7 @@ function nzshpcrt_getcategoryform($catid)
     if($product['image'] != '')
       {
       $basepath = str_replace("/wp-admin", "" , getcwd());
+      $basepath = str_replace("\\wp-admin", "" , $basepath); 
       $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/category_images/";
       $imagepath = $imagedir . $product['image'];
       include('getimagesize.php');
@@ -2871,9 +2872,9 @@ if(get_option('cart_location') == 4)
   
 $nzshpcrt_basepath =  str_replace("/wp-admin", "" , getcwd());
 $nzshpcrt_basepath = $nzshpcrt_basepath."/wp-content/plugins/wp-shopping-cart/";
-if(file_exists($nzshpcrt_basepath.'gold_shopping_cart.php'))
+if(file_exists($nzshpcrt_basepath.'ext_shopping_cart.php'))
   {
-  require_once('gold_shopping_cart.php');
+  require_once('ext_shopping_cart.php');
   }
 require_once("currency_converter.inc.php"); 
 require_once("form_display_functions.php"); 
