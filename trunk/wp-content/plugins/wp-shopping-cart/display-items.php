@@ -8,6 +8,7 @@ $product_images = $basepath."/wp-content/plugins/wp-shopping-cart/product_images
 $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
 $preview_clips_dir = $basepath."/wp-content/plugins/wp-shopping-cart/preview_clips/";
 $image = '';
+global $authors;
 
 // add product
 if(isset($_POST['submit_action']) && $_POST['submit_action'] == 'add') {
@@ -492,7 +493,7 @@ if(isset($_GET['deleteid']) && is_numeric($_GET['deleteid']))
  * Gets the product list, commented to make it stick out more, as it is hard to notice 
  */
 
-$items_on_page = 10;
+$items_on_page = 15;
 if(isset($_GET['offset']) && is_numeric($_GET['offset']))
 	{
 		$offset = $_GET['offset'];
@@ -540,7 +541,7 @@ $product_list = $wpdb->get_results($sql,ARRAY_A) ;
 
 <div class="wrap">
   <h2><?php echo TXT_WPSC_DISPLAYPRODUCTS;?></h2>
-  <a href="" onclick="return showaddform()" class="add_item_link"><img src="../wp-content/plugins/wp-shopping-cart/images/package_add.png" alt="Добавить в базу данных" title="Добавить в базу данных">&nbsp;<span>Добавить новое изображение в базу данных (очистить форму)</span></a><br>
+  <a href="" onclick="return showaddform()" class="add_item_link"><span>Добавить новое изображение в базу данных (очистить форму)</span></a><br><br>
   
   <?php
   echo topcategorylist($offset);
@@ -549,7 +550,7 @@ $product_list = $wpdb->get_results($sql,ARRAY_A) ;
   ?>
 
 №:<input type="text" value="000" id='editpicid' style="width:60px;">
-<a href="#" class="button add-new-h2" onclick="var editpicid=document.getElementById('editpicid').value;filleditform(editpicid);return false;">Редактировать по номеру</a>
+<a href="#" class="button add-new-h2" onclick="var editpicid=document.getElementById('editpicid').value;filleditform(editpicid.replace(/(^\s+)|(\s+$)/g, ''));return false;">Редактировать по номеру</a>
 
   <script language='javascript' type='text/javascript'>
 function conf()
@@ -573,12 +574,10 @@ if(isset($_POST['prodid']) && is_numeric($_POST['prodid']))
     {
     echo "filleditform(".$_GET['product_id'].");";
     }
-  
-//echo $display_added_product ;
-?>
+ ?>
 </script>
-  <?php
-  
+
+<?php
 if($product_list != null){
 	$shawn = sizeof($product_list);
 }
@@ -595,7 +594,7 @@ if (isset($_GET['catid'])){$_category = $_GET['catid'];}else{$_category = '';}
 				{
 					// "Previous page" link
 					$offset_back = $offset - $items_on_page;
-					$output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_GET['brand']."&category=".$_GET['catid']."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a>&nbsp;|&nbsp;";
+					$output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_GET['brand']."&category=".$_GET['catid']."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a><br>";
 				}
 				if(($offset < $items_count - $items_on_page) && ($items_count>0))
 				{
@@ -605,17 +604,21 @@ if (isset($_GET['catid'])){$_category = $_GET['catid'];}else{$_category = '';}
 				}
 				$output .= "</br></div>";
 
+// main table with two TD (item list & edit form)
 echo "    <table id='productpage'>\n\r";
-echo "      <tr><td valign='top'>\n\r";
-echo "        <table id='itemlist' style='width:200px;background-color:#FFFFFF;'>\n\r";
-echo "          <tr>\n\r";
-echo "            <td colspan='6' style='text-align: left;'>\n\r";
+echo "      <tr><td valign='top'\n\r";
+
+// left table (item list)
+echo "        <table id='itemlist' style='padding:4px;width:250px;background-color:#CCFFFF;'>\n\r";
+echo "          <tr style='background-color:#CCCCFF;'>\n\r";
+// selection message:
+echo "            <td colspan='6' style='padding:4px;text-align:center;'>\n\r";
 $from_num = $offset+1;
 $to_num = $from_num + $items_on_page;
 if($to_num>$items_count){$to_num=$items_count;}
 if($items_count>0)
 {
-	$diapazon = " (показаны <strong>".$from_num."-".$to_num."</strong> из <strong>".$items_count."</strong>)";
+	$diapazon = "<br>(показаны <strong>".$from_num."-".$to_num."</strong> из <strong>".$items_count."</strong>)";
 }
 echo "<strong class='form_group' style='font-size:10px;'>".TXT_WPSC_SELECT_PRODUCT."</strong>".$diapazon;
 echo $output; 
@@ -640,9 +643,9 @@ echo "            </td>\n\r";
 //echo TXT_WPSC_PRICE;
 //echo "            </td>\n\r";
 
-echo "            <td>\n\r";
+//echo "            <td>\n\r";
 //echo TXT_WPSC_CATEGORY;
-echo "            </td>\n\r";
+//echo "            </td>\n\r";
 
 echo "            <td>\n\r";
 //echo TXT_WPSC_EDIT;
@@ -660,38 +663,39 @@ if($product_list != null)
     {
     echo "          <tr>\n\r";
 
-    echo "            <td style='background-color:#DFEFCF;'>\n\r";
+    echo "            <td style='text-align:center;background-color:#FFFFFF;padding:2px;'>\n\r";
     echo $num+$offset;
     echo "            </td>\n\r";
 
-	echo "            <td style='background-color:#DFEFCF;'>\n\r";
+	echo "            <td style='text-align:center; background-color:#FFFFFF;width:70px;padding:2px;'>\n\r";
     //$basepath = str_replace("/wp-admin", "" , getcwd());  this defined at the top of the page
 
     $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
     if(file_exists($imagedir.$product['image']))
       {
-      echo "<img src='../wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='35' height='35' />";
+      echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'><img src='../wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='70' height='70' /></a>";
       }
       else
         {
-					echo "<br><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='35' height='35'  /><br>";
+					echo "<br><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='70' height='70'  /><br>";
 		  }
     echo "            </td>\n\r";
     
-    echo "            <td style='font-size:10px;background-color:#DFEFCF;'>\n\r";
-	echo "№ ".$product['id']." ";
-    echo "<b>".stripslashes($product['name'])."</b> (".$category_data[$product['category_id']].")";
+    echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px;'>\n\r";
+	echo "№ ".$product['id']."<br>";
+	echo $authors[$product['brand']]['name']."<br>";
+    echo "<b>".stripslashes($product['name'])."</b><br>[".$category_data[$product['category_id']]."]";
     echo "            </td>\n\r";
 
     //echo "            <td>\n\r";
     //echo nzshpcrt_currency_display($product['price'], 1);
     //echo "            </td>\n\r";
     
-    echo "            <td style='font-size:10px;background-color:#DFEFCF;'>\n\r";
+    //echo "            <td style='font-size:10px;background-color:#DFEFCF;padding:2px;'>\n\r";
     //echo "".$category_data[$product['category_id']]."";
-    echo "            </td>\n\r";
+    //echo "            </td>\n\r";
 
-    echo "            <td style='font-size:10px;background-color:#DFEFCF;'>\n\r";
+    echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px;'>\n\r";
     echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'>".TXT_WPSC_EDIT."</a>";
     echo "<br><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>";
 	echo "            </td>\n\r";
@@ -705,9 +709,9 @@ if($product_list != null)
     }
   }
 echo "        </table>\n\r";
-echo "      </td><td class='secondcol' valign='top' style='width:370px;background-color:#FFFF99'>\n\r";
+echo "      </td><td class='secondcol' valign='top' style='padding:4px;background-color:#FFFF99'>\n\r";
 ?>
-<div style='color:#660066'><b>Это форма для отправки новой картинки и правки старой</b></div>
+<div style='color:#660066'><b>Это форма для отправки нового изображения и правки старого</b></div>
 <?
 
 echo "        <div id='productform' style='background-color:#FFFF99;'>";
@@ -733,7 +737,7 @@ if(function_exists('add_multiple_image_form'))
 ?>
 	<tr>
       <td>
-        <?php echo TXT_WPSC_CHOOSEABRAND;?>:
+        Автор:
       </td>
       <td>
         <?php echo brandslist(); ?>
@@ -746,7 +750,7 @@ if(function_exists('add_multiple_image_form'))
     </tr>
     <tr>
       <td>
-        <?php echo TXT_WPSC_DOWNLOADABLEPRODUCT;//kartinka?>:
+        Укажите файл:
       </td>
       <td>
         <input id='fileupload' type='file' name='file' value='' />
@@ -760,7 +764,7 @@ if(function_exists('add_multiple_image_form'))
     </tr>
     <tr>
       <td class='itemfirstcol'>
-        <?php echo TXT_WPSC_PRODUCTNAME;?>:
+        Название:
       </td>
       <td>
         <input id='picturename' size='30' type='text' name='name' value='***'  />
@@ -768,7 +772,7 @@ if(function_exists('add_multiple_image_form'))
     </tr>
     <tr>
       <td class='itemfirstcol'>
-        <?php echo TXT_WPSC_PRODUCTDESCRIPTION;?>:
+        Краткое описание:
       </td>
       <td>
         <textarea id='picturedescription' name='description' cols='40' rows='2'></textarea><br />
@@ -784,23 +788,23 @@ if(function_exists('add_multiple_image_form'))
     </tr>
     <tr>
       <td class='itemfirstcol'>
-       Отображать в магазине
+       Всем видно:
       </td>
       <td>
-        <input id='visible' type="checkbox" name="visible" checked="checked"><br />
+        <input id='visible' type="checkbox" name="visible" checked="checked"> Если выключить — не будет видно покупателям<br />
       </td>
     </tr>
     <tr>
-      <td class='itemfirstcol'>
-       Картинка цветная
+      <td class='itemfirstcol' style="background-color:#FFFF33;">
+       Цветное:
       </td>
-      <td>
-        <input id='colored' type="checkbox" name="colored" checked="checked"><br />
+      <td style="background-color:#FFFF33;">
+        <input id='colored' type="checkbox" name="colored" checked="checked"> Отключите для ч/б<br />
       </td>
     </tr>
     <tr>
       <td>
-        <?php echo TXT_WPSC_CHOOSEACATEGORY;?>:
+        Выберите категорию:
       </td>
       <td>
         <?php echo categorylist(); ?>
@@ -876,8 +880,10 @@ function brandslist($current_brand = '')
 function al_brandslist($current_brand = '')
   {
   global $wpdb;
+  global $authors;
   $options = "";
   $values = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
+  $authors = $values;
   $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=wp-shopping-cart/display-items.php&offset=0";
   $options .= "<option value='$url'>".TXT_WPSC_SELECTABRAND."</option>\r\n";
   $selected = '';
