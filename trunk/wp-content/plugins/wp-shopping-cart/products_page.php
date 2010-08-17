@@ -289,13 +289,30 @@ $search_sql = NULL;
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
      if ($product!=null)
      {           
-                $_number = $product[0]['id'];
+
+				$_number = $product[0]['id'];
                 $_description = nl2br(stripslashes($product[0]['description']));
                 $_size = $product[0]['width']."px X ".$product[0]['height']."px;";
                 $_author = $product[0]['brand'];
                 $_name = $product[0]['name'];
-                //$_category = $product[0]['kategoria'];
-                $_category = "<a href=\'".get_option('product_list_url')."&category=".$product[0]['category_id']."\'>".$product[0]['kategoria']."</a>";
+				if (isset($product[0]['category_id']))
+				 {
+					$_categor = $product[0]['kategoria'];
+				 }
+				 else
+				 {
+					$_categor = '';
+				 }
+				if (isset($product[0]['brandid']))
+				 {
+					$_brandid = $product[0]['brandid'];
+				 }
+				 else
+				 {
+					$_brandid = '';
+				 }
+						
+				$_category = "<a href=\'".get_option('product_list_url')."&category=".$_categor."\'>".$_categor."</a>";
 
 
                 $_tags = nl2br(stripslashes($product[0]['additional_description']));
@@ -308,7 +325,7 @@ $search_sql = NULL;
                 $_tags_imploded = implode(", ", $_tags_array);
                 $_tags = $_tags_imploded;
 
-                $_bigpicstrip = "<div style=\"float:left;\"><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;".$_number."&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$product[0]['brandid']."\">".$_author."</a></b></div>";
+                $_bigpicstrip = "<div style=\"float:left;\"><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;".$_number."&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
                 $_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size;
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
@@ -360,7 +377,10 @@ $search_sql = NULL;
 
                 // непонятно зачем эти параметры?
                 $product_list = '';
-                $search_sql = '';
+
+				if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))         {$search_sql = $sql;}
+				else
+					 {$search_sql = '';}
 
 			 // FIRST PAGE OUTPUT
 			 echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
