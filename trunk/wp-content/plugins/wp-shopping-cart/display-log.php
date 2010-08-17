@@ -462,7 +462,7 @@ $earliest_year = date("Y",$earliest_timestamp);
             echo "  <tr><td>".TXT_WPSC_PHONE.":</td><td>".$purch_data[0]['phone']."</td></tr>";
             echo "  <tr><td>".TXT_WPSC_EMAIL.":</td><td>".$purch_data[0]['email']."</td></tr>";
             }
-        
+       echo "<b>there bug!!!!</b>"; 
         if(get_option('payment_method') == 2)
           {
           $gateway_name = '';

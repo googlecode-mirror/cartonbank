@@ -358,7 +358,7 @@ define('TXT_WPSC_PRODUCTDOWNLOAD', 'Файл для печати');
 define('TXT_WPSC_SHOWTHUMBNAILS', 'Показывать иконки');
 define('TXT_WPSC_ADD_ADDITIONAL_IMAGE', 'Добавить ещё изображение');
 define('TXT_WPSC_DELETE_IMAGE', 'Стереть изображение');
-define('TXT_WPSC_GOLD_OPTIONS', 'Gold Cart Параметры');
+define('TXT_WPSC_EXT_OPTIONS', 'Ext Cart Параметры');
 define('TXT_WPSC_ACTIVATE_SETTINGS', 'Activation Settings');
 define('TXT_WPSC_ACTIVATION_KEY', 'Activation Key');
 define('TXT_WPSC_THANKSACTIVATED', 'Thanks, the gold shopping cart has been activated.');

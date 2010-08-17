@@ -206,7 +206,8 @@ function options_categorylist()
   $categorylist .= "</select>";
   return $categorylist;
   }
-
+/*
+//redeclared in wp-shopping-cart.php  
 function brandslist($current_brand = '')
   {
   global $wpdb;
@@ -225,7 +226,7 @@ function brandslist($current_brand = '')
   $concat .= "<select name='default_brand'>".$options."</select>\r\n";
   return $concat;
   }
-  
+*/  
 function country_list($selected_country = null)
     {
     global $wpdb;

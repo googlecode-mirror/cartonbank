@@ -16,7 +16,7 @@
 <br>
 
 
-<?//php wp_list_pages('title_li=<h2>Pages<h2>&exclude=30,31,32'); ?>
+<?php //wp_list_pages('title_li=<h2>Pages<h2>&exclude=30,31,32'); ?>
 
 	<br><h2>Категории:</h2> 
 <?php

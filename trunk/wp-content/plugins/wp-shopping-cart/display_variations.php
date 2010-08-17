@@ -75,7 +75,7 @@ function display_variation_row($variation)
   if($_POST['submit_action'] == "add")
     {
     //exit("<pre>".print_r($_POST,true)."</pre>");
-    $variation_sql = "INSERT INTO `".$wpdb->prefix."product_variations` VALUES ('', '".$_POST['name']."', 0);";
+    $variation_sql = "INSERT INTO `".$wpdb->prefix."product_variations` (`name`, `variation_association`) VALUES ('".$_POST['name']."', 0);";
     if($wpdb->query($variation_sql))
       {
       $variation_id = $wpdb->get_results("SELECT LAST_INSERT_ID() AS `id` FROM `".$wpdb->prefix."product_variations` LIMIT 1",ARRAY_A);

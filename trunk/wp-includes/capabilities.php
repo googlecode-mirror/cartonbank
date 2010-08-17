@@ -458,6 +458,14 @@ class WP_User {
 	 * @var string
 	 */
 	var $filter = null;
+    
+    /**
+    * The wallet
+    * @creasysee
+    * @access private
+    * @var float
+    */
+    var $wallet = 0.00;
 
 	/**
 	 * PHP4 Constructor - Sets up the object properties.

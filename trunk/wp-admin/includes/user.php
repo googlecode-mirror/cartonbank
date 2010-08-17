@@ -106,6 +106,20 @@ function edit_user( $user_id = 0 ) {
 		$user->nickname = sanitize_text_field( $_POST['nickname'] );
 	if ( isset( $_POST['display_name'] ) )
 		$user->display_name = sanitize_text_field( $_POST['display_name'] );
+        
+    if ( isset( $_POST['wallet'] ) )
+    {
+        $user->wallet = (float) sanitize_text_field( $_POST['wallet'] );
+        $old_wallet = (float) $userdata->wallet;
+        if ($user->wallet != $old_wallet)
+        {
+            $delta =  $user->wallet - $old_wallet;
+            // update db log
+            $sql = "INSERT INTO `".$wpdb->prefix."purchase_logs` ( `id` , `totalprice` , `sessionid` , `firstname`, `lastname`, `email`, `date`, `shipping_country`, `gateway` )
+                VALUES ('', '".$delta."', '', '".$user->first_name."', '".$user->last_name."', '".$user->user_email."', '".time()."', '', 'credit')";
+            $wpdb->query($sql);
+        }
+    }
 
 	if ( isset( $_POST['description'] ) )
 		$user->description = trim( $_POST['description'] );

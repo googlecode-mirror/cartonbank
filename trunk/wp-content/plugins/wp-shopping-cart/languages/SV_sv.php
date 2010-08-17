@@ -358,7 +358,8 @@ define('TXT_WPSC_COUNTRY_FORM_FIELD', 'Land');
 define('TXT_WPSC_COUNTRY_FORM_FIELD_EXPLANATION', '(select which form field on the checkout page you want to use for specifying the country)');
 
 define('TXT_WPSC_SHIPPING', 'Frakt');
-define('TXT_WPSC_EMAIL_FORM_FIELD', 'Epostforul&auml;rets f&auml;lt');
+define('TXT_WPSC_EMAIL_FORM_FIELD', 'Epostforul&auml;
+rets f&auml;lt');
 define('TXT_WPSC_EMAIL_FORM_FIELD_EXPLANATION', '(V&auml;lj vilket f&auml;lt du vill anv&auml;nda f&ouml;r e-postadressen p&aring; kassasidan.)');
 
 
@@ -367,7 +368,7 @@ define('TXT_WPSC_PRODUCTDOWNLOAD', 'Produktnerladdning');
 define('TXT_WPSC_SHOWTHUMBNAILS', 'Visa miniatyrer');
 define('TXT_WPSC_ADD_ADDITIONAL_IMAGE', 'L&auml;gg till ytterligare bild');
 define('TXT_WPSC_DELETE_IMAGE', 'Radera bild');
-define('TXT_WPSC_GOLD_OPTIONS', 'Gold Cart Options');
+define('TXT_WPSC_EXT_OPTIONS', 'Ext Cart Options');
 define('TXT_WPSC_ACTIVATE_SETTINGS', 'Activation Settings');
 define('TXT_WPSC_ACTIVATION_KEY', 'Aktiveringsnyckel');
 define('TXT_WPSC_THANKSACTIVATED', 'Thanks, the gold shopping cart has been activated.');

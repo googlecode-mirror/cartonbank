@@ -3,14 +3,16 @@ global $wpdb,$gateway_checkout_form_fields;
 $_SESSION['cart_paid'] = false;
 $checkout = $_SESSION['checkoutdata'];
 if(get_option('permalink_structure') != '')
-   {
-   $seperator ="?";
-    }
-    else
-       {
-       $seperator ="&amp;";
-       }
-$currenturl = get_option('checkout_url') . $seperator .'total='.$_GET['total'];
+{
+    $seperator ="?";
+}
+ else
+{
+    $seperator ="&amp;";
+}
+$currenturl = get_option('checkout_url');
+if (isset($_GET['total']))       
+    $currenturl = get_option('checkout_url') . $seperator .'total='.$_GET['total'];
 if(!isset($_GET['result']))
   {
 ?>
@@ -20,11 +22,19 @@ if(!isset($_GET['result']))
  //echo TXT_WPSC_CREDITCARDHANDY;
  echo "<br /><br />";
  echo TXT_WPSC_ASTERISK;
-if($_SESSION['nzshpcrt_checkouterr'] != null)
+if(isset($_SESSION['nzshpcrt_checkouterr']))
   {
   echo "<br /><span style='color: red;'>".$_SESSION['nzshpcrt_checkouterr']."</span>";
   $_SESSION['nzshpcrt_checkouterr'] = '';
   }
+if (isset($_SESSION['wallet']))
+{
+    if ($_SESSION['wallet'] == 'decline')
+    {
+        echo "<br /><span style='color: red;'>".$_SESSION['WpscGatewayErrorMessage']."</span>";
+        $_SESSION['wallet'] = '';
+    }
+}
 ?>
  <table>
  <form action='<?php echo  $currenturl;?>' method='POST'><?php
@@ -126,36 +136,49 @@ if($_SESSION['nzshpcrt_checkouterr'] != null)
         echo "<input type='hidden' value='yes' name='agree' />";
         echo "";
         }
-    if(get_option('payment_method') == 2)
-      {
+
+        ?>
+      <tr>
+        <td colspan="2">
+        <strong>Метод оплаты</strong>
+        </td>
+      </tr>
+        <?php
+      $i = 0;
       $curgateway = get_option('payment_gateway');
       foreach($GLOBALS['nzshpcrt_gateways'] as $gateway)
         {
-        if($gateway['internalname'] == $curgateway )
-          {
           $gateway_name = $gateway['name'];
-          }
-        }
+
+           $i = $i + 1;
       ?>
-      <tr>
-        <td colspan="2">
-        <strong>Payment Method</strong>
-        </td>
-      </tr>
+
       
       <tr>
         <td colspan='2'>
-        <input type='radio' name='payment_method' value='1' id='payment_method_1' checked='true'>
-        <label for='payment_method_1'><?php echo TXT_WPSC_PAY_USING;?> <?php echo $gateway_name; ?>/<?php echo TXT_WPSC_CREDIT_CARD;?></label>
+        <input type='radio' name='payment_method' value='<?php echo $gateway['internalname']; ?>' id='payment_method_<?php echo $i ?>' <?php
+         if (isset($_SESSION['checkoutdata']['payment_method']))
+         {
+            if ($_SESSION['checkoutdata']['payment_method'] == $gateway['internalname'])
+                echo "checked='checked'";
+         }
+         
+         if (/*$i == 1 temporary enabled wallet only */$gateway['internalname'] == 'wallet') 
+            echo "checked='checked'"; 
+         else
+            echo "disabled='disabled"
+         ?> />
+        <label for='payment_method_<?php echo $i ?>'><?php echo TXT_WPSC_PAY_USING;?> <?php echo $gateway_name; ?></label>
+        <?php
+            global $userdata;
+            if ($gateway['internalname'] == "wallet")
+            {
+              echo "(". (float) $userdata->wallet .")";
+            }
+        ?>        
         </td>
       </tr>
-      
-      <tr>
-        <td colspan='2'>
-        <input type='radio' name='payment_method' value='2' id='payment_method_2'>
-        <label for='payment_method_2'><?php echo TXT_WPSC_PAY_MANUALLY;?></label>
-        </td>
-      </tr>
+    
       <?php
       }
     ?>

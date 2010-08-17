@@ -178,6 +178,10 @@ function wp_insert_user($userdata) {
 
 	if ( empty($user_registered) )
 		$user_registered = gmdate('Y-m-d H:i:s');
+        
+    if ( empty($wallet) )
+          $wallet = 0.00;
+    $wallet = (float) $wallet;
 
 	$user_nicename_check = $wpdb->get_var( $wpdb->prepare("SELECT ID FROM $wpdb->users WHERE user_nicename = %s AND user_login != %s LIMIT 1" , $user_nicename, $user_login));
 
@@ -191,7 +195,7 @@ function wp_insert_user($userdata) {
 		$user_nicename = $alt_user_nicename;
 	}
 
-	$data = compact( 'user_pass', 'user_email', 'user_url', 'user_nicename', 'display_name', 'user_registered' );
+	$data = compact( 'user_pass', 'user_email', 'user_url', 'user_nicename', 'display_name', 'user_registered', 'wallet' );
 	$data = stripslashes_deep( $data );
 
 	if ( $update ) {

@@ -10,7 +10,7 @@
 
 /** Make sure that the WordPress bootstrap has run before continuing. */
 require( dirname(__FILE__) . '/wp-load.php' );
-
+     
 // Redirect to https login if forced to use SSL
 if ( force_ssl_admin() && !is_ssl() ) {
 	if ( 0 === strpos($_SERVER['REQUEST_URI'], 'http') ) {
@@ -83,7 +83,7 @@ function login_header($title = 'Log In', $message = '', $wp_error = '') {
 </head>
 <body class="login">
 <?php   if ( !is_multisite() ) { ?>
-<div id="login"><h1><a href="<?php echo apply_filters('login_headerurl', 'http://cartoonbank.ru/cb3/'); ?>" title="<?php echo apply_filters('login_headertitle', __('Powered by WordPress')); ?>"><?php bloginfo('name'); ?></a></h1>
+<div id="login"><h1><a href="<?php echo apply_filters('login_headerurl', get_option('siteurl')); ?>" title="<?php echo apply_filters('login_headertitle', __('Powered by WordPress')); ?>"><?php bloginfo('name'); ?></a></h1>
 <?php   } else { ?>
 <div id="login"><h1><a href="<?php echo apply_filters('login_headerurl', network_home_url() ); ?>" title="<?php echo apply_filters('login_headertitle', $current_site->site_name ); ?>"><span class="hide"><?php bloginfo('name'); ?></span></a></h1>
 <?php   }
