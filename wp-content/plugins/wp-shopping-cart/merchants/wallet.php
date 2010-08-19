@@ -17,7 +17,7 @@ function gateway_wallet($seperator, $sessionid)
     $userdata->wallet = $userdata->wallet - $totalsum;
     $wpdb->query("UPDATE `".$wpdb->prefix."users` SET `wallet` = ".$userdata->wallet." WHERE `id` ='".$user_ID."' LIMIT 1 ;");
     $transact_url = get_option('transact_url');
-    $sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET `processed`= '2' WHERE `sessionid`=".$sessionid;
+    $sql = "UPDATE `WP_PURCHASE_LOGS` SET `processed`= '2' WHERE `sessionid`=".$sessionid;
     $wpdb->query($sql);
     $_SESSION['wallet'] = 'success';
   }
