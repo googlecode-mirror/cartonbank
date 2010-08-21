@@ -3677,7 +3677,7 @@ function add_contextual_help($screen, $help) {
 	if ( !isset($_wp_contextual_help) )
 		$_wp_contextual_help = array();
 
-	$_wp_contextual_help[$screen->id] = $help;
+	//$_wp_contextual_help[$screen->id] = $help;
 }
 
 function drag_drop_help() {
