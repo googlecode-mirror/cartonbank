@@ -810,7 +810,7 @@ if($product_brands_data[0]['count'] == 0)
 
 
 function nzshpcrt_style()
-	{
+    {
   ?>
   <link href='<?php echo get_option('siteurl'); ?>/wp-content/plugins/wp-shopping-cart/style.css' rel="stylesheet" type="text/css" />
   <style type="text/css" media="screen">
@@ -835,12 +835,12 @@ function nzshpcrt_style()
     }
   </style>
   <?php
-	}
-	
+    }
+    
 function nzshpcrt_javascript()
-	{
+    {
   $siteurl = get_option('siteurl'); 
-	?>
+    ?>
 <!-- <link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/product_rater.css' rel="stylesheet" type="text/css" />
 <link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/lightbox.css' rel="stylesheet" type="text/css" /> -->
 <script language='JavaScript' type='text/javascript'>
@@ -864,9 +864,9 @@ var borderSize = 10;  //if you adjust the padding in the CSS, you will need to u
   }
 
 function nzshpcrt_css()
-	{
+    {
   $siteurl = get_option('siteurl'); 
-	?>
+    ?>
 <!-- <link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/lightbox.css' rel="stylesheet" type="text/css" />
 <link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/admin.css' rel="stylesheet" type="text/css" /> -->
 
@@ -918,7 +918,7 @@ require_once('admin.js');
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/scriptaculous.js?load=dragdrop" language='JavaScript' type="text/javascript"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/lightbox.js" language='JavaScript' type="text/javascript"></script>
 <?php
-	}
+    }
 
 function nzshpcrt_displaypages()
   {
@@ -983,7 +983,7 @@ function nzshpcrt_products_page($content = '')
 
 function nzshpcrt_shopping_cart($content = '')
   {
-	$output = null;
+    $output = null;
   if(preg_match("/\[shoppingcart\]/",$content))
     {
     $nzshpcrt = new wp_shopping_cart;
@@ -1077,7 +1077,8 @@ function nzshpcrt_submit_ajax()
             }
         }
       }
-    //mail("tom@instinct.co.nz","test",print_r($_REQUEST,true));
+    mail("igor.aleshin@gmail.com","test",print_r($_REQUEST,true));
+    /*
     if((($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
       {
       $cartcount = count($_SESSION['nzshpcrt_cart']);
@@ -1125,7 +1126,8 @@ function nzshpcrt_submit_ajax()
         {
         $quantity_limit = true;
         }
-    
+    */
+    $quantity_limit = false;
     $cart = $_SESSION['nzshpcrt_cart'];
     echo nzshpcrt_shopping_basket_internals($cart,$quantity_limit);
     exit();
@@ -1584,14 +1586,14 @@ function nzshpcrt_submit_ajax()
 
   $visible = "";
   if ($product['visible'] == '1')
-	$visible = " checked='checked'";
+    $visible = " checked='checked'";
  
   $output .= "          <tr>\n\r";
   $output .= "          </tr>\n\r";
 
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "Отображать в магазине:";
+  $output .= "?????????? ? ????????:";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<input type='checkbox' name='visible'".$visible."/>";
@@ -1600,11 +1602,11 @@ function nzshpcrt_submit_ajax()
 
   $colored = "";
   if ($product['color'] == '1')
-	$colored = " checked='checked'";
+    $colored = " checked='checked'";
 
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "Картинка цветная:";
+  $output .= "???????? ???????:";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<input type='checkbox' name='colored'".$colored."/>";
@@ -1728,88 +1730,89 @@ function nzshpcrt_submit_ajax()
 
   
 /*  
-	  $output .= "          <tr>\n\r";
-	  $output .= "            <td>\n\r";
-	  $output .= TXT_WPSC_DISPLAY_FRONT_PAGE.": ";
-	  $output .= "            </td>\n\r";
-	  $output .= "            <td>\n\r";
-	  if($product['display_frontpage'] == 1)
-		{
-		$output .= "<input type='checkbox' checked='true' value='yes' name='display_frontpage'/>";
-		}
-		else
-		  {
-		  $output .= "<input type='checkbox' value='yes' name='display_frontpage'/>";
-		  }
-	  $output .= "            </td>\n\r";
-	  $output .= "          </tr>\n\r";
+      $output .= "          <tr>\n\r";
+      $output .= "            <td>\n\r";
+      $output .= TXT_WPSC_DISPLAY_FRONT_PAGE.": ";
+      $output .= "            </td>\n\r";
+      $output .= "            <td>\n\r";
+      if($product['display_frontpage'] == 1)
+        {
+        $output .= "<input type='checkbox' checked='true' value='yes' name='display_frontpage'/>";
+        }
+        else
+          {
+          $output .= "<input type='checkbox' value='yes' name='display_frontpage'/>";
+          }
+      $output .= "            </td>\n\r";
+      $output .= "          </tr>\n\r";
 
-	  $output .= "    <tr>\n\r";
-	  $output .= "      <td colspan='2'>\n\r";
-	  $output .= "        <strong class='form_group'>".TXT_WPSC_SHIPPING_DETAILS."</strong>\n\r";
-	  $output .= "      </td>\n\r";
-	  $output .= "    </tr>\n\r";
-	  
-	  $output .= "    <tr>\n\r";
-	  $output .= "      <td>";
-	  $output .= TXT_WPSC_LOCAL_PNP;
-	  $output .= "      </td>\n\r";
-	  $output .= "      <td>\n\r";
-	  $output .= "        <input type='text' size='10' name='pnp' value='".$product['pnp']."' />\n\r";
-	  $output .= "      </td>\n\r";
-	  $output .= "    </tr>\n\r";
-	  
-	  $output .= "    <tr>\n\r";
-	  $output .= "      <td>";
-	  $output .= TXT_WPSC_INTERNATIONAL_PNP;
-	  if($product['international_pnp'] == 0)
-		{
-		$product['international_pnp'] = "0.00";
-		}
-	  $output .= "      </td>\n\r";
-	  $output .= "      <td>\n\r";
-	  $output .= "        <input type='text' size='10' name='international_pnp' value='".$product['international_pnp']."' />\n\r";
-	  $output .= "      </td>\n\r";
-	  $output .= "    </tr>\n\r";
-		
-	  $output .= "          <tr>\n\r";
-	  $output .= "            <td colspan='2'>\n\r";
-	  $output .= "<br /><strong class='form_group'>".TXT_WPSC_PRODUCT_VARS."</strong>";
-	  $output .= "            </td>\n\r";
-	  $output .= "          </tr>\n\r";
-	  
-	  $output .= "          <tr>\n\r";
-	  $output .= "            <td>\n\r";
-	  $output .= TXT_WPSC_ADD_VAR.": ";
-	  $output .= "            </td>\n\r";
-	  $output .= "            <td>\n\r";
-	  $output .= variationslist();
-	  //$output .= variationslist();
-	  $output .= "<div id='edit_product_variations'>";
+      $output .= "    <tr>\n\r";
+      $output .= "      <td colspan='2'>\n\r";
+      $output .= "        <strong class='form_group'>".TXT_WPSC_SHIPPING_DETAILS."</strong>\n\r";
+      $output .= "      </td>\n\r";
+      $output .= "    </tr>\n\r";
+      
+      $output .= "    <tr>\n\r";
+      $output .= "      <td>";
+      $output .= TXT_WPSC_LOCAL_PNP;
+      $output .= "      </td>\n\r";
+      $output .= "      <td>\n\r";
+      $output .= "        <input type='text' size='10' name='pnp' value='".$product['pnp']."' />\n\r";
+      $output .= "      </td>\n\r";
+      $output .= "    </tr>\n\r";
+      
+      $output .= "    <tr>\n\r";
+      $output .= "      <td>";
+      $output .= TXT_WPSC_INTERNATIONAL_PNP;
+      if($product['international_pnp'] == 0)
+        {
+        $product['international_pnp'] = "0.00";
+        }
+      $output .= "      </td>\n\r";
+      $output .= "      <td>\n\r";
+      $output .= "        <input type='text' size='10' name='international_pnp' value='".$product['international_pnp']."' />\n\r";
+      $output .= "      </td>\n\r";
+      $output .= "    </tr>\n\r";
+        
+      $output .= "          <tr>\n\r";
+      $output .= "            <td colspan='2'>\n\r";
+      $output .= "<br /><strong class='form_group'>".TXT_WPSC_PRODUCT_VARS."</strong>";
+      $output .= "            </td>\n\r";
+      $output .= "          </tr>\n\r";
+      
+      $output .= "          <tr>\n\r";
+      $output .= "            <td>\n\r";
+      $output .= TXT_WPSC_ADD_VAR.": ";
+      $output .= "            </td>\n\r";
+      $output .= "            <td>\n\r";
+      $output .= variationslist();
+      //$output .= variationslist();
+      $output .= "<div id='edit_product_variations'>";
 
-	  $output .= "</div>";
-	  $output .= "            </td>\n\r";
-	  $output .= "          </tr>\n\r";
-*/		
-	  $check_variation_values = $wpdb->get_results("SELECT COUNT(*) as `count` FROM `".$wpdb->prefix."variation_values_associations` WHERE `product_id` = '".$product['id']."'",ARRAY_A);
-	  $check_variation_value_count = $check_variation_values[0]['count'];
-	  if($check_variation_value_count > 0)
-		{
-		$output .= "          <tr>\n\r";
-		$output .= "            <td>\n\r";
-		$output .= TXT_WPSC_EDIT_VAR.": ";
-		$output .= "            </td>\n\r";
-		$output .= "            <td>\n\r";
-		$variations_procesor = new nzshpcrt_variations;
-		$output .= $variations_procesor->display_attached_variations($product['id']);
-		$output .= "            </td>\n\r";
-		$output .= "          </tr>\n\r";
-		}
-	  $output .= "          <tr>\n\r";
-	  $output .= "            <td colspan='2'>\n\r";
-	  $output .= "<br /><strong class='form_group'>".TXT_WPSC_PRODUCTIMAGE."</strong>";
-	  $output .= "            </td>\n\r";
-	  $output .= "          </tr>\n\r";
+      $output .= "</div>";
+      $output .= "            </td>\n\r";
+      $output .= "          </tr>\n\r";
+*/        
+      $check_variation_values = $wpdb->get_results("SELECT COUNT(*) as `count` FROM `".$wpdb->prefix."variation_values_associations` WHERE `product_id` = '".$product['id']."'",ARRAY_A);
+      $check_variation_value_count = $check_variation_values[0]['count'];
+      if($check_variation_value_count > 0)
+        {
+        $output .= "          <tr>\n\r";
+        $output .= "            <td>\n\r";
+        $output .= TXT_WPSC_EDIT_VAR.": ";
+        $output .= "            </td>\n\r";
+        $output .= "            <td>\n\r";
+        $variations_procesor = new nzshpcrt_variations;
+        $output .= $variations_procesor->display_attached_variations($product['id']);
+        $output .= "            </td>\n\r";
+        $output .= "          </tr>\n\r";
+        }
+      $output .= "          <tr>\n\r";
+      $output .= "            <td colspan='2'>\n\r";
+      $output .= "<br><a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id'].">update</a>";
+      // class='button'
+      $output .= "            </td>\n\r";
+      $output .= "          </tr>\n\r";
  /*
   if(function_exists("getimagesize"))
     {
@@ -1856,20 +1859,20 @@ function nzshpcrt_submit_ajax()
 
       $output .= "    <td>";
  
- 		if(file_exists($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']))
-				{
-				$image_location = "product_images/".$product['image'];
-				}
-				else
-				  {
-				  $image_location = "images/".$product['image'];
-				  }
-		$preview_location = "product_images/".$product['image'];
-		$icon_location = "images/".$product['image'];
+         if(file_exists($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']))
+                {
+                $image_location = "product_images/".$product['image'];
+                }
+                else
+                  {
+                  $image_location = "images/".$product['image'];
+                  }
+        $preview_location = "product_images/".$product['image'];
+        $icon_location = "images/".$product['image'];
 
-		$m_image_link = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/".$preview_location;
+        $m_image_link = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/".$preview_location;
 
-		$output .= "<a href='".$m_image_link."' target=_blank><img id='previewimage' src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/$icon_location' alt='".TXT_WPSC_PREVIEW."' title='".TXT_WPSC_PREVIEW."' /></a>";
+        $output .= "<a href='".$m_image_link."' target=_blank><img id='previewimage' src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/$icon_location' alt='".TXT_WPSC_PREVIEW."' title='".TXT_WPSC_PREVIEW."' /></a>";
 
 
       $output .= "    </td>";
@@ -1957,12 +1960,13 @@ function nzshpcrt_submit_ajax()
   $output .= "            <td>\n\r";
   $output .= "<input type='hidden' name='prodid' value='".$product['id']."' />";
   $output .= "<input type='hidden' name='submit_action' value='edit' />";
-  //$output .= "<input class='edit_button' type='submit' name='submit' value='Сохранить изменения' />";
+  //$output .= "<input class='edit_button' type='submit' name='submit' value='????????? ?????????' />";
   
   
-  $output .= "<br><input type=\"button\" class='edit_button' name='sendit' value='Сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
+  $output .= "<br><input type=\"button\" class='edit_button' name='sendit' value='????????? ?????????' onclick=\"checkthefieldsEditForm();\"/>";
 
   $output .= "<br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >".TXT_WPSC_DELETE_PRODUCT."</a>";
+  
   $output .= "            <td>\n\r";
   $output .= "          </tr>\n\r";
   
@@ -2439,14 +2443,14 @@ function nzshpcrt_shopping_basket($input = null)
     }
     else if((get_option('cart_location') == 3) || (get_option('cart_location') == 4))
       {
-		if (isset ($_SESSION['nzshpcrt_cart']))
-			{
-				$cart = $_SESSION['nzshpcrt_cart'];
-      		}
-			else
-			{
-				$cart = null;
-			}
+        if (isset ($_SESSION['nzshpcrt_cart']))
+            {
+                $cart = $_SESSION['nzshpcrt_cart'];
+              }
+            else
+            {
+                $cart = null;
+            }
       if(get_option('cart_location') == 4)
         {
         echo $input;
@@ -2543,6 +2547,7 @@ function nzshpcrt_shopping_basket($input = null)
 function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $title='')
   {
   global $wpdb;
+  //global $current_user;
   $output = '';
   $current_url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
   switch(get_option('cart_location'))
@@ -2567,7 +2572,13 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     $spacing = "<br/><br />";
     break;
     }  
-  //echo session_name();
+  
+  $current_user = wp_get_current_user();    //print_r($current_user); exit(); 
+  $_wallet = $current_user->wallet;
+  
+
+
+
   if($cart != null)
     {
     $output .= $spacing;
@@ -2584,7 +2595,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
 
     $output .= "<table class='shoppingcart'>";
     //$output .= "<tr><th>".TXT_WPSC_PRODUCT."</th><th>".TXT_WPSC_QUANTITY_SHORT."</th><th>".TXT_WPSC_PRICE."</th></tr>"; 
-	$output .= "<tr><td><u>".TXT_WPSC_PRODUCT."</u></td><td><u>".TXT_WPSC_QUANTITY_SHORT."</u></td></tr>"; 
+    $output .= "<tr><td><u>".TXT_WPSC_PRODUCT."</u></td><td><u>".TXT_WPSC_QUANTITY_SHORT."</u></td></tr>"; 
     $total = 0;
     foreach($cart as $cart_item)
       {
@@ -2616,7 +2627,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
         */
       $total += $price;
       //$output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td><td>".nzshpcrt_currency_display($price, 1)."</td></tr>";
-	  $output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td></tr>";
+      $output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td></tr>";
       //$output .=   .": ". nzshpcrt_currency_display($price, 1) . "<br />";
       }
     $output .= "</table>";
@@ -2647,6 +2658,8 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
       {
       $output .= $spacing;
       $output .= TXT_WPSC_YOURSHOPPINGCARTISEMPTY.".<br />";
+      $output .= "? ????? ????????: <b>".$_wallet."</b> ???.<br>";
+
       $output .= "<a href='".get_option('product_list_url')."'>".TXT_WPSC_VISITTHESHOP."</a>";
       }
   return $output;
@@ -2691,7 +2704,7 @@ function nzshpcrt_download_file()
           $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
 
 /*
-	header('Content-Description: File Transfer');
+    header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename='.basename($file));
     header('Content-Transfer-Encoding: binary');
@@ -2703,7 +2716,7 @@ function nzshpcrt_download_file()
     flush();
 */
 
-	header('Content-Description: File Transfer');
+    header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
 
 
@@ -3164,10 +3177,10 @@ switch(get_option('cart_location'))
 
 function rus2uni($str,$isTo = true)
     {
-        $arr = array('ё'=>'&#x451;','Ё'=>'&#x401;');
+        $arr = array('?'=>'&#x451;','?'=>'&#x401;');
         for($i=192;$i<256;$i++)
             $arr[chr($i)] = '&#x4'.dechex($i-176).';';
-        $str =preg_replace(array('@([а-я]) @i','@ ([а-я])@i'),array('$1&#x0a0;','&#x0a0;$1'),$str);
+        $str =preg_replace(array('@([?-?]) @i','@ ([?-?])@i'),array('$1&#x0a0;','&#x0a0;$1'),$str);
         return strtr($str,$isTo?$arr:array_flip($arr));
     }
 
@@ -3238,10 +3251,10 @@ function Utf8ToWin($fcontents) {
  */  
 function serialize_shopping_cart()
   {
-	  if (isset($_SESSION['nzshpcrt_cart']))
-	  {
-		  $_SESSION['nzshpcrt_serialized_cart'] = serialize($_SESSION['nzshpcrt_cart']);
-	  }
+      if (isset($_SESSION['nzshpcrt_cart']))
+      {
+          $_SESSION['nzshpcrt_serialized_cart'] = serialize($_SESSION['nzshpcrt_cart']);
+      }
   return true;
   }  
 register_shutdown_function("serialize_shopping_cart");
