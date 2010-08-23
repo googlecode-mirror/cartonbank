@@ -66,7 +66,6 @@ if (isset($_GET['updateimage']))
     }
 }
 
-
 // add product
 if(isset($_POST['submit_action']) && $_POST['submit_action'] == 'add') {
 
