@@ -1593,7 +1593,7 @@ function nzshpcrt_submit_ajax()
 
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "?????????? ? ????????:";
+  $output .= "Видно всем:";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<input type='checkbox' name='visible'".$visible."/>";
@@ -1606,7 +1606,7 @@ function nzshpcrt_submit_ajax()
 
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "???????? ???????:";
+  $output .= "Цветная:";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<input type='checkbox' name='colored'".$colored."/>";
