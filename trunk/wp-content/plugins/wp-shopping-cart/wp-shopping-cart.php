@@ -1964,7 +1964,7 @@ function nzshpcrt_submit_ajax()
   //$output .= "<input class='edit_button' type='submit' name='submit' value='????????? ?????????' />";
   
   
-  $output .= "<br><input type=\"button\" class='edit_button' name='sendit' value='????????? ?????????' onclick=\"checkthefieldsEditForm();\"/>";
+  $output .= "<br><input type=\"button\" class='edit_button' name='sendit' value='сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
 
   $output .= "<br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >".TXT_WPSC_DELETE_PRODUCT."</a>";
   
