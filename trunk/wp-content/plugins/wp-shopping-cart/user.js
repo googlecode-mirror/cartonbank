@@ -4,7 +4,7 @@ function categorylist(url)
   {
   self.location = url;
   }
-  
+ 
 var getresults=function(results)
   {
   document.getElementById('shoppingcartcontents').innerHTML = results;
