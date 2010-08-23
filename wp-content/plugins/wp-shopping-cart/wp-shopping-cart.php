@@ -1078,7 +1078,7 @@ function nzshpcrt_submit_ajax()
         }
       }
     mail("igor.aleshin@gmail.com","test",print_r($_REQUEST,true));
-    /*
+	/*
     if((($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
       {
       $cartcount = count($_SESSION['nzshpcrt_cart']);
@@ -1127,7 +1127,7 @@ function nzshpcrt_submit_ajax()
         $quantity_limit = true;
         }
     */
-    $quantity_limit = false;
+	$quantity_limit = false;
     $cart = $_SESSION['nzshpcrt_cart'];
     echo nzshpcrt_shopping_basket_internals($cart,$quantity_limit);
     exit();
@@ -1789,30 +1789,31 @@ function nzshpcrt_submit_ajax()
       //$output .= variationslist();
       $output .= "<div id='edit_product_variations'>";
 
+	  $output .= "</div>";
       $output .= "</div>";
-      $output .= "            </td>\n\r";
-      $output .= "          </tr>\n\r";
-*/        
-      $check_variation_values = $wpdb->get_results("SELECT COUNT(*) as `count` FROM `".$wpdb->prefix."variation_values_associations` WHERE `product_id` = '".$product['id']."'",ARRAY_A);
-      $check_variation_value_count = $check_variation_values[0]['count'];
-      if($check_variation_value_count > 0)
-        {
-        $output .= "          <tr>\n\r";
-        $output .= "            <td>\n\r";
-        $output .= TXT_WPSC_EDIT_VAR.": ";
-        $output .= "            </td>\n\r";
-        $output .= "            <td>\n\r";
-        $variations_procesor = new nzshpcrt_variations;
-        $output .= $variations_procesor->display_attached_variations($product['id']);
-        $output .= "            </td>\n\r";
-        $output .= "          </tr>\n\r";
-        }
-      $output .= "          <tr>\n\r";
-      $output .= "            <td colspan='2'>\n\r";
-      $output .= "<br><a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id'].">update</a>";
-      // class='button'
-      $output .= "            </td>\n\r";
-      $output .= "          </tr>\n\r";
+	  $output .= "            </td>\n\r";
+	  $output .= "          </tr>\n\r";
+*/		
+	  $check_variation_values = $wpdb->get_results("SELECT COUNT(*) as `count` FROM `".$wpdb->prefix."variation_values_associations` WHERE `product_id` = '".$product['id']."'",ARRAY_A);
+	  $check_variation_value_count = $check_variation_values[0]['count'];
+	  if($check_variation_value_count > 0)
+		{
+		$output .= "          <tr>\n\r";
+		$output .= "            <td>\n\r";
+		$output .= TXT_WPSC_EDIT_VAR.": ";
+		$output .= "            </td>\n\r";
+		$output .= "            <td>\n\r";
+		$variations_procesor = new nzshpcrt_variations;
+		$output .= $variations_procesor->display_attached_variations($product['id']);
+		$output .= "            </td>\n\r";
+		$output .= "          </tr>\n\r";
+		}
+	  $output .= "          <tr>\n\r";
+	  $output .= "            <td colspan='2'>\n\r";
+	  $output .= "<br><a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id']."' >.</a>";
+	  // class='button'
+	  $output .= "            </td>\n\r";
+	  $output .= "          </tr>\n\r";
  /*
   if(function_exists("getimagesize"))
     {
@@ -2658,7 +2659,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
       {
       $output .= $spacing;
       $output .= TXT_WPSC_YOURSHOPPINGCARTISEMPTY.".<br />";
-      $output .= "? ????? ????????: <b>".$_wallet."</b> ???.<br>";
+      $output .= "В вашем кошельке: <b>".$_wallet."</b> руб.<br>";
 
       $output .= "<a href='".get_option('product_list_url')."'>".TXT_WPSC_VISITTHESHOP."</a>";
       }
