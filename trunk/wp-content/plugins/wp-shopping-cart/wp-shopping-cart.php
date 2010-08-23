@@ -1810,7 +1810,7 @@ function nzshpcrt_submit_ajax()
 		}
 	  $output .= "          <tr>\n\r";
 	  $output .= "            <td colspan='2'>\n\r";
-	  $output .= "<br><a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id']."' >.</a>";
+	  $output .= "<br><a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id']."' >update icon</a>";
 	  // class='button'
 	  $output .= "            </td>\n\r";
 	  $output .= "          </tr>\n\r";
