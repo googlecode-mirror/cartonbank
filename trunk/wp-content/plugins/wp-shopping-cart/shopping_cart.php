@@ -51,14 +51,15 @@ function country_list($selected_country = null)
   <span>
   <?php echo TXT_WPSC_CONFIRM_TOTALS; ?></span>
   <hr class='productcart' />
-  <table class='productcart'>
+  <table class='productcart' padding='2'>
   <?php
     
   echo "<tr class='firstrow'>\n\r";
-  echo "  <td class='firstcol'>".TXT_WPSC_DOWNLOADABLEPRODUCT.":</td>\n\r"; 
-  echo "  <td>".TXT_WPSC_PICTURE_NAME.":</td>\n\r";
-  //echo "  <td>". TXT_WPSC_PRICE.":</td>\n\r";
-  echo "  <td>".TXT_WPSC_REMOVE.":</td>\n\r";  
+  // заголовок таблицы
+  echo "  <td style='width:144px'>".TXT_WPSC_DOWNLOADABLEPRODUCT."</td>\n\r"; 
+  echo "  <td>Описание</td>\n\r";
+  echo "  <td>". TXT_WPSC_PRICE.":</td>\n\r";
+  echo "  <td>".TXT_WPSC_REMOVE."</td>\n\r";  
   echo "</tr>\n\r";
   $num = 1;
   $total = 0;
@@ -96,7 +97,7 @@ function country_list($selected_country = null)
     $product_list = $wpdb->get_results($sql,ARRAY_A) ;
     echo "<tr class='product_row'>\n\r";
     
-    echo "  <td class='firstcol'>\n\r";
+    echo "  <td style='width:144px;'>\n\r";
     //$imagepath = $imagedir . $imagedata[0]['image'];
     $basepath = get_option('siteurl');
     $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
@@ -104,9 +105,36 @@ function country_list($selected_country = null)
     echo ("<a href='".$previewdir.$product_list[0]['image']."'><img border='0' src='".$imagedir.$product_list[0]['image']."'></a>");
     echo "  </td>\n\r";
     echo "  <td>\n\r";
-    echo $product_list[0]['name'] . $variation_list;
+    echo "№&nbsp;".$product_list[0]['id']."<br>Автор ".$product_list[0]['brand'].'.<br>Название ' .$product_list[0]['name'] ."<br><span id='size'>"."<br> Описание: ".$product_list[0]['description'].$variation_list;
     echo "  </td>\n\r";
-    
+	echo "<td>".$product_list[0]['price']." руб.</td>";
+	//echo("<pre>".print_r($product_list,true)."</pre>");  
+/*
+(
+            +[id] => 2958
+            +[name] => У психиатра
+            [description] => Больной и врач видят друг друга превратно
+            [additional_description] => Больной, врач, доктор, психиатр, сумасшедший, страх, чудовище, представление, воображение
+            $product_list[0][price] => 200.00
+            [pnp] => 
+            [international_pnp] => 
+            [file] => 2969
+            [image] => 4c6715a23be1f6.29947505cartoon0016.jpg
+            [category] => 0
+            [brand] => 6
+            [quantity_limited] => 0
+            [quantity] => 0
+            [special] => 0
+            [special_price] => 
+            [display_frontpage] => 0
+            [notax] => 0
+            [active] => 1
+            [color] => 1
+            [visible] => 1
+        )
+
+*/
+
 //    echo "  <td>\n\r";
 //    echo  "<form class='adjustform' method='POST' action='".get_option('shopping_cart_url')."'><input type='text' value='".$number."' size='2' name='quantity' /><input type='hidden' value='".$key."' name='key' />&nbsp; <input type='submit' name='submit' value='".TXT_WPSC_APPLY."' /></form>";
 //    echo "  </td>\n\r";
