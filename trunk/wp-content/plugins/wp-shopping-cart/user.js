@@ -20,7 +20,7 @@ var getresults=function(results)
 
 function submitform(frm)
   {
-  alert(ajax.serialize(frm));
+  //alert(ajax.serialize(frm));
   ajax.post("index.php?ajax=true&user=true",getresults,ajax.serialize(frm));
   if(document.getElementById('loadingimage') != null)
     {
