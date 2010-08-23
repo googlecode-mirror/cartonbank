@@ -24,23 +24,23 @@ if (isset($_GET['updateimage']))
 
     if (file_exists($filedir.$idhash))
     {
-        $mimetype = $file_data[0]['mimetype'];
+	    $mimetype = $file_data[0]['mimetype'];
         $filename = $file_data[0]['filename'];
-        
-        $height = get_option('product_image_height');
-        $width  = get_option('product_image_width');
+	    
+	    $height = get_option('product_image_height');
+	    $width  = get_option('product_image_width');
 
-          $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
-          $product_images = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
+	      $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
+	      $product_images = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
           $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
-          
-          copy($filedir.$idhash, $imagedir.$filename); // icon
-          copy($filedir.$idhash, $product_images.$filename); // preview
+	      
+	      copy($filedir.$idhash, $imagedir.$filename); // icon
+	      copy($filedir.$idhash, $product_images.$filename); // preview
 
 //exit ("icon file : ".$imagedir.$filename);
-                        $imgsize = getimagesize($product_images.$filename);
-                        $file_w = $imgsize[0];
-                        $file_h = $imgsize[1];
+					    $imgsize = getimagesize($product_images.$filename);
+					    $file_w = $imgsize[0];
+					    $file_h = $imgsize[1];
 
                     //ales here we replace slides to that from LG
                     $chwidth = get_option('lg_pictwidth'); // crop size
@@ -51,19 +51,18 @@ if (isset($_GET['updateimage']))
                     $resample_quality = 85; //image quality
 
                     // slide
-                    al_create_resized_file($chwidth, $chheight, $product_images, $ifolder, $file, $resample_quality);    
+					al_create_resized_file($chwidth, $chheight, $product_images, $ifolder, $file, $resample_quality);    
                     
-                    // watremark
-					$wm = $basepath."/img/watermark.png";
-                    wtrmark($product_images.$file,$wm);
+					// watremark
+					wtrmark($product_images.$file,$wm);
 
-                    // icon
-                    al_create_cropped_file(140, 140, $imagedir, $ifolder, $file, $resample_quality);      
+					// icon
+					al_create_cropped_file($chwidth, $chheight, $imagedir, $ifolder, $file, $resample_quality);	  
     }
-    else
-    {
-        echo "<div class='error'><b>WARNING:</b> original file is not found at: ".$filedir.$idhash." <br /></div>";
-    }
+	else
+	{
+		echo "<div class='error'><b>WARNING:</b> original file is not found at: ".$filedir.$idhash." <br /></div>";
+	}
 }
 
 
@@ -1143,7 +1142,30 @@ function al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, 
 
         imagecopyresampled($resized, $img, 0, 0, 0, 0, imagesx($resized)+1,imagesy($resized)+1,imagesx($img),imagesy($img));
 
-        if (is_writable($gallery_root.$thatdir.$ifolder)){
+		if (is_writable($gallery_root.$thatdir.$ifolder)){
+
+		// exit("gallery_root.thatdir.ifolder : ".$gallery_root.$thatdir.$ifolder);
+		// /home/www/cb/wp-content/plugins/wp-shopping-cart/product_images/
+
+			switch(strtolower($path["extension"])){
+				case "jpeg":
+				case "jpg":
+					imagejpeg($resized, $gallery_root.$thatdir.$ifolder.'/'.$file, $resample_quality);
+					break;
+				case "gif":
+					imagegif($resized, $gallery_root.$thatdir.$ifolder.'/'.$file);
+					break;
+				case "png":
+					imagepng($resized, $gallery_root.$thatdir.$ifolder.'/'.$file);
+					break;
+				default:
+					break;
+			}
+		}
+		else {
+			echo "<div class='error'><b>WARNING:</b> Unable to create images inside $ifolder. <br />";
+			echo "Check your permissions.</div>";
+		}
 
         // exit("gallery_root.thatdir.ifolder : ".$gallery_root.$thatdir.$ifolder);
         // /home/www/cb/wp-content/plugins/wp-shopping-cart/product_images/
