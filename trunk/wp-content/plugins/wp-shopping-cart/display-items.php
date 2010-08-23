@@ -597,16 +597,16 @@ $product_list = $wpdb->get_results($sql,ARRAY_A) ;
 
 <div class="wrap">
   <h2><?php echo TXT_WPSC_DISPLAYPRODUCTS;?></h2>
-  <a href="" onclick="return showaddform()" class="add_item_link"><span>???????? ????? ??????????? ? ???? ?????? (???????? ?????)</span></a><br><br>
+  <a href="" onclick="return showaddform()" class="add_item_link"><span>Добавить новое изображение в базу данных (очистить форму)</span></a><br><br>
   
   <?php
   echo topcategorylist($offset);
-  echo (" ??? ".al_brandslist());
+  echo (" или ".al_brandslist());
 
   ?>
 
-?:<input type="text" value="000" id='editpicid' style="width:60px;">
-<a href="#" class="button add-new-h2" onclick="var editpicid=document.getElementById('editpicid').value;filleditform(editpicid.replace(/(^\s+)|(\s+$)/g, ''));return false;">????????????? ?? ??????</a>
+№:<input type="text" value="000" id='editpicid' style="width:60px;">
+<a href="#" class="button add-new-h2" onclick="var editpicid=document.getElementById('editpicid').value;filleditform(editpicid.replace(/(^\s+)|(\s+$)/g, ''));return false;">Редактировать по номеру</a>
 
   <script language='javascript' type='text/javascript'>
 function conf()
@@ -674,7 +674,7 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
     if($to_num>$items_count){$to_num=$items_count;}
     if($items_count>0)
     {
-        $diapazon = "<br>(???????? <strong>".$from_num."-".$to_num."</strong> ?? <strong>".$items_count."</strong>)";
+		$diapazon = "<br>(показаны <strong>".$from_num."-".$to_num."</strong> из <strong>".$items_count."</strong>)";
     }
     echo "<strong class='form_group' style='font-size:10px;'>".TXT_WPSC_SELECT_PRODUCT."</strong>".$diapazon;
     echo $output; 
@@ -705,7 +705,7 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
 
     echo "            <td>\n\r";
     //echo TXT_WPSC_EDIT;
-    echo "???.";
+	echo "Ред.";
     echo "            </td>\n\r";
 
     echo "            <td>\n\r";
@@ -738,7 +738,7 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
         echo "            </td>\n\r";
         
         echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px;'>\n\r";
-        echo "? ".$product['id']."<br>";
+		echo "№ ".$product['id']."<br>";
         //echo $authors[$product['brand']]['name']."<br>";
         echo "<b>".stripslashes($product['name'])."</b><br>[".$category_data[$product['category_id']]."]";
         echo "            </td>\n\r";
@@ -767,7 +767,7 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
 echo "        </table>\n\r";
 echo "      </td><td class='secondcol' valign='top' style='padding:4px;background-color:#FFFF99'>\n\r";
 ?>
-<div style='color:#660066'><b>??? ????? ??? ???????? ?????? ??????????? ? ?????? ???????</b></div>
+<div style='color:#660066'><b>Это форма для отправки нового изображения и правки старого</b></div>
 <?
 
 echo "        <div id='productform' style='background-color:#FFFF99;'>";
@@ -793,7 +793,7 @@ if(function_exists('add_multiple_image_form'))
 ?>
     <tr>
       <td>
-        ?????:
+        Автор:
       </td>
       <td>
         <?php echo brandslist(); ?>
@@ -801,12 +801,12 @@ if(function_exists('add_multiple_image_form'))
     </tr>
     <tr>
       <td colspan='2'>
-        <strong class='form_group'><?php echo TXT_WPSC_PRODUCTDOWNLOAD;//???? ??? ???????></strong>
+        <strong class='form_group'><?php echo TXT_WPSC_PRODUCTDOWNLOAD;//Файл для печати?></strong>
       </td>
     </tr>
     <tr>
       <td>
-        ??????? ????:
+        Укажите файл:
       </td>
       <td>
         <input id='fileupload' type='file' name='file' value='' />
@@ -820,7 +820,7 @@ if(function_exists('add_multiple_image_form'))
     </tr>
     <tr>
       <td class='itemfirstcol'>
-        ????????:
+        Название:
       </td>
       <td>
         <input id='picturename' size='30' type='text' name='name' value='***'  />
@@ -828,7 +828,7 @@ if(function_exists('add_multiple_image_form'))
     </tr>
     <tr>
       <td class='itemfirstcol'>
-        ??????? ????????:
+        Краткое описание:
       </td>
       <td>
         <textarea id='picturedescription' name='description' cols='40' rows='2'></textarea><br />
@@ -844,23 +844,23 @@ if(function_exists('add_multiple_image_form'))
     </tr>
     <tr>
       <td class='itemfirstcol'>
-       ???? ?????:
+       Всем видно:
       </td>
       <td>
-        <input id='visible' type="checkbox" name="visible" checked="checked"> ???? ?????????  ?? ????? ????? ???????????<br />
+        <input id='visible' type="checkbox" name="visible" checked="checked"> Если выключить — не будет видно покупателям<br />
       </td>
     </tr>
     <tr>
       <td class='itemfirstcol' style="background-color:#FFFF33;">
-       ???????:
+       Цветное:
       </td>
       <td style="background-color:#FFFF33;">
-        <input id='colored' type="checkbox" name="colored" checked="checked"> ????????? ??? ?/?<br />
+        <input id='colored' type="checkbox" name="colored" checked="checked"> Отключите для ч/б<br />
       </td>
     </tr>
     <tr>
       <td>
-        ???????? ?????????:
+        Выберите категорию:
       </td>
       <td>
         <?php echo categorylist(); ?>
