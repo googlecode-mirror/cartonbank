@@ -24,17 +24,19 @@ if($sessionid != null)
   
   
           
-                           
+/*                           
   if($check[0]['shipping_country'] != '')
     {
     $country = $check[0]['shipping_country'];
     }
     else
       {          
-      $country = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."submited_form_data` WHERE `log_id`=".$check[0]['id']." AND `form_id` = '".get_option('country_form_field')."' LIMIT 1",ARRAY_A);
+      $country = $wpdb->get_results("SELECT * FROM `wp_submited_form_data` WHERE `log_id`=".$check[0]['id']." AND `form_id` = '".get_option('country_form_field')."' LIMIT 1",ARRAY_A);
+      exit("<pre>".print_r($country,true)."</pre>");
       $country = $country[0]['value'];
-      }
-  
+	  }
+ */
+
   // gets first email address from checkout details
   $email_form_field = $wpdb->get_results("SELECT `id`,`type` FROM `wp_collect_data_forms` WHERE `type` IN ('email') AND `active` = '1' ORDER BY `order` ASC LIMIT 1",ARRAY_A);
   $email_address = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."submited_form_data` WHERE `log_id`=".$check[0]['id']." AND `form_id` = '".$email_form_field[0]['id']."' LIMIT 1",ARRAY_A);
@@ -86,6 +88,8 @@ CREATE TABLE `wp_product_list` (
        $previous_download_ids[] = $download_data['id'];
        }
        
+/*
+	   $country = '';
      $shipping = nzshpcrt_determine_item_shipping($row['prodid'], $row['quantity'], $country);
       
       
@@ -103,7 +107,8 @@ CREATE TABLE `wp_product_list` (
      $total += (($product_data[0]['price']-$price_modifier)*$row['quantity']);
      $message_price = nzshpcrt_currency_display((($product_data[0]['price']*$row['quantity'])), $product_data[0]['notax'], true,$product_data[0]['id']);
      $shipping_price  = nzshpcrt_currency_display($shipping, 1, true);
-     
+*/
+
      $variation_sql = "SELECT * FROM `".$wpdb->prefix."cart_item_variations` WHERE `cart_id`='".$row['id']."'";
      $variation_data = $wpdb->get_results($variation_sql,ARRAY_A); 
      $variation_count = count($variation_data);
@@ -153,13 +158,14 @@ CREATE TABLE `wp_product_list` (
           $message_html .= " - ".$row['quantity']." ". $product_data[0]['name'].$variation_list ."  ". $message_price ."\n - ". TXT_WPSC_SHIPPING.":".$shipping_price ."\n\r";
           }
 
+		$message_price = ''; //ales
       $report .= " - ". $product_data[0]['name'] ."  ".$message_price ."\n";
      }
      
-     
-  $total_shipping = nzshpcrt_determine_base_shipping($total_shipping, $country);
+  $total = '';  
+  $total_shipping = ''; //nzshpcrt_determine_base_shipping($total_shipping, $country);
   $message .= "<br><br>";
- $message .= "Общая стоимость: ".nzshpcrt_currency_display($total_shipping,1,true)."\n\r";
+  $message .= "Общая стоимость: ".nzshpcrt_currency_display($total_shipping,1,true)."\n\r";
   $message .= TXT_WPSC_TOTAL.": ".nzshpcrt_currency_display(($total+$total_shipping),1,true)."\n\r";
   
   
@@ -239,6 +245,7 @@ CREATE TABLE `wp_product_list` (
 
 if($check != null)
   {
+	$authcode = ""; // wtf?? ales
   $sql = "UPDATE `".$wpdb->prefix."purchase_logs` SET `statusno` = '".$errorcode."',`transactid` = '".$transactid."',`authcode` = '".$authcode."',`date` = '".time()."' WHERE `sessionid` = ".$sessionid." LIMIT 1";
    $wpdb->query($sql) ;
    }

@@ -2683,10 +2683,19 @@ function nzshpcrt_download_file()
       $wpdb->query("UPDATE `".$wpdb->prefix."download_status` SET `downloads` = '".($download_data['downloads']-1)."' WHERE `id` = '$id' LIMIT 1");
       $basepath =  getcwd();
       $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
-      //http://192.168.11.35/emptywp/?downloadid=1
-      header('Content-Type: '.$file_data['mimetype']);      
-      //header('Content-Length: '.filesize($filedir.$file_data['idhash']));
-      header('Content-Disposition: attachment; filename="'.$file_data['filename'].'"');
+      
+	header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+    header('Content-Type: '.$file_data['mimetype']);      
+	header('Content-Disposition: attachment; filename="'.$file_data['filename'].'"');
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Pragma: public');
+    header('Content-Length: '.filesize($filedir.$file_data['idhash']));
+    ob_clean();
+    flush();
+
       readfile($filedir.$file_data['idhash']);
       exit();
       }
@@ -3062,7 +3071,7 @@ function make_csv($array)
   $num = 1;
   foreach($array as $value)
     {
-    $output .= "'$value'";
+    $output = "'$value'";
     if($num < $count)
       {
       $output .= ",";

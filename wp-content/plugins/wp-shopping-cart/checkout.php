@@ -1,7 +1,11 @@
 ﻿<?php
 global $wpdb,$gateway_checkout_form_fields;
 $_SESSION['cart_paid'] = false;
-$checkout = $_SESSION['checkoutdata'];
+if (isset($_SESSION['checkoutdata']))
+{
+	$checkout = $_SESSION['checkoutdata'];
+}
+else{$checkout = null;}
 if(get_option('permalink_structure') != '')
 {
     $seperator ="?";
@@ -10,6 +14,16 @@ if(get_option('permalink_structure') != '')
 {
     $seperator ="&amp;";
 }
+if(isset($_SESSION['collected_data']))
+{
+	if (isset($form_field['id']))
+	{
+		$form_field_id = $_SESSION['collected_data'][$form_field['id']];
+	}
+	else {$form_field_id = null;}
+}
+else {$form_field_id = null;}
+
 $currenturl = get_option('checkout_url');
 if (isset($_GET['total']))       
     $currenturl = get_option('checkout_url') . $seperator .'total='.$_GET['total'];
@@ -40,7 +54,7 @@ if (isset($_SESSION['wallet']))
  <form action='<?php echo  $currenturl;?>' method='POST'><?php
   $form_sql = "SELECT * FROM `".$wpdb->prefix."collect_data_forms` WHERE `active` = '1' ORDER BY `order`;";
   $form_data = $wpdb->get_results($form_sql,ARRAY_A);
-  //exit("<pre>".print_r($form_data,true)."</pre>");
+  //exit("<pre>".print_r($_SESSION,true)."</pre>");
   foreach($form_data as $form_field)
     {
     if($form_field['type'] == 'heading')
@@ -74,19 +88,41 @@ if (isset($_SESSION['wallet']))
           case "text":
           case "city":
           case "delivery_city":
-          echo "<input type='text' value='".$_SESSION['collected_data'][$form_field['id']]."' name='collected_data[".$form_field['id']."]' />";
+          echo "<input type='text' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
+
+/*
+$_SESSION
+(
+    [cart_paid] => 
+    [selected_country] => 
+    [nzshpcrt_cart] => Array
+        (
+            [1] => cart_item Object
+                (
+                    [product_id] => 3299
+                    [product_variations] => 
+                    [quantity] => 1
+                )
+
+        )
+
+    [nzshpcrt_serialized_cart] => a:1:{i:1;O:9:"cart_item":3:{s:10:"product_id";s:4:"3299";s:18:"product_variations";N;s:8:"quantity";i:1;}}
+    [nzshpcrt_totalprice] => 200
+)
+*/
+
           break;
           
           case "address":
           case "delivery_address":
           case "textarea":
-          echo "<textarea name='collected_data[".$form_field['id']."]'>".$_SESSION['collected_data'][$form_field['id']]."</textarea>";
+          echo "<textarea name='collected_data[".$form_field['id']."]'>".$form_field_id."</textarea>";
           break;
           
           /*
           case "region":
           case "delivery_region":
-          echo "<select name='collected_data[".$form_field['id']."]'>".nzshpcrt_region_list($_SESSION['collected_data'][$form_field['id']])."</select>";
+          echo "<select name='collected_data[".$form_field['id']."]'>".nzshpcrt_region_list($form_field_id)."</select>";
           break;
           */
           
@@ -94,15 +130,15 @@ if (isset($_SESSION['wallet']))
           case "delivery_country":
           $country_name = $wpdb->get_var("SELECT `country` FROM `".$wpdb->prefix."currency_list` WHERE `isocode`='".$_SESSION['selected_country']."' LIMIT 1");
           echo "<input type='hidden' name='collected_data[".$form_field['id']."]' value='".get_option('base_country')."'>".$country_name." ";
-          //echo "<select name='collected_data[".$form_field['id']."]'>".nzshpcrt_country_list($_SESSION['collected_data'][$form_field['id']])."</select>";
+          //echo "<select name='collected_data[".$form_field['id']."]'>".nzshpcrt_country_list($form_field_id)."</select>";
           break;
           
           case "email":
-          echo "<input type='text' value='".$_SESSION['collected_data'][$form_field['id']]."' name='collected_data[".$form_field['id']."]' />";
+          echo "<input type='text' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
           break;
           
           default:
-          echo "<input type='text' value='".$_SESSION['collected_data'][$form_field['id']]."' name='collected_data[".$form_field['id']."]' />";
+          echo "<input type='text' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
           break;
           }
         echo "
