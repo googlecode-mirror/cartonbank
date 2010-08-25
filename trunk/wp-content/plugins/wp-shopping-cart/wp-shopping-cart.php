@@ -1077,8 +1077,8 @@ function nzshpcrt_submit_ajax()
             }
         }
       }
-    mail("igor.aleshin@gmail.com","_REQUEST",print_r($_REQUEST,true));
-	mail("igor.aleshin@gmail.com","_SESSION",print_r($_SESSION,true));
+    //mail("igor.aleshin@gmail.com","_REQUEST",print_r($_REQUEST,true));
+	//mail("igor.aleshin@gmail.com","_SESSION",print_r($_SESSION,true));
 	
     if((($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
       {
