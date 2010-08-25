@@ -1077,12 +1077,13 @@ function nzshpcrt_submit_ajax()
             }
         }
       }
-    mail("igor.aleshin@gmail.com","test",print_r($_REQUEST,true));
-	/*
+    mail("igor.aleshin@gmail.com","_REQUEST",print_r($_REQUEST,true));
+	mail("igor.aleshin@gmail.com","_SESSION",print_r($_SESSION,true));
+	
     if((($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
       {
       $cartcount = count($_SESSION['nzshpcrt_cart']);
-      if(is_array($_POST['variation'])) {  $variations = $_POST['variation'];  }  else  { $variations = null; }
+      if(isset($_POST['variation']) && is_array($_POST['variation'])) {  $variations = $_POST['variation'];  }  else  { $variations = null; }
       
       $updated_quantity = false;
       if($_SESSION['nzshpcrt_cart'] != null)
@@ -1108,7 +1109,7 @@ function nzshpcrt_submit_ajax()
         }
       if($updated_quantity === false)
         {
-        if(is_numeric($_POST['quantity']))
+        if(isset($_POST['quantity']) && is_numeric($_POST['quantity']))
           {
           if($_POST['quantity'] > 0)
             {
@@ -1126,7 +1127,7 @@ function nzshpcrt_submit_ajax()
         {
         $quantity_limit = true;
         }
-    */
+    
 	$quantity_limit = false;
     $cart = $_SESSION['nzshpcrt_cart'];
     echo nzshpcrt_shopping_basket_internals($cart,$quantity_limit);
@@ -1134,7 +1135,7 @@ function nzshpcrt_submit_ajax()
     }
     else if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && (isset($_POST['user']) and $_POST['user'] == "true") && ($_POST['emptycart'] == "true"))
       {
-      $_SESSION['nzshpcrt_cart'] = '';
+      //$_SESSION['nzshpcrt_cart'] = '';
       $_SESSION['nzshpcrt_cart'] = Array();
       echo nzshpcrt_shopping_basket_internals($cart);
       exit();
