@@ -21,7 +21,11 @@ if(get_option('permalink_structure') != '')
  
 $rawnum = null;
 $number = null;  
-$cart = $_SESSION['nzshpcrt_cart'];
+$cart = null;
+if (isset($_SESSION['nzshpcrt_cart']))
+{
+	$cart = $_SESSION['nzshpcrt_cart'];
+}
 
 function country_list($selected_country = null)
   {
@@ -45,7 +49,7 @@ function country_list($selected_country = null)
 ?>
 <div class="wrap">
   <?php
-  if($_SESSION['nzshpcrt_cart'] != null)
+  if(isset($_SESSION['nzshpcrt_cart']) && $_SESSION['nzshpcrt_cart'] != null)
     {
   ?>
   <span>
