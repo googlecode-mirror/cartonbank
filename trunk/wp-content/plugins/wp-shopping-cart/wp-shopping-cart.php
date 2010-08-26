@@ -24,6 +24,9 @@ if(get_option('language_setting') != '')
 require_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/classes/variations.class.php');
 require_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/classes/cart.class.php');
 
+//echo("<pre>".print_r($_SESSION,true)."</pre>");
+
+
 /*
  * Handles "bad" session setups that cause the session to be initialised before the cart.class.php file is included
  * The following piece of code uses the serialized cart variable to reconstruct the cart
@@ -1081,7 +1084,8 @@ function nzshpcrt_submit_ajax()
 	//mail("igor.aleshin@gmail.com","_SESSION",print_r($_SESSION,true));
 
 	if (isset($_SESSION['nzshpcrt_cart']))
-	{
+	
+{
 		if((($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
 		  {
 		  $cartcount = count($_SESSION['nzshpcrt_cart']);
@@ -1133,7 +1137,14 @@ function nzshpcrt_submit_ajax()
 	}	
 	
 	$quantity_limit = false;
-    $cart = $_SESSION['nzshpcrt_cart'];
+    if (isset($_SESSION['nzshpcrt_cart']))
+    {
+        $cart = $_SESSION['nzshpcrt_cart'];   
+    }
+    else
+    {
+        $cart = null;
+    }
     echo nzshpcrt_shopping_basket_internals($cart,$quantity_limit);
     exit();
     }
@@ -2493,7 +2504,8 @@ function nzshpcrt_shopping_basket($input = null)
         else
           {
           echo "<div id='sideshoppingcart'><div id='shoppingcartcontents'>";
-          echo nzshpcrt_shopping_basket_internals($cart);
+          $basket = nzshpcrt_shopping_basket_internals($cart);
+          echo $basket;
           echo "</div></div>";
           if(get_option('display_specials') == 1)
             {
