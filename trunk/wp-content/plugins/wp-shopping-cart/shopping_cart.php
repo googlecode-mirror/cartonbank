@@ -58,13 +58,13 @@ function country_list($selected_country = null)
   <table class='productcart' padding='2'>
   <?php
     
-  echo "<tr class='firstrow'>\n\r";
+  //echo "<tr class='firstrow'>\n\r";
   // заголовок таблицы
-  echo "  <td style='width:144px'>".TXT_WPSC_DOWNLOADABLEPRODUCT."</td>\n\r"; 
-  echo "  <td>Описание</td>\n\r";
-  echo "  <td>". TXT_WPSC_PRICE.":</td>\n\r";
-  echo "  <td>".TXT_WPSC_REMOVE."</td>\n\r";  
-  echo "</tr>\n\r";
+  //echo "  <td style='width:144px'>".TXT_WPSC_DOWNLOADABLEPRODUCT."</td>\n\r"; 
+  //echo "  <td>Описание</td>\n\r";
+  //echo "  <td>". TXT_WPSC_PRICE.":</td>\n\r";
+  //echo "  <td>".TXT_WPSC_REMOVE."</td>\n\r";  
+  //echo "</tr>\n\r";
   $num = 1;
   $total = 0;
   $total_shipping = 0;
@@ -111,7 +111,7 @@ function country_list($selected_country = null)
     echo "  <td>\n\r";
     echo "№&nbsp;".$product_list[0]['id']."<br>Автор ".$product_list[0]['brand'].'.<br>Название ' .$product_list[0]['name'] ."<br><span id='size'>"."<br> Описание: ".$product_list[0]['description'].$variation_list;
     echo "  </td>\n\r";
-	echo "<td>".$product_list[0]['price']." руб.</td>";
+	echo "<td>".$cart_item->price." руб.</td>";
 	//echo("<pre>".print_r($product_list,true)."</pre>");  
 /*
 (
