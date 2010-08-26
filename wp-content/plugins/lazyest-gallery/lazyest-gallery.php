@@ -389,9 +389,9 @@ function get_imgfiles ($dir = ''){
 	// Output error message & delete files
 	if ($notSupportFilesFound)
 	{
-		echo iconv('Windows-1251', 'UTF-8', "<span style='color:red'>Р’С‹ Р·Р°РіСЂСѓР·РёР»Рё РЅРµРїРѕРґРґРµСЂР¶РёРІР°РµРјС‹Рµ С‚РёРїС‹ С„Р°Р№Р»РѕРІ, РѕС‚Р»РёС‡РЅС‹Рµ РѕС‚ gif, jpeg Рё png. Р­С‚Рё С„Р°Р№Р»С‹ Р±С‹Р»Рё СѓРґР°Р»РµРЅС‹.</br>
-		РСЃРїСЂР°РІСЊС‚Рµ РѕС€РёР±РєСѓ Рё РїРѕРІС‚РѕСЂРёС‚Рµ Р·Р°РіСЂСѓР·РєСѓ.</br></span> 
-		РЎРїРёСЃРѕРє СѓРґР°Р»РµРЅРЅС‹С… С„Р°Р№Р»РѕРІ:</br>");
+		echo iconv('Windows-1251', 'UTF-8', "<span style='color:red'>Вы загрузили неподдерживаемые типы файлов, отличные от gif, jpeg и png. Эти файлы были удалены.</br>
+		Исправьте ошибку и повторите загрузку.</br></span> 
+		Список удаленных файлов:</br>");
 		foreach($filesList as $filex){  
 			echo '<span style="font-weight:bold">'.$filex.'</span></br>';
 			unlink($location.'/'.$filex);
