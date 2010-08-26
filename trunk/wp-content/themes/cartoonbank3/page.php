@@ -21,7 +21,7 @@
 $unregged ='';
 if ($user_identity == '')
 {
-	$unregged = "<br>Пожалуйста, <a href='wp-register.php'>зарегистрируйтесь</a> или <a href='wp-login.php'>залогиньтесь</a>.";
+	$unregged = "Пожалуйста, <a href='wp-register.php'>зарегистрируйтесь</a> или <a href='wp-login.php'>залогиньтесь</a>.";
 		?><div id="user_info"><? echo ($unregged); ?></div><?
 }
 else
