@@ -2220,9 +2220,28 @@ session_start();
     {
     $seperator ="&";
     }
-  if(isset($_POST['submitwpcheckout']) and ($_POST['submitwpcheckout'] == 'true'))
+  if(isset($_POST['collected_data']) && isset($_POST['submitwpcheckout']) and ($_POST['submitwpcheckout'] == 'true'))
     {
     //exit("<pre>".print_r($_POST,true)."</pre>");
+/*
+Array
+(
+    [collected_data] => Array
+        (
+            [0] => igor.aleshin@gmail.com
+            [1] => igor.aleshin@gmail.com
+            [2] => igor.aleshin@gmail.com
+        )
+
+    [agree] => yes
+    [payment_method] => wallet
+    [submitwpcheckout] => true
+    [submit] => Оплатить
+)
+*/
+
+
+
     $returnurl = "Location: ".get_option('checkout_url');
     if (isset($_GET['total']))
         $returnurl = "Location: ".get_option('checkout_url').$seperator."total=".$_GET['total'];
@@ -2230,9 +2249,11 @@ session_start();
     $any_bad_inputs = false;
     foreach($_POST['collected_data'] as $value_id => $value)
       {
-      $form_sql = "SELECT * FROM `".$wpdb->prefix."collect_data_forms` WHERE `id` = '$value_id' LIMIT 1";
+	  $value_id = $value_id + 1; // ales: somehow the index is wrong
+      $form_sql = "SELECT * FROM `wp_collect_data_forms` WHERE `id` = '.$value_id' LIMIT 1";
       $form_data = $wpdb->get_results($form_sql,ARRAY_A);
-      $form_data = $form_data[0];
+	  //mail("igor.aleshin@gmail.com","_POSTcollected_data",print_r($_POST['collected_data'],true));
+      //$form_data = $form_data[0];
       $bad_input = false;
       if($form_data['mandatory'] == 1)
         {        
