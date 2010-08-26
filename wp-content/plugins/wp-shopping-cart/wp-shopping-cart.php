@@ -1126,6 +1126,7 @@ function nzshpcrt_submit_ajax()
 
 				if($_SESSION['nzshpcrt_cart'][$cart_key]->product_variations === $variations) 
 				  {
+					/*
 				  if(is_numeric($_POST['quantity']))
 					{
 					//$_SESSION['nzshpcrt_cart'][$cart_key]->quantity += $_POST['quantity'];
@@ -1134,7 +1135,9 @@ function nzshpcrt_submit_ajax()
 					else
 					  {
 					  $_SESSION['nzshpcrt_cart'][$cart_key]->quantity++;
-					  }              
+					  }
+					*/
+				  $_SESSION['nzshpcrt_cart'][$cart_key]->quantity = 1;
 				  $updated_quantity = true;
 				  }
 				}
@@ -2774,6 +2777,11 @@ Session
     $output .= "<tr><td>&nbsp;</td><td style='border-top: 1px solid #FF9966'>Итого: </td><td align='right' style='border-top: 1px solid #FF9966'><b>".round($total)."</b></td></tr>";
     $output .= "</table>";
 
+	$output .= "<br>На вашем Личном Счёте <b>".$_wallet."</b> руб.<br>";
+
+if ($total > $_wallet)
+	$output .= "<div style='color:#CC0000;'>Не хватает средств для покупки выбранных изображений.</div>";
+
     if(get_option('permalink_structure') != '')
       {
       $seperator ="?";
@@ -2790,7 +2798,7 @@ Session
       {
       $output .= $spacing;
       $output .= TXT_WPSC_YOURSHOPPINGCARTISEMPTY.".<br />";
-      $output .= "В вашем кошельке: <b>".$_wallet."</b> руб.<br>";
+      $output .= "На вашем Личном Счёте <b>".$_wallet."</b> руб.<br>";
 
       $output .= "<a href='".get_option('product_list_url')."'>".TXT_WPSC_VISITTHESHOP."</a>";
       }
