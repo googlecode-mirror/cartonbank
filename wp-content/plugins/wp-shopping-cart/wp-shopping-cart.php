@@ -1077,57 +1077,61 @@ function nzshpcrt_submit_ajax()
             }
         }
       }
-    //mail("igor.aleshin@gmail.com","_REQUEST",print_r($_REQUEST,true));
+    mail("igor.aleshin@gmail.com","update shopping cart_POST",print_r($_POST,true));
 	//mail("igor.aleshin@gmail.com","_SESSION",print_r($_SESSION,true));
+
+	if (isset($_SESSION['nzshpcrt_cart']))
+	{
+		if((($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
+		  {
+		  $cartcount = count($_SESSION['nzshpcrt_cart']);
+		  if(isset($_POST['variation']) && is_array($_POST['variation'])) {  $variations = $_POST['variation'];  }  else  { $variations = null; }
+		  
+		  $updated_quantity = false;
+		  if($_SESSION['nzshpcrt_cart'] != null)
+			{ 
+			foreach($_SESSION['nzshpcrt_cart'] as $cart_key => $cart_item)
+			  {
+			  if($cart_item->product_id == $_POST['prodid'])
+				{
+				if($_SESSION['nzshpcrt_cart'][$cart_key]->product_variations === $variations) 
+				  {
+				  if(is_numeric($_POST['quantity']))
+					{
+					$_SESSION['nzshpcrt_cart'][$cart_key]->quantity += $_POST['quantity'];
+					}
+					else
+					  {
+					  $_SESSION['nzshpcrt_cart'][$cart_key]->quantity++;
+					  }              
+				  $updated_quantity = true;
+				  }
+				}
+			  }
+			}
+		  if($updated_quantity === false)
+			{
+			if(isset($_POST['quantity']) && is_numeric($_POST['quantity']))
+			  {
+			  if($_POST['quantity'] > 0)
+				{
+				$new_cart_item = new cart_item($_POST['prodid'],$variations,$_POST['quantity']);
+				}
+			  }
+			  else
+				{
+				$new_cart_item = new cart_item($_POST['prodid'],$variations);
+				}
+			$_SESSION['nzshpcrt_cart'][$cartcount + 1] = $new_cart_item;
+			}
+		  }
+		  else 
+			{
+			$quantity_limit = true;
+			}
+
+	}	
 	
-    if((($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
-      {
-      $cartcount = count($_SESSION['nzshpcrt_cart']);
-      if(isset($_POST['variation']) && is_array($_POST['variation'])) {  $variations = $_POST['variation'];  }  else  { $variations = null; }
-      
-      $updated_quantity = false;
-      if($_SESSION['nzshpcrt_cart'] != null)
-        { 
-        foreach($_SESSION['nzshpcrt_cart'] as $cart_key => $cart_item)
-          {
-          if($cart_item->product_id == $_POST['prodid'])
-            {
-            if($_SESSION['nzshpcrt_cart'][$cart_key]->product_variations === $variations) 
-              {
-              if(is_numeric($_POST['quantity']))
-                {
-                $_SESSION['nzshpcrt_cart'][$cart_key]->quantity += $_POST['quantity'];
-                }
-                else
-                  {
-                  $_SESSION['nzshpcrt_cart'][$cart_key]->quantity++;
-                  }              
-              $updated_quantity = true;
-              }
-            }
-          }
-        }
-      if($updated_quantity === false)
-        {
-        if(isset($_POST['quantity']) && is_numeric($_POST['quantity']))
-          {
-          if($_POST['quantity'] > 0)
-            {
-            $new_cart_item = new cart_item($_POST['prodid'],$variations,$_POST['quantity']);
-            }
-          }
-          else
-            {
-            $new_cart_item = new cart_item($_POST['prodid'],$variations);
-            }
-        $_SESSION['nzshpcrt_cart'][$cartcount + 1] = $new_cart_item;
-        }
-      }
-      else 
-        {
-        $quantity_limit = true;
-        }
-    
 	$quantity_limit = false;
     $cart = $_SESSION['nzshpcrt_cart'];
     echo nzshpcrt_shopping_basket_internals($cart,$quantity_limit);
@@ -2617,10 +2621,10 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     //exit("<pre>".print_r($_SERVER,true)."</pre>");
 
     $output .= "<table class='shoppingcart'>";
-    //$output .= "<tr><th>".TXT_WPSC_PRODUCT."</th><th>".TXT_WPSC_QUANTITY_SHORT."</th><th>".TXT_WPSC_PRICE."</th></tr>"; 
-    $output .= "<tr><td><u>".TXT_WPSC_PRODUCT."</u></td><td><u>".TXT_WPSC_QUANTITY_SHORT."</u></td></tr>"; 
+    $output .= "<tr><td><u>Название</u></td><td><u>Кол.</u></td></td><u>Цена</u></td></tr>"; 
     $total = 0;
-    foreach($cart as $cart_item)
+
+	foreach($cart as $cart_item)
       {
       $product_id = $cart_item->product_id;
       $quantity = $cart_item->quantity;
@@ -2634,25 +2638,38 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
           {
           $price_modifier = 0;
           }
-       
-      $price = $quantity * ($product[0]['price']-$price_modifier);
-      /*
-      if($product[0]['notax'] != 1)
-        {
-        $price = nzshpcrt_calculate_tax($price, $_SESSION['selected_country'], $_SESSION['selected_region']);
-        }
-      */  
-      /*
-      if($_SESSION['selected_country'] != null)
-        {        
-        $total_shipping += nzshpcrt_determine_item_shipping($product[0]['id'], $quantity, $_SESSION['selected_country']);
-        }
-        */
-      $total += $price;
-      //$output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td><td>".nzshpcrt_currency_display($price, 1)."</td></tr>";
-      $output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td></tr>";
+      mail("igor.aleshin@gmail.com","post in wp_sh_cart",print_r($_POST,true));
+
+		if (isset($_POST['license']))
+		  {
+			switch($_POST['license'])
+					{
+					case 'l1_price':
+					$price = $product[0]['l1_price'];
+					break;
+					
+					case 'l2_price':
+					$price = $product[0]['l2_price'];
+					break;
+					
+					case 'l3_price':
+					$price = $product[0]['l3_price'];
+					break;
+					
+					default:
+					$price = 0;
+					break;
+					}
+		  } 
+		  else
+		  {$price = 'нет';}
+
+	  $total += $price;
+      $output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td><td>".$price."</td></tr>";
+
       //$output .=   .": ". nzshpcrt_currency_display($price, 1) . "<br />";
       }
+    $output .= "<tr><td>&nbsp;</td><td>&nbsp;</td><td>".$total."</td></tr>";
     $output .= "</table>";
 //    if($_SESSION['selected_country'] != null)
 //      {
