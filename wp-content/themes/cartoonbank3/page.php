@@ -21,15 +21,17 @@
 $unregged ='';
 if ($user_identity == '')
 {
-	//$user_identity = 'незнакомец';
-	//$unregged = "<br>Мы рады вам, наслаждайтесь рисунками, но имейте в виду, что скачать изображение в хорошем разрешении можно только после <a href='wp-register.php'>регистрации</a>.";
-	$unregged = "<br>Пожалуйста, <a href='wp-register.php'>зарегистрирйтесь</a> или <a href='wp-login.php'>залогиньтесь</a>.";
+	$unregged = "<br>Пожалуйста, <a href='wp-register.php'>зарегистрируйтесь</a> или <a href='wp-login.php'>залогиньтесь</a>.";
+		?><div id="user_info"><? echo ($unregged); ?></div><?
+}
+else
+{
+		?><div id="user_info"><?php printf(__(TXT_WPSC_HELLO.'<a href="wp-admin/profile.php"><strong>%s</strong></a>.'), $user_identity); echo ($unregged); ?></div><?
 }
 ?>
-		<div id="user_info"><?php printf(__(TXT_WPSC_HELLO.'<a href="wp-admin/profile.php"><strong>%s</strong></a>.'), $user_identity); echo ($unregged); ?></div>
 		<br>
 
-	<?php echo nzshpcrt_shopping_basket(); ?>
+<?php echo nzshpcrt_shopping_basket(); ?>
 <?php get_sidebar(); ?>
 </div>
 </div>
