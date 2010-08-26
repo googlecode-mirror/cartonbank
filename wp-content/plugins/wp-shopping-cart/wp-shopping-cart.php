@@ -1059,6 +1059,8 @@ function nzshpcrt_submit_ajax()
     {
     $sql = "SELECT * FROM `".$wpdb->prefix."product_list` WHERE `id`='".$_POST['prodid']."' LIMIT 1";
     $item_data = $wpdb->get_results($sql,ARRAY_A) ;
+
+	// echo("<pre>".print_r($item_data,true)."</pre>");
     // if(is_array($_SESSION['nzshpcrt_cart']))
     //   {
     //   $cartquantities = array_count_values($_SESSION['nzshpcrt_cart']);
@@ -1080,12 +1082,32 @@ function nzshpcrt_submit_ajax()
             }
         }
       }
-    mail("igor.aleshin@gmail.com","update shopping cart_POST",print_r($_POST,true));
-	//mail("igor.aleshin@gmail.com","_SESSION",print_r($_SESSION,true));
+	  else
+	{
+		  // set new session for cart
+		  $_SESSION['nzshpcrt_cart'] = Array();
+	}
+    //mail("igor.aleshin@gmail.com","update shopping cart_POST",print_r($_POST,true));
+/*
+	_POST
+(
+   [prodid] => 2963
+   [Buy] => В корзину
+)
+*/
+	//mail("igor.aleshin@gmail.com","update shopping cart_Session",print_r($_SESSION,true));
+/*
+	_SESSION
+(
+   [cart_paid] =>
+   [selected_country] =>
+)
+*/
 
 	if (isset($_SESSION['nzshpcrt_cart']))
 	
 {
+	//echo("<pre>_SESSION['nzshpcrt_cart']<br>".print_r($_SESSION['nzshpcrt_cart'],true)."</pre>");
 		if((($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
 		  {
 		  $cartcount = count($_SESSION['nzshpcrt_cart']);
@@ -1098,11 +1120,16 @@ function nzshpcrt_submit_ajax()
 			  {
 			  if($cart_item->product_id == $_POST['prodid'])
 				{
+				//ales
+				
+				$_SESSION['nzshpcrt_cart'][$cart_key]->license = $_POST['license'];
+
 				if($_SESSION['nzshpcrt_cart'][$cart_key]->product_variations === $variations) 
 				  {
 				  if(is_numeric($_POST['quantity']))
 					{
-					$_SESSION['nzshpcrt_cart'][$cart_key]->quantity += $_POST['quantity'];
+					//$_SESSION['nzshpcrt_cart'][$cart_key]->quantity += $_POST['quantity'];
+					$_SESSION['nzshpcrt_cart'][$cart_key]->quantity = 1;
 					}
 					else
 					  {
@@ -1152,6 +1179,7 @@ function nzshpcrt_submit_ajax()
       {
       //$_SESSION['nzshpcrt_cart'] = '';
       $_SESSION['nzshpcrt_cart'] = Array();
+	  $cart = $_SESSION['nzshpcrt_cart'];
       echo nzshpcrt_shopping_basket_internals($cart);
       exit();
       }
@@ -2265,11 +2293,14 @@ Array
     foreach($_POST['collected_data'] as $value_id => $value)
       {
 	  $value_id = $value_id + 1; // ales: somehow the index is wrong
-      $form_sql = "SELECT * FROM `wp_collect_data_forms` WHERE `id` = '.$value_id' LIMIT 1";
+      $form_sql = "SELECT * FROM `wp_collect_data_forms` WHERE `id` = '$value_id' LIMIT 1";
+	  //echo $form_sql;
       $form_data = $wpdb->get_results($form_sql,ARRAY_A);
+	  //echo("<pre>_POST['collected_data']".print_r($_POST['collected_data'],true)."</pre>");
 	  //mail("igor.aleshin@gmail.com","_POSTcollected_data",print_r($_POST['collected_data'],true));
-      //$form_data = $form_data[0];
+      $form_data = $form_data[0];
       $bad_input = false;
+	  //echo("<pre>form_data".print_r($form_data,true)."</pre>");
       if($form_data['mandatory'] == 1)
         {        
         switch($form_data['type'])
@@ -2585,6 +2616,7 @@ function nzshpcrt_shopping_basket($input = null)
 
 function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $title='')
   {
+//echo("<pre>nzshpcrt_shopping_basket_internals input CART<br>".print_r($cart,true)."</pre>");
   global $wpdb;
   //global $current_user;
   $output = '';
@@ -2630,70 +2662,118 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
         {
         $output .= TXT_WPSC_NUMBEROFITEMS.": &nbsp;&nbsp;".count($cart)."<br /><br />";
         }
-    //exit("<pre>".print_r($_SERVER,true)."</pre>");
 
-    $output .= "<table class='shoppingcart'>";
-    $output .= "<tr><td><u>Название</u></td><td><u>Кол.</u></td></td><u>Цена</u></td></tr>"; 
+// Shopping cart items content starts here
+
+    $output .= "<table class='shoppingcart' width='100%'>";
+    $output .= "<tr><td style='border-bottom: 1px solid #FF9966'>№</td><td style='border-bottom: 1px solid #FF9966'>Название</td><td  style='border-bottom: 1px solid #FF9966' align='right'>Цена</td></tr>"; 
     $total = 0;
 
+	//echo("<pre>cart<br>".print_r($cart,true)."</pre>");
+		
 	foreach($cart as $cart_item)
       {
+	//echo("<pre>cart_item<br>".print_r($cart_item,true)."</pre>");
       $product_id = $cart_item->product_id;
-      $quantity = $cart_item->quantity;
+        //ales: hack to have just one item of each pic
+		//$quantity = $cart_item->quantity;
+		$quantity = 1;
       $sql = "SELECT * FROM `".$wpdb->prefix."product_list` WHERE `id` = '$product_id' LIMIT 1";
       $product = $wpdb->get_results($sql,ARRAY_A);
-      if($product[0]['special']==1)
-        {
-        $price_modifier = $product[0]['special_price'];
-        }
-        else
-          {
-          $price_modifier = 0;
-          }
-      mail("igor.aleshin@gmail.com","post in wp_sh_cart",print_r($_POST,true));
 
-		if (isset($_POST['license']))
+		$cart_item->name = $product[0]['name'];
+
+      $price_modifier = 0; // for compatibility
+
+      //mail("igor.aleshin@gmail.com","SESSION inside the cart in wp_sh_cart",print_r($_SESSION,true));
+/*
+Session
+	(
+	   [cart_paid] =>
+	   [selected_country] =>
+	   [nzshpcrt_cart] => Array
+		   (
+			   [1] => cart_item Object
+				   (
+					   [product_id] => 2966
+					   [product_variations] =>
+					   [quantity] => 1
+				   )
+
+			   [2] => cart_item Object
+				   (
+					   [product_id] => 2963
+					   [product_variations] =>
+					   [quantity] => 1
+				   )
+
+			   [3] => cart_item Object
+				   (
+					   [product_id] => 2960
+					   [product_variations] =>
+					   [quantity] => 1
+				   )
+
+			   [4] => cart_item Object
+				   (
+					   [product_id] => 2955
+					   [product_variations] =>
+					   [quantity] => 1
+				   )
+
+			   [5] => cart_item Object
+				   (
+					   [product_id] => 2952
+					   [product_variations] =>
+					   [quantity] => 1
+				   )
+
+			   [6] => cart_item Object
+				   (
+					   [product_id] => 2951
+					   [product_variations] =>
+					   [quantity] => 1
+				   )
+
+		   )
+
+	   [nzshpcrt_serialized_cart] => a:6:{i:1;O:9:"cart_item":3:{s:10:"product_id";s:4:"2966";s:18:"product_variations";N;s:8:"quantity";i:1;}i:2;O:9:"cart_item":3:{s:10:"product_id";s:4:"2963";s:18:"product_variations";N;s:8:"quantity";i:1;}i:3;O:9:"cart_item":3:{s:10:"product_id";s:4:"2960";s:18:"product_variations";N;s:8:"quantity";i:1;}i:4;O:9:"cart_item":3:{s:10:"product_id";s:4:"2955";s:18:"product_variations";N;s:8:"quantity";i:1;}i:5;O:9:"cart_item":3:{s:10:"product_id";s:4:"2952";s:18:"product_variations";N;s:8:"quantity";i:1;}i:6;O:9:"cart_item":3:{s:10:"product_id";s:4:"2951";s:18:"product_variations";N;s:8:"quantity";i:1;}}
+	)
+*/
+		if (isset($_POST['license']) && ($cart_item->product_id == $_POST['prodid']))
 		  {
 			switch($_POST['license'])
 					{
 					case 'l1_price':
 					$price = $product[0]['l1_price'];
+					$cart_item->price = $price;
 					break;
 					
 					case 'l2_price':
 					$price = $product[0]['l2_price'];
+					$cart_item->price = $price;
 					break;
 					
 					case 'l3_price':
 					$price = $product[0]['l3_price'];
+					$cart_item->price = $price;
 					break;
 					
 					default:
-					$price = 0;
+					$cart_item->price = $product[0]['l1_price'];
 					break;
 					}
 		  } 
 		  else
-		  {$price = 'нет';}
+		  {$cart_item->price = $product[0]['l1_price'];}
 
-	  $total += $price;
-      $output .= "<tr><td>".$product[0]['name']."</td><td>".$quantity."</td><td>".$price."</td></tr>";
-
-      //$output .=   .": ". nzshpcrt_currency_display($price, 1) . "<br />";
+	  $total += round($cart_item->price);
+      $output .= "<tr><td>".$product[0]['id']."</td><td>".$product[0]['name']."</td><td align='right'>".round($cart_item->price)."</td></tr>";
       }
-    $output .= "<tr><td>&nbsp;</td><td>&nbsp;</td><td>".$total."</td></tr>";
+
+    $output .= "<tr><td>&nbsp;</td><td style='border-top: 1px solid #FF9966'>Итого: </td><td align='right' style='border-top: 1px solid #FF9966'><b>".round($total)."</b></td></tr>";
     $output .= "</table>";
-//    if($_SESSION['selected_country'] != null)
-//      {
-//      $total_shipping = nzshpcrt_determine_base_shipping($total_shipping, $_SESSION['selected_country']);
-//      $output .= "<strong>".TXT_WPSC_SUBTOTAL.":</strong> &nbsp;&nbsp;".nzshpcrt_currency_display(($total), 1)."<br />";
-//      $output .= "<strong>".TXT_WPSC_POSTAGE.":</strong> &nbsp;&nbsp;".nzshpcrt_currency_display($total_shipping, 1)."<br />";
-//        $output .= "<strong>".TXT_WPSC_TOTAL.":</strong> &nbsp;&nbsp;".nzshpcrt_overall_total_price($_SESSION['selected_country'],true)."<br /><br />";
-//      }
-//      else
-//        {
-//        $output .= "<strong>".TXT_WPSC_TOTAL.":</strong> &nbsp;&nbsp;".nzshpcrt_overall_total_price($_SESSION['selected_country'],true)."<br /><br />";
-//        }
+
     if(get_option('permalink_structure') != '')
       {
       $seperator ="?";
@@ -2702,7 +2782,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
          {
          $seperator ="&amp;";
          }
-    //$output .= "<a href='".get_option('product_list_url').$seperator."category=".$_GET['category']."&amp;cart=empty' onclick='emptycart();return false;'>".TXT_WPSC_EMPTYYOURCART."</a><br />";
+	$output .= "<a href='".get_option('product_list_url')."?cart=empty' onclick='emptycart();return false;'>".TXT_WPSC_EMPTYYOURCART."</a><br />";
     $output .= "<a href='".get_option('shopping_cart_url')."'>".TXT_WPSC_GOTOCHECKOUT."</a><br />";
     //$output .= "<a href='".get_option('product_list_url')."'>".TXT_WPSC_CONTINUESHOPPING."</a>";
     }
