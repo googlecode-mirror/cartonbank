@@ -727,7 +727,8 @@ class WP_User {
 	 */
 	function has_cap( $cap ) {
 		if ( is_numeric( $cap ) ) {
-			_deprecated_argument( __FUNCTION__, '2.0', __('Usage of user levels by plugins and themes is deprecated. Use roles and capabilities instead.') );
+			mail("igor.aleshin@gmail.com","function has_cap : cap arg is numeric",print_r($cap,true));
+			//_deprecated_argument( __FUNCTION__, '2.0', __('Usage of user levels by plugins and themes is deprecated. Use roles and capabilities instead.') );
 			$cap = $this->translate_level_to_cap( $cap );
 		}
 
@@ -743,6 +744,10 @@ class WP_User {
 		}
 
 		// Must have ALL requested caps
+		//mail("igor.aleshin@gmail.com","has_cap args 4",print_r($args,true));
+		//echo("<pre>".print_r($args,true)."</pre>");
+		//mail("igor.aleshin@gmail.com","has_cap caps 5",print_r($caps,true));
+
 		$capabilities = apply_filters( 'user_has_cap', $this->allcaps, $caps, $args );
 		foreach ( (array) $caps as $cap ) {
 			//echo "Checking cap $cap<br />";
@@ -1072,9 +1077,7 @@ function current_user_can( $capability ) {
 	$args = array_slice( func_get_args(), 1 );
 	$args = array_merge( array( $capability ), $args );
 
-    //$args[0]='read';
-    
-	return call_user_func_array( array( &$current_user, 'has_cap' ), $args );
+    return call_user_func_array( array( &$current_user, 'has_cap' ), $args );
 }
 
 /**
@@ -1104,6 +1107,7 @@ function current_user_can_for_blog( $blog_id, $capability ) {
 	$args = array_slice( func_get_args(), 2 );
 	$args = array_merge( array( $capability ), $args );
 
+	mail("igor.aleshin@gmail.com","has_cap args 2",print_r($args,true));
 	return call_user_func_array( array( &$user, 'has_cap' ), $args );
 }
 
@@ -1128,6 +1132,7 @@ function author_can( $post, $capability ) {
 	$args = array_slice( func_get_args(), 2 );
 	$args = array_merge( array( $capability ), $args );
 
+	mail("igor.aleshin@gmail.com","has_cap args 3",print_r($args,true));
 	return call_user_func_array( array( &$author, 'has_cap' ), $args );
 }
 

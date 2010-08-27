@@ -12,7 +12,8 @@ Min WP Version: 2.0
 
 define('EXECPHP_VERSION', '3.0');
 define('EXECPHP_PLUGIN_ID', 'exec-php');
-define('EXECPHP_CAPABILITY', 'exec_php');
+//define('EXECPHP_CAPABILITY', 'exec_php');
+define('EXECPHP_CAPABILITY', 'read');
 define('EXECPHP_OPTION_HAS_OLD_STYLE', 'exec-php_has_old_style');
 define('EXECPHP_OPTION_IGNORE_OLD_STYLE_WARNING', 'exec-php_ignore_old_style_warning');
 
