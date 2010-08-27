@@ -552,4 +552,15 @@ ul.checkout_links li a{
 ul.checkout_links li a:hover{
  color: #000000 !important;
  }
-  
+
+a.button {
+ display: block;
+ float: left;
+ background: #f4f4f4;
+ border: 1px solid #b2b2b2;
+ color: #000;
+ font:  13px Verdana, Arial, Helvetica, sans-serif;
+ width: auto;
+ margin: 1px;
+ padding: 4px;
+ }
