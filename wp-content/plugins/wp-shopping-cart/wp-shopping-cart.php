@@ -2790,8 +2790,8 @@ if ($total > $_wallet)
          {
          $seperator ="&amp;";
          }
-	$output .= "<a href='".get_option('product_list_url')."?cart=empty' onclick='emptycart();return false;'>".TXT_WPSC_EMPTYYOURCART."</a><br />";
-    $output .= "<a href='".get_option('shopping_cart_url')."'>".TXT_WPSC_GOTOCHECKOUT."</a><br />";
+	$output .= "<a class='button' href='".get_option('product_list_url')."?cart=empty' onclick='emptycart();return false;'>".TXT_WPSC_EMPTYYOURCART."</a><br />";
+    $output .= "<a class='button' href='".get_option('shopping_cart_url')."'>".TXT_WPSC_GOTOCHECKOUT."</a><br />";
     //$output .= "<a href='".get_option('product_list_url')."'>".TXT_WPSC_CONTINUESHOPPING."</a>";
     }
     else
