@@ -214,7 +214,42 @@ if (isset($_POST['pnp']))
 if (isset($_POST['international_pnp ']))
     $_international_pnp  = $_POST['international_pnp '];
 
-  $insertsql = "INSERT INTO `".$wpdb->prefix."product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `color` ) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$colored');";
+
+
+// TODO: take it off to the SQL table
+		// License prices
+		// Category group 1
+		$l1_price_cat1_default = 200;
+		$l2_price_cat1_default = 400;
+		$l3_price_cat1_default = 2000;
+		// Category group 2
+		$l1_price_cat2_default = 350;
+		$l2_price_cat2_default = 700;
+		$l3_price_cat2_default = 3500;
+		//UPDATE `wp_product_list` SET l1_price = 200 WHERE id in (SELECT product_id from `wp_item_category_associations` WHERE category_id in (4,14,5,11));
+
+		$category_id = $wpdb->escape($_POST['category']);
+
+		switch($category_id)
+            {
+            case 4:
+			case 14:
+			case 5:
+			case 11:
+			$l1_price = $l1_price_cat1_default;
+			$l2_price = $l2_price_cat1_default;
+			$l3_price = $l3_price_cat1_default;
+			break;
+
+            default:
+			$l1_price = $l1_price_cat2_default;
+			$l2_price = $l2_price_cat2_default;
+			$l3_price = $l3_price_cat2_default;
+            break;
+            }
+//          
+
+  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `color`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$colored', $l1_price, $l2_price, $l3_price);";
 
   if($wpdb->query($insertsql))
     {
@@ -503,8 +538,39 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
     if (isset($_POST['quantity_limited'])){$_quantity_limited=$_POST['quantity_limited'];}else{$_quantity_limited=0;}
     if (isset($_POST['quantity'])){$_quantity=$_POST['quantity'];}else{$_quantity=1;}
 
-        
-      $updatesql = "UPDATE `".$wpdb->prefix."product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `color`='$colored'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+// TODO: take it off to the SQL table
+		// License prices
+		// Category group 1
+		$l1_price_cat1_default = 200;
+		$l2_price_cat1_default = 400;
+		$l3_price_cat1_default = 2000;
+		// Category group 2
+		$l1_price_cat2_default = 350;
+		$l2_price_cat2_default = 700;
+		$l3_price_cat2_default = 3500;
+		//UPDATE `wp_product_list` SET l1_price = 200 WHERE id in (SELECT product_id from `wp_item_category_associations` WHERE category_id in (4,14,5,11));
+
+		$category_id = $wpdb->escape($_POST['category']);
+
+		switch($category_id)
+            {
+            case 4:
+			case 14:
+			case 5:
+			case 11:
+			$l1_price = $l1_price_cat1_default;
+			$l2_price = $l2_price_cat1_default;
+			$l3_price = $l3_price_cat1_default;
+			break;
+
+            default:
+			$l1_price = $l1_price_cat2_default;
+			$l2_price = $l2_price_cat2_default;
+			$l3_price = $l3_price_cat2_default;
+            break;
+            }
+//        
+      $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `color`='$colored', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
       //exit("<pre>".print_r($updatesql,true)."</pre>");
       $wpdb->query($updatesql);
       if($image != null)
