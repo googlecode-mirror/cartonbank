@@ -902,7 +902,7 @@ function nzshpcrt_submit_ajax()
             }
         }
       }
-    mail("aleshin@dataart.com","test",print_r($_REQUEST,true));
+    //mail("aleshin@dataart.com","test",print_r($_REQUEST,true));
     if((($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
       {
       $cartcount = count($_SESSION['nzshpcrt_cart']);
