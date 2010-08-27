@@ -2295,7 +2295,7 @@ Array
     $any_bad_inputs = false;
     foreach($_POST['collected_data'] as $value_id => $value)
       {
-	  $value_id = $value_id + 1; // ales: somehow the index is wrong
+	  //$value_id = $value_id + 1; // ales: somehow the index is wrong
       $form_sql = "SELECT * FROM `wp_collect_data_forms` WHERE `id` = '$value_id' LIMIT 1";
 	  //echo $form_sql;
       $form_data = $wpdb->get_results($form_sql,ARRAY_A);
@@ -2303,8 +2303,7 @@ Array
 	  //mail("igor.aleshin@gmail.com","_POSTcollected_data",print_r($_POST['collected_data'],true));
       $form_data = $form_data[0];
       $bad_input = false;
-	  //echo("<pre>form_data".print_r($form_data,true)."</pre>");
-      if($form_data['mandatory'] == 1)
+	  if($form_data['mandatory'] == 1)
         {        
         switch($form_data['type'])
           {
@@ -2314,7 +2313,8 @@ Array
             $any_bad_inputs = true;
             $bad_input = true;
             }
-          break;
+//echo("<pre>form_data".print_r($form_data,true)."</pre>");
+                break;
           
           default:
           if($value == null)
@@ -2389,7 +2389,7 @@ Array
     $sessionid = (mt_rand(100,999).time());
     
     $sql = "INSERT INTO `".$wpdb->prefix."purchase_logs` ( `id` , `totalprice` , `sessionid` , `firstname`, `lastname`, `email`, `date`, `shipping_country` )
-VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid."', '".$wpdb->escape($_POST['collected_data']['1'])."', '".$wpdb->escape($_POST['collected_data']['2'])."', '".$_POST['collected_data']['3']."', '".time()."', '".$_SESSION['selected_country']."')";
+VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid."', '".$wpdb->escape($_POST['collected_data']['1'])."', '".$wpdb->escape($_POST['collected_data']['2'])."', '".$_POST['collected_data']['3']."', '".time()."', 'ru')";
    $wpdb->query($sql) ;
    
    $selectsql = "SELECT * FROM `".$wpdb->prefix."purchase_logs` WHERE `sessionid` LIKE '".$sessionid."' LIMIT 1";
