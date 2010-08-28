@@ -31,11 +31,10 @@ if(!isset($_GET['result']))
   {
 ?>
 <div class="wrap">
-<strong><?php echo TXT_WPSC_CONTACTDETAILS;?></strong><br />
+
 <?php
  //echo TXT_WPSC_CREDITCARDHANDY;
  echo "<br /><br />";
- echo TXT_WPSC_ASTERISK;
 if(isset($_SESSION['nzshpcrt_checkouterr']))
   {
   echo "<br /><span style='color: red;'>".$_SESSION['nzshpcrt_checkouterr']."</span>";
@@ -50,18 +49,28 @@ if (isset($_SESSION['wallet']))
     }
 }
 ?>
+
+
+
+<!-- Table begins here -->
+
  <table>
  <form action='<?php echo  $currenturl;?>' method='POST'><?php
   $form_sql = "SELECT * FROM `".$wpdb->prefix."collect_data_forms` WHERE `active` = '1' ORDER BY `order`;";
   $form_data = $wpdb->get_results($form_sql,ARRAY_A);
-  //exit("<pre>".print_r($_SESSION,true)."</pre>");
+  echo "<tr><td  style='padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan='2'><b>Подтвердите информацию о себе:</b></td></tr>";
+
   foreach($form_data as $form_field)
     {
     if($form_field['type'] == 'heading')
       {
+
+	// First row
+
+
       echo "
-      <tr>
-        <td colspan='2'>\n\r";
+      <tr style='padding:5px;'>
+        <td  style='padding:5px;' colspan='2'>\n\r";
       echo "<strong>".$form_field['name']."</strong>";        
       echo "
         </td>
@@ -71,7 +80,7 @@ if (isset($_SESSION['wallet']))
         {
         echo "
         <tr>
-          <td>\n\r";
+          <td style='padding-bottom:5px;'>\n\r";
         echo $form_field['name'];
         if($form_field['mandatory'] == 1)
           {
@@ -82,35 +91,13 @@ if (isset($_SESSION['wallet']))
           }
         echo "
           </td>\n\r
-          <td>\n\r";
+          <td style='padding:2px;'>\n\r";
         switch($form_field['type'])
           {
           case "text":
           case "city":
           case "delivery_city":
-          echo "<input type='text' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
-
-/*
-$_SESSION
-(
-    [cart_paid] => 
-    [selected_country] => 
-    [nzshpcrt_cart] => Array
-        (
-            [1] => cart_item Object
-                (
-                    [product_id] => 3299
-                    [product_variations] => 
-                    [quantity] => 1
-                )
-
-        )
-
-    [nzshpcrt_serialized_cart] => a:1:{i:1;O:9:"cart_item":3:{s:10:"product_id";s:4:"3299";s:18:"product_variations";N;s:8:"quantity";i:1;}}
-    [nzshpcrt_totalprice] => 200
-)
-*/
-
+		  echo "<input type='text' style='width: 300px; padding: 2px; border: 1px solid #c8c8c8' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
           break;
           
           case "address":
@@ -119,26 +106,19 @@ $_SESSION
           echo "<textarea name='collected_data[".$form_field['id']."]'>".$form_field_id."</textarea>";
           break;
           
-          /*
-          case "region":
-          case "delivery_region":
-          echo "<select name='collected_data[".$form_field['id']."]'>".nzshpcrt_region_list($form_field_id)."</select>";
-          break;
-          */
-          
           case "country":
           case "delivery_country":
           $country_name = $wpdb->get_var("SELECT `country` FROM `".$wpdb->prefix."currency_list` WHERE `isocode`='".$_SESSION['selected_country']."' LIMIT 1");
           echo "<input type='hidden' name='collected_data[".$form_field['id']."]' value='".get_option('base_country')."'>".$country_name." ";
-          //echo "<select name='collected_data[".$form_field['id']."]'>".nzshpcrt_country_list($form_field_id)."</select>";
           break;
           
           case "email":
-          echo "<input type='text' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
+		  echo "<input type='text' style='width: 300px; padding: 2px; border: 1px solid #c8c8c8' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
           break;
           
           default:
-          echo "<input type='text' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
+		  echo "<input type='text' style='width: 300px; padding: 2px; border: 1px solid #c8c8c8' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
+
           break;
           }
         echo "
@@ -147,7 +127,12 @@ $_SESSION
         }
     }
 ?>
-    <?php
+    <tr>
+      <td style='padding:4px;'>&nbsp;</td>
+      <td style='padding:4px;'><span style='font-size: 7pt;'>Поля, отмеченные звёздочкой обязательны для заполнения.</span></td>
+    </tr>
+	
+	<?php
     if(isset($gateway_checkout_form_fields))
       {
       echo $gateway_checkout_form_fields;
@@ -175,9 +160,7 @@ $_SESSION
 
         ?>
       <tr>
-        <td colspan="2">
-        <strong>Метод оплаты</strong>
-        </td>
+        <td style='padding-top:15px;padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan="2"><b>Метод оплаты</b></td>
       </tr>
         <?php
       $i = 0;
@@ -185,11 +168,8 @@ $_SESSION
       foreach($GLOBALS['nzshpcrt_gateways'] as $gateway)
         {
           $gateway_name = $gateway['name'];
-
            $i = $i + 1;
       ?>
-
-      
       <tr>
         <td colspan='2'>
         <input type='radio' name='payment_method' value='<?php echo $gateway['internalname']; ?>' id='payment_method_<?php echo $i ?>' <?php
@@ -202,14 +182,14 @@ $_SESSION
          if (/*$i == 1 temporary enabled wallet only */$gateway['internalname'] == 'wallet') 
             echo "checked='checked'"; 
          else
-            echo "disabled='disabled"
+            echo "disabled='disabled'";
          ?> />
-        <label for='payment_method_<?php echo $i ?>'><?php echo TXT_WPSC_PAY_USING;?> <?php echo $gateway_name; ?></label>
+        <label for='payment_method_<?php echo $i ?>'><?php echo TXT_WPSC_PAY_USING;?> <b><?php echo $gateway_name; ?></b></label>
         <?php
             global $userdata;
             if ($gateway['internalname'] == "wallet")
             {
-              echo "(". (float) $userdata->wallet .")";
+              echo "(доступно". (float) $userdata->wallet ." руб.)";
             }
         ?>        
         </td>
@@ -219,11 +199,17 @@ $_SESSION
       }
     ?>
     <tr>
-      <td>
+      <td style='padding-top:5px;border-top: 1px solid #c8c8c8;'>
       </td>
-      <td>
+      <td style='padding-top:5px;border-top: 1px solid #c8c8c8;'>
       <input type='hidden' value='true' name='submitwpcheckout' />
-      <input type='submit' value='<?php echo TXT_WPSC_MAKEPURCHASE;?>' name='submit' />
+      <input type='submit' value='Оплатить' name='submit' />
+      </td>
+    </tr>
+	<tr>
+      <td>&nbsp;
+      </td>
+      <td>После нажатия на кнопку "Оплатить" произойдет снятие денего с вашего Личного Счёта. Вы перейдёте на страницу с прямыми ссылками на заказанные файлы высокого разрешения. На указанный вами электронный почтовый адрес будет отправлено письмо с а) ссылками на заказанные файлы б) копиями лицензионного соглашения для каждого из изображений.
       </td>
     </tr>
 </table>

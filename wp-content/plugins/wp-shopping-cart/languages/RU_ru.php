@@ -370,7 +370,7 @@ define('TXT_WPSC_DELETE_PRODUCT', 'Стереть продукт');
 define('TXT_WPSC_ADDITIONAL_IMAGE', 'Ещё изображение');
 define('TXT_WPSC_GATEWAY_OPTIONS', 'Gateway Options');
 define('TXT_WPSC_SHIPPING_COUNTRY', 'Выберите страну доставки:');
-define('TXT_WPSC_CONFIRM_TOTALS', 'Скачивая следующие картинки, вы соглашаетесь с условиями оплаты:');
+define('TXT_WPSC_CONFIRM_TOTALS', 'Проверьте список изображений. Скачивая следующие картинки, вы соглашаетесь с условиями, описанными в соответсвующей лицензии. Переходите к следующей странице со списком возможных способов оплаты.');
 define('TXT_WPSC_CHECKOUT_FORM_FIELDS_DESCRIPTION', 'Here you can customise the forms to be displayed in your checkout page. The checkout page is where you collect important user information that will show up in your purchase logs i.e. the buyers address, and name...');
 define('TXT_WPSC_PAYMENT_OPTIONS', 'Payment Options');
 define('TXT_WPSC_PAYMENT_DESCRIPTION', 'Choose what payment options you want to make available in the checkout page. By default purchasers can only pay for items using a credit card however you may wish to also let them pay manually in which case you should select the credit card + manual payment option.');
@@ -378,7 +378,7 @@ define('TXT_WPSC_PAYMENT_DESCRIPTION', 'Choose what payment options you want to 
 define('TXT_WPSC_DEFAULT_GATEWAY_ONLY', ' only');
 define('TXT_WPSC_PLUS_MANUAL_PAYMENT', ' plus manual payment option');
 define('TXT_WPSC_PAYMENT_METHOD', 'Payment Method');
-define('TXT_WPSC_PAY_USING', 'Pay using');
+define('TXT_WPSC_PAY_USING', 'Оплата через ');
 define('TXT_WPSC_PAY_MANUALLY', 'Pay by Cheque/Bank Deposit');
 define('TXT_WPSC_CREDIT_CARD', 'Credit Card');
 define('TXT_WPSC_ADJUSTABLE_QUANTITY', 'Show quantity form in list view');
