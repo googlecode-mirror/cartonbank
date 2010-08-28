@@ -1,6 +1,6 @@
 <?php    
 //require_once('./admin.php'); 
-$nzshpcrt_gateways[$num]['name'] = 'Мой кошелек';
+$nzshpcrt_gateways[$num]['name'] = 'Личный Счёт (по предоплате)';
 $nzshpcrt_gateways[$num]['internalname'] = 'wallet';
 $nzshpcrt_gateways[$num]['function'] = 'gateway_wallet';
 $nzshpcrt_gateways[$num]['form'] = "form_wallet";
@@ -24,7 +24,7 @@ function gateway_wallet($seperator, $sessionid)
   else
   {
       $_SESSION['wallet'] = 'decline';
-      $_SESSION['WpscGatewayErrorMessage'] = "Средств на вашем кошельке недостаточно для проведения транзакции.";
+      $_SESSION['WpscGatewayErrorMessage'] = "Средств на вашем Личном Счёте недостаточно для проведения транзакции.";
       //$_SESSION['wpsc_checkout_misc_error_messages'][] = "Describe error"; 
       $transact_url = get_option('checkout_url'); 
   }

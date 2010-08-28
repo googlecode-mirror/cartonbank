@@ -1,15 +1,6 @@
 <?php
 global $wpdb;
-/*
-if($_POST['country'] != null)
-  {
-  $_SESSION['selected_country'] = $_POST['country'];
-  }
-  else if($_SESSION['selected_country'] == '')
-    {
-    $_SESSION['selected_country'] = get_option('base_country');
-    }
-*/    
+
 if(get_option('permalink_structure') != '')
   {
   $seperator ="?";
@@ -26,6 +17,25 @@ if (isset($_SESSION['nzshpcrt_cart']))
 {
 	$cart = $_SESSION['nzshpcrt_cart'];
 }
+
+function ischecked ($license,$picture_id)
+{
+	$cart = $_SESSION['nzshpcrt_cart'];
+	$cc = 1;
+foreach($cart as $key => $cart_item)
+    {
+		if (($license==$cart_item->license)&($picture_id==$cart_item->product_id))
+		{
+			$cc++;
+			echo 'checked';
+		}
+		else
+		{
+			echo '';
+		}
+	}
+}
+
 
 function country_list($selected_country = null)
   {
@@ -55,16 +65,9 @@ function country_list($selected_country = null)
   <span>
   <?php echo TXT_WPSC_CONFIRM_TOTALS; ?></span>
   <hr class='productcart' />
-  <table class='productcart' padding='2'>
+  <table id='productcart' class='productcart'>
   <?php
-    
-  //echo "<tr class='firstrow'>\n\r";
-  // заголовок таблицы
-  //echo "  <td style='width:144px'>".TXT_WPSC_DOWNLOADABLEPRODUCT."</td>\n\r"; 
-  //echo "  <td>Описание</td>\n\r";
-  //echo "  <td>". TXT_WPSC_PRICE.":</td>\n\r";
-  //echo "  <td>".TXT_WPSC_REMOVE."</td>\n\r";  
-  //echo "</tr>\n\r";
+   
   $num = 1;
   $total = 0;
   $total_shipping = 0;
@@ -75,7 +78,6 @@ function country_list($selected_country = null)
     $number =& $quantity;
     $product_variations = $cart_item->product_variations;
     $variation_count = count($product_variations);
-    //exit("<pre>".print_r($product_variations,true)."</pre>");
     if($variation_count >= 1)
       {
       $variation_list = "&nbsp;(";
@@ -87,8 +89,7 @@ function country_list($selected_country = null)
           $variation_list .= ",&nbsp;";
           }
         $value_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."variation_values` WHERE `id`='".$value_id."' LIMIT 1",ARRAY_A);
-        $variation_list .= str_replace(" ", "&nbsp;",$value_data[0]['name']);    
-        //echo("<pre>".print_r($variation,true)."</pre>");          
+        $variation_list .= str_replace(" ", "&nbsp;",stripslashes($value_data[0]['name']));    
         $i++;
         }
       $variation_list .= ")";
@@ -97,9 +98,13 @@ function country_list($selected_country = null)
         {
         $variation_list = '';
         }
-    $sql = "SELECT * FROM `".$wpdb->prefix."product_list` WHERE `id`='$product_id' LIMIT 1";
+    //$sql = "SELECT * FROM `".$wpdb->prefix."product_list` WHERE `id`='$product_id' LIMIT 1";
+	//$sql = "SELECT l.*, b.name AS author FROM `wp_product_list` AS l, wp_product_brands AS b WHERE l.id='$product_id' AND l.brand = b.id LIMIT 1";
+
+    $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE wp_product_list.id='$product_id' AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC LIMIT 1";
+
     $product_list = $wpdb->get_results($sql,ARRAY_A) ;
-    echo "<tr class='product_row'>\n\r";
+    echo "<tr>\n\r";
     
     echo "  <td style='width:144px;'>\n\r";
     //$imagepath = $imagedir . $imagedata[0]['image'];
@@ -108,36 +113,45 @@ function country_list($selected_country = null)
     $previewdir = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
     echo ("<a href='".$previewdir.$product_list[0]['image']."'><img border='0' src='".$imagedir.$product_list[0]['image']."'></a>");
     echo "  </td>\n\r";
-    echo "  <td>\n\r";
-    echo "№&nbsp;".$product_list[0]['id']."<br>Автор ".$product_list[0]['brand'].'.<br>Название ' .$product_list[0]['name'] ."<br><span id='size'>"."<br> Описание: ".$product_list[0]['description'].$variation_list;
-    echo "  </td>\n\r";
-	echo "<td>".$cart_item->price." руб.</td>";
-	//echo("<pre>".print_r($product_list,true)."</pre>");  
-/*
-(
-            +[id] => 2958
-            +[name] => У психиатра
-            [description] => Больной и врач видят друг друга превратно
-            [additional_description] => Больной, врач, доктор, психиатр, сумасшедший, страх, чудовище, представление, воображение
-            $product_list[0][price] => 200.00
-            [pnp] => 
-            [international_pnp] => 
-            [file] => 2969
-            [image] => 4c6715a23be1f6.29947505cartoon0016.jpg
-            [category] => 0
-            [brand] => 6
-            [quantity_limited] => 0
-            [quantity] => 0
-            [special] => 0
-            [special_price] => 
-            [display_frontpage] => 0
-            [notax] => 0
-            [active] => 1
-            [color] => 1
-            [visible] => 1
-        )
 
-*/
+    echo "  <td>\n\r";
+
+	$_size = $product_list[0]['width']."px X ".$product_list[0]['height']."px;";
+
+	$_bigpictext = "<b>Автор:</b> ".$product_list[0]['brand']."<br><b>Категория: </b> ".$product_list[0]['kategoria']."<br><b>Описание: </b> ".$product_list[0]['description']."<br><b>Тэги: </b>".$product_list[0]['additional_description']."<br><b>Размер:</b> ".$_size;
+
+	echo "<div style='font-size: 8pt !important;'>".$_bigpictext."</div>";
+
+    echo "  </td>\n\r";
+	
+	echo "  <td width='240'>\n\r";
+	?>
+	
+	<form name="licenses" id="licenses" onsubmit="submitform(this);return false;" action="http://cartoonbank.ru/cb/?page_id=29" method="POST"> 
+	
+	<input name="license" value="l1_price" type="radio" <? ischecked('l1_price', $product_list[0]['id']);?> /> 
+	<? echo round($product_list[0]['l1_price']);?>&nbsp;руб. <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=238" title="ограниченная">ограниченная</a> <br>
+	
+	<input name="license" value="l2_price" type="radio" <? ischecked('l2_price', $product_list[0]['id']);?> /> 
+	<? echo round($product_list[0]['l2_price']);?>&nbsp;руб. <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=242" title="стандартная">стандартная</a> <br>
+	
+	<input name="license" value="l3_price" type="radio" <? ischecked('l3_price', $product_list[0]['id']);?> /> 
+	<? echo round($product_list[0]['l3_price']);?>&nbsp;руб. <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=245" title="расширенная">расширенная</a> 
+	
+	<input value="<?echo $product_list[0]['id'];?>" name="prodid" type="hidden"> <br><br>
+	
+	<input id="searchsubmit" value="Сменить лицензию" type="submit"> </form>
+	
+	<?
+	
+	echo " </td>\n\r";
+	
+
+
+
+	//echo "<td>".round($cart_item->price)." руб.</td>";
+	//echo("<pre>".print_r($product_list,true)."</pre>");  
+
 
 //    echo "  <td>\n\r";
 //    echo  "<form class='adjustform' method='POST' action='".get_option('shopping_cart_url')."'><input type='text' value='".$number."' size='2' name='quantity' /><input type='hidden' value='".$key."' name='key' />&nbsp; <input type='submit' name='submit' value='".TXT_WPSC_APPLY."' /></form>";
@@ -167,8 +181,8 @@ function country_list($selected_country = null)
 //    echo "  </td>\n\r";
 //    $shipping = nzshpcrt_determine_item_shipping($product_id, $number, $_SESSION['selected_country']);
 //    $total_shipping += $shipping;
-    echo "  <td>\n\r";
-    echo "<a href='".get_option('shopping_cart_url').$seperator."remove=".$key."'>Убрать</a>";
+    echo "  <td width='70'>\n\r";
+    echo "<a href='".get_option('shopping_cart_url').$seperator."remove=".$key."'>Убрать из заказа</a>";
     echo "  </td>\n\r";
     
     echo "</tr>\n\r";
@@ -209,35 +223,25 @@ function country_list($selected_country = null)
 //  echo "  </td>\n\r";
 //  echo "</tr>\n\r";
     
-  echo "</table>";
+
+  echo "<tr><td colspan='2'>&nbsp;</td><td colspan='2'>";
   
-  echo "
-  <ul class='checkout_links'>";
 global $user_identity;
 if ($user_identity == '')
 {
-    echo ("<h2>Продолжить оплату и скачать изображение большого размера можно только после <a href='wp-register.php'>регистрации</a>.</h2>");
+    echo ("<div><h2>Продолжить оплату и скачать изображение большого размера можно только после <a href='wp-register.php'>регистрации</a>.</h2>");
 }
 else
 {
-  echo "
-    <li>
-      &gt;
-      <a href='".get_option('checkout_url').$seperator."total=$total'>".TXT_WPSC_MAKEPAYMENT."</a>
-    </li>";
+  echo "<div align='right' width='100%'><div style='clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('checkout_url').$seperator."total=$total' class='button' style='background-color:#CCFF00;'>Подтвердить выбор и перейти к оплате ></a></div><br>";
 }
-
-  echo "
-    <li>
-      &gt;
-      <a href='".get_option('product_list_url')."'>".TXT_WPSC_CONTINUESHOPPING."</a>
-    </li>
-    <li>
-      &gt;
-      <a href='".get_option('shopping_cart_url').$seperator."cart=empty'>".TXT_WPSC_EMPTYSHOPPINGCART."</a>
-    </li>
-  </ul>\n\r";
+  echo "<div style='clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('product_list_url')."' class='button'>< Продолжить выбор</a></div>";
+  echo "<div style='clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('shopping_cart_url').$seperator."cart=empty' class='button'>x Очистить корзину</a></div></div>";
   
+
+  echo "</td></tr>";
+echo "</table>";
+
   $_SESSION['nzshpcrt_totalprice'] = $total; 
   
     }
@@ -247,3 +251,6 @@ else
       }
   ?>
 </div>
+<?
+//echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
+?>

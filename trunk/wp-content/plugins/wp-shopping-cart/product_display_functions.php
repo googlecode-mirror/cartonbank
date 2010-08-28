@@ -95,42 +95,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
 
 // Lisence selection strip under the preview image:
-$_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'> Выбор лицензии: <input type=\'radio\' name=\'license\' value=\'l1_price\'> <a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=238\'>ограниченная</a> ".round($product['l1_price'])."&nbsp;руб. <input type=\'radio\' name=\'license\' value=\'l2_price\'> <a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=242\'>стандартная</a> ".round($product['l2_price'])."&nbsp;руб. <input type=\'radio\' name=\'license\' value=\'l3_price\'> <a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=245\'>расширенная</a> ".round($product['l3_price'])."&nbsp;руб.  <input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'><input id=\'searchsubmit\' value=\'Купить\' type=\'submit\'> </form></div>";
-
-/*
-$product
-(
-    [id] => 2723
-    [name] => Ельцин Борис Николаевич
-    [description] => Борис Николаевич Ельцин, первый президент России
-    [additional_description] => Ельцин, Борис Николаевич,первый , президент России
-    [price] => 200.00
-    [pnp] => 
-    [international_pnp] => 
-    [file] => 2734
-    [image] => 4c6255b068be37.08305970258.jpg
-    [category] => 0
-    [brand] => Мельник Леонид
-    [quantity_limited] => 0
-    [quantity] => 0
-    [special] => 0
-    [special_price] => 
-    [display_frontpage] => 0
-    [notax] => 0
-    [active] => 1
-    [color] => 1
-    [visible] => 1
-    [l1_price] => 200.00
-    [l2_price] => 400.00
-    [l3_price] => 2000.00
-    [width] => 1400
-    [height] => 2149
-    [brandid] => 7
-    [category_id] => 14
-    [kategoria] => Шарж
-)
-*/  
-
+$_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'> Выбор лицензии: <input type=\'radio\' name=\'license\' value=\'l1_price\'> ".round($product['l1_price'])."&nbsp;руб. <a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=238\' title=\'ограниченная\'>[?]</a> <input type=\'radio\' name=\'license\' value=\'l2_price\'> ".round($product['l2_price'])."&nbsp;руб. <a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=242\' title=\'стандартная\'>[?]</a> <input type=\'radio\' name=\'license\' value=\'l3_price\'> ".round($product['l3_price'])."&nbsp;руб. <a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=245\' title=\'расширенная\'>[?]</a> <input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> <input id=\'searchsubmit\' value=\'В заказ\' type=\'submit\'> </form></div>";
 
 	$vstavka = "document.getElementById('bigpic').innerHTML ='".$_bigpic."';";
 	$vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
