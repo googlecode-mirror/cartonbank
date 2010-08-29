@@ -241,11 +241,20 @@ if (isset($_POST['international_pnp ']))
 			$l3_price = $l3_price_cat1_default;
 			break;
 
-            default:
+			case 13:
+			case 8:
+			case 15:
+			case 6:
 			$l1_price = $l1_price_cat2_default;
 			$l2_price = $l2_price_cat2_default;
 			$l3_price = $l3_price_cat2_default;
             break;
+
+			default:
+			$l1_price = $l1_price_cat1_default;
+			$l2_price = $l2_price_cat1_default;
+			$l3_price = $l3_price_cat1_default;
+			break;
             }
 // 
 
