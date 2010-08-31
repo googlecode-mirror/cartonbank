@@ -73,9 +73,16 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	$_number = $product['id'];
 	$_description = nl2br(stripslashes($product['description']));
 	$_size = $product['width']."px X ".$product['height']."px;";
-	$_author = "<a href=\'".$siteurl."/?page_id=29&brand=".$product['brandid']."\'>".$product['brand']."</a>";//$product['brand'];
+	if (isset($product['brandid']))
+		{$_brandid = $product['brandid'];}
+	else {$_brandid = '';}
+	if (isset($product['category_id']))
+		{$_category_id = $product['category_id'];}
+	else {$_category_id = '';}
+
+	$_author = "<a href=\'".$siteurl."/?page_id=29&brand=".$_brandid."\'>".$product['brand']."</a>";//$product['brand'];
 	$_name = $product['name'];
-						$_category = "<a href=\'".get_option('product_list_url')."&category=".$product['category_id']."\'>".$product['kategoria']."</a>";
+						$_category = "<a href=\'".get_option('product_list_url')."&category=".$_category_id."\'>".$product['kategoria']."</a>";
 					//$options .= "<a href='".get_option('product_list_url')."/&category=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
 
 	$_tags = nl2br(stripslashes($product['additional_description']));
