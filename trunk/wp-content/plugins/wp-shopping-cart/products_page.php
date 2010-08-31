@@ -433,6 +433,8 @@ $search_sql = NULL;
 				$totalitems = $items_count;
 				$limit = $items_on_page;
 
+				if (isset($catid)){$catid=$catid;}else{$catid='';}
+
 				echo "<div style='clear:both;'>".getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&category=".$catid."&cs=".$keywords."&offset=")."<br></div>";
              }
          }
