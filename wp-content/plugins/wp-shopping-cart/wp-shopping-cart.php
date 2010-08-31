@@ -1096,7 +1096,7 @@ function nzshpcrt_submit_ajax()
 		  {
 		  $cartcount = count($_SESSION['nzshpcrt_cart']);
 
-			echo "cartcount: ".$cartcount;
+			//echo "cartcount: ".$cartcount;
 
 		  if(isset($_POST['variation']) && is_array($_POST['variation'])) {  $variations = $_POST['variation'];  }  else  { $variations = null; }
 		  
