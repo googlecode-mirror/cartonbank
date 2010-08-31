@@ -144,7 +144,7 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == 'add') {
         
         if(move_uploaded_file($_FILES['file']['tmp_name'],($filedir.$idhash)))
           {
-          $wpdb->query("UPDATE `".$wpdb->prefix."product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `idhash` = '$idhash', `width` = '$file_w', `height` = '$file_h' WHERE `id` = '$fileid' LIMIT 1");
+          $wpdb->query("UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `idhash` = '$idhash', `width` = '$file_w', `height` = '$file_h' WHERE `id` = '$fileid' LIMIT 1");
           }
     $file = $fileid;
  }
@@ -581,6 +581,8 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
 //        
       $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `color`='$colored', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
       //exit("<pre>".print_r($updatesql,true)."</pre>");
+	  mail("igor.aleshin@gmail.com","updatesql",print_r($updatesql,true));
+
       $wpdb->query($updatesql);
       if($image != null)
         {
