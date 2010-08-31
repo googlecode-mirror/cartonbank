@@ -499,7 +499,7 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 
 		//previous button
 		if ($page > 1) 
-			$pagination .= "<a href=\"$targetpage$pagestring$prev\">« назад</a>";
+			$pagination .= "<a href=\"".$targetpage. $pagestring. ($prev*$limit - $limit). "\">« назад</a>";
 		else
 			$pagination .= "<span class=\"disabled\">« назад</span>";	
 		
@@ -565,7 +565,7 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 		
 		//next button
 		if ($page < $counter - 1) 
-			$pagination .= "<a href=\"" . $targetpage . $pagestring . $next . "\">дальше »</a>";
+			$pagination .= "<a href=\"" . $targetpage . $pagestring . ($next*$limit - $limit) . "\">дальше »</a>";
 		else
 			$pagination .= "<span class=\"disabled\">дальше »</span>";
 		$pagination .= "</div>\n";
