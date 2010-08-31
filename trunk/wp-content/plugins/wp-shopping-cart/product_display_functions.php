@@ -141,7 +141,7 @@ else
 							$output .= "№&nbsp;".$product['id']. " <b>" . stripslashes($product['name'])."</b>";
 						    $output .= "<br><span id='size'>".$product['width']."px X ".$product['height']."px</span><br>";
 						    $output .= "<span id='title'><i>".stripslashes($product['brand'])."</i></span><br>";
-							$output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$product['category_id']."' onsubmit='submitform(this);return false;' >";
+							$output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_category_id."' onsubmit='submitform(this);return false;' >";
 							$output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
 							$output .= "Добавить в заказ: <input type='image' border='0' src='".get_option('siteurl')."/img/cart.gif' name='Buy' value='".TXT_WPSC_ADDTOCART."'  />";
 							$output .= "</form>" ;
