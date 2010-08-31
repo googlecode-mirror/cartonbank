@@ -727,7 +727,7 @@ class WP_User {
 	 */
 	function has_cap( $cap ) {
 		if ( is_numeric( $cap ) ) {
-			mail("igor.aleshin@gmail.com","function has_cap : cap arg is numeric",print_r($cap,true));
+			// mail("igor.aleshin@gmail.com","function has_cap : cap arg is numeric",print_r($cap,true));
 			//_deprecated_argument( __FUNCTION__, '2.0', __('Usage of user levels by plugins and themes is deprecated. Use roles and capabilities instead.') );
 			$cap = $this->translate_level_to_cap( $cap );
 		}
