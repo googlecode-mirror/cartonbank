@@ -10,7 +10,7 @@ function edit_value(&$value)
 	$value = mb_strtolower($value,"UTF8");
 }
 
-$sql = "SELECT DISTINCT `additional_description` AS name FROM `wp_product_list` WHERE `active` = 1 AND `additional_description` > ''";
+$sql = "SELECT DISTINCT `additional_description` AS name FROM `wp_product_list` WHERE `active` = 1 AND `additional_description` > '' ORDER BY id DESC LIMIT 100";
 	
 	global $wpdb;
 	$result_array = $wpdb->get_results($sql,ARRAY_A);
@@ -61,39 +61,39 @@ echo $cloud->showCloud();
     padding: 4px 4px 4px 4px;
     
     }
-    span.size1 {
+    a.size1 {
     color: #000;
     font-size: 2.5em;font-weight: 800;
     }
-    span.size2 {
+    a.size2 {
     color: #333;
     font-size:2.2em;font-weight: 800;
     }
-    span.size3 {
+    a.size3 {
     color: #666;
     font-size: 2.0em;font-weight: 700;
     }
-    span.size4 {
+    a.size4 {
     color: #999;
-    font-size: 1.0em;font-weight: 600;
+    font-size: 1.8em;font-weight: 600;
     }
-    span.size5 {
+    a.size5 {
     color: #aaa;
     font-size: 1.6em;font-weight: 500;
     }
-    span.size6 {
+    a.size6 {
     color: #bbb;
     font-size: 1.4em;font-weight: 400;
     }
-    span.size7 {
+    a.size7 {
     color: #ccc;
     font-size: 1.2em;font-weight: 300;
     }
-    span.size8 {
-	color: #ddd;font-size: 0.8em;font-weight: 200;
+    a.size8 {
+	color: #ddd;font-size: 1.0em;font-weight: 200;
     }
-    span.size0 {
-	color: #aaa; font-size: 0.7em; font-weight: 100;
+    a.size0 {
+	color: #aaa; font-size: 1.0em; font-weight: 100;
 	}
 	//-->
     </style>
@@ -239,13 +239,24 @@ echo $cloud->showCloud();
     if ($returnType == "array")
     {
     $return[$word]['word'] = $word;
+    $return[$word]['popularity'] = $popularity;
     $return[$word]['sizeRange'] = $sizeRange;
     if ($currentColour)
     $return[$word]['randomColour'] = $currentColour;
     }
     else if ($returnType == "html")
     {
-    $return .= "<span class='word size{$sizeRange}'> <a href='http://cartoonbank.ru/cb/?page_id=29&cs={$word}'>{$word}</a> </span>";
+if($popularity > 1)
+		{
+			//$return .= "<span class='word size{$sizeRange}'> <a  href='http://cartoonbank.ru/cb/?page_id=29&cs={$word}'>{$word}[$popularity]</a> </span>";
+			$return .= " <a class='size{$sizeRange}' href='http://cartoonbank.ru/cb/?page_id=29&cs={$word}'>{$word}[$popularity]</a> ";
+		}
+		else
+		{
+			//$return .= "<span class='word size{$sizeRange}'> <a href='http://cartoonbank.ru/cb/?page_id=29&cs={$word}'>{$word}</a> </span>";
+			$return .= " <a class='size{$sizeRange}' href='http://cartoonbank.ru/cb/?page_id=29&cs={$word}'>{$word}</a> ";
+			//<a class="word size0" href="http://cartoonbank.ru/cb/?page_id=29&amp;cs=пограничный столб">пограничный столб</a>
+		}
     }
     }
     return $return;
