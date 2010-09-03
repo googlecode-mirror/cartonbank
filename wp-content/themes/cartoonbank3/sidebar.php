@@ -10,6 +10,7 @@
 	<form method="post" id="searchform" action="?page_id=29">
 	<input id="s" size="15" type="text" value="введите слово..." name="cs" id="search_input" onfocus="this.value='';"/>
 	<input type="submit" id="searchsubmit" value="Искать" />
+	<div id='tags'><a href='?page_id=390'>Все тэги</a></div>
 <!-- 	
 	<br>
 	<select id="colorselect" name="">

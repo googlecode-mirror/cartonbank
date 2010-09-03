@@ -81,6 +81,7 @@ define ('WPLANG', 'ru_RU');
  * в своём рабочем окружении.
  */
 define('WP_DEBUG', false);
+//define('SAVEQUERIES', true);
 
 /* Это всё, дальше не редактируем. Успехов! */
 
