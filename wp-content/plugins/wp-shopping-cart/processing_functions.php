@@ -123,12 +123,12 @@ function nzshpcrt_overall_total_price($country_code = null, $for_display = false
           $price = ($cart_row['price'] * $cart_row['quantity']);
           
           
-          if($purch_data['shipping_country'] != '')
+          if(isset($purch_data['shipping_country']) && $purch_data['shipping_country'] != '')
             {
             $country_code = $purch_data['shipping_country'];
             }
           $shipping = nzshpcrt_determine_item_shipping($cart_row['prodid'], $cart_row['quantity'], $country_code);
-          $endtotal += $shipping + $price;
+          $endtotal = $shipping + $price;
           }
         $endtotal += nzshpcrt_determine_base_shipping(0, $country_code);
         }
@@ -271,7 +271,12 @@ function admin_display_total_price($start_timestamp = '', $end_timestamp = '')
       {
       $country_sql = "SELECT * FROM `".$wpdb->prefix."submited_form_data` WHERE `log_id` = '".$purchase['id']."' AND `form_id` = '".get_option('country_form_field')."' LIMIT 1";
       $country_data = $wpdb->get_results($country_sql,ARRAY_A);
-      $country = $country_data[0]['value'];
+	  if (isset($country_data[0]))
+	      {
+		  $country = $country_data[0]['value'];
+		  }
+		  else
+		  {$country = 'Россия';}
       $total += nzshpcrt_find_total_price($purchase['id'],$country);
       }
     }

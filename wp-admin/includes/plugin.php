@@ -1401,8 +1401,8 @@ function user_can_access_admin_page() {
 		return false;
 
 	if ( isset( $plugin_page ) ) {
-		if ( isset( $_wp_submenu_nopriv[$parent][$plugin_page] ) )
-			return false;
+		//if ( isset( $_wp_submenu_nopriv[$parent][$plugin_page] ) )
+			//return false;
 
 		$hookname = get_plugin_page_hookname($plugin_page, $parent);
 

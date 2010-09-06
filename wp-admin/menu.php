@@ -290,8 +290,9 @@ foreach ( array( 'submenu' ) as $sub_loop ) {
 	foreach ($$sub_loop as $parent => $sub) {
 		foreach ($sub as $index => $data) {
 			if ( ! current_user_can($data[1]) ) {
-				unset(${$sub_loop}[$parent][$index]);
-				$_wp_submenu_nopriv[$parent][$data[2]] = true;
+            	unset(${$sub_loop}[$parent][$index]);
+				//$_wp_submenu_nopriv[$parent][$data[2]] = true;
+                $_wp_submenu_nopriv[$parent][$data[2]] = false;
 			}
 		}
 		unset($index, $data);
@@ -368,6 +369,8 @@ foreach ( $menu as $id => $data ) {
 	}
 }
 unset($id, $data);
+
+$menu[999] = array( '', 'read', 'separator-last', '', 'wp-menu-separator-last' );  
 
 function add_cssclass($add, $class) {
 	$class = empty($class) ? $add : $class .= ' ' . $add;
@@ -452,5 +455,4 @@ if ( !user_can_access_admin_page() ) {
 	do_action('admin_page_access_denied');
 	wp_die( __('You do not have sufficient permissions to access this page.') );
 }
-
 ?>

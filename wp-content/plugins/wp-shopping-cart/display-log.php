@@ -2,7 +2,7 @@
 /*
  * this updates the processing status of an item
  */
-if(is_numeric($_GET['id']) && is_numeric($_GET['value']))
+if(isset($_GET['id']) && is_numeric($_GET['id']) && is_numeric($_GET['value']))
   {
   $stage_count_sql = "SELECT COUNT(*) AS `count` FROM `".$wpdb->prefix."purchase_statuses` WHERE `active`='1'";
   $stage_count_data = $wpdb->get_results($stage_count_sql,ARRAY_A);
@@ -42,7 +42,7 @@ $earliest_year = date("Y",$earliest_timestamp);
    <tr>  
     <td id='product_log_data'>
    <?php
-  if(($purchase_log == null) && !is_numeric($_GET['purchaseid']))
+  if(isset($purchase_log) && ($purchase_log == null) && isset($_GET['purchaseid']) && !is_numeric($_GET['purchaseid']))
     {
     if($earliest_record[0]['date'] != null)
       {
@@ -262,7 +262,7 @@ $earliest_year = date("Y",$earliest_timestamp);
         echo " </table>";
         }
     }
-    else if(is_numeric($_GET['purchaseid']))
+    else if(isset($_GET['purchaseid']) && is_numeric($_GET['purchaseid']))
       {
 
       $purch_sql = "SELECT * FROM `".$wpdb->prefix."purchase_logs` WHERE `id`='".$_GET['purchaseid']."'";
