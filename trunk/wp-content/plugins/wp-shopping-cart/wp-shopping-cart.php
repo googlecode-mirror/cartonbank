@@ -89,26 +89,26 @@ class wp_shopping_cart
           {
           $base_page = 'wp-shopping-cart/display-log.php';
           add_menu_page(TXT_WPSC_ECOMMERCE, TXT_WPSC_ECOMMERCE, 7, $base_page);
-          add_submenu_page('wp-shopping-cart/display-log.php',TXT_WPSC_PURCHASELOG, TXT_WPSC_PURCHASELOG, 'author', 'wp-shopping-cart/display-log.php');
+          add_submenu_page('wp-shopping-cart/display-log.php',TXT_WPSC_PURCHASELOG, TXT_WPSC_PURCHASELOG, 7, 'wp-shopping-cart/display-log.php');
           }
       
       
-      add_submenu_page($base_page,TXT_WPSC_PRODUCTS, TXT_WPSC_PRODUCTS, 'view', 'wp-shopping-cart/display-items.php');
-      add_submenu_page($base_page,TXT_WPSC_CATEGORIES, TXT_WPSC_CATEGORIES, 'view', 'wp-shopping-cart/display-category.php');
-      add_submenu_page($base_page,TXT_WPSC_BRANDS, TXT_WPSC_BRANDS, 'view', 'wp-shopping-cart/display-brands.php');
+      add_submenu_page($base_page,TXT_WPSC_PRODUCTS, TXT_WPSC_PRODUCTS, 7, 'wp-shopping-cart/display-items.php');
+      add_submenu_page($base_page,TXT_WPSC_CATEGORIES, TXT_WPSC_CATEGORIES, 7, 'wp-shopping-cart/display-category.php');
+      add_submenu_page($base_page,TXT_WPSC_BRANDS, TXT_WPSC_BRANDS, 7, 'wp-shopping-cart/display-brands.php');
       
-      add_submenu_page($base_page,TXT_WPSC_VARIATIONS, TXT_WPSC_VARIATIONS, 'view', 'wp-shopping-cart/display_variations.php');
-      add_submenu_page($base_page,TXT_WPSC_PAYMENTGATEWAYOPTIONS, TXT_WPSC_PAYMENTGATEWAYOPTIONS, 'view', 'wp-shopping-cart/gatewayoptions.php');
+      add_submenu_page($base_page,TXT_WPSC_VARIATIONS, TXT_WPSC_VARIATIONS, 7, 'wp-shopping-cart/display_variations.php');
+      add_submenu_page($base_page,TXT_WPSC_PAYMENTGATEWAYOPTIONS, TXT_WPSC_PAYMENTGATEWAYOPTIONS, 7, 'wp-shopping-cart/gatewayoptions.php');
       if(get_option('nzshpcrt_first_load') != 0)
         {
-        add_submenu_page($base_page,TXT_WPSC_OPTIONS, TXT_WPSC_OPTIONS, 'view', 'wp-shopping-cart/options.php');
+        add_submenu_page($base_page,TXT_WPSC_OPTIONS, TXT_WPSC_OPTIONS, 7, 'wp-shopping-cart/options.php');
         }
       if(function_exists('ext_shpcrt_options'))
         {
         ext_shpcrt_options($base_page);
         }
-      add_submenu_page($base_page,TXT_WPSC_FORM_FIELDS, TXT_WPSC_FORM_FIELDS, 'author', 'wp-shopping-cart/form_fields.php');
-      add_submenu_page($base_page,TXT_WPSC_HELPINSTALLATION, TXT_WPSC_HELPINSTALLATION, 'view', 'wp-shopping-cart/instructions.php');
+      add_submenu_page($base_page,TXT_WPSC_FORM_FIELDS, TXT_WPSC_FORM_FIELDS, 7, 'wp-shopping-cart/form_fields.php');
+      add_submenu_page($base_page,TXT_WPSC_HELPINSTALLATION, TXT_WPSC_HELPINSTALLATION, 7, 'wp-shopping-cart/instructions.php');
       }
     return;
     }
