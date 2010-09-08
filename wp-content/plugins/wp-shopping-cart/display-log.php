@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
  * this updates the processing status of an item
  */
@@ -37,7 +37,7 @@ $earliest_year = date("Y",$earliest_timestamp);
 
 ?>
 <div class="wrap" style=''>
-  <h2><?php echo TXT_WPSC_DISPLAYPURCHASES;?></h2><br />
+  <h2>Лог заказов</h2><br />
   <table style='width: 100%;'>
    <tr>  
     <td id='product_log_data'>
@@ -497,60 +497,36 @@ $purchase_log = $wpdb->get_results($sql,ARRAY_A) ;
    </td>
    
     <td id='order_summary_container'>
-    <strong class='order_summary'><?php echo TXT_WPSC_ORDER_SUMMARY; ?></strong>
+    <strong class='order_summary'>Информация о заказах</strong>
     <div class='order_summary'> 
       <div class='order_summary_subsection'>
-      <strong><?php echo TXT_WPSC_TOTAL_THIS_MONTH; ?></strong>
+      <strong>Заработано в этом месяце</strong>
       <p>
       <?php 
       $year = date("Y");
       $month = date("m");
       $start_timestamp = mktime(0, 0, 0, $month, 1, $year);
       $end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
+
        echo nzshpcrt_currency_display(admin_display_total_price($start_timestamp, $end_timestamp),1);
-       echo TXT_WPSC_ACCEPTED_PAYMENTS;
+       echo " (Принятые платежи)";
        ?>
       </p>
       </div>
      
       
       <div class='order_summary_subsection'>
-      <strong><?php echo TXT_WPSC_TOTAL_INCOME; ?></strong>
+      <strong>Суммарный доход</strong>
       <p>
       <?php
        $total_income = $wpdb->get_results($sql,ARRAY_A);
+	   //echo("<pre>sql ".print_r($sql,true)."</pre>");
+
        echo nzshpcrt_currency_display(admin_display_total_price(),1);
        ?>
       </p>
       </div>
-      
-      
-     
-      <div class='order_summary_subsection'>
-      <strong><?php echo TXT_WPSC_RSS_FEED_HEADER; ?></strong>
-      <p>
-        <a class='product_log_rss' href='http://instinct.co.nz/wordpress_development/index.php?rss=true&amp;rss_key=key&amp;action=purchase_log'><img align='absmiddle' src='../wp-content/plugins/wp-shopping-cart/images/rss-icon.jpg' alt='' title='' />&nbsp;<span><?php echo TXT_WPSC_RSS_FEED_LINK; ?></span></a> <?php echo TXT_WPSC_RSS_FEED_TEXT; ?>      </p>
-      </div>
-         <div class='order_summary_subsection'>
-      <strong><?php echo TXT_WPSC_PLUGIN_NEWS_HEADER; ?></strong>
-      <p>
-      <?php echo TXT_WPSC_PLUGIN_NEWS; ?>        
-        <br /><br /><?php echo TXT_WPSC_POWERED_BY; ?><a href='http://www.instinct.co.nz'>Instinct</a>
-      </p>
-      </div>
     </div>
-    <?php
-    if(get_option('activation_state') != "true")
-      {
-      ?>
-      <div class='gold-cart_pesterer'> 
-        <div>
-        <img src='../wp-content/plugins/wp-shopping-cart/images/gold-cart.png' alt='' title='' /><a href='http://www.instinct.co.nz/blogshop/'>Upgrade to Gold</a> and unleash more functionality into your shop.
-        </div>
-      </div>
-      <?php
-      }
-    ?>
     </td>  
   </tr>
  </table>

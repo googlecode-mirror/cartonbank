@@ -200,6 +200,8 @@ function nzshpcrt_currency_display($price_in, $tax_status, $nohtml = false, $id 
 
 // ales commented - crashes the site
 //$price_out =  number_format($price_in, 2, '.', '');
+$price_out = $price_in;
+
 
   if($currency_data[0]['symbol'] != '')
     {    
@@ -269,7 +271,7 @@ function admin_display_total_price($start_timestamp = '', $end_timestamp = '')
     {
     foreach($purchase_log as $purchase)
       {
-      $country_sql = "SELECT * FROM `".$wpdb->prefix."submited_form_data` WHERE `log_id` = '".$purchase['id']."' AND `form_id` = '".get_option('country_form_field')."' LIMIT 1";
+      $country_sql = "SELECT * FROM `wp_submited_form_data` WHERE `log_id` = '".$purchase['id']."' AND `form_id` = '".get_option('country_form_field')."' LIMIT 1";
       $country_data = $wpdb->get_results($country_sql,ARRAY_A);
 	  if (isset($country_data[0]))
 	      {
