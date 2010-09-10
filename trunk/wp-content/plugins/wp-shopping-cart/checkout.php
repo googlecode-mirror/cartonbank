@@ -1,5 +1,7 @@
 ﻿<?php
 global $wpdb,$gateway_checkout_form_fields;
+global $userdata;
+            
 $_SESSION['cart_paid'] = false;
 if (isset($_SESSION['checkoutdata']))
 {
@@ -60,7 +62,7 @@ if (isset($_SESSION['wallet']))
   $form_sql = "SELECT * FROM `".$wpdb->prefix."collect_data_forms` WHERE `active` = '1' ORDER BY `order`;";
   $form_data = $wpdb->get_results($form_sql,ARRAY_A);
   echo "<tr><td  style='padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan='2'><b>Подтвердите информацию о себе:</b></td></tr>";
-
+/*
   foreach($form_data as $form_field)
     {
     if($form_field['type'] == 'heading')
@@ -126,7 +128,25 @@ if (isset($_SESSION['wallet']))
         </tr>\n\r";
         }
     }
+*/
 ?>
+	<tr><td style="padding-bottom: 5px;">Имя*</td>
+		<td style="padding: 2px;">
+		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="<?if (isset($userdata->user_firstname)){echo $userdata->user_firstname;}?>" name="collected_data[1]" type="text">
+		</td>
+	</tr>
+	<tr><td style="padding-bottom: 5px;">Фамилия*</td>
+		<td style="padding: 2px;">
+		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="<?if (isset($userdata->user_lastname)){echo $userdata->user_lastname;}?>" name="collected_data[2]" type="text">
+		</td>
+	</tr>
+	<tr><td style="padding-bottom: 5px;">Email*</td>
+		<td style="padding: 2px;">
+		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="<?if (isset($userdata->user_email)){echo $userdata->user_email;}?>" name="collected_data[3]" type="text">
+		</td>
+	</tr>
+
+
     <tr>
       <td style='padding:4px;'>&nbsp;</td>
       <td style='padding:4px;'><span style='font-size: 7pt;'>Поля, отмеченные звёздочкой обязательны для заполнения.</span></td>
@@ -186,7 +206,6 @@ if (isset($_SESSION['wallet']))
          ?> />
         <label for='payment_method_<?php echo $i ?>'><?php echo TXT_WPSC_PAY_USING;?> <b><?php echo $gateway_name; ?></b></label>
         <?php
-            global $userdata;
             if ($gateway['internalname'] == "wallet")
             {
               echo " (доступно". (float) $userdata->wallet ." руб.)";
@@ -222,9 +241,10 @@ if (isset($_SESSION['wallet']))
     echo TXT_WPSC_BUYPRODUCTS;
     }
 /*
-echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
 echo("<pre>POST:".print_r($_POST,true)."</pre>");
-echo("<pre>GET:".print_r($_GET,true)."</pre>");
+echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
+echo("<pre>userdata:".print_r($userdata,true)."</pre>");
+
 */
 
 ?> 
