@@ -2360,7 +2360,7 @@ Array
       }
     $cart = $_SESSION['nzshpcrt_cart'];
     $_SESSION['checkoutdata'] = $_POST;
-    if($_POST['agree'] != 'yes')
+    if(isset($_POST['agree']) && $_POST['agree'] != 'yes')
       {
       $_SESSION['nzshpcrt_checkouterr'] = TXT_WPSC_PLEASEAGREETERMSANDCONDITIONS;
       header($returnurl);
