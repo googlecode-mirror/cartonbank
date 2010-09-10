@@ -71,8 +71,10 @@ function country_list($selected_country = null)
   $num = 1;
   $total = 0;
   $total_shipping = 0;
+  $current_item = 0;
   foreach($cart as $key => $cart_item)
     {
+	  $current_item = $current_item +1;
     $product_id = $cart_item->product_id;
     $quantity = $cart_item->quantity;
     $number =& $quantity;
@@ -120,6 +122,9 @@ function country_list($selected_country = null)
 
 	$_bigpictext = "<b>Автор:</b> ".$product_list[0]['brand']."<br><b>Категория: </b> ".$product_list[0]['kategoria']."<br><b>Описание: </b> ".$product_list[0]['description']."<br><b>Тэги: </b>".$product_list[0]['additional_description']."<br><b>Размер:</b> ".$_size;
 
+	$_SESSION['nzshpcrt_cart'][$key]->author  = $product_list[0]['brand'];
+
+
 	echo "<div style='font-size: 8pt !important;'>".$_bigpictext."</div>";
 
     echo "  </td>\n\r";
@@ -130,14 +135,15 @@ function country_list($selected_country = null)
 	<form name="licenses" id="licenses" onsubmit="submitform(this);return false;" action="http://cartoonbank.ru/cb/?page_id=29" method="POST"> 
 	
 	<input name="license" value="l1_price" type="radio" <? ischecked('l1_price', $product_list[0]['id']);?> /> 
-	<? echo round($product_list[0]['l1_price']);?>&nbsp;руб. <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=238" title="ограниченная">ограниченная</a> <br>
-	
+	<? echo round($product_list[0]['l1_price']);?>&nbsp;руб. <!-- <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=238" title="ограниченная">ограниченная</a> --> <a href="#" onclick="javascript:window.open('<?echo get_option('siteurl'); ?>/wp-content/plugins/wp-shopping-cart/license.php?l=1&item=<? echo $current_item; ?>','текст ограниченной лицензии','height=480,width=640,scrollbars=yes');">ограниченная</a> <br>
+
 	<input name="license" value="l2_price" type="radio" <? ischecked('l2_price', $product_list[0]['id']);?> /> 
-	<? echo round($product_list[0]['l2_price']);?>&nbsp;руб. <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=242" title="стандартная">стандартная</a> <br>
+	<? echo round($product_list[0]['l2_price']);?>&nbsp;руб. <!-- <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=242" title="стандартная">стандартная</a> --> <a href="#" onclick="javascript:window.open('<?echo get_option('siteurl'); ?>/wp-content/plugins/wp-shopping-cart/license.php?l=2&item=<? echo $current_item; ?>','текст стандартной лицензии','height=480,width=640,scrollbars=yes');">стандартная</a><br>
 	
 	<input name="license" value="l3_price" type="radio" <? ischecked('l3_price', $product_list[0]['id']);?> /> 
-	<? echo round($product_list[0]['l3_price']);?>&nbsp;руб. <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=245" title="расширенная">расширенная</a> 
-	
+	<? echo round($product_list[0]['l3_price']);?>&nbsp;руб. <!-- <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=245" title="расширенная">расширенная</a> --> 
+	<a href="#" onclick="javascript:window.open('<?echo get_option('siteurl'); ?>/wp-content/plugins/wp-shopping-cart/license.php?l=3&item=<? echo $current_item; ?>','текст стандартной лицензии','height=480,width=640,scrollbars=yes');">расширенная</a>
+
 	<input value="<?echo $product_list[0]['id'];?>" name="prodid" type="hidden"> <br><br>
 	
 	<input id="searchsubmit" value="Сменить лицензию" type="submit"> </form>
@@ -192,6 +198,7 @@ function country_list($selected_country = null)
   
   $total_shipping = nzshpcrt_determine_base_shipping($total_shipping, $_SESSION['selected_country']);
   $total += $total_shipping;
+
   if(get_option('base_country') != null)
     {
     echo "<tr class='product_shipping'>\n\r";
@@ -233,7 +240,8 @@ if ($user_identity == '')
 }
 else
 {
-  echo "<div align='right' width='100%'><div style='clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('checkout_url').$seperator."total=$total' class='button' style='background-color:#CCFF00;'>Подтвердить выбор и перейти к оплате ></a></div><br>";
+  echo "<div align='right' width='100%'><div style='clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('checkout_url')."' class='button' style='background-color:#CCFF00;'>Подтвердить выбор и перейти к оплате ></a></div><br>";
+
 }
   echo "<div style='clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('product_list_url')."' class='button'>< Продолжить выбор</a></div>";
   echo "<div style='clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('shopping_cart_url').$seperator."cart=empty' class='button'>x Очистить корзину</a></div></div>";
@@ -242,7 +250,7 @@ else
   echo "</td></tr>";
 echo "</table>";
 
-  $_SESSION['nzshpcrt_totalprice'] = $total; 
+  $_SESSION['total'] = $total; 
   
     }
     else

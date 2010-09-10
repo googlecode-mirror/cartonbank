@@ -10,7 +10,7 @@ function gateway_wallet($seperator, $sessionid)
 {
   global $userdata, $user_ID, $wpdb;
   $userdata->wallet = (float) $userdata->wallet;
-  $totalsum = (float) $_SESSION['nzshpcrt_totalprice']; 
+  $totalsum = (float) $_SESSION['total']; 
   $transact_url = "";
   if ($userdata->wallet >= $totalsum)
   {

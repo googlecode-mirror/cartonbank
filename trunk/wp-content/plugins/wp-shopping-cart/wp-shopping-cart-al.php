@@ -2062,7 +2062,7 @@ function nzshpcrt_submit_checkout()
     $sessionid = (mt_rand(100,999).time());
     
     $sql = "INSERT INTO `".$wpdb->prefix."purchase_logs` ( `id` , `totalprice` , `sessionid` , `firstname`, `lastname`, `email`, `address`, `phone`, `date`, `shipping_country` )
-	VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid."', '".$wpdb->escape($_POST['firstname'])."', '".$wpdb->escape($_POST['lastname'])."', '".$_POST['email']."', '".$wpdb->escape($_POST['address'])."', '".$wpdb->escape($_POST['phone'])."' , '".time()."', '".$_SESSION['selected_country']."')";
+	VALUES ('', '".$wpdb->escape($_SESSION['total'])."', '".$sessionid."', '".$wpdb->escape($_POST['firstname'])."', '".$wpdb->escape($_POST['lastname'])."', '".$_POST['email']."', '".$wpdb->escape($_POST['address'])."', '".$wpdb->escape($_POST['phone'])."' , '".time()."', '".$_SESSION['selected_country']."')";
    $wpdb->query($sql) ;
    
    $selectsql = "SELECT * FROM `".$wpdb->prefix."purchase_logs` WHERE `sessionid` LIKE '".$sessionid."' LIMIT 1";

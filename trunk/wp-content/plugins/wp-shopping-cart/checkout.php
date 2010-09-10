@@ -6,14 +6,7 @@ if (isset($_SESSION['checkoutdata']))
 	$checkout = $_SESSION['checkoutdata'];
 }
 else{$checkout = null;}
-if(get_option('permalink_structure') != '')
-{
-    $seperator ="?";
-}
- else
-{
-    $seperator ="&amp;";
-}
+
 if(isset($_SESSION['collected_data']))
 {
 	if (isset($form_field['id']))
@@ -25,16 +18,18 @@ if(isset($_SESSION['collected_data']))
 else {$form_field_id = null;}
 
 $currenturl = get_option('checkout_url');
+
 if (isset($_GET['total']))       
-    $currenturl = get_option('checkout_url') . $seperator .'total='.$_GET['total'];
+    $currenturl = get_option('checkout_url');// . $seperator .'total='.$_GET['total'];
 if(!isset($_GET['result']))
   {
 ?>
 <div class="wrap">
-
+<br><br>
 <?php
- //echo TXT_WPSC_CREDITCARDHANDY;
- echo "<br /><br />";
+
+
+// Errors
 if(isset($_SESSION['nzshpcrt_checkouterr']))
   {
   echo "<br /><span style='color: red;'>".$_SESSION['nzshpcrt_checkouterr']."</span>";
@@ -52,10 +47,16 @@ if (isset($_SESSION['wallet']))
 
 
 
+
+
 <!-- Table begins here -->
 
  <table>
- <form action='<?php echo  $currenturl;?>' method='POST'><?php
+ <form action='<?php echo  $currenturl;?>' method='POST'>
+ <input type="hidden" name="total" value="<?echo $_SESSION['total'];?>">
+ <?php
+
+  // input fields
   $form_sql = "SELECT * FROM `".$wpdb->prefix."collect_data_forms` WHERE `active` = '1' ORDER BY `order`;";
   $form_data = $wpdb->get_results($form_sql,ARRAY_A);
   echo "<tr><td  style='padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan='2'><b>Подтвердите информацию о себе:</b></td></tr>";
@@ -65,9 +66,8 @@ if (isset($_SESSION['wallet']))
     if($form_field['type'] == 'heading')
       {
 
+
 	// First row
-
-
       echo "
       <tr style='padding:5px;'>
         <td  style='padding:5px;' colspan='2'>\n\r";
@@ -189,7 +189,7 @@ if (isset($_SESSION['wallet']))
             global $userdata;
             if ($gateway['internalname'] == "wallet")
             {
-              echo "(доступно". (float) $userdata->wallet ." руб.)";
+              echo " (доступно". (float) $userdata->wallet ." руб.)";
             }
         ?>        
         </td>
@@ -221,4 +221,10 @@ if (isset($_SESSION['wallet']))
     {
     echo TXT_WPSC_BUYPRODUCTS;
     }
-  ?> 
+/*
+echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
+echo("<pre>POST:".print_r($_POST,true)."</pre>");
+echo("<pre>GET:".print_r($_GET,true)."</pre>");
+*/
+
+?> 
