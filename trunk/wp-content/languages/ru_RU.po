@@ -9658,13 +9658,13 @@ msgstr "Обо мне"
 msgid "About the user"
 msgstr "О пользователе"
 
-#: wp-admin/user-edit.php:337
+#: wp-admin/user-edit.php:347
 msgid "Biographical Info"
-msgstr "Биография"
+msgstr "О вас или о вашем СМИ"
 
-#: wp-admin/user-edit.php:339
+#: wp-admin/user-edit.php:349 
 msgid "Share a little biographical information to fill out your profile. This may be shown publicly."
-msgstr "Напишите немного о себе. Эта информация может отображаться на сайте."
+msgstr "Напишите название средства массовой информации (газета, журнал, телепередача, блог."
 
 #: wp-admin/user-edit.php:347
 msgid "New Password"
@@ -13840,17 +13840,17 @@ msgstr "Этот логин уже зарегистрирован."
 msgid "This email address is already registered."
 msgstr "Этот адрес e-mail уже зарегистрирован."
 
-#: wp-includes/registration.php:326
-msgid "AIM"
-msgstr "AIM"
+#: wp-includes/registration.php:330
+msgid "ICQ"
+msgstr "ICQ"
 
-#: wp-includes/registration.php:327
-msgid "Yahoo IM"
-msgstr "Yahoo IM"
+#: wp-includes/registration.php:331
+msgid "Skype"
+msgstr "Skype"
 
-#: wp-includes/registration.php:328
-msgid "Jabber / Google Talk"
-msgstr "Jabber / Google Talk"
+#: wp-includes/registration.php:332
+msgid "Google Talk"
+msgstr "Google Talk"
 
 #: wp-includes/rss.php:900
 msgid "An error has occurred, which probably means the feed is down. Try again later."
