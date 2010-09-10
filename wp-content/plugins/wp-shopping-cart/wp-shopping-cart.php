@@ -24,9 +24,6 @@ if(get_option('language_setting') != '')
 require_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/classes/variations.class.php');
 require_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/classes/cart.class.php');
 
-//echo("<pre>".print_r($_SESSION,true)."</pre>");
-
-
 /*
  * Handles "bad" session setups that cause the session to be initialised before the cart.class.php file is included
  * The following piece of code uses the serialized cart variable to reconstruct the cart
@@ -1110,6 +1107,9 @@ function nzshpcrt_submit_ajax()
 				//ales
 				
 				$_SESSION['nzshpcrt_cart'][$cart_key]->license = $_POST['license'];
+
+				$_SESSION['nzshpcrt_cart'][$cart_key]->author = get_brand($brand_id);
+
 
 				if($_SESSION['nzshpcrt_cart'][$cart_key]->product_variations === $variations) 
 				  {
@@ -2300,7 +2300,7 @@ Array
             $any_bad_inputs = true;
             $bad_input = true;
             }
-//echo("<pre>form_data".print_r($form_data,true)."</pre>");
+
                 break;
           
           default:
@@ -2376,7 +2376,7 @@ Array
     $sessionid = (mt_rand(100,999).time());
     
     $sql = "INSERT INTO `".$wpdb->prefix."purchase_logs` ( `id` , `totalprice` , `sessionid` , `firstname`, `lastname`, `email`, `date`, `shipping_country` )
-VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid."', '".$wpdb->escape($_POST['collected_data']['1'])."', '".$wpdb->escape($_POST['collected_data']['2'])."', '".$_POST['collected_data']['3']."', '".time()."', 'ru')";
+VALUES ('', '".$wpdb->escape($_SESSION['total'])."', '".$sessionid."', '".$wpdb->escape($_POST['collected_data']['1'])."', '".$wpdb->escape($_POST['collected_data']['2'])."', '".$_POST['collected_data']['3']."', '".time()."', 'ru')";
    $wpdb->query($sql) ;
    
    $selectsql = "SELECT * FROM `".$wpdb->prefix."purchase_logs` WHERE `sessionid` LIKE '".$sessionid."' LIMIT 1";
@@ -2391,7 +2391,7 @@ VALUES ('', '".$wpdb->escape($_SESSION['nzshpcrt_totalprice'])."', '".$sessionid
      $row = $cart_item->product_id;
      $quantity = $cart_item->quantity;
      $variations = $cart_item->product_variations;
-     //exit("<pre>".print_r($cart_item,true)."</pre>");
+
      $product_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_list` WHERE `id` = '$row' LIMIT 1",ARRAY_A) ;
      $product_data = $product_data[0];
      if($product_data['file'] > 0)
@@ -2606,7 +2606,7 @@ function nzshpcrt_shopping_basket($input = null)
 
 function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $title='')
   {
-//echo("<pre>nzshpcrt_shopping_basket_internals input CART<br>".print_r($cart,true)."</pre>");
+
   global $wpdb;
   //global $current_user;
   $output = '';
@@ -2659,11 +2659,9 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     $output .= "<tr><td style='border-bottom: 1px solid #FF9966'>№</td><td style='border-bottom: 1px solid #FF9966'>Название</td><td  style='border-bottom: 1px solid #FF9966' align='right'>Цена</td></tr>"; 
     $total = 0;
 
-	//echo("<pre>cart<br>".print_r($cart,true)."</pre>");
 		
 	foreach($cart as $cart_item)
       {
-	//echo("<pre>cart_item<br>".print_r($cart_item,true)."</pre>");
       $product_id = $cart_item->product_id;
 				//ales: hack to have just one item of each pic
 				//$quantity = $cart_item->quantity;
@@ -2720,8 +2718,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     $output .= "<tr><td>&nbsp;</td><td style='border-top: 1px solid #FF9966'>Итого: </td><td align='right' style='border-top: 1px solid #FF9966'><b>".round($total)."</b></td></tr>";
     $output .= "</table>";
 
-//echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
-//echo("<pre>POST:".print_r($_POST,true)."</pre>");
+$_SESSION['total'] = $total;
 
 	$output .= "На вашем Личном Счёте <b>".round($_wallet)."</b> руб.<br>";
 
@@ -2746,8 +2743,7 @@ if ($total > $_wallet)
       $output .= "На вашем Личном Счёте <b>".round($_wallet)."</b> руб.<br>";
 	  $output .= "<a href='".get_option('product_list_url')."'>".TXT_WPSC_VISITTHESHOP."</a>";
       }
-	//echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
-	//echo("<pre>POST:".print_r($_POST,true)."</pre>");
+
 
   return $output;
   }
@@ -2791,7 +2787,7 @@ function nzshpcrt_download_file()
         {
         $product_id = $_GET['product_id'];
         $product_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_list` WHERE `id` = '$product_id' LIMIT 1",ARRAY_A);
-        //exit("<pre>".print_r($product_data,true)."</pre>");
+
         if(is_numeric($product_data[0]['file']) && ($product_data[0]['file'] > 0))
           {
           $file_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_files` WHERE `id`='".$product_data[0]['file']."' LIMIT 1",ARRAY_A) ;
@@ -2974,7 +2970,7 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
         }
       
       $chkrate = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_rating` WHERE `id`='".$vote_id."' LIMIT 1",ARRAY_A);
-      //$output .= "<pre>".print_r($chkrate,true)."</pre>";
+
       if($chkrate[0]['rated'] > 0)
         {
         $rating = $chkrate[0]['rated'];
@@ -2985,7 +2981,7 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
           $rating = 0;
           $type = 'voting';
           }
-      //$output .= "<pre>".print_r($rating,true)."</pre>";
+
       $output .=  "<div id='starcontainer' $starcontainer_attributes >\r\n";
       for($k=1; $k<=5; ++$k)
         {

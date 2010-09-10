@@ -5,6 +5,14 @@ $sessionid = $_GET['sessionid'];
 $errorcode = '';
 $transactid = '';
 //$cart = $_SESSION['nzshpcrt_cart'];
+
+/*
+echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
+echo("<pre>POST:".print_r($_POST,true)."</pre>");
+echo("<pre>GET:".print_r($_GET,true)."</pre>");
+*/
+
+
 if($sessionid != null)
   {
   //$message = TXT_WPSC_EMAILMSG1;
@@ -77,7 +85,7 @@ CREATE TABLE `wp_product_list` (
      $product_data = $wpdb->get_results($productsql,ARRAY_A) ;
      if($product_data[0]['quantity_limited'] == 1)
        {
-       $wpdb->query("UPDATE `".$wpdb->prefix."product_list` SET `quantity`='".($product_data[0]['quantity']-$row['quantity'])."' WHERE `id`='".$product_data[0]['id']."' LIMIT 1");
+       $wpdb->query("UPDATE `wp_product_list` SET `quantity`='".($product_data[0]['quantity']-$row['quantity'])."' WHERE `id`='".$product_data[0]['id']."' LIMIT 1");
        }
      if($product_data[0]['file'] > 0)
        {
