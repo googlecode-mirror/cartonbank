@@ -189,30 +189,6 @@ include ('admin-header.php');
 
 <h3><?php _e('Personal Options'); ?></h3>
 
-<!-- <table class="form-table">
-<?php if ( rich_edit_exists() && !( IS_PROFILE_PAGE && !$user_can_edit ) ) : // don't bother showing the option if the editor has been removed ?>
-	<tr>
-		<th scope="row"><?php _e('Visual Editor')?></th>
-		<td><label for="rich_editing"><input name="rich_editing" type="checkbox" id="rich_editing" value="false" <?php checked('false', $profileuser->rich_editing); ?> /> <?php _e('Disable the visual editor when writing'); ?></label></td>
-	</tr>
-<?php endif; ?>
-<?php if ( count($_wp_admin_css_colors) > 1 && has_action('admin_color_scheme_picker') ) : ?>
-<tr>
-<th scope="row"><?php _e('Admin Color Scheme')?></th>
-<td><?php do_action( 'admin_color_scheme_picker' ); ?></td>
-</tr>
-<?php
-endif; // $_wp_admin_css_colors
-if ( !( IS_PROFILE_PAGE && !$user_can_edit ) ) : ?>
-<tr>
-<th scope="row"><?php _e( 'Keyboard Shortcuts' ); ?></th>
-<td><label for="comment_shortcuts"><input type="checkbox" name="comment_shortcuts" id="comment_shortcuts" value="true" <?php if ( !empty($profileuser->comment_shortcuts) ) checked('true', $profileuser->comment_shortcuts); ?> /> <?php _e('Enable keyboard shortcuts for comment moderation.'); ?></label> <?php _e('<a href="http://codex.wordpress.org/Keyboard_Shortcuts">More information</a>'); ?></td>
-</tr>
-<?php
-endif;
-do_action('personal_options', $profileuser);
-?>
-</table> -->
 <?php
 	if ( IS_PROFILE_PAGE )
 		do_action('profile_personal_options', $profileuser);
@@ -262,48 +238,15 @@ else
 </tr>
 
 <tr>
-    <th><label for="wallet"><?php _e('Wallet'); ?> </span></label></th>
+    <th><label for="wallet"><?php _e('Личный Счёт (руб.)'); ?> </span></label></th>
     <td><input type="text" name="wallet" id="wallet" value="<?php echo esc_attr($profileuser->wallet) ?>" 
 <?php if (IS_PROFILE_PAGE) { ?> 
          readonly="true"
 <?php } ?>
-    class="regular-text" /></td>
+    class="regular-text" />
+	<br><span class="description"><?php _e("Личный Счёт можно пополнить по безналичному расчёту."); ?></td>
 </tr>
 
-<!-- <tr>
-	<th><label for="nickname"><?php _e('Nickname'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
-	<td><input type="text" name="nickname" id="nickname" value="<?php echo esc_attr($profileuser->nickname) ?>" class="regular-text" /></td>
-</tr> -->
-
-<!-- <tr>
-	<th><label for="display_name"><?php _e('Display name publicly as') ?></label></th>
-	<td>
-		<select name="display_name" id="display_name">
-		<?php
-			$public_display = array();
-			$public_display['display_username']  = $profileuser->user_login;
-			$public_display['display_nickname']  = $profileuser->nickname;
-			if ( !empty($profileuser->first_name) )
-				$public_display['display_firstname'] = $profileuser->first_name;
-			if ( !empty($profileuser->last_name) )
-				$public_display['display_lastname'] = $profileuser->last_name;
-			if ( !empty($profileuser->first_name) && !empty($profileuser->last_name) ) {
-				$public_display['display_firstlast'] = $profileuser->first_name . ' ' . $profileuser->last_name;
-				$public_display['display_lastfirst'] = $profileuser->last_name . ' ' . $profileuser->first_name;
-			}
-			if ( !in_array( $profileuser->display_name, $public_display ) ) // Only add this if it isn't duplicated elsewhere
-				$public_display = array( 'display_displayname' => $profileuser->display_name ) + $public_display;
-			$public_display = array_map( 'trim', $public_display );
-			$public_display = array_unique( $public_display );
-			foreach ( $public_display as $id => $item ) {
-		?>
-			<option id="<?php echo $id; ?>" value="<?php echo esc_attr($item); ?>"<?php selected( $profileuser->display_name, $item ); ?>><?php echo $item; ?></option>
-		<?php
-			}
-		?>
-		</select>
-	</td>
-</tr> -->
 </table>
 
 <h3><?php _e('Contact Info') ?></h3>
@@ -337,15 +280,14 @@ else
 <?php
 	}
 ?>
-</table>
 
-<h3><?php IS_PROFILE_PAGE ? _e('About Yourself') : _e('About the user'); ?></h3>
+</table>
 
 <table class="form-table">
 <tr>
-	<th><label for="description"><?php _e('Biographical Info'); ?></label></th>
+	<th><label for="description">О вашем СМИ</label></th>
 	<td><textarea name="description" id="description" rows="5" cols="30"><?php echo esc_html($profileuser->description); ?></textarea><br />
-	<span class="description"><?php _e('Share a little biographical information to fill out your profile. This may be shown publicly.'); ?></span></td>
+	<span class="description"><?php _e('Назовите средство массовой информации, которое вы представляете.'); ?></span></td>
 </tr>
 
 <?php
@@ -363,8 +305,20 @@ if ( $show_password_fields ) :
 <?php endif; ?>
 </table>
 
+<!-- <h3><?php _e('Автору') ?></h3>
+
+<table class="form-table">
+
+<tr>
+	<th><label for="description">Напишите о себе</label></th>
+	<td><textarea name="bio" id="bio" rows="5" cols="30"><?php if (isset($profileuser->bio)){echo esc_html($profileuser->bio);} ?></textarea><br />
+	<span class="description"><?php _e('Это публичная информация для справки об авторе.'); ?></span></td>
+</tr>
+
+</table> -->
+
 <?php
-	if ( IS_PROFILE_PAGE )
+if ( IS_PROFILE_PAGE )
 		do_action( 'show_user_profile', $profileuser );
 	else
 		do_action( 'edit_user_profile', $profileuser );

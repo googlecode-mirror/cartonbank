@@ -62,7 +62,7 @@ function validate_username( $username ) {
  * set the user's preference on whether they want the rich editor on.
  *
  * Most of the $userdata array fields have filters associated with the values.
- * The exceptions are 'rich_editing', 'role', 'jabber', 'aim', 'yim',
+ * The exceptions are 'rich_editing', 'role', 'gtalk', 'icq', 'skype',
  * 'user_registered', and 'ID'. The filters have the prefix 'pre_user_' followed
  * by the field name. An example using 'description' would have the filter
  * called, 'pre_user_description' that can be hooked into.
@@ -87,9 +87,9 @@ function validate_username( $username ) {
  *		if not empty.
  * 'user_registered' - The date the user registered. Format is 'Y-m-d H:i:s'.
  * 'role' - A string used to set the user's role.
- * 'jabber' - User's Jabber account.
- * 'aim' - User's AOL IM account.
- * 'yim' - User's Yahoo IM account.
+ * 'gtalk' - User's gtalk account.
+ * 'icq' - User's AOL IM account.
+ * 'skype' - User's Yahoo IM account.
  *
  * @since 2.0.0
  * @uses $wpdb WordPress database layer.
@@ -327,9 +327,9 @@ function wp_create_user($username, $password, $email = '') {
  */
 function _wp_get_user_contactmethods() {
 	$user_contactmethods = array(
-		'aim' => __('AIM'),
-		'yim' => __('Yahoo IM'),
-		'jabber' => __('Jabber / Google Talk')
+		'icq' => __('ICQ'),
+		'skype' => __('Skype'),
+		'gtalk' => __('Google Talk')
 	);
 	return apply_filters('user_contactmethods',$user_contactmethods);
 }
