@@ -4,6 +4,9 @@ function cart_product_list_string($licensecolumn)
 // the function is for displaying the list of products
 // if $licensecolumn is False we don't diplay extra columns
 	global $wpdb;
+	$current_item = 0;
+	$total = 0;
+
 	$cart = $_SESSION['nzshpcrt_cart'];
 	$result = '<table class=\'productcart\'>';
 	foreach($cart as $key => $cart_item)

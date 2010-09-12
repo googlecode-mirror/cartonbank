@@ -88,7 +88,7 @@ CREATE TABLE `wp_product_list` (
        $previous_download_ids[] = $download_data['id'];
        }
        
-     
+      $variation_list = '';
       if($link != '')
         {
 		$message .= " - ". $product_data[0]['name'] . $variation_list ."  Кликните здесь, чтобы скачать: $link\n";

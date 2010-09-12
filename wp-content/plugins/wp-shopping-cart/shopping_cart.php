@@ -53,7 +53,7 @@ function country_list($selected_country = null)
   $num = 1;
   $total = 0;
   $total_shipping = 0;
-  $current_item = 0;
+  
 
   require('al_cart_function.php');
 
