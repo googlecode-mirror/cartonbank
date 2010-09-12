@@ -4,8 +4,6 @@ $curgateway = get_option('payment_gateway');
 $sessionid = $_GET['sessionid'];
 $errorcode = '';
 $transactid = '';
-//$cart = $_SESSION['nzshpcrt_cart'];
-
 
 //echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
 //echo("<pre>POST:".print_r($_POST,true)."</pre>");
@@ -125,7 +123,7 @@ CREATE TABLE `wp_product_list` (
     }
   if($email != '')
     {
-    mail($email, 'Purchase Receipt', $message, $headers);
+    mail($email, 'Подтверждение покупки изображения. Cartoonbank.ru', $message, $headers);
     }
   
   $purch_sql = "SELECT * FROM `wp_purchase_logs` WHERE `id`!='".$check[0]['id']."'";
@@ -160,10 +158,10 @@ CREATE TABLE `wp_product_list` (
   $report = $report_user . $report;
   if(get_option('purch_log_email') != null)
     {
-    mail(get_option('purch_log_email'), 'Purchase Report', $report, $headers);
+    mail(get_option('purch_log_email'), 'Подтверждение покупки изображения. Cartoonbank.ru', $report, $headers);
     }
-  //$_SESSION['nzshpcrt_cart'] = '';
-  //$_SESSION['nzshpcrt_cart'] = Array();
+  $_SESSION['nzshpcrt_cart'] = '';
+  $_SESSION['nzshpcrt_cart'] = Array();
   
   echo '<div class="wrap">';
   if($sessionid != null)
@@ -184,8 +182,8 @@ CREATE TABLE `wp_product_list` (
 if($check != null)
   {
 	$authcode = ""; // wtf?? ales
-  $sql = "UPDATE `wp_purchase_logs` SET `statusno` = '".$errorcode."',`transactid` = '".$transactid."',`authcode` = '".$authcode."',`date` = '".time()."' WHERE `sessionid` = ".$sessionid." LIMIT 1";
-   //$wpdb->query($sql) ;
+    $sql = "UPDATE `wp_purchase_logs` SET `statusno` = '".$errorcode."',`transactid` = '".$transactid."',`authcode` = '".$authcode."',`date` = '".time()."' WHERE `sessionid` = ".$sessionid." LIMIT 1";
+    $wpdb->query($sql) ;
    }
 
 	 
