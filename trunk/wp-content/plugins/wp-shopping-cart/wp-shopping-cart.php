@@ -2741,7 +2741,7 @@ if ($total > $_wallet)
       $output .= $spacing;
       $output .= TXT_WPSC_YOURSHOPPINGCARTISEMPTY.".<br />";
       $output .= "На вашем Личном Счёте <b>".round($_wallet)."</b> руб.<br>";
-	  $output .= "<a href='".get_option('product_list_url')."'>".TXT_WPSC_VISITTHESHOP."</a>";
+	  //$output .= "<a href='".get_option('product_list_url')."'>".TXT_WPSC_VISITTHESHOP."</a>";
       }
 
 
