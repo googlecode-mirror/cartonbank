@@ -18,24 +18,6 @@ if (isset($_SESSION['nzshpcrt_cart']))
 	$cart = $_SESSION['nzshpcrt_cart'];
 }
 
-function ischecked ($license,$picture_id)
-{
-	$cart = $_SESSION['nzshpcrt_cart'];
-	$cc = 1;
-foreach($cart as $key => $cart_item)
-    {
-		if (($license==$cart_item->license)&($picture_id==$cart_item->product_id))
-		{
-			$cc++;
-			echo 'checked';
-		}
-		else
-		{
-			echo '';
-		}
-	}
-}
-
 
 function country_list($selected_country = null)
   {
@@ -63,7 +45,7 @@ function country_list($selected_country = null)
     {
   ?>
   <span>
-  <?php echo TXT_WPSC_CONFIRM_TOTALS; ?></span>
+  Проверьте ваш заказ. Скачивая изображения, вы соглашаетесь с условиями, описанными в соответствующей лицензии. Переходите к следующей странице со списком возможных способов оплаты.</span>
   <hr class='productcart' />
   <table id='productcart' class='productcart'>
   <?php
@@ -72,164 +54,17 @@ function country_list($selected_country = null)
   $total = 0;
   $total_shipping = 0;
   $current_item = 0;
-  foreach($cart as $key => $cart_item)
-    {
-	  $current_item = $current_item +1;
-    $product_id = $cart_item->product_id;
-    $quantity = $cart_item->quantity;
-    $number =& $quantity;
-    $product_variations = $cart_item->product_variations;
-    $variation_count = count($product_variations);
-    if($variation_count >= 1)
-      {
-      $variation_list = "&nbsp;(";
-      $i = 0;
-      foreach($product_variations as $value_id)
-        {
-        if($i > 0)
-          {
-          $variation_list .= ",&nbsp;";
-          }
-        $value_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."variation_values` WHERE `id`='".$value_id."' LIMIT 1",ARRAY_A);
-        $variation_list .= str_replace(" ", "&nbsp;",stripslashes($value_data[0]['name']));    
-        $i++;
-        }
-      $variation_list .= ")";
-      }
-      else
-        {
-        $variation_list = '';
-        }
-    //$sql = "SELECT * FROM `".$wpdb->prefix."product_list` WHERE `id`='$product_id' LIMIT 1";
-	//$sql = "SELECT l.*, b.name AS author FROM `wp_product_list` AS l, wp_product_brands AS b WHERE l.id='$product_id' AND l.brand = b.id LIMIT 1";
 
-    $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE wp_product_list.id='$product_id' AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC LIMIT 1";
+  require('al_cart_function.php');
 
-    $product_list = $wpdb->get_results($sql,ARRAY_A) ;
-    echo "<tr>\n\r";
-    
-    echo "  <td style='width:144px;'>\n\r";
-    //$imagepath = $imagedir . $imagedata[0]['image'];
-    $basepath = get_option('siteurl');
-    $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
-    $previewdir = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
-    echo ("<a href='".$previewdir.$product_list[0]['image']."'><img border='0' src='".$imagedir.$product_list[0]['image']."'></a>");
-    echo "  </td>\n\r";
-
-    echo "  <td>\n\r";
-
-	$_size = $product_list[0]['width']."px X ".$product_list[0]['height']."px;";
-
-	$_bigpictext = "<b>Автор:</b> ".$product_list[0]['brand']."<br><b>Категория: </b> ".$product_list[0]['kategoria']."<br><b>Описание: </b> ".$product_list[0]['description']."<br><b>Тэги: </b>".$product_list[0]['additional_description']."<br><b>Размер:</b> ".$_size;
-
-	$_SESSION['nzshpcrt_cart'][$key]->author  = $product_list[0]['brand'];
-
-
-	echo "<div style='font-size: 8pt !important;'>".$_bigpictext."</div>";
-
-    echo "  </td>\n\r";
-	
-	echo "  <td width='240'>\n\r";
-	?>
-	
-	<form name="licenses" id="licenses" onsubmit="submitform(this);return false;" action="http://cartoonbank.ru/cb/?page_id=29" method="POST"> 
-	
-	<input name="license" value="l1_price" type="radio" <? ischecked('l1_price', $product_list[0]['id']);?> /> 
-	<? echo round($product_list[0]['l1_price']);?>&nbsp;руб. <!-- <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=238" title="ограниченная">ограниченная</a> --> <a href="#" onclick="javascript:window.open('<?echo get_option('siteurl'); ?>/wp-content/plugins/wp-shopping-cart/license.php?l=1&item=<? echo $current_item; ?>','текст ограниченной лицензии','height=480,width=640,scrollbars=yes');">ограниченная</a> <br>
-
-	<input name="license" value="l2_price" type="radio" <? ischecked('l2_price', $product_list[0]['id']);?> /> 
-	<? echo round($product_list[0]['l2_price']);?>&nbsp;руб. <!-- <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=242" title="стандартная">стандартная</a> --> <a href="#" onclick="javascript:window.open('<?echo get_option('siteurl'); ?>/wp-content/plugins/wp-shopping-cart/license.php?l=2&item=<? echo $current_item; ?>','текст стандартной лицензии','height=480,width=640,scrollbars=yes');">стандартная</a><br>
-	
-	<input name="license" value="l3_price" type="radio" <? ischecked('l3_price', $product_list[0]['id']);?> /> 
-	<? echo round($product_list[0]['l3_price']);?>&nbsp;руб. <!-- <a target="_blank" href="http://cartoonbank.ru/cb/?page_id=245" title="расширенная">расширенная</a> --> 
-	<a href="#" onclick="javascript:window.open('<?echo get_option('siteurl'); ?>/wp-content/plugins/wp-shopping-cart/license.php?l=3&item=<? echo $current_item; ?>','текст стандартной лицензии','height=480,width=640,scrollbars=yes');">расширенная</a>
-
-	<input value="<?echo $product_list[0]['id'];?>" name="prodid" type="hidden"> <br><br>
-	
-	<input id="searchsubmit" value="Сменить лицензию" type="submit"> </form>
-	
-	<?
-	
-	echo " </td>\n\r";
-	
-
-
-
-	//echo "<td>".round($cart_item->price)." руб.</td>";
-	//echo("<pre>".print_r($product_list,true)."</pre>");  
-
-
-//    echo "  <td>\n\r";
-//    echo  "<form class='adjustform' method='POST' action='".get_option('shopping_cart_url')."'><input type='text' value='".$number."' size='2' name='quantity' /><input type='hidden' value='".$key."' name='key' />&nbsp; <input type='submit' name='submit' value='".TXT_WPSC_APPLY."' /></form>";
-//    echo "  </td>\n\r";
-    
-//    echo "  <td>\n\r";
-//    if($product_list[0]['special']==1)
-//      {
-//      $price_modifier = $product_list[0]['special_price'];
-//      }
-//      else
-//        {
-        $price_modifier = 0;
-//        }
-//        
-//    echo nzshpcrt_currency_display(($number * ($product_list[0]['price']-$price_modifier)), $product_list[0]['notax']);
-//    
-    if($product_list[0]['notax'] == 1)
-      {
-      $total += $number * ($product_list[0]['price']-$price_modifier);
-      }
-      else
-        {
-        $total += $number * ($product_list[0]['price']-$price_modifier) * get_option('gst_rate');
-        }
-//    
-//    echo "  </td>\n\r";
-//    $shipping = nzshpcrt_determine_item_shipping($product_id, $number, $_SESSION['selected_country']);
-//    $total_shipping += $shipping;
-    echo "  <td width='70'>\n\r";
-    echo "<a href='".get_option('shopping_cart_url').$seperator."remove=".$key."'>Убрать из заказа</a>";
-    echo "  </td>\n\r";
-    
-    echo "</tr>\n\r";
-    }
-    
+  //cart_product_list();
+  $license = true;
+  echo cart_product_list_string($license);
+  
   $siteurl = get_option('siteurl');
   
   $total_shipping = nzshpcrt_determine_base_shipping($total_shipping, $_SESSION['selected_country']);
-  $total += $total_shipping;
-
-  if(get_option('base_country') != null)
-    {
-    echo "<tr class='product_shipping'>\n\r";
-    echo "  <td colspan='2'>\n\r";
-    ?>
-    <div class='select_country'>
-      <?php echo TXT_WPSC_SHIPPING_COUNTRY; ?>
-      <form name='change_country' action='' method='POST'>
-      <?php
-      echo country_list($_SESSION['selected_country']);
-      ?>
-      </form>
-    </div>
-    <?php
-    echo "  </td>\n\r";
-    echo "  <td colspan='2' style='vertical-align: middle;'>\n\r";
-    echo "" . nzshpcrt_currency_display($total_shipping, 1) . "";
-    echo "  </td>\n\r";
-    echo "</tr>\n\r";
-    }
-    
-//  //echo "<tr style='total-price'>\n\r";
-//  echo "<tr class='total_price'>\n\r";
-//  echo "  <td colspan='2'>\n\r";
-//  //echo "".TXT_WPSC_TOTALPRICE.":";
-//  echo "  </td>\n\r";
-//  echo "  <td colspan='2' style='vertical-align: middle;'>\n\r";
-//  echo "" . nzshpcrt_currency_display($total, 1) . "";
-//  echo "  </td>\n\r";
-//  echo "</tr>\n\r";
-    
+  $total += $total_shipping;   
 
   echo "<tr><td colspan='2'>&nbsp;</td><td colspan='2'>";
   
