@@ -1108,8 +1108,10 @@ function nzshpcrt_submit_ajax()
 				
 				$_SESSION['nzshpcrt_cart'][$cart_key]->license = $_POST['license'];
 
-				$_SESSION['nzshpcrt_cart'][$cart_key]->author = get_brand($brand_id);
-
+				if (isset($brand_id))
+				{
+					$_SESSION['nzshpcrt_cart'][$cart_key]->author = get_brand($brand_id);
+				}
 
 				if($_SESSION['nzshpcrt_cart'][$cart_key]->product_variations === $variations) 
 				  {
@@ -3120,7 +3122,10 @@ function get_brand($brand_id)
   {
   global $wpdb;
   $brand_data = $wpdb->get_results("SELECT `name` FROM `".$wpdb->prefix."product_brands` WHERE `id` IN ('".$brand_id."') LIMIT 1",ARRAY_A);
-  return $brand_data[0]['name']; 
+	if (isset($brand_data[0]['name']))
+	  {return $brand_data[0]['name'];}
+	else
+	  {return '';}
   }
 
 
