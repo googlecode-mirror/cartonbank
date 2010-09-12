@@ -112,6 +112,7 @@ function cart_product_list_string($licensecolumn)
 	    $result .= "<a href='".get_option('shopping_cart_url')."&remove=".$key."'>Убрать из заказа</a>";
 	    $result .= "  </td>";
 	    }
+		/*
 		else
 		{
 		// Download link
@@ -119,7 +120,7 @@ function cart_product_list_string($licensecolumn)
 	    $result .= "<a href=''>Скачать</a>";
 		$result .= "  </td>";
 		}
-
+		*/
 	    $result .= "</tr>";
 	 }
 
