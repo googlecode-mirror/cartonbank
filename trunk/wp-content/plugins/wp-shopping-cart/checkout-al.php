@@ -210,7 +210,7 @@ function al_paypal_payment_method(){
 			
 
 			<!-- <input type="hidden" name="cmd" value="_xclick">
-			<input type="hidden" name="business" value="aleshin@chance.ru">
+			<input type="hidden" name="business" value="igor.aleshin@gmail.com">
 			<input type="hidden" name="item_name" value="Several cartoons">
 			<input type="hidden" name="currency_code" value="USD">
 			<input type="hidden" name="amount" value="5.00">

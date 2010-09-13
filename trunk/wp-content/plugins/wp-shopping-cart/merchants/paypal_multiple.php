@@ -18,7 +18,7 @@ function gateway_paypal_multiple($seperator, $sessionid)
   //$transact_url = "http://cartoonbank.ru/?page_id=32";
   // paypal connection variables
   // ales $data['business'] = get_option('paypal_multiple_business');
-  $data['business'] = "aleshin@chance.ru"; // ales
+  $data['business'] = "igor.aleshin@gmail.com"; // ales
   $data['return'] = $transact_url.$seperator."sessionid=".$sessionid."&gateway=paypal";
   $data['cancel_return'] = $transact_url;
   $data['notify_url'] = $transact_url;
