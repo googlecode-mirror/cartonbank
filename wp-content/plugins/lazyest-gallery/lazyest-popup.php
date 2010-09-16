@@ -15,8 +15,8 @@
 		<meta name="generator" content="WordPress <?php bloginfo('version'); ?>" />
 
 		<title><?php echo $_GET['image'] ?></title>
-
-		<link rel="stylesheet" href="<?php get_option('siteurl'); ?>/wp-content/plugins/lazyest-gallery/lazyest-style.css" type="text/css" media="screen" />
+		<? $rrr = get_option('siteurl')."/wp-content/plugins/lazyest-gallery/lazyest-style.css"; ?>
+		<link rel="stylesheet" href="<?php echo $rrr; ?>" type="text/css" media="screen" />
 		<style type="text/css">
 			body {
 				text-align:center;
