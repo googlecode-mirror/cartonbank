@@ -848,8 +848,13 @@ function nzshpcrt_javascript()
 var base_url = "<?php echo $siteurl; ?>";
 
 /* LightBox Configuration start*/
-var fileLoadingImage = "<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/images/loading.gif";    
-var fileBottomNavCloseImage = "<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
+<?
+$loadgif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/loading.gif";
+$closegif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
+?>
+
+var fileLoadingImage = "<?php echo $loadgif; ?>";    
+var fileBottomNavCloseImage = "<?php echo $closegif; ?>";
 var resizeSpeed = 9;  // controls the speed of the image resizing (1=slowest and 10=fastest)
 var borderSize = 10;  //if you adjust the padding in the CSS, you will need to update this variable
 </script>
@@ -874,10 +879,14 @@ function nzshpcrt_css()
 /* base url */
 var base_url = "<?php echo $siteurl; ?>";
 
+<?
+$loadgif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/loading.gif";
+$closegif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
+?>
 
 /* LightBox Configuration start*/
-var fileLoadingImage = "<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/images/loading.gif";    
-var fileBottomNavCloseImage = "<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
+var fileLoadingImage = "<?php echo $loadgif; ?>";    
+var fileBottomNavCloseImage = "<?php echo $closegif; ?>";
 
 var resizeSpeed = 9;  
 
