@@ -139,7 +139,7 @@ function parse_page_for_gallery($content){
 }
 
 function add_lazyest_gallery_style(){ ?>
-	<link rel="stylesheet" href="<?php bloginfo('home'); ?>/wp-content/plugins/lazyest-gallery/lazyest-style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php get_option('siteurl'); ?>/wp-content/plugins/lazyest-gallery/lazyest-style.css" type="text/css" media="screen" />
 	<!--[if gte IE 5.5000]>
 		<style type="text/css">
 			#gallery {
@@ -906,7 +906,7 @@ function parse_posts_for_images($content){
 
 function add_post_thumbs_style(){
 	?>
-<link rel="stylesheet" href="<?php echo bloginfo('home'); ?>/wp-content/plugins/lazyest-gallery/lazyest-thumbs-style.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php get_option('siteurl'); ?>/wp-content/plugins/lazyest-gallery/lazyest-thumbs-style.css" type="text/css" media="screen" />
 	<?php
 }
 
