@@ -558,7 +558,7 @@ function process_ratings() {
 	if (isset($_GET['rate'])){$_rate=$_GET['rate'];}else {$_rate=0;}
 	if (isset($_GET['pid'])){$_pid=$_GET['pid'];}else{$_pid=0;}
 	$rate = intval($_rate);
-	$post_id = intval($_GET['pid']);
+	$post_id = intval($_pid);
 	if($rate > 0 && $post_id > 0 && check_allowtorate()) {		
 		// Check For Bot
 		$bots_useragent = array('googlebot', 'google', 'msnbot', 'ia_archiver', 'lycos', 'jeeves', 'scooter', 'fast-webcrawler', 'slurp@inktomi', 'turnitinbot', 'technorati', 'yahoo', 'findexa', 'findlinks', 'gaisbo', 'zyborg', 'surveybot', 'bloglines', 'blogsearch', 'ubsub', 'syndic8', 'userland', 'gigabot', 'become.com');
