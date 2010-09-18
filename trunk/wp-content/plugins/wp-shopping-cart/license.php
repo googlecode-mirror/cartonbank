@@ -30,12 +30,12 @@ function get_license($sequence_of_image,$license_num)
 */
 
 // load unique license data
-$current_user = wp_get_current_user();    
+	$current_user = wp_get_current_user();    
 
-$agreement_number = uniqid();
-$agreement_date = date("m.d.y");
-$customer_name = $current_user->last_name. " " . $current_user->first_name;
-$media_name = '[не указано]';
+	$agreement_number = uniqid();
+	$agreement_date = date("m.d.y");
+	$customer_name = $current_user->last_name. " " . $current_user->first_name;
+	$media_name = '[не указано]';
 
 if(isset($_SESSION['nzshpcrt_cart']))
 {
@@ -69,14 +69,14 @@ switch($license_num)
 $content=loadFile($filename); 
 
 // replace placeholders
-$content = str_replace ('#agreement_number#',$agreement_number,$content);
-$content = str_replace ('#agreement_date#',$agreement_date,$content);
-$content = str_replace ('#customer_name#',$customer_name,$content);
-$content = str_replace ('#image_number#',$image_number,$content);
-$content = str_replace ('#image_name#',$image_name,$content);
-$content = str_replace ('#author_name#',$author_name,$content);
-$content = str_replace ('#media_name#',$media_name,$content);
-$content = str_replace ('#price#',$price,$content);
+	$content = str_replace ('#agreement_number#',$agreement_number,$content);
+	$content = str_replace ('#agreement_date#',$agreement_date,$content);
+	$content = str_replace ('#customer_name#',$customer_name,$content);
+	$content = str_replace ('#image_number#',$image_number,$content);
+	$content = str_replace ('#image_name#',$image_name,$content);
+	$content = str_replace ('#author_name#',$author_name,$content);
+	$content = str_replace ('#media_name#',$media_name,$content);
+	$content = str_replace ('#price#',$price,$content);
 
 // output content
 echo $content;

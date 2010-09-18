@@ -52,30 +52,11 @@ $previous_download_ids = Array(0);
   
 if($cart != null && ($errorcode == 0))
   {
-  foreach($cart as $row)
+
+  /*foreach($cart as $row)
      {
-/*
-CREATE TABLE `wp_product_list` (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
-  `name` text NOT NULL,
-  `description` longtext NOT NULL,
-  `additional_description` longtext NOT NULL,
-  `price` varchar(20) NOT NULL default '',
-  `pnp` varchar(20) NOT NULL default '',
-  `international_pnp` varchar(20) NOT NULL default '',
-  `file` bigint(20) unsigned NOT NULL default '0',
-  `image` text NOT NULL,
-  `category` bigint(20) unsigned NOT NULL default '0',
-  `brand` bigint(20) unsigned NOT NULL default '0',
-  `quantity_limited` char(1) NOT NULL default '',
-  `quantity` int(10) unsigned NOT NULL default '0',
-  `special` char(1) NOT NULL default '',
-  `special_price` varchar(20) NOT NULL default '',
-  `display_frontpage` char(1) NOT NULL default '',
-  `notax` char(1) NOT NULL default '0',
-  `active` char(1) NOT NULL default '1',
-*/
-     $link ="";
+     
+	 $link ="";
      $productsql= "SELECT * FROM `wp_product_list` WHERE `id`=".$row['prodid']."";
      $product_data = $wpdb->get_results($productsql,ARRAY_A) ;
 	 
@@ -98,8 +79,9 @@ CREATE TABLE `wp_product_list` (
 
 		$message_price = ''; //ales
 		$report .= " - ". $product_data[0]['name'] ."  ".$message_price ."\n";
-     }
      
+	 }
+   */  
   $total = '';  
   $total_shipping = ''; //nzshpcrt_determine_base_shipping($total_shipping, $country);
   $message .= "<br><br>";
@@ -160,8 +142,10 @@ CREATE TABLE `wp_product_list` (
     {
     mail(get_option('purch_log_email'), 'Подтверждение покупки изображения. Cartoonbank.ru', $report, $headers);
     }
-  $_SESSION['nzshpcrt_cart'] = '';
-  $_SESSION['nzshpcrt_cart'] = Array();
+
+	// todo: 
+  //$_SESSION['nzshpcrt_cart'] = '';
+  //$_SESSION['nzshpcrt_cart'] = Array();
   
   echo '<div class="wrap">';
   if($sessionid != null)
@@ -170,6 +154,7 @@ CREATE TABLE `wp_product_list` (
     echo "<br />" . nl2br(str_replace("$",'\$',$message_html));
     }
   echo '</div>';
+ 
   }
   else
     {
@@ -182,8 +167,9 @@ CREATE TABLE `wp_product_list` (
 if($check != null)
   {
 	$authcode = ""; // wtf?? ales
-    $sql = "UPDATE `wp_purchase_logs` SET `statusno` = '".$errorcode."',`transactid` = '".$transactid."',`authcode` = '".$authcode."',`date` = '".time()."' WHERE `sessionid` = ".$sessionid." LIMIT 1";
-    $wpdb->query($sql) ;
+	$sql = "UPDATE `wp_purchase_logs` SET `statusno` = '".$errorcode."',`transactid` = '".$transactid."',`authcode` = '".$authcode."',`date` = '".time()."' WHERE `sessionid` = ".$sessionid." LIMIT 1";
+    //todo: remove to update 
+    //$wpdb->query($sql) ;
    }
 
 	 
