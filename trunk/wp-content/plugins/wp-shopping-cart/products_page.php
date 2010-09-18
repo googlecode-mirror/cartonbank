@@ -312,7 +312,8 @@ $search_sql = NULL;
                     {
                         $keywords = '';
                     }
-    
+    echo(" sql: ".print_r($sql,true)."");
+
 
     // список картинок
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
