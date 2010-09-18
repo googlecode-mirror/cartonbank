@@ -68,23 +68,23 @@ function cart_product_list_string($licensecolumn)
 
 		if ($licensecolumn)
 		{
-
 			$result .= "  <td width='240'>";
-			
-			
+
 			$result .= "<form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".$siteurl."/?page_id=29' method='POST'>";
 			
 			$ch1 = ischecked('l1_price', $product_list[0]['id']);
 			$result .= "<input name='license' value='l1_price' type='radio' $ch1 />"; 
-			$result .= round($product_list[0]['l1_price'])."&nbsp;руб. <a href='#' onclick='javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=1&item=".$current_item."','текст ограниченной лицензии','height=480,width=640,scrollbars=yes');'>ограниченная</a> <br>";
+			$result .= round($product_list[0]['l1_price'])."&nbsp;руб. ";
+			$result .= "<a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=1&item=".$current_item."','текст ограниченной лицензии','height=480,width=640,scrollbars=yes');\">ограниченная</a> <br>";
+
 
 			$ch2 = ischecked('l2_price', $product_list[0]['id']);
 			$result .= "<input name='license' value='l2_price' type='radio' $ch2 />"; 
-			$result .= round($product_list[0]['l2_price'])."&nbsp;руб. <a href='#' onclick='javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=2&item=".$current_item."','текст стандартной лицензии','height=480,width=640,scrollbars=yes');'>стандартная</a><br>";
+			$result .= round($product_list[0]['l2_price'])."&nbsp;руб. <a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=2&item=".$current_item."','текст стандартной лицензии','height=480,width=640,scrollbars=yes');\">стандартная</a><br>";
 			
 			$ch3 = ischecked('l3_price', $product_list[0]['id']);
 			$result .= "<input name='license' value='l3_price' type='radio'  $ch3 />"; 
-			$result .= round($product_list[0]['l3_price'])."&nbsp;руб. <a href='#' onclick='javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=3&item=".$current_item."','текст стандартной лицензии','height=480,width=640,scrollbars=yes');'>расширенная</a>";
+			$result .= round($product_list[0]['l3_price'])."&nbsp;руб. <a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=3&item=".$current_item."','текст расширенной лицензии','height=480,width=640,scrollbars=yes');\">расширенная</a>";
 
 			$result .= "<input value='".$product_list[0]['id']."' name='prodid' type='hidden'> <br><br>";
 			
