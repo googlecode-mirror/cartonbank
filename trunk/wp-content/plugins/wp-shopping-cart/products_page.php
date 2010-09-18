@@ -6,6 +6,7 @@ $brandid = '';
 $_bigpictext = '';
 $_bigpicstrip = '';
 $_bigpic = '';
+$_bottomstriptext = '';
 $keywords = '';
 
 
@@ -376,6 +377,10 @@ $search_sql = NULL;
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
 
+				// Lisence selection strip under the preview image:
+				$_bottomstriptext = "<div style='text-align:right;width:600px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'> Выбор лицензии: <input type='radio' name='license' value='l1_price' checked> ".round($product[0]['l1_price'])."&nbsp;руб. <a target='_blank'href='".get_option('siteurl')."/?page_id=238' title='ограниченная'>[?]</a> <input type='radio' name='license' value='l2_price'> ".round($product[0]['l2_price'])."&nbsp;руб. <a target='_blank'href='".get_option('siteurl')."/?page_id=242' title='стандартная'>[?]</a> <input type='radio' name='license' value='l3_price'> ".round($product[0]['l3_price'])."&nbsp;руб. <a target='_blank'href='".get_option('siteurl')."/?page_id=245' title='расширенная'>[?]</a> <input type='hidden' value='".$_number."' name='prodid'> <input id='searchsubmit' value='В заказ' type='submit'> </form></div>";
+
+
      }
     //placeholder for the slide preview wAS HERE
                  
@@ -406,7 +411,7 @@ $search_sql = NULL;
                echo "<div id='bigpictext'>".$_bigpictext."</div>";
                echo "<div id='bigpic'>".$_bigpic."</div>";
                echo "<div style='clear:both;'></div>";
-               echo "<div id='bigpicbottomstrip'></div>";
+               echo "<div id='bigpicbottomstrip'>".$_bottomstriptext."</div>";
 
                     
                     
