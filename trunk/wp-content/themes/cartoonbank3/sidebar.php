@@ -41,6 +41,8 @@ $options = '';
     if($categories != null)
       {
 	   $options .= "<a href='".get_option('product_list_url').$seperator."&category=0'>Все рисунки [".$total_cartoons."]</a><br />";
+	   $options .= "<a href='".get_option('product_list_url').$seperator."&colorfilter=1'>Все цветные</a><br />";
+	   $options .= "<a href='".get_option('product_list_url').$seperator."&colorfilter=0'>Все чёрно-белые</a><br />";
 
       foreach($categories as $option)
         {
