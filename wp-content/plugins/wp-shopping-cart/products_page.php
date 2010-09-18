@@ -324,9 +324,21 @@ $search_sql = NULL;
      if ($product!=null)
      {           
 
+				if(stristr($product[0]['image'], 'jpg') != FALSE) {
+						$_file_format = 'jpg';
+					} 
+					if(stristr($product[0]['image'], 'gif') != FALSE) {
+						$_file_format = 'gif';
+					} 
+					if(stristr($product[0]['image'], 'png') != FALSE) {
+						$_file_format = 'png';
+					} 
 				$_number = $product[0]['id'];
                 $_description = nl2br(stripslashes($product[0]['description']));
                 $_size = $product[0]['width']."px X ".$product[0]['height']."px;";
+				$_x_sm = round(($product[0]['width']/300)*2.54, 1);
+				$_y_sm = round(($product[0]['height']/300)*2.54, 1);
+				$_sizesm = $_x_sm." см X ".$_y_sm." см";
                 $_author = $product[0]['brand'];
                 $_name = $product[0]['name'];
 				if (isset($product[0]['kategoria']))
@@ -360,7 +372,7 @@ $search_sql = NULL;
                 $_tags = $_tags_imploded;
 
                 $_bigpicstrip = "<div style=\"float:left;\"><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;".$_number."&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
-                $_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size;
+                $_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат файла: </b><br>".$_file_format;
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
 

@@ -69,10 +69,23 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	$vstavka = "document.getElementById('bigpic').innerHTML = '<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>';";
 
     // here we prepare data for the BIGPIC preview
-						
+
+	if(stristr($product['image'], 'jpg') != FALSE) {
+        $_file_format = 'jpg';
+	} 
+	if(stristr($product['image'], 'gif') != FALSE) {
+        $_file_format = 'gif';
+	} 
+	if(stristr($product['image'], 'png') != FALSE) {
+        $_file_format = 'png';
+	} 
+	
 	$_number = $product['id'];
 	$_description = nl2br(stripslashes($product['description']));
 	$_size = $product['width']."px X ".$product['height']."px;";
+		$_x_sm = round(($product['width']/300)*2.54, 1);
+		$_y_sm = round(($product['height']/300)*2.54, 1);
+		$_sizesm = $_x_sm." см X ".$_y_sm." см";
 	if (isset($product['brandid']))
 		{$_brandid = $product['brandid'];}
 	else {$_brandid = '';}
@@ -98,7 +111,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 
 	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;".$_number."&nbsp;<b>".$_author."</b></div>";
 						
-	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size;
+	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат файла: </b><br>".$_file_format;
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
 
 // Lisence selection strip under the preview image:
