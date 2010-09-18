@@ -1,5 +1,5 @@
 <?php
-global $wpdb;
+global $wpdb, $colorfilter;
 $siteurl = get_option('siteurl');
 $_SESSION['selected_country'] = '';
 $brandid = '';
