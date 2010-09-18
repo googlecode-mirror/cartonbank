@@ -8,6 +8,42 @@ $_bigpicstrip = '';
 $_bigpic = '';
 $keywords = '';
 
+
+
+
+// Color filter
+	$color = 'all';
+
+	if((isset($_POST['color']) && $_POST['color']!= '') or (isset($_GET['color']) && $_GET['color']!= ''))
+	{
+		if(isset($_POST['color']))
+		$color = $_POST['color'];
+
+		if(isset($_GET['color']))
+		$color = $_GET['color'];
+
+		switch($color)
+			{
+			case 'color':
+			$colorfilter = ' AND `wp_product_list`.`color`=1 '; 
+			break;
+
+			case 'bw':
+			$colorfilter = ' AND `wp_product_list`.`color`=0 '; 
+			break;
+
+			default:
+			$colorfilter = '';
+			$color = 'all';
+			break;
+			}
+	}
+	else
+		{
+			$colorfilter = '';
+		}
+
+
 if (isset($_GET['brand'])){$_brand = $_GET['brand'];}else{$_brand = '';}
 if (isset($_GET['category'])){$_category = $_GET['category'];}else{$_category = '';}
 
@@ -25,44 +61,6 @@ if(is_numeric($_brand) || (is_numeric(get_option('default_brand')) && (get_optio
   
   $group_sql = "AND `brand`='".$brandid."'";
   
-
-// Color filter
-	$color = 'all';
-
-	if((isset($_POST['color']) && $_POST['color']!= '') or (isset($_GET['color']) && $_GET['color']!= ''))
-	{
-
-		if(isset($_POST['color']))
-		$color = $_POST['color'];
-
-		if(isset($_GET['color']))
-		$color = $_GET['color'];
-
-
-
-		switch($color)
-			{
-			case 'color':
-			$colorfilter = ' AND `wp_product_list`.`color`=1 '; 
-			break;
-
-			case 'bw':
-			$colorfilter = ' AND `wp_product_list`.`color`=0 '; 
-			break;
-
-			default:
-			$colorfilter = ''; 
-			break;
-			}
-
-	}
-	else
-		{
-			$colorfilter = '';
-		}
-
-
-
 
   $cat_sql = "SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `id`='".$brandid."' LIMIT 1";
   $group_type = TXT_WPSC_BRANDNOCAP;
@@ -320,13 +318,8 @@ $search_sql = NULL;
                     {
                         $keywords = '';
                     }
-echo(" colorfilter: ".print_r($colorfilter,true)."");
-echo(" color: ".print_r($color,true)."");
 
-echo(" sql: ".print_r($sql,true)."");
-
-
-    // список картинок
+	// список картинок
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
      if ($product!=null)
      {           

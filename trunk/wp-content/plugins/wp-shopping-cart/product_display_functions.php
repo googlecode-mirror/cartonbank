@@ -3,7 +3,7 @@
 function product_display_paginated($product_list, $group_type, $group_sql = '', $search_sql = '', $offset, $items_on_page)
 	{
         
-	 global $wpdb;
+	 global $wpdb, $colorfilter;
 	 $siteurl = get_option('siteurl');
 	//todo: remove special
     $andcategory = "";
@@ -31,11 +31,11 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	{
 		if (isset($_GET['brand']) && $_GET['brand'] == '')
 		{
-        $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
+        $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$colorfilter." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
 		}
 		else
 		{ 
-        $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
+        $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
 		}
 	}
 
@@ -162,7 +162,7 @@ else
 
 function product_display_default($product_list, $group_type, $group_sql = '', $search_sql = '')
   {
-  global $wpdb;
+  global $wpdb, $colorfilter;
   $siteurl = get_option('siteurl');
   
   if(function_exists('ext_shpcrt_search_sql'))
@@ -170,16 +170,16 @@ function product_display_default($product_list, $group_type, $group_sql = '', $s
     $search_sql = ext_shpcrt_search_sql();
     if($search_sql != '')
       {
-      $sql = "SELECT `".$wpdb->prefix."product_list`.* FROM `".$wpdb->prefix."product_list`,`".$wpdb->prefix."item_category_associations` WHERE `".$wpdb->prefix."product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `".$wpdb->prefix."product_list`.`id` = `".$wpdb->prefix."item_category_associations`.`product_id` $search_sql ORDER BY `".$wpdb->prefix."product_list`.`special` DESC";
+      $sql = "SELECT `".$wpdb->prefix."product_list`.* FROM `".$wpdb->prefix."product_list`,`".$wpdb->prefix."item_category_associations` WHERE `".$wpdb->prefix."product_list`.`active`='1' ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `".$wpdb->prefix."product_list`.`id` = `".$wpdb->prefix."item_category_associations`.`product_id` $search_sql ORDER BY `".$wpdb->prefix."product_list`.`special` DESC";
       }
       else
         {
-        $sql = "SELECT `".$wpdb->prefix."product_list`.* FROM `".$wpdb->prefix."product_list`,`".$wpdb->prefix."item_category_associations` WHERE `".$wpdb->prefix."product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `".$wpdb->prefix."product_list`.`id` = `".$wpdb->prefix."item_category_associations`.`product_id` $group_sql ORDER BY `".$wpdb->prefix."product_list`.`special` DESC"; 
+        $sql = "SELECT `".$wpdb->prefix."product_list`.* FROM `".$wpdb->prefix."product_list`,`".$wpdb->prefix."item_category_associations` WHERE `".$wpdb->prefix."product_list`.`active`='1' ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `".$wpdb->prefix."product_list`.`id` = `".$wpdb->prefix."item_category_associations`.`product_id` $group_sql ORDER BY `".$wpdb->prefix."product_list`.`special` DESC"; 
         }
     }
     else
       {
-      $sql = "SELECT `".$wpdb->prefix."product_list`.* FROM `".$wpdb->prefix."product_list`,`".$wpdb->prefix."item_category_associations` WHERE `".$wpdb->prefix."product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `".$wpdb->prefix."product_list`.`id` = `".$wpdb->prefix."item_category_associations`.`product_id` $group_sql ORDER BY `".$wpdb->prefix."product_list`.`special` DESC"; 
+      $sql = "SELECT `".$wpdb->prefix."product_list`.* FROM `".$wpdb->prefix."product_list`,`".$wpdb->prefix."item_category_associations` WHERE `".$wpdb->prefix."product_list`.`active`='1' ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `".$wpdb->prefix."product_list`.`id` = `".$wpdb->prefix."item_category_associations`.`product_id` $group_sql ORDER BY `".$wpdb->prefix."product_list`.`special` DESC"; 
       }         
         
   $product_list = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
@@ -363,7 +363,7 @@ function product_display_default($product_list, $group_type, $group_sql = '', $s
 
 function single_product_display($product_id)
   {
-  global $wpdb;
+  global $wpdb, $colorfilter;
   $output = null;
   $siteurl = get_option('siteurl');
   if(get_option('permalink_structure') != '')
@@ -505,8 +505,8 @@ function single_product_display($product_id)
   }
 
 function get_random_image(){
-	global $wpdb;
-	$sql = "SELECT `wp_product_list`.`id` FROM `wp_product_list` WHERE `active`='1' AND `visible`='1' ORDER BY RAND(NOW()) LIMIT 1";
+	global $wpdb, $colorfilter;
+	$sql = "SELECT `wp_product_list`.`id` FROM `wp_product_list` WHERE `active`='1' ".$colorfilter." AND `visible`='1' ORDER BY RAND(NOW()) LIMIT 1";
 	$product_list = $wpdb->get_results($sql,ARRAY_A);
 	echo single_product_display($product_list[0]['id']);
  }
