@@ -1,5 +1,5 @@
 <?php
-global $wpdb, $colorfilter;
+global $wpdb, $colorfilter, $color;
 $siteurl = get_option('siteurl');
 $_SESSION['selected_country'] = '';
 $brandid = '';
@@ -27,19 +27,27 @@ if(is_numeric($_brand) || (is_numeric(get_option('default_brand')) && (get_optio
   
 
 // Color filter
+	$color = 'all';
 
-	if((isset($_POST['colorfilter']) && $_POST['colorfilter']!= '') or (isset($_GET['colorfilter']) && $_GET['colorfilter']!= ''))
+	if((isset($_POST['color']) && $_POST['color']!= '') or (isset($_GET['color']) && $_GET['color']!= ''))
 	{
-		$_colorvalue = $_POST['colorfilter'];
 
-		switch($_colorvalue)
+		if(isset($_POST['color']))
+		$color = $_POST['color'];
+
+		if(isset($_GET['color']))
+		$color = $_GET['color'];
+
+
+
+		switch($color)
 			{
-			case 0:
-			$colorfilter = ' AND `wp_product_list`.`color`=0 '; 
+			case 'color':
+			$colorfilter = ' AND `wp_product_list`.`color`=1 '; 
 			break;
 
-			case 1:
-			$colorfilter = ' AND `wp_product_list`.`color`=1 '; 
+			case 'bw':
+			$colorfilter = ' AND `wp_product_list`.`color`=0 '; 
 			break;
 
 			default:
@@ -312,7 +320,10 @@ $search_sql = NULL;
                     {
                         $keywords = '';
                     }
-    echo(" sql: ".print_r($sql,true)."");
+echo(" colorfilter: ".print_r($colorfilter,true)."");
+echo(" color: ".print_r($color,true)."");
+
+echo(" sql: ".print_r($sql,true)."");
 
 
     // список картинок
@@ -434,7 +445,7 @@ $search_sql = NULL;
 
 				if (isset($catid)){$catid=$catid;}else{$catid='';}
 
-				echo "<div style='clear:both;'>".getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&colorfilter=".$catid."&category=".$catid."&cs=".$keywords."&offset=")."<br></div>";
+				echo "<div style='clear:both;'>".getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=")."<br></div>";
              }
          }
      }
