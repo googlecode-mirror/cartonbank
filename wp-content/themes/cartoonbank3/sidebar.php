@@ -2,25 +2,22 @@
 
 	<div id="sidebar">
 
-    <!-- <h2>Поиск по сайту:</h2>
-	<form id="searchform" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<input type="text" name="s" id="s" size="20" onfocus="this.value='';" value="введите слово..."/></form> -->
-
 	<h2>Поиск картинок:</h2>
 	<form method="post" id="searchform" action="?page_id=29">
 	<input id="s" size="15" type="text" value="введите слово..." name="cs" id="search_input" onfocus="this.value='';"/>
 	<input type="submit" id="searchsubmit" value="Искать" />
+
 	<div id='tags'><a href='?page_id=390'>Все тэги</a></div>
-<!-- 	
+ 	
 	<br>
-	<select id="colorselect" name="">
+	<select id="colorselect" name="colorfilter">
 		<option value="all" selected>all</option>
 		<option value="bw">ч/б</options>
 		<option value="color">цв.</options>
 	</select>
- -->	</form>
-	<!-- <form id="cartoonsearchform" method="get" action="?page_id=29">
-	<input type="text" name="cs" id="cs" size="20" onfocus="this.value='';" value="введите слово..." ></form> -->
+ 
+	</form>
+	
 <br>
 
 
