@@ -310,8 +310,6 @@ $search_sql = NULL;
                         $keywords = '';
                     }
     
-    echo("<pre> sql ".print_r($sql,true)."</pre>");
-
 
     // список картинок
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
@@ -425,44 +423,14 @@ $search_sql = NULL;
 				$output = "<div id='pagination' class='width:470px;clear:both;'><br>";
 				$output .= "Всего найдено изображений: ".$items_count. "<br><br></div>";
 				echo "<div style='clear:both;'>".$output."<br></div>";
-/*
-				if($offset >= $items_on_page*2)
-				{
-					// echo "Previous page" link
-					$offset_back = $offset-$items_on_page*2;
-					$output .= "<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$offset_back."&cs=".$keywords."'><< ".TXT_WPSC_PREV_PAGE."</a>&nbsp;";
-				}
-                $pagenum = 1;
-                for ($i=0; $i<$items_count; $i=$i+$items_on_page)
-                    {
-                        $current_page_num = $offset /  $items_on_page;
-                        if ($pagenum == $current_page_num)
-                        {
-                            $output .= " <a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$i."&cs=".$keywords."'><span style='background: #C0C0FF; color: black !important; cursor: default; font-weight: 400; padding: 0.15em 0.3em; text-decoration: none;'>".$pagenum ."</span></a> ";
-                        }
-                         else
-                        {
-                           $output .= " <a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$i."&cs=".$keywords."'>[".$pagenum ."]</a> ";
-                        }
-                       $pagenum++;
-                    }
-                
-				if($offset < $items_count) 
-				{
-					// echo "Next page" link
-					$output .= "<a href='".get_option('siteurl')."?page_id=".$page_id."&brand=".$brandid."&category=".$catid."&offset=".$offset."&cs=".$keywords."'>".TXT_WPSC_NEXT_PAGE." >></a>";
-				}
-				$output .= "</br></div>";
 
-				//echo "<div style='clear:both;'>".$output."<br></div>";
-*/
 				$page = round($offset/$items_on_page);
 				$totalitems = $items_count;
 				$limit = $items_on_page;
 
 				if (isset($catid)){$catid=$catid;}else{$catid='';}
 
-				echo "<div style='clear:both;'>".getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&category=".$catid."&cs=".$keywords."&offset=")."<br></div>";
+				echo "<div style='clear:both;'>".getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&colorfilter=".$catid."&category=".$catid."&cs=".$keywords."&offset=")."<br></div>";
              }
          }
      }
