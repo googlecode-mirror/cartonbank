@@ -1,21 +1,17 @@
 <!-- begin sidebar -->
-
+<?php
+global $wpdb;
+?>
 	<div id="sidebar">
 
 	<h2>Поиск картинок:</h2>
 	<form method="post" id="searchform" action="?page_id=29">
-	<input id="s" size="15" type="text" value="введите слово..." name="cs" id="search_input" onfocus="this.value='';"/>
-	<input type="submit" id="searchsubmit" value="Искать" />
-
-	<div id='tags'><a href='?page_id=390'>Все тэги</a></div>
- 	
-	<br>
 	<select id="colorselect" name="color">
 		<option value="all" selected>all</option>
 		<option value="bw">ч/б</options>
 		<option value="color">цв.</options>
-	</select>
- 
+	</select><input id="s" size="15" type="text" value="введите слово..." name="cs" id="search_input" onfocus="this.value='';"/>
+	<input type="submit" id="searchsubmit" value="Искать" />
 	</form>
 	
 <br>
@@ -24,8 +20,13 @@
 <?php //wp_list_pages('title_li=<h2>Pages<h2>&exclude=30,31,32'); ?>
 
 	<br><h2>Категории:</h2> 
-<?php
-global $wpdb;
+
+<?
+// number of bw cartoons
+$bw_number = $wpdb->get_results("SELECT count(*) AS bw_number FROM `wp_product_list` WHERE color=0 AND `active`=1 AND `visible`=1");
+
+$bw_number = $bw_number[0]->bw_number;
+
 $seperator = '';
 $options = '';
 // Categories
@@ -38,11 +39,13 @@ $options = '';
 		{
 			$total_cartoons = $total_cartoons + $cat['count'];
 		}
+
+	$color_number = $total_cartoons - $bw_number;
     if($categories != null)
       {
 	   $options .= "<a href='".get_option('product_list_url').$seperator."&category=0&color=all'>Все рисунки [".$total_cartoons."]</a><br />";
-	   $options .= "<a href='".get_option('product_list_url').$seperator."&color=color'>Все цветные</a><br />";
-	   $options .= "<a href='".get_option('product_list_url').$seperator."&color=bw'>Все чёрно-белые</a><br />";
+	   $options .= "<a href='".get_option('product_list_url').$seperator."&color=color'>Все цветные [".$color_number."]</a><br />";
+	   $options .= "<a href='".get_option('product_list_url').$seperator."&color=bw'>Все чёрно-белые [".$bw_number."]</a><br />";
 
       foreach($categories as $option)
         {
@@ -100,6 +103,11 @@ $options = '';
     echo $options;
     echo "</div>";
 ?>
+
+<br><h2>Тэги</h2>
+<div id='tags'><a href='?page_id=390'>Все ключевые слова</a></div>
+	
+
 <div style="float:right;">
 	<br><h2>Вход</h2>
 		<ul style="text-align:right;">
