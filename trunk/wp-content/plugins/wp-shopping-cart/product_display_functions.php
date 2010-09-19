@@ -48,14 +48,8 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
                     $sql = $search_sql;
                     }
 
-                    
-					//exit("<pre>sql ".print_r($sql,true)."</pre>");
-
-
 
 	$product_list = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
-
-
 
 	  if($product_list != null)
 	  {
@@ -124,7 +118,6 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	$_tags_imploded = implode(", ", $_tags_array);
 	$_tags = $_tags_imploded;
 
-	//$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b>".$_author."</b></div>";
 	
 	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</b></div>";
 	
@@ -133,7 +126,8 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
 
 // Lisence selection strip under the preview image:
-$_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'> Выбор лицензии: <input type=\'radio\' name=\'license\' value=\'l1_price\' checked> ".round($product['l1_price'])."&nbsp;руб. <a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=238\' title=\'ограниченная\'>[?]</a> <input type=\'radio\' name=\'license\' value=\'l2_price\'> ".round($product['l2_price'])."&nbsp;руб. <a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=242\' title=\'стандартная\'>[?]</a> <input type=\'radio\' name=\'license\' value=\'l3_price\'> ".round($product['l3_price'])."&nbsp;руб. <a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=245\' title=\'расширенная\'>[?]</a> <input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> <input id=\'searchsubmit\' value=\'В заказ\' type=\'submit\'> </form></div>";
+$_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'><table class=\'licenses\'> <tr> <td class=\'wh\'>Выбор лицензии:</td> <td class=\'wh\' style=\'padding-left:8px;\'><input type=\'radio\' name=\'license\' value=\'l1_price\' checked></td> <td style=\'border-left: 1px solid #999999\'>".round($product['l1_price'])."&nbsp;руб.</td> <td class=\'wh\' style=\'padding-left:8px;\'><input type=\'radio\' name=\'license\' value=\'l2_price\'></td> <td style=\'border-left: 1px solid #999999\'>".round($product['l2_price'])."&nbsp;руб.</td> <td class=\'wh\' style=\'padding-left:8px;\'><input type=\'radio\' name=\'license\' value=\'l3_price\'></td> <td style=\'border-left: 1px solid #999999\'>".round($product['l3_price'])."&nbsp;руб.</td> <td rowspan=\'2\' class=\'wh\'><input id=\'searchsubmit\' value=\'В заказ\' type=\'submit\' class=\'borders\'></td> </tr> <tr> <td class=\'wh\'>&nbsp;</td> <td class=\'wh\'></td> <td style=\'border-left: 1px solid #999999\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=238\' title=\'подробнее об ограниченной лицензии\'>ограниченная</a></td> <td class=\'wh\'></td> <td style=\'border-left: 1px solid #999999\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=242\' title=\'подробнее о стандартной лицензии\'>стандартная</a></td> <td class=\'wh\'></td> <td style=\'border-left: 1px solid #999999\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=245\' title=\'подробнее об расширенной лицензии\'>расширенная</a></td> </tr> </table><input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> </form></div>";
+
 
 	$vstavka = "document.getElementById('bigpic').innerHTML ='".$_bigpic."';";
 	$vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
@@ -186,7 +180,6 @@ $fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['ima
 				$counter = $counter+1;
 		  }
 		  $output .= "</div>";
-//exit("<pre>product ".print_r($product,true)."</pre>");
 		  return $output;
   }
   // end function output first page
