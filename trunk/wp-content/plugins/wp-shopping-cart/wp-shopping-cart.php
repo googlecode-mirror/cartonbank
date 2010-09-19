@@ -2761,7 +2761,7 @@ if ($total > $_wallet)
 
 function nzshpcrt_download_file()
   {
-  global $wpdb,$user_level,$wp_rewrite; 
+  global $wpdb,$user_level,$wp_rewrite; /
   get_currentuserinfo();
   if(isset($_GET['downloadid']) and is_numeric($_GET['downloadid']))
     {
