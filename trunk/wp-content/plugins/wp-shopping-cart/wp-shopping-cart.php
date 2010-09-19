@@ -647,7 +647,7 @@ if($product_brands_data[0]['count'] == 0)
 
   add_option('gst_rate', '1', TXT_WPSC_GSTRATE, 'yes');
 
-  add_option('max_downloads', '1', TXT_WPSC_MAXDOWNLOADS, 'yes');
+  add_option('max_downloads', '5', TXT_WPSC_MAXDOWNLOADS, 'yes');
 
   add_option('display_pnp', '1', TXT_WPSC_DISPLAYPNP, 'yes');
 
@@ -2761,7 +2761,7 @@ if ($total > $_wallet)
 
 function nzshpcrt_download_file()
   {
-  global $wpdb,$user_level,$wp_rewrite; /
+  global $wpdb,$user_level,$wp_rewrite;
   get_currentuserinfo();
   if(isset($_GET['downloadid']) and is_numeric($_GET['downloadid']))
     {
