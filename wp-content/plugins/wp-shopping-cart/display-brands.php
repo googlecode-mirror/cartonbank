@@ -21,7 +21,7 @@ function brandlist($curent_brand)
   $basepath =  str_replace("/wp-admin", "" , getcwd());
   $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/brand_images/";
 
-  if($_POST['submit_action'] == "add")
+  if(isset($_POST['submit_action']) && $_POST['submit_action'] == "add")
     { 
     if($_FILES['image'] != null)
       {
@@ -51,7 +51,7 @@ function brandlist($curent_brand)
         }
     }
 
-  if(($_POST['submit_action'] == "edit") && is_numeric($_POST['prodid']))
+  if(isset($_POST['submit_action']) && ($_POST['submit_action'] == "edit") && is_numeric($_POST['prodid']))
     {
    if($_POST['special'] == 'yes')
      {
@@ -76,7 +76,7 @@ function brandlist($curent_brand)
      }
   
 
-if(is_numeric($_GET['deleteid']))
+if(isset($_GET['deleteid']) && is_numeric($_GET['deleteid']))
   {
   $deletesql = "UPDATE `".$wpdb->prefix."product_brands` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
   $wpdb->query($deletesql);

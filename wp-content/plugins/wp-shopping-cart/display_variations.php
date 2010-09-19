@@ -61,7 +61,7 @@ function display_variation_row($variation)
   $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/variation_images/";
   
  /*  delete variation_value */  
-  if($_GET['delete_value'] == 'true')
+  if(isset($_GET['delete_value']) && $_GET['delete_value'] == 'true')
    {
    if(is_numeric($_GET['variation_id']) && is_numeric($_GET['value_id']))
      {
@@ -72,7 +72,7 @@ function display_variation_row($variation)
    }  
   
  /* add variation */
-  if($_POST['submit_action'] == "add")
+  if(isset($_POST['submit_action']) && $_POST['submit_action'] == "add")
     {
     //exit("<pre>".print_r($_POST,true)."</pre>");
     $variation_sql = "INSERT INTO `".$wpdb->prefix."product_variations` (`name`, `variation_association`) VALUES ('".$_POST['name']."', 0);";
@@ -112,7 +112,7 @@ function display_variation_row($variation)
     
     
   /* edit variation */
-  if(($_POST['submit_action'] == "edit") && is_numeric($_POST['prodid']))
+  if(isset($_POST['submit_action']) && ($_POST['submit_action'] == "edit") && is_numeric($_POST['prodid']))
     {
     //exit("<pre>".print_r($_POST,true)."</pre>");
     $variation_id = $_POST['prodid'];
@@ -162,7 +162,7 @@ VALUES ";
     }
   
 
-if(is_numeric($_GET['deleteid']))
+if(isset($_GET['deleteid']) && is_numeric($_GET['deleteid']))
   {
   $delete_value_assoc_sql = "DELETE FROM `".$wpdb->prefix."variation_values_associations` WHERE `variation_id` = '".$_GET['deleteid']."'";
   $delete_variation_assoc_sql = "DELETE FROM `".$wpdb->prefix."variation_associations` WHERE `variation_id` = '".$_GET['deleteid']."'";
@@ -196,7 +196,7 @@ function conf()
     echo "fillvariationform(".$_POST['prodid'].");";
     }
     
-  if(is_numeric($_GET['variation_id']))
+  if(isset($_GET['variation_id']) && is_numeric($_GET['variation_id']))
     {
     echo "fillvariationform(".$_GET['variation_id'].");";
     }

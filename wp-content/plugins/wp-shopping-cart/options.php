@@ -66,7 +66,7 @@ if($_POST != null)
     update_option('max_downloads', $_POST['max_downloads']);
     }
 
-  if(is_numeric($_POST['postage_and_packaging']))
+  if(isset($_POST['postage_and_packaging']) && is_numeric($_POST['postage_and_packaging']))
     {
     update_option('postage_and_packaging', $_POST['postage_and_packaging']);
     }
@@ -96,12 +96,12 @@ if($_POST != null)
     update_option('default_category', $_POST['default_category']);
     }
 
-  if($_POST['default_brand'] != get_option('default_brand'))
+  if(isset($_POST['default_brand']) && $_POST['default_brand'] != get_option('default_brand'))
     {
     update_option('default_brand', $_POST['default_brand']);
     }
 
-  if($_POST['product_view'] != get_option('product_view'))
+  if(isset($_POST['product_view']) && $_POST['product_view'] != get_option('product_view'))
     {
     update_option('product_view', $_POST['product_view']);
     }
@@ -158,17 +158,17 @@ if($_POST != null)
     update_option('base_country', $_POST['base_country']);
     }
     
-  if(is_numeric($_POST['country_form_field']))
+  if(isset($_POST['country_form_field']) && is_numeric($_POST['country_form_field']))
     {
     update_option('country_form_field', $_POST['country_form_field']);
     }
     
-  if(is_numeric($_POST['email_form_field']))
+  if(isset($_POST['email_form_field']) && is_numeric($_POST['email_form_field']))
     {
     update_option('email_form_field', $_POST['email_form_field']);
     }
   
-  if($_POST['list_view_quantity'] == 1)
+  if(isset($_POST['list_view_quantity']) && $_POST['list_view_quantity'] == 1)
     {
     update_option('list_view_quantity', 1);
     }
@@ -186,10 +186,12 @@ if(get_option('nzshpcrt_first_load') == 0)
 function options_categorylist()
   {
   global $wpdb;
+  $selected = '';
   $cat_sql = "SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `active`='1'";
   $category_data = $wpdb->get_results($cat_sql,ARRAY_A);
   $current_default = get_option('default_category');
-  $categorylist .= "<select name='default_category'>";
+  //echo "<pre>current_default: ".print_r($current_default,true)."</pre>";
+  $categorylist = "<select name='default_category'>";
   $categorylist .= "<option value='none' ".$selected." >".TXT_WPSC_SELECTACATEGORY."</option>";
   foreach($category_data as $category)
     {
@@ -377,6 +379,8 @@ function country_list($selected_country = null)
 $cart_location = get_option('cart_location');
 $cart1 = "";
 $cart2 = "";
+$cart3 = "";
+$cart4 = "";
 switch($cart_location)
   {
   case 1:

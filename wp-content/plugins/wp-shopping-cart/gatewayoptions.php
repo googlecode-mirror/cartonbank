@@ -1,19 +1,17 @@
-<?php
-/*
+<!-- <option value='paypal' <?php echo $paypal; ?>>PayPal</option>
+<option value='testmode' <?php echo $testmode; ?>>Test Mode</option> -->
 
-       
-       <option value='paypal' <?php echo $paypal; ?>>PayPal</option>
-       <option value='testmode' <?php echo $testmode; ?>>Test Mode</option>
-*/
+<?php
+
 $changes_made = false;
-if(($_POST['payment_gw'] != null) && ($_POST['submit_details'] == null))
+if(isset($_POST['payment_gw']) && isset($_POST['submit_details']) && ($_POST['payment_gw'] != null) && ($_POST['submit_details'] == null))
   {
   update_option('payment_gateway', $_POST['payment_gw']);
   $changes_made = true;
   }
 $curgateway = get_option('payment_gateway');
  
-if(($_POST['payment_gw'] != null) && ($_POST['submit_details'] == "Submit"))
+if(isset($_POST['payment_gw']) && isset($_POST['submit_details']) && ($_POST['payment_gw'] != null) && ($_POST['submit_details'] == "Submit"))
   {
   foreach($nzshpcrt_gateways as $gateway)
     {
@@ -31,6 +29,7 @@ if($changes_made == true)
   }
 
 $form = "";
+$gatewaylist = "";
 foreach($nzshpcrt_gateways as $gateway)
   {
   if($gateway['internalname'] == $curgateway )
