@@ -201,7 +201,8 @@ $search_sql = NULL;
                         $items_count = 0;
                         $search_sql ='';
                     }
-                }
+                $sql = $search_sql;
+				}
                 else 
                     {
                         $keywords = '';
