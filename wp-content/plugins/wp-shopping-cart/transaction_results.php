@@ -144,8 +144,8 @@ if($cart != null && ($errorcode == 0))
     }
 
 	// todo: 
-  //$_SESSION['nzshpcrt_cart'] = '';
-  //$_SESSION['nzshpcrt_cart'] = Array();
+  $_SESSION['nzshpcrt_cart'] = '';
+  $_SESSION['nzshpcrt_cart'] = Array();
   
   echo '<div class="wrap">';
   if($sessionid != null)
@@ -169,7 +169,7 @@ if($check != null)
 	$authcode = ""; // wtf?? ales
 	$sql = "UPDATE `wp_purchase_logs` SET `statusno` = '".$errorcode."',`transactid` = '".$transactid."',`authcode` = '".$authcode."',`date` = '".time()."' WHERE `sessionid` = ".$sessionid." LIMIT 1";
     //todo: remove to update 
-    //$wpdb->query($sql) ;
+    $wpdb->query($sql) ;
    }
 
 	 
