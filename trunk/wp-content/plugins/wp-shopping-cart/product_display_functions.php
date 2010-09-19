@@ -124,9 +124,11 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	$_tags_imploded = implode(", ", $_tags_array);
 	$_tags = $_tags_imploded;
 
+	//$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b>".$_author."</b></div>";
+	
+	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</b></div>";
+	
 
-	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b>".$_author."</b></div>";
-						
 	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат файла: </b><br>".$_file_format;
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
 
@@ -168,8 +170,9 @@ $fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['ima
 						/*pop-up*/
 						
 						$output .= "<div class='lev2' id='description".$product['id']."'>";
-							$output .= "<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>".$product['id']. " <b>" . stripslashes($product['name'])."</b>";
-						    $output .= "<br><span id='size'>".$product['width']."px X ".$product['height']."px</span><br>";
+							//$output .= "<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>".$product['id']. " <b>" . stripslashes($product['name'])."</b>";
+						    $output .= "№&nbsp;".$product['id']. " <b>" . stripslashes($product['name'])."</b>";
+							$output .= "<br><span id='size'>".$product['width']."px X ".$product['height']."px</span><br>";
 						    $output .= "<span id='title'><i>".stripslashes($product['brand'])."</i></span><br>";
 							$output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_category_id."' onsubmit='submitform(this);return false;' >";
 							$output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
