@@ -117,12 +117,12 @@ define('TXT_WPSC_NOTHINGINYOURSHOPPINGCART', 'Ваша корзина пуста
 define('TXT_WPSC_SPECIALS', 'Специально');
 define('TXT_WPSC_BUY', 'Купить');
 define('TXT_WPSC_SHOPPINGCART', 'Корзина заказов');
-define('TXT_WPSC_NUMBEROFITEMS', 'Картинок в корзине');
+define('TXT_WPSC_NUMBEROFITEMS', 'Изображений в корзине');
 define('TXT_WPSC_NOMOREAVAILABLE', 'Этого продукта нет в наличии.');
 define('TXT_WPSC_EMPTYYOURCART', 'Очистить корзину');
 define('TXT_WPSC_GOTOCHECKOUT', 'Оплатить и скачать'); 
 define('TXT_WPSC_CONTINUESHOPPING', 'Продолжить выбор');
-define('TXT_WPSC_YOURSHOPPINGCARTISEMPTY', 'Ваша корзина заказов пуста');
+define('TXT_WPSC_YOURSHOPPINGCARTISEMPTY', 'Корзина заказов пуста');
 define('TXT_WPSC_VISITTHESHOP', 'Выбрать изображение');
 define('TXT_WPSC_PAGES', 'Страницы');
 define('TXT_WPSC_OUTOF', 'Out of');
