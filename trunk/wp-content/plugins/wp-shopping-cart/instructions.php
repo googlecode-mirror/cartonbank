@@ -3,7 +3,7 @@ global $wpdb;
 ?>
 <div class="wrap">
   <?php
-  if($_GET['debug'] == 'true')
+  if(isset($_GET['debug']) && $_GET['debug'] == 'true')
     {
     echo "<pre>".print_r($wpdb,true)."</pre>";
     }

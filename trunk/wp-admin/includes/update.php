@@ -134,7 +134,10 @@ function update_nag() {
 	else
 		$msg = sprintf( __('<a href="http://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> is available! Please notify the site administrator.'), $cur->current );
 //is_super_admin()
-	if ( current_user_can('edit_files')) {echo "<div class='update-nag'>$msg</div>";}
+	if ( current_user_can('edit_files')) 
+		{
+		//echo "<div class='update-nag'>$msg</div>";
+		}
 }
 if (current_user_can('edit_users'))
 	add_action( 'admin_notices', 'update_nag', 3 );
@@ -261,7 +264,7 @@ function maintenance_nag() {
 	else
 		$msg = __('An automated WordPress update has failed to complete! Please notify the site administrator.');
 
-  	echo "<div class='update-nag'>$msg</div>";
+  	//echo "<div class='update-nag'>$msg</div>";
 }
 add_action( 'admin_notices', 'maintenance_nag' );
 

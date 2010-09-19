@@ -11,7 +11,7 @@ if($_POST != null)
     }
   }
 
-if($_POST['submit_action'] == 'add')
+if(isset($_POST['submit_action']) && $_POST['submit_action'] == 'add')
   {
   if($_POST['form_name'] != null)
     {
@@ -179,7 +179,7 @@ if($_POST['submit_action'] == 'add')
     </tr>
     <tr>
       <td colspan='2'>
-      <input type='radio' name='payment_method' value='2' id='payment_method_2' <?php echo $selected[2]; ?>>
+      <input type='radio' name='payment_method' value='2' id='payment_method_2' <?php if (isset($selected[2])) echo $selected[2]; ?>>
       <label for='payment_method_2'><?php echo $gateway_name."/".TXT_WPSC_CREDIT_CARD . TXT_WPSC_PLUS_MANUAL_PAYMENT; ?></label>
       </td>
     </tr>

@@ -25,12 +25,13 @@ function parent_category_list()
   $values = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `category_parent`='0' AND `active` = '1' ORDER BY `id` ASC",ARRAY_A);
   $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=wp-shopping-cart/display-items.php";
   $options .= "<option value='$url'>".TXT_WPSC_SELECT_PARENT."</option>\r\n";
+  $selected = '';
   if($values != null)
     {
     foreach($values as $option)
       {
       $category_data[$option['id']] = $option['name'];
-      if($_GET['catid'] == $option['id'])
+      if(isset($_GET['catid']) && $_GET['catid'] == $option['id'])
         {
         $selected = "selected='selected'";
         }
@@ -38,7 +39,7 @@ function parent_category_list()
       $selected = "";
       }
     }
-  $concat .= "<select name='category_parent'>".$options."</select>\r\n";
+  $concat = "<select name='category_parent'>".$options."</select>\r\n";
   return $concat;
   }
 
@@ -137,7 +138,7 @@ function display_category_row($category,$subcategory_level = 0)
   $basepath =  str_replace("/wp-admin", "" , getcwd());
   $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/category_images/";
 
-  if($_POST['submit_action'] == "add")
+  if(isset($_POST['submit_action']) && $_POST['submit_action'] == "add")
     { 
     if($_FILES['image'] != null)
       {
@@ -177,7 +178,7 @@ function display_category_row($category,$subcategory_level = 0)
         }
     }
 
-  if(($_POST['submit_action'] == "edit") && is_numeric($_POST['prodid']))
+  if(isset($_POST['submit_action']) && ($_POST['submit_action'] == "edit") && is_numeric($_POST['prodid']))
     {
     //echo nl2br(print_r($_FILES));
     if($_FILES['image'] != null)
@@ -250,7 +251,7 @@ function display_category_row($category,$subcategory_level = 0)
      }
   
 
-if(is_numeric($_GET['deleteid']))
+if(isset($_GET['deleteid']) && is_numeric($_GET['deleteid']))
   {
   $deletesql = "UPDATE `".$wpdb->prefix."product_categories` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
   $wpdb->query($deletesql);

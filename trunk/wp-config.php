@@ -80,7 +80,7 @@ define ('WPLANG', 'ru_RU');
  * Настоятельно рекомендуется, чтобы разработчики плагинов и тем использовали WP_DEBUG
  * в своём рабочем окружении.
  */
-define('WP_DEBUG', false);
+define('WP_DEBUG', true);
 //define('SAVEQUERIES', true);
 
 /* Это всё, дальше не редактируем. Успехов! */

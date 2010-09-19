@@ -244,8 +244,9 @@ function form_paypal_multiple()
       <td>
       PayPal Accepted Currency (e.g. USD, AUD)
       </td>
-      <td>
-        <select name='paypal_curcode'>
+      <td>";
+/*
+$output .= "		<select name='paypal_curcode'>
           <option ".$select_currency['USD']." value='USD'>U.S. Dollar</option>
           <option ".$select_currency['CAD']." value='CAD'>Canadian Dollar</option>
           <option ".$select_currency['AUD']." value='AUD'>Australian Dollar</option>
@@ -262,8 +263,9 @@ function form_paypal_multiple()
           <option ".$select_currency['PLN']." value='PLN'>Polish Zloty</option>
           <option ".$select_currency['NOK']." value='NOK'>Norwegian Krone</option>
           <option ".$select_currency['CZK']." value='CZK'>Czech Koruna</option>
-        </select> 
-      </td>
+        </select>";
+*/
+$output .= "      </td>
    </tr>";
   return $output;
   }
