@@ -8,9 +8,7 @@ $_bigpicstrip = '';
 $_bigpic = '';
 $_bottomstriptext = '';
 $keywords = '';
-
-
-
+$seperator ="?";
 
 // Color filter
 	$color = 'all';
@@ -114,97 +112,6 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
   $_SESSION['nzshpcrt_cart'][$cartcount + 1] = $_POST['item'];
   }
 
-function nzshpcrt_display_categories_groups()
-  {
-  global $wpdb;
-  if(get_option('permalink_structure') != '')
-    {
-    $seperator ="?";
-    }
-    else
-      {
-      $seperator ="&amp;";
-      }
-?>
-<div class="wrap">
-<?php
-  if(function_exists('ext_shpcrt_search_form'))
-    {
-    echo ext_shpcrt_search_form();
-    }
-?>
-<?php
-  
-  echo "<table>";
-  
-  switch(get_option('show_categorybrands'))
-    {
-    case 1:
-//    echo "<tr><td class='prodgroupmidline'><a href='' onclick='return prodgroupswitch(\"categories\");'>".TXT_WPSC_CATEGORIES."</a></td><td class='prodgroupright'><a href='' onclick='return prodgroupswitch(\"brands\");'>".TXT_WPSC_BRANDS."</a></td></tr>";
-    break;
-    
-    case 2:
-	//	echo ("<tr><td colspan='2'>Выберите категорию:</td></tr>");
-//    echo "<tr><td colspan='2'><a href='' onclick='return prodgroupswitch(\"categories\");'>".TXT_WPSC_CATEGORIES."</a></td></tr>";
-    break;
-    
-    case 3:
-//    echo "<tr><td colspan='2'><a href='' onclick='return prodgroupswitch(\"brands\");'>".TXT_WPSC_BRANDS."</a></td></tr>";
-    break;
-    }
-  echo "<tr><td colspan='2'>";
-  
-  
-  if((get_option('show_categorybrands') == 1 ) || (get_option('show_categorybrands') == 2))
-    {
-    //exit("done");
-    echo "<div id='categorydisplay'>";
-    $categories = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `active`='1' AND `category_parent` = '0' ORDER BY `order` ASC",ARRAY_A);
-    if($categories != null)
-      {
-	   //$options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."category=0'>Все рисунки</a><br />";
-
-
-      foreach($categories as $option)
-        {
-        $options .= "<a class='categorylink' href='".get_option('product_list_url')."&category=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
-        $subcategory_sql = "SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `active`='1' AND `category_parent` = '".$option['id']."' ORDER BY `id`";
-        $subcategories = $wpdb->get_results($subcategory_sql,ARRAY_A);
-        if($subcategories != null)
-          {
-          foreach($subcategories as $subcategory)
-            {
-            $options .= "<a class='categorylink' href='".get_option('product_list_url')."&category=".$subcategory['id']."'>-".stripslashes($subcategory['name'])."</a><br />";
-            }
-          }
-        }
-      }
-    echo $options;
-    }
-    
-  
-  if((get_option('show_categorybrands') == 1 ) || (get_option('show_categorybrands') == 3))
-    {
-    //echo "<div id='branddisplay'>";
-    $options ='';
-    $brands = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `active`='1' ORDER BY `order` ASC",ARRAY_A);
-    if($brands != null)
-      {
-      foreach($brands as $option)
-        {
-        $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."brand=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
-        }
-      }
-    echo $options;
-   // echo "</div>";
-    }
-    
-    
-  echo "</td></tr>";
-  echo "</table>";
-  }
-
-
   $num = 0;
   //else if(is_numeric($_GET['category']) || (is_numeric(get_option('default_category')) && (get_option('show_categorybrands') != 3)))
   if((is_numeric($_category) || is_numeric(get_option('default_category'))) && ((get_option('show_categorybrands') == 1) || (get_option('show_categorybrands') == 2)))
@@ -243,33 +150,14 @@ function nzshpcrt_display_categories_groups()
 			}
 
 $search_sql = NULL;
-    if(get_option('permalink_structure') != '')
-      {
-      $seperator ="?";
-      }
-      else
-        {
-        $seperator ="&amp;";
-        }
 
-     if(isset($_GET['product_id']) && is_numeric($_GET['product_id']))
-       {
-       echo "<div style='float:left;'>";
-       echo single_product_display($_GET['product_id']);
-       }
-       else
-         {
-        // echo nzshpcrt_display_categories_groups();
          if(isset($_GET['product_search']) && $_GET['product_search'] != null)
            {
            echo "<strong class='cattitles'>".TXT_WPSC_SEARCH_FOR." : ".$_GET['product_search']."</strong>";
            }
-           else if ($_category == 0)
+           else if (($_category == 0) or ($_category == ''))
              {
-    //global $wpdb;
-    //$sql = "SELECT `wp_product_list`.* FROM `wp_product_list` WHERE `active`='1' AND `visible`='1' ORDER BY RAND(NOW()) LIMIT 1";
-    //$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY RAND(NOW()) LIMIT 1"; 
-    $sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$colorfilter." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT 1"; 
+				$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$colorfilter." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT 1"; 
     
     
                 if (isset($_GET['offset']) && is_numeric($_GET['offset']))
@@ -313,23 +201,37 @@ $search_sql = NULL;
                         $items_count = 0;
                         $search_sql ='';
                     }
-                    $sql = $search_sql;
                 }
                 else 
                     {
                         $keywords = '';
                     }
 
+		
+	// we inject here direct link to the image
+	// $_GET['cartoonid'] : &cartoonid=666
+	if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
+	{
+		//echo("<pre>_cartoon_id ".print_r($_GET['cartoonid'],true)."</pre>");
+		$_cartoon_id = $_GET['cartoonid'];
+		$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = '".$_cartoon_id."' AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC "; 
+	    $sql = $search_sql;
+    }
+
+	
+	//exit("<pre>sql ".print_r($sql,true)."</pre>");
+
+	//$sql = $search_sql;
 	// список картинок
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
      if ($product!=null)
      {           
-
+			// slide preview preparations:
 				if(stristr($product[0]['image'], 'jpg') != FALSE) {
 						$_file_format = 'jpg';
 					} 
 					if(stristr($product[0]['image'], 'gif') != FALSE) {
-						$_file_format = 'gif';
+						$_file_format = 'gif'; 
 					} 
 					if(stristr($product[0]['image'], 'png') != FALSE) {
 						$_file_format = 'png';
@@ -372,38 +274,51 @@ $search_sql = NULL;
                 $_tags_imploded = implode(", ", $_tags_array);
                 $_tags = $_tags_imploded;
 
-                $_bigpicstrip = "<div style=\"float:left;\"><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;".$_number."&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
+                $_bigpicstrip = "<div style=\"float:left;\"><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a href='".get_option('siteurl')."?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
                 $_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат файла: </b><br>".$_file_format;
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
 
 				// Lisence selection strip under the preview image:
-				$_bottomstriptext = "<div style='text-align:right;width:600px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'> Выбор лицензии: <input type='radio' name='license' value='l1_price' checked> ".round($product[0]['l1_price'])."&nbsp;руб. <a target='_blank'href='".get_option('siteurl')."/?page_id=238' title='ограниченная'>[?]</a> <input type='radio' name='license' value='l2_price'> ".round($product[0]['l2_price'])."&nbsp;руб. <a target='_blank'href='".get_option('siteurl')."/?page_id=242' title='стандартная'>[?]</a> <input type='radio' name='license' value='l3_price'> ".round($product[0]['l3_price'])."&nbsp;руб. <a target='_blank'href='".get_option('siteurl')."/?page_id=245' title='расширенная'>[?]</a> <input type='hidden' value='".$_number."' name='prodid'> <input id='searchsubmit' value='В заказ' type='submit'> </form></div>";
+				//$_bottomstriptext = "<div style='text-align:right;width:600px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'> Выбор лицензии: <input type='radio' name='license' value='l1_price' checked> ".round($product[0]['l1_price'])."&nbsp;руб. <a target='_blank'href='".get_option('siteurl')."/?page_id=238' title='ограниченная'>[?]</a> <input type='radio' name='license' value='l2_price'> ".round($product[0]['l2_price'])."&nbsp;руб. <a target='_blank'href='".get_option('siteurl')."/?page_id=242' title='стандартная'>[?]</a> <input type='radio' name='license' value='l3_price'> ".round($product[0]['l3_price'])."&nbsp;руб. <a target='_blank'href='".get_option('siteurl')."/?page_id=245' title='расширенная'>[?]</a> <input type='hidden' value='".$_number."' name='prodid'> <input id='searchsubmit' value='В заказ' type='submit'> </form></div>";
 
 
+				$_bottomstriptext = "<div style='text-align:right;width:600px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'><table class='licenses'>
+					  <tr>
+						<td class='wh'>Выбор лицензии:</td>
+						<td class='wh' style='padding-left:8px;'><input type='radio' name='license' value='l1_price' checked></td>
+						<td style='border-left: 1px solid #999999'>".round($product[0]['l1_price'])."&nbsp;руб.</td>
+						<td class='wh' style='padding-left:8px;'><input type='radio' name='license' value='l2_price'></td>
+						<td style='border-left: 1px solid #999999'>".round($product[0]['l2_price'])."&nbsp;руб.</td>
+						<td class='wh' style='padding-left:8px;'><input type='radio' name='license' value='l3_price'></td>
+						<td style='border-left: 1px solid #999999'>".round($product[0]['l3_price'])."&nbsp;руб.</td>
+						<td rowspan='2' class='wh'><input id='searchsubmit' value='В заказ' type='submit' class='borders'></td>
+					  </tr>
+					  <tr>
+						<td class='wh'>&nbsp;</td>
+						<td class='wh'></td>
+						<td style='border-left: 1px solid #999999'><a target='_blank'href='".get_option('siteurl')."/?page_id=238' title='подробнее об ограниченной лицензии'>ограниченная</a></td>
+						<td class='wh'></td>
+						<td style='border-left: 1px solid #999999'><a target='_blank'href='".get_option('siteurl')."/?page_id=242' title='подробнее о стандартной лицензии'>стандартная</a></td>
+						<td class='wh'></td>
+						<td style='border-left: 1px solid #999999'><a target='_blank'href='".get_option('siteurl')."/?page_id=245' title='подробнее об расширенной лицензии'>расширенная</a></td>
+					  </tr>
+					  </table><input type='hidden' value='".$_number."' name='prodid'>  </form></div>";
      }
-    //placeholder for the slide preview wAS HERE
-                 
-
+		else
+		{
+			if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
+              {
+                  echo ("<br><br>Изображения с таким номером нет.");
+              }
+			
+		}
              }
-			 else
-             {
-             //echo "Категория: <strong class='cattitles'>".$category_data[0]['name']."";
-             }
-
-//		 echo "<span id='loadingindicator'><img id='loadingimage' src='$siteurl/wp-content/plugins/wp-shopping-cart/images/indicator.gif' alt='Loading' title='Loading' /> ".TXT_WPSC_UDPATING."...</span>";
-		 echo "</strong>";
-             
-         if(function_exists('product_display_list') && (get_option('product_view') == 'list'))
-           {
-           echo product_display_list($product/* not used, but generate notice $product_list*/, $group_type, $group_sql, $search_sql);
-           }
-           else
-             {
+			
 			 // ales: product page starts here
-					// old code to call all items at once
-					// echo product_display_default($product_list, $group_type, $group_sql, $search_sql);
-               // placeholder for the slide preview
+				// old code to call all items at once
+				// echo product_display_default($product_list, $group_type, $group_sql, $search_sql);
+                // placeholder for the slide preview
                
                $_bigpictext = str_ireplace("\\'","\"",$_bigpictext);
                 
@@ -436,8 +351,14 @@ $search_sql = NULL;
 
                      
                      
-			 // FIRST PAGE OUTPUT
-			 echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
+			 // FIRST PAGE icons OUTPUT
+              if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
+              {
+                  echo "";
+              }
+              else
+			  {
+              echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
 			 
              // PAGINATION
              $offset = $offset + $items_on_page;
@@ -456,29 +377,9 @@ $search_sql = NULL;
 				if (isset($catid)){$catid=$catid;}else{$catid='';}
 
 				echo "<div style='clear:both;'>".getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=")."<br></div>";
-             }
-         }
+              }
      }
-    else
-      {
-      switch(get_option('show_categorybrands'))
-        {
-        case 1:
-        $group_type = TXT_WPSC_CATEGORYORBRAND;
-        break;
 
-        case 2:
-        $group_type = TXT_WPSC_CATEGORY;
-        break;
-
-        case 3:
-        $group_type = TXT_WPSC_BRAND;
-        break;
-        }
-
-      echo "<a name='products' ></a><strong class='prodtitles'>".TXT_WPSC_PLEASECHOOSEA." ".ucfirst($group_type)."</strong><br />";
-   //   echo nzshpcrt_display_categories_groups();
-      }
 
 function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1, $targetpage = "/", $pagestring = "?page=")
 {		

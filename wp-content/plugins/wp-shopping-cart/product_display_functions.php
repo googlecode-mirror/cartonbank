@@ -1,21 +1,18 @@
 <?php
 //ales
 function product_display_paginated($product_list, $group_type, $group_sql = '', $search_sql = '', $offset, $items_on_page)
-	{
+{
         
-	 global $wpdb, $colorfilter;
-	 $siteurl = get_option('siteurl');
-	//todo: remove special
+	global $wpdb, $colorfilter;
+	$siteurl = get_option('siteurl');
     $andcategory = "";
     $category='';
     $num = 0;
     if (isset($_GET['category'])){$_category = $_GET['category'];}else{$_category = '';}
-
     
     if (isset($_category) and is_numeric($_category) and ($_category != 0))
     {
         $andcategory = " AND `wp_product_categories`.`id`=".$_category." ";
-        
         $category=$_category;
     }
     else
@@ -39,7 +36,26 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 		}
 	}
 
+
+					// we inject here direct link to the image
+					// $_GET['cartoonid'] : &cartoonid=666
+					if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
+					{
+						//echo("<pre>_cartoon_id ".print_r($_GET['cartoonid'],true)."</pre>");
+						$_cartoon_id = $_GET['cartoonid'];
+						$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = ".$_cartoon_id." AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC "; 
+					
+                    $sql = $search_sql;
+                    }
+
+                    
+					//exit("<pre>sql ".print_r($sql,true)."</pre>");
+
+
+
 	$product_list = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
+
+
 
 	  if($product_list != null)
 	  {
@@ -123,17 +139,18 @@ $_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><f
 	$vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
 	
 	$output .= "<a href=\"#\"  onclick=\"".$vstavka."\">";
+		  
 	
 $fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['image'];
 
-if (file_exists($fiilename))
-{
-		  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' class='thumb' />";
-}
-else
-{
-		  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/icon-rest.gif' class='thumb' />";
-}
+					if (file_exists($fiilename))
+					{
+							  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' class='thumb' />";
+					}
+					else
+					{
+							  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/icon-rest.gif' class='thumb' />";
+					}
 					  $output .= "</a>";
 					}
 					else
@@ -166,361 +183,17 @@ else
 				$counter = $counter+1;
 		  }
 		  $output .= "</div>";
+//exit("<pre>product ".print_r($product,true)."</pre>");
 		  return $output;
   }
   // end function output first page
 }
 /// ales
 
-
-function product_display_default($product_list, $group_type, $group_sql = '', $search_sql = '')
-  {
-  global $wpdb, $colorfilter;
-  $siteurl = get_option('siteurl');
-  
-  if(function_exists('ext_shpcrt_search_sql'))
-    {
-    $search_sql = ext_shpcrt_search_sql();
-    if($search_sql != '')
-      {
-      $sql = "SELECT `".$wpdb->prefix."product_list`.* FROM `".$wpdb->prefix."product_list`,`".$wpdb->prefix."item_category_associations` WHERE `".$wpdb->prefix."product_list`.`active`='1' ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `".$wpdb->prefix."product_list`.`id` = `".$wpdb->prefix."item_category_associations`.`product_id` $search_sql ORDER BY `".$wpdb->prefix."product_list`.`special` DESC";
-      }
-      else
-        {
-        $sql = "SELECT `".$wpdb->prefix."product_list`.* FROM `".$wpdb->prefix."product_list`,`".$wpdb->prefix."item_category_associations` WHERE `".$wpdb->prefix."product_list`.`active`='1' ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `".$wpdb->prefix."product_list`.`id` = `".$wpdb->prefix."item_category_associations`.`product_id` $group_sql ORDER BY `".$wpdb->prefix."product_list`.`special` DESC"; 
-        }
-    }
-    else
-      {
-      $sql = "SELECT `".$wpdb->prefix."product_list`.* FROM `".$wpdb->prefix."product_list`,`".$wpdb->prefix."item_category_associations` WHERE `".$wpdb->prefix."product_list`.`active`='1' ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `".$wpdb->prefix."product_list`.`id` = `".$wpdb->prefix."item_category_associations`.`product_id` $group_sql ORDER BY `".$wpdb->prefix."product_list`.`special` DESC"; 
-      }         
-        
-  $product_list = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
-  
-  if($product_list != null)
-    {
-    $output .= "<table class='productdisplay'>";
-    foreach($product_list as $product)
-      {
-      $num++;
-      $output .= "    <tr>";
-      if($category_data[0]['fee'] == 0)
-        {
-        $output .= "      <td class='imagecol' style='vertical-align: top;'>";
-        if(get_option('show_thumbnails') == 1)
-          {
-          if($product['image'] !=null)
-            {
-            $image_size = @getimagesize($imagedir.$product['image']);
-            $image_link = "index.php?productid=".$product['id']."&width=".$image_size[0]."&height=".$image_size[1]."";
-            if(function_exists("ext_shpcrt_display_extra_images"))
-              {
-              $output .= ext_shpcrt_display_extra_images($product['id'],$num);
-              }
-            $output .= "<a id='preview_link' href='".$image_link."' rel='lightbox[$num]' class='lightbox_links'>";
-            $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' />";
-            $output .= "</a>";
-            }
-            else
-              {
-              if(get_option('product_image_width') != '')
-                {
-                $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/no-image-uploaded.gif' title='".$product['name']."' alt='".$product['name']."' width='".get_option('product_image_width')."' height='".get_option('product_image_height')."' />";
-                }
-                else
-                  {
-                  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/no-image-uploaded.gif' title='".$product['name']."' alt='".$product['name']."' />";
-                  }
-              }
-          }
-        $output .= "</td>";
-        }
-      $output .= "      <td class='textcol'>";
-      if($product['special'] == 1)
-        {
-        $special = "<strong class='special'>".TXT_WPSC_SPECIAL." - </strong>";
-        }
-        else
-          {
-          $special = "";
-          }
-      $output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_category."' onsubmit='submitform(this);return false;' >";
-      $output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
-      
-      $imagedir = ABSPATH."wp-content/plugins/wp-shopping-cart/product_images/";
-      $output .= "<div class='producttext'>$special";
-      $output .= "<strong>". stripslashes($product['name']) . "</strong>";
-      $output .= "<br />";
-      /*
-      if(($product['image'] != '') && (file_exists($imagedir.$product['image']) === true) && function_exists("getimagesize"))
-        {
-        $image_size = @getimagesize($imagedir.$product['image']);
-        $image_link = "index.php?productid=".$product['id']."&width=".$image_size[0]."&height=".$image_size[1]."";
-        $output .= "<div class='producttext'>$special";
-        //$output .= $imagedir.$product['image'];
-        $output .= "<a id='preview_link' href='".$image_link."' rel='lightbox[$num]' class='lightbox_links'>";
-        $output .= "<strong>". stripslashes($product['name']) . "</strong>";
-        $output .= "<br />";
-        }
-        else
-          {*/
-          //}
-      
-      if(is_numeric($product['file']) && ($product['file'] > 0))
-        {
-        $file_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_files` WHERE `id`='".$product['file']."' LIMIT 1",ARRAY_A);
-        if(($file_data != null) && ($file_data[0]['mimetype'] == 'audio/mpeg') && (function_exists('listen_button')))
-          {
-          $output .= listen_button($file_data[0]['idhash']);
-          }
-        }
-      
-      
-      if($product['description'] != '')
-        {
-        $output .= nl2br(stripslashes($product['description'])) . "<br />";
-        }
-        
-      if($product['additional_description'] != '')
-        {
-        
-        $output .= "<a href='#' class='additional_description_link' onclick='return show_additional_description(\"additionaldescription".$product['id']."\",\"link_icon".$product['id']."\");'>";
-        $output .= "<img id='link_icon".$product['id']."' style='margin-right: 3px;' src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/icon_window_expand.gif' title='".$product['name']."' alt='".$product['name']."' />";
-        $output .= TXT_WPSC_MOREDETAILS."</a>";
-        
-        //$output .= "<span class='additional_description' id='additionaldescription".$product['id']."'><br />";
-		$output .= "<span class='additionaldescription' id='additionaldescription".$product['id']."'><br />";
-        $output .= nl2br(stripslashes($product['additional_description'])) . "";
-        $output .= "</span><br />";
-        }
-      
-      if($product['special']==1)
-        {
-        $output .= "<span class='oldprice'>".TXT_WPSC_PRICE.": " . nzshpcrt_currency_display($product['price'], $product['notax']) . "</span><br />";
-        $output .= TXT_WPSC_PRICE.": " . nzshpcrt_currency_display($product['price'], $product['notax'],false,$product['id']) . "<br />";
-        }
-        else
-          {
-          $output .= TXT_WPSC_PRICE.": " . nzshpcrt_currency_display($product['price'], $product['notax']) . "<br />";
-          }
-      
-      $variations_procesor = new nzshpcrt_variations;
-          
-      $output .= $variations_procesor->display_product_variations($product['id']);
-          
-      if(get_option('display_pnp') == 1)
-        {
-        $output .= TXT_WPSC_PNP.": " . nzshpcrt_currency_display($product['pnp'], 1) . "<br />";
-        }
-      
-      $output .= "<input type='hidden' name='item' value='".$product['id']."' />";
-      //AND (`quantity_limited` = '1' AND `quantity` > '0' OR `quantity_limited` = '0' )
-      if(($product['quantity_limited'] == 1) && ($product['quantity'] < 1))
-        {
-        $output .= TXT_WPSC_PRODUCTSOLDOUT."";
-        }
-        else
-          {
-          $output .= "<input type='submit' name='Buy' value='".TXT_WPSC_ADDTOCART."'  />";
-          }
-      if(get_option('product_ratings') == 1)
-        {
-        $output .= "<div class='product_footer'>";
-        
-        $output .= "<div class='product_average_vote'>";
-        $output .= "<strong>".TXT_WPSC_AVGCUSTREVIEW.":</strong>";
-        $output .= nzshpcrt_product_rating($product['id']);
-        $output .= "</div>";
-        
-        $output .= "<div class='product_user_vote'>";
-        $vote_output = nzshpcrt_product_vote($product['id'],"onmouseover='hide_save_indicator(\"saved_".$product['id']."_text\");'");
-        if($vote_output[1] == 'voted')
-          {
-          $output .= "<strong><span id='rating_".$product['id']."_text'>".TXT_WPSC_YOURRATING.":</span>";
-          $output .= "<span class='rating_saved' id='saved_".$product['id']."_text'> ".TXT_WPSC_RATING_SAVED."</span>";
-          $output .= "</strong>";
-          }
-          else if($vote_output[1] == 'voting')
-            {
-            $output .= "<strong><span id='rating_".$product['id']."_text'>".TXT_WPSC_RATETHISITEM.":</span>";
-            $output .= "<span class='rating_saved' id='saved_".$product['id']."_text'> ".TXT_WPSC_RATING_SAVED."</span>";
-            $output .= "</strong>";
-            }
-        $output .= $vote_output[0];
-        $output .= "</div>";
-        $output .= "</div>";
-        }
-      
-      $output .= "</div>";
-      
-      $output .= "</form>";
-      $output .= "      </td>\n\r";
-      $output .= "    </tr>\n\r";
-      }
-    $output .= "</table>";
-    }
-    else
-      {
-      if($_GET['product_search'] != null)
-        {
-        $output .= "<br /><strong class='cattitles'>".TXT_WPSC_YOUR_SEARCH_FOR." \"".$_GET['product_search']."\" ".TXT_WPSC_RETURNED_NO_RESULTS."</strong>";
-        }
-        else
-          {
-          $output .= "<p>".TXT_WPSC_NOTHING_FOUND."</p>";
-		  }
-      }
-  return $output;
-  }
-  
-
-function single_product_display($product_id)
-  {
-  global $wpdb, $colorfilter;
-  $output = null;
-  $siteurl = get_option('siteurl');
-  if(get_option('permalink_structure') != '')
-    {
-    $seperator ="?";
-    }
-    else
-      {
-      $seperator ="&amp;";
-      }
-  if(is_numeric($product_id))
-    {
-    $sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`name` as artist FROM `wp_product_list`, `wp_product_brands` WHERE `wp_product_list`.`id`='".$product_id."' AND `wp_product_brands`.`id` = `wp_product_list`.`brand` LIMIT 1";
-    $product_list = $wpdb->get_results($sql,ARRAY_A);
-    }
-  
-  if($product_list != null)
-    {
-    //$output .= "<strong class='cattitles'>".$product_list[0]['name']."</strong>"; 
-    $output .= "<table class='productdisplay'>";
-	$num = 0;
-    foreach((array)$product_list as $product)
-      {
-      $num++;
-      $output .= "<tr class='productdisplay'>";
-      if(isset($category_data[0]['fee']) and $category_data[0]['fee'] == 0)
-        {
-        $output .= "<td class='imagecol' style='vertical-align: top;'>";
-        if(get_option('show_thumbnails') == 1)
-          {
-          if($product['image'] !=null)
-              {
-              $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."'  style='border: 1px solid #b2b2b2;'/>";
-              }
-              else
-                {
-                if(get_option('product_image_width') != '')
-                  {
-                  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/no-image-uploaded.gif' title='".$product['name']."' alt='".$product['name']."' width='".get_option('product_image_width')."' height='".get_option('product_image_height')."'  style='border: 1px solid #b2b2b2;'/>";
-                  }
-                  else
-                    {
-                    $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/no-image-uploaded.gif' title='".$product['name']."' alt='".$product['name']."' style='border: 1px solid #b2b2b2;' />";
-                    }
-                }
-          }
-        $output .= "</td>";
-        }
-      $output .= "<td style='productdisplay'>";
-	  $output .= "<div class='producttext'><u>Автор:</u><br>".$product_list[0]['artist']."<br>";
-	  $output .= "<u>Название:</u><br>".$product_list[0]['name'];
-      
-	  if (isset($_category))
-	  {
-		  $cate = $_category;
-	  }
-	  else
-	  {
-		  $cate = '';
-	  }
-
-	  $output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$cate."' onsubmit='submitform(this);return false;' >";
-      
-      $output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
-      $imagedir = ABSPATH."wp-content/plugins/wp-shopping-cart/product_images/";
-      if(($product['image'] != '') && (file_exists($imagedir.$product['image']) === true) && function_exists("getimagesize"))
-        {
-        $image_size = @getimagesize($imagedir.$product['image']);
-        $image_link = "index.php?productid=".$product['id']."&width=".$image_size[0]."&height=".$image_size[1]."";
-//        $output .= "<div class='producttext'>$special";
-//        $output .= "<a id='preview_link' href='".$image_link."' rel='lightbox[$num]' class='lightbox_links'>";
-//        $output .= "</a>";
-        }
-      if($product['description'] != '')
-        {
-        $output .= "<u>Описание:</u><br>".nl2br(stripslashes($product['description'])) . "<br />";
-        }
-      if($product['additional_description'] != '')
-        {                
-        $output .= "<u>Ключевые слова:</u><br>";
-        $output .= nl2br(stripslashes($product['additional_description'])) . "";
-        //$output .= "</span><br /><br />";
-        }
-	    //$output .= TXT_WPSC_PRICE . ": " . nzshpcrt_currency_display($product['price'], $product['notax']) . "<br />"; 
-      
-      $variations_procesor = new nzshpcrt_variations;
-      $output .= $variations_procesor->display_product_variations($product['id']);
-
-      $output .= "</div><input type='hidden' name='item' value='".$product['id']."' />";
-      if(($product['quantity_limited'] == 1) && ($product['quantity'] < 1))
-        {
-        $output .= TXT_WPSC_PRODUCTSOLDOUT."";
-        }
-        else
-          {
-          $output .= "<br><input type='submit' class='buy_button' name='Buy' value='".TXT_WPSC_ADDTOCART."'  />";
-          }
-      if(get_option('product_ratings') == 1)
-        { 
-			$output .= "<div class='product_footer'>";
-			
-				$output .= "<div class='product_average_vote'>";
-				$output .= "<strong>".TXT_WPSC_AVGCUSTREVIEW.":</strong>";
-				$output .= nzshpcrt_product_rating($product['id']);
-				$output .= "</div>";
-			
-				$output .= "<div class='product_user_vote'>";
-				$vote_output = nzshpcrt_product_vote($product['id'],"onmouseover='hide_save_indicator(\"saved_".$product['id']."_text\");'");
-				if($vote_output[1] == 'voted')
-				  {
-				  $output .= "<strong><span id='rating_".$product['id']."_text'>".TXT_WPSC_YOURRATING.":</span>";
-				  $output .= "<span class='rating_saved' id='saved_".$product['id']."_text'> ".TXT_WPSC_RATING_SAVED."</span>";
-				  $output .= "</strong>";
-				  }
-				  else if($vote_output[1] == 'voting')
-					{
-					$output .= "<strong><span id='rating_".$product['id']."_text'>".TXT_WPSC_RATETHISITEM.":</span>";
-					$output .= "<span class='rating_saved' id='saved_".$product['id']."_text'> ".TXT_WPSC_RATING_SAVED."</span>";
-					$output .= "</strong>";
-					}
-				$output .= $vote_output[0];
-				$output .= "</div>";
-			$output .= "</div>";
-        }
-      
-      $output .= "</div>";
-      $output .= "</form>";
-      $output .= "      </td>\n\r";
-      $output .= "    </tr>\n\r";
-      }
-    $output .= "</table>";
-    }
-    else
-      {
-      //$output .= "<p>".TXT_WPSC_NOITEMSINTHIS." ".$group_type.".</p>";
-      $output .= "<p>".TXT_WPSC_NOTHING_FOUND."</p>";
-      }
-  return $output;
-  }
-
 function get_random_image(){
 	global $wpdb, $colorfilter;
 	$sql = "SELECT `wp_product_list`.`id` FROM `wp_product_list` WHERE `active`='1' ".$colorfilter." AND `visible`='1' ORDER BY RAND(NOW()) LIMIT 1";
 	$product_list = $wpdb->get_results($sql,ARRAY_A);
-	echo single_product_display($product_list[0]['id']);
+	//echo single_product_display($product_list[0]['id']);
  }
 ?>
