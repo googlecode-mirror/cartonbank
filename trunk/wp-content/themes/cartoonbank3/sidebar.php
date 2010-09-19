@@ -11,7 +11,7 @@ global $wpdb;
 		<option value="bw">ч/б</options>
 		<option value="color">цв.</options>
 	</select><input id="s" size="15" type="text" value="введите слово..." name="cs" id="search_input" onfocus="this.value='';"/>
-	<input type="submit" id="searchsubmit" value="Искать" />
+	<input type="submit" id="searchsubmit" class='borders' value="Искать" />
 	</form>
 	
 <br>
@@ -19,7 +19,7 @@ global $wpdb;
 
 <?php //wp_list_pages('title_li=<h2>Pages<h2>&exclude=30,31,32'); ?>
 
-	<br><h2>Категории:</h2> 
+	<br><h2>Категории</h2> 
 
 <?
 // number of bw cartoons
@@ -43,7 +43,7 @@ $options = '';
 	$color_number = $total_cartoons - $bw_number;
     if($categories != null)
       {
-	   $options .= "<a href='".get_option('product_list_url').$seperator."&category=0&color=all'>Все рисунки [".$total_cartoons."]</a><br />";
+	   $options .= "<a href='".get_option('product_list_url').$seperator."&category=0&color=all'>Все изображения [".$total_cartoons."]</a><br />";
 	   $options .= "<a href='".get_option('product_list_url').$seperator."&color=color'>Все цветные [".$color_number."]</a><br />";
 	   $options .= "<a href='".get_option('product_list_url').$seperator."&color=bw'>Все чёрно-белые [".$bw_number."]</a><br />";
 
