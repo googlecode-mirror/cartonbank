@@ -2627,12 +2627,12 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     case 1:
     $output .= "<h2>".TXT_WPSC_SHOPPINGCART."</h2>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
     $output .="<span id='alt_loadingindicator'><img id='alt_loadingimage' src='". get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/indicator.gif' alt='Loading' title='Loading' /> ".TXT_WPSC_UDPATING."...</span></strong><br />";
-    $spacing = "<br/><br />";
+    $spacing = "<br/>";
     break;
     
     case 3:
     $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
-    $spacing = "<br/><br />";
+    $spacing = "<br/>";
     break;
     
     case 4:
@@ -2641,7 +2641,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     
     default:
     $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
-    $spacing = "<br/><br />";
+    $spacing = "<br/>";
     break;
     }  
   
@@ -2731,7 +2731,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
 
 $_SESSION['total'] = $total;
 
-	$output .= "На вашем Личном Счёте <b>".round($_wallet)."</b> руб.<br>";
+	$output .= "На Личном счёте <b>".round($_wallet)."</b> руб.<br>";
 
 if ($total > $_wallet)
 	$output .= "<div style='color:#CC0000;'>Не хватает средств для покупки выбранных изображений.</div>";
@@ -2750,11 +2750,9 @@ if ($total > $_wallet)
     else
       {
       $output .= $spacing;
-      $output .= TXT_WPSC_YOURSHOPPINGCARTISEMPTY.".<br />";
-      $output .= "На вашем Личном Счёте <b>".round($_wallet)."</b> руб.<br>";
-	  //$output .= "<a href='".get_option('product_list_url')."'>".TXT_WPSC_VISITTHESHOP."</a>";
+      $output .= "Корзина заказов пуста.<br />";
+      $output .= "На Личном счёте <b>".round($_wallet)."</b> руб.<br>";
       }
-
 
   return $output;
   }
