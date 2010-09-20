@@ -286,7 +286,7 @@ $search_sql = NULL;
 
 				$_bottomstriptext = "<div style='text-align:right;width:600px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'><table class='licenses'>
 					  <tr>
-						<td class='wh'>Выбор лицензии:</td>
+						<td class='wh'>Выбор</td>
 						<td class='wh' style='padding-left:8px;'><input type='radio' name='license' value='l1_price' checked></td>
 						<td style='border-left: 1px solid #999999'>".round($product[0]['l1_price'])."&nbsp;руб.</td>
 						<td class='wh' style='padding-left:8px;'><input type='radio' name='license' value='l2_price'></td>
@@ -296,7 +296,7 @@ $search_sql = NULL;
 						<td rowspan='2' class='wh'><input id='searchsubmit' value='В заказ' type='submit' class='borders'></td>
 					  </tr>
 					  <tr>
-						<td class='wh'>&nbsp;</td>
+						<td class='wh'>лицензии:</td>
 						<td class='wh'></td>
 						<td style='border-left: 1px solid #999999'><a target='_blank'href='".get_option('siteurl')."/?page_id=238' title='подробнее об ограниченной лицензии'>ограниченная</a></td>
 						<td class='wh'></td>
