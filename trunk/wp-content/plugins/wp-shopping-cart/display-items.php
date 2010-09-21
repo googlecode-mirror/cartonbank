@@ -206,6 +206,8 @@ if ($_POST['visible'] == 'on')
     $visible = '1';  
 if ($_POST['colored'] == 'on'){$colored = '1'; }
     else{$colored="0";}
+if ($_POST['portfolio'] == 'on'){$portfolio = '1'; }
+    else{$portfolio="0";}
 
 if (isset($_POST['price']))
     $_price = $_POST['price'];
@@ -258,7 +260,7 @@ if (isset($_POST['international_pnp ']))
             }
 // 
 
-  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `color`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$colored', $l1_price, $l2_price, $l3_price);";
+  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `color`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$colored', '$portfolio', $l1_price, $l2_price, $l3_price);";
 
   if($wpdb->query($insertsql))
     {
@@ -900,7 +902,7 @@ if(function_exists('add_multiple_image_form'))
         Название:
       </td>
       <td>
-        <input id='picturename' size='30' type='text' name='name' value='***'  />
+        <input id='picturename' size='30' type='text' name='name' value='***'  />  <input id='portfolio' type="checkbox" name="portfolio" > Только в портфолио<br />
       </td>
     </tr>
     <tr>
@@ -1370,5 +1372,7 @@ function wtrmark($sourcefile, $watermarkfile) {
    imagedestroy($logofile_id);
   
  }
+echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
+echo("<pre>POST:".print_r($_POST,true)."</pre>");
 
 ?>
