@@ -6,11 +6,11 @@ global $wpdb;
 
 	<h2>Поиск картинок:</h2>
 	<form method="post" id="searchform" action="?page_id=29">
-	<select id="colorselect" name="color">
+	<input id="s" size="25" type="text" value="введите поисковые слово..." name="cs" id="search_input" onfocus="this.value='';"/><br><select class='borders' id="colorselect" name="color">
 		<option value="all" selected>все</option>
-		<option value="bw">ч/б</options>
-		<option value="color">цв.</options>
-	</select><input id="s" size="15" type="text" value="введите слово..." name="cs" id="search_input" onfocus="this.value='';"/>
+		<option value="bw">чёрно-белые</options>
+		<option value="color">цветные</options>
+	</select>
 	<input type="submit" id="searchsubmit" class='borders' value="Искать" />
 	</form>
 	
