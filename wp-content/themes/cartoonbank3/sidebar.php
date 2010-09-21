@@ -93,7 +93,7 @@ else
 <?
 echo $avatar_url."<br>";
 echo $author_name;
-echo "<br><a href='http://localhost/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
+echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
 }
 ?>
 <br>
