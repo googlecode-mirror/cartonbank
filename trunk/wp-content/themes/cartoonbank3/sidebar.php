@@ -6,7 +6,7 @@ global $wpdb;
 
 	<h2>Поиск картинок:</h2>
 	<form method="post" id="searchform" action="?page_id=29">
-	<input id="s" size="25" type="text" value="введите поисковые слово..." name="cs" id="search_input" onfocus="this.value='';"/><br><select class='borders' id="colorselect" name="color">
+	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" id="search_input" onfocus="this.value='';"/><br><select class='borders' id="colorselect" name="color">
 		<option value="all" selected>все</option>
 		<option value="bw">чёрно-белые</options>
 		<option value="color">цветные</options>
