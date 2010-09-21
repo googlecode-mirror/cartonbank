@@ -4,7 +4,7 @@ global $wpdb;
 ?>
 	<div id="sidebar">
 
-	<h2>Поиск картинок:</h2>
+	<h2>Поиск</h2>
 	<form method="post" id="searchform" action="?page_id=29">
 	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" id="search_input" onfocus="this.value='';"/><br><select class='borders' id="colorselect" name="color">
 		<option value="all" selected>все</option>
@@ -16,10 +16,35 @@ global $wpdb;
 	
 <br>
 
+<br><h2>Авторы</h2>
 
-<?php //wp_list_pages('title_li=<h2>Pages<h2>&exclude=30,31,32'); ?>
+<?php
+// Autors
+    echo "<div id='branddisplay1'>";
+    $options ='';
+	$seperator = '';
+    $brands = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
+	$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( * ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
+    if($brands != null && $cartoons_count != null)
+      {
+      foreach($brands as $option)
+        {
+        $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."&brand=".$option['id']."'>".stripslashes($option['name']);
+		foreach ($cartoons_count as $count_row)
+			{
+				if ($count_row['id'] == $option['id'])
+				{
+					$options .= " [".$count_row['count']."]";
+				}
+			}
+		$options .= "</a><br />";
+        }
+      }
+    echo $options;
+    echo "</div>";
+?>
 
-	<br><h2>Категории</h2> 
+<br><h2>Категории</h2> 
 
 <?
 // number of bw cartoons
@@ -76,33 +101,6 @@ $options = '';
     echo $options;
 ?>
 
-<br><h2>Авторы</h2>
-
-<?php
-// Autors
-    echo "<div id='branddisplay1'>";
-    $options ='';
-	$seperator = '';
-    $brands = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
-	$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( * ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
-    if($brands != null && $cartoons_count != null)
-      {
-      foreach($brands as $option)
-        {
-        $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."&brand=".$option['id']."'>".stripslashes($option['name']);
-		foreach ($cartoons_count as $count_row)
-			{
-				if ($count_row['id'] == $option['id'])
-				{
-					$options .= " [".$count_row['count']."]";
-				}
-			}
-		$options .= "</a><br />";
-        }
-      }
-    echo $options;
-    echo "</div>";
-?>
 
 <br><h2>Тэги</h2>
 <div id='tags'><a href='?page_id=390'>Все ключевые слова</a></div>
