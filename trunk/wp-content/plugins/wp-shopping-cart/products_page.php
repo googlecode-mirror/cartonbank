@@ -222,15 +222,15 @@ $search_sql = NULL;
                     }
                     // search request
                     // count found results
-					if (isset($_brand))
+					if (isset($_brand) && isset($_brand)!='')
 					{
 						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND `wp_product_list`.`brand`=".$_brand." AND `wp_product_list`.`visible`='1' ".$colorfilter." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
-						eee($search_sql);
+						//eee($search_sql);
 					}
                     else
 					{
 						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' ".$colorfilter." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
-						eee($search_sql);
+						//eee($search_sql);
 					}
 
                     $items_count = $GLOBALS['wpdb']->get_results($search_sql,ARRAY_A);
