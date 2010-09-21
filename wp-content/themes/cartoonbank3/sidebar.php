@@ -1,6 +1,29 @@
 <!-- begin sidebar -->
 <?php
 global $wpdb;
+$portfolio = false;
+$brandid = '';
+
+//filters set
+
+// portfolio do show trash
+if (isset($_GET['portf']) && is_numeric($_GET['portf']))
+{
+	$portfolio = true;
+}
+
+// brandid - to get to the auther section
+if (isset($_GET['brand']) && is_numeric($_GET['brand']))
+{
+	$brandid = $_GET['brand'];
+	$author_section = true;
+	}
+	else
+	{
+		$brandid = '';
+		$author_section = false;
+		}
+
 ?>
 	<div id="sidebar">
 
@@ -16,14 +39,18 @@ global $wpdb;
 	
 <br>
 
-<br><h2>Авторы</h2>
-
 <?php
-// Autors
+
+if (!$author_section) // for not Author section (portfolio)
+{
+
+?><br><h2>Авторы</h2><?
+
+// Authors
     echo "<div id='branddisplay1'>";
     $options ='';
 	$seperator = '';
-    $brands = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
+    $brands = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
 	$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( * ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
     if($brands != null && $cartoons_count != null)
       {
@@ -42,21 +69,65 @@ global $wpdb;
       }
     echo $options;
     echo "</div>";
+
+}
+else
+{
+	
+
+	// Get the Brand (author) data
+	$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
+	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
+
+	// avatar url
+				
+	if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
+	{$avatar_url = "<img width=140 src='".$brand_result[0]['avatar_url']."'>";}
+	else {$avatar_url = "<img width=140 src='".get_option('siteurl')."/img/avatar.gif'>";}
+
+	// author name
+	if (isset($brand_result[0]['name']) && $brand_result[0]['name'] != '')
+	{$author_name = $brand_result[0]['name'];}else{$brand_result[0]['name']='';}
 ?>
+<h2>Автор</h2> 
+<?
+echo $avatar_url."<br>";
+echo $author_name;
+echo "<br><a href='http://localhost/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
+}
+?>
+<br>
 
 <br><h2>Категории</h2> 
 
 <?
-// number of bw cartoons
-$bw_number = $wpdb->get_results("SELECT count(*) AS bw_number FROM `wp_product_list` WHERE color=0 AND `active`=1 AND `visible`=1");
-
-$bw_number = $bw_number[0]->bw_number;
-
 $seperator = '';
 $options = '';
 // Categories
-    $categories = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `active`='1' AND `category_parent` = '0' ORDER BY `order` ASC",ARRAY_A);
+	$categories = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `active`='1' AND `category_parent` = '0' ORDER BY `order` ASC",ARRAY_A);
+	$categories = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' AND `category_parent` = '0' ORDER BY `order` ASC",ARRAY_A);
+
+if (!$author_section)
+{
 	$category_count = $wpdb->get_results("SELECT `wp_item_category_associations`.`category_id`, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` GROUP BY `wp_item_category_associations`.`category_id`;",ARRAY_A);
+
+	// number of bw cartoons
+	$bw_number = $wpdb->get_results("SELECT count(*) AS bw_number FROM `wp_product_list` WHERE color=0 AND `active`=1 AND `visible`=1");
+	$bw_number = $bw_number[0]->bw_number;
+}
+else
+{
+	//Author section
+	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
+	{
+		$brand = $_GET['brand'];
+		$category_count = $wpdb->get_results("SELECT `wp_item_category_associations`.`category_id`, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.brand=".$brand." AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` GROUP BY `wp_item_category_associations`.`category_id`;",ARRAY_A);
+
+		// number of bw cartoons
+		$bw_number = $wpdb->get_results("SELECT count(*) AS bw_number FROM `wp_product_list` WHERE color=0 AND brand=".$brand." AND `active`=1 AND `visible`=1");
+		$bw_number = $bw_number[0]->bw_number;
+	}
+}
 	$total_cartoons = 0;
 	if($category_count != null)
 	{
@@ -68,22 +139,28 @@ $options = '';
 	$color_number = $total_cartoons - $bw_number;
     if($categories != null)
       {
-	   $options .= "<a href='".get_option('product_list_url').$seperator."&category=0&color=all'>Все изображения [".$total_cartoons."]</a><br />";
-	   $options .= "<a href='".get_option('product_list_url').$seperator."&color=color'>Все цветные [".$color_number."]</a><br />";
-	   $options .= "<a href='".get_option('product_list_url').$seperator."&color=bw'>Все чёрно-белые [".$bw_number."]</a><br />";
-
       foreach($categories as $option)
         {
-        $options .= "<a href='".get_option('product_list_url').$seperator."&category=".$option['id']."'>".stripslashes($option['name'])."";
+		$cartoon_counter = 0;
+        $category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&category=".$option['id']."'>".stripslashes($option['name'])."";
 		foreach ($category_count as $cat_row)
 			{
 				if ($cat_row['category_id'] == $option['id'])
 				{
-					$options .= " [".$cat_row['count']."]";
+					$category_in_the_list .= " [".$cat_row['count']."]";
+					$cartoon_counter = $cat_row['count'];
 				}
 			}
-		$options .= "</a><br />";
+		$category_in_the_list .= "</a><br />";
 
+		if ($cartoon_counter == 0)
+		{
+			$category_in_the_list ='';
+		}
+		else
+		{
+			$options .= $category_in_the_list;
+		}
 		
 		$subcategory_sql = "SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `active`='1' AND `category_parent` = '".$option['id']."' ORDER BY `id`";
         $subcategories = $wpdb->get_results($subcategory_sql,ARRAY_A);
@@ -101,6 +178,27 @@ $options = '';
     echo $options;
 ?>
 
+<br><h2>Разделы</h2>
+
+<?
+	if($categories != null && $total_cartoons > 0)
+      {
+		if ($author_section)
+		{
+		   $options = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&category=0&color=all'>Все изображения [".$total_cartoons."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&color=color'>Все цветные [".$color_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&color=bw'>Все чёрно-белые [".$bw_number."]</a><br />";
+		}
+		else
+		{
+		   $options = "<a href='".get_option('product_list_url').$seperator."&category=0&color=all'>Все изображения [".$total_cartoons."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=color'>Все цветные [".$color_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=bw'>Все чёрно-белые [".$bw_number."]</a><br />";
+		}
+
+	   echo $options;
+	  }
+?>
 
 <br><h2>Тэги</h2>
 <div id='tags'><a href='?page_id=390'>Все ключевые слова</a></div>

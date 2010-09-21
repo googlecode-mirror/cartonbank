@@ -10,6 +10,8 @@ $_bottomstriptext = '';
 $keywords = '';
 $seperator ="?";
 $portfolio = '';
+$bio = '';
+$cat_group_sql = '';
 
 // Portfolio filter
 if (isset($_GET['portf']) && is_numeric($_GET['portf']) && $_GET['portf'] != '')
@@ -23,6 +25,22 @@ if (isset($_GET['portf']) && is_numeric($_GET['portf']) && $_GET['portf'] != '')
 			$portfolio = 0;
 			break;
 	}
+
+// Bio filter
+if (isset($_GET['bio']) && is_numeric($_GET['bio']) && $_GET['bio'] != '')
+	switch ($_GET['bio'])
+	{
+		case 1:
+			// show bio
+			$bio = 1;
+			break;
+		default:
+			$bio = 0;
+			break;
+	}
+
+// Brand filter
+if (isset($_GET['brand'])){$_brand = $_GET['brand'];}else{$_brand = '';}
 
 // Color filter
 	$color = 'all';
@@ -56,8 +74,15 @@ if (isset($_GET['portf']) && is_numeric($_GET['portf']) && $_GET['portf'] != '')
 			$colorfilter = '';
 		}
 
-if (isset($_GET['brand'])){$_brand = $_GET['brand'];}else{$_brand = '';}
-if (isset($_GET['category'])){$_category = $_GET['category'];}else{$_category = '';}
+if (isset($_GET['category']))
+{
+	$_category = $_GET['category'];
+    $cat_group_sql = " AND `wp_item_category_associations`.`category_id`=".$_category;
+	}
+	else
+	{
+		$_category = '';
+		}
 
 if(is_numeric($_brand) || (is_numeric(get_option('default_brand')) && (get_option('show_categorybrands') == 3)))
   {
@@ -72,7 +97,7 @@ if(is_numeric($_brand) || (is_numeric(get_option('default_brand')) && (get_optio
   
   $group_sql = "AND `brand`='".$brandid."'";
 
-  $cat_sql = "SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `id`='".$brandid."' LIMIT 1";
+  $cat_sql = "SELECT * FROM `wp_product_brands` WHERE `id`='".$brandid."' LIMIT 1";
   $group_type = TXT_WPSC_BRANDNOCAP;
   }
   else if(is_numeric($_category) || (is_numeric(get_option('default_category')) && (get_option('show_categorybrands') != 3)))
@@ -86,18 +111,19 @@ if(is_numeric($_brand) || (is_numeric(get_option('default_brand')) && (get_optio
         //$catid = get_option('default_category');
 		$catid = '';
         }
+
 		if ($catid==0)
 		{
-		$group_sql = "";
-		$cat_sql = "SELECT * FROM `".$wpdb->prefix."product_categories`";
+			$group_sql = "";
+			$cat_sql = "SELECT * FROM `wp_product_categories`";
 		}
 		else
 		{
-		$group_sql = "AND `".$wpdb->prefix."item_category_associations`.`category_id`='".$catid."'";
-		$cat_sql = "SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `id`='".$catid."' LIMIT 1";
+			$group_sql = "AND `wp_item_category_associations`.`category_id`='".$catid."'";
+			$cat_sql = "SELECT * FROM `wp_product_categories` WHERE `id`='".$catid."' LIMIT 1";
 		}
-//    $group_sql = "AND `".$wpdb->prefix."item_category_associations`.`category_id`='".$catid."'";
-//    $cat_sql = "SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `id`='".$catid."' LIMIT 1"; 
+//    $group_sql = "AND `wp_item_category_associations`.`category_id`='".$catid."'";
+//    $cat_sql = "SELECT * FROM `wp_product_categories` WHERE `id`='".$catid."' LIMIT 1"; 
     $group_type = TXT_WPSC_CATEGORYNOCAP;
     }
     else
@@ -140,12 +166,13 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
 			// how many records total?
 			if ($_brand == '')
 			{
-			$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` $group_sql"; 
+				//SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_item_category_associations`.`category_id`=11 AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `brand`='3'
+			$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$cat_group_sql." ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` $group_sql"; 
 			}
 			else
 			{
 				//$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id` != ".get_option('default_category')." $group_sql"; 
-			$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` $group_sql"; 
+			$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$cat_group_sql." ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` $group_sql"; 
 			}
 
             
@@ -195,7 +222,16 @@ $search_sql = NULL;
                     }
                     // search request
                     // count found results
-                    $search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' ".$colorfilter." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
+					if (isset($_brand))
+					{
+						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND `wp_product_list`.`brand`=".$_brand." AND `wp_product_list`.`visible`='1' ".$colorfilter." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
+						eee($search_sql);
+					}
+                    else
+					{
+						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' ".$colorfilter." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
+						eee($search_sql);
+					}
 
                     $items_count = $GLOBALS['wpdb']->get_results($search_sql,ARRAY_A);
 
@@ -238,9 +274,76 @@ $search_sql = NULL;
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
      if ($product!=null)
      {      
-		 if ($portfolio == 0) // slide display. not portfolio
+		 if ($bio == 1 && $brandid > 0) // bio
 		 {
-			// normal workflow: diaply big preview image
+		  // display portfolio
+			 
+			 // prepare content
+				
+				// Get the Brand (author) data
+				$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
+				$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
+
+				/*
+				brand_result Array
+					(
+						[0] => Array
+							(
+								[id] => 3
+								[name] => Александров Василий
+								[description] => Санкт-Петербург
+								[active] => 1
+								[order] => 0
+								[avatar_url] => http://z58365.infobox.ru/cb/wp-content/uploads/2007/02/alexandrov_photo.jpg
+								[contact] => Alexandrov_Vasil@mail.ru
+								[bio_post_id] => 43
+							)
+
+					)
+				*/
+
+				// bio
+
+				if (isset($brand_result[0]['bio_post_id']))
+				{
+				$bio_sql = "SELECT `post_content` FROM `wp_posts` WHERE id = ".$brand_result[0]['bio_post_id'] ; // todo: use page ID!
+				$bio = $GLOBALS['wpdb']->get_results($bio_sql,ARRAY_A);
+				}
+				
+				if (isset($bio[0]) ) 
+				{
+					$bio = $bio[0]['post_content'];
+				}
+				else 
+					{
+						$bio = 'Автор исключительно талантливый художник. Больше нам про него пока ничего не известно.<br>Ведём бесконечные переговоры об обновлении этой информации.';
+					}
+
+				// avatar url
+				
+				if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
+				{$avatar_url = "<img width=140 src='".$brand_result[0]['avatar_url']."'>";}
+				else {$avatar_url = "<img width=140 src='".get_option('siteurl')."/img/avatar.gif'>";}
+				
+
+				// contact
+				$brand_contact = '';
+				if ($brand_result[0]['contact']!='')
+				{
+					$brand_contact = "<a href='mailto:".$brand_result[0]['contact']."'>написать письмо</a>" ;
+				}
+					else{$brand_contact=='';}
+
+				$_bigpicstrip = "<b>".$product[0]['brand']. ". Авторский раздел.</b>";
+				$_bigpictext = $avatar_url."<br><br>".$brand_contact;
+				$_bigpic = "<div style='width:600px;'>".$bio."</div>"; 
+				$_bottomstriptext = "<span style='color:#B1B1B1;'>В Авторском разделе дополнительно представлены работы, не предназначенные для продажи, а также не вошедшие в основной раздел (Банк изображений).</span>";
+
+			// end of portfolio
+		 } 
+		 else
+		 {
+			// normal workflow: disply big preview image
 			// slide preview preparations:
 				if(stristr($product[0]['image'], 'jpg') != FALSE) {
 						$_file_format = 'jpg';
@@ -289,7 +392,7 @@ $search_sql = NULL;
                 $_tags_imploded = implode(", ", $_tags_array);
                 $_tags = $_tags_imploded;
 
-                $_bigpicstrip = "<div style=\"float:left;\"><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a> <a href=\"".$siteurl."/?page_id=29&portf=1&brand=".$_brandid."\">[портфолио]</a></b></div>";
+                $_bigpicstrip = "<div style=\"float:left;\"><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
                 $_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат файла: </b><br>".$_file_format;
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
@@ -315,84 +418,12 @@ $search_sql = NULL;
 						<td style='border-left: 1px solid #999999'><a target='_blank'href='".get_option('siteurl')."/?page_id=245' title='подробнее об расширенной лицензии'>расширенная</a></td>
 					  </tr>
 					  </table><input type='hidden' value='".$_number."' name='prodid'>  </form></div>";
+		  // end of normal workflow: disply big preview image
 		 }
-		 else
-		 {
-		  // display portfolio
-			 
-			 // prepare content
-				
-				// Get the Brand (author) data
-				$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
-				$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
-
-				/*
-				brand_result Array
-					(
-						[0] => Array
-							(
-								[id] => 3
-								[name] => Александров Василий
-								[description] => Санкт-Петербург
-								[active] => 1
-								[order] => 0
-								[avatar_url] => http://z58365.infobox.ru/cb/wp-content/uploads/2007/02/alexandrov_photo.jpg
-								[contact] => Alexandrov_Vasil@mail.ru
-								[bio_post_id] => 43
-							)
-
-					)
-				*/
-
-				//exit("<pre>brand_result ".print_r($brand_result,true)."</pre>");
-
-				// bio
-
-				if (isset($brand_result[0]['bio_post_id']))
-				{
-				$bio_sql = "SELECT `post_content` FROM `wp_posts` WHERE id = ".$brand_result[0]['bio_post_id'] ; // todo: use page ID!
-				$bio = $GLOBALS['wpdb']->get_results($bio_sql,ARRAY_A);
-				}
-				
-				if (isset($bio[0]) ) 
-				{
-					$bio = $bio[0]['post_content'];
-				}
-				else 
-					{
-						$bio = 'Автор исключительно талантливый художник. Больше нам про него пока ничего не известно.<br>Ведём бесконечные переговоры об обновлении этой информации.';
-					}
-
-				// avatar url
-				
-				if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
-				{$avatar_url = "<img width=140 src='".$brand_result[0]['avatar_url']."'>";}
-				else {$avatar_url = "<img width=140 src='".get_option('siteurl')."/img/avatar.gif'>";}
-				
-
-				// contact
-				$brand_contact = '';
-				if ($brand_result[0]['contact']!='')
-				{
-					$brand_contact = "<a href='mailto:".$brand_result[0]['contact']."'>написать письмо</a>" ;
-				}
-					else{$brand_contact=='';}
-
-
-
-  //echo("<pre>avatar_url ".print_r($avatar_url,true)."</pre>");
-
-				$_bigpicstrip = "<b>".$product[0]['brand']. ". Авторский раздел.</b>";
-				$_bigpictext = $avatar_url."<br><br>".$brand_contact;
-				$_bigpic = "<div style='width:600px;border:1 solid black;'>".$bio."</div>"; 
-				$_bottomstriptext = "<span style='color:#B1B1B1;'>В Авторском разделе дополнительно представлены работы, не предназначенные для продажи, а также не вошедшие в основной раздел (Банк изображений).</span>";
-
-
-		 } // end of portfolio
-		
+		 
 	 }
 		else
-		{
+		{// no products
 			if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
               {
                   echo ("<br><br>Изображения с таким номером нет.");
@@ -582,5 +613,9 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 
 }
 
-//echo ("wpdb: <pre>".print_r($GLOBALS['wpdb'],true)."</pre>"); //
+
+function eee($to_print)
+{
+	echo ("<pre>".print_r($to_print,true)."</pre>"); 
+}
   ?>
