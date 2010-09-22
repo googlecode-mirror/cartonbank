@@ -375,8 +375,7 @@ if ( !current_user_can( 'edit_posts' ) )
 {
 unset($menu[100]);
 }
-
-
+pokazh($menu);
 $menu[999] = array( '', 'read', 'separator-last', '', 'wp-menu-separator-last' );  
 
 function add_cssclass($add, $class) {
