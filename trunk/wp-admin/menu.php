@@ -373,7 +373,9 @@ unset($id, $data);
 
 if ( !current_user_can( 'edit_posts' ) )
 {
+	// remove menu e-commerce & Банкир from non-admin
 unset($menu[100]);
+unset($menu[102]);
 }
 pokazh($menu);
 $menu[999] = array( '', 'read', 'separator-last', '', 'wp-menu-separator-last' );  
