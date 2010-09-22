@@ -1,4 +1,9 @@
 <?php
+function pokazh($to_print)
+{
+	echo ("<div style='padding:2px;background-color:#FFB366'><pre>".print_r($to_print,true)."</pre></div>"); 
+}
+
 function brandlist($curent_brand)
   {
   global $wpdb;
@@ -23,7 +28,7 @@ function brandlist($curent_brand)
 
   if(isset($_POST['submit_action']) && $_POST['submit_action'] == "add")
     { 
-    if($_FILES['image'] != null)
+    if(isset($_FILES['image']) && $_FILES['image'] != null)
       {
       if(function_exists("getimagesize"))
         {

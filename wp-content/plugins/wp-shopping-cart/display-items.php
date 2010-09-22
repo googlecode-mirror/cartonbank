@@ -1,4 +1,49 @@
 <?php 
+// Filter for the authors
+// pokazh($current_user->wp_capabilities['author'],"wp_capabilities"); // Автор 
+// pokazh($current_user->wp_capabilities['administrator'],"wp_capabilities"); Админ
+
+	global $user_brand;
+	if (isset($current_user->ID) && is_numeric($current_user->ID))
+	{
+		$user_id = $current_user->ID;
+		$sql = "SELECT * FROM `wp_product_brands` where user_id=".$user_id;
+		$user_brand = $wpdb->get_results($sql,ARRAY_A);
+		}
+	
+	if (isset($user_brand[0]['id']))
+	{
+		$user_brand = $user_brand[0]['id'];
+		} 
+		else
+			{
+				$user_brand = 0;
+			}
+	
+	/*
+	$user_brand
+	(
+		[0] => Array
+			(
+				[id] => 16
+				[name] => a1
+				[description] => 
+				[active] => 1
+				[order] => 0
+				[avatar_url] => 
+				[contact] => 
+				[bio_post_id] => 0
+				[user_id] => 32
+			)
+		)
+		*/
+	$author_group_sql = " AND `wp_product_list`.`brand` = '".$user_brand."' ";
+
+	if (isset($current_user->wp_capabilities['administrator']))
+	{
+		$author_group_sql = "";
+	}
+
 $category_data = null;
 $basepath = str_replace("/wp-admin", "" , getcwd()); 
 $basepath = str_replace("\\wp-admin", "" , $basepath);
@@ -133,8 +178,8 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == 'add') {
           ///ales
 
         $timestamp = time();
-        $wpdb->query("INSERT INTO `".$wpdb->prefix."product_files` ( `id` , `filename`  , `mimetype` , `idhash` , `date` , `width`, `height`) VALUES ( '' , '', '', '', '$timestamp', '', '');");
-        $fileid_raw = $wpdb->get_results("SELECT `id` FROM `".$wpdb->prefix."product_files` WHERE `date` = '$timestamp'",ARRAY_A);
+        $wpdb->query("INSERT INTO `wp_product_files` ( `id` , `filename`  , `mimetype` , `idhash` , `date` , `width`, `height`) VALUES ( '' , '', '', '', '$timestamp', '', '');");
+        $fileid_raw = $wpdb->get_results("SELECT `id` FROM `wp_product_files` WHERE `date` = '$timestamp'",ARRAY_A);
         $fileid = $fileid_raw[0]['id'];
         $idhash = sha1($fileid);
         $mimetype = $_FILES['file']['type'];
@@ -197,16 +242,15 @@ else
        }
        
 $visible = '0';
-//$colored = '1';
 $_price='';
 $_pnp = '';
 $_international_pnp = '';
 
-if ($_POST['visible'] == 'on')
+if (isset($_POST['visible']) && $_POST['visible'] == 'on')
     $visible = '1';  
-if ($_POST['colored'] == 'on'){$colored = '1'; }
+if (isset($_POST['colored']) && $_POST['colored'] == 'on'){$colored = '1'; }
     else{$colored="0";}
-if ($_POST['portfolio'] == 'on'){$portfolio = '1'; }
+if (isset($_POST['portfolio']) && $_POST['portfolio'] == 'on'){$portfolio = '1'; }
     else{$portfolio="0";}
 
 if (isset($_POST['price']))
@@ -264,7 +308,7 @@ if (isset($_POST['international_pnp ']))
 
   if($wpdb->query($insertsql))
     {
-    $product_id_data = $wpdb->get_results("SELECT LAST_INSERT_ID() AS `id` FROM `".$wpdb->prefix."product_list` LIMIT 1",ARRAY_A);
+    $product_id_data = $wpdb->get_results("SELECT LAST_INSERT_ID() AS `id` FROM `wp_product_list` LIMIT 1",ARRAY_A);
     $product_id = $product_id_data[0]['id'];
   
   if(isset ($_FILES['extra_image']) && ($_FILES['extra_image'] != null) && function_exists('edit_submit_extra_images'))
@@ -287,7 +331,7 @@ if (isset($_POST['international_pnp ']))
         $sql_delete = "DELETE `wp_item_category_associations`.* FROM `wp_item_category_associations` WHERE `product_id` = '".$product_id."'";
 //        exit($sql_delete);
         $wpdb->query($sql_delete);
-//        $check_existing = $wpdb->get_var("SELECT `id` FROM `".$wpdb->prefix."item_category_associations` WHERE `product_id` = ".$product_id." AND `category_id` = '$category_id' LIMIT 1");
+//        $check_existing = $wpdb->get_var("SELECT `id` FROM `wp_item_category_associations` WHERE `product_id` = ".$product_id." AND `category_id` = '$category_id' LIMIT 1");
 //      if($check_existing == null)
 //        {
         $wpdb->query("INSERT INTO `wp_item_category_associations` ( `id` , `product_id` , `category_id` ) VALUES ('', '".$product_id."', '".$category_id."');");        
@@ -302,7 +346,7 @@ if (isset($_POST['international_pnp ']))
       $check_existing = $wpdb->get_var("SELECT `id` FROM `wp_item_category_associations` WHERE `product_id` = ".$product_id." LIMIT 1");
       if($check_existing == null)
         {
-        $wpdb->query("INSERT INTO `".$wpdb->prefix."item_category_associations` ( `id` , `product_id` , `category_id` ) VALUES ('', '".$product_id."', '".$default_cat."');");        
+        $wpdb->query("INSERT INTO `wp_item_category_associations` ( `id` , `product_id` , `category_id` ) VALUES ('', '".$product_id."', '".$default_cat."');");        
         }
      }
 
@@ -323,13 +367,13 @@ if(isset($_GET['submit_action']) && $_GET['submit_action'] == "remove_set")
     {
     $product_id = $_GET['product_id'];
     $variation_assoc_id = $_GET['variation_assoc_id'];
-    $variation_association = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."variation_associations` WHERE `id` = '$variation_assoc_id' LIMIT 1",ARRAY_A);
+    $variation_association = $wpdb->get_results("SELECT * FROM `wp_variation_associations` WHERE `id` = '$variation_assoc_id' LIMIT 1",ARRAY_A);
     if($variation_association != null)
       {
       $variation_association = $variation_association[0];
       $variation_id = $variation_association['variation_id'];
-      $delete_variation_sql = "DELETE FROM `".$wpdb->prefix."variation_associations` WHERE `id` = '$variation_assoc_id' LIMIT 1";
-      $delete_value_sql = "DELETE FROM `".$wpdb->prefix."variation_values_associations` WHERE `product_id` = '$product_id' AND `variation_id` = '$variation_id'";
+      $delete_variation_sql = "DELETE FROM `wp_variation_associations` WHERE `id` = '$variation_assoc_id' LIMIT 1";
+      $delete_value_sql = "DELETE FROM `wp_variation_values_associations` WHERE `product_id` = '$product_id' AND `variation_id` = '$variation_id'";
       $wpdb->query($delete_variation_sql);
       $wpdb->query($delete_value_sql);
       echo "<div class='updated'><p align='center'>".TXT_WPSC_PRODUCTHASBEENEDITED."</p></div>";
@@ -366,9 +410,9 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
   if(($_FILES['file']['tmp_name'] != null) && ($_FILES['file']['name'] != null))
    {
     $id = $_POST['prodid'];
-    $fileid_data = $wpdb->get_results("SELECT `file` FROM `".$wpdb->prefix."product_list` WHERE `id` = '$id' LIMIT 1",ARRAY_A);
+    $fileid_data = $wpdb->get_results("SELECT `file` FROM `wp_product_list` WHERE `id` = '$id' LIMIT 1",ARRAY_A);
     $fileid = $fileid_data[0]['file'];
-    $file_data = $wpdb->get_results("SELECT `id`,`idhash` FROM `".$wpdb->prefix."product_files` WHERE `id` = '$fileid' LIMIT 1",ARRAY_A);
+    $file_data = $wpdb->get_results("SELECT `id`,`idhash` FROM `wp_product_files` WHERE `id` = '$fileid' LIMIT 1",ARRAY_A);
     $idhash = $file_data[0]['idhash'];
     $mimetype = $_FILES['file']['type'];
 
@@ -431,7 +475,7 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
 
         if(move_uploaded_file($_FILES['file']['tmp_name'],($filedir.$idhash)))
           {
-          $wpdb->query("UPDATE `".$wpdb->prefix."product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `width` = '$file_w', `height` = '$file_h' WHERE `id` = '".$file_data[0]['id']."' LIMIT 1");
+          $wpdb->query("UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `width` = '$file_w', `height` = '$file_h' WHERE `id` = '".$file_data[0]['id']."' LIMIT 1");
           }
     }
 
@@ -439,7 +483,7 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
     {
     if(isset($_POST['image_resize']) && ($_POST['image_resize'] > 0) && ($image === ''))
       {
-      $imagesql = "SELECT `image` FROM `".$wpdb->prefix."product_list` WHERE `id`=".$_POST['prodid']." LIMIT 1";
+      $imagesql = "SELECT `image` FROM `wp_product_list` WHERE `id`=".$_POST['prodid']." LIMIT 1";
       $imagedata = $wpdb->get_results($imagesql,ARRAY_A);
       if($imagedata[0]['image'] != '')
         {
@@ -473,10 +517,10 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
         {
         foreach($_POST['category'] as $category_id)
           {
-          $check_existing = $wpdb->get_var("SELECT `id` FROM `".$wpdb->prefix."item_category_associations` WHERE `product_id` = ".$id." AND `category_id` = '$category_id' LIMIT 1");
+          $check_existing = $wpdb->get_var("SELECT `id` FROM `wp_item_category_associations` WHERE `product_id` = ".$id." AND `category_id` = '$category_id' LIMIT 1");
           if($check_existing == null)
             {
-            $wpdb->query("INSERT INTO `".$wpdb->prefix."item_category_associations` ( `id` , `product_id` , `category_id` ) VALUES ('', '".$id."', '".$category_id."');");        
+            $wpdb->query("INSERT INTO `wp_item_category_associations` ( `id` , `product_id` , `category_id` ) VALUES ('', '".$id."', '".$category_id."');");        
             }
           if($counter > 0)
             {
@@ -490,7 +534,7 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
           {
           $item_list = "'0'";
           }
-      $wpdb->query("DELETE FROM `".$wpdb->prefix."item_category_associations` WHERE `product_id`= '$id' AND `category_id` NOT IN (".$item_list.")"); 
+      $wpdb->query("DELETE FROM `wp_item_category_associations` WHERE `product_id`= '$id' AND `category_id` NOT IN (".$item_list.")"); 
       }
     
    if(isset($_POST['quantity']) && is_numeric($_POST['quantity']) && ($_POST['quantity_limited'] == "yes"))
@@ -588,12 +632,12 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
       $wpdb->query($updatesql);
       if($image != null)
         {
-        $updatesql2 = "UPDATE `".$wpdb->prefix."product_list` SET `image` = '".$image."' WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+        $updatesql2 = "UPDATE `wp_product_list` SET `image` = '".$image."' WHERE `id`='".$_POST['prodid']."' LIMIT 1";
         $wpdb->query($updatesql2);
         }
       if(isset($_POST['deleteimage']) && $_POST['deleteimage'] == 1)
         {
-        $updatesql2 = "UPDATE `".$wpdb->prefix."product_list` SET `image` = ''  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+        $updatesql2 = "UPDATE `wp_product_list` SET `image` = ''  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
         $wpdb->query($updatesql2);
         }
      
@@ -619,7 +663,7 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
 
 if(isset($_GET['deleteid']) && is_numeric($_GET['deleteid']))
   {
-  $deletesql = "UPDATE `".$wpdb->prefix."product_list` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
+  $deletesql = "UPDATE `wp_product_list` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
   $wpdb->query($deletesql);
   }
   
@@ -646,26 +690,28 @@ else
 if(isset($_GET['catid']) && is_numeric($_GET['catid']))
   {
   // if we are getting items from only one category
-  $sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
+  $sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
    $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."'",ARRAY_A);
    }
    else if (isset($_GET['brand']) && is_numeric($_GET['brand']))
    {
         // if we are getting items from only one brand
-        $sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`brand`='".$_GET['brand']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
+        $sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`brand`='".$_GET['brand']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
         $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`brand`='".$_GET['brand']."'",ARRAY_A);
    }
   else
     {
     // if not, get everything that is not deleted (denoted by the active column, 1 = present, 0 = deleted, no real deletion because that would screw up the product log)
-    $sql = "SELECT `wp_product_list`.*, `wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
+    $sql = "SELECT `wp_product_list`.*, `wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
-    $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`;",ARRAY_A);
+    $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`;",ARRAY_A);
 
     }
 $product_list = $wpdb->get_results($sql,ARRAY_A) ;
+//pokazh($sql);
+
 /*
  * The product list is stored in $product_list now
  */
@@ -751,11 +797,13 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
     $from_num = $offset+1;
     $to_num = $from_num + $items_on_page;
     if($to_num>$items_count){$to_num=$items_count;}
+	//pokazh($user_brand, "user_brand");
     if($items_count>0)
     {
 		$diapazon = "<br>(показаны <strong>".$from_num."-".$to_num."</strong> из <strong>".$items_count."</strong>)";
     }
-    echo "<strong class='form_group' style='font-size:10px;'>".TXT_WPSC_SELECT_PRODUCT."</strong>".$diapazon;
+	else{$diapazon = "<br>нет картинок для показа или у вас нет полномочий для просмотра";}
+    echo "<strong class='form_group' style='font-size:10px;'>Выбрать работу</strong>".$diapazon;
     echo $output; 
     echo "            </td>\n\r";
     echo "          </tr>\n\r";
@@ -766,29 +814,18 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
     echo "            </td>\n\r";
 
     echo "            <td>\n\r";
-    //echo TXT_WPSC_IMAGE;
 
     echo "            </td>\n\r";
 
     echo "            <td>\n\r";
-    echo TXT_WPSC_NAME;
+    echo "Имя";
     echo "            </td>\n\r";
 
-    //echo "            <td>\n\r";
-    //echo TXT_WPSC_PRICE;
-    //echo "            </td>\n\r";
-
-    //echo "            <td>\n\r";
-    //echo TXT_WPSC_CATEGORY;
-    //echo "            </td>\n\r";
-
     echo "            <td>\n\r";
-    //echo TXT_WPSC_EDIT;
 	echo "Ред.";
     echo "            </td>\n\r";
 
     echo "            <td>\n\r";
-    //echo "del";
     echo "            </td>\n\r";
 
     echo "          </tr>\n\r";
@@ -969,7 +1006,7 @@ function topcategorylist($offset)
   {
   global $wpdb,$category_data;
   $options = "";
-  $values = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `active`='1' ORDER BY `id` ASC",ARRAY_A);
+  $values = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' ORDER BY `id` ASC",ARRAY_A);
   $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=wp-shopping-cart/display-items.php&offset=0";
   $options .= "<option value='$url'>".TXT_WPSC_ALLCATEGORIES."</option>\r\n";
   $selected = '';
@@ -990,79 +1027,44 @@ function topcategorylist($offset)
   return $concat;
   }
 
-/*
-//redeclared in wp-shopping-cart.php
-function brandslist($current_brand = '')
-  {
-  global $wpdb;
-  $options = "";
-  $options .= "<option  $selected value='0'>".TXT_WPSC_SELECTABRAND."</option>\r\n";
-  $values = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
-  foreach($values as $option)
-    {
-    if($curent_category == $option['id'])
-      {
-      $selected = "selected='selected'";
-       }
-    $options .= "<option  $selected value='".$option['id']."'>".$option['name']."</option>\r\n";
-    $selected = "";
-    }
-  $concat .= "<select name='brand'>".$options."</select>\r\n";
-  return $concat;
-  }
-*/
 
 function al_brandslist($current_brand = '')
   {
   global $wpdb;
-  global $authors;
+  global $authors, $user_brand, $current_user;
+  $combo_disabled = '';
+  if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
+			$combo_disabled = "disabled='disabled'";
+  if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
+			$combo_disabled = '';
   $options = "";
-  $values = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
+  $values = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
   $authors = $values;
   $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=wp-shopping-cart/display-items.php&offset=0";
-  $options .= "<option value='$url'>".TXT_WPSC_SELECTABRAND."</option>\r\n";
+  $options .= "<option value='$url'>Выберите автора</option>\r\n";
   $selected = '';
+	$who_is_selected_brand = 0;
+	if(isset($_GET['brand']) && is_numeric($_GET['brand'])) // we ordered selected user
+	{
+		$who_is_selected_brand = $_GET['brand'];
+	}
+	else if (isset($user_brand)) // select logged user
+	{
+		$who_is_selected_brand = $user_brand;
+	}
+
   foreach($values as $option)
     {
-    if(isset($_GET['brand']) && $_GET['brand'] == $option['id'])
+    if($who_is_selected_brand == $option['id'])
       {
       $selected = "selected='selected'";
-       }
+      }
       $options .= "<option $selected value='$url&amp;brand=".$option['id']."'>".$option['name']."</option>\r\n";
       $selected = "";
     }
-  $concat = "<select name='brand' onChange='categorylist(this.options[this.selectedIndex].value)'>".$options."</select>\r\n";
+  $concat = "<select name='brand' $combo_disabled onChange = 'categorylist(this.options[this.selectedIndex].value)'>".$options."</select>\r\n";
   return $concat;
   }
-
-
-/*
-// redeclared in wp-shopping-cart.php  
-function variationslist($current_variation = '')
-
-    {
-    global $wpdb;
-    $options = "";
-    //$options .= "<option value=''>".TXT_WPSC_SELECTACATEGORY."</option>\r\n";
-    $values = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_variations` ORDER BY `id` ASC",ARRAY_A);
-    $options .= "<option  $selected value='0'>".TXT_WPSC_SELECTAVARIATION."</option>\r\n";
-    //$options .= "<option  $selected value='add'>".TXT_WPSC_NEW_VARIATION."</option>\r\n";
-    if($values != null)
-      {
-      foreach($values as $option)
-        {
-        if($current_brand == $option['id'])
-          {
-          $selected = "selected='selected'";
-          }
-        $options .= "<option  $selected value='".$option['id']."'>".$option['name']."</option>\r\n";
-        $selected = "";
-        }
-      }
-    $concat .= "<select name='variations' onChange='add_variation_value_list(this.options[this.selectedIndex].value)'>".$options."</select>\r\n";
-    return $concat;
- }
-*/
  
  function al_watermark($path)
  {
@@ -1372,7 +1374,7 @@ function wtrmark($sourcefile, $watermarkfile) {
    imagedestroy($logofile_id);
   
  }
-echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
-echo("<pre>POST:".print_r($_POST,true)."</pre>");
-
+//echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
+//echo("<pre>POST:".print_r($_POST,true)."</pre>");
+//
 ?>
