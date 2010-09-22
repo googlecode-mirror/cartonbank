@@ -1186,12 +1186,12 @@ function nzshpcrt_submit_ajax()
       }
       
   /* fill product form */    
-  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && is_numeric($_POST['prodid']))
+  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && isset($_POST['prodid']) && is_numeric($_POST['prodid']))
     {
     echo nzshpcrt_getproductform($_POST['prodid']);
     exit();
     }  /* fill category form */   
-    else if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && is_numeric($_POST['catid']))
+    else if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && isset($_POST['catid']) && is_numeric($_POST['catid']))
       {
       echo nzshpcrt_getcategoryform($_POST['catid']);
       exit();
@@ -2041,7 +2041,7 @@ function nzshpcrt_submit_ajax()
   $output .= "        </table>\n\r";
   
   // TODO: Remove before upload to the server! temp! local debug only!
-  $output = Utf8ToWin($output);
+  //$output = Utf8ToWin($output);
   //return $outp;
   
   return $output;
@@ -2176,10 +2176,10 @@ function nzshpcrt_getbrandsform($catid)
   $sql = "SELECT * FROM `wp_product_brands` WHERE `id`='$catid' LIMIT 1";
   $product_data = $wpdb->get_results($sql,ARRAY_A) ;
   $product = $product_data[0];
-  $output .= "        <table>\n\r";
+  $output = "        <table border='1'>\n\r";
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_NAME.": ";
+  $output .= "имя: ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<input type='text' name='title' value='".stripslashes($product['name'])."' />";
@@ -2188,7 +2188,7 @@ function nzshpcrt_getbrandsform($catid)
 
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_DESCRIPTION.": ";
+  $output .= "описание: ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<textarea name='description' cols='40' rows='8' >".stripslashes($product['description'])."</textarea>";
@@ -2198,12 +2198,23 @@ function nzshpcrt_getbrandsform($catid)
 
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
+  $output .= "user_id: ";
+  $output .= "            </td>\n\r";
+  $output .= "            <td>\n\r";
+  $output .= "<input name='user_id' value='".$product['user_id']."'>";
+  $output .= "            </td>\n\r";
+  $output .= "          </tr>\n\r";
+  $output .= "          </tr>\n\r";
+
+
+  $output .= "          <tr>\n\r";
+  $output .= "            <td>\n\r";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<input type='hidden' name='prodid' value='".$product['id']."' />";
   $output .= "<input type='hidden' name='submit_action' value='edit' />";
   $output .= "<input class='edit_button' type='submit' name='submit' value='".TXT_WPSC_EDIT."' />";
-  $output .= "<a class='delete_button' href='admin.php?page=wp-shopping-cart/display-brands.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >".TXT_WPSC_DELETE."</a>";
+  $output .= "<a class='delete_button' href='admin.php?page=wp-shopping-cart/display-brands.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >стереть</a>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
  $output .= "        </table>\n\r";
