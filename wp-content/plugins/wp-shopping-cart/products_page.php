@@ -12,6 +12,7 @@ $seperator ="?";
 $portfolio = '';
 $bio = '';
 $cat_group_sql = '';
+$filter_list = '';
 
 // Portfolio filter
 if (isset($_GET['portf']) && is_numeric($_GET['portf']) && $_GET['portf'] != '')
@@ -20,6 +21,7 @@ if (isset($_GET['portf']) && is_numeric($_GET['portf']) && $_GET['portf'] != '')
 		case 1:
 			// portfolio is active
 			$portfolio = 1;
+			//$filter_list .= 'портфолио: да ';
 			break;
 		default:
 			$portfolio = 0;
@@ -33,6 +35,7 @@ if (isset($_GET['bio']) && is_numeric($_GET['bio']) && $_GET['bio'] != '')
 		case 1:
 			// show bio
 			$bio = 1;
+			//$filter_list .= 'биография: да ';
 			break;
 		default:
 			$bio = 0;
@@ -40,8 +43,16 @@ if (isset($_GET['bio']) && is_numeric($_GET['bio']) && $_GET['bio'] != '')
 	}
 
 // Brand filter
-if (isset($_GET['brand'])){$_brand = $_GET['brand'];}else{$_brand = '';}
-
+if (isset($_GET['brand']) && is_numeric($_GET['brand']))
+{
+	$_brand = $_GET['brand'];
+	$brand_group_sql = " AND `brand`='".$_brand."' ";
+	}
+	else
+		{
+			$_brand = '';
+			$brand_group_sql = '';
+		}
 // Color filter
 	$color = 'all';
 
@@ -122,9 +133,8 @@ if(is_numeric($_brand) || (is_numeric(get_option('default_brand')) && (get_optio
 			$group_sql = "AND `wp_item_category_associations`.`category_id`='".$catid."'";
 			$cat_sql = "SELECT * FROM `wp_product_categories` WHERE `id`='".$catid."' LIMIT 1";
 		}
-//    $group_sql = "AND `wp_item_category_associations`.`category_id`='".$catid."'";
-//    $cat_sql = "SELECT * FROM `wp_product_categories` WHERE `id`='".$catid."' LIMIT 1"; 
-    $group_type = TXT_WPSC_CATEGORYNOCAP;
+
+	$group_type = TXT_WPSC_CATEGORYNOCAP;
     }
     else
       {
@@ -162,20 +172,16 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
       
   if($display_items == true)
     {
-
 			// how many records total?
 			if ($_brand == '')
 			{
-				//SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_item_category_associations`.`category_id`=11 AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `brand`='3'
-			$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$cat_group_sql." ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` $group_sql"; 
+			$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$brand_group_sql.$cat_group_sql." ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`"; 
 			}
 			else
 			{
-				//$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id` != ".get_option('default_category')." $group_sql"; 
-			$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$cat_group_sql." ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` $group_sql"; 
+			$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$brand_group_sql.$cat_group_sql." ".$colorfilter." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`"; 
 			}
 
-            
 			$items_count = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
 
 			if (is_numeric($items_count[0]['count']))
@@ -188,14 +194,7 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
 			}
 
 $search_sql = NULL;
-
-         if(isset($_GET['product_search']) && $_GET['product_search'] != null)
-           {
-           echo "<strong class='cattitles'>".TXT_WPSC_SEARCH_FOR." : ".$_GET['product_search']."</strong>";
-           }
-           else if (($_category == 0) or ($_category == ''))
-             {
-				$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$colorfilter." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT 1"; 
+				$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$colorfilter." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT 1"; 
     
     
                 if (isset($_GET['offset']) && is_numeric($_GET['offset']))
@@ -220,28 +219,27 @@ $search_sql = NULL;
                     if(isset($_GET['cs']) && $_GET['cs']!= ''){
                         $keywords = strtolower(trim($_GET['cs']));
                     }
+					$filter_list .= 'поиск: ('.$keywords.") ";
                     // search request
                     // count found results
 					if (isset($_brand) && isset($_brand)!='')
 					{
-						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND `wp_product_list`.`brand`=".$_brand." AND `wp_product_list`.`visible`='1' ".$colorfilter." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
-						//eee($search_sql);
+						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' ".$cat_group_sql.$brand_group_sql." AND `wp_product_list`.`visible`='1' ".$colorfilter." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
 					}
                     else
 					{
 						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' ".$colorfilter." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
-						//eee($search_sql);
 					}
 
                     $items_count = $GLOBALS['wpdb']->get_results($search_sql,ARRAY_A);
 
-                    if (is_numeric($items_count[0]['count']))
+                    if (isset($items_count[0]['count']) && is_numeric($items_count[0]['count']))
                     {
                         $items_count = $items_count[0]['count'];
                         // search request
                         //$search_sql = "SELECT * FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' AND (name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')"; 
 
-                        $search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' ".$colorfilter." AND `wp_product_list`.`visible`='1' AND (LOWER(`wp_product_list`.`name`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`id`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`description`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`additional_description`) LIKE '%".$keywords."%') AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
+                        $search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' ".$cat_group_sql.$colorfilter." AND `wp_product_list`.`visible`='1' AND (LOWER(`wp_product_list`.`name`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`id`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`description`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`additional_description`) LIKE '%".$keywords."%') AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
                     }
                     else
                     {
@@ -254,8 +252,6 @@ $search_sql = NULL;
                     {
                         $keywords = '';
                     }
-
-		
 	// we inject here direct link to the image
 	// $_GET['cartoonid'] : &cartoonid=666
 	if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
@@ -266,14 +262,10 @@ $search_sql = NULL;
 	    $sql = $search_sql;
     }
 
-	
-	//exit("<pre>sql ".print_r($sql,true)."</pre>");
-
-	//$sql = $search_sql;
 	// список картинок
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
      if ($product!=null)
-     {      
+     {   
 		 if ($bio == 1 && $brandid > 0) // bio
 		 {
 		  // display portfolio
@@ -362,9 +354,13 @@ $search_sql = NULL;
 				$_sizesm = $_x_sm." см X ".$_y_sm." см";
                 $_author = $product[0]['brand'];
                 $_name = $product[0]['name'];
+				if(isset($_GET['brand']) && is_numeric($_GET['brand'])) 
+						$filter_list .= "автор: <b>".$_author."</b> ";
 				if (isset($product[0]['kategoria']))
 				 {
 					$_categor = $product[0]['kategoria'];
+					if(isset($_GET['category']) && is_numeric($_GET['category'])) 
+						$filter_list .= "категория: <b>".$_categor."</b> ";
 				 }
 				 else
 				 {
@@ -430,7 +426,6 @@ $search_sql = NULL;
               }
 			
 		}
-             }
 			
 			 // ales: product page starts here
 				// old code to call all items at once
@@ -484,7 +479,7 @@ $search_sql = NULL;
 			 //pagination links
 
 				$output = "<div id='pagination' class='width:470px;clear:both;'><br>";
-				$output .= "Всего найдено изображений: ".$items_count. "<br><br></div>";
+				$output .= "Всего найдено изображений: ".$items_count. ". <span style='color:#c0c0c0;'>".$filter_list."</span><br><br></div>";
 				echo "<div style='clear:both;'>".$output."<br></div>";
 
 				$page = round($offset/$items_on_page);
@@ -614,8 +609,8 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 }
 
 
-function eee($to_print)
+function pokazh($to_print)
 {
-	echo ("<pre>".print_r($to_print,true)."</pre>"); 
+	echo ("<div style='padding:2px;background-color:#FFB366'><pre>".print_r($to_print,true)."</pre></div>"); 
 }
   ?>
