@@ -393,25 +393,24 @@ $search_sql = NULL;
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
 
-				$_bottomstriptext = "<div style='text-align:right;width:600px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'><table class='licenses'>
+				$_bottomstriptext = "<div style='width:450px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'><table class='licenses'>
 					  <tr>
-						<td class='wh'>Выбор</td>
-						<td class='wh' style='padding-left:8px;'><input type='radio' name='license' value='l1_price' checked></td>
-						<td style='border-left: 1px solid #999999'>".round($product[0]['l1_price'])."&nbsp;руб.</td>
-						<td class='wh' style='padding-left:8px;'><input type='radio' name='license' value='l2_price'></td>
-						<td style='border-left: 1px solid #999999'>".round($product[0]['l2_price'])."&nbsp;руб.</td>
-						<td class='wh' style='padding-left:8px;'><input type='radio' name='license' value='l3_price'></td>
-						<td style='border-left: 1px solid #999999'>".round($product[0]['l3_price'])."&nbsp;руб.</td>
-						<td rowspan='2' class='wh'><input id='searchsubmit' value='В заказ' type='submit' class='borders'></td>
+						<td class='wh' style='width:80px;vertical-align:bottom;'><b>Выбор</b></td>
+						<td class='wh' style='text-align:left;'><input type='radio' name='license' value='l1_price' checked></td>
+						<td style='vertical-align:middle;text-align:right;'>".round($product[0]['l1_price'])."&nbsp;руб.</td>
+						<td rowspan='2' style='width:20px;'>&nbsp;</td>
+						<td class='wh' style='text-align:left;'><input type='radio' name='license' value='l2_price'></td>
+						<td style='vertical-align:middle;text-align:right;'>".round($product[0]['l2_price'])."&nbsp;руб.</td>
+						<td rowspan='2' style='width:20px;'>&nbsp;</td>
+						<td class='wh' style='text-align:left;'><input type='radio' name='license' value='l3_price'></td>
+						<td style='vertical-align:middle;text-align:right;'>".round($product[0]['l3_price'])."&nbsp;руб.</td>
+						<td rowspan='2' class='wh' style='width:80px; text-align:right; vertical-align:bottom;'><input id='searchsubmit' value='В заказ' type='submit' class='borders'></td>
 					  </tr>
 					  <tr>
-						<td class='wh'>лицензии:</td>
-						<td class='wh'></td>
-						<td style='border-left: 1px solid #999999'><a target='_blank'href='".get_option('siteurl')."/?page_id=238' title='подробнее об ограниченной лицензии'>ограниченная</a></td>
-						<td class='wh'></td>
-						<td style='border-left: 1px solid #999999'><a target='_blank'href='".get_option('siteurl')."/?page_id=242' title='подробнее о стандартной лицензии'>стандартная</a></td>
-						<td class='wh'></td>
-						<td style='border-left: 1px solid #999999'><a target='_blank'href='".get_option('siteurl')."/?page_id=245' title='подробнее об расширенной лицензии'>расширенная</a></td>
+						<td class='wh' style='vertical-align:top;'><b>лицензии:</b></td>
+						<td colspan='2' style='padding-left:6px;'><a target='_blank'href='".get_option('siteurl')."/?page_id=238' title='подробнее об ограниченной лицензии'>ограниченная</a></td>
+						<td colspan='2' style='padding-left:6px;'><a target='_blank'href='".get_option('siteurl')."/?page_id=242' title='подробнее о стандартной лицензии'>стандартная</a></td>
+						<td colspan='2' style='padding-left:6px;'><a target='_blank'href='".get_option('siteurl')."/?page_id=245' title='подробнее об расширенной лицензии'>расширенная</a></td>
 					  </tr>
 					  </table><input type='hidden' value='".$_number."' name='prodid'>  </form></div>";
 		  // end of normal workflow: disply big preview image
@@ -438,7 +437,7 @@ $search_sql = NULL;
                echo "<div id='bigpictext'>".$_bigpictext."</div>";
                echo "<div id='bigpic'>".$_bigpic."</div>";
                echo "<div style='clear:both;'></div>";
-               echo "<div id='bigpicbottomstrip'>".$_bottomstriptext."</div>";
+               echo "<div id='bigpicbottomstrip' style='float:right;'>".$_bottomstriptext."</div>";
 
                     
                     

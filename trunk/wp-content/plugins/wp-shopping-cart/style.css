@@ -43,11 +43,10 @@ div#sideshoppingcart div h2{
  }
 
 table.licenses tr td{
-font-size: 12px;
+font-size: 10px;
 text-align: left;
 margin:0px;
 padding:0px;
-padding-left:2px;
 }
 
 table.licenses td.wh{
