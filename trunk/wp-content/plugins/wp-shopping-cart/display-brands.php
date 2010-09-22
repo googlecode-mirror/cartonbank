@@ -8,8 +8,7 @@ function brandlist($curent_brand)
   {
   global $wpdb;
   $options = "";
-  //$options .= "<option value=''>".TXT_WPSC_SELECTABRAND."</option>\r\n";
-  $values = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_brands` ORDER BY `id` ASC",ARRAY_A);
+  $values = $wpdb->get_results("SELECT * FROM `wp_product_brands` ORDER BY `id` ASC",ARRAY_A);
   foreach($values as $option)
     {
     if($curent_brand == $option['id'])
@@ -44,7 +43,7 @@ function brandlist($curent_brand)
         {
         $image = '';
         }
-    $insertsql = "INSERT INTO `".$wpdb->prefix."product_brands` ( `id` , `name` , `description`, `active` )VALUES ('', '".$_POST['name']."', '".$_POST['description']."', '1')";
+    $insertsql = "INSERT INTO `wp_product_brands` ( `id` , `name` , `description`, `active` )VALUES ('', '".$_POST['name']."', '".$_POST['description']."', '1')";
   
     if($wpdb->query($insertsql))
       {
@@ -58,7 +57,7 @@ function brandlist($curent_brand)
 
   if(isset($_POST['submit_action']) && ($_POST['submit_action'] == "edit") && is_numeric($_POST['prodid']))
     {
-   if($_POST['special'] == 'yes')
+   if(isset($_POST['special']) && $_POST['special'] == 'yes')
      {
      $special = 1;
      }
@@ -67,7 +66,7 @@ function brandlist($curent_brand)
        $special = 0;
        }
 
-   if($_POST['notax'] == 'yes')
+   if(isset($_POST['notax']) && $_POST['notax'] == 'yes')
      {
      $notax = 1;
      }
@@ -75,7 +74,7 @@ function brandlist($curent_brand)
        {
        $notax = 0;
        }
-    $updatesql = "UPDATE `".$wpdb->prefix."product_brands` SET `name` = '".$wpdb->escape($_POST['title'])."', `description` = '".$wpdb->escape($_POST['description'])."'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+    $updatesql = "UPDATE `wp_product_brands` SET `name` = '".$wpdb->escape($_POST['title'])."', `description` = '".$wpdb->escape($_POST['description'])."', `user_id` = '".$wpdb->escape($_POST['user_id'])."' WHERE `id`='".$_POST['prodid']."' LIMIT 1";
     $wpdb->query($updatesql);
    echo "<div class='updated'><p align='center'>".TXT_WPSC_BRANDHASBEENEDITED."</p></div>";
      }
@@ -83,11 +82,11 @@ function brandlist($curent_brand)
 
 if(isset($_GET['deleteid']) && is_numeric($_GET['deleteid']))
   {
-  $deletesql = "UPDATE `".$wpdb->prefix."product_brands` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
+  $deletesql = "UPDATE `wp_product_brands` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
   $wpdb->query($deletesql);
   }
 
-$sql = "SELECT * FROM `".$wpdb->prefix."product_brands` WHERE `active`=1";
+$sql = "SELECT * FROM `wp_product_brands` WHERE `active`=1";
 $product_list = $wpdb->get_results($sql,ARRAY_A) ;
 ?>
 
@@ -117,29 +116,32 @@ function conf()
 <div class="wrap">
   <h2><?php echo TXT_WPSC_DISPLAYBRANDS;?></h2>
   <a href='' onclick='return showaddform()' class='add_item_link'><img src='../wp-content/plugins/wp-shopping-cart/images/package_add.png' alt='<?php echo TXT_WPSC_ADD; ?>' title='<?php echo TXT_WPSC_ADD; ?>' />&nbsp;<span><?php echo TXT_WPSC_ADDBRAND;?></span></a>
-  <span id='loadingindicator_span'><img id='loadingimage' src='../wp-content/plugins/wp-shopping-cart/images/indicator.gif' alt='Loading' title='Loading' /></span>
+  <span id='loadingindicator_span'></span>
   <?php
   $num = 0;
-echo "    <table id='productpage'>\n\r";
+echo "    <table id='productpage' style='padding:4px;'>\n\r";
 echo "      <tr><td>\n\r";
-echo "        <table id='itemlist'>\n\r";
-echo "          <tr class='firstrow'>\n\r";
-/*
+echo "        <table id='itemlist' style='padding:4px;'>\n\r";
+echo "          <tr class='firstrow' style='border:1px solid black;background-color:#c0c0c0;'>\n\r";
 echo "            <td>\n\r";
-echo TXT_WPSC_IMAGE;
-echo "            </td>\n\r";
-*/
-
-echo "            <td>\n\r";
-echo TXT_WPSC_NAME;
+echo "фото";
 echo "            </td>\n\r";
 
 echo "            <td>\n\r";
-echo TXT_WPSC_DESCRIPTION;
+echo "имя";
 echo "            </td>\n\r";
 
 echo "            <td>\n\r";
-echo TXT_WPSC_EDIT;
+echo "описание";
+echo "            </td>\n\r";
+
+echo "            <td>\n\r";
+echo "user_id";
+echo "            </td>\n\r";
+
+
+echo "            <td>\n\r";
+echo "редактировать";
 echo "            </td>\n\r";
 
 echo "          </tr>\n\r";
@@ -148,19 +150,18 @@ if($product_list != null)
   {
   foreach($product_list as $product)
     {
-/*
 echo "          <tr>\n\r";
 echo "            <td>\n\r";
-if($product['image'] !=null)
+if($product['avatar_url'] !=null)
       {
-      echo "<img src='../wp-content/plugins/wp-shopping-cart/brand_images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='50' height='50' />";
+      echo "<img src='".$product['avatar_url']."' title='".$product['name']."' alt='".$product['name']."' width='50' height='50' />";
       }
       else
         {
         echo "<img src='../wp-content/plugins/wp-shopping-cart/no-image-uploaded.gif' title='".$product['name']."' alt='".$product['name']."' width='50' height='50'  />";
         }
 echo "            </td>\n\r";
-*/
+
 echo "            <td>\n\r";
 echo "".stripslashes($product['name'])."";
 echo "            </td>\n\r";
@@ -190,6 +191,10 @@ if($displaydescription != $product['description'])
 
 echo "            <td>\n\r";
 echo "".stripslashes($displaydescription)."";
+echo "            </td>\n\r";
+
+echo "            <td>\n\r";
+echo $product['user_id'];
 echo "            </td>\n\r";
 
 echo "            <td>\n\r";
