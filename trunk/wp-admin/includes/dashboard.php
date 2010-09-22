@@ -1,5 +1,12 @@
 <?php
-header( 'Location: '.get_option('siteurl').'/wp-admin/profile.php' ) ;
+if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
+{
+	header( 'Location: '.get_option('siteurl').'/wp-admin/admin.php?page=wp-shopping-cart/display-items.php' ) ;
+}
+else
+{
+	header( 'Location: '.get_option('siteurl').'/wp-admin/profile.php' ) ;
+}
 /**
  * WordPress Dashboard Widget Administration Panel API
  *

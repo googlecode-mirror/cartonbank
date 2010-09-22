@@ -330,6 +330,7 @@ foreach ( $menu as $id => $data ) {
 			$_wp_submenu_nopriv[$new_parent] = $_wp_submenu_nopriv[$old_parent];
 	}
 }
+
 unset($id, $data, $subs, $first_sub, $old_parent, $new_parent);
 
 do_action('admin_menu', '');
@@ -370,6 +371,12 @@ foreach ( $menu as $id => $data ) {
 }
 unset($id, $data);
 
+if ( !current_user_can( 'edit_posts' ) )
+{
+unset($menu[100]);
+}
+
+
 $menu[999] = array( '', 'read', 'separator-last', '', 'wp-menu-separator-last' );  
 
 function add_cssclass($add, $class) {
@@ -385,33 +392,33 @@ function add_menu_classes($menu) {
 	foreach ( $menu as $order => $top ) {
 		$i++;
 
-		if ( 0 == $order ) { // dashboard is always shown/single
-			$menu[0][4] = add_cssclass('menu-top-first', $top[4]);
-			$lastorder = 0;
-			continue;
-		}
+			if ( 0 == $order ) { // dashboard is always shown/single
+				$menu[0][4] = add_cssclass('menu-top-first', $top[4]);
+				$lastorder = 0;
+				continue;
+			}
 
-		if ( 0 === strpos($top[2], 'separator') ) { // if separator
-			$first = true;
- 			$c = $menu[4][4];
-			$menu[4][4] = add_cssclass('menu-top-last', $c);
-			continue;
-		}
+			if (isset($menu[4][4]) && 0 === strpos($top[2], 'separator') ) { // if separator
+				$first = true;
+				$c = $menu[4][4];
+				$menu[4][4] = add_cssclass('menu-top-last', $c);
+				continue;
+			}
 
-		if ( $first ) {
-			$c = $menu[$order][4];
-			$menu[$order][4] = add_cssclass('menu-top-first', $c);
-			$first = false;
-		}
+			if ( $first ) {
+				$c = $menu[$order][4];
+				$menu[$order][4] = add_cssclass('menu-top-first', $c);
+				$first = false;
+			}
 
-		if ( $mc == $i ) { // last item
-			$c = $menu[$order][4];
-			$menu[$order][4] = add_cssclass('menu-top-last', $c);
-		}
+			if ( $mc == $i ) { // last item
+				$c = $menu[$order][4];
+				$menu[$order][4] = add_cssclass('menu-top-last', $c);
+			}
 
-		$lastorder = $order;
+			$lastorder = $order;
+
 	}
-
 	return apply_filters( 'add_menu_classes', $menu );
 }
 
@@ -454,5 +461,11 @@ $menu = add_menu_classes($menu);
 if ( !user_can_access_admin_page() ) {
 	do_action('admin_page_access_denied');
 	wp_die( __('You do not have sufficient permissions to access this page.') );
+}
+
+function pokazh($to_print,$comment = '')
+{
+	$response = "<div style='margin:2px;padding-left:6px;background-color:#FFCC66;border:1px solid #CC0066;'><pre><b>".$comment.":</b> ".print_r($to_print,true)."</pre></div>";
+	echo ($response); 
 }
 ?>
