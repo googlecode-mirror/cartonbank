@@ -158,14 +158,21 @@ input.buy {
  margin-bottom: 4px;
  }
 
+
+select.borders {
+ border: 1px solid #b2b2b2;
+ width: auto;
+ margin-top:4px;
+ }
+
 input.borders {
  background: #f4f4f4;
  border: 1px solid #b2b2b2;
  color: #000;
  font:  10px Verdana, Arial, Helvetica, sans-serif;
  width: auto;
- margin: 1px;
- padding: 3px;
+ padding-top: 4px;
+ padding-bottom: 1px;
  }
  /* ///ales */
 

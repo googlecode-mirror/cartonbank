@@ -370,29 +370,22 @@ foreach ( $menu as $id => $data ) {
 	}
 //pokazh($current_user->wp_capabilities,"666");
 	
-if (isset($current_user->wp_capabilities['subscriber']) && $current_user->wp_capabilities['subscriber']==1)
-{
-	if ($menu[$id][0] == 'Банкир')
-		unset($menu[$id]);
-}
-
-
+	if (isset($current_user->wp_capabilities['subscriber']) && $current_user->wp_capabilities['subscriber']==1)
+	{
+		if (isset($menu[$id][0]) && $menu[$id][0] == 'Банкир')
+			unset($menu[$id]);
+	}
+	if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
+	{
+		if (isset($menu[$id][0]) && $menu[$id][0] == 'e-Commerce')
+			unset($menu[$id]);
+	}
+	//unset($menu[100]);//банкир 
+	//unset($menu[102]);//e-commerce
 }
 unset($id, $data);
-/*
-//if ( !current_user_can( 'edit_posts' ) )
-if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
-{
- // do nothing
-}
-else
-{
-// remove menu e-commerce & Банкир from non-admin
-//unset($menu[100]);//банкир 
-unset($menu[102]);//e-commerce
-}
-*/
-pokazh($menu);
+
+//pokazh($menu);
 $menu[999] = array( '', 'read', 'separator-last', '', 'wp-menu-separator-last' );  
 
 function add_cssclass($add, $class) {

@@ -1,5 +1,16 @@
 <?php
 global $wpdb, $colorfilter, $color;
+
+// send email from feedback form
+if (isset($_REQUEST['email']) && isset($_REQUEST['message']))
+{
+  $email = $_REQUEST['email'] ;
+  $message = $_REQUEST['message'] ;
+  mail("igor.aleshin@gmail.com","_REQUEST",print_r($_REQUEST,true));
+  mail("cartoonbank.ru@gmail.com", "Письмо от посетителья сайта cartoonbank.ru", $message, "From: $email" );
+  //header( "Location: http://www.example.com/thankyou.html" );
+}
+
 $siteurl = get_option('siteurl');
 $_SESSION['selected_country'] = '';
 $brandid = '';
@@ -276,24 +287,6 @@ $search_sql = NULL;
 				$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
 				$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
 
-				/*
-				brand_result Array
-					(
-						[0] => Array
-							(
-								[id] => 3
-								[name] => Александров Василий
-								[description] => Санкт-Петербург
-								[active] => 1
-								[order] => 0
-								[avatar_url] => http://z58365.infobox.ru/cb/wp-content/uploads/2007/02/alexandrov_photo.jpg
-								[contact] => Alexandrov_Vasil@mail.ru
-								[bio_post_id] => 43
-							)
-
-					)
-				*/
-
 				// bio
 
 				if (isset($brand_result[0]['bio_post_id']))
@@ -312,11 +305,21 @@ $search_sql = NULL;
 					}
 
 				// avatar url
-				
+				/*
 				if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
 				{$avatar_url = "<img width=140 src='".$brand_result[0]['avatar_url']."'>";}
 				else {$avatar_url = "<img width=140 src='".get_option('siteurl')."/img/avatar.gif'>";}
+				*/
 				
+				// email form
+				//pokazh(get_option('siteurl'),"siteurl");
+				$email_form = "<div id='emailform'><form method='post' action='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>
+								  Email: <input name='email' type='text' /><br />
+								  Message:<br />
+								  <textarea style='width:600px;' name='message' rows='15' cols='40'></textarea><br />
+								  <input type='submit' />
+								</form></div>";
+				$email_form = '';
 
 				// contact
 				$brand_contact = '';
@@ -326,9 +329,9 @@ $search_sql = NULL;
 				}
 					else{$brand_contact=='';}
 
-				$_bigpicstrip = "<b>".$product[0]['brand']. ". Авторский раздел.</b>";
-				$_bigpictext = $avatar_url."<br><br>".$brand_contact;
-				$_bigpic = "<div style='width:600px;'>".$bio."</div>"; 
+				$_bigpicstrip = "<b>".$product[0]['brand']. ". Информация об авторе</b>";
+				$_bigpictext = "<br><br>".$brand_contact;
+				$_bigpic = "<div style='width:600px;'>".$bio."</div>".$email_form; 
 				$_bottomstriptext = "<span style='color:#B1B1B1;'>В Авторском разделе дополнительно представлены работы, не предназначенные для продажи, а также не вошедшие в основной раздел (Банк изображений).</span>";
 
 			// end of portfolio

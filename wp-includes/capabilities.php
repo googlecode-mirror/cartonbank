@@ -1107,7 +1107,7 @@ function current_user_can_for_blog( $blog_id, $capability ) {
 	$args = array_slice( func_get_args(), 2 );
 	$args = array_merge( array( $capability ), $args );
 
-	mail("igor.aleshin@gmail.com","has_cap args 2",print_r($args,true));
+	//mail("igor.aleshin@gmail.com","has_cap args 2",print_r($args,true));
 	return call_user_func_array( array( &$user, 'has_cap' ), $args );
 }
 
@@ -1132,7 +1132,7 @@ function author_can( $post, $capability ) {
 	$args = array_slice( func_get_args(), 2 );
 	$args = array_merge( array( $capability ), $args );
 
-	mail("igor.aleshin@gmail.com","has_cap args 3",print_r($args,true));
+	//mail("igor.aleshin@gmail.com","has_cap args 3",print_r($args,true));
 	return call_user_func_array( array( &$author, 'has_cap' ), $args );
 }
 
