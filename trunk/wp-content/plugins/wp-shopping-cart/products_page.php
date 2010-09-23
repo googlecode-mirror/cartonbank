@@ -6,9 +6,16 @@ if (isset($_REQUEST['email']) && isset($_REQUEST['message']))
 {
   $email = $_REQUEST['email'] ;
   $message = $_REQUEST['message'] ;
-  mail("igor.aleshin@gmail.com","_REQUEST",print_r($_REQUEST,true));
-  mail("cartoonbank.ru@gmail.com", "Письмо от посетителья сайта cartoonbank.ru", $message, "From: $email" );
-  //header( "Location: http://www.example.com/thankyou.html" );
+  // mail("cartoonbank.ru@gmail.com", "Письмо от посетителья сайта cartoonbank.ru", $message, "From: $email" );
+  // header( "Location: http://www.example.com/thankyou.html" );
+
+	$headers = "From: ".$email."\r\n" .
+			   'X-Mailer: PHP/' . phpversion() . "\r\n" .
+			   "MIME-Version: 1.0\r\n" .
+			   "Content-Type: text/html; charset=utf-8\r\n" .
+			   "Content-Transfer-Encoding: 8bit\r\n\r\n";
+
+    mail("cartoonbank.ru@gmail.com", 'Письмо от посетителья сайта cartoonbank.ru', $message, $headers);
 }
 
 $siteurl = get_option('siteurl');
@@ -42,8 +49,6 @@ if (isset($_GET['portf']) && is_numeric($_GET['portf']) && $_GET['portf'] != '')
 // Bio filter
 if (isset($_GET['bio']) && is_numeric($_GET['bio']) && $_GET['bio'] != '')
 {
-	mail("igor.aleshin@gmail.com","bio",print_r($_GET['bio'],true));
-	pokazh("mail sent");
 	switch ($_GET['bio'])
 	{
 		case 1:
@@ -307,35 +312,30 @@ $search_sql = NULL;
 						$bio = 'Автор исключительно талантливый художник. Больше нам про него пока ничего не известно.<br>Ведём бесконечные переговоры об обновлении этой информации.';
 					}
 
-				// avatar url
-				/*
-				if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
-				{$avatar_url = "<img width=140 src='".$brand_result[0]['avatar_url']."'>";}
-				else {$avatar_url = "<img width=140 src='".get_option('siteurl')."/img/avatar.gif'>";}
-				*/
-				
 				// email form
-				//pokazh(get_option('siteurl'),"siteurl");
-				$email_form = "<div id='emailform'><form method='post' action='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>
-								  Email: <input name='email' type='text' /><br />
-								  Message:<br />
-								  <textarea style='width:600px;' name='message' rows='15' cols='40'></textarea><br />
-								  <input type='submit' />
+				$email_form = "<div id='emailform' style='display:none;text-align:right;'><form method='post' action='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>
+								  Email для обратной связи: <input name='email' type='text' style='width:400px;'/><br /><br />
+								  <textarea style='width:600px;' name='message' rows='15' cols='40'>Уважаемый ".$product[0]['brand']."!\n\n</textarea><br />
+								  <input type='submit' value='Отправить письмо' class='borders'/>
 								</form></div>";
-				$email_form = '';
-
 				// contact
+				
+				/*
 				$brand_contact = '';
 				if ($brand_result[0]['contact']!='')
 				{
-					$brand_contact = "<a href='mailto:".$brand_result[0]['contact']."'>написать письмо</a>" ;
+					//$brand_contact = "<a href='mailto:".$brand_result[0]['contact']."'>написать письмо</a>" ;
+					$brand_contact = "<a onclick='document.getElementById(emailform).style.visibility=visible'>написать письмо</a>" ;
 				}
 					else{$brand_contact=='';}
+				*/
+				
+	$brand_contact = "<a href='#' onclick=\"document.getElementById('emailform').style.display='block';document.getElementById('bio').style.display='none';return false;\">написать письмо</a>";
 
 				$_bigpicstrip = "<b>".$product[0]['brand']. ". Информация об авторе</b>";
 				$_bigpictext = "<br><br>".$brand_contact;
-				$_bigpic = "<div style='width:600px;'>".$bio."</div>".$email_form; 
-				$_bottomstriptext = "<span style='color:#B1B1B1;'>В Авторском разделе дополнительно представлены работы, не предназначенные для продажи,<br>а также не вошедшие в основной раздел (Банк изображений).</span>";
+				$_bigpic = "<div style='width:600px;'><div id='bio' style='display:block;'>".$bio."</div></div>".$email_form; 
+				$_bottomstriptext = "<span style='color:#B1B1B1;'>В рубрике «Рабочий стол» авторского раздела дополнительно представлены работы, не предназначенные для продажи, а также не вошедшие в основной раздел (Банк изображений).</span>";
 
 			// end of portfolio
 		 } 
