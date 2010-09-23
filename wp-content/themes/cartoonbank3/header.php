@@ -8,7 +8,6 @@
 
 <title><?php wp_title(''); ?><?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?></title>
 <meta name="generator" content="WordPress <?php bloginfo('version'); ?>" />
-<!-- leave this for stats please -->
 
 <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank2/images/favicon.ico" type="image/x-icon" />
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url'); ?>" />
@@ -25,7 +24,6 @@
 <body>
 
 <div id="header">
-	<!-- <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a><br /> -->
 	<a href="<?php echo get_option('home'); ?>/"><img src="<?php echo get_option('home'); ?>/wp-admin/images/cb-logo.gif" border="0"></a><br />
 	<?php bloginfo('description'); ?>
 </div>
@@ -35,9 +33,7 @@
 		<li><a href="?page_id=95">О проекте</a></li>
 		<li><a href="?page_id=29">Банк изображений</a></li>
 		<li><a href="?page_id=73">Авторам</a></li>
-		<!--<li><a href="?page_id=38">Авторы</a></li>-->
 		<li><a href="?page_id=97">Клиентам</a></li>
 		<li><a href="?page_id=2">Ответы</a></li>
-		<?php //wp_list_pages('title_li=&depth=1&exclude=3,4,5,6,7,8,9'); ?>
 	</ul>
 </div>
