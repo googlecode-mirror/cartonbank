@@ -1,7 +1,14 @@
 <?php
-$imagetype = getimagesize($_FILES['file']['tmp_name']); //previously exif_imagetype()
+if (isset($_FILES['file']['tmp_name']))
+{
+	$imagetype = getimagesize($_FILES['file']['tmp_name']); //previously exif_imagetype()
+}
+else
+{
+	$imagetype = '';
+}
  
-if(is_numeric($height) && is_numeric($width))
+if(isset($height) && is_numeric($height) && isset($width) && is_numeric($width))
   {
 	$image = $wpdb->escape($_FILES['file']['name']);
 	$destdir = $imagedir.$image;

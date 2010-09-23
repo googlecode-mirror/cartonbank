@@ -397,13 +397,13 @@ $search_sql = NULL;
 					  <tr>
 						<td class='wh' style='width:80px;vertical-align:bottom;'><b>Выбор</b></td>
 						<td class='wh' style='text-align:left;'><input type='radio' name='license' value='l1_price' checked></td>
-						<td style='vertical-align:middle;text-align:right;'>".round($product[0]['l1_price'])."&nbsp;руб.</td>
+						<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l1_price'])."&nbsp;руб.</b></td>
 						<td rowspan='2' style='width:20px;'>&nbsp;</td>
 						<td class='wh' style='text-align:left;'><input type='radio' name='license' value='l2_price'></td>
-						<td style='vertical-align:middle;text-align:right;'>".round($product[0]['l2_price'])."&nbsp;руб.</td>
+						<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l2_price'])."&nbsp;руб.</b></td>
 						<td rowspan='2' style='width:20px;'>&nbsp;</td>
 						<td class='wh' style='text-align:left;'><input type='radio' name='license' value='l3_price'></td>
-						<td style='vertical-align:middle;text-align:right;'>".round($product[0]['l3_price'])."&nbsp;руб.</td>
+						<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l3_price'])."&nbsp;руб.</b></td>
 						<td rowspan='2' class='wh' style='width:80px; text-align:right; vertical-align:bottom;'><input id='searchsubmit' value='В заказ' type='submit' class='borders'></td>
 					  </tr>
 					  <tr>
