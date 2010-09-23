@@ -1,11 +1,9 @@
 div#shoppingcart{
  float: right;
-/* height: 200px; */
  width: 148px;
  margin: 0px;
  padding: 0px;
  margin-left: 5px;
-/* margin-right: -100px; */
  }
  
 div#shoppingcart img{
@@ -85,7 +83,6 @@ form.adjustform{
  }
 
 table.productdisplay{
-/* margin-top: 10px; */
  margin-bottom: 0px;
  border-collapse: collapse;
  width: 100%;
@@ -106,7 +103,6 @@ table.productdisplay tr td.imagecol{
  }
  
 table.productdisplay tr td.imagecol img{
-/* width: 300px; */
 border: 0px solid #ffffff;
  }
 
@@ -542,8 +538,12 @@ div.pagination span.current {
 		padding: 2px 5px 2px 5px;
 		margin: 2px;
 		border: 1px solid #EEE;
-	
 		color: #DDD;
 	}
 
+tr.tdfirstcol{ 
+	font-size: 6pt; 
+	width: 140px !important; 
+	vertical-align: top; 
+	}
 

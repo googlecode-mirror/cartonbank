@@ -104,7 +104,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 			$colorfilter = '';
 		}
 
-if (isset($_GET['category']))
+if (isset($_GET['category']) && is_numeric($_GET['category']))
 {
 	$_category = $_GET['category'];
     $cat_group_sql = " AND `wp_item_category_associations`.`category_id`=".$_category;
@@ -112,6 +112,7 @@ if (isset($_GET['category']))
 	else
 	{
 		$_category = '';
+		$cat_group_sql = '';
 		}
 
 if(is_numeric($_brand) || (is_numeric(get_option('default_brand')) && (get_option('show_categorybrands') == 3)))
@@ -203,7 +204,7 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
 
 			$items_count = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
 
-			if (is_numeric($items_count[0]['count']))
+			if (isset($items_count[0]['count']) && is_numeric($items_count[0]['count']))
 			{
 				$items_count = $items_count[0]['count'];
 			}
@@ -398,7 +399,13 @@ $search_sql = NULL;
                 $_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b> ".$_file_format;
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
-
+				
+				if (isset($product[0]['not_for_sale']) && $product[0]['not_for_sale']=='1')
+				{
+					$_bottomstriptext = "Продажа лицензий на данное изображение не разрешена автором";
+				}
+				else
+				{
 				$_bottomstriptext = "<div style='width:450px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'><table class='licenses'>
 					  <tr>
 						<td class='wh' style='width:80px;vertical-align:bottom;'><b>Выбор</b></td>
@@ -419,6 +426,7 @@ $search_sql = NULL;
 						<td colspan='2' style='padding-left:6px;'><a target='_blank'href='".get_option('siteurl')."/?page_id=245' title='подробнее об расширенной лицензии'>расширенная</a></td>
 					  </tr>
 					  </table><input type='hidden' value='".$_number."' name='prodid'>  </form></div>";
+				}
 		  // end of normal workflow: disply big preview image
 		 }
 		 
