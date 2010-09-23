@@ -815,7 +815,7 @@ function nzshpcrt_style()
   <link href='<?php echo get_option('siteurl'); ?>/wp-content/plugins/wp-shopping-cart/style.css' rel="stylesheet" type="text/css" />
   <style type="text/css" media="screen">
     <?php
-    if(is_numeric($_GET['brand']) || (get_option('show_categorybrands') == 3))
+    if(isset($_GET['brand']) && is_numeric($_GET['brand']) || (get_option('show_categorybrands') == 3))
     {
     $brandstate = 'block';
     $categorystate = 'none';
@@ -829,7 +829,6 @@ function nzshpcrt_style()
     div#categorydisplay{
     display: <?php echo $categorystate; ?>;
     }
-    
     div#branddisplay{
     display: <?php echo $brandstate; ?>;
     }
@@ -841,22 +840,16 @@ function nzshpcrt_javascript()
     {
   $siteurl = get_option('siteurl'); 
     ?>
-<!-- <link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/product_rater.css' rel="stylesheet" type="text/css" />
-<link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/lightbox.css' rel="stylesheet" type="text/css" /> -->
 <script language='JavaScript' type='text/javascript'>
-/* base url */
 var base_url = "<?php echo $siteurl; ?>";
-
-/* LightBox Configuration start*/
 <?
 $loadgif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/loading.gif";
 $closegif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
 ?>
-
 var fileLoadingImage = "<?php echo $loadgif; ?>";    
 var fileBottomNavCloseImage = "<?php echo $closegif; ?>";
-var resizeSpeed = 9;  // controls the speed of the image resizing (1=slowest and 10=fastest)
-var borderSize = 10;  //if you adjust the padding in the CSS, you will need to update this variable
+var resizeSpeed = 9;
+var borderSize = 10;
 </script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/ajax.js" language='JavaScript' type="text/javascript"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/prototype.js" language='JavaScript' type="text/javascript"></script>
@@ -872,35 +865,18 @@ function nzshpcrt_css()
     {
   $siteurl = get_option('siteurl'); 
     ?>
-<!-- <link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/lightbox.css' rel="stylesheet" type="text/css" />
-<link href='<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/admin.css' rel="stylesheet" type="text/css" /> -->
-
 <script language='JavaScript' type='text/javascript'>
-/* base url */
 var base_url = "<?php echo $siteurl; ?>";
-
 <?
 $loadgif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/loading.gif";
 $closegif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
 ?>
-
-/* LightBox Configuration start*/
 var fileLoadingImage = "<?php echo $loadgif; ?>";    
 var fileBottomNavCloseImage = "<?php echo $closegif; ?>";
-
 var resizeSpeed = 9;  
-
 var borderSize = 10;
-/* LightBox Configuration end*/
-
-/* Ajax functions start*/
 <?php
 require_once('ajax.js');
-?>
-/* Ajax functions end*/
-
-/* custom admin functions start*/
-<?php
 echo "var TXT_WPSC_DELETE = '".TXT_WPSC_DELETE."';\n\r";
 echo "var TXT_WPSC_TEXT = '".TXT_WPSC_TEXT."';\n\r";
 echo "var TXT_WPSC_EMAIL = '".TXT_WPSC_EMAIL."';\n\r";
@@ -920,7 +896,6 @@ echo "<option value='heading' >".TXT_WPSC_HEADING."</option>\";\n\r";
 
 require_once('admin.js');
 ?>
-/* custom admin functions end*/
 </script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/prototype.js" language='JavaScript' type="text/javascript"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/scriptaculous.js?load=effects" language='JavaScript' type="text/javascript"></script>
@@ -2783,10 +2758,9 @@ if ($total > $_wallet)
     else
       {
       $output .= $spacing;
-      $output .= "Корзина заказов пуста.<br />";
-      $output .= "На Личном счёте <b>".round($_wallet)."</b> руб.<br>";
+      //$output .= "Корзина заказов пуста.<br />";
+      $output .= "На Личном счёте <b>".round($_wallet)."</b> р.<br>";
       }
-
   return $output;
   }
 

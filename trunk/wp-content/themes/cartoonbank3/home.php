@@ -35,9 +35,6 @@ $redirecturl = get_option('siteurl')."/?page_id=29";
 
 	
 	<div id="contentright">
-		<!-- <h2>Ключевые слова</h2>
-		<?php //jkeywords_tag_cloud(); ?> 
-<br>-->
 <?
 $unregged ='';
 if ($user_identity == '')

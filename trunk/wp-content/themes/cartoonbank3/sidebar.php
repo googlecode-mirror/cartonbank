@@ -1,4 +1,4 @@
-<!-- begin sidebar -->
+<!-- sidebar start -->
 <?php
 global $wpdb;
 $portfolio = false;
@@ -103,13 +103,13 @@ echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=
 <?
 $seperator = '';
 $options = '';
-// Categories
-	$categories = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `active`='1' AND `category_parent` = '0' ORDER BY `order` ASC",ARRAY_A);
-	$categories = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' AND `category_parent` = '0' ORDER BY `order` ASC",ARRAY_A);
-
 if (!$author_section)
-{
-	$category_count = $wpdb->get_results("SELECT `wp_item_category_associations`.`category_id`, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` GROUP BY `wp_item_category_associations`.`category_id`;",ARRAY_A);
+{ // all categories
+// Categories
+	// exclude category 666 (rokfor)
+	$categories = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' AND `category_parent` = '0' AND `id` <> '666' ORDER BY `order` ASC",ARRAY_A);
+
+	$category_count = $wpdb->get_results("SELECT `wp_item_category_associations`.`category_id`, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id` <> '666' GROUP BY `wp_item_category_associations`.`category_id`;",ARRAY_A);
 
 	// number of bw cartoons
 	$bw_number = $wpdb->get_results("SELECT count(*) AS bw_number FROM `wp_product_list` WHERE color=0 AND `active`=1 AND `visible`=1");
@@ -117,11 +117,15 @@ if (!$author_section)
 }
 else
 {
+	$categories = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' AND `category_parent` = '0' ORDER BY `order` ASC",ARRAY_A);
+
 	//Author section
 	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	{
 		$brand = $_GET['brand'];
+
 		$category_count = $wpdb->get_results("SELECT `wp_item_category_associations`.`category_id`, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.brand=".$brand." AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` GROUP BY `wp_item_category_associations`.`category_id`;",ARRAY_A);
+
 		// number of bw cartoons
 		$bw_number = $wpdb->get_results("SELECT count(*) AS bw_number FROM `wp_product_list` WHERE color=0 AND brand=".$brand." AND `active`=1 AND `visible`=1");
 		$bw_number = $bw_number[0]->bw_number;
@@ -161,7 +165,7 @@ else
 			$options .= $category_in_the_list;
 		}
 		
-		$subcategory_sql = "SELECT * FROM `".$wpdb->prefix."product_categories` WHERE `active`='1' AND `category_parent` = '".$option['id']."' ORDER BY `id`";
+		$subcategory_sql = "SELECT * FROM `wp_product_categories` WHERE `active`='1' AND `category_parent` = '".$option['id']."' ORDER BY `id`";
         $subcategories = $wpdb->get_results($subcategory_sql,ARRAY_A);
         if($subcategories != null)
           {
@@ -213,4 +217,4 @@ else
 </div>
 </div>
 
-<!-- end sidebar -->
+<!-- sidebar end -->

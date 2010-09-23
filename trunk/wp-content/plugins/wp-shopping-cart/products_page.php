@@ -41,6 +41,9 @@ if (isset($_GET['portf']) && is_numeric($_GET['portf']) && $_GET['portf'] != '')
 
 // Bio filter
 if (isset($_GET['bio']) && is_numeric($_GET['bio']) && $_GET['bio'] != '')
+{
+	mail("igor.aleshin@gmail.com","bio",print_r($_GET['bio'],true));
+	pokazh("mail sent");
 	switch ($_GET['bio'])
 	{
 		case 1:
@@ -52,7 +55,7 @@ if (isset($_GET['bio']) && is_numeric($_GET['bio']) && $_GET['bio'] != '')
 			$bio = 0;
 			break;
 	}
-
+}
 // Brand filter
 if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 {
@@ -332,7 +335,7 @@ $search_sql = NULL;
 				$_bigpicstrip = "<b>".$product[0]['brand']. ". Информация об авторе</b>";
 				$_bigpictext = "<br><br>".$brand_contact;
 				$_bigpic = "<div style='width:600px;'>".$bio."</div>".$email_form; 
-				$_bottomstriptext = "<span style='color:#B1B1B1;'>В Авторском разделе дополнительно представлены работы, не предназначенные для продажи, а также не вошедшие в основной раздел (Банк изображений).</span>";
+				$_bottomstriptext = "<span style='color:#B1B1B1;'>В Авторском разделе дополнительно представлены работы, не предназначенные для продажи,<br>а также не вошедшие в основной раздел (Банк изображений).</span>";
 
 			// end of portfolio
 		 } 

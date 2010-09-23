@@ -1,5 +1,4 @@
-﻿<!-- begin footer -->
-
+﻿<!-- footer begins -->
 <div style="clear:both;"></div>
 <div style="clear:both;"></div>
 
@@ -9,5 +8,4 @@ Copyright &copy; 2010 <a href="<?php echo get_option('home'); ?>/"><?php bloginf
 
 <?php do_action('wp_footer'); ?>
 <br><br><br><br><br>
-</body>
-</html>
+</body></html>
