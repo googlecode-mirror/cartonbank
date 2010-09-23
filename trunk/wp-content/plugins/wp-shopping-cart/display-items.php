@@ -304,7 +304,11 @@ if (isset($_POST['international_pnp ']))
             }
 // 
 
-  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `color`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$wpdb->escape($_POST['brand'])."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$colored', '$portfolio', $l1_price, $l2_price, $l3_price);";
+if (isset($_POST['brand']) && is_numeric($_POST['brand']))
+	{$_brand = $wpdb->escape($_POST['brand']);}
+else {$_brand = $user_brand;}
+
+  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `color`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$_brand."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$colored', '$portfolio', $l1_price, $l2_price, $l3_price);";
 
   if($wpdb->query($insertsql))
     {
@@ -775,7 +779,7 @@ if (isset($_GET['catid'])){$_category = $_GET['catid'];}else{$_category = '';}
                 {
                     // "Previous page" link
                     $offset_back = $offset - $items_on_page;
-                    $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_GET['brand']."&category=".$_GET['catid']."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a><br>";
+                    $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_brand."&category=".$_GET['catid']."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a><br>";
                 }
                 if(($offset < $items_count - $items_on_page) && ($items_count>0))
                 {

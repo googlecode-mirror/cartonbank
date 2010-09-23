@@ -29,7 +29,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 
 	<h2>Поиск</h2>
 	<form method="post" id="searchform" action="?page_id=29">
-	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" id="search_input" onfocus="this.value='';"/><br><select class='borders' id="colorselect" name="color">
+	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" id="search_input" onfocus="this.value='';"/><br><select id="colorselect" name="color" class='borders'>
 		<option value="all" selected>все</option>
 		<option value="bw">чёрно-белые</options>
 		<option value="color">цветные</options>
