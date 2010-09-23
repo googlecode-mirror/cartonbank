@@ -2077,7 +2077,7 @@ function nzshpcrt_getcategoryform($catid)
   $sql = "SELECT * FROM `wp_product_categories` WHERE `id`=$catid LIMIT 1";
   $product_data = $wpdb->get_results($sql,ARRAY_A) ;
   $product = $product_data[0];
-  $output .= "        <table>\n\r";
+  $output = "        <table>\n\r";
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
   $output .= TXT_WPSC_NAME.": ";

@@ -371,11 +371,16 @@ foreach ( $menu as $id => $data ) {
 }
 unset($id, $data);
 
-if ( !current_user_can( 'edit_posts' ) )
+//if ( !current_user_can( 'edit_posts' ) )
+if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
 {
-	// remove menu e-commerce & Банкир from non-admin
-unset($menu[100]);
-unset($menu[102]);
+ // do nothing
+}
+else
+{
+// remove menu e-commerce & Банкир from non-admin
+//unset($menu[100]);//банкир 
+unset($menu[102]);//e-commerce
 }
 //pokazh($menu);
 $menu[999] = array( '', 'read', 'separator-last', '', 'wp-menu-separator-last' );  

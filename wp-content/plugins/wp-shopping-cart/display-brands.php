@@ -1,9 +1,4 @@
 <?php
-function pokazh($to_print)
-{
-	echo ("<div style='padding:2px;background-color:#FFB366'><pre>".print_r($to_print,true)."</pre></div>"); 
-}
-
 function brandlist($curent_brand)
   {
   global $wpdb;
