@@ -250,6 +250,8 @@ if (isset($_POST['visible']) && $_POST['visible'] == 'on')
     $visible = '1';  
 if (isset($_POST['colored']) && $_POST['colored'] == 'on'){$colored = '1'; }
     else{$colored="0";}
+if (isset($_POST['not_for_sale']) && $_POST['not_for_sale'] == 'on'){$not_for_sale = '1'; }
+    else{$not_for_sale="0";}
 if (isset($_POST['portfolio']) && $_POST['portfolio'] == 'on'){$portfolio = '1'; }
     else{$portfolio="0";}
 
@@ -308,7 +310,9 @@ if (isset($_POST['brand']) && is_numeric($_POST['brand']))
 	{$_brand = $wpdb->escape($_POST['brand']);}
 else {$_brand = $user_brand;}
 
-  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `color`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$_brand."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$colored', '$portfolio', $l1_price, $l2_price, $l3_price);";
+  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `color`, `not_for_sale`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$_brand."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$colored', '$not_for_sale', '$portfolio', $l1_price, $l2_price, $l3_price);";
+
+   mail("igor.aleshin@gmail.com","new cartoon added",print_r($insertsql,true));
 
   if($wpdb->query($insertsql))
     {
@@ -590,6 +594,8 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
         $visible = '1'; 
     if (isset($_POST['colored']) && $_POST['colored'] == 'on'){$colored = '1';}
         else {$colored = '0';}
+    if (isset($_POST['not_for_sale']) && $_POST['not_for_sale'] == 'on'){$not_for_sale = '1';}
+        else {$not_for_sale = '0';}
 
     if (isset($_POST['price'])){$_price=$_POST['price'];}else{$_price='';}
     if (isset($_POST['pnp'])){$_pnp=$_POST['pnp'];}else{$_pnp='';}
@@ -629,9 +635,17 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
             break;
             }
 //        
-      $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$wpdb->escape($_POST['brand'])."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `color`='$colored', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+
+if (isset($_POST['brand']) && is_numeric($_POST['brand']))
+		{$_brand = $_POST['brand'];}
+else
+		{$_brand = $user_brand;}
+
+	
+
+      $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$_brand."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
       //exit("<pre>".print_r($updatesql,true)."</pre>");
-	  mail("igor.aleshin@gmail.com","updatesql",print_r($updatesql,true));
+	  mail("igor.aleshin@gmail.com","old cartoon updated",print_r($updatesql,true));
 
       $wpdb->query($updatesql);
       if($image != null)
@@ -790,7 +804,7 @@ if (isset($_GET['catid'])){$_category = $_GET['catid'];}else{$_category = '';}
                 $output .= "</br></div>";
 
 // main table with two TD (item list & edit form)
-echo "    <table id='productpage' width=300>\n\r";
+echo "    <table id='productpage'>\n\r";
 echo "      <tr><td valign='top'>\n\r";
 
 // left table (item list)
@@ -892,9 +906,9 @@ echo "      </td><td class='secondcol' valign='top' style='padding:4px;backgroun
 
 echo "        <div id='productform' style='background-color:#FFFF99;'>";
 echo "<form method='POST'  id='editproductformtop' enctype='multipart/form-data' name='editproduct$num'>";
-echo "        <table class='producttext'>\n\r";;    
+//echo "        <table class='producttext'>\n\r";;    
 
-echo "        </table>\n\r";
+//echo "        </table>\n\r";
 echo "        <div id='formcontent'>\n\r";
 echo "        </div>\n\r";
 echo "</form>";
@@ -903,14 +917,7 @@ echo "        </div>";
 ?>
 <div id='additem'>
   <form  id='editproductform' method='POST' enctype='multipart/form-data'>
-<!--   action='admin.php?page=wp-shopping-cart/display-items.php' -->
-  <table class='additem' width='500'>
-  <?
-if(function_exists('add_multiple_image_form'))
-  {
-  echo add_multiple_image_form(); 
-  }
-?>
+  <table class='additem'>
     <tr>
       <td>
         Автор:
@@ -921,11 +928,11 @@ if(function_exists('add_multiple_image_form'))
     </tr>
     <tr>
       <td colspan='2'>
-        <strong class='form_group'><?php echo TXT_WPSC_PRODUCTDOWNLOAD;//Файл для печати?></strong>
+        <strong>Файл для печати</strong>
       </td>
     </tr>
-    <tr>
-      <td>
+    <tr class='tdfirstcol'>
+      <td class='tdfirstcol'>
         Укажите файл:
       </td>
       <td>
@@ -935,15 +942,15 @@ if(function_exists('add_multiple_image_form'))
 
     <tr>
       <td colspan='2'>
-        <strong class='form_group'><?php echo TXT_WPSC_PRODUCTDETAILS;?> <span><?php echo TXT_WPSC_ENTERPRODUCTDETAILSHERE;?></span></strong>
+        <strong class='form_group'>Описание картинки (внимательно заполните поля)</strong>
       </td>
     </tr>
     <tr>
-      <td class='itemfirstcol'>
+      <td class='tdfirstcol'>
         Название:
       </td>
       <td>
-        <input id='picturename' size='30' type='text' name='name' value='***'  />  <input id='portfolio' type="checkbox" name="portfolio" > Только в портфолио<br />
+        <input id='picturename' size='30' type='text' name='name' value='***'  />
       </td>
     </tr>
     <tr>
@@ -951,15 +958,15 @@ if(function_exists('add_multiple_image_form'))
         Краткое описание:
       </td>
       <td>
-        <textarea id='picturedescription' name='description' cols='40' rows='2'></textarea><br />
+        <textarea id='picturedescription' name='description' cols='50' rows='3'></textarea><br />
       </td>
     </tr>
     <tr>
       <td class='itemfirstcol'>
-       <?php echo TXT_WPSC_ADDITIONALPRODUCTDESCRIPTION;?>:
+       Ключевые слова, разделённые запятыми:
       </td>
       <td>
-        <textarea id='tags' name='additional_description' cols='40' rows='2'></textarea><br />
+        <textarea id='tags' name='additional_description' cols='50' rows='4'></textarea><br />
       </td>
     </tr>
     <tr>
@@ -979,6 +986,14 @@ if(function_exists('add_multiple_image_form'))
       </td>
     </tr>
     <tr>
+      <td class='itemfirstcol'>
+       Не для продажи:
+      </td>
+      <td>
+        <input id='not_for_sale' type="checkbox" name="not_for_sale"> Не продаётся, если включено<br />
+      </td>
+    </tr>
+    <tr>
       <td>
         Выберите категорию:
       </td>
@@ -991,8 +1006,7 @@ if(function_exists('add_multiple_image_form'))
       </td>
       <td>
         <input type='hidden' name='submit_action' value='add' />
-        <input type="button" name='sendit' value='<?php echo TXT_WPSC_ADD;?>' onclick="checkthefields();"/>
-        <!-- <input type='submit' name='submit' value='<?php echo TXT_WPSC_ADD;?>' /> -->
+        <input type="button" name='sendit' value='Добавить в базу данных' onclick="checkthefields();"/>
       </td>
     </tr>
   </table>

@@ -195,9 +195,9 @@ define('TXT_WPSC_VARIATION_VALUES', 'Значения опций');
 define('TXT_WPSC_REMOVE_SET', 'Удалить эти опции'); //this needs to be translated
 
 define('TXT_WPSC_SELECT_PARENT', 'Select Parent');
-define('TXT_WPSC_PRODUCTHASBEENEDITED', 'The product has been edited.');
+define('TXT_WPSC_PRODUCTHASBEENEDITED', 'Изображение обновлено.');
 define('TXT_WPSC_ADDPRODUCT', 'Добавить новое изображение в базу данных (очистить форму)');
-define('TXT_WPSC_DISPLAYPRODUCTS', 'Показать картинки');
+define('TXT_WPSC_DISPLAYPRODUCTS', 'Каталог изображений');
 define('TXT_WPSC_PLEASESELECTACATEGORY', 'Выберите раздел');
 define('TXT_WPSC_STOCK', 'Stock');
 define('TXT_WPSC_PNP', 'PnP');
@@ -366,7 +366,7 @@ define('TXT_WPSC_NOTACTIVATED', 'Sorry, the API key was incorrect.');
 define('TXT_WPSC_DEFAULT', 'По умолчанию');
 define('TXT_WPSC_LIST', 'Список');
 define('TXT_WPSC_VISIBLE', 'Показывать');
-define('TXT_WPSC_DELETE_PRODUCT', 'Стереть продукт');
+define('TXT_WPSC_DELETE_PRODUCT', 'Стереть изображение');
 define('TXT_WPSC_ADDITIONAL_IMAGE', 'Ещё изображение');
 define('TXT_WPSC_GATEWAY_OPTIONS', 'Gateway Options');
 define('TXT_WPSC_SHIPPING_COUNTRY', 'Выберите страну доставки:');

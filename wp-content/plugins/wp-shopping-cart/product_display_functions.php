@@ -69,10 +69,10 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 					{
 					  $output .= "<div id='item' class='item'>"; // start item
 
-	$addtocart = "<form name=$num method=POST action=".get_option('product_list_url')." onsubmit=submitform(this);return false; >";
-	$addtocart .= "<input type=hidden name=prodid value=".$product['id'].">";
-	$addtocart .= "Добавить в заказ: <input type=image border=0 src=".get_option('siteurl')."/img/cart.gif name=Buy value=".TXT_WPSC_ADDTOCART." />";
-	$addtocart .= "</form>" ;
+	//$addtocart = "<form name=$num method=POST action=".get_option('product_list_url')." onsubmit=submitform(this);return false; >";
+	//$addtocart .= "<input type=hidden name=prodid value=".$product['id'].">";
+	//$addtocart .= "Добавить в заказ: <input type=image border=0 src=".get_option('siteurl')."/img/cart.gif name=Buy value=".TXT_WPSC_ADDTOCART." />";
+	//$addtocart .= "</form>" ;
 
 	$vstavka = "document.getElementById('bigpic').innerHTML = '<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>';";
 
@@ -122,12 +122,14 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b>".$_file_format;
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
 
-// Lisence selection strip under the preview image:
-//$_bottomstriptext = "<div style=\'text-align:right;width:600px;float:right;\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'><table class=\'licenses\'> <tr> <td class=\'wh\'>Выбор</td> <td class=\'wh\' style=\'padding-left:8px;\'><input type=\'radio\' name=\'license\' value=\'l1_price\' checked></td> <td style=\'border-left: 1px solid #999999\'>".round($product['l1_price'])."&nbsp;руб.</td> <td class=\'wh\' style=\'padding-left:8px;\'><input type=\'radio\' name=\'license\' value=\'l2_price\'></td> <td style=\'border-left: 1px solid #999999\'>".round($product['l2_price'])."&nbsp;руб.</td> <td class=\'wh\' style=\'padding-left:8px;\'><input type=\'radio\' name=\'license\' value=\'l3_price\'></td> <td style=\'border-left: 1px solid #999999\'>".round($product['l3_price'])."&nbsp;руб.</td> <td rowspan=\'2\' class=\'wh\'><input id=\'searchsubmit\' value=\'В заказ\' type=\'submit\' class=\'borders\'></td> </tr> <tr> <td class=\'wh\'>лицензии:</td> <td class=\'wh\'></td> <td style=\'border-left: 1px solid #999999\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=238\' title=\'подробнее об ограниченной лицензии\'>ограниченная</a></td> <td class=\'wh\'></td> <td style=\'border-left: 1px solid #999999\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=242\' title=\'подробнее о стандартной лицензии\'>стандартная</a></td> <td class=\'wh\'></td> <td style=\'border-left: 1px solid #999999\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=245\' title=\'подробнее об расширенной лицензии\'>расширенная</a></td> </tr> </table><input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> </form></div>";
-
-
+if (isset($product['not_for_sale']) && $product['not_for_sale']=='1')
+{
+	$_bottomstriptext = "Продажа лицензий на данное изображение не разрешена автором";
+}
+else
+{
 $_bottomstriptext = "<div style=\'width:450px;float:right;\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'><table class=\'licenses\'> <tr> <td class=\'wh\' style=\'width:80px;vertical-align:bottom;\'><b>Выбор</b></td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' value=\'l1_price\' checked></td> <td style=\'vertical-align:middle;text-align:right;\'><b>".round($product['l1_price'])."&nbsp;руб.</b></td> <td rowspan=\'2\' style=\'width:20px;\'>&nbsp;</td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' value=\'l2_price\'></td> <td style=\'vertical-align:middle;text-align:right;\'><b>".round($product['l2_price'])."&nbsp;руб.</b></td> <td rowspan=\'2\' style=\'width:20px;\'>&nbsp;</td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' value=\'l3_price\'></td> <td style=\'vertical-align:middle;text-align:right;\'><b>".round($product['l3_price'])."&nbsp;руб.</b></td> <td rowspan=\'2\' class=\'wh\' style=\'width:80px; text-align:right; vertical-align:bottom;\'><input id=\'searchsubmit\' value=\'В заказ\' type=\'submit\' class=\'borders\'></td> </tr> <tr> <td class=\'wh\' style=\'vertical-align:top;\'><b>лицензии:</b></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=238\' title=\'подробнее об ограниченной лицензии\'>ограниченная</a></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=242\' title=\'подробнее о стандартной лицензии\'>стандартная</a></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=245\' title=\'подробнее об расширенной лицензии\'>расширенная</a></td> </tr> </table><input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> </form></div>";
-
+}
 
 	$vstavka = "document.getElementById('bigpic').innerHTML ='".$_bigpic."';";
 	$vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
@@ -168,10 +170,10 @@ $fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['ima
 						    $output .= "№&nbsp;".$product['id']. " <b>" . stripslashes($product['name'])."</b>";
 							$output .= "<br><span id='size'>".$product['width']."px X ".$product['height']."px</span><br>";
 						    $output .= "<span id='title'><i>".stripslashes($product['brand'])."</i></span><br>";
-							$output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_category_id."' onsubmit='submitform(this);return false;' >";
-							$output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
-							$output .= "Добавить в заказ: <input type='image' border='0' src='".get_option('siteurl')."/img/cart.gif' name='Buy' value='".TXT_WPSC_ADDTOCART."'  />";
-							$output .= "</form>" ;
+							//$output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_category_id."' onsubmit='submitform(this);return false;' >";
+							//$output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
+							//$output .= "Добавить в заказ: <input type='image' border='0' src='".get_option('siteurl')."/img/cart.gif' name='Buy' value='".TXT_WPSC_ADDTOCART."'  />";
+							//$output .= "</form>" ;
 						  //title
 
 						$output .= nl2br(stripslashes($product['description'])) . " <br /></div>";

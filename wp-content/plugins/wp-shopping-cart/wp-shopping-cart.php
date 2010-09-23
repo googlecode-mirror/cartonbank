@@ -1618,7 +1618,7 @@ function nzshpcrt_submit_ajax()
   
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_ADDITIONALDESCRIPTION.": ";
+  $output .= "Ключевые слова, разделённые запятыми: ";
 
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
@@ -1646,15 +1646,32 @@ function nzshpcrt_submit_ajax()
   if ($product['color'] == '1')
     $colored = " checked='checked'";
 
+
+  $not_for_sale = "";
+  if ($product['not_for_sale'] == '1')
+    $not_for_sale = " checked='checked'";
+
+
   $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "            <td style='background-color:#FFFF33;'>\n\r";
   $output .= "Цветная:";
   $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "            <td style='background-color:#FFFF33;'>\n\r";
   $output .= "<input type='checkbox' name='colored'".$colored."/>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
+
+
+  $output .= "          <tr>\n\r";
+  $output .= "            <td>\n\r";
+  $output .= "Не для продажи:";
+  $output .= "            </td>\n\r";
+  $output .= "            <td>\n\r";
+  $output .= "<input type='checkbox' name='not_for_sale'".$not_for_sale."/>";
+  $output .= "            </td>\n\r";
+  $output .= "          </tr>\n\r";
    
+
 /*
   
   

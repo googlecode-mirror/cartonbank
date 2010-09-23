@@ -61,7 +61,7 @@ div#additem{ display: block; }
 
 div#additem table tr td{ height: 11px; }
 
-td.itemfirstcol{ width: 120px !important; vertical-align: center; }
+td.itemfirstcol{ font-size: 9pt; width: 140px !important; vertical-align: top; }
 
 input.image_resize{ position: relative; top: 4px; }
  
