@@ -4,8 +4,9 @@ $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
 
 if (strstr($_SERVER['PHP_SELF'],'cb3/'))
-{$abspath = $abspath_2;}
-else {$abspath = $abspath_1;}
+	{$abspath = $abspath_2;}
+else if (strstr($_SERVER['PHP_SELF'],'cb/')) 
+	{$abspath = $abspath_1;}
 
 
 require($abspath.'wp-blog-header.php');
