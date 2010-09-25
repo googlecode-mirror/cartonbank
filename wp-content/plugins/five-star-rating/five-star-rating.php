@@ -46,6 +46,13 @@ function rated_best_of_the_month()
 	echo $FSR->getBestOfMonth();
 }
 
+function rated_recently()
+{
+	global $FSR;
+	echo $FSR->getRecentlyRated();
+}
+
+
 function five_star_rating_func_2($id) {
     global $FSR, $picture_id;
     $picture_id = $id;

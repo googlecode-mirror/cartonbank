@@ -213,31 +213,58 @@ class FSR {
 		return $html;
 	}
 
-	function getBestOfMonth($star_type = 'star') {
+	function getRecentlyRated($star_type = 'star') {
 		global $wpdb, $table_prefix;
 		$month = date('m');
 		$limit = 10;
 		$table_name = $table_prefix . "fsr_user";
-		$sql = "SELECT post, COUNT(*) AS votes, SUM(points) AS points, AVG(points)
-			FROM {$table_name}
-			WHERE MONTH(vote_date)={$month} AND YEAR(vote_date)=YEAR(NOW())
-			GROUP BY 1
-			ORDER BY 4 DESC, 2 DESC
-			LIMIT {$limit}";
+		$sql = "SELECT post, COUNT(*) AS votes, SUM(points) AS points, AVG(points) AS average, vote_date, wp_product_list.name AS title, wp_product_brands.name AS name FROM wp_fsr_user, wp_product_list, wp_product_brands WHERE wp_fsr_user.post = wp_product_list.id AND wp_product_list.brand = wp_product_brands.id GROUP BY wp_fsr_user.post ORDER BY wp_fsr_user.vote_date DESC LIMIT {$limit}";
 		$data = $wpdb->get_results($sql);
+		//pokazh($data,"data");
 		if (is_array($data)) {
 			$html = '<div style="width:150px;text-align:left;"><ul class="FSR_month_scores">';
 			foreach ($data AS $row) {
 				$siteurl = get_option('siteurl');
 				$cartoon_id = $row->post;
+				$cartoon_title = $row->title;
+				$cartoonist = $row->name;
+
 				//$title = get_the_title($row->post);
-				$html .= "<li><a class='post_title' href='".$siteurl."/?page_id=29&cartoonid=".$cartoon_id."'>№&nbsp;" . $cartoon_id . '</a> ' . $this->_drawStars($row->votes, $row->points,$star_type) . '</li>';
+				$html .= "<li><a class='post_title' href='".$siteurl."/?page_id=29&cartoonid=".$cartoon_id."'>№&nbsp;" . $cartoon_id . "<br>" . $cartoon_title . "<br>" . $cartoonist . '</a> ' . $this->_drawStars($row->votes, $row->points,$star_type) . '</li>';
 			}
 			$html .= '</ul></div>';
 			return $html;
 		}
 	}
 
+
+	function getBestOfMonth($star_type = 'star') {
+		global $wpdb, $table_prefix;
+		$month = date('m');
+		$limit = 10;
+		$table_name = $table_prefix . "fsr_user";
+		$sql = "SELECT post, COUNT(*) AS votes, SUM(points) AS points, AVG(points) AS average, vote_date, wp_product_list.name AS title, wp_product_brands.name AS name 
+					FROM wp_fsr_user, wp_product_list, wp_product_brands 
+					WHERE wp_fsr_user.post = wp_product_list.id 
+					AND wp_product_list.brand = wp_product_brands.id 
+					AND MONTH(vote_date)={$month} AND YEAR(vote_date)=YEAR(NOW())
+					GROUP BY 1
+					ORDER BY 4 DESC, 2 DESC LIMIT {$limit}";
+		$data = $wpdb->get_results($sql);
+		if (is_array($data)) {
+			$html = '<div style="width:150px;text-align:left;"><ul class="FSR_month_scores">';
+			foreach ($data AS $row) {
+				$siteurl = get_option('siteurl');
+				$cartoon_id = $row->post;
+				$cartoon_title = $row->title;
+				$cartoonist = $row->name;
+				//$title = get_the_title($row->post);
+				$html .= "<li><a class='post_title' href='".$siteurl."/?page_id=29&cartoonid=".$cartoon_id."'>№&nbsp;" . $cartoon_id . "<br>" . $cartoon_title . "<br>" . $cartoonist . '</a> ' . $this->_drawStars($row->votes, $row->points,$star_type) . '</li>';
+			}
+			$html .= '</ul></div>';
+			return $html;
+		}
+	}
 	/**
 	 * Initialize the values.
 	 * Get the puntuation from url and the user from the cookies.
