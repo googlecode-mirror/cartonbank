@@ -24,7 +24,8 @@ require( ABSPATH . WPINC . '/version.php' );
 wp_initial_constants( );
 
 // Disable magic quotes at runtime. Magic quotes are added using wpdb later in wp-settings.php.
-set_magic_quotes_runtime( 0 );
+@ini_set('magic_quotes_runtime', 0);
+//set_magic_quotes_runtime( 0 );
 @ini_set( 'magic_quotes_sybase', 0 );
 
 // Set default timezone in PHP 5.
@@ -201,7 +202,7 @@ do_action( 'sanitize_comment_cookies' );
  * @global object $wp_the_query
  * @since 2.0.0
  */
-$wp_the_query =& new WP_Query();
+$wp_the_query = new WP_Query();//$wp_the_query =& new WP_Query();
 
 /**
  * Holds the reference to @see $wp_the_query
@@ -209,28 +210,28 @@ $wp_the_query =& new WP_Query();
  * @global object $wp_query
  * @since 1.5.0
  */
-$wp_query =& $wp_the_query;
+$wp_query = $wp_the_query;//$wp_query =& $wp_the_query;
 
 /**
  * Holds the WordPress Rewrite object for creating pretty URLs
  * @global object $wp_rewrite
  * @since 1.5.0
  */
-$wp_rewrite =& new WP_Rewrite();
+$wp_rewrite = new WP_Rewrite();//$wp_rewrite =& new WP_Rewrite();
 
 /**
  * WordPress Object
  * @global object $wp
  * @since 2.0.0
  */
-$wp =& new WP();
+$wp = new WP();//$wp =& new WP();
 
 /**
  * WordPress Widget Factory Object
  * @global object $wp_widget_factory
  * @since 2.8.0
  */
-$wp_widget_factory =& new WP_Widget_Factory();
+$wp_widget_factory = new WP_Widget_Factory();//$wp_widget_factory =& new WP_Widget_Factory();
 
 do_action( 'setup_theme' );
 
@@ -255,7 +256,7 @@ require( ABSPATH . WPINC . '/locale.php' );
  * @global object $wp_locale
  * @since 2.1.0
  */
-$wp_locale =& new WP_Locale();
+$wp_locale = new WP_Locale();//$wp_locale =& new WP_Locale();
 
 // Load the functions for the active theme, for both parent and child theme if applicable.
 if ( TEMPLATEPATH !== STYLESHEETPATH && file_exists( STYLESHEETPATH . '/functions.php' ) )

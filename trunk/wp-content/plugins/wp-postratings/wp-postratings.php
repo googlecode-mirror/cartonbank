@@ -575,6 +575,46 @@ function process_ratings() {
 		if(!$rated) {
 			// Check Whether Is There A Valid Post
 			$post = get_post($post_id);
+			$product = get_product($post_id);
+
+	pokazh($post,"post");
+	pokazh($product,"product");
+	exit();
+/*
+post: stdClass Object
+(
+    [ID] => 38
+    [post_author] => 1
+    [post_date] => 2007-02-01 12:42:18
+    [post_date_gmt] => 2007-02-01 09:42:18
+    [post_content] => Список художников, чьи работы представлены на сайте
+    [post_title] => Авторы
+    [post_category] => 0
+    [post_excerpt] => 
+    [post_status] => publish
+    [comment_status] => open
+    [ping_status] => open
+    [post_password] => 
+    [post_name] => authors
+    [to_ping] => 
+    [pinged] => 
+    [post_modified] => 2010-08-12 10:49:08
+    [post_modified_gmt] => 2010-08-12 06:49:08
+    [post_content_filtered] => 
+    [post_parent] => 0
+    [guid] => http://z58365.infobox.ru/cb/?page_id=38
+    [menu_order] => 0
+    [post_type] => page
+    [post_mime_type] => 
+    [comment_count] => 0
+    [ancestors] => Array
+        (
+        )
+    [filter] => raw
+)
+*/
+			
+			
 			// If Valid Post Then We Rate It
 			if($post && !wp_is_post_revision($post)) {
 				$ratings_max = intval(get_option('postratings_max'));
@@ -981,9 +1021,9 @@ function expand_ratings_template($template, $post_id, $post_ratings_data = null,
 	// Get post related variables
 	if(is_null($post_ratings_data)) {
 		$post_ratings_data = get_post_custom($post_id);
-		$post_ratings_users = intval($post_ratings_data['ratings_users'][0]);
-		$post_ratings_score = intval($post_ratings_data['ratings_score'][0]);
-		$post_ratings_average = floatval($post_ratings_data['ratings_average'][0]);
+		isset($post_ratings_data['ratings_users'][0])?$post_ratings_users = intval($post_ratings_data['ratings_users'][0]):$post_ratings_users = null;
+		isset($post_ratings_data['ratings_score'][0])?$post_ratings_score = intval($post_ratings_data['ratings_score'][0]):$post_ratings_score = null;
+		isset($post_ratings_data['ratings_average'][0])?$post_ratings_average = floatval($post_ratings_data['ratings_average'][0]):$post_ratings_average = null;
 	} else {
 		$post_ratings_users = intval($post_ratings_data->ratings_users);
 		$post_ratings_score = intval($post_ratings_data->ratings_score);
@@ -1304,6 +1344,19 @@ function create_ratinglogs_table() {
 	}
 }
 
+function pokazh($to_print,$comment = '')
+{
+	$response = "<div style='margin:2px;padding-left:6px;background-color:#FFCC66;border:1px solid #CC0066;'><pre><b>".$comment.":</b> ".print_r($to_print,true)."</pre></div>";
+	echo ($response); 
+}
+
+function get_product($id){
+	global $wpdb;
+	$sql = "SELECT * FROM `wp_product_list` WHERE `id`= ".$id." LIMIT 1";
+	$get_product = $wpdb->get_results($sql,ARRAY_A);
+	//pokazh ($sql,"sql");
+	return $get_product;
+ }
 
 ### Seperate PostRatings Stats For Readability
 require_once('postratings-stats.php');

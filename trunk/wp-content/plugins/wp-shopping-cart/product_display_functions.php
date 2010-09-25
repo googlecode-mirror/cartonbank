@@ -116,10 +116,17 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	$_tags_imploded = implode(", ", $_tags_array);
 	$_tags = $_tags_imploded;
 
-	
+	if (function_exists('five_star_rating_func_2'))
+		$_rating_html = five_star_rating_func_2($_number);
+	else
+		$_rating_html = "";
+
+	$_rating_html = str_replace("\"","\'",$_rating_html);
+	$_rating_html = str_replace("'","\'",$_rating_html);
+
 	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
 
-	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b>".$_file_format;
+	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b>".$_file_format."<br><br><b>Оцените:</b><br>".$_rating_html;
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
 
 if (isset($product['not_for_sale']) && $product['not_for_sale']=='1')
@@ -136,7 +143,8 @@ $_bottomstriptext = "<div style=\'width:450px;float:right;\'><form name=\'licens
 	$vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='".$_bigpicstrip."';";
 	$vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
 	
-	$output .= "<a href=\"#\"  onclick=\"".$vstavka."\">";
+	$output .= "<a href=\"#\"  onclick=\"".$vstavka.";FSR_starlet();\">";
+	//$output .= "<a href=\"#\"  onclick=\"".$vstavka.";\">";
 		  
 	
 $fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['image'];
