@@ -393,6 +393,10 @@ $search_sql = NULL;
                 $_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b> ".$_file_format."<br><br><b>Оцените:</b><br>".$_rating_html;
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
+
+				if($product[0]['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
+				if($product[0]['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
+				if($product[0]['l3_price']=='0') {$l3_disabled = 'disabled=true';} else {$l3_disabled = '';}
 				
 				if (isset($product[0]['not_for_sale']) && $product[0]['not_for_sale']=='1')
 				{
@@ -403,13 +407,13 @@ $search_sql = NULL;
 				$_bottomstriptext = "<div style='width:450px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'><table class='licenses'>
 					  <tr>
 						<td class='wh' style='width:80px;vertical-align:bottom;'><b>Выбор</b></td>
-						<td class='wh' style='text-align:left;'><input type='radio' name='license' value='l1_price' checked></td>
+						<td class='wh' style='text-align:left;'><input type='radio' name='license' $l1_disabled value='l1_price' checked></td>
 						<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l1_price'])."&nbsp;руб.</b></td>
 						<td rowspan='2' style='width:20px;'>&nbsp;</td>
-						<td class='wh' style='text-align:left;'><input type='radio' name='license' value='l2_price'></td>
+						<td class='wh' style='text-align:left;'><input type='radio' name='license' $l2_disabled value='l2_price'></td>
 						<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l2_price'])."&nbsp;руб.</b></td>
 						<td rowspan='2' style='width:20px;'>&nbsp;</td>
-						<td class='wh' style='text-align:left;'><input type='radio' name='license' value='l3_price'></td>
+						<td class='wh' style='text-align:left;'><input type='radio' name='license' $l3_disabled value='l3_price'></td>
 						<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l3_price'])."&nbsp;руб.</b></td>
 						<td rowspan='2' class='wh' style='width:80px; text-align:right; vertical-align:bottom;'><input id='searchsubmit' value='В заказ' type='submit' class='borders'></td>
 					  </tr>
