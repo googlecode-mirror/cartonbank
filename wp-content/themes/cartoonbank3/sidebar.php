@@ -203,14 +203,9 @@ else
 	  }
 ?>
 
-<br><h2>Тэги</h2>
-<div id='tags'><a href='?page_id=390'>Все ключевые слова</a></div>
-
-	
-<?if (function_exists('rated_best_of_the_month')){?>
-<br><h2>Лучшие за месяц</h2>
-<div id='best_of_month' style='float:right;width:100px;'><?rated_best_of_the_month()?></div>
-<?}?>
+<br><h2>Разное</h2>
+<div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>
+<div id='tags'><a href='?page_id=390'>Тэги</a></div>
 
 
 <div style="float:right;">
