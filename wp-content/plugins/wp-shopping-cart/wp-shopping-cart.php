@@ -1904,7 +1904,7 @@ function nzshpcrt_submit_ajax()
   $output .= "        </table>\n\r";
   
   // TODO: Remove before upload to the server! temp! local debug only!
-  $output = Utf8ToWin($output);
+  //$output = Utf8ToWin($output);
   //return $outp;
   
   return $output;
