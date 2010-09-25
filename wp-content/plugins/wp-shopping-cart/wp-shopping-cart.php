@@ -1522,9 +1522,6 @@ function nzshpcrt_submit_ajax()
 		if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
 			$combo_disabled = "disabled='disabled'";
 
-	//pokazh($current_user,"current_user");
-	//pokazh($combo_disabled,"combo_disabled");
-
 		$who_is_selected_brand = 0;
 		if(isset($_GET['brand']) && is_numeric($_GET['brand'])) // we ordered selected user
 		{
@@ -1644,13 +1641,24 @@ function nzshpcrt_submit_ajax()
 
   $colored = "";
   if ($product['color'] == '1')
-    $colored = " checked='checked'";
+    $colored = " checked='checked' ";
 
 
   $not_for_sale = "";
   if ($product['not_for_sale'] == '1')
-    $not_for_sale = " checked='checked'";
+    $not_for_sale = " checked='checked' ";
 
+  $license1checked = "";
+  if ($product['l1_price'] != '0')
+    $license1checked = " checked='checked' ";
+
+  $license2checked = "";
+  if ($product['l2_price'] != '0')
+    $license2checked = " checked='checked' ";
+
+  $license3checked = "";
+  if ($product['l3_price'] != '0')
+    $license3checked = " checked='checked' ";
 
   $output .= "          <tr>\n\r";
   $output .= "            <td style='background-color:#FFFF33;'>\n\r";
@@ -1670,95 +1678,8 @@ function nzshpcrt_submit_ajax()
   $output .= "<input type='checkbox' name='not_for_sale'".$not_for_sale."/>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
-   
 
-/*
-  
-  
-  if($product['notax'] == 1)
-    {
-    $checked = "checked='true'";
-    }
-    else
-      {
-      $checked = "";
-      }
-/*
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "<input id='tax' type='checkbox' name='notax' value='yes' $checked />&nbsp;<label for='tax'>".TXT_WPSC_TAXALREADYINCLUDED."</label>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
 
-  if($product['special'] == 1)
-    {
-    $checked = "checked='true'";
-    }
-    else
-      {
-      $checked = "";
-      }
-  
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
-  
-  $output .= "<input id='form_special' type='checkbox' $checked name='special' value='yes' onclick='hideelement(\"edit_special\")' /> <label for='form_special'>".TXT_WPSC_SPECIAL."</label>";
-  
-  if($product['special'] == 1)
-    {
-    $output .= "            <div id='edit_special' style='display: block;'>\n\r";
-    }
-    else
-      {
-      $output .= "            <div id='edit_special' style='display: none;'>\n\r";
-      }
-  if($product['special'] == 1)
-    {
-    $output .= "<input type='text' name='special_price' value='".number_format(($product['price']-$product['special_price']), 2, '.', '')."' size='10' />";
-    }
-    else
-      {
-      $output .= "<input type='text' name='special_price' value='0.00' size='10' />";
-      }
-  $output .= "              </div>\n\r";
-
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r"; 
-  */
-
-/*
-
-  if($product['quantity_limited'] == 1)
-    {
-    $checked = "checked='true'";
-    }
-    else
-      {
-      $checked = "";
-      }
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_LIMITED_STOCK.": ";
-  //$output .= TXT_WPSC_PRODUCTSTOCK.": ";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "<input type='checkbox' $checked name='quantity_limited' value='yes' onclick='hideelement(\"edit_stock\")' /><span class='small'>".TXT_WPSC_UNTICKBOX."</span>";
-  if($product['quantity_limited'] == 1)
-    {
-    $output .= "            <div id='edit_stock' style='display: block;'>\n\r";
-    }
-    else
-      {
-      $output .= "            <div id='edit_stock' style='display: none;'>\n\r";
-      }
-  $output .= "<input type='text' name='quantity' size='10' value='".$product['quantity']."' />";
-  $output .= "              </div>\n\r";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
-*/
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
 
@@ -1778,81 +1699,15 @@ function nzshpcrt_submit_ajax()
 
     $output .= "<a href='".$m_image_link."' target=_blank><img id='previewimage' src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/$icon_location' alt='".TXT_WPSC_PREVIEW."' title='".TXT_WPSC_PREVIEW."' /></a>";
 
-
   
-  //$output .= TXT_WPSC_CATEGORY.": ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= categorylist($product['id']);
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
-  
-/*  
-      $output .= "          <tr>\n\r";
-      $output .= "            <td>\n\r";
-      $output .= TXT_WPSC_DISPLAY_FRONT_PAGE.": ";
-      $output .= "            </td>\n\r";
-      $output .= "            <td>\n\r";
-      if($product['display_frontpage'] == 1)
-        {
-        $output .= "<input type='checkbox' checked='true' value='yes' name='display_frontpage'/>";
-        }
-        else
-          {
-          $output .= "<input type='checkbox' value='yes' name='display_frontpage'/>";
-          }
-      $output .= "            </td>\n\r";
-      $output .= "          </tr>\n\r";
-
-      $output .= "    <tr>\n\r";
-      $output .= "      <td colspan='2'>\n\r";
-      $output .= "        <strong class='form_group'>".TXT_WPSC_SHIPPING_DETAILS."</strong>\n\r";
-      $output .= "      </td>\n\r";
-      $output .= "    </tr>\n\r";
-      
-      $output .= "    <tr>\n\r";
-      $output .= "      <td>";
-      $output .= TXT_WPSC_LOCAL_PNP;
-      $output .= "      </td>\n\r";
-      $output .= "      <td>\n\r";
-      $output .= "        <input type='text' size='10' name='pnp' value='".$product['pnp']."' />\n\r";
-      $output .= "      </td>\n\r";
-      $output .= "    </tr>\n\r";
-      
-      $output .= "    <tr>\n\r";
-      $output .= "      <td>";
-      $output .= TXT_WPSC_INTERNATIONAL_PNP;
-      if($product['international_pnp'] == 0)
-        {
-        $product['international_pnp'] = "0.00";
-        }
-      $output .= "      </td>\n\r";
-      $output .= "      <td>\n\r";
-      $output .= "        <input type='text' size='10' name='international_pnp' value='".$product['international_pnp']."' />\n\r";
-      $output .= "      </td>\n\r";
-      $output .= "    </tr>\n\r";
-        
-      $output .= "          <tr>\n\r";
-      $output .= "            <td colspan='2'>\n\r";
-      $output .= "<br /><strong class='form_group'>".TXT_WPSC_PRODUCT_VARS."</strong>";
-      $output .= "            </td>\n\r";
-      $output .= "          </tr>\n\r";
-      
-      $output .= "          <tr>\n\r";
-      $output .= "            <td>\n\r";
-      $output .= TXT_WPSC_ADD_VAR.": ";
-      $output .= "            </td>\n\r";
-      $output .= "            <td>\n\r";
-      $output .= variationslist();
-      //$output .= variationslist();
-      $output .= "<div id='edit_product_variations'>";
-
-	  $output .= "</div>";
-      $output .= "</div>";
-	  $output .= "            </td>\n\r";
-	  $output .= "          </tr>\n\r";
-*/		
+  /*
+	
 	  $check_variation_values = $wpdb->get_results("SELECT COUNT(*) as `count` FROM `wp_variation_values_associations` WHERE `product_id` = '".$product['id']."'",ARRAY_A);
 	  $check_variation_value_count = $check_variation_values[0]['count'];
 	  if($check_variation_value_count > 0)
@@ -1867,12 +1722,28 @@ function nzshpcrt_submit_ajax()
 		$output .= "            </td>\n\r";
 		$output .= "          </tr>\n\r";
 		}
-	  $output .= "          <tr>\n\r";
-	  $output .= "            <td colspan='2'>\n\r";
-	  $output .= "<br><a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id']."' >нажмите здесь, чтобы обновить иконку и слайд с водяными знаками</a>";
-	  // class='button'
-	  $output .= "            </td>\n\r";
-	  $output .= "          </tr>\n\r";
+
+*/
+
+  $output .= "          <tr>\n\r";
+  $output .= "            <td colspan='2'>\n\r";
+  $output .= "<br><a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id']."' >нажмите здесь, чтобы обновить иконку и слайд с водяными знаками</a>";
+  // class='button'
+  $output .= "            </td>\n\r";
+  $output .= "          </tr>\n\r";
+
+    
+
+  $output .= "          <tr>\n\r";
+  $output .= "            <td>\n\r";
+  $output .= "Доступны лицензии:";
+  $output .= "            </td>\n\r";
+  $output .= "            <td>\n\r";
+  $output .= "Огр:&nbsp;<input id='license1' type='checkbox' name='license1'".$license1checked.">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type='checkbox' name='license2'".$license2checked.">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type='checkbox' name='license3'".$license3checked."><br />";
+  $output .= "            </td>\n\r";
+  $output .= "          </tr>\n\r";
+
+
  /*
   if(function_exists("getimagesize"))
     {
@@ -2023,9 +1894,9 @@ function nzshpcrt_submit_ajax()
   //$output .= "<input class='edit_button' type='submit' name='submit' value='????????? ?????????' />";
   
   
-  $output .= "<br><input type=\"button\" class='edit_button' name='sendit' value='сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
+  $output .= "<br><input type=\"button\" class='edit_button' style='padding:6px; background-color:#93F273;' name='sendit' value='сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
 
-  $output .= "<br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >".TXT_WPSC_DELETE_PRODUCT."</a>";
+  $output .= "<br><br><br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >стереть изображение</a>";
   
   $output .= "            <td>\n\r";
   $output .= "          </tr>\n\r";
@@ -2033,7 +1904,7 @@ function nzshpcrt_submit_ajax()
   $output .= "        </table>\n\r";
   
   // TODO: Remove before upload to the server! temp! local debug only!
-  //$output = Utf8ToWin($output);
+  $output = Utf8ToWin($output);
   //return $outp;
   
   return $output;
@@ -3386,11 +3257,4 @@ function serialize_shopping_cart()
   return true;
   }  
 register_shutdown_function("serialize_shopping_cart");
-/*
-function pokazh($to_print,$comment = '')
-{
-	$response = "<div style='margin:2px;padding-left:6px;background-color:#FFCC66;border:1px solid #CC0066;'><pre><b>".$comment.":</b> ".print_r($to_print,true)."</pre></div>";
-	echo ($response); 
-}
-*/
 ?>

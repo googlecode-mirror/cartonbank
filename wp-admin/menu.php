@@ -471,11 +471,4 @@ if ( !user_can_access_admin_page() ) {
 	do_action('admin_page_access_denied');
 	wp_die( __('You do not have sufficient permissions to access this page.') );
 }
-/*
-function pokazh($to_print,$comment = '')
-{
-	$response = "<div style='margin:2px;padding-left:6px;background-color:#FFCC66;border:1px solid #CC0066;'><pre><b>".$comment.":</b> ".print_r($to_print,true)."</pre></div>";
-	echo ($response); 
-}
-*/
 ?>
