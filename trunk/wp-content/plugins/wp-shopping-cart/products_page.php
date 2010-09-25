@@ -325,7 +325,7 @@ $search_sql = NULL;
 				$_bigpicstrip = "<b>".$product[0]['brand']. ". Информация об авторе</b>";
 				$_bigpictext = "<br><br>".$brand_contact;
 				$_bigpic = "<div style='width:600px;'><div id='bio' style='display:block;'>".$bio."</div></div>".$email_form; 
-				$_bottomstriptext = "<span style='color:#B1B1B1;'>В рубрике «Рабочий стол» авторского раздела дополнительно представлены работы, не предназначенные для продажи, а также не вошедшие в основной раздел (Банк изображений).</span>";
+				$_bottomstriptext = "";
 
 			// end of portfolio
 		 } 
@@ -407,7 +407,7 @@ $search_sql = NULL;
 				$_bottomstriptext = "<div style='width:450px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'><table class='licenses'>
 					  <tr>
 						<td class='wh' style='width:80px;vertical-align:bottom;'><b>Выбор</b></td>
-						<td class='wh' style='text-align:left;'><input type='radio' name='license' $l1_disabled value='l1_price' checked></td>
+						<td class='wh' style='text-align:left;'><input type='radio' name='license' $l1_disabled value='l1_price'></td>
 						<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l1_price'])."&nbsp;руб.</b></td>
 						<td rowspan='2' style='width:20px;'>&nbsp;</td>
 						<td class='wh' style='text-align:left;'><input type='radio' name='license' $l2_disabled value='l2_price'></td>
@@ -620,8 +620,4 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 }
 
 
-function pokazh($to_print)
-{
-	echo ("<div style='padding:2px;background-color:#FFB366'><pre>".print_r($to_print,true)."</pre></div>"); 
-}
   ?>

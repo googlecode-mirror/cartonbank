@@ -255,6 +255,15 @@ if (isset($_POST['not_for_sale']) && $_POST['not_for_sale'] == 'on'){$not_for_sa
 if (isset($_POST['portfolio']) && $_POST['portfolio'] == 'on'){$portfolio = '1'; }
     else{$portfolio="0";}
 
+if (isset($_POST['license1']) && $_POST['license1'] == 'on'){$license1 = '1'; }
+    else{$license1="0";}
+if (isset($_POST['license2']) && $_POST['license2'] == 'on'){$license2 = '1'; }
+    else{$license2="0";}
+if (isset($_POST['license3']) && $_POST['license3'] == 'on'){$license3 = '1'; }
+    else{$license3="0";}
+
+
+
 if (isset($_POST['price']))
     $_price = $_POST['price'];
 if (isset($_POST['pnp']))
@@ -304,7 +313,12 @@ if (isset($_POST['international_pnp ']))
 			$l3_price = $l3_price_cat1_default;
 			break;
             }
-// 
+
+			// unset not available licences
+			if (!isset($license1)||$license1=='0'){$l1_price = '0';}
+			if (!isset($license2)||$license2=='0'){$l2_price = '0';}
+			if (!isset($license3)||$license3=='0'){$l3_price = '0';}
+
 
 if (isset($_POST['brand']) && is_numeric($_POST['brand']))
 	{$_brand = $wpdb->escape($_POST['brand']);}
@@ -597,6 +611,14 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
     if (isset($_POST['not_for_sale']) && $_POST['not_for_sale'] == 'on'){$not_for_sale = '1';}
         else {$not_for_sale = '0';}
 
+
+	if (isset($_POST['license1']) && $_POST['license1'] == 'on'){$license1 = '1'; }
+		else{$license1="0";}
+	if (isset($_POST['license2']) && $_POST['license2'] == 'on'){$license2 = '1'; }
+		else{$license2="0";}
+	if (isset($_POST['license3']) && $_POST['license3'] == 'on'){$license3 = '1'; }
+		else{$license3="0";}
+
     if (isset($_POST['price'])){$_price=$_POST['price'];}else{$_price='';}
     if (isset($_POST['pnp'])){$_pnp=$_POST['pnp'];}else{$_pnp='';}
     if (isset($_POST['international_pnp'])){$_international_pnp=$_POST['international_pnp'];}else{$_international_pnp='';}
@@ -616,7 +638,6 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
 		//UPDATE `wp_product_list` SET l1_price = 200 WHERE id in (SELECT product_id from `wp_item_category_associations` WHERE category_id in (4,14,5,11));
 
 		$category_id = $wpdb->escape($_POST['category']);
-
 		switch($category_id)
             {
             case 4:
@@ -628,12 +649,27 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
 			$l3_price = $l3_price_cat1_default;
 			break;
 
-            default:
+			case 13:
+			case 8:
+			case 15:
+			case 6:
 			$l1_price = $l1_price_cat2_default;
 			$l2_price = $l2_price_cat2_default;
 			$l3_price = $l3_price_cat2_default;
             break;
+
+			default:
+			$l1_price = $l1_price_cat1_default;
+			$l2_price = $l2_price_cat1_default;
+			$l3_price = $l3_price_cat1_default;
+			break;
             }
+
+			// unset not available licences
+			if (!isset($license1)||$license1=='0'){$l1_price = '0';}
+			if (!isset($license2)||$license2=='0'){$l2_price = '0';}
+			if (!isset($license3)||$license3=='0'){$l3_price = '0';}
+
 //        
 
 if (isset($_POST['brand']) && is_numeric($_POST['brand']))
@@ -644,7 +680,7 @@ else
 	
 
       $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$_brand."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
-      //exit("<pre>".print_r($updatesql,true)."</pre>");
+
 	  mail("igor.aleshin@gmail.com","old cartoon updated",print_r($updatesql,true));
 
       $wpdb->query($updatesql);
@@ -815,7 +851,6 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
     $from_num = $offset+1;
     $to_num = $from_num + $items_on_page;
     if($to_num>$items_count){$to_num=$items_count;}
-	//pokazh($user_brand, "user_brand");
     if($items_count>0)
     {
 		$diapazon = "<br>(показаны <strong>".$from_num."-".$to_num."</strong> из <strong>".$items_count."</strong>)";
@@ -1002,11 +1037,19 @@ echo "        </div>";
       </td>
     </tr>
     <tr>
-      <td>
+      <td class='itemfirstcol'>
+       Доступны лицензии:
       </td>
       <td>
+        Огр:&nbsp;<input id='license1' type="checkbox" name="license1" checked="checked">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type="checkbox" name="license2" checked="checked">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type="checkbox" name="license3" checked="checked"><br />
+      </td>
+    </tr>
+	<tr>
+      <td>
+      </td>
+      <td><br>
         <input type='hidden' name='submit_action' value='add' />
-        <input type="button" name='sendit' value='Добавить в базу данных' onclick="checkthefields();"/>
+        <input type="button" name='sendit' style='padding:6px;background-color:#84DF88;' value='Добавить в базу данных' onclick="checkthefields();"/>
       </td>
     </tr>
   </table>
