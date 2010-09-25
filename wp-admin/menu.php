@@ -351,10 +351,12 @@ foreach ( $menu as $id => $data ) {
 }
 unset($id, $data);
 
+pokazh($menu);
+
 // todo remove e-commerce        e-Commerce
-if (! is_super_admin() ) {
-unset($menu[101]);
-}
+//if (! is_super_admin() ) {
+//unset($menu[101]);
+//}
 // Remove any duplicated seperators
 $seperator_found = false;
 foreach ( $menu as $id => $data ) {
@@ -374,10 +376,16 @@ foreach ( $menu as $id => $data ) {
 	{
 		if (isset($menu[$id][0]) && $menu[$id][0] == 'Банкир')
 			unset($menu[$id]);
+		if (isset($menu[$id][0]) && $menu[$id][0] == 'Five Star Rating')
+			unset($menu[$id]);
+		if (isset($menu[$id][0]) && $menu[$id][0] == 'e-Commerce')
+			unset($menu[$id]);
 	}
 	if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
 	{
 		if (isset($menu[$id][0]) && $menu[$id][0] == 'e-Commerce')
+			unset($menu[$id]);
+		if (isset($menu[$id][0]) && $menu[$id][0] == 'Five Star Rating')
 			unset($menu[$id]);
 	}
 	//unset($menu[100]);//банкир 
@@ -385,7 +393,7 @@ foreach ( $menu as $id => $data ) {
 }
 unset($id, $data);
 
-//pokazh($menu);
+pokazh($menu);
 $menu[999] = array( '', 'read', 'separator-last', '', 'wp-menu-separator-last' );  
 
 function add_cssclass($add, $class) {
