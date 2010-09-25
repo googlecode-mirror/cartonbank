@@ -577,9 +577,6 @@ function process_ratings() {
 			$post = get_post($post_id);
 			$product = get_product($post_id);
 
-	pokazh($post,"post");
-	pokazh($product,"product");
-	exit();
 /*
 post: stdClass Object
 (
@@ -1342,12 +1339,6 @@ function create_ratinglogs_table() {
 	if(!$role->has_cap('manage_ratings')) {
 		$role->add_cap('manage_ratings');
 	}
-}
-
-function pokazh($to_print,$comment = '')
-{
-	$response = "<div style='margin:2px;padding-left:6px;background-color:#FFCC66;border:1px solid #CC0066;'><pre><b>".$comment.":</b> ".print_r($to_print,true)."</pre></div>";
-	echo ($response); 
 }
 
 function get_product($id){

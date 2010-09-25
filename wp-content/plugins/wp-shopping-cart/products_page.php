@@ -320,18 +320,7 @@ $search_sql = NULL;
 								  <input type='submit' value='Отправить письмо' class='borders'/>
 								</form></div>";
 				// contact
-				
-				/*
-				$brand_contact = '';
-				if ($brand_result[0]['contact']!='')
-				{
-					//$brand_contact = "<a href='mailto:".$brand_result[0]['contact']."'>написать письмо</a>" ;
-					$brand_contact = "<a onclick='document.getElementById(emailform).style.visibility=visible'>написать письмо</a>" ;
-				}
-					else{$brand_contact=='';}
-				*/
-				
-	$brand_contact = "<a href='#' onclick=\"document.getElementById('emailform').style.display='block';document.getElementById('bio').style.display='none';return false;\">написать письмо</a>";
+				$brand_contact = "<a href='#' onclick=\"document.getElementById('emailform').style.display='block';document.getElementById('bio').style.display='none';return false;\">Написать письмо</a>";
 
 				$_bigpicstrip = "<b>".$product[0]['brand']. ". Информация об авторе</b>";
 				$_bigpictext = "<br><br>".$brand_contact;
