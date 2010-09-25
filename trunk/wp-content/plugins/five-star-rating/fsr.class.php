@@ -100,7 +100,7 @@ class FSR {
 	 */
 	function getStars($starType) {
 		$data = $this->_getPoints();
-		return $this->_drawStars($data->votes, $data->points,$starType);
+		return $this->_drawStars(isset($data->votes)?$data->votes:'', isset($data->points)?$data->points:'',$starType);
 	}
 
 	/**
@@ -226,12 +226,14 @@ class FSR {
 			LIMIT {$limit}";
 		$data = $wpdb->get_results($sql);
 		if (is_array($data)) {
-			$html = '<ul class="FSR_month_scores">';
+			$html = '<div style="width:150px;text-align:left;"><ul class="FSR_month_scores">';
 			foreach ($data AS $row) {
-				$title = get_the_title($row->post);
-				$html .= '<li><a class="post_title" href="' . get_permalink($row->post) . '" title="' . $title . '">' . $title . '</a> ' . $this->_drawStars($row->votes, $row->points,$star_type) . '</li>';
+				$siteurl = get_option('siteurl');
+				$cartoon_id = $row->post;
+				//$title = get_the_title($row->post);
+				$html .= "<li><a class='post_title' href='".$siteurl."/?page_id=29&cartoonid=".$cartoon_id."'>№&nbsp;" . $cartoon_id . '</a> ' . $this->_drawStars($row->votes, $row->points,$star_type) . '</li>';
 			}
-			$html .= '</ul>';
+			$html .= '</ul></div>';
 			return $html;
 		}
 	}

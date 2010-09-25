@@ -40,6 +40,12 @@ function five_star_rating_func($atts) {
 	return $FSR->getVotingStars($star_type);
 }
 
+function rated_best_of_the_month()
+{
+	global $FSR;
+	echo $FSR->getBestOfMonth();
+}
+
 function five_star_rating_func_2($id) {
     global $FSR, $picture_id;
     $picture_id = $id;
