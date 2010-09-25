@@ -351,7 +351,7 @@ foreach ( $menu as $id => $data ) {
 }
 unset($id, $data);
 
-pokazh($menu);
+//pokazh($menu);
 
 // todo remove e-commerce        e-Commerce
 //if (! is_super_admin() ) {
@@ -393,7 +393,7 @@ foreach ( $menu as $id => $data ) {
 }
 unset($id, $data);
 
-pokazh($menu);
+//pokazh($menu);
 $menu[999] = array( '', 'read', 'separator-last', '', 'wp-menu-separator-last' );  
 
 function add_cssclass($add, $class) {
