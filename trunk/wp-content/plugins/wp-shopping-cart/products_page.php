@@ -349,7 +349,7 @@ $search_sql = NULL;
 				$_y_sm = round(($product[0]['height']/300)*2.54, 1);
 				$_sizesm = $_x_sm." см X ".$_y_sm." см";
                 $_author = $product[0]['brand'];
-                $_name = $product[0]['name'];
+                $_name = nl2br(stripslashes($product[0]['name']));
 				if(isset($_GET['brand']) && is_numeric($_GET['brand'])) 
 						$filter_list .= "автор: <b>".$_author."</b> ";
 				if (isset($product[0]['kategoria']))

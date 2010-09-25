@@ -102,9 +102,10 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	else {$_category_id = '';}
 
 	$_author = "<a href=\'".$siteurl."/?page_id=29&brand=".$_brandid."\'>".$product['brand']."</a>";//$product['brand'];
-	$_name = $product['name'];
-						$_category = "<a href=\'".get_option('product_list_url')."&category=".$_category_id."\'>".$product['kategoria']."</a>";
-					//$options .= "<a href='".get_option('product_list_url')."/&category=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
+	$_name = nl2br(stripslashes($product['name']));
+
+	$_category = "<a href=\'".get_option('product_list_url')."&category=".$_category_id."\'>".$product['kategoria']."</a>";
+	//$options .= "<a href='".get_option('product_list_url')."/&category=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
 
 	$_tags = nl2br(stripslashes($product['additional_description']));
 	$_tags_array = explode(',',$_tags);
