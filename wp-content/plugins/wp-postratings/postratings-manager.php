@@ -26,20 +26,21 @@ if(!current_user_can('manage_ratings')) {
 ### Ratings Variables
 $base_name = plugin_basename('wp-postratings/postratings-manager.php');
 $base_page = 'admin.php?page='.$base_name;
-$mode = trim($_GET['mode']);
-$postratings_page = intval($_GET['ratingpage']);
-$postratings_filterid = trim(addslashes($_GET['id']));
-$postratings_filteruser = trim(addslashes($_GET['user']));
-$postratings_filterrating = trim(addslashes($_GET['rating']));
-$postratings_sortby = trim($_GET['by']);
+isset($_GET['mode'])?$mode = trim($_GET['mode']):$mode = '';
+isset($_GET['ratingpage'])?$postratings_page = intval($_GET['ratingpage']):$postratings_page = "";
+isset($_GET['id'])?$postratings_filterid = trim(addslashes($_GET['id'])):$postratings_filterid = "";
+isset($_GET['user'])?$postratings_filteruser = trim(addslashes($_GET['user'])):$postratings_filteruser = "";
+isset($_GET['rating'])?$postratings_filterrating = trim(addslashes($_GET['rating'])):$postratings_filterrating = "";
+isset($_GET['by'])?$postratings_sortby = trim($_GET['by']):$postratings_sortby = "";
 $postratings_sortby_text = '';
-$postratings_sortorder = trim($_GET['order']);
+isset($_GET['order'])?$postratings_sortorder = trim($_GET['order']):$postratings_sortorder = "";
 $postratings_sortorder_text = '';
-$postratings_log_perpage = intval($_GET['perpage']);
+isset($_GET['perpage'])?$postratings_log_perpage = intval($_GET['perpage']):$postratings_log_perpage = "";
 $postratings_sort_url = '';
 $ratings_image = get_option('postratings_image');
 $ratings_max = intval(get_option('postratings_max'));
 
+$text_direction = "rtl";
 
 ### Form Processing 
 if(!empty($_POST['do'])) {
@@ -121,7 +122,7 @@ if(!empty($postratings_filterid)) {
 if(!empty($postratings_filteruser)) {
 	$postratings_sort_url .= '&amp;user='.$postratings_filteruser;
 }
-if($_GET['rating'] != '') {
+if(isset($_GET['rating']) && $_GET['rating'] != '') {
 	$postratings_filterrating = intval($postratings_filterrating);
 	$postratings_sort_url .= '&amp;rating='.$postratings_filterrating;
 }
@@ -195,7 +196,7 @@ if(!empty($postratings_filterid)) {
 if(!empty($postratings_filteruser)) {
 	$postratings_where .= " AND rating_username = '$postratings_filteruser'";
 }
-if($_GET['rating'] != '') {
+if(isset($_GET['rating']) &&$_GET['rating'] != '') {
 	$postratings_where .= " AND rating_rating = '$postratings_filterrating'";
 }
 // Get Post Ratings Logs Data
