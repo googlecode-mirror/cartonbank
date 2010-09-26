@@ -3,7 +3,7 @@
 <div style="clear:both;"></div>
 
 <div id="footer">
-Copyright &copy; 2010 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a>
+<a href="?page_id=433">Copyright</a> &copy; 2010 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a>
 </div>
 
 <?php do_action('wp_footer'); ?>
