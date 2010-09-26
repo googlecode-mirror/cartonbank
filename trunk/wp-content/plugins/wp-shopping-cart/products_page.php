@@ -239,7 +239,7 @@ $search_sql = NULL;
                     if(isset($_GET['cs']) && $_GET['cs']!= ''){
                         $keywords = strtolower(trim($_GET['cs']));
                     }
-					$filter_list .= 'поиск: ('.$keywords.") ";
+					$filter_list .= 'Поиск: ('.$keywords.") ";
                     // search request
                     // count found results
 					if (isset($_brand) && isset($_brand)!='')
@@ -351,12 +351,12 @@ $search_sql = NULL;
                 $_author = $product[0]['brand'];
                 $_name = nl2br(stripslashes($product[0]['name']));
 				if(isset($_GET['brand']) && is_numeric($_GET['brand'])) 
-						$filter_list .= "автор: <b>".$_author."</b> ";
+						$filter_list .= "Автор: <b>".$_author."</b> ";
 				if (isset($product[0]['kategoria']))
 				 {
 					$_categor = $product[0]['kategoria'];
 					if(isset($_GET['category']) && is_numeric($_GET['category'])) 
-						$filter_list .= "категория: <b>".$_categor."</b> ";
+						$filter_list .= "Категория: <b>".$_categor."</b> ";
 				 }
 				 else
 				 {
