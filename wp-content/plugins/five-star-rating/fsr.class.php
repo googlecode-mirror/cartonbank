@@ -188,21 +188,22 @@ class FSR {
 				$char = '&nbsp;';
 			}
 			//$html .= sprintf('<input type="radio" id="fsr_star_%1$d_%2$d" class="star" name="fsr_stars" value="%2$d"/><label class="%3$s" for="fsr_star_%1$d_%2$d" onmouseover="FSR_star_over(this, %2$d)">%2$d</label> ', $picture_id, $i, $class);
+			$title = ' title="star" ';
 			switch ($i) {
 				case '1':
-					$title = " title='плохо' ";
+					$title = ' title="плохо" ';
 					break;
 				case '2':
-					$title = " title='неуд' ";
+					$title = ' title="неуд" ';
 					break;
 				case '3':
-					$title = " title='уд' ";
+					$title = ' title="уд" ';
 					break;
 				case '4':
-					$title = " title='гуд' ";
+					$title = ' title="гуд" ';
 					break;
 				case '5':
-					$title = " title='отл' ";
+					$title = ' title="отл" ';
 					break;
 			}
 			$html .= sprintf('<input type="radio" id="fsr_star_%1$d_%2$d" class="star" name="fsr_stars" value="%2$d"/><label class="%3$s" $title for="fsr_star_%1$d_%2$d">%2$d</label> ', $picture_id, $i, $class);
