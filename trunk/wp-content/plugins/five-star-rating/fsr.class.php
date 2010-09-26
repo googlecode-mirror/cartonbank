@@ -226,7 +226,7 @@ class FSR {
 			foreach ($data AS $row) {
 				$siteurl = get_option('siteurl');
 				$cartoon_id = $row->post;
-				$cartoon_title = $row->title;
+				$cartoon_title = nl2br(stripslashes($row->title));
 				$cartoonist = $row->name;
 
 				//$title = get_the_title($row->post);
@@ -256,7 +256,7 @@ class FSR {
 			foreach ($data AS $row) {
 				$siteurl = get_option('siteurl');
 				$cartoon_id = $row->post;
-				$cartoon_title = $row->title;
+				$cartoon_title = nl2br(stripslashes($row->title));
 				$cartoonist = $row->name;
 				//$title = get_the_title($row->post);
 				$html .= "<li><a class='post_title' href='".$siteurl."/?page_id=29&cartoonid=".$cartoon_id."'>№&nbsp;" . $cartoon_id . "<br>" . $cartoon_title . "<br>" . $cartoonist . '</a> ' . $this->_drawStars($row->votes, $row->points,$star_type) . '</li>';
