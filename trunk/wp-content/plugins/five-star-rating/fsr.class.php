@@ -206,7 +206,7 @@ class FSR {
 					$title = ' title="отл" ';
 					break;
 			}
-			$html .= sprintf('<input type="radio" id="fsr_star_%1$d_%2$d" class="star" name="fsr_stars" value="%2$d"/><label class="%3$s" $title for="fsr_star_%1$d_%2$d">%2$d</label> ', $picture_id, $i, $class);
+			$html .= sprintf('<input type="radio" id="fsr_star_%1$d_%2$d" class="star" name="fsr_stars" value="%2$d"/><label class="%3$s" '.$title." for="fsr_star_%1$d_%2$d">%2$d</label> ', $picture_id, $i, $class);
 		}
 		$html .= '<span class="FSR_votes">' . (int) $votes . '</span> ';
 		if( $votes > 1) { 
