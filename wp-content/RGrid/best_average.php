@@ -67,7 +67,7 @@
     */
     $grid->SetDisplayNames(array('ID'       => '№',
                                  'votes'   => 'голоса',
-                                 'points'    => 'очки',
+                                 'points'    => 'баллы',
                                  'user' => 'user',
                                  'vote_date'   => 'проголосовано',
                                  'post'   => 'post',
