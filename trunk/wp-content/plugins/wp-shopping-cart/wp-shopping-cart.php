@@ -1597,7 +1597,7 @@ function nzshpcrt_submit_ajax()
   
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_PRODUCTNAME." (".$product['id']."): ";
+  $output .= TXT_WPSC_PRODUCTNAME." (<a href='".get_option('siteurl')."/?page_id=29&cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>): ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' />";
@@ -1904,8 +1904,8 @@ function nzshpcrt_submit_ajax()
   $output .= "        </table>\n\r";
   
   // TODO: Remove before upload to the server! temp! local debug only!
-  //$output = Utf8ToWin($output);
-  //return $outp;
+  if ($_SERVER['SERVER_NAME']=='localhost')
+	  {$output = Utf8ToWin($output);}
   
   return $output;
   }
