@@ -88,7 +88,7 @@
     * Generally any column that shows HTML
     */
     $grid->NoSpecialChars('actions', 'ac_id');
-    $grid->NoSpecialChars('ID', 'image');
+    $grid->NoSpecialChars('ID', 'image','title');
     
     /**
     * A callback function that gets called for each and every row.
