@@ -447,19 +447,19 @@
             <?php if($this->rowcallback):?>
                 <?php call_user_func($this->rowcallback, &$row)?>
             <?php endif?>
-            <tr onmouseover="MouseOver(<?php echo intval($rownum)?>)" onmouseout="MouseOut(<?php echo intval($rownum)?>)">
-                    <td class="altcol">
-                        <b><?php echo ($rownum+1);?></b>
-                    </td>
-                <?php foreach($row as $k => $v):?>
-                    <?php if(in_array($k, $this->hiddenColumns)) continue?>
+            <tr>
+				<td class="altcol">
+						<b><?php echo (intval($this->startnum) + $rownum + 1);?></b>
+				</td>
+				<?php foreach($row as $k => $v):?>
+					<?php if(in_array($k, $this->hiddenColumns)) continue?>
 					<td class="row_<?php echo intval($rownum)?> col_<?php echo (!empty($colnum) ? $colnum : 0)?> <?php if($rownum % 2 == 1):?>altrow<?php endif?><?php if($colnum % 2 == 1):?>altcol<?php endif?>"><?php echo (in_array($k, $this->noSpecialChars) ? $v : htmlspecialchars($v))?></td>
-                    <?php $colnum++?>
-                <?php endforeach?>
-            </tr>
-            <?php if($rownum++ == ($this->perPage - 1) ) break?>
-            <?php if(is_array($this->connection)): next($this->connection); endif?>
-        <?php endwhile?>
+					<?php $colnum++?>
+				<?php endforeach?>
+			</tr>
+			<?php if($rownum++ == ($this->perPage - 1) ) break?>
+			<?php if(is_array($this->connection)): next($this->connection); endif?>
+		<?php endwhile?>
     </tbody>
     <tfoot>
         <tr>
