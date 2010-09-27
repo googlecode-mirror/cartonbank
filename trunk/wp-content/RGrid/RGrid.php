@@ -520,7 +520,7 @@
 
 		public function get_clean_url()
 		{
-			$_page_id = isset($_GET['page_id'])?$_GET['page_id']:'';
+			$_page_id = isset($_GET['page_id'])?$_GET['page_id']:0;
 			$_url = get_option('siteurl')."/?page_id=".$_page_id;
 			echo $_url;
 		}
