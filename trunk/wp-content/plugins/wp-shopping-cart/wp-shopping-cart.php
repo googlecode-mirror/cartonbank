@@ -1576,7 +1576,7 @@ function nzshpcrt_submit_ajax()
 
   function nzshpcrt_getproductform($prodid)
   {
-  global $wpdb,$nzshpcrt_imagesize_info;
+  global $wpdb,$nzshpcrt_imagesize_info,$current_user;
  /*
   * makes the product form
   * has functions inside a function
@@ -1588,16 +1588,27 @@ function nzshpcrt_submit_ajax()
   $output = "        <table>\n\r";
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_BRAND.": ";
+  $output .= "Автор: ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= brandslist($product['brand']);
+
+  $approved = 0;
+	if ($product['approved'] == '1')
+		$approved = " checked='checked'";
+//pokazh($current_user->wp_capabilities);
+	if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
+		{$output .= "<input type='checkbox' name='approved'".$approved."/> Утвержено.";}
+	else if (isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabilities['editor']==1)
+		{$output .= "<input type='checkbox' name='approved'".$approved."/> Утвержено.";}
+
+  
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_PRODUCTNAME." (<a href='".get_option('siteurl')."/?page_id=29&cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>): ";
+  $output .= "Имя картинки (<a href='".get_option('siteurl')."/?page_id=29&cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>): ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' />";
@@ -1606,7 +1617,7 @@ function nzshpcrt_submit_ajax()
   
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= TXT_WPSC_PRODUCTDESCRIPTION.": ";
+  $output .= "Описание картинки (текстовое): ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<textarea id='productdescredit' name='description' cols='40' rows='3' >".stripslashes($product['description'])."</textarea>";

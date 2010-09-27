@@ -381,6 +381,15 @@ foreach ( $menu as $id => $data ) {
 		if (isset($menu[$id][0]) && $menu[$id][0] == 'e-Commerce')
 			unset($menu[$id]);
 	}
+	if (isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabilities['editor']==1)
+	{
+		if (isset($menu[$id][0]) && $menu[$id][0] == 'Five Star Rating')
+			unset($menu[$id]);
+		if (isset($menu[$id][0]) && $menu[$id][0] == 'e-Commerce')
+			unset($menu[$id]);
+		if (isset($menu[$id][0]) && $menu[$id][0] == 'Lazyest Gallery')
+			unset($menu[$id]);
+	}
 	if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
 	{
 		if (isset($menu[$id][0]) && $menu[$id][0] == 'e-Commerce')

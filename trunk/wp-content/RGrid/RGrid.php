@@ -159,7 +159,7 @@
                 RGrid::$orderby['column']    = $_GET['orderBy'];
                 RGrid::$orderby['direction'] = $_GET['orderDir'];
                 
-                $orderby = 'ORDER BY ' . $_GET['orderBy'] . ' ' . ($_GET['orderDir'] ? 'ASC' : 'DESC');
+                $orderby = 'ORDER BY ' . $_GET['orderBy'] . ' ' . ($_GET['orderDir'] ? 'DESC' : 'ASC');
                 $sql = preg_replace('/ORDER\s+BY.*(ASC|DESC)/is', $orderby, $sql);
             }
             /**

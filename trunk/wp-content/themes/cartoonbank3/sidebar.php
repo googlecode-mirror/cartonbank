@@ -195,8 +195,8 @@ else
 		else
 		{
 		   $options = "<a href='".get_option('product_list_url').$seperator."&category=0&color=all'>Все изображения [".$total_cartoons."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=color'>Все цветные [".$color_number."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=bw'>Все чёрно-белые [".$bw_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=color'>Цветные [".$color_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=bw'>Чёрно-белые [".$bw_number."]</a><br />";
 		}
 
 	   echo $options;

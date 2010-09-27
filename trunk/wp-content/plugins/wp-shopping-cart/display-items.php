@@ -1,4 +1,4 @@
-<?php 
+ <?php 
 // Filter for the authors
 // pokazh($current_user->wp_capabilities['author'],"wp_capabilities"); // Автор 
 // pokazh($current_user->wp_capabilities['administrator'],"wp_capabilities"); Админ
@@ -40,6 +40,10 @@
 	$author_group_sql = " AND `wp_product_list`.`brand` = '".$user_brand."' ";
 
 	if (isset($current_user->wp_capabilities['administrator']))
+	{
+		$author_group_sql = "";
+	}
+	if (isset($current_user->wp_capabilities['editor']))
 	{
 		$author_group_sql = "";
 	}
@@ -245,7 +249,10 @@ $visible = '0';
 $_price='';
 $_pnp = '';
 $_international_pnp = '';
+$approved = '';
 
+if (isset($_POST['approved']) && $_POST['approved'] == 'on')
+    $approved = '1';  
 if (isset($_POST['visible']) && $_POST['visible'] == 'on')
     $visible = '1';  
 if (isset($_POST['colored']) && $_POST['colored'] == 'on'){$colored = '1'; }
@@ -324,7 +331,7 @@ if (isset($_POST['brand']) && is_numeric($_POST['brand']))
 	{$_brand = $wpdb->escape($_POST['brand']);}
 else {$_brand = $user_brand;}
 
-  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `color`, `not_for_sale`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$_brand."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$colored', '$not_for_sale', '$portfolio', $l1_price, $l2_price, $l3_price);";
+  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `approved`, `color`, `not_for_sale`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$_brand."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$approved', '$colored', '$not_for_sale', '$portfolio', $l1_price, $l2_price, $l3_price);";
 
    mail("igor.aleshin@gmail.com","new cartoon added",print_r($insertsql,true));
 
@@ -606,6 +613,8 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
     $visible = '0';
     if (isset($_POST['visible']) && $_POST['visible'] == 'on')
         $visible = '1'; 
+    if (isset($_POST['approved']) && $_POST['approved'] == 'on')
+        $approved = '1'; 
     if (isset($_POST['colored']) && $_POST['colored'] == 'on'){$colored = '1';}
         else {$colored = '0';}
     if (isset($_POST['not_for_sale']) && $_POST['not_for_sale'] == 'on'){$not_for_sale = '1';}
@@ -679,7 +688,7 @@ else
 
 	
 
-      $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$_brand."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+      $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$_brand."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `approved`='$approved', `color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
 
 	  mail("igor.aleshin@gmail.com","old cartoon updated",print_r($updatesql,true));
 
@@ -717,8 +726,11 @@ else
 
 if(isset($_GET['deleteid']) && is_numeric($_GET['deleteid']))
   {
-  $deletesql = "UPDATE `wp_product_list` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
-  $wpdb->query($deletesql);
+	  if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
+	  {
+		  $deletesql = "UPDATE `wp_product_list` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
+		  $wpdb->query($deletesql);
+	  }
   }
   
   
@@ -958,7 +970,7 @@ echo "        </div>";
         Автор:
       </td>
       <td>
-        <?php echo brandslist(); ?>
+        <?php echo brandslist(); ?> <input id='approved' type="checkbox" name="approved"> Утверждено.
       </td>
     </tr>
     <tr>
@@ -1097,6 +1109,8 @@ function al_brandslist($current_brand = '')
   if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
 			$combo_disabled = "disabled='disabled'";
   if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
+			$combo_disabled = '';
+  if (isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabilities['editor']==1)
 			$combo_disabled = '';
   $options = "";
   $values = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
