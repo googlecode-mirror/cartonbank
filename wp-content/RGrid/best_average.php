@@ -60,29 +60,29 @@
     * Different to the above - this is the HTML that is shown above the
     * actual datagrid
     */
-    $grid->SetHeaderHTML('<div style="text-align: center">Лучшие из проголосованных</div>');
+    $grid->SetHeaderHTML('<div style="text-align: center">Статистика голосования</div>');
 
     /**
     * Sets nice(r) display names instead of the raw column names
     */
     $grid->SetDisplayNames(array('ID'       => '№',
-                                 'votes'   => 'голосов',
-                                 'points'    => 'очков',
+                                 'votes'   => 'голоса',
+                                 'points'    => 'очки',
                                  'user' => 'user',
                                  'vote_date'   => 'проголосовано',
                                  'post'   => 'post',
                                  'title'   => 'название',
                                  'image'   => 'иконка',
                                  'author'   => 'автор',
-                                 'average'   => 'ср.&nbsp;балл',
+                                 'average'   => 'средн.',
                                  'ip'    => 'ip'));
 
     /**
     * This hides a column from the result set. It would of course be easier and
     * faster just to not select it, but this isn't always possible.
     */
-	//$grid->HideColumn('ID');
-                                 
+	$grid->HideColumn('ID');
+                               
     /**
     * This simply sets the specified columns not to be passed through htmlspecialchars()
     * Generally any column that shows HTML
@@ -101,7 +101,7 @@
     function RowCallback(&$row)
     {
 		//pokazh($row);
-		$row['image'] = "<a href='?page_id=29&cartoonid=".$row['ID']."'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$row['image']."' width='140' height='140'></a>";
+		$row['image'] = "<a href='?page_id=29&cartoonid=".$row['ID']."'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$row['image']."' width='140' height='140' style='border:1px solid black;margin:1px;'></a>";
 		$row['ID'] = "<a href='?page_id=29&cartoonid=".$row['ID']."'>".$row['ID']."</a>";
 		 
 		$row['average'] = round($row['average'],2);
@@ -159,13 +159,12 @@
         }
         .datagrid thead th {
             color: black;
-            border-bottom: 1px solid #9B9B9B;
+            border-bottom: 1px solid white;
             font-size: 8pt;
             font-family: Verdana;
             text-align: center;
-			padding:0px;
+			padding:10px;
 			margin:0px;
-			height: 10px;
         }
         .datagrid thead th#header {
             border: 0;
@@ -180,7 +179,7 @@
         .datagrid tbody td {
             padding-left: 5px;
 			font-size: 8pt;
-			border-bottom: 1px solid #D4D4D4;
+			border-bottom: 1px solid white;
 			vertical-align:middle;
 			text-align:center;
         }
