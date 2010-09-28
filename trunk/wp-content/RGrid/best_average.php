@@ -30,6 +30,8 @@
 					FROM wp_fsr_user, wp_product_list, wp_product_brands 
 					WHERE wp_fsr_user.post = wp_product_list.id 
 					AND wp_product_list.brand = wp_product_brands.id 
+					AND wp_product_list.active = 1
+					AND wp_product_list.visible = 1
 					GROUP BY 1
 					ORDER BY 7 DESC, 5 DESC";
 //pokazh ($sql);
