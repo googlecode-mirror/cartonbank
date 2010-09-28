@@ -97,7 +97,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 
 	$_size_warning = '';
 	if ($product['height']<800 || $product['width']<800)
-		$_size_warning = "<div style=\'color:red;float:left;width:280px;padding-top:6px;\'>Внимание! Размеры файла<br>ограничивают применение!</div>";
+		$_size_warning = "<div style=\'color:red;float:left;width:286px;padding-top:8px;font-size:0.8em;\'>Внимание! Размеры файла<br>ограничивают применение!</div>";
 
 
 	if (isset($product['brandid']))
