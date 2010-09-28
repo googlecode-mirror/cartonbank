@@ -347,6 +347,11 @@ $search_sql = NULL;
                 $_size = $product[0]['width']."px X ".$product[0]['height']."px;";
 				$_x_sm = round(($product[0]['width']/300)*2.54, 1);
 				$_y_sm = round(($product[0]['height']/300)*2.54, 1);
+
+				$_size_warning = '';
+				if ($product[0]['height']<800 || $product[0]['width']<800)
+					$_size_warning = "<div style='color:red;float:left;width:280px;padding-top:6px;'>Внимание! Размеры файла<br>ограничивают применение!</div>";
+
 				$_sizesm = $_x_sm." см X ".$_y_sm." см";
                 $_author = $product[0]['brand'];
                 $_name = nl2br(stripslashes($product[0]['name']));
@@ -404,7 +409,7 @@ $search_sql = NULL;
 				}
 				else
 				{
-				$_bottomstriptext = "<div style='width:450px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'><table class='licenses'>
+				$_bottomstriptext = $_size_warning."<div style='width:450px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'><table class='licenses'>
 					  <tr>
 						<td class='wh' style='width:80px;vertical-align:bottom;'><b>Выбор</b></td>
 						<td class='wh' style='text-align:left;'><input type='radio' name='license' $l1_disabled value='l1_price'></td>
