@@ -614,7 +614,7 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 		if ($filter_list=='')
 			$pagination .= " Всего найдено изображений: ".$totalitems. "</div>";
 		else
-			$pagination .= " Всего найдено изображений: ".$totalitems. "<b>Фильтр</b>: <span style='color:#c0c0c0;font-size:0.8em;'>".$filter_list."</span></div>";
+			$pagination .= " Всего найдено изображений: ".$totalitems. "&nbsp;<b>Фильтр</b>: <span style='color:#c0c0c0;font-size:0.8em;'>".$filter_list."</span></div>";
 	}
 	
 	return $pagination;
