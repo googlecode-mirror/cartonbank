@@ -7,6 +7,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	$siteurl = get_option('siteurl');
     $andcategory = "";
     $category='';
+	$javascript_functions ='';
     $num = 0;
     if (isset($_GET['category'])){$_category = $_GET['category'];}else{$_category = '';}
     
@@ -67,7 +68,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 				  // thumbs output
 				  if ($preview_mode==1)
 					{
-					  $output .= "<div id='item' class='item'>"; // start item
+					  $output .= "<div id='item".$counter."' class='item'>"; // start item
 
 	//$addtocart = "<form name=$num method=POST action=".get_option('product_list_url')." onsubmit=submitform(this);return false; >";
 	//$addtocart .= "<input type=hidden name=prodid value=".$product['id'].">";
@@ -134,7 +135,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
 
 	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b>".$_file_format."<br><br><b>Оценка:</b><br>".$_rating_html;
-    $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>";
+    $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\' border=0>";
 
 	if($product['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
 	if($product['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
@@ -150,12 +151,20 @@ else
 $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'><table class=\'licenses\'> <tr> <td class=\'wh\' style=\'width:80px;vertical-align:bottom;\'><b>Выбор</b></td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l1_disabled value=\'l1_price\'></td> <td style=\'vertical-align:middle;text-align:right;\'><b>".round($product['l1_price'])."&nbsp;руб.</b></td> <td rowspan=\'2\' style=\'width:20px;\'>&nbsp;</td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l2_disabled value=\'l2_price\'></td> <td style=\'vertical-align:middle;text-align:right;\'><b>".round($product['l2_price'])."&nbsp;руб.</b></td> <td rowspan=\'2\' style=\'width:20px;\'>&nbsp;</td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l3_disabled value=\'l3_price\'></td> <td style=\'vertical-align:middle;text-align:right;\'><b>".round($product['l3_price'])."&nbsp;руб.</b></td> <td rowspan=\'2\' class=\'wh\' style=\'width:80px; text-align:right; vertical-align:bottom;\'><input id=\'searchsubmit\' value=\'В заказ\' type=\'submit\' class=\'borders\'></td> </tr> <tr> <td class=\'wh\' style=\'vertical-align:top;\'><b>лицензии:</b></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=238\' title=\'подробнее об ограниченной лицензии\'>ограниченная</a></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=242\' title=\'подробнее о стандартной лицензии\'>стандартная</a></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=245\' title=\'подробнее об расширенной лицензии\'>расширенная</a></td> </tr> </table><input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> </form></div>";
 }
 
-	$vstavka = "document.getElementById('bigpic').innerHTML ='".$_bigpic."';";
+	$_next_item = $counter + 1;
+	if ($_next_item == 15)
+		$_next_item = 0;
+	//$vstavka = "document.getElementById('bigpic').innerHTML ='".$_bigpic."';";
+	$vstavka = "document.getElementById('bigpic').innerHTML ='<a href=\"#pagetop\" onclick=\"get_item".$_next_item."()\">".$_bigpic."</a>';";
 	$vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
 	$vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='".$_bigpicstrip."';";
 	$vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
 	
-	$output .= "<a href=\"#\"  onclick=\"".$vstavka.";FSR_starlet();\">";
+	//$output .= "<a href=\"#\"  onclick=\"".$vstavka." FSR_starlet();\">";
+	$output .= "<a href=\"#pagetop\"  onclick=\"get_item".$counter."(); FSR_starlet();\">";
+	
+	$javascript_functions .= " function get_item".$counter."() { ".$vstavka." FSR_starlet();} "; 
+	
 	//$output .= "<a href=\"#\"  onclick=\"".$vstavka.";\">";
 		  
 	
@@ -174,7 +183,7 @@ $fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['ima
 					else
 					{
 						// Lightbox
-					  $output .= "<div id='item' class='item'>"; // start item
+					  $output .= "<div id='item".$counter."' class='item'>"; // start item
 					  $output .= "<a id='preview_link' href='".$image_link."' rel='lightbox[$num]' class='lightbox_links'>"; 
 					  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' class='thumb' />";
 					  $output .= "</a>";
@@ -199,10 +208,10 @@ $fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['ima
 						$output .= nl2br(stripslashes($product['description'])) . " <br /></div>";
 					$output .= "</div>"; // stop item
 				}
-				$counter = $counter+1;
+				$counter = $counter + 1;
 		  }
 		  $output .= "</div>";
-		  return $output;
+		  return "<script type=\"text/javascript\" language=\"JavaScript\"> ".$javascript_functions. "</script>" . " ". $output;
   }
   // end function output first page
 }
