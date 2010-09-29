@@ -11,17 +11,6 @@ $redirecturl = get_option('siteurl')."/?page_id=29";
 <div id="contentmiddle">
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-
-	<!-- <div id="contentdate">
-		<h3><?php the_time('M'); ?></h3>
-		<h4><?php the_time('j'); ?></h4>
-	</div> -->
-		
-	<!-- <div id="contenttitle">
-		<h1><a href="<?php the_permalink() ?>" rel="bookmark"><?php the_title(); ?></a></h1>
-		<p><?php the_time('F j, Y'); ?> | <?php comments_popup_link('Комментировать', '1 Отклик', '% Отклики'); ?></p>
-	</div> -->
-
 	<div id="contentbody">
 		<?php the_content(__('Читать дальше'));?>
 	</div>
@@ -49,11 +38,7 @@ if ($user_identity == '')
 
 		<?php get_sidebar(); ?>
 	</div>
-
 </div>
-	
-
-
-<!-- The main column ends  -->
+<!-- Main column ends  -->
 
 <?php get_footer(); ?>

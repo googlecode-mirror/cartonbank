@@ -214,8 +214,13 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
 			}
 
 $search_sql = NULL;
-				$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$colorfilter." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT 1"; 
-    
+			
+			if (isset($_GET['offset']) && is_numeric($_GET['offset']))
+				$_product_start_num = $_GET['offset'];
+			else
+				$_product_start_num = 0;
+
+				$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$colorfilter." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
     
                 if (isset($_GET['offset']) && is_numeric($_GET['offset']))
                  {
@@ -332,6 +337,7 @@ $search_sql = NULL;
 		 else
 		 {
 			// normal workflow: disply big preview image
+
 			// slide preview preparations:
 				if(stristr($product[0]['image'], 'jpg') != FALSE) {
 						$_file_format = 'jpg';
@@ -397,7 +403,7 @@ $search_sql = NULL;
                 $_bigpicstrip = "<div style=\"float:left;\"><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
                 $_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Размер:</b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b> ".$_file_format."<br><br><b>Оценка:</b><br>".$_rating_html;
                 $siteurl = get_option('siteurl');
-                $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\">";
+                $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\" border=0>";
 
 				if($product[0]['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
 				if($product[0]['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
@@ -452,11 +458,11 @@ $search_sql = NULL;
                 
                echo "<div id='bigpictopstrip'>".$_bigpicstrip."</div>";
                echo "<div id='bigpictext'>".$_bigpictext."</div>";
-               echo "<div id='bigpic'>".$_bigpic."</div>";
-               echo "<div style='clear:both;'></div>";
-               echo "<div id='bigpicbottomstrip' style='float:right;'>".$_bottomstriptext."</div>";
+               echo "<div id='bigpic'><a href='#' onclick=\"get_item1()\">".$_bigpic."</a></div>";
 
-                    
+			   //<div id="right"><a href="#"  onclick="var next=document.getElementById('image1').innerHTML;document.getElementById('right').innerHTML = next; "><div style='height:200px;width:200px;background color:#CCFF66;'>main image </div></a></div>
+               echo "<div style='clear:both;'></div>";
+               echo "<div id='bigpicbottomstrip' style='float:right;margin-bottom:6px;'>".$_bottomstriptext."</div>";
                     
 				if (isset($_GET['offset']) && is_numeric($_GET['offset']))
 				 {
@@ -486,30 +492,28 @@ $search_sql = NULL;
               }
               else
 			  {
-              echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
-			 
+
              // PAGINATION
-             $offset = $offset + $items_on_page;
+             $offset = $offset;// + $items_on_page;
 			 $page_id = $_GET['page_id'];
 
-			 //pagination links
-
-				$output = "<div id='pagination' class='width:470px;clear:both;'><br>";
-				$output .= "Всего найдено изображений: ".$items_count. ". <span style='color:#c0c0c0;'>".$filter_list."</span><br><br></div>";
-				echo "<div style='clear:both;'>".$output."<br></div>";
-
-				$page = round($offset/$items_on_page);
+				$page = round($offset/$items_on_page)+1;
 				$totalitems = $items_count;
 				$limit = $items_on_page;
-
 				if (isset($catid)){$catid=$catid;}else{$catid='';}
 
-				echo "<div style='clear:both;'>".getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=")."<br></div>";
+				$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=",$filter_list);
+				
+			  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
+
+              echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
+			 
+			  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
               }
      }
 
 
-function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1, $targetpage = "/", $pagestring = "?page=")
+function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1, $targetpage = "/", $pagestring = "?page=", $filter_list = '')
 {		
 	//function to return the pagination string
 	//getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?brand=".$brandid."&category=".$catid."&offset=".$offset."&cs=".$keywords."&page_id=29");
@@ -530,21 +534,11 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 		We're actually saving the code to a variable in case we want to draw it more than once.
 	*/
 	$pagination = "";
-	$margin = '2px';
-	$padding = '4px';
+	$margin = '0px';
+	$padding = '0px';
 	if($lastpage > 1)
 	{	
-		$pagination .= "<div class=\"pagination\"";
-		if($margin || $padding)
-		{
-			$pagination .= " style=\"";
-			if($margin)
-				$pagination .= "margin: $margin;";
-			if($padding)
-				$pagination .= "padding: $padding;";
-			$pagination .= "\"";
-		}
-		$pagination .= ">";
+		$pagination .= "<div class='pagination' style='padding-top:4px;'>";
 
 		//previous button
 		if ($page > 1) 
@@ -617,7 +611,10 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 			$pagination .= "<a href=\"" . $targetpage . $pagestring . ($next*$limit - $limit) . "\">туда »</a>";
 		else
 			$pagination .= "<span class=\"disabled\">туда »</span>";
-		$pagination .= "</div>\n";
+		if ($filter_list=='')
+			$pagination .= " Всего найдено изображений: ".$totalitems. "</div>";
+		else
+			$pagination .= " Всего найдено изображений: ".$totalitems. "<b>Фильтр</b>: <span style='color:#c0c0c0;font-size:0.8em;'>".$filter_list."</span></div>";
 	}
 	
 	return $pagination;

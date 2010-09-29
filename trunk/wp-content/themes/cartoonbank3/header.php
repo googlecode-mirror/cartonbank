@@ -50,3 +50,4 @@
 		<li><a href="?page_id=2">Ответы</a></li>
 	</ul>
 </div>
+<a name="pagetop">&nbsp;</a>
