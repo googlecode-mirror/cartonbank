@@ -1,7 +1,14 @@
 ﻿<?php
 global $wpdb,$gateway_checkout_form_fields;
 global $userdata;
-            
+/*
+if (isset($userdata->ID) && is_numeric($userdata->ID))
+{
+	$sql = "SELECT meta_key,meta_value FROM wp_usermeta as m WHERE m.user_id = ".$userdata->ID;
+	$result = $wpdb->get_results($sql,ARRAY_A);
+	pokazh($result);
+}
+*/            
 $_SESSION['cart_paid'] = false;
 if (isset($_SESSION['checkoutdata']))
 {
@@ -25,14 +32,12 @@ if (isset($_GET['total']))
     $currenturl = get_option('checkout_url');// . $seperator .'total='.$_GET['total'];
 if(!isset($_GET['result']))
   {
-?>
-<div class="wrap">
-<br><br>
+?><div class="wrap">
 <?php
 
 
 // Errors
-if(isset($_SESSION['nzshpcrt_checkouterr']))
+if(isset($_SESSION['nzshpcrt_checkouterr']) && $_SESSION['nzshpcrt_checkouterr']!='')
   {
   echo "<br /><span style='color: red;'>".$_SESSION['nzshpcrt_checkouterr']."</span>";
   $_SESSION['nzshpcrt_checkouterr'] = '';
@@ -47,88 +52,14 @@ if (isset($_SESSION['wallet']))
 }
 ?>
 
-
-
-
-
 <!-- Table begins here -->
-
  <table>
  <form action='<?php echo  $currenturl;?>' method='POST'>
  <input type="hidden" name="total" value="<?echo $_SESSION['total'];?>">
+
  <?php
+ echo "<tr><td style='padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan='2'><b>Подтвердите информацию о себе:</b></td></tr>";
 
-  // input fields
-  $form_sql = "SELECT * FROM `".$wpdb->prefix."collect_data_forms` WHERE `active` = '1' ORDER BY `order`;";
-  $form_data = $wpdb->get_results($form_sql,ARRAY_A);
-  echo "<tr><td  style='padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan='2'><b>Подтвердите информацию о себе:</b></td></tr>";
-/*
-  foreach($form_data as $form_field)
-    {
-    if($form_field['type'] == 'heading')
-      {
-
-
-	// First row
-      echo "
-      <tr style='padding:5px;'>
-        <td  style='padding:5px;' colspan='2'>\n\r";
-      echo "<strong>".$form_field['name']."</strong>";        
-      echo "
-        </td>
-      </tr>\n\r";
-      }
-      else
-        {
-        echo "
-        <tr>
-          <td style='padding-bottom:5px;'>\n\r";
-        echo $form_field['name'];
-        if($form_field['mandatory'] == 1)
-          {
-          if(!(($form_field['type'] == 'country') || ($form_field['type'] == 'delivery_country')))
-            {
-            echo "*";
-            }
-          }
-        echo "
-          </td>\n\r
-          <td style='padding:2px;'>\n\r";
-        switch($form_field['type'])
-          {
-          case "text":
-          case "city":
-          case "delivery_city":
-		  echo "<input type='text' style='width: 300px; padding: 2px; border: 1px solid #c8c8c8' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
-          break;
-          
-          case "address":
-          case "delivery_address":
-          case "textarea":
-          echo "<textarea name='collected_data[".$form_field['id']."]'>".$form_field_id."</textarea>";
-          break;
-          
-          case "country":
-          case "delivery_country":
-          $country_name = $wpdb->get_var("SELECT `country` FROM `".$wpdb->prefix."currency_list` WHERE `isocode`='".$_SESSION['selected_country']."' LIMIT 1");
-          echo "<input type='hidden' name='collected_data[".$form_field['id']."]' value='".get_option('base_country')."'>".$country_name." ";
-          break;
-          
-          case "email":
-		  echo "<input type='text' style='width: 300px; padding: 2px; border: 1px solid #c8c8c8' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
-          break;
-          
-          default:
-		  echo "<input type='text' style='width: 300px; padding: 2px; border: 1px solid #c8c8c8' value='".$form_field_id."' name='collected_data[".$form_field['id']."]' />";
-
-          break;
-          }
-        echo "
-          </td>
-        </tr>\n\r";
-        }
-    }
-*/
 ?>
 	<tr><td style="padding-bottom: 5px;">Имя*</td>
 		<td style="padding: 2px;">
@@ -145,44 +76,37 @@ if (isset($_SESSION['wallet']))
 		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="<?if (isset($userdata->user_email)){echo $userdata->user_email;}?>" name="collected_data[3]" type="text">
 		</td>
 	</tr>
+	<tr><td style="padding-bottom: 5px;">Телефон</td>
+		<td style="padding: 2px;">
+		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="" name="collected_data[4]" type="text">
+		</td>
+	</tr>
+	<tr><td style="padding-bottom: 5px;">СМИ</td>
+		<td style="padding: 2px;">
+		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="" name="collected_data[5]" type="text">
+		</td>
+	</tr>
 
 
     <tr>
       <td style='padding:4px;'>&nbsp;</td>
-      <td style='padding:4px;'><span style='font-size: 7pt;'>Поля, отмеченные звёздочкой обязательны для заполнения.</span></td>
+      <td style='padding:4px;'><span style='font-size: 7pt;'>* Поля, отмеченные звёздочкой обязательны для заполнения.<br>На указанный электронный ящик будет выслана ссылка для скачивания файла(ов).</span> <input type='hidden' value='yes' name='agree'>
+	  </td>
     </tr>
 	
-	<?php
-    if(isset($gateway_checkout_form_fields))
-      {
-      echo $gateway_checkout_form_fields;
-      }
-    $termsandconds = get_option('terms_and_conditions');
-    if($termsandconds != '')
-      {
-      ?>
-    <tr>
-      <td>
-      </td>
-      <td>
-      <input type='checkbox' value='yes' name='agree' /> <?php echo TXT_WPSC_TERMS1;?><a target='_blank' href='' class='termsandconds' onclick='window.open("<?php
-      echo get_option('siteurl')."?termsandconds=true";
-       ?>","","width=550,height=600,scrollbars,resizable"); return false;'><?php echo TXT_WPSC_TERMS2;?></a>
-      </td>
-    </tr>
-      <?php
-      }
-      else
-        {
-        echo "<input type='hidden' value='yes' name='agree' />";
-        echo "";
-        }
+	  <tr>
+        <td style='padding-top:15px;padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan="2"><b>Сумма оплаты</b></td>
+      </tr>
+	  
+	  <tr>
+        <td style='padding:4px;'><? if (isset($_SESSION['total'])) {echo ($_SESSION['total']." руб.");} ?></td>
+      </tr>
 
-        ?>
-      <tr>
+	  <tr>
         <td style='padding-top:15px;padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan="2"><b>Метод оплаты</b></td>
       </tr>
-        <?php
+
+	 <?php
       $i = 0;
       $curgateway = get_option('payment_gateway');
       foreach($GLOBALS['nzshpcrt_gateways'] as $gateway)
@@ -195,20 +119,25 @@ if (isset($_SESSION['wallet']))
         <input type='radio' name='payment_method' value='<?php echo $gateway['internalname']; ?>' id='payment_method_<?php echo $i ?>' <?php
          if (isset($_SESSION['checkoutdata']['payment_method']))
          {
-            if ($_SESSION['checkoutdata']['payment_method'] == $gateway['internalname'])
+            if ($_SESSION['checkoutdata']['payment_method'] == $gateway['internalname']  && (isset($_SESSION['WpscGatewayErrorMessage']) && $_SESSION['WpscGatewayErrorMessage']==''))
                 echo "checked='checked'";
          }
-         
-         if (/*$i == 1 temporary enabled wallet only */$gateway['internalname'] == 'wallet') 
+         //pokazh($_SESSION['WpscGatewayErrorMessage']);
+         if (/*temporary enabled wallet only */$gateway['internalname'] == 'wallet' && ($userdata->wallet >= (float) $_SESSION['total'])) 
             echo "checked='checked'"; 
          else
             echo "disabled='disabled'";
          ?> />
-        <label for='payment_method_<?php echo $i ?>'><?php echo TXT_WPSC_PAY_USING;?> <b><?php echo $gateway_name; ?></b></label>
+        <label for='payment_method_<?php echo $i ?>'>Оплата через <b><?php echo $gateway_name; ?></b></label>
         <?php
             if ($gateway['internalname'] == "wallet")
             {
-              echo " (доступно". (float) $userdata->wallet ." руб.)";
+              echo " (доступно ". (float) $userdata->wallet ." руб.)";
+			  if (($userdata->wallet < (float) $_SESSION['total']))
+				{
+				  echo "<br /><span style='color: red;'>".$_SESSION['WpscGatewayErrorMessage']."</span>";
+				}
+			//pokazh($_SESSION);
             }
         ?>        
         </td>

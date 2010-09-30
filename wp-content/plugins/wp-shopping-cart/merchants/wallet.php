@@ -20,12 +20,12 @@ function gateway_wallet($seperator, $sessionid)
     $sql = "UPDATE `wp_purchase_logs` SET `processed`= '2' WHERE `sessionid`=".$sessionid;
     $wpdb->query($sql);
     $_SESSION['wallet'] = 'success';
+	$_SESSION['WpscGatewayErrorMessage'] = '';
   }
   else
   {
       $_SESSION['wallet'] = 'decline';
       $_SESSION['WpscGatewayErrorMessage'] = "Средств на вашем Личном Счёте недостаточно для проведения транзакции.";
-      //$_SESSION['wpsc_checkout_misc_error_messages'][] = "Describe error"; 
       $transact_url = get_option('checkout_url'); 
   }
   header("Location: ".$transact_url.$seperator."sessionid=".$sessionid);
@@ -34,10 +34,8 @@ function gateway_wallet($seperator, $sessionid)
 
 function submit_wallet()
 {
-
-
-$user_id = (int) $user_id;
-$current_user = wp_get_current_user();    print_r($current_user); exit();
+	$user_id = (int) $user_id;
+	$current_user = wp_get_current_user();    print_r($current_user); exit();
       //$profileuser = get_user_to_edit($user_id); 
       //$wallet = 
   return true;
@@ -47,4 +45,4 @@ function form_wallet()
 {
   return '';
 }
-  ?>
+?>

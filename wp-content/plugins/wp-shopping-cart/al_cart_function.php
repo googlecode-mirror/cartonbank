@@ -55,7 +55,7 @@ if (!$licensecolumn)
 
 //echo ("<pre>product_list:".print_r($product_list,true)."</pre>");
 	 
-	 if($product_list[0]['file'] > 0)
+	 if(isset($product_list[0]['file']) && isset($check[0]['id']) && $product_list[0]['file'] > 0)
        {
        $wpdb->query("UPDATE `wp_download_status` SET `active`='1' WHERE `fileid`='".$product_list[0]['file']."' AND `purchid` = '".$check[0]['id']."' LIMIT 1");
        $download_data = $wpdb->get_results("SELECT * FROM `wp_download_status` WHERE `fileid`='".$product_list[0]['file']."' AND `purchid`='".$check[0]['id']."' AND `id` NOT IN (".make_csv($previous_download_ids).") LIMIT 1",ARRAY_A);
@@ -232,7 +232,9 @@ function get_license($sequence_of_image,$license_num)
 // load unique license data
 	$current_user = wp_get_current_user();    
 
-	$agreement_number = uniqid();
+	$license_unique_number = $_GET['sessionid']."_".$_SESSION['nzshpcrt_cart'][1]->product_id;
+
+	$agreement_number = $license_unique_number;//uniqid();
 	$agreement_date = date("m.d.y");
 	$customer_name = $current_user->last_name. " " . $current_user->first_name;
 	$media_name = '[не указано]';
