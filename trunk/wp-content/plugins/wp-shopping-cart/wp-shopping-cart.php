@@ -148,667 +148,6 @@ class wp_shopping_cart
     }  
   }
 
-function nzshpcrt_install()
-   {
-   global $wpdb, $user_level, $wp_rewrite, $wp_version;
-   $table_name = $wpdb->prefix . "product_list";
-   //$log_table_name = $wpdb->prefix . "sms_log";
-   if($wp_version < 2.1)
-     {
-     get_currentuserinfo();
-     if($user_level < 8)
-       {
-       return;
-       }
-    }
-  $first_install = false;
-  $result = mysql_list_tables(DB_NAME);
-  $tables = array();
-  while($row = mysql_fetch_row($result))
-    {
-    $tables[] = $row[0];
-    }
-  if(!in_array($table_name, $tables))
-    {
-    $first_install = true;
-    }
-$itemtable = "CREATE TABLE ".$table_name." (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` TEXT NOT NULL ,
-  `description` LONGTEXT NOT NULL ,
-  `additional_description` LONGTEXT NOT NULL ,
-  `price` VARCHAR( 20 ) NOT NULL ,
-  `pnp` VARCHAR( 20 ) NOT NULL ,
-  `international_pnp` VARCHAR( 20 ) NOT NULL ,
-  `file` BIGINT UNSIGNED NOT NULL ,
-  `image` TEXT NOT NULL ,
-  `category` BIGINT UNSIGNED NOT NULL ,
-  `brand` BIGINT UNSIGNED NOT NULL ,
-  `quantity_limited` VARCHAR( 1 ) NOT NULL,
-  `quantity` INT UNSIGNED NOT NULL,
-  `special` VARCHAR( 1 ) NOT NULL ,
-  `special_price` VARCHAR( 20 ) NOT NULL,
-  `notax` VARCHAR( 1 ) DEFAULT '0' NOT NULL ,
-  `active` VARCHAR( 1 ) DEFAULT '1' NOT NULL ,
-  PRIMARY KEY ( `id` )
-  ) TYPE = MYISAM ;";
-
-
-$categorytable = "CREATE TABLE `wp_product_categories` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT ,
-  `name` TEXT NOT NULL ,
-  `description` TEXT NOT NULL ,
-  `image` TEXT NOT NULL,
-  `fee` VARCHAR( 1 ) DEFAULT '0' NOT NULL ,
-  `active` VARCHAR( 1 ) DEFAULT '1' NOT NULL ,
-  `order` BIGINT UNSIGNED NOT NULL ,
-  PRIMARY KEY ( `id` )
-  ) TYPE=MyISAM;";
-
-
-$category_assoc_table = "CREATE TABLE `wp_item_category_associations` (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
-  `product_id` bigint(20) unsigned NOT NULL default '0',
-  `category_id` bigint(20) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `product_id` (`product_id`,`category_id`)
-  ) TYPE=MyISAM;";
-
-$brandstable = "CREATE TABLE `wp_product_brands` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT ,
-  `name` TEXT NOT NULL ,
-  `description` TEXT NOT NULL ,
-  `active` VARCHAR( 1 ) DEFAULT '1' NOT NULL ,
-  `order` BIGINT UNSIGNED NOT NULL ,
-  PRIMARY KEY ( `id` )
-  ) TYPE=MyISAM;";
-    
-$logtable = "CREATE TABLE `wp_purchase_logs` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `totalprice` MEDIUMINT NOT NULL ,
-  `statusno` SMALLINT NOT NULL ,
-  `sessionid` VARCHAR( 255 ) NOT NULL,
-  `transactid` VARCHAR( 255 ) NOT NULL,
-  `authcode` VARCHAR( 255 ) NOT NULL,
-  `firstname` TEXT NOT NULL ,
-  `lastname` TEXT NOT NULL ,
-  `email` VARCHAR( 90 ) NOT NULL ,
-  `address` TEXT NOT NULL ,
-  `phone` VARCHAR( 90 ) NOT NULL,
-  `downloadid` BIGINT UNSIGNED NOT NULL,
-  `processed` BIGINT UNSIGNED NOT NULL DEFAULT '1',
-  `date` VARCHAR( 255 ) NOT NULL ,
-  `gateway` VARCHAR( 64 ) NOT NULL ,
-  `shipping_country` CHAR( 6 ) NOT NULL,
-  PRIMARY KEY ( `id` ),
-  INDEX ( `gateway` ),
-  UNIQUE KEY `sessionid` (`sessionid`)
-  ) TYPE=MyISAM;";
-
-$carttable = "CREATE TABLE `wp_cart_contents` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `prodid` BIGINT UNSIGNED NOT NULL ,
-  `purchaseid` BIGINT UNSIGNED NOT NULL ,
-  `price` VARCHAR( 128 ) NOT NULL ,
-  `pnp` VARCHAR( 128 ) NOT NULL ,
-  `gst` VARCHAR( 128 ) NOT NULL ,
-  `quantity` INT UNSIGNED NOT NULL ,
-  PRIMARY KEY ( `id` )
-  ) TYPE=MyISAM;";
-
-$cart_variations_table = "CREATE TABLE `wp_cart_item_variations` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `cart_id` BIGINT UNSIGNED NOT NULL ,
-  `variation_id` BIGINT UNSIGNED NOT NULL ,
-  `venue_id` BIGINT UNSIGNED NOT NULL ,
-  PRIMARY KEY ( `id` )
-  ) TYPE=MyISAM;";
-
-$downloadtable = "CREATE TABLE `wp_download_status` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  `fileid` BIGINT UNSIGNED NOT NULL ,
-  `purchid` BIGINT UNSIGNED NOT NULL ,
-  `downloads` INT NOT NULL ,
-  `active` VARCHAR( 1 ) NOT NULL DEFAULT '0',
-  `datetime` DATETIME NOT NULL
-  ) TYPE = MYISAM ;";
-
-$filetable = "CREATE TABLE `wp_product_files` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  `filename` VARCHAR( 255 ) NOT NULL ,
-  `mimetype` VARCHAR( 128 ) NOT NULL ,
-  `idhash` VARCHAR( 45 ) NOT NULL ,
-  `date` VARCHAR( 255 ) NOT NULL
-  ) TYPE = MYISAM ;";
-require "currency_list.php";
-
-$currencytable = "CREATE TABLE `wp_currency_list`  (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
-  `country` varchar(255) NOT NULL default '',
-  `isocode` char(2) default NULL,
-  `currency` varchar(255) NOT NULL default '',
-  `symbol` varchar(10) NOT NULL default '',
-  `symbol_html` varchar(10) NOT NULL default '',
-  `code` char(3) NOT NULL default '',
-  `has_regions` char(1) NOT NULL default '0',
-  `tax` varchar(8) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM ;";
-
-$purchase_statuses_table = "CREATE TABLE `wp_purchase_statuses` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  `name` VARCHAR( 128 ) NOT NULL ,
-  `active` VARCHAR( 1 ) NOT NULL ,
-  `colour` VARCHAR( 6 ) NOT NULL
-  ) TYPE = MYISAM ;";
-
-
-
-$product_rating_table = "CREATE TABLE `wp_product_rating` (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
-  `ipnum` varchar(30) NOT NULL default '',
-  `productid` bigint(20) unsigned NOT NULL default '0',
-  `rated` tinyint(1) NOT NULL default '0',
-  `time` BIGINT UNSIGNED NOT NULL,
-  PRIMARY KEY  (`id`)
-  ) TYPE=MyISAM;";
-
-
-
-$product_variations_table = "CREATE TABLE `wp_product_variations` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR( 128 ) NOT NULL ,
-  `variation_association` BIGINT UNSIGNED NOT NULL ,
-  PRIMARY KEY ( `id` ) ,
-  INDEX ( `variation_association` )
-  );";
-
-$variation_values_table = "CREATE TABLE `wp_variation_values` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR( 128 ) NOT NULL ,
-  `variation_id` BIGINT UNSIGNED NOT NULL ,
-  PRIMARY KEY ( `id` ) ,
-  INDEX ( `variation_id` )
-  );";
-
-$variation_associations_table = "CREATE TABLE `wp_variation_associations` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `type` VARCHAR( 64 ) NOT NULL ,
-  `name` VARCHAR( 128 ) NOT NULL ,
-  `associated_id` BIGINT UNSIGNED NOT NULL ,
-  `variation_id` BIGINT UNSIGNED NOT NULL,
-  PRIMARY KEY ( `id` ) ,
-  INDEX ( `associated_id` ) ,
-  INDEX ( `variation_id` )
-  );";
-
-$variation_values_associations_table = "CREATE TABLE `wp_variation_values_associations` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `product_id` BIGINT UNSIGNED NOT NULL ,
-  `value_id` BIGINT UNSIGNED NOT NULL ,
-  `quantity` INT NOT NULL ,
-  `price` VARCHAR( 32 ) NOT NULL ,
-  `visible` VARCHAR( 1 ) NOT NULL ,
-  `variation_id` BIGINT UNSIGNED NOT NULL ,
-  PRIMARY KEY ( `id` ) ,
-  INDEX ( `product_id` , `value_id` , `variation_id` )
-  );";
-
-
-
-$collected_data_table = "CREATE TABLE `wp_collect_data_forms` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR( 255 ) NOT NULL ,
-  `type` VARCHAR( 64 ) NOT NULL ,
-  `mandatory` VARCHAR( 1 ) NOT NULL ,
-  `display_log` char(1) NOT NULL DEFAULT '0',
-  `default` VARCHAR( 128 ) NOT NULL ,
-  `active` VARCHAR( 1 ) DEFAULT '1' NOT NULL,
-  `order` INT UNSIGNED NOT NULL,
-  PRIMARY KEY ( `id` ) ,
-  INDEX ( `order` )
-  );";
-
-$submitted_data_table = "CREATE TABLE `wp_submited_form_data` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `log_id` bigint(20) unsigned NOT NULL default '0',
-  `form_id` bigint(20) unsigned NOT NULL default '0',
-  `value` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`),
-  KEY `log_id` (`log_id`,`form_id`))";
-
-$product_order_table = "CREATE TABLE `wp_product_order` (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
-  `category_id` bigint(20) unsigned NOT NULL default '0',
-  `product_id` bigint(20) unsigned NOT NULL default '0',
-  `order` bigint(20) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `category_id` (`category_id`,`product_id`),
-  KEY `order` (`order`)
-) TYPE=MyISAM ;";
-  
-  
-$region_tax_table = "CREATE TABLE `wp_region_tax` (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
-  `country_id` bigint(20) unsigned NOT NULL default '0',
-  `name` varchar(64) NOT NULL default '',
-  `tax` float NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  KEY `country_id` (`country_id`)
-) TYPE=MyISAM;";
-  
-
-  require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
-  maybe_create_table($table_name,$itemtable);
-  maybe_create_table(($wpdb->prefix."purchase_logs"),$logtable);
-  maybe_create_table(($wpdb->prefix."cart_contents"),$carttable);
-  maybe_create_table(($wpdb->prefix."cart_item_variations"),$cart_variations_table);
-  maybe_create_table(($wpdb->prefix."product_categories"),$categorytable);
-  maybe_create_table(($wpdb->prefix."product_brands"),$brandstable);
-  maybe_create_table(($wpdb->prefix."download_status"),$downloadtable);
-  maybe_create_table(($wpdb->prefix."product_files"),$filetable);
-  maybe_create_table(($wpdb->prefix."currency_list"),$currencytable);
-  maybe_create_table(($wpdb->prefix."purchase_statuses"),$purchase_statuses_table);
-  maybe_create_table(($wpdb->prefix."product_rating"),$product_rating_table);
-  
-  maybe_create_table(($wpdb->prefix."product_variations"),$product_variations_table);
-  maybe_create_table(($wpdb->prefix."variation_values"),$variation_values_table);
-  maybe_create_table(($wpdb->prefix."variation_associations"),$variation_associations_table);
-  maybe_create_table(($wpdb->prefix."variation_values_associations"),$variation_values_associations_table);
-  maybe_create_table(($wpdb->prefix."collect_data_forms"),$collected_data_table);
-  maybe_create_table(($wpdb->prefix."submited_form_data"),$submitted_data_table);
-  maybe_create_table(($wpdb->prefix."item_category_associations"),$category_assoc_table);
-  maybe_create_table(($wpdb->prefix."product_order"),$product_order_table);
-  maybe_create_table(($wpdb->prefix."region_tax"),$region_tax_table);
- 
-
-
- 
-  /*
-  Updates from old versions, 
-  */     
-  include_once('update.php');
-  
-  $add_cart_quantity  = $wpdb->get_results("SHOW FULL COLUMNS FROM `wp_cart_contents` LIKE 'quantity'",ARRAY_A);
-  if($add_cart_quantity == null)
-    {
-    $wpdb->query("ALTER TABLE `wp_cart_contents` ADD `quantity` INT UNSIGNED NOT NULL AFTER `gst` ;");
-    }
-
-  $add_international_pnp  = $wpdb->get_results("SHOW FULL COLUMNS FROM `wp_product_list` LIKE 'international_pnp'",ARRAY_A);
-  if($add_international_pnp == null)
-    {
-    $wpdb->query("ALTER TABLE `wp_product_list` ADD `international_pnp` VARCHAR( 20 ) NOT NULL AFTER `pnp`;");
-    }
-    
-  $add_gateway_log  = $wpdb->get_results("SHOW FULL COLUMNS FROM `wp_purchase_logs` LIKE 'gateway'",ARRAY_A);
-  if($add_gateway_log == null)
-    {
-    $wpdb->query("ALTER TABLE `wp_purchase_logs` ADD `gateway` VARCHAR( 64 ) NOT NULL AFTER `date`;");
-    $wpdb->query("ALTER TABLE `wp_purchase_logs` ADD INDEX ( `gateway` ) ;");
-    }
-    
-
-  $add_shipping_country  = $wpdb->get_results("SHOW FULL COLUMNS FROM `wp_purchase_logs` LIKE 'shipping_country'",ARRAY_A);
-  if($add_shipping_country == null)
-    {
-    $wpdb->query("ALTER TABLE `wp_purchase_logs` ADD `shipping_country` CHAR( 6 ) NOT NULL AFTER `gateway`;");
-    }
-  
-  $add_shipping_region  = $wpdb->get_results("SHOW FULL COLUMNS FROM `wp_purchase_logs` LIKE 'shipping_region'",ARRAY_A);
-  if($add_shipping_region == null)
-    {
-    $wpdb->query("ALTER TABLE `wp_purchase_logs` ADD `shipping_region` CHAR( 6 ) NOT NULL AFTER `shipping_country`;");
-    }
-
-  $add_initial_category = $wpdb->get_results("SELECT COUNT(*) AS `count` FROM `wp_product_categories`",ARRAY_A);
-  if($add_initial_category[0]['count'] == 0)
-    {
-    $wpdb->query("INSERT INTO `wp_product_categories` ( `id` , `name` , `description`, `active`) VALUES (NULL , '".TXT_WPSC_EXAMPLECATEGORY."', '".TXT_WPSC_EXAMPLEDETAILS."', '1');");
-    }
-  
-  $add_display_frontpage  = $wpdb->get_results("SHOW FULL COLUMNS FROM `wp_product_list` LIKE 'display_frontpage'",ARRAY_A);
-  if($add_display_frontpage == null)
-    {
-    $wpdb->query("ALTER TABLE `wp_product_list` ADD `display_frontpage` VARCHAR( 1 ) NOT NULL AFTER `special_price`;");
-    }
-  
-  $add_currency_tax  = $wpdb->get_results("SHOW FULL COLUMNS FROM `wp_currency_list` LIKE 'tax'",ARRAY_A);
-  if($add_currency_tax == null)
-    {
-    $wpdb->query("ALTER TABLE `wp_currency_list` ADD `tax` VARCHAR( 8 ) NOT NULL AFTER `code`");
-    }
-  
-  $add_currency_has_regions  = $wpdb->get_results("SHOW FULL COLUMNS FROM `wp_currency_list` LIKE 'has_regions'",ARRAY_A);
-  if($add_currency_has_regions == null)
-    {
-    $wpdb->query("ALTER TABLE `wp_currency_list` ADD `has_regions` VARCHAR( 8 ) NOT NULL AFTER `code`");
-    }
-        
-  $check_category_assoc = $wpdb->get_results("SELECT COUNT(*) AS `count` FROM `wp_item_category_associations`",ARRAY_A);
-  if($check_category_assoc[0]['count'] == 0)
-    {
-    $sql = "SELECT * FROM `wp_product_list` WHERE `active`=1";
-    $product_list = $wpdb->get_results($sql,ARRAY_A);
-    foreach((array)$product_list as $product)
-      {
-      $results = $wpdb->query("INSERT INTO `wp_item_category_associations` ( `id` , `product_id` , `category_id` ) VALUES ('', '".$product['id']."', '".$product['category']."');");
-      }
-    }
-
-  $currency_data  = $wpdb->get_var("SELECT COUNT(*) AS `count` FROM `wp_currency_list`");
-  if($currency_data == 0)
-    {
-    $currency_array = explode("\n",$currency_sql);
-    foreach($currency_array as $currency_row)
-      {
-      $wpdb->query($currency_row);
-      }
-    }
-    
-  $purchase_statuses_data  = $wpdb->get_results("SELECT COUNT(*) AS `count` FROM `wp_purchase_statuses`",ARRAY_A);
-  if($purchase_statuses_data[0]['count'] == 0)
-    {
-    $wpdb->query("INSERT INTO `wp_purchase_statuses` ( `id` , `name` , `active` , `colour` ) 
-    VALUES
-    ('', '".TXT_WPSC_RECEIVED."', '1', ''),
-    ('', '".TXT_WPSC_ACCEPTED_PAYMENT."', '1', ''),
-    ('', '".TXT_WPSC_JOB_DISPATCHED."', '1', ''),
-    ('', '".TXT_WPSC_PROCESSED."', '1', '');");
-    }
-  
-  $add_category_parent  = $wpdb->get_results("SHOW FULL COLUMNS FROM `wp_product_categories` LIKE 'category_parent'",ARRAY_A);
-  if($add_category_parent == null)
-    {
-    $wpdb->query("ALTER TABLE `wp_product_categories` ADD `category_parent` BIGINT UNSIGNED DEFAULT '0' NOT NULL AFTER `active`") ;
-    $wpdb->query("ALTER TABLE `wp_product_categories` ADD INDEX ( `category_parent` )");
-    }
-    
-    
-    
-    
-  
-  $add_regions = $wpdb->get_var("SELECT COUNT(*) AS `count` FROM `wp_region_tax`");
-  // exit($add_regions);
-  if($add_regions < 1)
-    {
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Alberta', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'British Columbia', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Manitoba', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'New Brunswick', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Newfoundland', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Northwest Territories', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Nova Scotia', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Nunavut', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Ontario', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Prince Edward Island', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Quebec', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Saskatchewan', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '100', 'Yukon', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Alabama', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Alaska', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Arizona', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Arkansas', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'California', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Colorado', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Connecticut', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Delaware', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Florida', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Georgia', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Hawaii', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Idaho', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Illinois', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Indiana', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Iowa', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Kansas', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Kentucky', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Louisiana', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Maine', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Maryland', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Massachusetts', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Michigan', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Minnesota', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Mississippi', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Missouri', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Montana', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Nebraska', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Nevada', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'New Hampshire', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'New Jersey', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'New Mexico', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'New York', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'North Carolina', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'North Dakota', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Ohio', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Oklahoma', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Oregon', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Pennsylvania', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Rhode Island', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'South Carolina', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'South Dakota', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Tennessee', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Texas', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Utah', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Vermont', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Virginia', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Washington', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Washington DC', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'West Virginia', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Wisconsin', '0.00')");
-    $wpdb->query("INSERT INTO `wp_region_tax` ( `id` , `country_id` , `name` , `tax` ) VALUES ('', '136', 'Wyoming', '0.00')");
-    }
-    
-    
-    
-$data_forms = $wpdb->get_results("SELECT COUNT(*) AS `count` FROM `wp_collect_data_forms`",ARRAY_A);
-if($data_forms[0]['count'] == 0)
-  {
-  $wpdb->query("INSERT INTO `wp_collect_data_forms` VALUES ('', '".TXT_WPSC_FIRSTNAME."', 'text', '1', '1', '', '1', '1');");
-  $wpdb->query("INSERT INTO `wp_collect_data_forms` VALUES ('', '".TXT_WPSC_LASTNAME."', 'text', '1', '1', '', '1', '2');");
-  $wpdb->query("INSERT INTO `wp_collect_data_forms` VALUES ('', '".TXT_WPSC_EMAIL."', 'email', '1', '1', '', '1', '3');");
-  $wpdb->query("INSERT INTO `wp_collect_data_forms` VALUES ('', '".TXT_WPSC_ADDRESS1."', 'text', '1', '0', '', '1', '4');");
-  $wpdb->query("INSERT INTO `wp_collect_data_forms` VALUES ('', '".TXT_WPSC_ADDRESS2."', 'text', '0', '0', '', '1', '5');");
-  $wpdb->query("INSERT INTO `wp_collect_data_forms` VALUES ('', '".TXT_WPSC_CITY."', 'text', '1', '0', '', '1', '6');");
-  $wpdb->query("INSERT INTO `wp_collect_data_forms` VALUES ('', '".TXT_WPSC_COUNTRY."', 'country', '1', '0', '', '1', '7');");
-  $country_form_id  = $wpdb->get_results("SELECT `id` FROM `wp_collect_data_forms` WHERE `name` = '".TXT_WPSC_COUNTRY."' AND `type` = 'country' LIMIT 1",ARRAY_A);
-  $email_form_id  = $wpdb->get_results("SELECT `id` FROM `wp_collect_data_forms` WHERE `name` = '".TXT_WPSC_EMAIL."' AND `type` = 'country' LIMIT 1",ARRAY_A);
-  update_option('country_form_field', $country_form_id[0]['id']);
-  update_option('email_form_field', $email_form_id[0]['id']);
-  $wpdb->query("INSERT INTO `wp_collect_data_forms` VALUES ('', '".TXT_WPSC_PHONE."', 'text', '1', '0', '', '1', '8');");
-  }
-  
-  
-$product_brands_data  = $wpdb->get_results("SELECT COUNT(*) AS `count` FROM `wp_product_brands`",ARRAY_A);
-if($product_brands_data[0]['count'] == 0)
-  {
-  $wpdb->query("INSERT INTO `wp_product_brands` (`id`, `name`, `description`, `active`, `order`) VALUES (NULL, '".TXT_WPSC_EXAMPLEBRAND."','".TXT_WPSC_EXAMPLEDETAILS."', '1', '0');");
-  }
-  
-  add_option('show_thumbnails', 1, TXT_WPSC_SHOWTHUMBNAILS, "yes");
-
-  add_option('product_image_width', '', TXT_WPSC_PRODUCTIMAGEWIDTH, 'yes');
-  add_option('product_image_height', '', TXT_WPSC_PRODUCTIMAGEHEIGHT, 'yes');
-
-  add_option('category_image_width', '', TXT_WPSC_CATEGORYIMAGEWIDTH, 'yes');
-  add_option('category_image_height', '', TXT_WPSC_CATEGORYIMAGEHEIGHT, 'yes');
-
-  add_option('product_list_url', '', TXT_WPSC_PRODUCTLISTURL, 'yes');
-  add_option('shopping_cart_url', '', TXT_WPSC_SHOPPINGCARTURL, 'yes');
-  add_option('checkout_url', '', TXT_WPSC_CHECKOUTURL, 'yes');
-  add_option('transact_url', '', TXT_WPSC_TRANSACTURL, 'yes');
-  add_option('payment_gateway', '', TXT_WPSC_PAYMENTGATEWAY, 'yes');
-
-  add_option('cart_location', '1', TXT_WPSC_CARTLOCATION, 'yes');
-
-  //add_option('show_categorybrands', '0', TXT_WPSC_SHOWCATEGORYBRANDS, 'yes');
-
-  add_option('currency_type', '156', TXT_WPSC_CURRENCYTYPE, 'yes');
-  add_option('currency_sign_location', '3', TXT_WPSC_CURRENCYSIGNLOCATION, 'yes');
-
-  add_option('gst_rate', '1', TXT_WPSC_GSTRATE, 'yes');
-
-  add_option('max_downloads', '5', TXT_WPSC_MAXDOWNLOADS, 'yes');
-
-  add_option('display_pnp', '1', TXT_WPSC_DISPLAYPNP, 'yes');
-
-  add_option('display_specials', '1', TXT_WPSC_DISPLAYSPECIALS, 'yes');
-
-  add_option('postage_and_packaging', '0', TXT_WPSC_POSTAGEAND_PACKAGING, 'yes');
-
-  add_option('purch_log_email', '', TXT_WPSC_PURCHLOGEMAIL, 'yes');
-  add_option('return_email', '', TXT_WPSC_RETURNEMAIL, 'yes');
-  add_option('terms_and_conditions', '', TXT_WPSC_TERMSANDCONDITIONS, 'yes');
-
- 
-   add_option('default_brand', 'none', TXT_WPSC_DEFAULTBRAND, 'yes');
-   add_option('default_category', 'none', TXT_WPSC_DEFAULTCATEGORY, 'yes');
-   
-   add_option('product_view', 'default', "", 'yes');
-   if(get_option('default_category') < 1)
-     {
-     update_option('default_category','none');
-     }
-   
-    add_option('nzshpcrt_first_load', '0', "", 'yes');
-  
-  if(!((get_option('show_categorybrands') > 0) && (get_option('show_categorybrands') < 3)))
-    {
-    update_option('show_categorybrands', 2);
-    }
-  //add_option('show_categorybrands', '0', TXT_WPSC_SHOWCATEGORYBRANDS, 'yes');
-  /* PayPal options */
-  add_option('paypal_business', '', TXT_WPSC_PAYPALBUSINESS, 'yes');
-  add_option('paypal_url', '', TXT_WPSC_PAYPALURL, 'yes');
-  //update_option('paypal_url', "https://www.sandbox.paypal.com/xclick");
-  
-  
-  add_option('paypal_multiple_business', '', TXT_WPSC_PAYPALBUSINESS, 'yes');
-  
-  if(get_option('paypal_multiple_url') == null)
-    {
-    add_option('paypal_multiple_url', '', TXT_WPSC_PAYPALURL, 'yes');
-    update_option('paypal_multiple_url', "https://www.paypal.com/cgi-bin/webscr");
-    }
-
-  add_option('product_ratings', '0', TXT_WPSC_SHOWPRODUCTRATINGS, 'yes');
-
-/*
- * This part creates the pages and automatically puts their URLs into the options page.
- * As you can probably see, it is very easily extendable, just pop in your page and the deafult content in the array and you are good to go.
- */
-  $post_date =date("Y-m-d H:i:s");
-  $post_date_gmt =gmdate("Y-m-d H:i:s");
-  
-  $pages[0]['name'] = 'products-page';
-  $pages[0]['title'] = TXT_WPSC_PRODUCTSPAGE;
-  $pages[0]['tag'] = '[productspage]';
-  $pages[0]['option'] = 'product_list_url';
-  
-  $pages[1]['name'] = 'checkout';
-  $pages[1]['title'] = TXT_WPSC_CHECKOUT;
-  $pages[1]['tag'] = '[shoppingcart]';
-  $pages[1]['option'] = 'shopping_cart_url';
-  
-  $pages[2]['name'] = 'enter-details';
-  $pages[2]['title'] = TXT_WPSC_ENTERDETAILS;
-  $pages[2]['tag'] = '[checkout]';
-  $pages[2]['option'] = 'checkout_url';
-  
-  $pages[3]['name'] = 'transaction-results';
-  $pages[3]['title'] = TXT_WPSC_TRANSACTIONRESULTS;
-  $pages[3]['tag'] = '[transactionresults]';
-  $pages[3]['option'] = 'transact_url';
-  
-  $newpages = false;
-  $i = 0;
-  $post_parent = 0;
-  foreach($pages as $page)
-    {
-    $check_page = $wpdb->get_results("SELECT * FROM ".$wpdb->posts." WHERE `post_name` = '".$page['name']."' LIMIT 1",ARRAY_A) ;
-    if($check_page == null)
-      {
-      if($i == 0)
-        {
-        $post_parent = 0;
-        }
-        else
-          {
-          $post_parent = $first_id;
-          }
-      
-      if($wp_version >= 2.1)
-        {
-        $sql ="INSERT INTO ".$wpdb->posts."
-        (post_author, post_date, post_date_gmt, post_content, post_content_filtered, post_title, post_excerpt,  post_status, comment_status, ping_status, post_password, post_name, to_ping, pinged, post_modified, post_modified_gmt, post_parent, menu_order, post_type)
-        VALUES
-        ('1', '$post_date', '$post_date_gmt', '".$page['tag']."', '', '".$page['title']."', '', 'publish', 'open', 'open', '', '".$page['name']."', '', '', '$post_date', '$post_date_gmt', '$post_parent', '0', 'page')";
-        }
-        else
-        {      
-        $sql ="INSERT INTO ".$wpdb->posts."
-        (post_author, post_date, post_date_gmt, post_content, post_content_filtered, post_title, post_excerpt,  post_status, comment_status, ping_status, post_password, post_name, to_ping, pinged, post_modified, post_modified_gmt, post_parent, menu_order)
-        VALUES
-        ('1', '$post_date', '$post_date_gmt', '".$page['tag']."', '', '".$page['title']."', '', 'static', 'open', 'open', '', '".$page['name']."', '', '', '$post_date', '$post_date_gmt', '$post_parent', '0')";
-        }
-      $wpdb->query($sql);
-      $post_id = $wpdb->insert_id;
-      if($i == 0)
-        {
-        $first_id = $post_id;
-        }
-      $wpdb->query("UPDATE $wpdb->posts SET guid = '" . get_permalink($post_id) . "' WHERE ID = '$post_id'");
-      update_option($page['option'],  get_permalink($post_id));
-      $newpages = true;
-      $i++;
-      }
-    }
-  if($newpages == true)
-    {
-    wp_cache_delete('all_page_ids', 'pages');
-    $wp_rewrite->flush_rules();
-    }
-    
-  /*
-   * Moves images to thumbnails directory
-   */
-  $basepath =  str_replace("/wp-admin", "" , getcwd());
-  $image_dir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
-  $product_images = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
-  $product_thumbnails = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/thumbnails/";
-  if(!is_dir($product_thumbnails))
-    {
-    mkdir($product_thumbnails, 0775);
-    }
-  $product_list = $wpdb->get_results("SELECT * FROM `wp_product_list` WHERE `image` != ''",ARRAY_A);
-  foreach((array)$product_list as $product)
-    {
-    if(!glob($product_thumbnails.$product['image']))
-      {
-      $new_filename = $product['image']; //$new_filename = $product['id']."_".$product['image'];
-      if(glob($image_dir.$product['image']))
-        {
-        copy($image_dir.$product['image'], $product_thumbnails.$new_filename);
-        copy($product_images.$product['image'], $product_images.$new_filename);
-        $wpdb->query("UPDATE `wp_product_list` SET `image` = '".$new_filename."' WHERE `id`='".$product['id']."' LIMIT 1");
-        }        
-        else
-          {
-          $imagedir = $product_thumbnails;
-          $name = $new_filename;
-          $new_image_path = $product_images.$product['image'];
-          $imagepath = $product['image'];
-          $height = get_option('product_image_height');
-          $width  = get_option('product_image_width');
-          include("extra_image_processing.php");
-          copy($product_images.$product['image'], $product_images.$new_filename);
-          $wpdb->query("UPDATE `wp_product_list` SET `image` = '".$new_filename."' WHERE `id`='".$product['id']."' LIMIT 1");
-          echo $product['image']." not found <br/>";
-          }
-      }
-    }
-  }
-
-
 function nzshpcrt_style()
     {
   ?>
@@ -2234,15 +1573,15 @@ Array
           switch($form_data['name'])
             {
             case TXT_WPSC_FIRSTNAME:
-            $bad_input_message .= TXT_WPSC_PLEASEENTERAVALIDNAME . "";
+            $bad_input_message .= "Пожалуйста, введите правильное имя<br>";
             break;
     
             case TXT_WPSC_LASTNAME:
-            $bad_input_message .= TXT_WPSC_PLEASEENTERAVALIDSURNAME . "";
+            $bad_input_message .= "Пожалуйста, введите правильную фамилию<br>";
             break;
     
             case TXT_WPSC_EMAIL:
-            $bad_input_message .= TXT_WPSC_PLEASEENTERAVALIDEMAILADDRESS . "";
+            $bad_input_message .= "Пожалуйста, введите правильный E-mail<br>";
             break;
     
             case TXT_WPSC_ADDRESS1:
@@ -2267,7 +1606,6 @@ Array
             break;
             }
           }
-        $bad_input_message .= "\n\r";
         }
       }
     if($any_bad_inputs === true)
@@ -2280,21 +1618,21 @@ Array
     $_SESSION['checkoutdata'] = $_POST;
     if(isset($_POST['agree']) && $_POST['agree'] != 'yes')
       {
-      $_SESSION['nzshpcrt_checkouterr'] = TXT_WPSC_PLEASEAGREETERMSANDCONDITIONS;
+      $_SESSION['nzshpcrt_checkouterr'] = "Пожалуйста, ознакомьтесь с условиями лицензии и отметьте в квадратике";
       header($returnurl);
       exit();
       }
     
     if($cart == null)
       {
-      $_SESSION['nzshpcrt_checkouterr'] = TXT_WPSC_NOTHINGINYOURSHOPPINGCART;
+      $_SESSION['nzshpcrt_checkouterr'] = "Ваша корзина пуста";
       header($returnurl);
       exit();
       }
     $sessionid = (mt_rand(100,999).time());
     
-    $sql = "INSERT INTO `wp_purchase_logs` ( `id` , `totalprice` , `sessionid` , `firstname`, `lastname`, `email`, `date`, `shipping_country` )
-VALUES ('', '".$wpdb->escape($_SESSION['total'])."', '".$sessionid."', '".$wpdb->escape($_POST['collected_data']['1'])."', '".$wpdb->escape($_POST['collected_data']['2'])."', '".$_POST['collected_data']['3']."', '".time()."', 'ru')";
+    $sql = "INSERT INTO `wp_purchase_logs` (`id` , `totalprice` , `sessionid` , `firstname`, `lastname`, `email`, `date`, `shipping_country`,`address`, `phone` ) VALUES ('', '".$wpdb->escape($_SESSION['total'])."', '".$sessionid."', '".$wpdb->escape($_POST['collected_data']['1'])."', '".$wpdb->escape($_POST['collected_data']['2'])."', '".$_POST['collected_data']['3']."', '".time()."', '', '".$_POST['collected_data']['5']."', '".$_POST['collected_data']['4']."')";
+
    $wpdb->query($sql) ;
    
    $selectsql = "SELECT * FROM `wp_purchase_logs` WHERE `sessionid` LIKE '".$sessionid."' LIMIT 1";
@@ -2347,7 +1685,9 @@ VALUES ('', '".$wpdb->escape($_SESSION['total'])."', '".$sessionid."', '".$wpdb-
             }
           }
       }
-      else { */$gst = 0; /*}*/
+      else { */
+	  $gst = ''; 
+	  /*}*/
         
             
     //$country = $wpdb->get_results("SELECT * FROM `wp_submited_form_data` WHERE `log_id`=".$getid[0]['id']." AND `form_id` = '".get_option('country_form_field')."' LIMIT 1",ARRAY_A);
@@ -2357,12 +1697,53 @@ VALUES ('', '".$wpdb->escape($_SESSION['total'])."', '".$sessionid."', '".$wpdb-
      
      // $shipping = $base_shipping + ($additional_shipping * $quantity);
      $shipping = 0;
-     $cartsql = "INSERT INTO `wp_cart_contents` ( `id` , `prodid` , `purchaseid`, `price`, `pnp`, `gst`, `quantity` ) VALUES ('', '".$row."', '".$getid[0]['id']."','".$price."','".$shipping."', '".$gst."','".$quantity."')";
-    
-  
-     
+	 //$_SESSION['nzshpcrt_cart'][$cart_key]->license
+/*
+pokazh($getid,"getid");
+pokazh($cart_item,"cart_item");	 
+exit;
+
+getid: Array
+(
+    [0] => Array
+        (
+            [id] => 166
+            [totalprice] => 0
+            [statusno] => 0
+            [sessionid] => 5881285871982
+            [transactid] => 
+            [authcode] => 
+            [firstname] => РќРµРєС‚Рѕ
+            [lastname] => Р’ РЁР»СЏРїРµ
+            [email] => aleshin@dataart.com
+            [address] => bb
+            [phone] => aa
+            [downloadid] => 0
+            [processed] => 1
+            [date] => 1285871982
+            [gateway] => 
+            [shipping_country] => 
+            [shipping_region] => 
+        )
+
+)
+cart_item: cart_item Object
+(
+    [product_id] => 3310
+    [product_variations] => 
+    [quantity] => 1
+    [name] => 111
+    [price] => 0
+    [license] => l1_price
+    [author] => a1
+)
+*/
+	$license_num = $getid[0]['sessionid']."_".$cart_item->product_id;
+	$cartsql = "INSERT INTO `wp_cart_contents` ( `id` , `prodid` , `purchaseid`, `price`, `pnp`, `gst`, `quantity`, `license` ) VALUES ('', '".$row."', '".$getid[0]['id']."','".$price."','".$shipping."', '".$gst."','".$quantity."', '".$license_num."')";
      $wpdb->query($cartsql);
-     $cart_id = $wpdb->get_results("SELECT LAST_INSERT_ID() AS `id` FROM `wp_product_variations` LIMIT 1",ARRAY_A);
+
+	 
+	 $cart_id = $wpdb->get_results("SELECT LAST_INSERT_ID() AS `id` FROM `wp_product_variations` LIMIT 1",ARRAY_A);
      $cart_id = $cart_id[0]['id'];
      if($variations != null)
        {
@@ -2373,7 +1754,12 @@ VALUES ('', '".$wpdb->escape($_SESSION['total'])."', '".$sessionid."', '".$wpdb-
        }
      }
 
-   $curgateway = $_POST['payment_method'];
+	if (isset($_POST['payment_method']))
+		{
+			$curgateway = $_POST['payment_method'];
+		}
+		else
+		{$curgateway = '';}
    
   if(get_option('permalink_structure') != '')
     {
@@ -2396,7 +1782,7 @@ VALUES ('', '".$wpdb->escape($_SESSION['total'])."', '".$sessionid."', '".$wpdb-
         }
       
     //require_once("merchants.php");
-    }
+    } //end of: if(isset($_POST['collected_data']) && isset($_POST['submitwpcheckout']) and ($_POST['submitwpcheckout'] == 'true'))
     else if(isset($_GET['termsandconds']) and $_GET['termsandconds'] === 'true')
       {
       echo stripslashes(get_option('terms_and_conditions'));
@@ -2532,13 +1918,13 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
   switch(get_option('cart_location'))
     {
     case 1:
-    $output .= "<h2>".TXT_WPSC_SHOPPINGCART."</h2>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
-    $output .="<span id='alt_loadingindicator'><img id='alt_loadingimage' src='". get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/indicator.gif' alt='Loading' title='Loading' /> ".TXT_WPSC_UDPATING."...</span></strong><br />";
+    $output .= "<h2>Корзина заказов</h2>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
+    $output .="<span id='alt_loadingindicator'><img id='alt_loadingimage' src='". get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/indicator.gif' alt='Loading' title='Loading' /> Идёт загрузка...</span></strong><br />";
     $spacing = "<br/>";
     break;
     
     case 3:
-    $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
+    $output .= "<strong>Корзина заказов</strong>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
     $spacing = "<br/>";
     break;
     
@@ -2547,7 +1933,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     break;
     
     default:
-    $output .= "<strong>".TXT_WPSC_SHOPPINGCART."</strong>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
+    $output .= "<strong>Корзина заказов</strong>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
     $spacing = "<br/>";
     break;
     }  
@@ -2591,6 +1977,8 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
 
       $price_modifier = 0; // for compatibility
 
+
+
 		if (isset($_POST['license']) && ($cart_item->product_id == $_POST['prodid']) && !isset($_POST['Buy']))
 		  {
 			switch($_POST['license'])
@@ -2621,7 +2009,8 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
 		  } 
 		  else
 		  {
-			  if (isset($_POST['prodid']) && !isset($_POST['license']) && ($cart_item->product_id == $_POST['prodid']) && isset($_POST['Buy']))
+			  //if (isset($_POST['prodid']) && !isset($_POST['license']) && ($cart_item->product_id == $_POST['prodid']) && isset($_POST['Buy']))
+			  if (isset($_POST['prodid']) && ($cart_item->product_id == $_POST['prodid']))
 			  {
 					$price = $product[0]['l1_price'];
 					$cart_item->price = $price;
@@ -2638,7 +2027,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
 
 $_SESSION['total'] = $total;
 
-	$output .= "На Личном счёте <b>".round($_wallet)."</b> руб.<br>";
+	$output .= "На Личном счёте <b>".round($_wallet)."</b> р.<br>";
 
 if ($total > $_wallet)
 	$output .= "<div style='color:#CC0000;'>Не хватает средств для покупки выбранных изображений.</div>";
@@ -2651,15 +2040,28 @@ if ($total > $_wallet)
          {
          $seperator ="&amp;";
          }
-	$output .= "<a class='button' href='".get_option('product_list_url')."?cart=empty' onclick='emptycart();return false;'>".TXT_WPSC_EMPTYYOURCART."</a><br />";
-    $output .= "<a class='button' href='".get_option('shopping_cart_url')."'>".TXT_WPSC_GOTOCHECKOUT."</a><br />";
-    }
+	$output .= "<a class='button' href='".get_option('product_list_url')."?cart=empty' onclick='emptycart();return false;'>x Очистить корзину</a><br />";
+
+global $user_identity;
+if ($user_identity == '')
+{
+	$output .= "Доступ к корзине возможен только после входа";
+}
+else
+{
+	if (isset($_GET['page_id']) && ($_GET['page_id']==30 || $_GET['page_id']==31))
+	{$output .= "";}
+	else
+	{$output .= "<a class='button' href='".get_option('shopping_cart_url')."'>Оплатить и скачать</a><br />";}
+}
+	}
     else
       {
       $output .= $spacing;
       //$output .= "Корзина заказов пуста.<br />";
       $output .= "На Личном счёте <b>".round($_wallet)."</b> р.<br>";
       }
+
   return $output;
   }
 

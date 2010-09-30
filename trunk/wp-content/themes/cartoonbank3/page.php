@@ -8,7 +8,7 @@
 	<?php the_content(__('Читать дальше'));?>
 	<?php endwhile; else: ?>
 
-	<p><?php _e('Извините, здесь пока ничего нет.'); ?></p><?php endif; ?>
+	<?php _e('<br>Извините, здесь пока ничего нет.<br>'); ?><?php endif; ?>
 </div>
 
 <div id="contentright">

@@ -5,6 +5,7 @@ $sessionid = $_GET['sessionid'];
 $errorcode = '';
 $transactid = '';
 
+
 //echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
 //echo("<pre>POST:".print_r($_POST,true)."</pre>");
 //echo("<pre>GET:".print_r($_GET,true)."</pre>");
@@ -14,7 +15,7 @@ $transactid = '';
 if($sessionid != null)
   {
 
-  $message = "<div class='wrap'>Спасибо, ваш заказ оформлен. Вы можете скачать заказ используя ссылки ниже.<br>
+  $message = "<div class='wrap'>Спасибо, ваш заказ оформлен. На ваш электронный адрес выслано письмо с тестом лицензии и сылкой для скачиывания. Вам доступны ".get_option('max_downloads')." попыток скачивания по ссылке в письме. Вы можете также скачать ваш заказ используя ссылки ниже.<br>
   Вы заказали следующие картинки:</div>";
 
 	include('al_cart_function.php');
@@ -29,59 +30,32 @@ if($sessionid != null)
 
 	$message_html = $message;
 
-
-
   $report = 'Были заказаны следующие изображения:';
 
   $selectsql = "SELECT * FROM `wp_purchase_logs` WHERE `sessionid`= ".$sessionid." LIMIT 1";
   $check = $wpdb->get_results($selectsql,ARRAY_A) ;
+//pokazh ($selectsql,"selectsql");
 
-
-  $cartsql = "SELECT * FROM `wp_cart_contents` WHERE `purchaseid`=".$check[0]['id']."";
-  $cart = $wpdb->get_results($cartsql,ARRAY_A); 
+  if (isset($check[0]['id']))
+	  {
+		$cartsql = "SELECT * FROM `wp_cart_contents` WHERE `purchaseid`=".$check[0]['id']."";
+		$cart = $wpdb->get_results($cartsql,ARRAY_A); 
+	  
   
   // gets first email address from checkout details
   $email_form_field = $wpdb->get_results("SELECT `id`,`type` FROM `wp_collect_data_forms` WHERE `type` IN ('email') AND `active` = '1' ORDER BY `order` ASC LIMIT 1",ARRAY_A);
   $email_address = $wpdb->get_results("SELECT * FROM `wp_submited_form_data` WHERE `log_id`=".$check[0]['id']." AND `form_id` = '".$email_form_field[0]['id']."' LIMIT 1",ARRAY_A);
   $email = $email_address[0]['value'];
+		}
   }
 
 $siteurl = get_option('siteurl');
   
 $previous_download_ids = Array(0);  
   
-if($cart != null && ($errorcode == 0))
+if(isset($cart) && $cart != null && ($errorcode == 0))
   {
 
-  /*foreach($cart as $row)
-     {
-     
-	 $link ="";
-     $productsql= "SELECT * FROM `wp_product_list` WHERE `id`=".$row['prodid']."";
-     $product_data = $wpdb->get_results($productsql,ARRAY_A) ;
-	 
-	 if($product_data[0]['file'] > 0)
-       {
-       $wpdb->query("UPDATE `wp_download_status` SET `active`='1' WHERE `fileid`='".$product_data[0]['file']."' AND `purchid` = '".$check[0]['id']."' LIMIT 1");
-       $download_data = $wpdb->get_results("SELECT * FROM `wp_download_status` WHERE `fileid`='".$product_data[0]['file']."' AND `purchid`='".$check[0]['id']."' AND `id` NOT IN (".make_csv($previous_download_ids).") LIMIT 1",ARRAY_A);
-       $download_data = $download_data[0];
-       $link = $siteurl."?downloadid=".$download_data['id'];
-       $previous_download_ids[] = $download_data['id'];
-       }
-       
-      $variation_list = '';
-      if($link != '')
-        {
-		$message .= " - ". $product_data[0]['name'] . $variation_list ."  Кликните здесь, чтобы скачать: $link\n";
-        $message_html .= " - #".$product_data[0]['id']. "; название: <b>".$product_data[0]['name'] . "</b>;<br> описание: ".$product_data[0]['description']. "; " . $variation_list ."<br><a href='$link'>Скачать #".$product_data[0]['id']."</a><br><p></p>";
-        }
-        
-
-		$message_price = ''; //ales
-		$report .= " - ". $product_data[0]['name'] ."  ".$message_price ."\n";
-     
-	 }
-   */  
   $total = '';  
   $total_shipping = ''; //nzshpcrt_determine_base_shipping($total_shipping, $country);
   $message .= "<br><br>";
@@ -155,7 +129,7 @@ if($cart != null && ($errorcode == 0))
     }
   echo '</div>';
  
-  }
+  } // end of: if(isset($cart) && $cart != null && ($errorcode == 0))
   else
     {
     echo '<div class="wrap">';
