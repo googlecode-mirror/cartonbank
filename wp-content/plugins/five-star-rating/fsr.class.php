@@ -191,19 +191,19 @@ class FSR {
 			$title = ' title="star" ';
 			switch ($i) {
 				case '1':
-					$title = ' title="плохо" ';
+					$title = ' title="+1" ';
 					break;
 				case '2':
-					$title = ' title="неуд" ';
+					$title = ' title="+2" ';
 					break;
 				case '3':
-					$title = ' title="уд" ';
+					$title = ' title="+3" ';
 					break;
 				case '4':
-					$title = ' title="гуд" ';
+					$title = ' title="+4" ';
 					break;
 				case '5':
-					$title = ' title="отл" ';
+					$title = ' title="+5" ';
 					break;
 			}
 			$html .= sprintf('<input type="radio" id="fsr_star_%1$d_%2$d" class="star" name="fsr_stars" value="%2$d"/><label class="%3$s" '.$title.' for="fsr_star_%1$d_%2$d">%2$d</label> ', $picture_id, $i, $class);
