@@ -690,7 +690,7 @@ else
 
       $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$_brand."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `approved`='$approved', `color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
 
-	  mail("igor.aleshin@gmail.com","old cartoon updated",print_r($updatesql,true));
+	  //mail("igor.aleshin@gmail.com","old cartoon updated",print_r($updatesql,true));
 
       $wpdb->query($updatesql);
       if($image != null)
