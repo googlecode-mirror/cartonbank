@@ -8,7 +8,7 @@ function cart_product_list_string($licensecolumn)
 	$current_item = 0;
 	$total = 0;
 
-	$cart = $_SESSION['nzshpcrt_cart'];
+	$cart = isset($_SESSION['nzshpcrt_cart'])?$_SESSION['nzshpcrt_cart']:"";
 	$result = '<table class=\'productcart\'>';
 	
 	foreach($cart as $key => $cart_item)
