@@ -169,7 +169,7 @@ if (!$licensecolumn)
 			$result .= "</tr>";
 		}
 
-	 }
+	 } // end of: foreach($cart as $key => $cart_item)
 
 	 $result .= '</table>';
 
@@ -232,8 +232,9 @@ function get_license($sequence_of_image,$license_num)
 // load unique license data
 	$current_user = wp_get_current_user();    
 
-	$license_unique_number = $_GET['sessionid']."_".$_SESSION['nzshpcrt_cart'][1]->product_id;
-
+	$license_unique_number = $_GET['sessionid']."_".$_SESSION['nzshpcrt_cart'][$sequence_of_image]->product_id;
+ mail("igor.aleshin@gmail.com","license_unique_number",print_r($license_unique_number."<br> sequence_of_image=".$sequence_of_image,true));
+ mail("igor.aleshin@gmail.com","_SESSION",print_r($_SESSION,true));
 	$agreement_number = $license_unique_number;//uniqid();
 	$agreement_date = date("m.d.y");
 	$customer_name = $current_user->last_name. " " . $current_user->first_name;
