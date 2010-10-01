@@ -2073,7 +2073,7 @@ function nzshpcrt_download_file()
     {
     $id = $_GET['downloadid'];
     $download_data = $wpdb->get_results("SELECT * FROM `wp_download_status` WHERE `id`='".$id."' AND `downloads` > '0' AND `active`='1' LIMIT 1",ARRAY_A) ;
-    $download_data = $download_data[0];
+    isset($download_data[0])?$download_data = $download_data[0]:null;
     if($download_data != null)
       {
       $file_data = $wpdb->get_results("SELECT * FROM `wp_product_files` WHERE `id`='".$download_data['fileid']."' LIMIT 1",ARRAY_A) ;
