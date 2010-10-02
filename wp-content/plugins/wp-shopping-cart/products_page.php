@@ -258,7 +258,7 @@ $search_sql = NULL;
                     // count found results
 					if (isset($_brand) && isset($_brand)!='')
 					{
-						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' ".$cat_group_sql.$exclude_category_sql.$brand_group_sql." AND `wp_product_list`.`visible`='1' ".$colorfilter." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
+						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' ".$cat_group_sql.$brand_group_sql." AND `wp_product_list`.`visible`='1' ".$colorfilter." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
 					}
                     else
 					{
