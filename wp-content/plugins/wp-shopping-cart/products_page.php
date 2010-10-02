@@ -369,7 +369,7 @@ $search_sql = NULL;
 
 				$_size_warning = '';
 				if ($product[0]['height']<800 || $product[0]['width']<800)
-					$_size_warning = "<div style='color:red;float:left;width:288px;padding-top:8px;font-size:0.8em;'>Внимание! Размеры файла<br>ограничивают применение!</div>";
+					$_size_warning = "<a href='".get_option('siteurl')."/?page_id=771'><div style='color:red;float:left;width:288px;padding-top:8px;font-size:0.8em;'>Внимание! Размеры файла<br>ограничивают применение!</div></a>";
 
 				$_sizesm = $_x_sm." см X ".$_y_sm." см";
                 $_author = $product[0]['brand'];
