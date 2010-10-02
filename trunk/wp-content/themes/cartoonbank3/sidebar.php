@@ -155,7 +155,7 @@ else
         
 		if ($option['id']=='666')
 		{
-			$category_in_the_list = '<a href="'.get_option('siteurl').'/?page_id=649" title="подробнее о категории"> ? </a>'.'<a href="#" onclick="rokfor();">'.stripslashes($option['name']);
+			$category_in_the_list = '<a href="'.get_option('siteurl').'/?page_id=649" title="подробнее о категории"><div style="padding-top:2px;color:red;font-size:0.8em;text-decoration:none;">предупреждение:</div></a>'.'<a href="#" onclick="rokfor();">'.stripslashes($option['name']).'';
 		}
 		else
 		{
