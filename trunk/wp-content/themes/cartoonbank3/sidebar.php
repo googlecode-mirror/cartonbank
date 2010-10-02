@@ -101,22 +101,9 @@ echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=
 
 <?
 $_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
-?>
 
-<script language="JavaScript">
-<!--
-function rokfor(){
-if (confirm("Вы выбрали категорию Рабочий стол. Это категория может содержать спорные с точки зрения морали карикатуры. Хотите смотреть их?")) 
-	{
-		window.location = "/?page_id=29&brand=8&category=666";
-	}
-else 
-	{
-		window.location = "#";
-	}
-}
-//-->
-</script>
+echo "<script language='JavaScript'>function rokfor(){if (confirm('Вы выбрали категорию Рабочий стол. Это категория может содержать спорные с точки зрения морали карикатуры. Хотите смотреть их?')) 	{window.location = '".$_rokfor_url."';} else 	{window.location = '#';	}}</script>";
+?>
 
 <br><h2>Категории</h2> 
 
@@ -168,7 +155,6 @@ else
         
 		if ($option['id']=='666')
 		{
-			$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
 			$category_in_the_list = '<a href="#" onclick="rokfor();">'.stripslashes($option['name']);
 		}
 		else
@@ -212,11 +198,6 @@ else
 	}
     echo $options;
 ?>
-
-<?//$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';?>
-
-<!-- <a href="#" onclick='if(confirm("Вы выбрали категорию Рабочий стол. Это категория может содержать спорные с точки зрения морали карикатуры. Хотите смотреть их?")) {window.location = "<? echo $_rokfor_url; ?>";} else {window.location = "#";}'>РАБСТОЛ</a> -->
-
 
 <br><h2>Разделы</h2>
 
