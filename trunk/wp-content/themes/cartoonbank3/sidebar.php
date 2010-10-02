@@ -31,8 +31,8 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	<form method="post" id="searchform" action="?page_id=29">
 	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" id="search_input" onfocus="this.value='';"/><br><select id="colorselect" name="color" class='borders'>
 		<option value="all" selected>все</option>
-		<option value="bw">чёрно-белые</options>
-		<option value="color">цветные</options>
+		<option value="bw">чёрно-белые</option>
+		<option value="color">цветные</option>
 	</select>
 	<input type="submit" id="searchsubmit" class='borders' value="Искать" />
 	</form>
@@ -102,7 +102,7 @@ echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=
 <?
 $_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
 
-echo "<script language='JavaScript'>function rokfor(){if (confirm('Вы выбрали категорию Рабочий стол. Это категория может содержать спорные с точки зрения морали карикатуры. Хотите смотреть их?')) 	{window.location = '".$_rokfor_url."';} else 	{window.location = '#';	}}</script>";
+echo "<script language='JavaScript'>function rokfor(){if (confirm('Вы выбрали категорию Рабочий стол. Эта авторская категория может содержать спорные с точки зрения морали карикатуры. Хотите смотреть их?')) {window.location = '".$_rokfor_url."';} else {window.location = '#';}}</script>";
 ?>
 
 <br><h2>Категории</h2> 
@@ -155,7 +155,7 @@ else
         
 		if ($option['id']=='666')
 		{
-			$category_in_the_list = '<a href="#" onclick="rokfor();">'.stripslashes($option['name']);
+			$category_in_the_list = '<a href="'.get_option('siteurl').'/?page_id=649" title="подробнее о категории"> ? </a>'.'<a href="#" onclick="rokfor();">'.stripslashes($option['name']);
 		}
 		else
 		{
