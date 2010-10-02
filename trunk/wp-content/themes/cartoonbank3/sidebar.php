@@ -98,6 +98,26 @@ echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=
 ?>
 <br>
 
+
+<?
+$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
+?>
+
+<script language="JavaScript">
+<!--
+function rokfor(){
+if (confirm("Вы выбрали категорию Рабочий стол. Это категория может содержать спорные с точки зрения морали карикатуры. Хотите смотреть их?")) 
+	{
+		window.location = "/?page_id=29&brand=8&category=666";
+	}
+else 
+	{
+		window.location = "#";
+	}
+}
+//-->
+</script>
+
 <br><h2>Категории</h2> 
 
 <?
@@ -145,7 +165,17 @@ else
       foreach($categories as $option)
         {
 		$cartoon_counter = 0;
-        $category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&category=".$option['id']."'>".stripslashes($option['name'])."";
+        
+		if ($option['id']=='666')
+		{
+			$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
+			$category_in_the_list = '<a href="#" onclick="rokfor();">'.stripslashes($option['name']);
+		}
+		else
+		{
+			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&category=".$option['id']."'>".stripslashes($option['name'])."";
+		}
+		
 		foreach ($category_count as $cat_row)
 			{
 				if ($cat_row['category_id'] == $option['id'])
@@ -154,7 +184,9 @@ else
 					$cartoon_counter = $cat_row['count'];
 				}
 			}
+
 		$category_in_the_list .= "</a><br />";
+		
 
 		if ($cartoon_counter == 0)
 		{
@@ -180,6 +212,11 @@ else
 	}
     echo $options;
 ?>
+
+<?//$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';?>
+
+<!-- <a href="#" onclick='if(confirm("Вы выбрали категорию Рабочий стол. Это категория может содержать спорные с точки зрения морали карикатуры. Хотите смотреть их?")) {window.location = "<? echo $_rokfor_url; ?>";} else {window.location = "#";}'>РАБСТОЛ</a> -->
+
 
 <br><h2>Разделы</h2>
 
