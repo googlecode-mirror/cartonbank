@@ -409,8 +409,8 @@ $search_sql = NULL;
 				else
 					$_rating_html = "";
 
-                $_bigpicstrip = "<div style=\"float:left;\"><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
-                $_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Ссылка:</b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br><br><b>Размер:</b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b> ".$_file_format."<br><br><b>Оценка:</b><br>".$_rating_html;
+                $_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение' style='text-decoration:none;'>Название:</a> </b>" .$_name."</div> "."<div>№&nbsp;<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
+                $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение' style='text-decoration:none;'>Категория:</a> </b><br>".$_category."<br><br><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение' style='text-decoration:none;'>Описание:</a> </b> ".$_description."<br><br><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение' style='text-decoration:none;'>Тэги:</a> </b><br>".$_tags."<br><br><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение' style='text-decoration:none;'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br><br><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение' style='text-decoration:none;'>Размер:</a></b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение' style='text-decoration:none;'>Формат:</a> </b> ".$_file_format."<br><br><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение' style='text-decoration:none;'>Оценка:</a></b><br>".$_rating_html;
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\" border=0>";
 
@@ -491,7 +491,6 @@ $search_sql = NULL;
                      {$search_sql = $sql;}
 				else
 					 {$search_sql = '';}
-
                      
                      
 			 // FIRST PAGE icons OUTPUT
