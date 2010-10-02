@@ -36,8 +36,6 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	</select>
 	<input type="submit" id="searchsubmit" class='borders' value="Искать" />
 	</form>
-	
-<br>
 
 <?php
 
@@ -96,7 +94,6 @@ echo $author_name;
 echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
 }
 ?>
-<br>
 
 
 <?
@@ -225,10 +222,17 @@ else
 <div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>
 <div id='tags'><a href='?page_id=390'>Тэги</a></div>
 
+<br><h2>Поделиться</h2>
+<?
+isset($_GET['cartoonid'])&&is_numeric($_GET['cartoonid'])?$_number=$_GET['cartoonid']:$_number='';
+?>
+<div style="float:right;width:160px;"><div class='addthis_toolbox addthis_default_style' addthis:url='<?echo get_option('siteurl');?>/?page_id=29&cartoonid=<? echo $_number;?>' addthis:title='Классная картинка!' style="float:right;width:104px;"><a class='addthis_button_preferred_1'></a><a class='addthis_button_preferred_2'></a><a class='addthis_button_preferred_3'></a><a class='addthis_button_preferred_4'></a><a class='addthis_button_compact'></a></div></div>
+<script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca706da2e6d8d4d'></script>
 
-<div style="float:right;">
+
+<div style="float:right;width:180px;text-align:right;">
 	<br><h2>Вход</h2>
-		<ul style="text-align:right;">
+		<ul style="float:right;width:160px;text-align:right;">
 		<?php wp_register(); ?>
 		<?php wp_loginout(); ?>
 		<?php wp_meta(); ?>
