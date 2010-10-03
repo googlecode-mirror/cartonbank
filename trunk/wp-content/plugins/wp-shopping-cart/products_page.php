@@ -519,7 +519,7 @@ $search_sql = NULL;
 
               echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
 			 
-			  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
+			  //echo "<div style='clear:both;'>".$_pages_navigation."</div>";
               }
      }
 
