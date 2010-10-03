@@ -224,30 +224,31 @@ else
 
 <br><h2>Поделиться</h2>
 <?
-isset($_GET['cartoonid'])&&is_numeric($_GET['cartoonid'])?$_number=$_GET['cartoonid']:$_number='';
+if (isset($_GET['cartoonid'])&&is_numeric($_GET['cartoonid']))
+{
+	$_number=$_GET['cartoonid'];
+	$_title="Классная картинка!";
+	$_description='Хорошие карикатуры';
+}
+else
+{
+	$_number='';
+	$_title="Зацени карикатуры!";
+	$_description='Хорошие карикатуры';
+}
 ?>
 
-<div style="float:right;width:160px;">
-	<div class="addthis_toolbox addthis_default_style" style="float:right;width:130px;" addthis.user.function(callback); addthis:url='<?echo get_option('siteurl');?>/?page_id=29' addthis:title='Классная картинка!' addthis:description='Хорошие карикатуры'>
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style" style="float:right;width:130px;" addthis:url='<?echo get_option('siteurl');?>/?page_id=29&cartoonid=<? echo $_number;?>' addthis:title='<?echo $_title;?>' addthis:description='<?echo $_description;?>'>
 		<a class="addthis_button_facebook" style="cursor:pointer"></a>
 		<a class="addthis_button_twitter" style="cursor:pointer"></a>
 		<a class="addthis_button_vk" style="cursor:pointer"></a>
 		<a class="addthis_button_livejournal" style="cursor:pointer"></a>
 		<a class="addthis_button_friendfeed" style="cursor:pointer"></a>
 		<a class="addthis_button_compact" style="cursor:pointer"></a>
-	</div>
 </div>
-	<script type='text/javascript'>
-	var cuid = document.getElementById('cuid').innerText;
-	var addthis_share = {
-		url_transforms : {
-			add: {
-				cartoonid: cuid
-			}
-		}
-	}
-	</script>
-	<script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca706da2e6d8d4d'></script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca87c100b770f7c"></script>
+<!-- AddThis Button END -->
 
 
 <div style="float:right;width:180px;text-align:right;">
