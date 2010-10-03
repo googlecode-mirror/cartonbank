@@ -27,8 +27,6 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 ?>
 	<div id="sidebar">
 
-<a href="#" onclick="alert(document.getElementById('cuid').innerText);">test номера</a> 
-	
 	<h2>Поиск</h2>
 	<form method="post" id="searchform" action="?page_id=29">
 	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" id="search_input" onfocus="this.value='';"/><br><select id="colorselect" name="color" class='borders'>
@@ -231,8 +229,10 @@ isset($_GET['cartoonid'])&&is_numeric($_GET['cartoonid'])?$_number=$_GET['cartoo
 
 <div style="float:right;width:160px;">
 	<div class="addthis_toolbox addthis_default_style" style="float:right;width:130px;" addthis.user.function(callback); addthis:url='<?echo get_option('siteurl');?>/?page_id=29' addthis:title='Классная картинка!' addthis:description='Хорошие карикатуры'>
-		<a class="addthis_button_facebook" style="cursor:pointer"></a><a class="addthis_button_twitter" style="cursor:pointer"></a>
-		<a class="addthis_button_vk" style="cursor:pointer"></a><a class="addthis_button_livejournal" style="cursor:pointer"></a>
+		<a class="addthis_button_facebook" style="cursor:pointer"></a>
+		<a class="addthis_button_twitter" style="cursor:pointer"></a>
+		<a class="addthis_button_vk" style="cursor:pointer"></a>
+		<a class="addthis_button_livejournal" style="cursor:pointer"></a>
 		<a class="addthis_button_friendfeed" style="cursor:pointer"></a>
 		<a class="addthis_button_compact" style="cursor:pointer"></a>
 	</div>
