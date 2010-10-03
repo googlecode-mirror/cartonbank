@@ -41,13 +41,20 @@
 	<?php bloginfo('description'); ?>
 </div>
 
+<?
+function selected_style()
+{
+	echo "style='background-color:#658cb3;padding:2px;color:#CCFFFF'";
+}
+?>
+
 <div id="navbar">
 	<ul> 
-		<li><a href="?page_id=95">О проекте</a></li>
-		<li><a href="?page_id=29">Банк изображений</a></li>
-		<li><a href="?page_id=73">Авторам</a></li>
-		<li><a href="?page_id=97">Клиентам</a></li>
-		<li><a href="?page_id=2">Ответы</a></li>
+		<li><a href="?page_id=95" <? $_GET['page_id']=='95'? selected_style():"" ?> >О проекте</a></li>
+		<li><a href="?page_id=29" <? $_GET['page_id']=='29'? selected_style():"" ?> >Банк изображений</a></li>
+		<li><a href="?page_id=73" <? $_GET['page_id']=='73'? selected_style():"" ?> >Авторам</a></li>
+		<li><a href="?page_id=97" <? $_GET['page_id']=='97'? selected_style():"" ?> >Клиентам</a></li>
+		<li><a href="?page_id=2" <? $_GET['page_id']=='2'? selected_style():"" ?> >Ответы</a></li>
 	</ul>
 </div>
 <a name="pagetop">&nbsp;</a>
