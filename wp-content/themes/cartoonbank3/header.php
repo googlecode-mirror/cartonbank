@@ -44,7 +44,11 @@
 <?
 function selected_style()
 {
-	echo "style='background-color:#658cb3;padding:2px;color:#CCFFFF'";
+	//echo "style='background-color:#658cb3;padding:2px;color:#CCFFFF'";
+	//echo "style='font-weight:bold;color:black'";
+	//echo "style='border-bottom-style:dotted;'";
+	echo "style='color:#658cb3'";
+	
 }
 ?>
 
