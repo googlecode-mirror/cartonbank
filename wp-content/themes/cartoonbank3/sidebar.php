@@ -27,6 +27,8 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 ?>
 	<div id="sidebar">
 
+<a href="#" onclick="alert(document.getElementById('cuid').innerText);">test номера</a> 
+	
 	<h2>Поиск</h2>
 	<form method="post" id="searchform" action="?page_id=29">
 	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" id="search_input" onfocus="this.value='';"/><br><select id="colorselect" name="color" class='borders'>
@@ -226,8 +228,26 @@ else
 <?
 isset($_GET['cartoonid'])&&is_numeric($_GET['cartoonid'])?$_number=$_GET['cartoonid']:$_number='';
 ?>
-<div style="float:right;width:160px;"><div class='addthis_toolbox addthis_default_style' addthis:url='<?echo get_option('siteurl');?>/?page_id=29&cartoonid=<? echo $_number;?>' addthis:title='Классная картинка!' style="float:right;width:104px;"><a class='addthis_button_preferred_1'></a><a class='addthis_button_preferred_2'></a><a class='addthis_button_preferred_3'></a><a class='addthis_button_preferred_4'></a><a class='addthis_button_compact'></a></div></div>
-<script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca706da2e6d8d4d'></script>
+
+<div style="float:right;width:160px;">
+	<div class="addthis_toolbox addthis_default_style" style="float:right;width:130px;" addthis.user.function(callback); addthis:url='<?echo get_option('siteurl');?>/?page_id=29' addthis:title='Классная картинка!' addthis:description='Хорошие карикатуры'>
+		<a class="addthis_button_facebook" style="cursor:pointer"></a><a class="addthis_button_twitter" style="cursor:pointer"></a>
+		<a class="addthis_button_vk" style="cursor:pointer"></a><a class="addthis_button_livejournal" style="cursor:pointer"></a>
+		<a class="addthis_button_friendfeed" style="cursor:pointer"></a>
+		<a class="addthis_button_compact" style="cursor:pointer"></a>
+	</div>
+</div>
+	<script type='text/javascript'>
+	var cuid = document.getElementById('cuid').innerText;
+	var addthis_share = {
+		url_transforms : {
+			add: {
+				cartoonid: cuid
+			}
+		}
+	}
+	</script>
+	<script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca706da2e6d8d4d'></script>
 
 
 <div style="float:right;width:180px;text-align:right;">
