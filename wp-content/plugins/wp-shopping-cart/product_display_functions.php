@@ -73,11 +73,10 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 				  $image_size = @getimagesize($imagedir.$product['image']);
 				  $image_link = "index.php?productid=".$product['id']."&width=".$image_size[0]."&height=".$image_size[1]."";
  
-				  // thumbs output
-				  if ($preview_mode==1)
-					{
-					  $output .= "<div id='item".$counter."' class='item'>"; // start item
+	// thumbs output
 
+    $output .= "<div id='item".$counter."' class='item'>"; // start item
+	
 	//$addtocart = "<form name=$num method=POST action=".get_option('product_list_url')." onsubmit=submitform(this);return false; >";
 	//$addtocart .= "<input type=hidden name=prodid value=".$product['id'].">";
 	//$addtocart .= "Добавить в заказ: <input type=image border=0 src=".get_option('siteurl')."/img/cart.gif name=Buy value=".TXT_WPSC_ADDTOCART." />";
@@ -169,21 +168,17 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 	$_next_item = $counter + 1;
 	if ($_next_item == 15)
 		$_next_item = 0;
-	//$vstavka = "document.getElementById('bigpic').innerHTML ='".$_bigpic."';";
+
 	$vstavka = "document.getElementById('bigpic').innerHTML ='<a href=\"#pagetop\" onclick=\"get_item".$_next_item."()\">".$_bigpic."</a>';";
 	$vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
 	$vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='".$_bigpicstrip."';";
 	$vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
 	
-	//$output .= "<a href=\"#\"  onclick=\"".$vstavka." FSR_starlet();\">";
 	$output .= "<a href=\"#pagetop\"  onclick=\"get_item".$counter."(); FSR_starlet();\">";
 	
 	$javascript_functions .= " function get_item".$counter."() { ".$vstavka." FSR_starlet();} "; 
 	
-	//$output .= "<a href=\"#\"  onclick=\"".$vstavka.";\">";
-		  
-	
-$fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['image'];
+	$fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['image'];
 
 					if (file_exists($fiilename))
 					{
@@ -194,33 +189,24 @@ $fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['ima
 							  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/icon-rest.gif' class='thumb' />";
 					}
 					  $output .= "</a>";
-					}
-					else
-					{
-						// Lightbox
-					  $output .= "<div id='item".$counter."' class='item'>"; // start item
-					  $output .= "<a id='preview_link' href='".$image_link."' rel='lightbox[$num]' class='lightbox_links'>"; 
-					  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' class='thumb' />";
-					  $output .= "</a>";
-					}
 
-					$output .= "<a href='#' class='additional_description_link' onclick='return show_additional_description(\"description".$product['id']."\",\"link_icon".$product['id']."\");'>";
-					$output .= "<img id='link_icon".$product['id']."' style='margin-right: 3px;border:0;' src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/icon_window_expand.gif' title='".$product['name']."' alt='".$product['name']."' />";
-					$output .= TXT_WPSC_DETAILS."</a>";
+					//$output .= "<a href='#' class='additional_description_link' onclick='return show_additional_description(\"description".$product['id']."\",\"link_icon".$product['id']."\");'>";
+					//$output .= "<img id='link_icon".$product['id']."' style='margin-right: 3px;border:0;' src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/icon_window_expand.gif' title='".$product['name']."' alt='".$product['name']."' />";
+					//$output .= "Подробнее!</a>";
 						/*pop-up*/
 						
-						$output .= "<div class='lev2' id='description".$product['id']."'>";
-							//$output .= "<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>".$product['id']. " <b>" . stripslashes($product['name'])."</b>";
-						    $output .= "№&nbsp;".$product['id']. " <b>" . stripslashes($product['name'])."</b>";
-							$output .= "<br><span id='size'>".$product['width']."px X ".$product['height']."px</span><br>";
-						    $output .= "<span id='title'><i>".stripslashes($product['brand'])."</i></span><br>";
+						//$output .= "<div class='lev2' id='description".$product['id']."'>";
+
+						    //$output .= "№&nbsp;".$product['id']. " <b>" . stripslashes($product['name'])."</b>";
+							//$output .= "<br><span id='size'>".$product['width']."px X ".$product['height']."px</span><br>";
+						    //$output .= "<span id='title'><i>".stripslashes($product['brand'])."</i></span><br>";
 							//$output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_category_id."' onsubmit='submitform(this);return false;' >";
 							//$output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
 							//$output .= "Добавить в заказ: <input type='image' border='0' src='".get_option('siteurl')."/img/cart.gif' name='Buy' value='".TXT_WPSC_ADDTOCART."'  />";
 							//$output .= "</form>" ;
 						  //title
 
-						$output .= nl2br(stripslashes($product['description'])) . " <br /></div>";
+						//$output .= nl2br(stripslashes($product['description'])) . " <br /></div>";
 					$output .= "</div>"; // stop item
 				}
 				$counter = $counter + 1;

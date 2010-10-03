@@ -122,24 +122,13 @@ div.producttext{
  vertical-align: bottom;
  }
 
-/* ales */
-
-/*
-div.items{
-	width:500px;
-	float:left;
-}
-*/
- 
 div.item{
 	width:142px;
-	height:160px;
 	float:left;
-	/*border: 1px solid #b2b2b2;*/
 	margin: 2px;
 	padding-top:0;
+	padding-right:4px;
 	padding-bottom: 2px;
-	background: #f4f4f4;
 	text-align: left;
 }
 img.thumb{
@@ -170,10 +159,8 @@ input.borders {
  padding-top: 4px;
  padding-bottom: 1px;
  }
- /* ///ales */
 
 table.list_productdisplay{
-/* margin-top: 10px; */
 font-size: 8pt;
  margin-bottom: 0px;
  border-collapse: collapse;
@@ -184,7 +171,6 @@ table.list_productdisplay tr td{
  vertical-align: top;
  padding-bottom: 0px;
  font-size: 8pt;
-/*  border: 1px solid black;  */
  }
 
 table.list_productdisplay tr td select{
@@ -230,13 +216,10 @@ a.termsandconds
 
 span.miniarrow{
  display: block;
-/* border: 1px solid black; */
  vertical-align: top !important;
  }
 
 img.miniarrow{
-/* position: relative; */
-/* border: 1px solid black; */
  margin-right: 4px;
  }
 
@@ -250,7 +233,6 @@ img.catimage{
 strong.cattitles{
  display: block;
  position: relative;
-/* margin-bottom: -15px; */
  }
 
 strong.prodtitles{
@@ -272,7 +254,6 @@ strong.title{
 
 a.categorylink{
  font-size: 8pt;
- /*border: 1px solid red; */
  }
 
 span.pricedisplay{
@@ -287,12 +268,10 @@ table.cattable{
  padding: 0px;
  margin: 0px;
  border-collapse: collapse;
-/* border: 1px solid black; */
  }
  
 table.cattable tr td{
  padding: 0px;
-/* border: 1px solid black; */
  }
  
  td.catfirstcol{
@@ -345,7 +324,6 @@ td.prodgroupmidline{
  position: relative;
  top: 3px;
  margin-left: 6px;
-/*  visibility: hidden; */
   border: none !important;
  }
  
@@ -359,16 +337,13 @@ td.prodgroupmidline{
  position: relative;
  top: 3px;
  margin-left: 6px;
-/*  visibility: hidden; */
   border: none !important;
  }
  
-/* e-commerce fix for K2 */
 table.productdisplay tr td img {
 font-size: 7pt;
  max-width: none;
  }
- 
  
 div.product_footer{
  position: relative;
@@ -452,9 +427,6 @@ div.frontpage_product span.front_page_price{
   display: block;
   }
   
-  
-/* shopping cart styling */
-
 table.productcart{
  font-size: 8pt !important; 
  width: 100%;
@@ -514,8 +486,7 @@ div.pagination a {
 	padding: 2px 5px 2px 5px;
 	margin: 2px;
 	border: 1px solid rgb(192, 192, 255);
-	
-	text-decoration: none; /* no underline */
+	text-decoration: none; 
 	color: solid #333399;
 }
 div.pagination a:hover, div.pagination a:active {
