@@ -221,7 +221,6 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
 			{
 				$items_count = 0;
 			}
-
 $search_sql = NULL;
 			
 			if (isset($_GET['offset']) && is_numeric($_GET['offset']))
@@ -230,7 +229,7 @@ $search_sql = NULL;
 				$_product_start_num = 0;
 
 				$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$exclude_category_sql.$colorfilter." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
-    
+
                 if (isset($_GET['offset']) && is_numeric($_GET['offset']))
                  {
                     $offset = $_GET['offset'];
@@ -297,10 +296,7 @@ $search_sql = NULL;
     }
 	// список картинок
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
-	
-	//pokazh($sql,"sql");
 
-	//pokazh($product[0],"product[0]");
 
      if ($product!=null)
      {   
@@ -415,7 +411,7 @@ $search_sql = NULL;
 					
 				//$_share_it_code = "<br><br><div class='addthis_toolbox addthis_default_style' addthis:url='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."' addthis:title='Классная картинка!'><a class='addthis_button_preferred_1'></a><a class='addthis_button_preferred_2'></a><a class='addthis_button_preferred_3'></a><a class='addthis_button_preferred_4'></a><a class='addthis_button_compact'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca706da2e6d8d4d'></script>";
 
-                $_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение' style='text-decoration:none;'>Название:</a> </b>" .$_name."</div> "."<div>№&nbsp;<a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
+                $_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение' style='text-decoration:none;'>Название:</a> </b>" .$_name."</div> "."<div>№&nbsp;<a id='cuid' title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
                 $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение' style='text-decoration:none;'>Категория:</a> </b><br>".$_category."<br><br><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение' style='text-decoration:none;'>Описание:</a> </b> ".$_description."<br><br><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение' style='text-decoration:none;'>Тэги:</a> </b><br>".$_tags."<br><br><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение' style='text-decoration:none;'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br><br><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение' style='text-decoration:none;'>Размер:</a></b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение' style='text-decoration:none;'>Формат:</a> </b> ".$_file_format."<br><br><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение' style='text-decoration:none;'>Оценка:</a></b><br>".$_rating_html;
 
                 $siteurl = get_option('siteurl');
@@ -635,6 +631,5 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 	return $pagination;
 
 }
-
-
+//    pokazh($wpdb->queries,"queries");
   ?>
