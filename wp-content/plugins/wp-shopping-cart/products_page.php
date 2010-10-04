@@ -631,5 +631,6 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 	return $pagination;
 
 }
+
 //    pokazh($wpdb->queries,"queries");
   ?>
