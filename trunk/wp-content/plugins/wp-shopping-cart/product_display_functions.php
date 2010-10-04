@@ -15,7 +15,6 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 			$exclude_category_sql = " AND `wp_item_category_associations`.`category_id` != '666' ";
 		}
 
-	$javascript_functions ='';
     $num = 0;
     if (isset($_GET['category'])){$_category = $_GET['category'];}else{$_category = '';}
     
@@ -28,6 +27,32 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
     {
         $andcategory = "";
     }
+
+
+
+// next page function
+	isset($_GET['offset'])&&is_numeric($_GET['offset'])?$_offset=$_GET['offset']:$_offset=0;
+	$_offset = $_offset + 15;
+
+	isset($_GET['brand'])&&is_numeric($_GET['brand'])?$_brand=$_GET['brand']:$_brand='';
+
+	if (isset($_GET['color'])&&$_GET['color']=='color')
+		{$_color = 'color';}
+	elseif (isset($_GET['color'])&&$_GET['color']=='bw')
+		{$_color = 'bw';}
+	elseif (isset($_GET['color'])&&$_GET['color']=='all')
+		{$_color = 'all';}
+	else {$_color = '';}
+
+	if (isset($_GET['cs']))
+		{$_cs = htmlspecialchars($_GET['cs']);}
+	else
+		{$_cs = '';}
+	
+	//$_offset = $_offset + 15;
+
+	$javascript_functions ='';
+	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29&brand='.$_brand.'&color='.$_color.'&category='.$category.'&cs='.$_cs.'&offset='.$_offset.'";}';
    
 	if ($search_sql != '')
 	{
@@ -167,15 +192,30 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 
 	$_next_item = $counter + 1;
 	if ($_next_item == 15)
-		$_next_item = 0;
+		{
+			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующая страница\" href=\"#pagetop\" onclick=\"next_page();\">".$_bigpic."</a>';";
+		}
+		else
+		{
+			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующее изображение\" href=\"#pagetop\" onclick=\"get_item". $_next_item ."();\">".$_bigpic."</a>';";
+		}
 
-	$vstavka = "document.getElementById('bigpic').innerHTML ='<a href=\"#pagetop\" onclick=\"get_item".$_next_item."()\">".$_bigpic."</a>';";
 	$vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
 	$vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='".$_bigpicstrip."';";
 	$vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
 	
-	$output .= "<a href=\"#pagetop\"  onclick=\"get_item".$counter."(); FSR_starlet();\">";
-	
+    $output .= "<a href=\"#pagetop\"  onclick=\"get_item". ($_next_item - 1) ."();\">";
+/*
+	if ($_next_item == 15)
+		{
+			$output .= "<a href=\"#\"  onclick=\"alert('last item');next_page();\">";
+		}
+		else
+		{
+			$output .= "<a href=\"#pagetop\"  onclick=\"get_item".$_next_item."();\">";
+		}
+
+*/	
 	$javascript_functions .= " function get_item".$counter."() { ".$vstavka." FSR_starlet();} "; 
 	
 	$fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['image'];
