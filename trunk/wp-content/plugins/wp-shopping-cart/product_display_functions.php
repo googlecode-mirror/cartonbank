@@ -193,11 +193,11 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 	$_next_item = $counter + 1;
 	if ($_next_item == 15)
 		{
-			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующая страница\" href=\"#pagetop\" onclick=\"next_page();\">".$_bigpic."</a>';";
+			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующая страница > \" href=\"#pagetop\" onclick=\"next_page();\">".$_bigpic."</a>';";
 		}
 		else
 		{
-			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующее изображение\" href=\"#pagetop\" onclick=\"get_item". $_next_item ."();\">".$_bigpic."</a>';";
+			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующее изображение > \" href=\"#pagetop\" onclick=\"get_item". $_next_item ."();\">".$_bigpic."</a>';";
 		}
 
 	$vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
