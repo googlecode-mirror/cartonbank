@@ -191,10 +191,12 @@ var resizeSpeed = 9;
 var borderSize = 10;
 </script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/ajax.js" language='JavaScript' type="text/javascript"></script>
+<!-- 
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/prototype.js" language='JavaScript' type="text/javascript"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/effects.js" language='JavaScript' type="text/javascript"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/dragdrop.js" language='JavaScript' type="text/javascript"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/lightbox.js" language='JavaScript' type="text/javascript"></script>
+ -->
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/user.js" language='JavaScript' type="text/javascript">
 </script>
 <?php
