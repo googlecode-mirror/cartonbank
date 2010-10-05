@@ -517,12 +517,10 @@ $search_sql = NULL;
 				
 			  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
 
-              echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
-			 
-			  //echo "<div style='clear:both;'>".$_pages_navigation."</div>";
+              
+			  echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
               }
      }
-
 
 function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1, $targetpage = "/", $pagestring = "?page=", $filter_list = '')
 {		
@@ -631,6 +629,5 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 	return $pagination;
 
 }
-
 //    pokazh($wpdb->queries,"queries");
-  ?>
+?>

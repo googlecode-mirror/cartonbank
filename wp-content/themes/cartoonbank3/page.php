@@ -7,7 +7,6 @@
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<?php the_content(__('Читать дальше'));?>
 	<?php endwhile; else: ?>
-
 	<?php _e('<br>Извините, здесь пока ничего нет.<br>'); ?><?php endif; ?>
 </div>
 

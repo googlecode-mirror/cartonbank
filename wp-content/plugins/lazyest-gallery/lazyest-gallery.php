@@ -54,15 +54,15 @@ $lg_text_domain = "lazyestgallery";
 lazyestInit();
 
 // Filter for the gallery page
-add_action('wp_head', 'add_lazyest_gallery_style');
-add_filter('the_content', 'parse_page_for_gallery');
+//add_action('wp_head', 'add_lazyest_gallery_style');
+//add_filter('the_content', 'parse_page_for_gallery');
 
 // Insert the gallery_add_pages() sink into the plugin hook list for 'admin_menu'
 add_action('admin_menu', 'gallery_add_pages');
 
 // Filter for the post with images links to the gallery ie:[[Image:folder/img.png|align|110|descr]]
-add_action('wp_head', 'add_post_thumbs_style');
-add_filter('the_content', 'parse_posts_for_images');
+//add_action('wp_head', 'add_post_thumbs_style');
+//add_filter('the_content', 'parse_posts_for_images');
 
 // Adds the gallery browser in the post editor
 add_action('edit_form_advanced', 'lg_add_gallery_browser');
@@ -138,7 +138,7 @@ function parse_page_for_gallery($content){
 	}
 }
 
-function add_lazyest_gallery_style(){ 
+function dd_lazyest_gallery_style(){ 
 	$rrr = get_option('siteurl')."/wp-content/plugins/lazyest-gallery/lazyest-style.css";
 	
 	?>
