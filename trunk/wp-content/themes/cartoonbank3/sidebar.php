@@ -222,8 +222,9 @@ else
 <div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>
 <div id='tags'><a href='?page_id=390'>Тэги</a></div>
 
-<br><h2>Поделиться</h2>
+
 <?
+/*<br><h2>Поделиться</h2>
 if (isset($_GET['cartoonid'])&&is_numeric($_GET['cartoonid']))
 {
 	$_number=$_GET['cartoonid'];
@@ -236,6 +237,7 @@ else
 	$_title="Зацени карикатуры!";
 	$_description='Хорошие карикатуры';
 }
+*/
 ?>
 
 <!-- AddThis Button BEGIN -->
