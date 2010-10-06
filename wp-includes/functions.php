@@ -1815,6 +1815,7 @@ function do_robots() {
  * @return bool Whether blog is already installed.
  */
 function is_blog_installed() {
+	return true;
 	global $wpdb;
 
 	// Check cache first. If options table goes away and we have true cached, oh well.
