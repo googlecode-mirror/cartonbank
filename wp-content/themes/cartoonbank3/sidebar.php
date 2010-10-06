@@ -241,7 +241,7 @@ else
 ?>
 
 <!-- AddThis Button BEGIN -->
-<div class="addthis_toolbox addthis_default_style" style="float:right;width:130px;" addthis:url='<?echo get_option('siteurl');?>/?page_id=29&cartoonid=<? echo $_number;?>' addthis:title='<?echo $_title;?>' addthis:description='<?echo $_description;?>'>
+<!-- <div class="addthis_toolbox addthis_default_style" style="float:right;width:130px;" addthis:url='<?echo get_option('siteurl');?>/?page_id=29&cartoonid=<? echo $_number;?>' addthis:title='<?echo $_title;?>' addthis:description='<?echo $_description;?>'>
 		<a class="addthis_button_facebook" style="cursor:pointer"></a>
 		<a class="addthis_button_twitter" style="cursor:pointer"></a>
 		<a class="addthis_button_vk" style="cursor:pointer"></a>
@@ -249,7 +249,7 @@ else
 		<a class="addthis_button_friendfeed" style="cursor:pointer"></a>
 		<a class="addthis_button_compact" style="cursor:pointer"></a>
 </div>
-<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca87c100b770f7c"></script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca87c100b770f7c"></script> -->
 <!-- AddThis Button END -->
 
 
