@@ -1,37 +1,5 @@
 <br>
-На это странице описание правил работы с картунбанком, отправки и редактирования изображений.
+На это странице ссылки на описание правил работы с картунбанком, отправки и редактирования изображений.
 <p>
-<a href="<?get_option('siteurl');?>/cb3/?page_id=79" target=_blank>Правила работы с Банком для участников проекта.</a> 
+<a href="<?get_option('siteurl');?>/cb3/?page_id=229" target=_blank>Отправка изображения Автором через редакторскую форму.</a> 
 </p>
-
-<p>
-<a href="<?get_option('siteurl');?>/cb3/?page_id=229" target=_blank>Отправка изображения через форму.</a> 
-</p>
-
-<!-- <p>
-<a href="<?get_option('siteurl');?>/?page_id=71" target=_blank>Старые правила работы с Банком для участников проекта.</a> 
-</p> -->
-
-
-
-<?
-help();
-
-function begin(){
-	echo ("welcome to heaven");
-}
-
-function help(){
-	echo("<pre>");
-
-	//htmlspecialchars(print_r(get_alloptions()));
-	//print_r($_POST);
-	//print_r($_GET);
-	//print_r(get_loaded_extensions());
-	//print_r(get_defined_constants());
-	//print_r(get_defined_functions());
-	//print_r(get_defined_vars());
-	
-	echo("</pre>");
-}
-?>
