@@ -1,3 +1,4 @@
+
  <?php 
 // Filter for the authors
 // pokazh($current_user->wp_capabilities['author'],"wp_capabilities"); // Автор 
@@ -20,23 +21,6 @@
 				$user_brand = 0;
 			}
 	
-	/*
-	$user_brand
-	(
-		[0] => Array
-			(
-				[id] => 16
-				[name] => a1
-				[description] => 
-				[active] => 1
-				[order] => 0
-				[avatar_url] => 
-				[contact] => 
-				[bio_post_id] => 0
-				[user_id] => 32
-			)
-		)
-		*/
 	$author_group_sql = " AND `wp_product_list`.`brand` = '".$user_brand."' ";
 
 	if (isset($current_user->wp_capabilities['administrator']))
@@ -86,7 +70,6 @@ if (isset($_GET['updateimage']))
           copy($filedir.$idhash, $imagedir.$filename); // icon
           copy($filedir.$idhash, $product_images.$filename); // preview
 
-//exit ("icon file : ".$imagedir.$filename);
                         $imgsize = getimagesize($product_images.$filename);
                         $file_w = $imgsize[0];
                         $file_h = $imgsize[1];
@@ -126,7 +109,6 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == 'add') {
       $_FILES['file']['name'] = rus2translit($_FILES['file']['name']); 
       //rename the file  
       $_FILES['file']['name'] = uniqid('', true).$_FILES['file']['name'];
-        //$_FILES['file']['name'] = 'blah-blah'.$_FILES['file']['name'];
         //ales default upload
         if(!is_dir($product_images))
           {
@@ -1449,7 +1431,19 @@ function wtrmark($sourcefile, $watermarkfile) {
    imagedestroy($logofile_id);
   
  }
-//echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
-//echo("<pre>POST:".print_r($_POST,true)."</pre>");
-//
+
+wp_enqueue_script('jquery');
+
+if (current_user_can('manage_options') && isset($_POST['edid']) && is_numeric($_POST['edid']))
+{
+	pokazh ($_POST['edid'],"_POST['edid']");
+?>
+		<script type="text/javascript">
+			  jQuery(document).ready(function(){
+						filleditform(<?echo($_POST['edid']);?>);
+
+			   });
+		</script>
+<?
+}
 ?>
