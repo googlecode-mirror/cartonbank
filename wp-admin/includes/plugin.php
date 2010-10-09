@@ -919,7 +919,6 @@ function add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, 
 	global $_wp_submenu_nopriv;
 	global $_registered_pages;
 	global $_parent_pages;
-
 	$menu_slug = plugin_basename( $menu_slug );
 	$parent_slug = plugin_basename( $parent_slug);
 
@@ -930,7 +929,6 @@ function add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, 
 		$_wp_submenu_nopriv[$parent_slug][$menu_slug] = true;
 		return false;
 	}
-
 	// If the parent doesn't already have a submenu, add a link to the parent
 	// as the first item in the submenu.  If the submenu file is the same as the
 	// parent file someone is trying to link back to the parent manually.  In
@@ -941,7 +939,6 @@ function add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, 
 				$submenu[$parent_slug][] = $parent_menu;
 		}
 	}
-
 	$submenu[$parent_slug][] = array ( $menu_title, $capability, $menu_slug, $page_title );
 
 	$hookname = get_plugin_page_hookname( $menu_slug, $parent_slug);
@@ -955,7 +952,6 @@ function add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, 
 
 	// No parent as top level
 	$_parent_pages[$menu_slug] = $parent_slug;
-
 	return $hookname;
 }
 

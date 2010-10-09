@@ -103,6 +103,7 @@ function nzshpcrt_overall_total_price($country_code = null, $for_display = false
   function nzshpcrt_find_total_price($purchase_id,$country_code)
     {
     global $wpdb;
+	$endtotal = '';
     if(is_numeric($purchase_id))
       {
       $purch_sql = "SELECT * FROM `".$wpdb->prefix."purchase_logs` WHERE `id`='".$purchase_id."'";
