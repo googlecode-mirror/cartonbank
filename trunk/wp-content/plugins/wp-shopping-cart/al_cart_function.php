@@ -10,7 +10,9 @@ function cart_product_list_string($licensecolumn)
 
 	$cart = isset($_SESSION['nzshpcrt_cart'])?$_SESSION['nzshpcrt_cart']:"";
 	$result = '<table class=\'productcart\'>';
-	
+
+	if (isset($cart) && $cart!='')
+	{
 	foreach($cart as $key => $cart_item)
 	{
 	    $current_item = $current_item +1;
@@ -170,7 +172,7 @@ if (!$licensecolumn)
 		}
 
 	 } // end of: foreach($cart as $key => $cart_item)
-
+}
 	 $result .= '</table>';
 
 		$result .= "<script language='javascript'> ";

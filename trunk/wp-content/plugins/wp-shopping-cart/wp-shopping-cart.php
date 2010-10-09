@@ -79,33 +79,33 @@ class wp_shopping_cart
       if(get_option('nzshpcrt_first_load') == 0)
         {
         $base_page = 'wp-shopping-cart/options.php';
-        add_menu_page(TXT_WPSC_ECOMMERCE, TXT_WPSC_ECOMMERCE, 7, $base_page);
-        add_submenu_page($base_page,TXT_WPSC_OPTIONS, TXT_WPSC_OPTIONS, 7, 'wp-shopping-cart/options.php');
+        add_menu_page('e-Commerce', 'e-Commerce', 7, $base_page);
+        add_submenu_page($base_page,'Параметры магазина', 'Параметры магазина', 7, 'wp-shopping-cart/options.php');
         }
         else
           {
           $base_page = 'wp-shopping-cart/display-log.php';
-          add_menu_page(TXT_WPSC_ECOMMERCE, TXT_WPSC_ECOMMERCE, 7, $base_page);
-          add_submenu_page('wp-shopping-cart/display-log.php',TXT_WPSC_PURCHASELOG, TXT_WPSC_PURCHASELOG, 7, 'wp-shopping-cart/display-log.php');
+          add_menu_page('e-Commerce', 'e-Commerce', 7, $base_page);
+          add_submenu_page('wp-shopping-cart/display-log.php','Лог заказов', 'Лог заказов', 7, 'wp-shopping-cart/display-log.php');
           }
+      add_submenu_page($base_page,'Все продажи', 'Все продажи', 7, 'wp-shopping-cart/display-sales.php');
       
+      add_submenu_page($base_page,'Продукты', 'Продукты', 7, 'wp-shopping-cart/display-items.php');
+      add_submenu_page($base_page,'Категория', 'Категория', 7, 'wp-shopping-cart/display-category.php');
+      add_submenu_page($base_page,'Автор', 'Автор', 7, 'wp-shopping-cart/display-brands.php');
       
-      add_submenu_page($base_page,TXT_WPSC_PRODUCTS, TXT_WPSC_PRODUCTS, 7, 'wp-shopping-cart/display-items.php');
-      add_submenu_page($base_page,TXT_WPSC_CATEGORIES, TXT_WPSC_CATEGORIES, 7, 'wp-shopping-cart/display-category.php');
-      add_submenu_page($base_page,TXT_WPSC_BRANDS, TXT_WPSC_BRANDS, 7, 'wp-shopping-cart/display-brands.php');
-      
-      add_submenu_page($base_page,TXT_WPSC_VARIATIONS, TXT_WPSC_VARIATIONS, 7, 'wp-shopping-cart/display_variations.php');
-      add_submenu_page($base_page,TXT_WPSC_PAYMENTGATEWAYOPTIONS, TXT_WPSC_PAYMENTGATEWAYOPTIONS, 7, 'wp-shopping-cart/gatewayoptions.php');
+      add_submenu_page($base_page,'Варьирование', 'Варьирование', 7, 'wp-shopping-cart/display_variations.php');
+      add_submenu_page($base_page,'Параметры доступа', 'Параметры доступа', 7, 'wp-shopping-cart/gatewayoptions.php');
       if(get_option('nzshpcrt_first_load') != 0)
         {
-        add_submenu_page($base_page,TXT_WPSC_OPTIONS, TXT_WPSC_OPTIONS, 7, 'wp-shopping-cart/options.php');
+        add_submenu_page($base_page,'Параметры магазина', 'Параметры магазина', 7, 'wp-shopping-cart/options.php');
         }
       if(function_exists('ext_shpcrt_options'))
         {
         ext_shpcrt_options($base_page);
         }
-      add_submenu_page($base_page,TXT_WPSC_FORM_FIELDS, TXT_WPSC_FORM_FIELDS, 7, 'wp-shopping-cart/form_fields.php');
-      add_submenu_page($base_page,TXT_WPSC_HELPINSTALLATION, TXT_WPSC_HELPINSTALLATION, 7, 'wp-shopping-cart/instructions.php');
+      add_submenu_page($base_page,'Checkout Options', 'Checkout Options', 7, 'wp-shopping-cart/form_fields.php');
+      add_submenu_page($base_page,'Помощь/Обновить', 'Помощь/Обновить', 7, 'wp-shopping-cart/instructions.php');
       }
     return;
     }
@@ -1617,6 +1617,7 @@ Array
       exit();     
       }
     $cart = $_SESSION['nzshpcrt_cart'];
+//pokazh($cart,"cart");
     $_SESSION['checkoutdata'] = $_POST;
     if(isset($_POST['agree']) && $_POST['agree'] != 'yes')
       {
@@ -1652,6 +1653,7 @@ Array
 
      $product_data = $wpdb->get_results("SELECT * FROM `wp_product_list` WHERE `id` = '$row' LIMIT 1",ARRAY_A) ;
      $product_data = $product_data[0];
+// pokazh ($product_data,"product_data");
      if($product_data['file'] > 0)
        {
        $wpdb->query("INSERT INTO `wp_download_status` ( `id` , `fileid` , `purchid` , `downloads` , `active` , `datetime` ) VALUES ( '', '".$product_data['file']."', '".$getid[0]['id']."', '$downloads', '0', NOW( ));");
@@ -1665,7 +1667,7 @@ Array
           $price_modifier = 0;
           }
     
-    $price = ($product_data['price'] - $price_modifier); 
+    $price = $cart_item->price;//($product_data['price'] - $price_modifier); 
     /*  
     if($product_list[0]['notax'] != 1)
       {
@@ -1744,6 +1746,7 @@ cart_item: cart_item Object
 	$cartsql = "INSERT INTO `wp_cart_contents` ( `id` , `prodid` , `purchaseid`, `price`, `pnp`, `gst`, `quantity`, `license` ) VALUES ('', '".$row."', '".$getid[0]['id']."','".$price."','".$shipping."', '".$gst."','".$quantity."', '".$license_num."')";
      $wpdb->query($cartsql);
 
+ //pokazh ($cartsql,"cartsql");
 	 
 	 $cart_id = $wpdb->get_results("SELECT LAST_INSERT_ID() AS `id` FROM `wp_product_variations` LIMIT 1",ARRAY_A);
      $cart_id = $cart_id[0]['id'];
