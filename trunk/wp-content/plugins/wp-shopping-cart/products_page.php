@@ -520,7 +520,7 @@ $search_sql = NULL;
 				$page = round($offset/$items_on_page)+1;
 				$totalitems = $items_count;
 				$limit = $items_on_page;
-				if (isset($catid)){$catid=$catid;}else{$catid='';}
+				if (isset($_GET['category'])&&is_numeric($_GET['category'])) {$catid=$_GET['category'];}else{$catid='';}
 
 				$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=",$filter_list);
 				
