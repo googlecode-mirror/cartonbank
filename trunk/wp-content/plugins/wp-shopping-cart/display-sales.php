@@ -1,4 +1,14 @@
 <?php
+$abspath = 'z:/home/localhost/www/';
+$abspath_1 = "/home/www/cb/";
+$abspath_2 = "/home/www/cb3/";
+
+if (strstr($_SERVER['PHP_SELF'],'cb3/'))
+	{$abspath = $abspath_2;}
+else if (strstr($_SERVER['PHP_SELF'],'cb/')) 
+	{$abspath = $abspath_1;}
+
+
 $year = date("Y");
 $month = date("m");
 
@@ -23,7 +33,7 @@ $sql = "SELECT date, c.price, p.name as title, totalprice, firstname, lastname, 
 
 	//pokazh($purchase_log,"purchase_log");
 
-    require_once('..\wp-content\RGrid\RGrid.php');
+    require_once($abspath.'wp-content\RGrid\RGrid.php');
     
     $params['hostname'] = 'localhost';
     $params['username'] = 'z58365_cbru3';
