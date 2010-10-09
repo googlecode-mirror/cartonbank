@@ -77,6 +77,10 @@ else
 	$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
 	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
 
+	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = 1 order by name";
+	$brands_result  = $GLOBALS['wpdb']->get_results($brands_sql,ARRAY_A);
+
+
 	// avatar url
 				
 	if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
@@ -86,11 +90,26 @@ else
 	// author name
 	if (isset($brand_result[0]['name']) && $brand_result[0]['name'] != '')
 	{$author_name = $brand_result[0]['name'];}else{$brand_result[0]['name']='';}
+
+	// all authors dropdown
+	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option>все авторы</option>";
+	$_selected = "";
+
+	foreach ($brands_result as $brand)
+	{
+		if ($brand_result[0]['id'] == $brand['id'])
+			{$_selected = " selected";}
+		$authors .= "<option $_selected value=".$brand['id'].">".$brand['name']."</option>";
+		$_selected = "";
+	}
+	$authors .= "</select>";
+
 ?>
 <h2>Автор</h2> 
 <?
 echo $avatar_url."<br>";
-echo $author_name;
+//echo $author_name;
+echo $authors;
 echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
 }
 ?>
