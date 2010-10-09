@@ -15,7 +15,7 @@ $month = date("m");
 $start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
 $end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
 
-$sql = "SELECT date, c.price, p.name as title, totalprice, firstname, lastname, email, address, phone, s.name as processed, gateway, p.id, c.license, st.downloads, st.active, c.purchaseid, st.id as downloadid
+$sql = "SELECT date, c.price, p.name as title, totalprice, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active, p.id, c.purchaseid, st.id as downloadid
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
@@ -49,6 +49,8 @@ $sql = "SELECT date, c.price, p.name as title, totalprice, firstname, lastname, 
 
     $grid->SetDisplayNames(array('ID'       => '№',
                                  'totalprice'   => 'сумма заказа',
+                                 'id'   => 'номер изобр.',
+                                 'active'   => 'активно',
                                  'date'   => 'дата покупки',
                                  'price'   => 'цена картинки',
                                  'firstname'   => 'имя покупателя',
@@ -59,6 +61,7 @@ $sql = "SELECT date, c.price, p.name as title, totalprice, firstname, lastname, 
                                  'processed'   => 'прохождение заказа',
                                  'title'   => 'название изображения',
                                  'license'   => 'номер лицензии',
+                                 'downloadid'   => 'скачать',
                                  'downloads'   => 'осталось скачиваний'));
 
 $grid->HideColumn('id');
@@ -78,7 +81,7 @@ $grid->HideColumn('shopping_region');
 		$row['date'] = date("d.m.y H:m:s",$row['date']);
 		$row['title'] = "<a target='_blank' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$row['id']."'>".$row['title']."</a>";
 		//$row['average'] = round($row['average'],2);
-		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."'>download</a>";
+		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."'>скачать</a>";
 		//$link = $siteurl."?downloadid=".$download_data['id'];
     }
 
