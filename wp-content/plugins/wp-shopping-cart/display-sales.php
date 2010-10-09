@@ -4,9 +4,24 @@ $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
 
 if (strstr($_SERVER['PHP_SELF'],'cb3/'))
-	{$abspath = $abspath_2;}
+{
+	$abspath = $abspath_2;
+	$params['database'] = 'z58365_cbru3';
+}
 else if (strstr($_SERVER['PHP_SELF'],'cb/')) 
-	{$abspath = $abspath_1;}
+{
+	$abspath = $abspath_1;
+    $params['database'] = 'z58365_cbru';
+}
+else
+{
+    $params['database'] = 'z58365_cbru3';
+}
+
+    $params['hostname'] = 'localhost';
+    $params['username'] = 'z58365_cbru3';
+    $params['password'] = 'greenbat';
+
 
 
 $year = date("Y");
@@ -35,11 +50,6 @@ $sql = "SELECT date, c.price, p.name as title, totalprice, firstname, lastname, 
 
     require_once($abspath.'wp-content/RGrid/RGrid.php');
     
-    $params['hostname'] = 'localhost';
-    $params['username'] = 'z58365_cbru3';
-    $params['password'] = 'greenbat';
-    $params['database'] = 'z58365_cbru3';
-
     $grid = RGrid::Create($params, $sql);
 
     $grid->showHeaders = true;
