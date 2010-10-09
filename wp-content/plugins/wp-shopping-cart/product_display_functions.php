@@ -173,7 +173,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 
 	if (current_user_can('manage_options'))
 				{
-					$_edid = " <form method=\'post\' action=\'http://localhost/wp-admin/admin.php?page=wp-shopping-cart/display-items.php\'> <input type=\'hidden\' name=\'edid\' value=\'".$_number."\' /> <input class=\'borders\' type=\'submit\' value=\'Редактировать изображение\'> </form> ";
+					$_edid = " <form method=\'post\' action=\'".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php\'> <input type=\'hidden\' name=\'edid\' value=\'".$_number."\' /> <input class=\'borders\' type=\'submit\' value=\'Редактировать изображение\'> </form> ";
 				}
 				else
 				{
