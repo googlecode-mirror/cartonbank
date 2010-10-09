@@ -30,7 +30,7 @@ $month = date("m");
 $start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
 $end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
 
-$sql = "SELECT date, c.price, p.name as title, totalprice, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active, p.id, c.purchaseid, st.id as downloadid
+$sql = "SELECT date,  p.id, c.price, p.name as title, totalprice, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active, c.purchaseid, st.id as downloadid
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
@@ -60,6 +60,7 @@ $sql = "SELECT date, c.price, p.name as title, totalprice, firstname, lastname, 
     $grid->SetDisplayNames(array('ID'       => '№',
                                  'totalprice'   => 'сумма заказа',
                                  'id'   => 'номер изобр.',
+                                 'purchaseid'   => 'номер заказа',
                                  'active'   => 'активно',
                                  'date'   => 'дата покупки',
                                  'price'   => 'цена картинки',
