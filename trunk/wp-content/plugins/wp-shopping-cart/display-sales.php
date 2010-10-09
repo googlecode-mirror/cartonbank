@@ -30,7 +30,7 @@ $month = date("m");
 $start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
 $end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
 
-$sql = "SELECT date,  p.id, c.price, p.name as title, totalprice, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active, c.purchaseid, st.id as downloadid
+$sql = "SELECT date,  c.purchaseid, c.price, p.id, p.name as title, totalprice, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
@@ -75,12 +75,6 @@ $sql = "SELECT date,  p.id, c.price, p.name as title, totalprice, firstname, las
                                  'downloadid'   => 'скачать',
                                  'downloads'   => 'осталось скачиваний'));
 
-$grid->HideColumn('id');
-$grid->HideColumn('statusno');
-$grid->HideColumn('transactid');
-$grid->HideColumn('authcodeid');
-$grid->HideColumn('shopping_count');
-$grid->HideColumn('shopping_region');
                                
     $grid->NoSpecialChars('title','downloadid');
     
@@ -113,7 +107,7 @@ $grid->HideColumn('shopping_region');
             font-size: 8pt;
             font-family: Verdana;
             text-align: center;
-			padding:10px;
+			padding:2px;
 			margin:0px;
         }
         .datagrid thead th#header {
@@ -127,7 +121,7 @@ $grid->HideColumn('shopping_region');
           background-color: #eee;
         }
         .datagrid tbody td {
-            padding-left: 5px;
+            padding: 2px;
 			font-size: 8pt;
 			border-bottom: 1px solid #DBDBDB;
 			vertical-align:middle;
