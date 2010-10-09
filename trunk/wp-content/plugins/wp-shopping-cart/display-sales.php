@@ -33,7 +33,7 @@ $sql = "SELECT date, c.price, p.name as title, totalprice, firstname, lastname, 
 
 	//pokazh($purchase_log,"purchase_log");
 
-    require_once($abspath.'wp-content\RGrid\RGrid.php');
+    require_once($abspath.'wp-content/RGrid/RGrid.php');
     
     $params['hostname'] = 'localhost';
     $params['username'] = 'z58365_cbru3';
