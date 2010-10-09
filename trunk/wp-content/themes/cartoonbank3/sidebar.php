@@ -92,7 +92,7 @@ else
 	{$author_name = $brand_result[0]['name'];}else{$brand_result[0]['name']='';}
 
 	// all authors dropdown
-	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option value=0>все авторы</option>";
+	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
 	$_selected = "";
 
 	foreach ($brands_result as $brand)
