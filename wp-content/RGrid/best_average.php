@@ -71,7 +71,7 @@
                                  'votes'   => 'голоса',
                                  'points'    => 'баллы',
                                  'user' => 'user',
-                                 'vote_date'   => 'проголосовано',
+                                 'vote_date'   => 'дата&nbsp;голос.',
                                  'post'   => 'post',
                                  'title'   => 'название',
                                  'image'   => 'иконка',

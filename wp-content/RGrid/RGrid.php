@@ -159,12 +159,13 @@
                 RGrid::$orderby['column']    = $_GET['orderBy'];
                 RGrid::$orderby['direction'] = $_GET['orderDir'];
                 //ORDER BY 7 DESC, 5 DESC";
-				if (isset($_GET['orderBy']) && !empty($_GET['orderBy']))
+				if (isset($_GET['orderBy']) && !empty($_GET['orderBy']) && $_GET['orderBy']=='vote_date')
 					$orderby = 'ORDER BY ' . $_GET['orderBy'] . ' ' . ($_GET['orderDir'] ? 'DESC' : 'ASC');
 				else
 					$orderby = 'ORDER BY ' . $_GET['orderBy'] . ' ' . ($_GET['orderDir'] ? 'DESC' : 'ASC') . ", votes DESC ";
                 $sql = preg_replace('/ORDER\s+BY.*(ASC|DESC)/is', $orderby, $sql);
             }
+			//pokazh($sql);
             /**
             * Perform the query to get the result set
             */
