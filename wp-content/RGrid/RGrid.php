@@ -158,8 +158,11 @@
                 // Store it so the direction indicators appear
                 RGrid::$orderby['column']    = $_GET['orderBy'];
                 RGrid::$orderby['direction'] = $_GET['orderDir'];
-                
-                $orderby = 'ORDER BY ' . $_GET['orderBy'] . ' ' . ($_GET['orderDir'] ? 'DESC' : 'ASC');
+                //ORDER BY 7 DESC, 5 DESC";
+				if (isset($_GET['orderBy']) && !empty($_GET['orderBy']))
+					$orderby = 'ORDER BY ' . $_GET['orderBy'] . ' ' . ($_GET['orderDir'] ? 'DESC' : 'ASC');
+				else
+					$orderby = 'ORDER BY ' . $_GET['orderBy'] . ' ' . ($_GET['orderDir'] ? 'DESC' : 'ASC') . ", votes DESC ";
                 $sql = preg_replace('/ORDER\s+BY.*(ASC|DESC)/is', $orderby, $sql);
             }
             /**
