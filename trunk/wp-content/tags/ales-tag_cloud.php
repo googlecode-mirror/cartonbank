@@ -10,7 +10,7 @@ else
 }
 function read_tags_to_browser()
 {
-	$filename = '/home/www/cb/wp-content/tags/tagcloud.htm';
+	$filename = '/home/www/cb3/wp-content/tags/tagcloud.htm';
 	$contents = 'no tags found';
 
 	if (file_exists($filename)) {
@@ -32,7 +32,7 @@ function read_tags_to_browser()
 
 function write_tags_to_file()
 	{
-	$filename = '/home/www/cb/wp-content/tags/tagcloud.htm';
+	$filename = '/home/www/cb3/wp-content/tags/tagcloud.htm';
 
 	$somecontent = create_tag_cloud();
 
