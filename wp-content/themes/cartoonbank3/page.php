@@ -27,6 +27,17 @@ else
 <?php echo nzshpcrt_shopping_basket(); ?>
 <?php get_sidebar(); ?>
 </div>
+
+	<div style="clear:both;"></div>
+	<div id="topfooter" style="background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat-y;"><b>Популярные темы:</b>
+	<?
+		$filepath = WP_CONTENT_DIR . '/tags/ales-tag_cloud_small.php' ;
+		if ( file_exists( $filepath ) )
+		require_once( WP_CONTENT_DIR . '/tags/ales-tag_cloud_small.php' );
+	?>
+	</div>
+
 </div>
 <!-- The main column ends  -->
+
 <?php get_footer(); ?>
