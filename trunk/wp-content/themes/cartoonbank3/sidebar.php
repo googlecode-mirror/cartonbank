@@ -245,16 +245,6 @@ $_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
 <div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>
 <div id='tags'><a href='?page_id=390'>Тэги</a></div>
 
-<br><h2>Популярные темы</h2>
-<div id='pop_tags'>
-<?
-	$filepath = WP_CONTENT_DIR . '/tags/ales-tag_cloud_small.php' ;
-	if ( file_exists( $filepath ) )
-	require_once( WP_CONTENT_DIR . '/tags/ales-tag_cloud_small.php' );
-?>
-</a>
-
-
 <?
 /*<br><h2>Поделиться</h2>
 if (isset($_GET['cartoonid'])&&is_numeric($_GET['cartoonid']))
