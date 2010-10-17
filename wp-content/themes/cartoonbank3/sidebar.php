@@ -37,89 +37,6 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	<input type="submit" id="searchsubmit" class='borders' value="Искать" />
 	</form>
 
-<?php
-
-if (!$author_section) // for not Author section (portfolio)
-{
-
-?><br><h2>Авторы</h2><?
-
-// Authors
-    echo "<div id='branddisplay1'>";
-    $options ='';
-	$seperator = '';
-    $brands = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
-	$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( * ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
-    if($brands != null && $cartoons_count != null)
-      {
-      foreach($brands as $option)
-        {
-        $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."&brand=".$option['id']."'>".stripslashes($option['name']);
-		foreach ($cartoons_count as $count_row)
-			{
-				if ($count_row['id'] == $option['id'])
-				{
-					$options .= " [".$count_row['count']."]";
-				}
-			}
-		$options .= "</a><br />";
-        }
-      }
-    echo $options;
-    echo "</div>";
-
-}
-else
-{
-	
-
-	// Get the Brand (author) data
-	$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
-	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
-
-	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = 1 order by name";
-	$brands_result  = $GLOBALS['wpdb']->get_results($brands_sql,ARRAY_A);
-
-
-	// avatar url
-				
-	if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
-	{$avatar_url = "<img width=140 src='".$brand_result[0]['avatar_url']."'>";}
-	else {$avatar_url = "<img width=140 src='".get_option('siteurl')."/img/avatar.gif'>";}
-
-	// author name
-	if (isset($brand_result[0]['name']) && $brand_result[0]['name'] != '')
-	{$author_name = $brand_result[0]['name'];}else{$brand_result[0]['name']='';}
-
-	// all authors dropdown
-	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
-	$_selected = "";
-
-	foreach ($brands_result as $brand)
-	{
-		if ($brand_result[0]['id'] == $brand['id'])
-			{$_selected = " selected";}
-		$authors .= "<option $_selected value=".$brand['id'].">".$brand['name']."</option>";
-		$_selected = "";
-	}
-	$authors .= "</select>";
-
-?>
-<h2>Автор</h2> 
-<?
-echo $avatar_url."<br>";
-//echo $author_name;
-echo $authors;
-echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
-}
-?>
-
-
-<?
-$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
-
-//echo "<script language='JavaScript'>function rokfor(){if (confirm('Внимание!)) {window.location = '".$_rokfor_url."';} else {window.location = '#';}}</script>";
-?>
 
 <br><h2>Категории</h2> 
 
@@ -215,6 +132,93 @@ else
     echo $options;
 ?>
 
+
+
+<?php
+
+if (!$author_section) // for not Author section (portfolio)
+{
+
+?><br><h2>Авторы</h2><?
+
+// Authors
+    echo "<div id='branddisplay1'>";
+    $options ='';
+	$seperator = '';
+    $brands = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
+	$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( * ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
+    if($brands != null && $cartoons_count != null)
+      {
+      foreach($brands as $option)
+        {
+        $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."&brand=".$option['id']."'>".stripslashes($option['name']);
+		foreach ($cartoons_count as $count_row)
+			{
+				if ($count_row['id'] == $option['id'])
+				{
+					$options .= " [".$count_row['count']."]";
+				}
+			}
+		$options .= "</a><br />";
+        }
+      }
+    echo $options;
+    echo "</div>";
+
+}
+else
+{
+	
+
+	// Get the Brand (author) data
+	$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
+	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
+
+	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = 1 order by name";
+	$brands_result  = $GLOBALS['wpdb']->get_results($brands_sql,ARRAY_A);
+
+
+	// avatar url
+				
+	if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
+	{$avatar_url = "<img width=140 src='".$brand_result[0]['avatar_url']."'>";}
+	else {$avatar_url = "<img width=140 src='".get_option('siteurl')."/img/avatar.gif'>";}
+
+	// author name
+	if (isset($brand_result[0]['name']) && $brand_result[0]['name'] != '')
+	{$author_name = $brand_result[0]['name'];}else{$brand_result[0]['name']='';}
+
+	// all authors dropdown
+	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
+	$_selected = "";
+
+	foreach ($brands_result as $brand)
+	{
+		if ($brand_result[0]['id'] == $brand['id'])
+			{$_selected = " selected";}
+		$authors .= "<option $_selected value=".$brand['id'].">".$brand['name']."</option>";
+		$_selected = "";
+	}
+	$authors .= "</select>";
+
+?>
+<br><h2>Автор</h2> 
+<?
+echo $avatar_url."<br>";
+//echo $author_name;
+echo $authors;
+echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
+}
+?>
+
+
+<?
+$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
+
+//echo "<script language='JavaScript'>function rokfor(){if (confirm('Внимание!)) {window.location = '".$_rokfor_url."';} else {window.location = '#';}}</script>";
+?>
+
+
 <br><h2>Разделы</h2>
 
 <?
@@ -240,6 +244,15 @@ else
 <br><h2>Разное</h2>
 <div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>
 <div id='tags'><a href='?page_id=390'>Тэги</a></div>
+
+<br><h2>Популярные темы</h2>
+<div id='pop_tags'>
+<?
+	$filepath = WP_CONTENT_DIR . '/tags/ales-tag_cloud_small.php' ;
+	if ( file_exists( $filepath ) )
+	require_once( WP_CONTENT_DIR . '/tags/ales-tag_cloud_small.php' );
+?>
+</a>
 
 
 <?

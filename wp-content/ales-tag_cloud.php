@@ -14,6 +14,8 @@ $sql = "SELECT DISTINCT `additional_description` AS name FROM `wp_product_list` 
 	
 	global $wpdb;
 	$result_array = $wpdb->get_results($sql,ARRAY_A);
+	pokazh ($result_array);
+	exit();
 
 
 //$result_array = array_map('trim',$result_array);
@@ -27,6 +29,9 @@ $sql = "SELECT DISTINCT `additional_description` AS name FROM `wp_product_list` 
 	array_walk($tags, 'edit_value');
 
 	sort($tags);
+
+	pokazh ($tags);
+	exit();
 
 foreach ($tags as $key => $value) { 
    if (is_null($value)) 
