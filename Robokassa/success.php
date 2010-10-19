@@ -2,7 +2,7 @@
 
 // регистрационная информация (пароль #1)
 // registration info (password #1)
-$mrh_pass1 = "Morbid11";
+$mrh_pass1 = "Atljhjdbx1";
 
 // чтение параметров
 // read parameters
@@ -36,6 +36,10 @@ while(!feof($f))
   { 
 	echo "Операция прошла успешно\n";
 	echo "Operation of payment is successfully completed\n";
+	echo $out_summ."<br>";
+	echo $inv_id."<br>";
+	echo $shp_item."<br>";
+	echo $crc."<br>";
   }
 }
 fclose($f);
