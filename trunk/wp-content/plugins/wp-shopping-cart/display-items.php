@@ -265,13 +265,13 @@ if (isset($_POST['international_pnp ']))
 // TODO: take it off to the SQL table
 		// License prices
 		// Category group 1
-		$l1_price_cat1_default = 200;
-		$l2_price_cat1_default = 400;
-		$l3_price_cat1_default = 2000;
+		$l1_price_cat1_default = 250;
+		$l2_price_cat1_default = 500;
+		$l3_price_cat1_default = 2500;
 		// Category group 2
-		$l1_price_cat2_default = 350;
-		$l2_price_cat2_default = 700;
-		$l3_price_cat2_default = 3500;
+		$l1_price_cat2_default = 250;
+		$l2_price_cat2_default = 500;
+		$l3_price_cat2_default = 2500;
 		//UPDATE `wp_product_list` SET l1_price = 200 WHERE id in (SELECT product_id from `wp_item_category_associations` WHERE category_id in (4,14,5,11));
 
 		$category_id = $wpdb->escape($_POST['category']);
@@ -619,13 +619,13 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
 // TODO: take it off to the SQL table
 		// License prices
 		// Category group 1
-		$l1_price_cat1_default = 200;
-		$l2_price_cat1_default = 400;
-		$l3_price_cat1_default = 2000;
+		$l1_price_cat1_default = 250;
+		$l2_price_cat1_default = 500;
+		$l3_price_cat1_default = 2500;
 		// Category group 2
-		$l1_price_cat2_default = 350;
-		$l2_price_cat2_default = 700;
-		$l3_price_cat2_default = 3500;
+		$l1_price_cat2_default = 250;
+		$l2_price_cat2_default = 500;
+		$l3_price_cat2_default = 2500;
 		//UPDATE `wp_product_list` SET l1_price = 200 WHERE id in (SELECT product_id from `wp_item_category_associations` WHERE category_id in (4,14,5,11));
 
 		$category_id = $wpdb->escape($_POST['category']);
