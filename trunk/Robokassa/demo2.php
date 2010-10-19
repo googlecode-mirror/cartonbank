@@ -1,4 +1,4 @@
-﻿<?
+<?
 
 // 2.
 // Оплата заданной суммы с выбором валюты на сайте ROBOKASSA
@@ -6,8 +6,8 @@
 
 // регистрационная информация (логин, пароль #1)
 // registration info (login, password #1)
-$mrh_login = "demo";
-$mrh_pass1 = "Morbid11";
+$mrh_login = "cartoonbank";
+$mrh_pass1 = "Atljhjdbx1";
 
 // номер заказа
 // number of order
@@ -19,19 +19,19 @@ $inv_desc = "ROBOKASSA Advanced User Guide";
 
 // сумма заказа
 // sum of order
-$out_summ = "8.96";
+$out_summ = "200";
 
 // тип товара
 // code of goods
-$shp_item = "2";
+$shp_item = "222";
 
 // предлагаемая валюта платежа
 // default payment e-currency
-$in_curr = "PCR";
+$in_curr = "";
 
 // язык
 // language
-$culture = "en";
+$culture = "ru";
 
 // формирование подписи
 // generate signature
@@ -40,7 +40,7 @@ $crc  = md5("$mrh_login:$out_summ:$inv_id:$mrh_pass1:Shp_item=$shp_item");
 // форма оплаты товара
 // payment form
 print "<html>".
-      "<form action='https://merchant.roboxchange.com/Index.aspx' method=POST>".
+      "<form action='http://test.robokassa.ru/Index.aspx' method=POST>".
       "<input type=hidden name=MrchLogin value=$mrh_login>".
       "<input type=hidden name=OutSum value=$out_summ>".
       "<input type=hidden name=InvId value=$inv_id>".
@@ -49,6 +49,6 @@ print "<html>".
       "<input type=hidden name=Shp_item value='$shp_item'>".
       "<input type=hidden name=IncCurrLabel value=$in_curr>".
       "<input type=hidden name=Culture value=$culture>".
-      "<input type=submit value='Pay'>".
+      "<input type=submit value='Оплатить'>".
       "</form></html>";
 ?>

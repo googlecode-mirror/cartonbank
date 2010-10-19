@@ -2,7 +2,7 @@
 
 // регистрационная информация (пароль #2)
 // registration info (password #2)
-$mrh_pass2 = "Visions22";
+$mrh_pass2 = "Atljhjdbx2";
 
 //установка текущего времени
 //current date
