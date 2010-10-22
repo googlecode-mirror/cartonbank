@@ -857,11 +857,10 @@ function nzshpcrt_submit_ajax()
 		$combo_disabled = '';
 		$options = '';
 		$selected = '';
+		$me = '';
 		$values = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `id` ASC",ARRAY_A);
 		$options .= "<option $selected value='0'>Выберите автора</option>\r\n";
 
-		if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
-			$combo_disabled = "disabled='disabled'";
 
 		$who_is_selected_brand = 0;
 		if(isset($_GET['brand']) && is_numeric($_GET['brand'])) // we ordered selected user
@@ -882,14 +881,23 @@ function nzshpcrt_submit_ajax()
 		if($who_is_selected_brand == $option['id'])
 		  {
 		  $selected = "selected='selected'";
+		  $me = $option['name'];
 		  }
 		  $options .= "<option $selected value='".$option['id']."'>".$option['name']."</option>\r\n";
 		  $selected = "";
 		}
 
 		$concat = "<select name='brand' id='brandslist' $combo_disabled'>".$options."</select>\r\n";
-		return $concat;
+
+		if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
+		{
+			return $me;
 		}
+		else
+		{
+			return $concat;
+		}
+	}
   
   function variationslist($current_variation = '')
     {
