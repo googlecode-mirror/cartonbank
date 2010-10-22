@@ -1943,9 +1943,13 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     break;
     }  
   
-  $current_user = wp_get_current_user();    //print_r($current_user); exit(); 
+  $current_user = wp_get_current_user();   
+
   $_wallet = $current_user->wallet;
-  $_discount = $current_user->discount;
+  if (isset($current_user->discount))
+		$_discount = $current_user->discount;
+  else
+		$_discount = 0;
 
 
 

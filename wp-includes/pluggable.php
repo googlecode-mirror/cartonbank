@@ -86,7 +86,6 @@ function get_currentuserinfo() {
 		 	return false;
 		 }
 	}
-
 	wp_set_current_user($user);
 }
 endif;
