@@ -1945,7 +1945,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
   
   $current_user = wp_get_current_user();    //print_r($current_user); exit(); 
   $_wallet = $current_user->wallet;
-  
+  $_discount = $current_user->discount;
 
 
 
@@ -1967,6 +1967,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     $output .= "<table class='shoppingcart' width='100%'>";
     $output .= "<tr><td style='border-bottom: 1px solid #FF9966'>№</td><td style='border-bottom: 1px solid #FF9966'>Название</td><td  style='border-bottom: 1px solid #FF9966' align='right'>Цена</td></tr>"; 
     $total = 0;
+	$discount = 0;
 
 		
 	foreach($cart as $cart_item)
@@ -2024,13 +2025,23 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
 		  }
 
 	  $total += round($cart_item->price);
-      $output .= "<tr><td>".$product[0]['id']."</td><td>".stripslashes($product[0]['name'])."</td><td align='right'>".round($cart_item->price)."</td></tr>";
+	  $output .= "<tr><td style='border-bottom: 1px solid #CCCC99'>".$product[0]['id']."</td><td  style='border-bottom: 1px solid #CCCC99'>".stripslashes($product[0]['name'])."</td><td align='right' style='border-bottom: 1px solid #CCCC99'>".round($cart_item->price)."</td></tr>";
       }
 
-    $output .= "<tr><td>&nbsp;</td><td style='border-top: 1px solid #FF9966'>Итого: </td><td align='right' style='border-top: 1px solid #FF9966'><b>".round($total)."</b></td></tr>";
+	if ($_discount>0)
+		{
+			$output .= "<tr><td>&nbsp;</td><td>ваша cкидка</td><td align='right'>".$_discount."%</td></tr>";
+			$output .= "<tr><td>&nbsp;</td><td style='border-top: 1px solid #FF9966'>Итого без скидки: </td><td align='right' style='vertical-align:bottom;border-top: 1px solid #FF9966'><strike>".round($total)."</strike></td></tr>";
+			$output .= "<tr><td>&nbsp;</td><td style='border-top: 1px solid #FF9966'>Итого со скидкой: </td><td align='right' style='vertical-align:bottom;border-top: 1px solid #FF9966'><b>".round($total*(100-$_discount)/100)."</b></td></tr>";
+		}
+		else
+		{
+			$output .= "<tr><td>&nbsp;</td><td style='border-top: 1px solid #FF9966'>Итого: </td><td align='right' style='border-top: 1px solid #FF9966'><b>".round($total)."</b></td></tr>";
+		}
+    
     $output .= "</table>";
 
-$_SESSION['total'] = $total;
+$_SESSION['total'] = round($total*(100-$_discount)/100);
 
 	$output .= "На Личном счёте <b>".round($_wallet)."</b> р.<br>";
 
