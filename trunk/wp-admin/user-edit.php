@@ -239,11 +239,12 @@ else
 
 <tr>
     <th><label for="wallet"><?php _e('Личный Счёт (руб.)'); ?> </span></label></th>
-    <td><input type="text" name="wallet" id="wallet" value="<?php echo esc_attr($profileuser->wallet) ?>" 
+    <td> 
 <?php if (IS_PROFILE_PAGE) { ?> 
-         readonly="true"
+        <?php echo esc_attr($profileuser->wallet) ?>
+<?php } else{?>
+		<input type="text" name="wallet" id="wallet" value="<?php echo esc_attr($profileuser->wallet) ?>" class="regular-text" />
 <?php } ?>
-    class="regular-text" />
 	<br><span class="description"><?php _e("Личный Счёт можно пополнить по безналичному расчёту."); ?></td>
 </tr>
 
@@ -255,7 +256,6 @@ else
 <?php } else{?>
 		<input type="text" name="discount" id="discount" value="<?php echo esc_attr($profileuser->discount) ?>" class="regular-text" />
 <?php }?>
-    
 	<br><span class="description"><?php _e("Размер скидки определяется администрацией."); ?></td>
 </tr>
 
