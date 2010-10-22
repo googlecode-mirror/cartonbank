@@ -713,6 +713,12 @@ if(isset($_GET['deleteid']) && is_numeric($_GET['deleteid']))
 		  $deletesql = "UPDATE `wp_product_list` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
 		  $wpdb->query($deletesql);
 	  }
+
+	  if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
+	  {
+		  $deletesql = "UPDATE `wp_product_list` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
+		  $wpdb->query($deletesql);
+	  }
   }
   
   
@@ -916,7 +922,7 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
 
         echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px;'>\n\r";
         echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'>".TXT_WPSC_EDIT."</a>";
-        echo "<br><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>";
+        echo "<br><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>"; //http://localhost/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&deleteid=3312
         echo "            </td>\n\r";
 
         echo "            <td style='font-size:10px;'>\n\r";
@@ -952,7 +958,7 @@ echo "        </div>";
         Автор:
       </td>
       <td>
-        <?php echo brandslist(); ?> <input id='approved' type="checkbox" name="approved"> Утверждено.
+        <?php echo brandslist(); ?> <!-- <input id='approved' type="checkbox" name="approved"> Утверждено. -->
       </td>
     </tr>
     <tr>
