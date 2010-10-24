@@ -55,7 +55,7 @@ if (!$licensecolumn)
 		$selectsql = "SELECT * FROM `wp_purchase_logs` WHERE `sessionid`= ".$sessionid." LIMIT 1";
 		$check = $wpdb->get_results($selectsql,ARRAY_A) ;
 
-//echo ("<pre>product_list:".print_r($product_list,true)."</pre>");
+		//pokazh($product_list,"product_list");
 	 
 	 if(isset($product_list[0]['file']) && isset($check[0]['id']) && $product_list[0]['file'] > 0)
        {
@@ -85,7 +85,15 @@ if (!$licensecolumn)
 
 		$_size = $product_list[0]['width']."px X ".$product_list[0]['height']."px;";
 
-		$_bigpictext = "<b>Номер:</b> ".$product_list[0]['id']."<br><b>Автор:</b> ".$product_list[0]['brand']."<br><b>Название: </b> ".nl2br(stripslashes($product_list[0]['name']))."<br><b>Категория: </b> ".$product_list[0]['kategoria']."<br><b>Описание: </b> ".nl2br(stripslashes($product_list[0]['description']))."<br><b>Тэги: </b>".nl2br(stripslashes($product_list[0]['additional_description']))."<br><b>Размер:</b> ".$_size;
+		$_bigpictext = "<b>Номер:</b> ".$product_list[0]['id'];
+		$_bigpictext .= "<br><b>Автор:</b> ".$product_list[0]['brand'];
+		$_bigpictext .= "<br><b>Название: </b> ".nl2br(stripslashes($product_list[0]['name']));
+		$_bigpictext .= "<br><b>Категория: </b> ".$product_list[0]['kategoria'];
+		$_bigpictext .= "<br><b>Описание: </b> ".nl2br(stripslashes($product_list[0]['description']));
+		$_bigpictext .= "<br><b>Тэги: </b>".nl2br(stripslashes($product_list[0]['additional_description']));
+		$_bigpictext .= "<br><b>Размер:</b> ".$_size;
+		$_bigpictext .= "<br><b>Цена (без скидки):</b> ".$_SESSION['nzshpcrt_cart'][$key]->price." руб.";
+		$_bigpictext .= "<br><b>Лицензия:</b> ".license_name($_SESSION['nzshpcrt_cart'][$key]->license);
 
 		$_SESSION['nzshpcrt_cart'][$key]->author  = $product_list[0]['brand'];
 
@@ -283,6 +291,29 @@ $content=loadFile($filename);
 
 // output content
 return $content;
+}
+
+function license_name($license_code)
+{
+	switch($license_code)
+        {
+        case 'l1_price':
+        $license_name = "Ограниченая";
+        break;
+        
+        case 'l2_price':
+        $license_name = "Стандартная";
+        break;
+
+        case 'l3_price':
+        $license_name = "Расширенная";
+        break;
+
+        default:
+        $license_name = "";
+        break;
+		}
+	return $license_name;
 }
 
 function loadFile($sFilename, $sCharset = 'UTF-8')

@@ -13,7 +13,7 @@ $transactid = '';
 
 
 if($sessionid != null)
-  {
+{
 
   $message = "<div class='wrap'>Спасибо за пользование услугами сайта cartoonbank.ru! На ваш электронный адрес выслано письмо с тестом лицензии и ссылкой для скачивания. Вам доступны ".get_option('max_downloads')." попыток скачивания по ссылке в письме. Вы можете скачать ваш заказ используя ссылки ниже.<br>
   Вы заказали следующие картинки:</div>";
@@ -27,27 +27,33 @@ if($sessionid != null)
 
 	//echo $message;
 
-
 	$message_html = $message;
 
   $report = 'Были заказаны следующие изображения:';
 
   $selectsql = "SELECT * FROM `wp_purchase_logs` WHERE `sessionid`= ".$sessionid." LIMIT 1";
   $check = $wpdb->get_results($selectsql,ARRAY_A) ;
-//pokazh ($selectsql,"selectsql");
+
+if (isset($check[0]['totalprice']))
+	$_total = $check[0]['totalprice'];
+else
+	$_total = '';
+  
+
+	//pokazh ($check,"check");
 
   if (isset($check[0]['id']))
-	  {
-		$cartsql = "SELECT * FROM `wp_cart_contents` WHERE `purchaseid`=".$check[0]['id']."";
-		$cart = $wpdb->get_results($cartsql,ARRAY_A); 
+  {
+	$cartsql = "SELECT * FROM `wp_cart_contents` WHERE `purchaseid`=".$check[0]['id']."";
+	$cart = $wpdb->get_results($cartsql,ARRAY_A); 
 	  
   
   // gets first email address from checkout details
   $email_form_field = $wpdb->get_results("SELECT `id`,`type` FROM `wp_collect_data_forms` WHERE `type` IN ('email') AND `active` = '1' ORDER BY `order` ASC LIMIT 1",ARRAY_A);
   $email_address = $wpdb->get_results("SELECT * FROM `wp_submited_form_data` WHERE `log_id`=".$check[0]['id']." AND `form_id` = '".$email_form_field[0]['id']."' LIMIT 1",ARRAY_A);
   $email = $email_address[0]['value'];
-		}
   }
+}
 
 $siteurl = get_option('siteurl');
   
@@ -55,13 +61,13 @@ $previous_download_ids = Array(0);
   
 if(isset($cart) && $cart != null && ($errorcode == 0))
   {
-
-  $total = '';  
-  $total_shipping = ''; //nzshpcrt_determine_base_shipping($total_shipping, $country);
   $message .= "<br><br>";
-  $message .= "Общая стоимость: ".nzshpcrt_currency_display($total_shipping,1,true)."\n\r";
-  $message .= "Всего: ".nzshpcrt_currency_display(($total+$total_shipping),1,true)."\n\r";
+  $message .= "Общая стоимость с учётом скидки: ".$_total." руб.\n\r";
   
+	//pokazh($cart,"cart");
+	//pokazh($message,"message");
+	//exit;
+
   
   $message_html .= "\n\r";
 
