@@ -234,7 +234,7 @@ $_international_pnp = '';
 $approved = '';
 
 if (isset($_POST['approved']) && $_POST['approved'] == 'on')
-    $approved = '1';  
+    {$approved = '1';} else {$approved = '0';}  
 if (isset($_POST['visible']) && $_POST['visible'] == 'on')
     $visible = '1';  
 if (isset($_POST['colored']) && $_POST['colored'] == 'on'){$colored = '1'; }
@@ -596,7 +596,7 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
     if (isset($_POST['visible']) && $_POST['visible'] == 'on')
         $visible = '1'; 
     if (isset($_POST['approved']) && $_POST['approved'] == 'on')
-        $approved = '1'; 
+        {$approved = '1';} else {$approved = '0';}
     if (isset($_POST['colored']) && $_POST['colored'] == 'on'){$colored = '1';}
         else {$colored = '0';}
     if (isset($_POST['not_for_sale']) && $_POST['not_for_sale'] == 'on'){$not_for_sale = '1';}
@@ -922,7 +922,7 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
 
         echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px;'>\n\r";
         echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'>".TXT_WPSC_EDIT."</a>";
-        echo "<br><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>"; //http://localhost/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&deleteid=3312
+        echo "<br><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>";
         echo "            </td>\n\r";
 
         echo "            <td style='font-size:10px;'>\n\r";
