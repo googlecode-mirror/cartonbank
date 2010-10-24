@@ -107,10 +107,12 @@ function checkthefields()
 	var tags = document.getElementById('tags');
 
 	$message = '';
+	/*
 	if (brandselect.options[brandselect.selectedIndex].value == 0)
 	{
 		$message += 'Надо бы указать автора.\n';
 	}
+	*/
 	if (fileupload.value.length == 0)
 	{
 		$message += 'Не забудьте выбрать файл для отправки.\n';
@@ -162,10 +164,12 @@ function checkthefieldsEditForm()
 	var tags = document.getElementById('tagsedit');
 
 	$message = '';
+	/*
 	if (brandselect.options[brandselect.selectedIndex].value == 0)
 	{
 		$message += 'Надо бы указать автора.\n';
 	}
+	*/
 	$selectedradiobutton = null;
 			for (var ii = 0; ii < radio.length; ii++)
             {
