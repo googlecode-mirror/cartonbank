@@ -431,7 +431,7 @@ function nzshpcrt_submit_ajax()
 				{
 				//ales
 				
-				if isset($_POST['license']) 
+				if (isset($_POST['license']))
 					$_SESSION['nzshpcrt_cart'][$cart_key]->license = $_POST['license'];
 				else
 					$_SESSION['nzshpcrt_cart'][$cart_key]->license = 'l1_price';
