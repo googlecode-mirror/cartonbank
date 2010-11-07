@@ -14,7 +14,6 @@ $transactid = '';
 
 if($sessionid != null)
 {
-
   $message = "<div class='wrap'>Спасибо за пользование услугами сайта cartoonbank.ru! На ваш электронный адрес выслано письмо с тестом лицензии и ссылкой для скачивания. Вам доступны ".get_option('max_downloads')." попыток скачивания по ссылке в письме. Вы можете скачать ваш заказ используя ссылки ниже.<br>
   Вы заказали следующие картинки:</div>";
 
@@ -23,7 +22,14 @@ if($sessionid != null)
 	$license = false;
 	$cart_content = cart_product_list_string($license);
 
-	$message = $message.$cart_content;
+//pokazh($cart_content);
+
+if ($cart_content!='')
+	{$message = $message.$cart_content;}
+else {$message = 'Корзина пуста';}
+
+
+	
 
 	//echo $message;
 
@@ -34,10 +40,10 @@ if($sessionid != null)
   $selectsql = "SELECT * FROM `wp_purchase_logs` WHERE `sessionid`= ".$sessionid." LIMIT 1";
   $check = $wpdb->get_results($selectsql,ARRAY_A) ;
 
-if (isset($check[0]['totalprice']))
-	$_total = $check[0]['totalprice'];
-else
-	$_total = '';
+	if (isset($check[0]['totalprice']))
+		$_total = $check[0]['totalprice'];
+	else
+		$_total = '';
   
 
 	//pokazh ($check,"check");
@@ -58,31 +64,23 @@ else
 $siteurl = get_option('siteurl');
   
 $previous_download_ids = Array(0);  
-  
-if(isset($cart) && $cart != null && ($errorcode == 0))
-  {
-  $message .= "<br><br>";
-  $message .= "Общая стоимость с учётом скидки: ".$_total." руб.\n\r";
-  
+
+  $message_html .= "<br><br>";
+  $message_html .= "Общая стоимость с учётом скидки: ".$_total." руб.\n\r";
+  $message_html .= "\n\r";
+
 	//pokazh($cart,"cart");
 	//pokazh($message,"message");
 	//exit;
-
   
-  $message_html .= "\n\r";
-
-	$headers = "From: ".get_option('return_email')."\r\n" .
+if(isset($cart) && $cart != null && ($errorcode == 0))
+  {
+  $headers = "From: ".get_option('return_email')."\r\n" .
 			   'X-Mailer: PHP/' . phpversion() . "\r\n" .
 			   "MIME-Version: 1.0\r\n" .
 			   "Content-Type: text/html; charset=utf-8\r\n" .
 			   "Content-Transfer-Encoding: 8bit\r\n\r\n";
 
-  if(isset($_GET['ti']))
-    {
-    $message .= "Your Transaction ID: " . $_GET['ti'];
-    $message_html .= "Your Transaction ID: " . $_GET['ti'];
-    $report .= "Transaction ID: " . $_GET['ti'];
-    }
   if($email != '')
     {
     mail($email, 'Подтверждение покупки изображения. Cartoonbank.ru', $message, $headers);
@@ -93,9 +91,6 @@ if(isset($cart) && $cart != null && ($errorcode == 0))
 
   $report_user = "О заказчике."; 
   
-  
-
-
   $form_sql = "SELECT * FROM `wp_submited_form_data` WHERE `log_id` = '".$check[0]['id']."'";
   $form_data = $wpdb->get_results($form_sql,ARRAY_A);
   if($form_data != null)
@@ -126,7 +121,8 @@ if(isset($cart) && $cart != null && ($errorcode == 0))
 	// todo: 
   $_SESSION['nzshpcrt_cart'] = '';
   $_SESSION['nzshpcrt_cart'] = Array();
-  
+  $_SESSION['total'] = 0;
+
   echo '<div class="wrap">';
   if($sessionid != null)
     {
@@ -135,6 +131,9 @@ if(isset($cart) && $cart != null && ($errorcode == 0))
     }
   echo '</div>';
  
+
+   
+
   } // end of: if(isset($cart) && $cart != null && ($errorcode == 0))
   else
     {
