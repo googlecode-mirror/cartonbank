@@ -112,21 +112,23 @@ if (isset($_SESSION['wallet']))
 
 //pokazh($curgateway,"curgateway");
 //pokazh($GLOBALS['nzshpcrt_gateways'],"GLOBALS['nzshpcrt_gateways']");
+$rooturl = get_option('siteurl');
 		?>
 	  <tr>
         <td width='270'>
 		<input type="radio" name="payment_method" value="wallet" id="payment_method_2"/> 
         <label for='payment_method_2'>Оплата через<br><b>Личный Счёт (по предоплате) </b></label>
-		<br><img src="http://localhost/img/gate_beznal.png">
+		<br><img src="<?php echo($rooturl);?>/img/gate_beznal.png">
         </td>
 		<td>
 		После нажатия на кнопку "Оплатить" произойдет уменьшение вашего Личного Счета на размер стоимости подтвержденной вами Лицензии. Вы перейдёте на страницу с прямыми ссылками на заказанные файлы высокого разрешения. На указанный вами при регистрации электронный почтовый адрес будет отправлено сообщение, содержащее:<br>1. Ссылку на выбранное изображение в виде файла качественного разрешения, доступный вам для скачивания в течение 1 недели со дня получения сообщения.<br>2. Лицензионный Договор на использование каждого выбранного изображения.
 		</td>
       </tr>
+	  <?if (WP_DEBUG) {?>
 	  <tr><td>
 		<input type="radio" name="payment_method" value="robokassa" id="payment_method_3"><!-- disabled="disabled" -->
 		<label for='payment_method_3'>Оплата через<br><b>Робокассу</b></label>
-		<br><img src="http://localhost/img/gate_robokassa.png">
+		<br><img src="<?php echo($rooturl);?>/img/gate_robokassa.png">
 	  </td>
 		<td>
 		После нажатия на кнопку "Оплатить" вы перейдёте на сайт <a href="http://robokassa.ru/" target=_blank>Робокассы</a>, где выберете валюту оплаты. После успешной оплаты вы перейдёте на страницу с прямыми ссылками на заказанные файлы высокого разрешения. На указанный вами при регистрации электронный почтовый адрес будет отправлено сообщение, содержащее:<br>1. Ссылку на выбранное изображение в виде файла качественного разрешения, доступный вам для скачивания в течение 1 недели со дня получения сообщения.<br>2. Лицензионный Договор на использование каждого выбранного изображения.
@@ -136,14 +138,14 @@ if (isset($_SESSION['wallet']))
 	  <tr><td>
 		<input type="radio" name="payment_method" value="paypal_multiple" id="payment_method_1"><!--  disabled="disabled" -->
 		<label for='payment_method_1'>Оплата через <b>PayPal</b></label>
-		<br><img src="http://localhost/img/gate_paypal.png">
+		<br><img src="<?php echo($rooturl);?>/img/gate_paypal.png">
 	  </td>
 		<td>
 		После нажатия на кнопку "Оплатить" вы перейдёте на сайт <a href="http://paypal.com" target=_blank>Paypal</a>, где оплатите заказ. После успешной оплаты вы перейдёте на страницу с прямыми ссылками на заказанные файлы высокого разрешения. На указанный вами при регистрации электронный почтовый адрес будет отправлено сообщение, содержащее:<br>1. Ссылку на выбранное изображение в виде файла качественного разрешения, доступный вам для скачивания в течение 1 недели со дня получения сообщения.<br>2. Лицензионный Договор на использование каждого выбранного изображения.
 		</td>
 	  </tr>
 
-	  
+	  <?} ?>
 
     <tr>
       <td style='padding-top:5px;border-top: 1px solid #c8c8c8;'>
@@ -168,11 +170,8 @@ if (isset($_SESSION['wallet']))
     {
     echo TXT_WPSC_BUYPRODUCTS;
     }
-/*
 echo("<pre>POST:".print_r($_POST,true)."</pre>");
 echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
 echo("<pre>userdata:".print_r($userdata,true)."</pre>");
-
-*/
 
 ?> 
