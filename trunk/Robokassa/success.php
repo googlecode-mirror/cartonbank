@@ -11,6 +11,7 @@ else
 		$purchaseid = '0';
 	}
 
+pokazh($purchaseid,"$purchaseid");
 
 // регистрационная информация (пароль #1)
 // registration info (password #1)
