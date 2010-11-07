@@ -1,4 +1,16 @@
 <?
+global $wpdb;
+$purchase_log_sql = "SELECT * FROM `wp_purchase_logs` WHERE `id`= ".$inv_id." LIMIT 1";
+$purchase_log = $wpdb->get_results($purchase_log_sql,ARRAY_A) ;
+if (isset($purchase_log[0]['id']))
+	{
+		$purchaseid = $purchase_log[0]['id'];
+	}
+else
+	{
+		$purchaseid = '0';
+	}
+
 
 // регистрационная информация (пароль #1)
 // registration info (password #1)
@@ -22,6 +34,7 @@ if ($my_crc != $crc)
   echo "bad sign\n";
   exit();
 }
+
 
 // проверка наличия номера счета в истории операций
 // check of number of the order info in history of operations
