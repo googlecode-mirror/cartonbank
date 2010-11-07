@@ -8,10 +8,10 @@ $nzshpcrt_gateways[$num]['submit_function'] = "submit_paypal_multiple";
 function gateway_paypal_multiple($seperator, $sessionid)
   {
   global $wpdb;
-  $purchase_log_sql = "SELECT * FROM `".$wpdb->prefix."purchase_logs` WHERE `sessionid`= ".$sessionid." LIMIT 1";
+  $purchase_log_sql = "SELECT * FROM `wp_purchase_logs` WHERE `sessionid`= ".$sessionid." LIMIT 1";
   $purchase_log = $wpdb->get_results($purchase_log_sql,ARRAY_A) ;
 
-  $cart_sql = "SELECT * FROM `".$wpdb->prefix."cart_contents` WHERE `purchaseid`='".$purchase_log[0]['id']."'";
+  $cart_sql = "SELECT * FROM `wp_cart_contents` WHERE `purchaseid`='".$purchase_log[0]['id']."'";
   $cart = $wpdb->get_results($cart_sql,ARRAY_A) ; 
   
   $transact_url = get_option('transact_url');
@@ -26,7 +26,7 @@ function gateway_paypal_multiple($seperator, $sessionid)
   //$data['image'] = 'src=\"http://www.paypal.com/en_US/i/btn/x-click-but01.gif\" name=\"submit\" alt=\"Make payments with PayPal - its fast, free and secure!\"';  // ales
   
    // look up the currency codes and local price
-  $currency_code = $wpdb->get_results("SELECT `code` FROM `".$wpdb->prefix."currency_list` WHERE `id`='".get_option(currency_type)."' LIMIT 1",ARRAY_A);
+  $currency_code = $wpdb->get_results("SELECT `code` FROM `wp_currency_list` WHERE `id`='".get_option(currency_type)."' LIMIT 1",ARRAY_A);
   $local_currency_code = $currency_code[0]['code'];
   //ales $paypal_currency_code = get_option('paypal_curcode');
   $paypal_currency_code = "USD";
@@ -58,12 +58,12 @@ function gateway_paypal_multiple($seperator, $sessionid)
   $i = 1;
   foreach($cart as $item)
     {
-    $product_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."product_list` WHERE `id`='".$item['prodid']."' LIMIT 1",ARRAY_A);
+    $product_data = $wpdb->get_results("SELECT * FROM `wp_product_list` WHERE `id`='".$item['prodid']."' LIMIT 1",ARRAY_A);
     $product_data = $product_data[0];
     //exit("<pre>" . print_r($item,true) ."</pre>");
     $variation_count = count($product_variations);
     
-    $variation_sql = "SELECT * FROM `".$wpdb->prefix."cart_item_variations` WHERE `cart_id`='".$item['id']."'";
+    $variation_sql = "SELECT * FROM `wp_cart_item_variations` WHERE `cart_id`='".$item['id']."'";
     $variation_data = $wpdb->get_results($variation_sql,ARRAY_A); 
     //exit("<pre>" . print_r($variation_data,true) ."</pre>");
     $variation_count = count($variation_data);
@@ -78,7 +78,7 @@ function gateway_paypal_multiple($seperator, $sessionid)
           $variation_list .= ", ";
           }
         $value_id = $variation['venue_id'];
-        $value_data = $wpdb->get_results("SELECT * FROM `".$wpdb->prefix."variation_values` WHERE `id`='".$value_id."' LIMIT 1",ARRAY_A);
+        $value_data = $wpdb->get_results("SELECT * FROM `wp_variation_values` WHERE `id`='".$value_id."' LIMIT 1",ARRAY_A);
         $variation_list .= $value_data[0]['name'];              
         $j++;
         }
@@ -148,7 +148,7 @@ function gateway_paypal_multiple($seperator, $sessionid)
   $data['last_name'] = $_POST['lastname'];
   */
   
-  $address_data = $wpdb->get_results("SELECT `id`,`type` FROM `".$wpdb->prefix."collect_data_forms` WHERE `type` IN ('address','delivery_address') AND `active` = '1'",ARRAY_A);
+  $address_data = $wpdb->get_results("SELECT `id`,`type` FROM `wp_collect_data_forms` WHERE `type` IN ('address','delivery_address') AND `active` = '1'",ARRAY_A);
   foreach((array)$address_data as $address)
     {
     $data['address1'] = $_POST['collected_data'][$address['id']];
@@ -158,7 +158,7 @@ function gateway_paypal_multiple($seperator, $sessionid)
       }
     }
   
-  $city_data = $wpdb->get_results("SELECT `id`,`type` FROM `".$wpdb->prefix."collect_data_forms` WHERE `type` IN ('city','delivery_city') AND `active` = '1'",ARRAY_A);
+  $city_data = $wpdb->get_results("SELECT `id`,`type` FROM `wp_collect_data_forms` WHERE `type` IN ('city','delivery_city') AND `active` = '1'",ARRAY_A);
   foreach((array)$city_data as $city)
     {
     $data['city'] = $_POST['collected_data'][$city['id']];
@@ -167,7 +167,7 @@ function gateway_paypal_multiple($seperator, $sessionid)
       break;
       }
     }
-  $country_data = $wpdb->get_results("SELECT `id`,`type` FROM `".$wpdb->prefix."collect_data_forms` WHERE `type` IN ('country','delivery_country') AND `active` = '1'",ARRAY_A);
+  $country_data = $wpdb->get_results("SELECT `id`,`type` FROM `wp_collect_data_forms` WHERE `type` IN ('country','delivery_country') AND `active` = '1'",ARRAY_A);
   foreach((array)$country_data as $country)
     {
     $data['country'] = $_POST['collected_data'][$country['id']];
