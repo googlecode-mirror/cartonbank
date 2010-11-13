@@ -3,9 +3,9 @@ $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
 
-if (strstr($_SERVER['PHP_SELF'],'cb3/'))
+if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
 	{$abspath = $abspath_2;}
-else if (strstr($_SERVER['PHP_SELF'],'cb/')) 
+else if (strstr($_SERVER['DOCUMENT_ROOT'],'cb/')) 
 	{$abspath = $abspath_1;}
 
 
