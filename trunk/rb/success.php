@@ -1,5 +1,5 @@
 <?
-require_once('../cb/wp-config.php');
+require_once('../wp-config.php');
 global $wpdb;
 
 // чтение параметров
