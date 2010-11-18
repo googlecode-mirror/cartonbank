@@ -24,7 +24,7 @@
     $params['hostname'] = 'localhost';
     $params['username'] = 'z58365_cbru3';
     $params['password'] = 'greenbat';
-    $params['database'] = 'z58365_cbru3';
+    $params['database'] = 'cartoonbankru';
 
     $sql = "SELECT p.ID, l.image as image, l.name as title, b.name as author, p.votes, p.points, u.vote_date, u.ip  
 		FROM	`wp_fsr_post` as p, 
