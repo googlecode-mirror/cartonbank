@@ -24,7 +24,7 @@
     $params['hostname'] = 'localhost';
     $params['username'] = 'z58365_cbru3';
     $params['password'] = 'greenbat';
-    $params['database'] = 'z58365_cbru3';
+    $params['database'] = 'cartoonbankru';
 
     $sql = "SELECT wp_product_brands.name AS author, Count(*) AS votes, SUM(points) AS points, AVG(points) AS average  
 					FROM wp_fsr_user, wp_product_list, wp_product_brands 
