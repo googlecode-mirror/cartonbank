@@ -1,5 +1,5 @@
 <?
-header("Location: http://cartoonbank.ru/cb/?page_id=918&p=0");
+header("Location: http://cartoonbank.ru/?page_id=918&p=0");
 exit;
 
 require_once('../cb/wp-config.php');
