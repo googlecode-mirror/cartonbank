@@ -1,27 +1,8 @@
-<?php get_header(); ?>
-
-<div id="content">
-<?php get_sidebar(); ?>
-
-<div id="contentmiddle">
-	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-
-<div id="contentdate">
-	<h3><?php the_time('M'); ?></h3>
-	<h4><?php the_time('j'); ?></h4>
-	</div>
-	
-<div id="contenttitle">
-	<h1>Not Found, Error 404</h1><br />
-	<p>Запрошенная страница не существует.</p>
-	</div>
-	
-<div id="contentright">
-	
-</div>
-	
-</div>
-
-<!-- The main column ends  -->
-
-<?php get_footer(); ?>
+<html><head><title>cartoonbank.ru</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head><body>
+<center>
+<br><br>
+<img src="http://cartoonbank.ru/img/open_soon_derg.png">
+<br><a href="http://cartoonbank.ru/"><img src="http://cartoonbank.ru/img/cb-logo.gif" border="0"></a>
+</center>
+</body>
+</html>
