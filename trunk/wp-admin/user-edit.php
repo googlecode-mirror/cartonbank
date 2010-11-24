@@ -252,9 +252,9 @@ else
     <th><label for="discount"><?php _e('Ваша скидка (%)'); ?> </span></label></th>
     <td>
 <?php if (IS_PROFILE_PAGE) { ?> 
-        <?php echo esc_attr($profileuser->discount) ?>
+        <?php echo esc_attr(round($profileuser->discount,0)) ?>
 <?php } else{?>
-		<input type="text" name="discount" id="discount" value="<?php echo esc_attr($profileuser->discount) ?>" class="regular-text" />
+		<input type="text" name="discount" id="discount" value="<?php echo esc_attr(round($profileuser->discount,0)) ?>" class="regular-text" />
 <?php }?>
 	<br><span class="description"><?php _e("Размер скидки определяется администрацией."); ?></td>
 </tr>
