@@ -24,7 +24,8 @@ if (isset($_REQUEST['email']) && isset($_REQUEST['message']))
 			   "Content-Type: text/html; charset=utf-8\r\n" .
 			   "Content-Transfer-Encoding: 8bit\r\n\r\n";
 
-    mail("cartoonbank.ru@gmail.com", 'Письмо от посетителья сайта cartoonbank.ru', $message, $headers);
+    mail("cartoonbank.ru@gmail.com", 'Письмо от посетителя сайта cartoonbank.ru', $message, $headers);
+	mail("igor.aleshin@gmail.com", 'CC: Письмо от посетителя сайта cartoonbank.ru', $message, $headers);
 }
 
 $siteurl = get_option('siteurl');
