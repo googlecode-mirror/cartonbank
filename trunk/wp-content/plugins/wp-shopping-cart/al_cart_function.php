@@ -237,6 +237,14 @@ function get_license($sequence_of_image,$license_num)
 		#author_name#
 		#media_name#
 		#price#
+
+if (isset($current_user->discount))
+		$_discount = $current_user->discount;
+  else
+		$_discount = 0;
+
+$_SESSION['total'] = round($total*(100-$_discount)/100);
+
 		*/
 
 // load unique license data
@@ -247,10 +255,19 @@ function get_license($sequence_of_image,$license_num)
 	$agreement_date = date("m.d.y");
 	$customer_name = $current_user->last_name. " " . $current_user->first_name;
 	$media_name = '[не указано]';
+	if (isset($current_user->discount))
+		$_discount = $current_user->discount;
+	else
+		$_discount = 0;
 
 if(isset($_SESSION['nzshpcrt_cart']))
 {
 	$price = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> price;
+	if (isset($current_user->discount))
+	{
+		$price = round($price*(100-$_discount)/100);
+	}
+	
 	$image_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> name;
 	$image_number = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> product_id;
 	$author_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> author;
