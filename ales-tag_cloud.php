@@ -1,5 +1,5 @@
 <div style="float:right;">
-<br><h2>Облако тэгов</h2>
+<br><h2>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ</h2>
 <?
 function edit_value(&$value) 
 { 
@@ -238,7 +238,7 @@ echo $cloud->showCloud();
     }
     else if ($returnType == "html")
     {
-    $return .= "<span class='word size{$sizeRange}'> <a href='http://cartoonbank.ru/cb/?page_id=29&cs={$word}'>{$word}</a> </span>";
+    $return .= "<span class='word size{$sizeRange}'> <a href='http://cartoonbank.ru/?page_id=29&cs={$word}'>{$word}</a> </span>";
     }
     }
     return $return;
