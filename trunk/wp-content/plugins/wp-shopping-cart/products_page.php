@@ -15,6 +15,7 @@ if (isset($_REQUEST['email']) && isset($_REQUEST['message']))
 {
   $email = $_REQUEST['email'] ;
   $message = $_REQUEST['message'] ;
+  $message = $message . ' <br><br> ' .$email;
   // mail("cartoonbank.ru@gmail.com", "Письмо от посетителья сайта cartoonbank.ru", $message, "From: $email" );
   // header( "Location: http://www.example.com/thankyou.html" );
 
@@ -339,8 +340,8 @@ $search_sql = NULL;
 
 				$_bigpicstrip = "<b>".$product[0]['brand']. ". Информация об авторе</b>";
 				$_bigpictext = "<br><br>".$brand_contact;
-				$_bigpic = "<div style='width:600px;'><div id='bio' style='display:block;'>".$bio."</div></div>".$email_form; 
-				$_bottomstriptext = "";
+				$_bigpic = "<div style='width:600px;'><div id='bio' style='display:block;'>".$bio."</div></div>"; 
+				$_bottomstriptext = "".$email_form;
 
 			// end of portfolio
 		 } 
