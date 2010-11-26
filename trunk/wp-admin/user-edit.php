@@ -299,7 +299,7 @@ else
 <table class="form-table">
 <tr>
 	<th><label for="description">Название СМИ</label></th>
-	<td><textarea name="description" id="description" rows="5" cols="30"><?php echo esc_html($profileuser->description); ?></textarea><br />
+	<td><textarea name="description" id="description" rows="1" cols="30"><?php echo esc_html($profileuser->description); ?></textarea><br />
 	<span class="description"><?php _e('Название СМИ или иной организации, от имени которой вы действуете.'); ?></span></td>
 </tr>
 
