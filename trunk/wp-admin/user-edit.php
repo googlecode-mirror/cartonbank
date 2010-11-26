@@ -298,9 +298,9 @@ else
 
 <table class="form-table">
 <tr>
-	<th><label for="description">О вашем СМИ</label></th>
+	<th><label for="description">Название СМИ</label></th>
 	<td><textarea name="description" id="description" rows="5" cols="30"><?php echo esc_html($profileuser->description); ?></textarea><br />
-	<span class="description"><?php _e('Назовите средство массовой информации, которое вы представляете.'); ?></span></td>
+	<span class="description"><?php _e('Название СМИ или иной организации, от имени которой вы действуете.'); ?></span></td>
 </tr>
 
 <?php
