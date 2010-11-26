@@ -84,7 +84,7 @@ if(isset($cart) && $cart != null && ($errorcode == 0))
   if($email != '')
     {
     mail($email, 'Подтверждение покупки изображения. Cartoonbank.ru', $message, $headers);
-	mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru', $report, $headers);
+	mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru', $message, $headers);
     }
   
   $purch_sql = "SELECT * FROM `wp_purchase_logs` WHERE `id`!='".$check[0]['id']."'";
@@ -117,7 +117,7 @@ if(isset($cart) && $cart != null && ($errorcode == 0))
   if(get_option('purch_log_email') != null)
     {
     mail(get_option('purch_log_email'), 'Подтверждение покупки изображения. Cartoonbank.ru', $report, $headers);
-    mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru', $report, $headers);
+    mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru', $report."\n\r\n\r".$message, $headers);
     }
 
 	// todo: 
