@@ -246,11 +246,11 @@ $_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
 <div id='tags'><a href='?page_id=390'>Тэги</a></div>
 
 <br><h2>Поделиться</h2>
-<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://twitter.com/share?url=http://cartoonbank.ru?page_id='; window.open(uu+cuid);"><img src="img/s_twitter.png" border="0"></a>
+<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://twitter.com/share?url=http://cartoonbank.ru/?page_id=29&cartoonid='; window.open(uu+cuid);"><img src="img/s_twitter.png" border="0"></a>
 
-<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://www.facebook.com/sharer.php?t=cartoonbank.ru&u=http://cartoonbank.ru?page_id='; window.open(uu+cuid);"><img src="img/s_facebook.png" border="0"></a>
+<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://www.facebook.com/sharer.php?t=cartoonbank.ru&u=http://cartoonbank.ru/?page_id=29&cartoonid='; window.open(uu+cuid);"><img src="img/s_facebook.png" border="0"></a>
 
-<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://vkontakte.ru/share.php?title=cartoonbank.ru&url=http://cartoonbank.ru?page_id='; window.open(uu+cuid);"><img src="img/s_vkontakte.png" border="0"></a>
+<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://vkontakte.ru/share.php?title=cartoonbank.ru&url=http://cartoonbank.ru/?page_id=29&cartoonid='; window.open(uu+cuid);"><img src="img/s_vkontakte.png" border="0"></a>
 
 <div style="float:right;width:180px;text-align:right;">
 	<br><h2>Вход</h2>
