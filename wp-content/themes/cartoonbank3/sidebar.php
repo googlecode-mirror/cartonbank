@@ -245,22 +245,12 @@ $_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
 <div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>
 <div id='tags'><a href='?page_id=390'>Тэги</a></div>
 
-<?
-/*<br><h2>Поделиться</h2>
-if (isset($_GET['cartoonid'])&&is_numeric($_GET['cartoonid']))
-{
-	$_number=$_GET['cartoonid'];
-	$_title="Классная картинка!";
-	$_description='Хорошие карикатуры';
-}
-else
-{
-	$_number='';
-	$_title="Зацени карикатуры!";
-	$_description='Хорошие карикатуры';
-}
-*/
-?>
+<br><h2>Поделиться</h2>
+<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://twitter.com/share?url=http://cartoonbank.ru?page_id='; window.open(uu+cuid);"><img src="img/s_twitter.png" border="0"></a>
+
+<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://www.facebook.com/sharer.php?t=cartoonbank.ru&u=http://cartoonbank.ru?page_id='; window.open(uu+cuid);"><img src="img/s_facebook.png" border="0"></a>
+
+<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://vkontakte.ru/share.php?title=cartoonbank.ru&url=http://cartoonbank.ru?page_id='; window.open(uu+cuid);"><img src="img/s_vkontakte.png" border="0"></a>
 
 <div style="float:right;width:180px;text-align:right;">
 	<br><h2>Вход</h2>
