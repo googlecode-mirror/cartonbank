@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 global $wpdb,$gateway_checkout_form_fields;
 global $userdata;
 /*
@@ -124,6 +124,18 @@ $rooturl = get_option('siteurl');
 		После нажатия на кнопку "Оплатить" произойдет уменьшение вашего Личного Счета на размер стоимости подтвержденной вами Лицензии. Вы перейдёте на страницу с прямыми ссылками на заказанные файлы высокого разрешения. На указанный вами при регистрации электронный почтовый адрес будет отправлено сообщение, содержащее:<br>1. Ссылку на выбранное изображение в виде файла качественного разрешения, доступный вам для скачивания в течение 1 недели со дня получения сообщения.<br>2. Лицензионный Договор на использование каждого выбранного изображения.
 		</td>
       </tr>
+	  <tr>
+        <td width='270'>
+		<input type="radio" name="payment_method" value="check" id="payment_method_4"/> 
+        <label for='payment_method_4'>Оплата через<br><b>Сбербанк</b></label>
+		<br><!-- <img src="<?php echo($rooturl);?>/img/gate_beznal.png"> -->
+        </td>
+		<td>
+		Распечатать бланк и оплатить его в любом отделении Сбербанка. Также возможен платёж из других российских банков. Будьте внимательны! Возврат внесённых средств не производится.
+		<br>
+		Для вас будет сформирован счёт на оплату. Вы можете его распечатать и оплатить в течение 5 банковских дней. Для ускорения процесса сообщите нам о факте оплаты счета на адрес cartoonbank.ru@gmail.com. Когда счет будет оплачен изображения и лицензии к ним будут отправлены на указанный вами при регистрации e-mail.
+		</td>
+      </tr>
 	  <?if (WP_DEBUG) {?>
 	  <tr><td>
 		<input type="radio" name="payment_method" value="robokassa" id="payment_method_3"><!-- disabled="disabled" -->
@@ -158,7 +170,7 @@ $rooturl = get_option('siteurl');
 	<tr>
       <td>&nbsp;
       </td>
-      <td>.
+      <td>
       </td>
     </tr>
 </table>
@@ -170,8 +182,8 @@ $rooturl = get_option('siteurl');
     {
     echo TXT_WPSC_BUYPRODUCTS;
     }
-echo("<pre>POST:".print_r($_POST,true)."</pre>");
-echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
-echo("<pre>userdata:".print_r($userdata,true)."</pre>");
+//echo("<pre>POST:".print_r($_POST,true)."</pre>");
+//echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
+//echo("<pre>userdata:".print_r($userdata,true)."</pre>");
 
 ?> 

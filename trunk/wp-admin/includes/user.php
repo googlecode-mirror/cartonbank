@@ -124,6 +124,9 @@ function edit_user( $user_id = 0 ) {
 	if ( isset( $_POST['discount'] ) )
 		$user->discount = sanitize_text_field( $_POST['discount'] );
 
+	if ( isset( $_POST['contract'] ) )
+		$user->contract = sanitize_text_field( $_POST['contract'] );
+
 	if ( isset( $_POST['description'] ) )
 		$user->description = trim( $_POST['description'] );
 

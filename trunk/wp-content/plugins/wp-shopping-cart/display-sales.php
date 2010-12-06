@@ -42,17 +42,21 @@ $month = date("m");
 $start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
 $end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
 
-$sql = "SELECT date,  c.purchaseid, c.price, p.id, p.name as title, totalprice, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid
+$sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id,firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
 		`wp_product_list` as p,
-		`wp_download_status` as st
+		`wp_download_status` as st,
+		`wp_product_brands` as b,
+		`wp_users` as u
 	WHERE	l.`processed`=s.`id` 
 		AND l.id=c.purchaseid 
 		AND p.id=c.prodid  
 		AND st.purchid=c.purchaseid
-	AND (`date` BETWEEN '$start_timestamp' AND '$end_timestamp') 
+		AND p.brand=b.id
+		AND u.id = l.user_id
+	AND (`date` BETWEEN '$start_timestamp' AND '$end_timestamp')
 	GROUP BY c.license
 	ORDER BY `date` DESC";
 
@@ -72,6 +76,10 @@ $sql = "SELECT date,  c.purchaseid, c.price, p.id, p.name as title, totalprice, 
     $grid->SetDisplayNames(array('ID'       => '№',
                                  'totalprice'   => 'сумма заказа',
                                  'id'   => 'номер изобр.',
+                                 'artist'   => 'автор изобр.',
+                                 'discount'   => 'скидка %',
+                                 'display_name'   => 'логин',
+								 'user_id' => 'покупатель',
                                  'purchaseid'   => 'номер заказа',
                                  'active'   => 'активно',
                                  'date'   => 'дата покупки',
@@ -85,7 +93,8 @@ $sql = "SELECT date,  c.purchaseid, c.price, p.id, p.name as title, totalprice, 
                                  'title'   => 'название изображения',
                                  'license'   => 'номер лицензии',
                                  'downloadid'   => 'скачать',
-                                 'downloads'   => 'осталось скачиваний'));
+                                 'downloads'   => 'осталось скачиваний',
+                                 'contract'   => 'номер договора'));
 
                                
     $grid->NoSpecialChars('title','downloadid');

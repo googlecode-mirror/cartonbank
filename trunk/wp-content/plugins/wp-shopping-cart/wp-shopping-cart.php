@@ -1644,8 +1644,588 @@ Array
       exit();
       }
     $sessionid = (mt_rand(100,999).time());
-    
-    $sql = "INSERT INTO `wp_purchase_logs` (`id` , `totalprice` , `sessionid` , `firstname`, `lastname`, `email`, `date`, `shipping_country`,`address`, `phone` ) VALUES ('', '".$wpdb->escape($_SESSION['total'])."', '".$sessionid."', '".$wpdb->escape($_POST['collected_data']['1'])."', '".$wpdb->escape($_POST['collected_data']['2'])."', '".$_POST['collected_data']['3']."', '".time()."', '', '".$_POST['collected_data']['5']."', '".$_POST['collected_data']['4']."')";
+
+
+
+$current_user = wp_get_current_user();   
+  $_current_user_id = $current_user->id;
+
+//pokazh($_SESSION,"SESSION");
+//pokazh($_POST,"POST");
+//pokazh($wpdb,"wpdb");
+//exit();
+
+/*
+	wp_get_current_user(): WP_User Object
+	(
+		[data] => stdClass Object
+			(
+				[ID] => 1
+				[user_login] => admin
+				[user_pass] => $P$9f9It8Kpj56xOQprafuL49jfHEjvlW.
+				[user_nicename] => admin
+				[user_email] => admin@cartoonist.name
+				[user_url] => 
+				[user_registered] => 2007-01-15 15:32:35
+				[user_activation_key] => 
+				[user_status] => 0
+				[display_name] => admin
+				[wallet] => 3090.00
+				[discount] => 0.00
+				[contract] => aadmin
+				[wp_user_level] => 10
+				[wp_capabilities] => Array
+					(
+						[administrator] => 1
+					)
+
+				[first_name] => Игорь
+				[last_name] => Алёшин
+				[nickname] => admin
+				[description] => 
+				[jabber] => 
+				[aim] => 
+				[yim] => 
+				[rich_editing] => true
+				[skype] => lyapustin
+				[icq] => 1516347
+				[wp_dashboard_quick_press_last_post_id] => 86
+				[plugins_last_view] => active
+				[wp_usersettings] => m11=c&m10=o&m12=o&m7=o&m5=o&m8=o&m6=o&m1=c&m3=c&m4=c&imgsize=large&galfile=1&editor=html&uploader=1&urlbutton=file&align=center
+				[wp_usersettingstime] => 1286619937
+				[closedpostboxes_page] => Array
+					(
+						[0] => postcustom
+						[1] => authordiv
+					)
+
+				[metaboxhidden_page] => Array
+					(
+						[0] => slugdiv
+					)
+
+				[closedpostboxes_dashboard] => Array
+					(
+						[0] => dashboard_right_now
+						[1] => dashboard_recent_comments
+						[2] => dashboard_incoming_links
+						[3] => dashboard_recent_drafts
+					)
+
+				[metaboxhidden_dashboard] => Array
+					(
+					)
+
+				[comment_shortcuts] => false
+				[admin_color] => fresh
+				[use_ssl] => 0
+				[user_level] => 10
+				[user_firstname] => Игорь
+				[user_lastname] => Алёшин
+				[user_description] => 
+			)
+
+		[ID] => 1
+		[id] => 1
+		[caps] => Array
+			(
+				[administrator] => 1
+			)
+
+		[cap_key] => wp_capabilities
+		[roles] => Array
+			(
+				[0] => administrator
+			)
+
+		[allcaps] => Array
+			(
+				[switch_themes] => 1
+				[edit_themes] => 1
+				[activate_plugins] => 1
+				[edit_plugins] => 1
+				[edit_users] => 1
+				[edit_files] => 1
+				[manage_options] => 1
+				[moderate_comments] => 1
+				[manage_categories] => 1
+				[manage_links] => 1
+				[upload_files] => 1
+				[import] => 1
+				[unfiltered_html] => 1
+				[edit_posts] => 1
+				[edit_others_posts] => 1
+				[edit_published_posts] => 1
+				[publish_posts] => 1
+				[edit_pages] => 1
+				[read] => 1
+				[level_10] => 1
+				[level_9] => 1
+				[level_8] => 1
+				[level_7] => 1
+				[level_6] => 1
+				[level_5] => 1
+				[level_4] => 1
+				[level_3] => 1
+				[level_2] => 1
+				[level_1] => 1
+				[level_0] => 1
+				[exec_php] => 1
+				[edit_others_pages] => 1
+				[edit_published_pages] => 1
+				[publish_pages] => 1
+				[delete_pages] => 1
+				[delete_others_pages] => 1
+				[delete_published_pages] => 1
+				[delete_posts] => 1
+				[delete_others_posts] => 1
+				[delete_published_posts] => 1
+				[delete_private_posts] => 1
+				[edit_private_posts] => 1
+				[read_private_posts] => 1
+				[delete_private_pages] => 1
+				[edit_private_pages] => 1
+				[read_private_pages] => 1
+				[delete_users] => 1
+				[create_users] => 1
+				[unfiltered_upload] => 1
+				[edit_dashboard] => 1
+				[update_plugins] => 1
+				[delete_plugins] => 1
+				[install_plugins] => 1
+				[update_themes] => 1
+				[install_themes] => 1
+				[update_core] => 1
+				[list_users] => 1
+				[remove_users] => 1
+				[add_users] => 1
+				[promote_users] => 1
+				[edit_theme_options] => 1
+				[delete_themes] => 1
+				[export] => 1
+				[administrator] => 1
+			)
+
+		[first_name] => Игорь
+		[last_name] => Алёшин
+		[filter] => 
+		[wallet] => 3090.00
+		[user_login] => admin
+		[user_pass] => $P$9f9It8Kpj56xOQprafuL49jfHEjvlW.
+		[user_nicename] => admin
+		[user_email] => admin@cartoonist.name
+		[user_url] => 
+		[user_registered] => 2007-01-15 15:32:35
+		[user_activation_key] => 
+		[user_status] => 0
+		[display_name] => admin
+		[discount] => 0.00
+		[contract] => aadmin
+		[wp_user_level] => 10
+		[wp_capabilities] => Array
+			(
+				[administrator] => 1
+			)
+
+		[nickname] => admin
+		[description] => 
+		[jabber] => 
+		[aim] => 
+		[yim] => 
+		[rich_editing] => true
+		[skype] => lyapustin
+		[icq] => 1516347
+		[wp_dashboard_quick_press_last_post_id] => 86
+		[plugins_last_view] => active
+		[wp_usersettings] => m11=c&m10=o&m12=o&m7=o&m5=o&m8=o&m6=o&m1=c&m3=c&m4=c&imgsize=large&galfile=1&editor=html&uploader=1&urlbutton=file&align=center
+		[wp_usersettingstime] => 1286619937
+		[closedpostboxes_page] => Array
+			(
+				[0] => postcustom
+				[1] => authordiv
+			)
+
+		[metaboxhidden_page] => Array
+			(
+				[0] => slugdiv
+			)
+
+		[closedpostboxes_dashboard] => Array
+			(
+				[0] => dashboard_right_now
+				[1] => dashboard_recent_comments
+				[2] => dashboard_incoming_links
+				[3] => dashboard_recent_drafts
+			)
+
+		[metaboxhidden_dashboard] => Array
+			(
+			)
+
+		[comment_shortcuts] => false
+		[admin_color] => fresh
+		[use_ssl] => 0
+		[user_level] => 10
+		[user_firstname] => Игорь
+		[user_lastname] => Алёшин
+		[user_description] => 
+	)
+
+
+
+	POST: Array
+	(
+		[total] => 200
+		[collected_data] => Array
+			(
+				[1] => Игорь
+				[2] => Алёшин
+				[3] => admin@cartoonist.name
+				[4] => 
+				[5] => 
+			)
+
+		[agree] => yes
+		[payment_method] => wallet
+		[submitwpcheckout] => true
+		[submit] => Оплатить
+	)
+
+
+
+	SESSION: Array
+	(
+		[selected_country] => 
+		[cart_paid] => 
+		[nzshpcrt_cart] => Array
+			(
+				[1] => cart_item Object
+					(
+						[product_id] => 6155
+						[product_variations] => 
+						[quantity] => 1
+						[name] => Ожидаемый подарок
+						[price] => 200.00
+						[license] => l1_price
+						[author] => Тарасенко Валерий
+					)
+
+			)
+
+		[total] => 200
+		[nzshpcrt_serialized_cart] => a:1:{i:1;O:9:"cart_item":7:{s:10:"product_id";s:4:"6155";s:18:"product_variations";N;s:8:"quantity";i:1;s:4:"name";s:33:"Ожидаемый подарок";s:5:"price";s:6:"200.00";s:7:"license";s:8:"l1_price";s:6:"author";s:33:"Тарасенко Валерий";}}
+		[collected_data] => Array
+			(
+				[1] => Игорь
+				[2] => Алёшин
+				[3] => admin@cartoonist.name
+				[4] => 
+				[5] => 
+			)
+
+		[checkoutdata] => Array
+			(
+				[total] => 200
+				[collected_data] => Array
+					(
+						[1] => Игорь
+						[2] => Алёшин
+						[3] => admin@cartoonist.name
+						[4] => 
+						[5] => 
+					)
+
+				[agree] => yes
+				[payment_method] => wallet
+				[submitwpcheckout] => true
+				[submit] => Оплатить
+			)
+
+	)
+
+
+	wpdb: wpdb Object
+	(
+		[show_errors] => 1
+		[suppress_errors] => 
+		[last_error] => 
+		[num_queries] => 9
+		[num_rows] => 1
+		[rows_affected] => 0
+		[insert_id] => 0
+		[last_query] => SELECT * FROM `wp_collect_data_forms` WHERE `id` = '5' LIMIT 1
+		[last_result] => Array
+			(
+				[0] => stdClass Object
+					(
+						[id] => 5
+						[name] => Адрес 2
+						[type] => text
+						[mandatory] => 0
+						[display_log] => 0
+						[default] => 
+						[active] => 0
+						[order] => 5
+					)
+
+			)
+
+		[col_info] => Array
+			(
+				[0] => stdClass Object
+					(
+						[name] => id
+						[table] => wp_collect_data_forms
+						[def] => 
+						[max_length] => 1
+						[not_null] => 1
+						[primary_key] => 1
+						[multiple_key] => 0
+						[unique_key] => 0
+						[numeric] => 1
+						[blob] => 0
+						[type] => int
+						[unsigned] => 1
+						[zerofill] => 0
+					)
+
+				[1] => stdClass Object
+					(
+						[name] => name
+						[table] => wp_collect_data_forms
+						[def] => 
+						[max_length] => 12
+						[not_null] => 1
+						[primary_key] => 0
+						[multiple_key] => 0
+						[unique_key] => 0
+						[numeric] => 0
+						[blob] => 0
+						[type] => string
+						[unsigned] => 0
+						[zerofill] => 0
+					)
+
+				[2] => stdClass Object
+					(
+						[name] => type
+						[table] => wp_collect_data_forms
+						[def] => 
+						[max_length] => 4
+						[not_null] => 1
+						[primary_key] => 0
+						[multiple_key] => 0
+						[unique_key] => 0
+						[numeric] => 0
+						[blob] => 0
+						[type] => string
+						[unsigned] => 0
+						[zerofill] => 0
+					)
+
+				[3] => stdClass Object
+					(
+						[name] => mandatory
+						[table] => wp_collect_data_forms
+						[def] => 
+						[max_length] => 1
+						[not_null] => 1
+						[primary_key] => 0
+						[multiple_key] => 0
+						[unique_key] => 0
+						[numeric] => 0
+						[blob] => 0
+						[type] => string
+						[unsigned] => 0
+						[zerofill] => 0
+					)
+
+				[4] => stdClass Object
+					(
+						[name] => display_log
+						[table] => wp_collect_data_forms
+						[def] => 
+						[max_length] => 1
+						[not_null] => 1
+						[primary_key] => 0
+						[multiple_key] => 0
+						[unique_key] => 0
+						[numeric] => 0
+						[blob] => 0
+						[type] => string
+						[unsigned] => 0
+						[zerofill] => 0
+					)
+
+				[5] => stdClass Object
+					(
+						[name] => default
+						[table] => wp_collect_data_forms
+						[def] => 
+						[max_length] => 0
+						[not_null] => 1
+						[primary_key] => 0
+						[multiple_key] => 0
+						[unique_key] => 0
+						[numeric] => 0
+						[blob] => 0
+						[type] => string
+						[unsigned] => 0
+						[zerofill] => 0
+					)
+
+				[6] => stdClass Object
+					(
+						[name] => active
+						[table] => wp_collect_data_forms
+						[def] => 
+						[max_length] => 1
+						[not_null] => 1
+						[primary_key] => 0
+						[multiple_key] => 0
+						[unique_key] => 0
+						[numeric] => 0
+						[blob] => 0
+						[type] => string
+						[unsigned] => 0
+						[zerofill] => 0
+					)
+
+				[7] => stdClass Object
+					(
+						[name] => order
+						[table] => wp_collect_data_forms
+						[def] => 
+						[max_length] => 1
+						[not_null] => 1
+						[primary_key] => 0
+						[multiple_key] => 1
+						[unique_key] => 0
+						[numeric] => 1
+						[blob] => 0
+						[type] => int
+						[unsigned] => 1
+						[zerofill] => 0
+					)
+
+			)
+
+		[queries] => 
+		[prefix] => wp_
+		[ready] => 1
+		[blogid] => 0
+		[siteid] => 0
+		[tables] => Array
+			(
+				[0] => posts
+				[1] => comments
+				[2] => links
+				[3] => options
+				[4] => postmeta
+				[5] => terms
+				[6] => term_taxonomy
+				[7] => term_relationships
+				[8] => commentmeta
+			)
+
+		[old_tables] => Array
+			(
+				[0] => categories
+				[1] => post2cat
+				[2] => link2cat
+			)
+
+		[global_tables] => Array
+			(
+				[0] => users
+				[1] => usermeta
+			)
+
+		[ms_global_tables] => Array
+			(
+				[0] => blogs
+				[1] => signups
+				[2] => site
+				[3] => sitemeta
+				[4] => sitecategories
+				[5] => registration_log
+				[6] => blog_versions
+			)
+
+		[comments] => wp_comments
+		[commentmeta] => wp_commentmeta
+		[links] => wp_links
+		[options] => wp_options
+		[postmeta] => wp_postmeta
+		[posts] => wp_posts
+		[terms] => wp_terms
+		[term_relationships] => wp_term_relationships
+		[term_taxonomy] => wp_term_taxonomy
+		[usermeta] => wp_usermeta
+		[users] => wp_users
+		[blogs] => 
+		[blog_versions] => 
+		[registration_log] => 
+		[signups] => 
+		[site] => 
+		[sitecategories] => 
+		[sitemeta] => 
+		[field_types] => Array
+			(
+				[post_author] => %d
+				[post_parent] => %d
+				[menu_order] => %d
+				[term_id] => %d
+				[term_group] => %d
+				[term_taxonomy_id] => %d
+				[parent] => %d
+				[count] => %d
+				[object_id] => %d
+				[term_order] => %d
+				[ID] => %d
+				[commment_ID] => %d
+				[comment_post_ID] => %d
+				[comment_parent] => %d
+				[user_id] => %d
+				[link_id] => %d
+				[link_owner] => %d
+				[link_rating] => %d
+				[option_id] => %d
+				[blog_id] => %d
+				[meta_id] => %d
+				[post_id] => %d
+				[user_status] => %d
+				[umeta_id] => %d
+				[comment_karma] => %d
+				[comment_count] => %d
+				[active] => %d
+				[cat_id] => %d
+				[deleted] => %d
+				[lang_id] => %d
+				[mature] => %d
+				[public] => %d
+				[site_id] => %d
+				[spam] => %d
+			)
+
+		[charset] => utf8
+		[collate] => 
+		[real_escape] => 1
+		[dbuser] => z58365_cbru3
+		[func_call] => $db->query("SELECT * FROM `wp_collect_data_forms` WHERE `id` = '5' LIMIT 1")
+		[dbh] => Resource id #5
+		[base_prefix] => wp_
+		[categories] => wp_categories
+		[post2cat] => wp_post2cat
+		[link2cat] => wp_link2cat
+		[last_db_used] => other/read
+		[result] => Resource id #36
+	)
+
+
+*/
+
+    $sql = "INSERT INTO `wp_purchase_logs` (`id` , `totalprice` , `sessionid` , `user_id`, `firstname`, `lastname`, `email`, `date`, `shipping_country`,`address`, `phone` ) VALUES ('', '".$wpdb->escape($_SESSION['total'])."', '".$sessionid."', '".$_current_user_id."', '".$wpdb->escape($_POST['collected_data']['1'])."', '".$wpdb->escape($_POST['collected_data']['2'])."', '".$_POST['collected_data']['3']."', '".time()."', '', '".$_POST['collected_data']['5']."', '".$_POST['collected_data']['4']."')";
 
    $wpdb->query($sql) ;
    
