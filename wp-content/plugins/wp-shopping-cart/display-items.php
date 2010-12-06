@@ -922,11 +922,16 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
 
         echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px;'>\n\r";
         echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'>".TXT_WPSC_EDIT."</a>";
-        echo "<br><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>";
+  if (isset($current_user->wp_capabilities['author']) &&	$current_user->wp_capabilities['author']==1) 
+	  {
+		echo "";
+	  }
+  else {
+		echo "<br><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>";
+	  }
         echo "            </td>\n\r";
 
         echo "            <td style='font-size:10px;'>\n\r";
-        //echo "<a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>";
         echo "            </td>\n\r";
         
         echo "          </tr>\n\r";
