@@ -248,6 +248,11 @@ else
 	<br><span class="description"><?php _e("Личный Счёт можно пополнить по безналичному расчёту."); ?></td>
 </tr>
 
+
+<?
+if (esc_attr(round($profileuser->discount,0))>0)
+{
+?>
 <tr>
     <th><label for="discount"><?php _e('Ваша скидка (%)'); ?> </span></label></th>
     <td>
@@ -258,7 +263,9 @@ else
 <?php }?>
 	<br><span class="description"><?php _e("Размер скидки определяется администрацией."); ?></td>
 </tr>
-
+<?
+}
+?>
 
 </table>
 
