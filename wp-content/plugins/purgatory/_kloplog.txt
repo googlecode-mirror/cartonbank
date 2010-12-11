@@ -1,0 +1,9 @@
+
+ result=Resource id #6
+ sql=update wp_product_list set approved=1 where image_id='2378'
+ up_value=11
+ sql=update wp_product_list set approved=1 where image_id='2378'
+ up_value=12
+ sql=update wp_product_list set approved=1 where id='2378'
+ up_value=3
+ sql=update wp_product_list set approved=1 where id='3312'
