@@ -1,3 +1,12 @@
+<?
+//header("Location: http://cartoonbank.ru");
+/*
+if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29")
+{
+	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,8140));
+}
+*/
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
@@ -10,11 +19,6 @@
 <meta name="generator" content="WordPress <?php bloginfo('version'); ?>" />
 
 <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank2/images/favicon.ico" type="image/x-icon" />
-<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url'); ?>" />
-<link rel="alternate" type="text/xml" title="RSS .92" href="<?php bloginfo('rss_url'); ?>" />
-<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<?php bloginfo('atom_url'); ?>" />
-<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
-<?php wp_get_archives('type=monthly&format=link'); ?>
 <?php wp_head(); ?>
 <style type="text/css" media="screen">
 <!-- @import url( <?php bloginfo('stylesheet_url'); ?> ); -->
@@ -86,6 +90,5 @@ function selected_style()
 		<li><a href="?page_id=97" <? $_GET['page_id']=='97'? selected_style():"" ?> >Клиентам</a></li>
 		<li><a href="?page_id=907" <? $_GET['page_id']=='907'? selected_style():"" ?> >Зрителям</a></li>
 		<li><a href="?page_id=2" <? $_GET['page_id']=='2'? selected_style():"" ?> >Ответы</a></li>
-	</ul>
+		<li><a href="?page_id=976" <? $_GET['page_id']=='976'? selected_style():"" ?> >Контакты</a></li>	</ul>
 </div>
-<a name="pagetop">&nbsp;</a>
