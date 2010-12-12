@@ -28,7 +28,7 @@ $row=mysql_fetch_array($result);
 $up_value=$row['up'];
 
 		//fw("\n\r up_value=".$up_value);
-		if ($up_value >= $limit)
+		if ($up_value >= $limit_plus) // 2 плюса - проходит, 3 минуса - не проходит
 		{
 			$sql = "update wp_product_list set approved=1 where id='$id'";
 			//fw("\n\r sql=".$sql);

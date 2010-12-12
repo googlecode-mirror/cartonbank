@@ -28,7 +28,7 @@ if($_POST['id'])
 	$down_value=$row['down'];
 
 		//fw("\n\r up_value=".$up_value);
-		if ($down_value >= $limit)
+		if ($down_value >= $limit_minus) // 2 плюса - проходит, 3 минуса - не проходит
 		{
 			$sql = "update wp_product_list set approved=0 where id='$id'";
 			//fw("\n\r sql=".$sql);
