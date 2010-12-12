@@ -231,7 +231,7 @@ $visible = '0';
 $_price='';
 $_pnp = '';
 $_international_pnp = '';
-$approved = '';
+$approved = Null;
 
 if (isset($_POST['approved']) && $_POST['approved'] == 'on')
     {$approved = '1';} else {$approved = '0';}  
@@ -313,15 +313,31 @@ if (isset($_POST['brand']) && is_numeric($_POST['brand']))
 	{$_brand = $wpdb->escape($_POST['brand']);}
 else {$_brand = $user_brand;}
 
-  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `approved`, `color`, `not_for_sale`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$_brand."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', '$approved', '$colored', '$not_for_sale', '$portfolio', $l1_price, $l2_price, $l3_price);";
+  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `approved`, `color`, `not_for_sale`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$_brand."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', NULL, '$colored', '$not_for_sale', '$portfolio', $l1_price, $l2_price, $l3_price);";
 
-   mail("igor.aleshin@gmail.com","new cartoon added",print_r($insertsql,true));
-
+	mail("igor.aleshin@gmail.com","new cartoon added",print_r($insertsql,true));
+	
   if($wpdb->query($insertsql))
     {
     $product_id_data = $wpdb->get_results("SELECT LAST_INSERT_ID() AS `id` FROM `wp_product_list` LIMIT 1",ARRAY_A);
     $product_id = $product_id_data[0]['id'];
-  
+	
+	$new_id = mysql_insert_id();
+	//mail("igor.aleshin@gmail.com","добавлена картинка ".$new_id,$new_id);
+
+	$sql_purgery = "insert into al_editors_votes (image_id, up, down) values ('".$new_id."','0','0')";
+	$wpdb->query($sql_purgery);
+
+	$votecontent = "<html><head><title>Please vote!</title></head> <body>Please vote!<br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br> <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=aleshin&id=".$new_id."'>Пропустить в Банк</a> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=aleshin&id=".$new_id."'>Отправить в Стол</a> </body></html>";
+
+	// To send HTML mail, the Content-type header must be set
+	$headers  = 'MIME-Version: 1.0' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
+	//mail($to, $subject, $message, $headers);
+	mail("igor.aleshin@gmail.com","Please make your vote!",$votecontent,$headers);
+	
+ 
   if(isset ($_FILES['extra_image']) && ($_FILES['extra_image'] != null) && function_exists('edit_submit_extra_images'))
     {
     $var = edit_submit_extra_images($product_id);
@@ -596,7 +612,7 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
     if (isset($_POST['visible']) && $_POST['visible'] == 'on')
         $visible = '1'; 
     if (isset($_POST['approved']) && $_POST['approved'] == 'on')
-        {$approved = '1';} else {$approved = '0';}
+        {$approved = '1';} else {$approved = Null;}
     if (isset($_POST['colored']) && $_POST['colored'] == 'on'){$colored = '1';}
         else {$colored = '0';}
     if (isset($_POST['not_for_sale']) && $_POST['not_for_sale'] == 'on'){$not_for_sale = '1';}
@@ -672,7 +688,6 @@ else
 
       $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$_brand."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `approved`='$approved', `color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
 
-	  //mail("igor.aleshin@gmail.com","old cartoon updated",print_r($updatesql,true));
 
       $wpdb->query($updatesql);
       if($image != null)
