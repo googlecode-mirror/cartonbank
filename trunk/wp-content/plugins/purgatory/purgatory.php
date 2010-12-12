@@ -1,14 +1,30 @@
+<?
+if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
+{
+echo ("<h3>Извините, у вас нет права доступа к этой странице</h3>");
+exit;
+}
+?>
+
 <h3>Чистилище</h3>
 
+
 <?
+include("config.php");
+
 	$sql=mysql_query("SELECT id, name FROM wp_product_brands where active = 1 order by name");
+
+	?>
+	<b>Проходной балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса.
+	
+	<br><b>Фильтр по авторам</b>: <?
 
 	while($row=mysql_fetch_array($sql))
 	{
 	$id=$row['id'];
 	$name=$row['name'];
 	?>
-	<a href="http://localhost/wp-admin/admin.php?page=purgatory/purgatory.php&brand=<?echo $id;?>"><?echo $name;?></a>; 
+	<a href="http://karikashop.com/cb/wp-admin/admin.php?page=purgatory/purgatory.php&brand=<?echo $id;?>"><?echo $name;?></a>; 
 	<?
 	}
 ?>
@@ -16,7 +32,7 @@
 
 
 
-<script type="text/javascript" src="http://localhost/wp-content/plugins/purgatory/jquery.js"></script>
+<script type="text/javascript" src="http://karikashop.com/cb/wp-content/plugins/purgatory/jquery.js"></script>
 <script type="text/javascript">
 	$(function() {
 	$(".vote").click(function() 
@@ -32,7 +48,7 @@
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
-	   url: "http://localhost/wp-content/plugins/purgatory/up_vote.php",
+	   url: "http://karikashop.com/cb/wp-content/plugins/purgatory/up_vote.php",
 	   data: dataString,
 	   cache: false,
 
@@ -48,7 +64,7 @@
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
-	   url: "http://localhost/wp-content/plugins/purgatory/down_vote.php",
+	   url: "http://karikashop.com/cb/wp-content/plugins/purgatory/down_vote.php",
 	   data: dataString,
 	   cache: false,
 
@@ -73,14 +89,14 @@ function sendup(id)
    {
 	var myelemname = "up"+id;
 	var mydiv = document.getElementById(myelemname);
-	ajax.post("http://localhost/wp-content/plugins/purgatory/up_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
+	ajax.post("http://karikashop.com/cb/wp-content/plugins/purgatory/up_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
    }
 
 function senddown(id)
    {
 	var myelemname = "down"+id;
 	var mydiv = document.getElementById(myelemname);
-	ajax.post("http://localhost/wp-content/plugins/purgatory/down_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
+	ajax.post("http://karikashop.com/cb/wp-content/plugins/purgatory/down_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
    }
 
 </script>
@@ -177,8 +193,7 @@ function senddown(id)
 
 <div>
 
-	<?php
-		include("config.php");
+<?php
 
 if (isset($_GET['brand'])&&is_numeric($_GET['brand']))
 {
@@ -204,8 +219,8 @@ else
 		$up=$row['up'];
 		$down=$row['down'];
 		$img=$row['image'];
-		$imgpath = "http://localhost/wp-content/plugins/wp-shopping-cart/images/".$img; 
-		$previewpath = "http://localhost/wp-content/plugins/wp-shopping-cart/product_images/".$img;
+		$imgpath = "http://karikashop.com/cb/wp-content/plugins/wp-shopping-cart/images/".$img; 
+		$previewpath = "http://karikashop.com/cb/wp-content/plugins/wp-shopping-cart/product_images/".$img;
 		$imgname=$row['name'];
 		$artist=$row['Artist'];
 		?>

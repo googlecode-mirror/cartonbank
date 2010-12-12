@@ -17,7 +17,7 @@ $count=mysql_num_rows($ip_sql);
 		mysql_query( $sql);
 		
 
-		$sql_in = "insert into al_editors_votes (mes_id_fk,ip_add) values ('$id','$ip')";
+		$sql_in = "insert into al_editors_voting_ip (mes_id_fk,ip_add) values ('$id','$ip')";
 		mysql_query( $sql_in);
 	}
 
