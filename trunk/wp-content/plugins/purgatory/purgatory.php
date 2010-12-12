@@ -1,5 +1,21 @@
 <h3>Чистилище</h3>
 
+<?
+	$sql=mysql_query("SELECT id, name FROM wp_product_brands where active = 1 order by name");
+
+	while($row=mysql_fetch_array($sql))
+	{
+	$id=$row['id'];
+	$name=$row['name'];
+	?>
+	<a href="http://localhost/wp-admin/admin.php?page=purgatory/purgatory.php&brand=<?echo $id;?>"><?echo $name;?></a>; 
+	<?
+	}
+?>
+
+
+
+
 <script type="text/javascript" src="http://localhost/wp-content/plugins/purgatory/jquery.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -164,10 +180,21 @@ function senddown(id)
 	<?php
 		include("config.php");
 
+if (isset($_GET['brand'])&&is_numeric($_GET['brand']))
+{
+	$brand=$_GET['brand'];
+	$sql_brand = " AND B.id = $brand ";
+}
+else
+{
+	$brand=0;
+	$sql_brand = "";
+}
+
 		$sql=mysql_query("SELECT V.image_id, V.up, V.down, P.name, P.image, B.name AS Artist, P.approved FROM al_editors_votes AS V, wp_product_list AS P, wp_product_brands AS B 
 							WHERE V.image_id=P.id 
 							AND P.brand = B.id
-							AND P.approved is NULL
+							AND (P.approved is NULL)".$sql_brand."
 							Limit 40");
 
 		while($row=mysql_fetch_array($sql))

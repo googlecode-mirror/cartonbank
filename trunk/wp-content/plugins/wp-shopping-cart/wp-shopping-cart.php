@@ -946,14 +946,25 @@ function nzshpcrt_submit_ajax()
   $output .= brandslist($product['brand']);
 
   $approved = 0;
+		//pokazh($product,"product: ");
+		//pokazh($current_user);
 	if ($product['approved'] == '1')
+	  {
 		$approved = " checked='checked'";
-//pokazh($current_user->wp_capabilities);
-	if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
-		{$output .= "<input type='checkbox' name='approved'".$approved."/> Утвержено.";}
-	else if (isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabilities['editor']==1)
-		{$output .= "<input type='checkbox' name='approved'".$approved."/> Утвержено.";}
-
+		if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
+			{$output .= "<input type='checkbox' name='approved'".$approved."/> Утвержено.";}
+		else if (isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabilities['editor']==1)
+			{$output .= "<input type='checkbox' name='approved'".$approved."/> Утвержено.";}
+		$output .= "<div style='color:#669900'>Картинка находится в <b>хранилище банка</b></div>";
+	  }
+	  elseif($product['approved'] == '0')
+	  {
+		$output .= "<div style='color:#9900CC'>Картинка может находиться в <b>Рабочем столе</b></div>";
+	  }
+	  else
+	  {
+		$output .= "<div style='color:#FF6600'>Картинка находится в <b>прихожей банка</b> в ожидании приёма</div>";
+	  }
   
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
@@ -1090,7 +1101,7 @@ function nzshpcrt_submit_ajax()
 
   $output .= "          <tr>\n\r";
   $output .= "            <td colspan='2'>\n\r";
-  $output .= "<br><a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id']."' >нажмите здесь, чтобы обновить иконку и слайд с водяными знаками</a>";
+  $output .= "<br><a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id']."' >обновить иконку и слайд с водяными знаками</a>";
   // class='button'
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
@@ -1259,7 +1270,11 @@ function nzshpcrt_submit_ajax()
   
   $output .= "<br><input type=\"button\" class='edit_button' style='padding:6px; background-color:#93F273;' name='sendit' value='сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
 
-  $output .= "<br><br><br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >стереть изображение</a>";
+if ($product['approved'] != '1')
+	{
+		$output .= "<br><br><br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >стереть изображение</a>";
+	}
+
   
   $output .= "            <td>\n\r";
   $output .= "          </tr>\n\r";

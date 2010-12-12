@@ -1,4 +1,11 @@
 <?php
+
+//if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "karikashop.com/cb/?page_id=29")
+//{
+	//header("Location: http://karikashop.com/cb/?page_id=29&offset=".rand(0,5000));
+	//header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,5000));
+//}
+
 /**
  * Loads the WordPress environment and template.
  *
