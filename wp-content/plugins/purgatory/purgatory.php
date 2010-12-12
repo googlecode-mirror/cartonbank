@@ -6,7 +6,7 @@ exit;
 }
 ?>
 
-<h3>Чистилище</h3>
+<h3>Прихожая</h3>
 
 
 <?
@@ -15,7 +15,7 @@ include("config.php");
 	$sql=mysql_query("SELECT id, name FROM wp_product_brands where active = 1 order by name");
 
 	?>
-	<b>Проходной балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса.
+	<b>Минимальный балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса.
 	
 	<br><b>Фильтр по авторам</b>: <?
 
@@ -24,15 +24,14 @@ include("config.php");
 	$id=$row['id'];
 	$name=$row['name'];
 	?>
-	<a href="http://karikashop.com/cb/wp-admin/admin.php?page=purgatory/purgatory.php&brand=<?echo $id;?>"><?echo $name;?></a>; 
+	<a href="http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php&brand=<?echo $id;?>"><?echo $name;?></a>; 
 	<?
 	}
-?>
+?><br><br>
 
 
 
-
-<script type="text/javascript" src="http://karikashop.com/cb/wp-content/plugins/purgatory/jquery.js"></script>
+<script type="text/javascript" src="http://cartoonbank.ru/wp-content/plugins/purgatory/jquery.js"></script>
 <script type="text/javascript">
 	$(function() {
 	$(".vote").click(function() 
@@ -48,7 +47,7 @@ include("config.php");
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
-	   url: "http://karikashop.com/cb/wp-content/plugins/purgatory/up_vote.php",
+	   url: "http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php",
 	   data: dataString,
 	   cache: false,
 
@@ -64,7 +63,7 @@ include("config.php");
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
-	   url: "http://karikashop.com/cb/wp-content/plugins/purgatory/down_vote.php",
+	   url: "http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php",
 	   data: dataString,
 	   cache: false,
 
@@ -89,14 +88,14 @@ function sendup(id)
    {
 	var myelemname = "up"+id;
 	var mydiv = document.getElementById(myelemname);
-	ajax.post("http://karikashop.com/cb/wp-content/plugins/purgatory/up_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
+	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
    }
 
 function senddown(id)
    {
 	var myelemname = "down"+id;
 	var mydiv = document.getElementById(myelemname);
-	ajax.post("http://karikashop.com/cb/wp-content/plugins/purgatory/down_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
+	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
    }
 
 </script>
@@ -209,7 +208,9 @@ else
 		$sql=mysql_query("SELECT V.image_id, V.up, V.down, P.name, P.image, B.name AS Artist, P.approved FROM al_editors_votes AS V, wp_product_list AS P, wp_product_brands AS B 
 							WHERE V.image_id=P.id 
 							AND P.brand = B.id
-							AND (P.approved is NULL)".$sql_brand."
+							AND P.active = '1'
+							AND ((P.approved is NULL) OR (P.approved = ''))".$sql_brand."
+							ORDER BY P.id DESC
 							Limit 40");
 
 		while($row=mysql_fetch_array($sql))
@@ -219,8 +220,8 @@ else
 		$up=$row['up'];
 		$down=$row['down'];
 		$img=$row['image'];
-		$imgpath = "http://karikashop.com/cb/wp-content/plugins/wp-shopping-cart/images/".$img; 
-		$previewpath = "http://karikashop.com/cb/wp-content/plugins/wp-shopping-cart/product_images/".$img;
+		$imgpath = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$img; 
+		$previewpath = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$img;
 		$imgname=$row['name'];
 		$artist=$row['Artist'];
 		?>

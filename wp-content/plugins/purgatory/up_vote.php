@@ -15,7 +15,6 @@ $count=mysql_num_rows($ip_sql);
 	{
 		$sql = "update al_editors_votes set up=up+1  where image_id='$id'";
 		mysql_query( $sql);
-		
 
 		$sql_in = "insert into al_editors_voting_ip (mes_id_fk,ip_add) values ('$id','$ip')";
 		mysql_query( $sql_in);
