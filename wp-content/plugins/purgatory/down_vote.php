@@ -1,12 +1,18 @@
 <?php
 include("config.php");
 
-$ip=$_SERVER['REMOTE_ADDR']; 
+$ip = 'none';
+if (isset($_GET['ip']))
+	{$ip = $_GET['ip'];}
+elseif (isset($_SERVER['REMOTE_ADDR']) and $_SERVER['REMOTE_ADDR'] != '')
+	{$ip=$_SERVER['REMOTE_ADDR'];}
 
-
-if($_POST['id'])
+if($_POST['id'] or $_GET['id'])
 {
+if (isset($_POST['id']))
 	$id=$_POST['id'];
+elseif (isset($_GET['id']))
+	$id=$_GET['id'];
 	$id = mysql_escape_String($id);
 
 	$ip_sql=mysql_query("select ip_add from al_editors_voting_ip where mes_id_fk='$id' and ip_add='$ip'");

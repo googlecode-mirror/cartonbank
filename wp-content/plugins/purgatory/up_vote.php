@@ -1,15 +1,23 @@
 <?php
 include("config.php");
 
-$ip=$_SERVER['REMOTE_ADDR']; 
+$ip = 'none';
+if (isset($_GET['ip']))
+	{$ip = $_GET['ip'];}
+elseif (isset($_SERVER['REMOTE_ADDR']) and $_SERVER['REMOTE_ADDR'] != '')
+	{$ip=$_SERVER['REMOTE_ADDR'];}
 
-if($_POST['id'])
+if($_POST['id'] or $_GET['id'])
 {
-$id=$_POST['id'];
-$id = mysql_escape_String($id);
+if (isset($_POST['id']))
+	$id=$_POST['id'];
+elseif (isset($_GET['id']))
+	$id=$_GET['id'];
+	$id = mysql_escape_String($id);
 
-$ip_sql=mysql_query("select ip_add from al_editors_voting_ip where mes_id_fk='$id' and ip_add='$ip'");
-$count=mysql_num_rows($ip_sql);
+
+	$ip_sql=mysql_query("select ip_add from al_editors_voting_ip where mes_id_fk='$id' and ip_add='$ip'");
+	$count=mysql_num_rows($ip_sql);
 
 	if($count==0)
 	{
@@ -20,21 +28,20 @@ $count=mysql_num_rows($ip_sql);
 		mysql_query( $sql_in);
 	}
 
-$result=mysql_query("select up from al_editors_votes where image_id='$id'");
+	$result=mysql_query("select up from al_editors_votes where image_id='$id'");
 
+	$row=mysql_fetch_array($result);
+	$up_value=$row['up'];
 
-$row=mysql_fetch_array($result);
-$up_value=$row['up'];
+			//fw("\n\r up_value=".$up_value);
+			if ($up_value >= $limit_plus) // 2 плюса - проходит, 3 минуса - не проходит
+			{
+				$sql = "update wp_product_list set approved=1 where id='$id'";
+				//fw("\n\r sql=".$sql);
+				mysql_query( $sql);
+			}
 
-		//fw("\n\r up_value=".$up_value);
-		if ($up_value >= $limit_plus) // 2 плюса - проходит, 3 минуса - не проходит
-		{
-			$sql = "update wp_product_list set approved=1 where id='$id'";
-			//fw("\n\r sql=".$sql);
-			mysql_query( $sql);
-		}
-
-echo $up_value;
+	echo $up_value;
 }
 
 function fw($text)
