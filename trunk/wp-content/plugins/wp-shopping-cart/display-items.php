@@ -315,7 +315,13 @@ else {$_brand = $user_brand;}
 
   $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `approved`, `color`, `not_for_sale`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$_brand."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', NULL, '$colored', '$not_for_sale', '$portfolio', $l1_price, $l2_price, $l3_price);";
 
-	mail("igor.aleshin@gmail.com","new cartoon added",print_r($insertsql,true));
+	// To send HTML mail, the Content-type header must be set
+	$headers  = 'MIME-Version: 1.0' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
+
+	//mail($to, $subject, $message, $headers);
+	//mail("igor.aleshin@gmail.com","new cartoon added",print_r($insertsql,true),$headers);
 	
   if($wpdb->query($insertsql))
     {
@@ -328,14 +334,18 @@ else {$_brand = $user_brand;}
 	$sql_purgery = "insert into al_editors_votes (image_id, up, down) values ('".$new_id."','0','0')";
 	$wpdb->query($sql_purgery);
 
-	$votecontent = "<html><head><title>Please vote!</title></head> <body>Please vote!<br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br> <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=aleshin&id=".$new_id."'>Пропустить в Банк</a> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=aleshin&id=".$new_id."'>Отправить в Стол</a> </body></html>";
 
-	// To send HTML mail, the Content-type header must be set
-	$headers  = 'MIME-Version: 1.0' . "\r\n";
-	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
-	//mail($to, $subject, $message, $headers);
-	mail("igor.aleshin@gmail.com","Please make your vote!",$votecontent,$headers);
+	// aleshin
+	$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br> <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=igor.aleshin@gmail.com&id=".$new_id."'>Пропустить в Банк</a> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=igor.aleshin@gmail.com&id=".$new_id."'>Отправить в Стол</a> </body></html>";
+	mail("igor.aleshin@gmail.com","Новая картинка в Прихожей!",$votecontent,$headers);
+
+	// bogorad
+	$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br> <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=vbogorad@mail.ru&id=".$new_id."'>Пропустить в Банк</a> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=vbogorad@mail.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
+	mail("vbogorad@mail.ru","Новая картинка в Прихожей!",$votecontent,$headers);
+
+	// shilov
+	$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br> <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=vfshilov@gmail.com&id=".$new_id."'>Пропустить в Банк</a> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=vfshilov@gmail.com&id=".$new_id."'>Отправить в Стол</a> </body></html>";
+	mail("vfshilov@gmail.com","Новая картинка в Прихожей!",$votecontent,$headers);
 	
  
   if(isset ($_FILES['extra_image']) && ($_FILES['extra_image'] != null) && function_exists('edit_submit_extra_images'))
