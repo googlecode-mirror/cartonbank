@@ -135,16 +135,18 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
             border: 0;
         }
         .datagrid tbody td.altrow {
-            background-color: #fff;
+            /*background-color: #fff;*/
         }
         .datagrid tbody td.altcol
         {
-          background-color: #eee;
+			border-left:1px solid #DBDBDB;
+          /*background-color: #eee;*/
         }
         .datagrid tbody td {
             padding: 2px;
 			font-size: 8pt;
 			border-bottom: 1px solid #DBDBDB;
+			border-left:1px solid #DBDBDB;
 			vertical-align:middle;
 			text-align:center;
         }
