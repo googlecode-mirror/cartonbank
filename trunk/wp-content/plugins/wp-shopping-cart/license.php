@@ -1,16 +1,16 @@
 <?
+
 $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
+
 
 if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
 	{$abspath = $abspath_2;}
 else if (strstr($_SERVER['DOCUMENT_ROOT'],'cb/')) 
 	{$abspath = $abspath_1;}
 
-
 require($abspath.'wp-blog-header.php');
-
 
 if (isset($_GET['l']) && is_numeric($_GET['l']))
  $license_num = ($_GET['l']);
@@ -33,14 +33,28 @@ function get_license($sequence_of_image,$license_num)
 // load unique license data
 	$current_user = wp_get_current_user();    
 
+//echo("<pre>".print_r($current_user,true)."</pre>");
+//echo("<pre>".print_r($_SESSION['nzshpcrt_cart'],true)."</pre>");
+
 	$agreement_number = uniqid();
 	$agreement_date = date("m.d.y");
 	$customer_name = $current_user->last_name. " " . $current_user->first_name;
+if (isset($current_user->user_description)&& $current_user->user_description!='')
+	$media_name = "«".$current_user->user_description."»";
+else
 	$media_name = '[не указано]';
+
+if (isset($current_user->discount) && $current_user->discount!='')
+	$discount = (int)$current_user->discount;
+else
+	$discount = 0;
 
 if(isset($_SESSION['nzshpcrt_cart']))
 {
 	$price = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> price;
+		$percent_to_pay = (100-$discount);
+		$price = ($price/100)*$percent_to_pay;
+
 	$image_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> name;
 	$image_number = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> product_id;
 	$author_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> author;
