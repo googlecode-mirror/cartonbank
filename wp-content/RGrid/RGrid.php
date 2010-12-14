@@ -441,7 +441,7 @@
             </tr>
         <?php endif ?>
 <?php if($this->showHeaders): ?>
-<tr><th  class="col_1"><a href="#">№</a></th><?php foreach($this->headers as $k => $h): ?><?php if(in_array($h, $this->hiddenColumns)) continue ?><th class="col_<?php echo $k ?>" title="<?php echo ($printable = !empty($this->colnames[$h]) ? $this->colnames[$h] : $h) ?>"><?php if($this->allowSorting AND !in_array($h, $this->noSort)): ?><a href="<? $this->get_clean_url()?>&orderBy=<?php echo $h ?>&orderDir=<?php echo (!empty($_GET['orderDir']) && $_GET['orderBy'] == $h ? 0 : 1) ?>"><?php echo $printable ?></a><?php else: ?><?php echo $printable ?><?php endif ?><?php if($this->allowSorting): ?><?php if($h == RGrid::$orderby['column']): ?><span style="font-family: WebDings"><?php echo (!empty(RGrid::$orderby['direction']) && trim(RGrid::$orderby['direction']) == 1 ? 5 : 6)?></span><?php endif?><?php endif?>
+<tr style="background-color:#CCCCCC;"><th  class="col_1"><a href="#">№</a></th><?php foreach($this->headers as $k => $h): ?><?php if(in_array($h, $this->hiddenColumns)) continue ?><th class="col_<?php echo $k ?>" title="<?php echo ($printable = !empty($this->colnames[$h]) ? $this->colnames[$h] : $h) ?>"><?php if($this->allowSorting AND !in_array($h, $this->noSort)): ?><a href="<? $this->get_clean_url()?>&orderBy=<?php echo $h ?>&orderDir=<?php echo (!empty($_GET['orderDir']) && $_GET['orderBy'] == $h ? 0 : 1) ?>"><?php echo $printable ?></a><?php else: ?><?php echo $printable ?><?php endif ?><?php if($this->allowSorting): ?><?php if($h == RGrid::$orderby['column']): ?><span style="font-family: WebDings"><?php echo (!empty(RGrid::$orderby['direction']) && trim(RGrid::$orderby['direction']) == 1 ? 5 : 6)?></span><?php endif?><?php endif?>
 </th><?php endforeach?></tr>
         <?php endif?>
     </thead>
@@ -451,7 +451,12 @@
             <?php if($this->rowcallback):?>
                 <?php call_user_func($this->rowcallback, &$row)?>
             <?php endif?>
-            <tr>
+			<?
+				if ($row['contract']!='')
+					{echo("<tr style='background-color:#E1FFC4;'>");}
+				else
+					{echo('<tr>');}
+			?>
 				<td class="altcol">
 						<b><?php echo (intval($this->startnum) + $rownum + 1);?></b>
 				</td>
