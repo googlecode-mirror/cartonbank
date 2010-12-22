@@ -453,6 +453,9 @@
             <?php endif?>
 			<?
 				if ($row['contract']!='')
+					if ($row['gateway']!='wallet')
+					{echo("<tr style='background-color:#CCFF66;'>");}
+					else
 					{echo("<tr style='background-color:#E1FFC4;'>");}
 				else
 					{echo('<tr>');}

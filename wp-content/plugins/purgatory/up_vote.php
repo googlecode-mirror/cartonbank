@@ -36,9 +36,14 @@ elseif (isset($_GET['id']))
 			//fw("\n\r up_value=".$up_value);
 			if ($up_value >= $limit_plus) // 2 плюса - проходит, 3 минуса - не проходит
 			{
+				// approve it to the main collection
 				$sql = "update wp_product_list set approved=1 where id='$id'";
 				//fw("\n\r sql=".$sql);
 				mysql_query( $sql);
+
+				//send update to twitter
+				//'http://cartoonbank.ru/wp-content/totwit/totwit.php?artist=Vasya&cid='.$id
+				$handle = fopen("http://cartoonbank.ru/wp-content/totwit/totwit.php?cid=".$id, "r");
 			}
 
 	echo $up_value;
