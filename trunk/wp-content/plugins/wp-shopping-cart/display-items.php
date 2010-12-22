@@ -351,6 +351,11 @@ else {$_brand = $user_brand;}
  	$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br> <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=popov.a.a@bk.ru&id=".$new_id."'>Пропустить в Банк</a> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=popov.a.a@bk.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
 	mail("popov.a.a@bk.ru","Новая картинка в Прихожей!",$votecontent,$headers);
 
+	// alexandrov
+ 	$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br> <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=Alexandrov_Vasil@mail.ru&id=".$new_id."'>Пропустить в Банк</a> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=Alexandrov_Vasil@mail.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
+	mail("Alexandrov_Vasil@mail.ru","Новая картинка в Прихожей!",$votecontent,$headers);
+
+
   if(isset ($_FILES['extra_image']) && ($_FILES['extra_image'] != null) && function_exists('edit_submit_extra_images'))
     {
     $var = edit_submit_extra_images($product_id);
