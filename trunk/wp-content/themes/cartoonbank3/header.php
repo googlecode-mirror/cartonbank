@@ -1,11 +1,11 @@
 <?
 //header("Location: http://cartoonbank.ru");
-/*
-if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29")
+
+if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29" && !isset($_POST['cs']))
 {
-	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,8140));
+	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,8300));
 }
-*/
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -18,7 +18,7 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 <title><?php wp_title(''); ?><?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?></title>
 <meta name="generator" content="WordPress <?php bloginfo('version'); ?>" />
 
-<link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
+<link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank2/images/favicon.ico" type="image/x-icon" />
 <?php wp_head(); ?>
 <style type="text/css" media="screen">
 <!-- @import url( <?php bloginfo('stylesheet_url'); ?> ); -->
@@ -85,10 +85,11 @@ function selected_style()
 <div id="navbar">
 	<ul> 
 		<li><a href="?page_id=95" <? $_GET['page_id']=='95'? selected_style():"" ?> >О проекте</a></li>
-		<li><a href="?page_id=29" <? $_GET['page_id']=='29'? selected_style():"" ?> >Банк изображений</a></li>
+		<li><a href="?page_id=29&offset=0" <? $_GET['page_id']=='29'? selected_style():"" ?> >Банк изображений</a></li>
 		<li><a href="?page_id=73" <? $_GET['page_id']=='73'? selected_style():"" ?> >Авторам</a></li>
 		<li><a href="?page_id=97" <? $_GET['page_id']=='97'? selected_style():"" ?> >Клиентам</a></li>
 		<li><a href="?page_id=907" <? $_GET['page_id']=='907'? selected_style():"" ?> >Зрителям</a></li>
 		<li><a href="?page_id=2" <? $_GET['page_id']=='2'? selected_style():"" ?> >Ответы</a></li>
-		<li><a href="?page_id=976" <? $_GET['page_id']=='976'? selected_style():"" ?> >Контакты</a></li>	</ul>
+		<li><a href="?page_id=976" <? $_GET['page_id']=='976'? selected_style():"" ?> >Контакты</a></li>
+	</ul>
 </div>
