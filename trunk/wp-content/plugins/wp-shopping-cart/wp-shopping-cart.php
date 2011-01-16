@@ -526,7 +526,7 @@ function nzshpcrt_submit_ajax()
           exit();
           }
           
-  
+  /*
   if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && is_numeric($_POST['currencyid']))
     {
     $currency_data = $wpdb->get_results("SELECT `symbol`,`symbol_html`,`code` FROM `wp_currency_list` WHERE `id`='".$_POST['currencyid']."' LIMIT 1",ARRAY_A) ;
@@ -542,7 +542,7 @@ function nzshpcrt_submit_ajax()
     echo $currency_sign;
     exit();
     }
-  
+  */
   
   /* rate item */    
   if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['rate_item'] == "true") && is_numeric($_POST['product_id']) && is_numeric($_POST['rating']))
@@ -631,7 +631,8 @@ function nzshpcrt_submit_ajax()
     drag_and_drop_cart_contents();
     exit();
     }
-  
+
+  /*
   if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['get_country_tax'] == "true") && preg_match("/[a-zA-Z]{2,4}/",$_POST['country_id']))  
     {
     $country_id = $_POST['country_id'];
@@ -656,7 +657,8 @@ function nzshpcrt_submit_ajax()
       else { echo "&nbsp;"; }
     exit();
     }
-    
+   */
+   
    if(isset($_POST['language_setting']) && ($_GET['page'] = 'wp-shopping-cart/options.php'))
     {
     if($user_level >= 7)
@@ -770,7 +772,7 @@ function nzshpcrt_submit_ajax()
     foreach($data as $purchase)
       {
       $country_sql = "SELECT * FROM `wp_submited_form_data` WHERE `log_id` = '".$purchase['id']."' AND `form_id` = '".get_option('country_form_field')."' LIMIT 1";
-      $country_data = $wpdb->get_results($country_sql,ARRAY_A);
+      $country_data = ''; //$wpdb->get_results($country_sql,ARRAY_A);
       $country = $country_data[0]['value'];
            
       $output .= "\"".nzshpcrt_find_total_price($purchase['id'],$country) ."\",";
@@ -948,21 +950,28 @@ function nzshpcrt_submit_ajax()
   $approved = 0;
 		//pokazh($product,"product: ");
 		//pokazh($current_user);
+
 	if ($product['approved'] == '1')
 	  {
 		$approved = " checked='checked'";
 		if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
-			{$output .= "<input type='checkbox' name='approved'".$approved."/> Утвержено.";}
+			{$output .= "<input type='checkbox' name='approved'".$approved."/> Утверждено.";}
 		else if (isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabilities['editor']==1)
 			{$output .= "<input type='checkbox' name='approved'".$approved."/> Утвержено.";}
 		$output .= "<div style='color:#669900'>Картинка находится в <b>хранилище банка</b></div>";
 	  }
 	  elseif($product['approved'] == '0')
 	  {
+		$approved = "";
+		if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
+			{$output .= "<input type='checkbox' name='approved'".$approved."/> Утверждено.";}
 		$output .= "<div style='color:#9900CC'>Картинка может находиться в <b>Рабочем столе</b></div>";
 	  }
 	  else
 	  {
+		$approved = "";
+		if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
+			{$output .= "<input type='checkbox' name='approved'".$approved."/> Утверждено.";}
 		$output .= "<div style='color:#FF6600'>Картинка находится в <b>прихожей банка</b> в ожидании приёма</div>";
 	  }
   
@@ -2303,7 +2312,7 @@ $current_user = wp_get_current_user();
     //$country = $wpdb->get_results("SELECT * FROM `wp_submited_form_data` WHERE `log_id`=".$getid[0]['id']." AND `form_id` = '".get_option('country_form_field')."' LIMIT 1",ARRAY_A);
     $country = '';//$country[0]['value'];
      
-     $country_data = $wpdb->get_row("SELECT * FROM `wp_currency_list` WHERE `isocode` IN('".get_option('base_country')."') LIMIT 1",ARRAY_A);
+     $country_data = ''; //$wpdb->get_row("SELECT * FROM `wp_currency_list` WHERE `isocode` IN('".get_option('base_country')."') LIMIT 1",ARRAY_A);
      
      // $shipping = $base_shipping + ($additional_shipping * $quantity);
      $shipping = 0;
@@ -2986,7 +2995,7 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
     global $wpdb;
     $output = "";
     $output .= "<option value=''></option>";
-    $country_data = $wpdb->get_results("SELECT * FROM `wp_currency_list` ORDER BY `country` ASC",ARRAY_A);
+    $country_data = ''; //$wpdb->get_results("SELECT * FROM `wp_currency_list` ORDER BY `country` ASC",ARRAY_A);
     foreach ($country_data as $country)
       {
       $selected ='';
@@ -3001,6 +3010,8 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
   
   function nzshpcrt_region_list($selected_country = null, $selected_region = null)
     {
+	exit; //ales
+	/*
     global $wpdb;
     if($selected_region == null)
       {
@@ -3031,6 +3042,7 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
         $output .= "<select name='base_region' disabled='true'><option value=''>None</option></select>\n\r";
         }
     return $output;
+	*/
     }
     
   function nzshpcrt_form_field_list($selected_field = null)
@@ -3055,7 +3067,7 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
  function get_country($country_code)  
   {
   global $wpdb;
-  $country_data = $wpdb->get_results("SELECT * FROM `wp_currency_list` WHERE `isocode` IN ('".$country_code."') LIMIT 1",ARRAY_A);
+  $country_data = ''; //$wpdb->get_results("SELECT * FROM `wp_currency_list` WHERE `isocode` IN ('".$country_code."') LIMIT 1",ARRAY_A);
   return $country_data[0]['country']; 
   }
   
