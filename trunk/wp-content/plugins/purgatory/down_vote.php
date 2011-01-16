@@ -39,6 +39,10 @@ elseif (isset($_GET['id']))
 			$sql = "update wp_product_list set approved=0 where id='$id'";
 			//fw("\n\r sql=".$sql);
 			mysql_query( $sql);
+
+			$sql = "update wp_item_category_associations set category=666 where product_id='$id'";
+			//fw("\n\r sql=".$sql);
+			mysql_query( $sql);
 		}
 
 
