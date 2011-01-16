@@ -13,10 +13,10 @@ exit;
 include("config.php");
 
 	$sql=mysql_query("SELECT id, name FROM wp_product_brands where active = 1 order by name");
-
 	?>
-	<b>Минимальный балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса.
 	
+	<b>Минимальный балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса.
+
 	<br><b>Фильтр по авторам</b>: <?
 
 	while($row=mysql_fetch_array($sql))
@@ -44,6 +44,7 @@ include("config.php");
 
 	if(name=='up')
 	{
+	alert ('up');
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
@@ -58,15 +59,33 @@ include("config.php");
 	  }  });
 	  
 	}
-	else
+
+	if (name=='black')
 	{
+	alert ('black');
+
+	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
+	$.ajax({
+	   type: "POST",
+	   url: "http://cartoonbank.ru/wp-content/plugins/purgatory/black_vote.php",
+	   data: dataString,
+	   cache: false,
+	   success: function(html)
+	   {
+		parent.html(html);	  
+	   }  });
+	  
+	}
+
+	if(name=='down')
+	{
+	alert ('down');
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
 	   url: "http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php",
 	   data: dataString,
 	   cache: false,
-
 	   success: function(html)
 	   {
 		   parent.html(html);
@@ -96,6 +115,13 @@ function senddown(id)
 	var myelemname = "down"+id;
 	var mydiv = document.getElementById(myelemname);
 	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
+   }
+
+function sendblack(id)
+   {
+	var myelemname = "black"+id;
+	var mydiv = document.getElementById(myelemname);
+	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/black_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
    }
 
 </script>
@@ -153,6 +179,25 @@ function senddown(id)
 	color:#FFFFFF;
 	text-decoration:none;
 	}
+
+	.black
+	{  
+	padding-top: 8px; color: white;
+	height:30px; font-size:24px; text-align:center; background-color:#4A4A4A; margin-top:2px;
+	-moz-border-radius: 6px;-webkit-border-radius: 6px;
+	}
+
+	.black a
+	{
+	color:#FFFFFF;
+	text-decoration:none;
+	}
+	.black a:hover
+	{
+	color:#FFFFFF;
+	text-decoration:none;
+	}
+
 	.box1
 	{
 	font-family:'Georgia', Times New Roman, Times, serif;
@@ -205,7 +250,7 @@ else
 	$sql_brand = "";
 }
 
-		$sql=mysql_query("SELECT V.image_id, V.up, V.down, P.name, P.image, B.name AS Artist, P.approved FROM al_editors_votes AS V, wp_product_list AS P, wp_product_brands AS B 
+		$sql=mysql_query("SELECT V.image_id, V.up, V.down, V.black, P.name, P.image, B.name AS Artist, P.approved FROM al_editors_votes AS V, wp_product_list AS P, wp_product_brands AS B 
 							WHERE V.image_id=P.id 
 							AND P.brand = B.id
 							AND P.active = '1'
@@ -219,6 +264,7 @@ else
 		$mes_id=$row['image_id'];
 		$up=$row['up'];
 		$down=$row['down'];
+		$black=$row['black'];
 		$img=$row['image'];
 		$imgpath = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$img; 
 		$previewpath = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$img;
@@ -230,6 +276,7 @@ else
 		<div class="box1">
 			<div class='up'><a href="" id="up<?php echo $mes_id;?>"  onclick="sendup(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="up"><?php echo $up; ?></a></div>
 			<div class='down'><a href="" id="down<?php echo $mes_id;?>" onclick="senddown(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="down"><?php echo $down; ?></a></div>
+			<div class='black'><a href="" id="black<?php echo $mes_id;?>" onclick="sendblack(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black"><?php echo $black; ?></a></div>
 		</div>
 
 		<div class='box2' >
