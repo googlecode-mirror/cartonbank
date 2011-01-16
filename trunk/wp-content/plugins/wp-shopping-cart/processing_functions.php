@@ -55,7 +55,7 @@ function nzshpcrt_overall_total_price($country_code = null, $for_display = false
       }
     if($for_display === true)
       {
-      $total = nzshpcrt_currency_display($total,1);
+      //$total = nzshpcrt_currency_display($total,1);
       if($country_code == null)
         {
         $total .= " + ".TXT_WPSC_POSTAGE_AND_TAX;
@@ -177,14 +177,11 @@ function nzshpcrt_overall_total_price($country_code = null, $for_display = false
 
 function nzshpcrt_currency_display($price_in, $tax_status, $nohtml = false, $id = false, $no_dollar_sign = false)
   {
+	  return $price_in; //ales
   /*
    * This now ignores tax status, but removing it entirely will probably have to wait for the inevitable total rewrite.
    */
   global $wpdb;
-  $currency_sign_location = get_option('currency_sign_location');
-  $currency_type = get_option('currency_type');
-  $currency_data = $wpdb->get_results("SELECT `symbol`,`symbol_html`,`code` FROM `".$wpdb->prefix."currency_list` WHERE `id`='".$currency_type."' LIMIT 1",ARRAY_A) ;
-  $price_out = null;
   $currency_sign_location = get_option('currency_sign_location');
   $currency_type = get_option('currency_type');
   $currency_data = $wpdb->get_results("SELECT `symbol`,`symbol_html`,`code` FROM `".$wpdb->prefix."currency_list` WHERE `id`='".$currency_type."' LIMIT 1",ARRAY_A) ;
@@ -279,7 +276,7 @@ function admin_display_total_price($start_timestamp = '', $end_timestamp = '')
 		  $country = $country_data[0]['value'];
 		  }
 		  else
-		  {$country = 'Россия';}
+		  {$country = 'Р РѕСЃСЃРёСЏ';}
       $total += nzshpcrt_find_total_price($purchase['id'],$country);
       }
     }
