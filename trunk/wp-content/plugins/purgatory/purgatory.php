@@ -254,7 +254,7 @@ else
 							WHERE V.image_id=P.id 
 							AND P.brand = B.id
 							AND P.active = '1'
-							AND ((P.approved is NULL) OR (P.approved = ''))".$sql_brand."
+							AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))".$sql_brand."
 							ORDER BY P.id DESC
 							Limit 40");
 
