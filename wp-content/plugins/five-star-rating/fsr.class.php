@@ -142,7 +142,7 @@ class FSR {
 			$html .= '<span class="' . $class . '">' . $char . '</span> ';
 		}
 		//$html .= '<span class="FSR_votes">' . (int) $votes . '</span> ';
-		$html .= '<span class="FSR_votes">' . (int) $votes . ' ('. round($rate,2) . ')</span> ';
+		$html .= '<span class="FSR_votes">'. round($rate,2) . '(' . (int) $votes . '<img src="http://cartoonbank.ru/img/user.gif" width="5" height="9" title="голосов">)</span>';
 		if($votes > 1) {
 			$html .= ''; //$html .= '<span class="FSR_tvotes">' . __('votes') . '</span>';
 		} else {
@@ -210,7 +210,7 @@ class FSR {
 			$html .= sprintf('<input type="radio" id="fsr_star_%1$d_%2$d" class="star" name="fsr_stars" value="%2$d"/><label class="%3$s" '.$title.' for="fsr_star_%1$d_%2$d">%2$d</label> ', $picture_id, $i, $class);
 		}
 		//$html .= '<span class="FSR_votes">' . (int) $votes . '</span> ';
-		$html .= '<span class="FSR_votes">' . (int) $votes . ' ('. round($rate,2) . ')</span> ';
+		$html .= '<span class="FSR_votes">'. round($rate,2) . '(' . (int) $votes . '<img src="http://cartoonbank.ru/img/user.gif" width="5" height="9" title="голосов">)</span>';
 		if( $votes > 1) { 
 			$html .= ''; //$html .= '<span class="FSR_tvotes">' . __('votes') . '</span>';
 		}
