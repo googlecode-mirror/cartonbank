@@ -93,9 +93,6 @@ $output .= '&Culture='.$culture;
 
 //header("Location: http://test.robokassa.ru/Index.aspx?".$output);
 header("Location: https://merchant.roboxchange.com/Index.aspx?".$output);
-
 exit;
 }
-
-
 ?>
