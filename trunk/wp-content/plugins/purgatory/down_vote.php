@@ -36,11 +36,11 @@ elseif (isset($_GET['id']))
 		//fw("\n\r up_value=".$up_value);
 		if ($down_value >= $limit_minus) // 2 плюса - проходит, 3 минуса - не проходит
 		{
-			$sql = "update wp_product_list set approved=0 where id='$id'";
+			$sql = "update wp_product_list set approved=1 where id='$id'";
 			//fw("\n\r sql=".$sql);
 			mysql_query( $sql);
 
-			$sql = "update wp_item_category_associations set category=666 where product_id='$id'";
+			$sql = "update wp_item_category_associations set category_id=666 where product_id='$id'";
 			//fw("\n\r sql=".$sql);
 			mysql_query( $sql);
 		}
