@@ -9,12 +9,12 @@ include("config.php");
 $link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
 mysql_set_charset('utf8',$link);
 
-$result=mysql_query("SELECT l.name as Title, b.name as Artist FROM `wp_product_list` as l, `wp_product_brands` as b WHERE l.brand=b.id
+$result=mysql_query("SELECT l.name as Title, l.description as Description,  l.additional_description as Tags, b.name as Artist FROM `wp_product_list` as l, `wp_product_brands` as b WHERE l.brand=b.id
 AND l.id = ".$_id);
 $row=mysql_fetch_array($result);
 $_title=htmlentities($row['Title'], ENT_QUOTES | ENT_IGNORE, "UTF-8");
 $_artist=htmlentities($row['Artist'], ENT_QUOTES | ENT_IGNORE, "UTF-8");
-
+$_description=htmlentities($row['Description'], ENT_QUOTES | ENT_IGNORE, "UTF-8");
 
 if (empty($_artist) | empty($_title))
 	{
@@ -22,7 +22,7 @@ if (empty($_artist) | empty($_title))
 	}
 else
 	{
-		$_message = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoonid='.$_id;
+		$_message = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoonid='.$_id.' '.$_description;
 	}
 
 // cartoonbank.ru@gmail.com twitter:
