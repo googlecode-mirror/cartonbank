@@ -27,11 +27,13 @@ $text = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoo
 	/* ваш ник в ЖЖ */
 	$name = "_cartoonist_";
 	/* ваш пароль в ЖЖ */
-	$password = "basie5670659";
+	$password = "basie5";
 	/* текст который вы хотите опубликовать */
-	$text = "Некоторый текст";
+	$text = "test";
 	/* заголовок для текста */
-	$subj = "заголовок";
+	$subj = "test";
+	/* комьюнити */
+	$usejournal = "cartoonbank";
 
 	/* включаем библиотеку XML-RPC */
 
@@ -54,13 +56,14 @@ $text = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoo
 	/* (!!!) Конвертируем текст из одной кодировки в UTF-8 
 	в данном случае файл хранится в кодировке CP1251 */
 
-	//$text = iconv("CP1251", "UTF-8", html_entity_decode($text));
-	//$subj = iconv("CP1251", "UTF-8", html_entity_decode($subj));
+	$text = iconv("CP1251", "UTF-8", html_entity_decode($text));
+	$subj = iconv("CP1251", "UTF-8", html_entity_decode($subj));
 
 	/* заполняем массив с необходимыми переменными */
 
 	$post = array(
 			"username" => new xmlrpcval($name, "string"),
+			"usejournal" => new xmlrpcval($usejournal, "string"),
 			"password" => new xmlrpcval($password, "string"),
 			"event" => new xmlrpcval($text, "string"),
 			"subject" => new xmlrpcval($subj, "string"),
