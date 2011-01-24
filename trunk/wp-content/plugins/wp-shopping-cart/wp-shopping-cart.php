@@ -1279,7 +1279,12 @@ function nzshpcrt_submit_ajax()
   
   $output .= "<br><input type=\"button\" class='edit_button' style='padding:6px; background-color:#93F273;' name='sendit' value='сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
 
-if ($product['approved'] != '1')
+if ($product['approved'] != '1' | $current_user->wp_capabilities['administrator']!=1)
+	{
+		$output .= "<br><br><br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >стереть изображение</a>";
+	}
+
+if ($product['approved'] == '1' | $current_user->wp_capabilities['administrator']==1)
 	{
 		$output .= "<br><br><br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >стереть изображение</a>";
 	}
