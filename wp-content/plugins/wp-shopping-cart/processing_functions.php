@@ -276,7 +276,7 @@ function admin_display_total_price($start_timestamp = '', $end_timestamp = '')
 		  $country = $country_data[0]['value'];
 		  }
 		  else
-		  {$country = 'Р РѕСЃСЃРёСЏ';}
+		  {$country = 'Россия';}
       $total += nzshpcrt_find_total_price($purchase['id'],$country);
       }
     }
