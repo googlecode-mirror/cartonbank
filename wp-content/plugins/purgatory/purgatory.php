@@ -198,6 +198,12 @@ function sendblack(id)
 	text-decoration:none;
 	}
 
+	.gr
+	{
+	color:#838383;
+	text-decoration:none;
+	}
+
 	.box1
 	{
 	font-family:'Georgia', Times New Roman, Times, serif;
@@ -250,9 +256,26 @@ else
 	$sql_brand = "";
 }
 
+/*
 		$sql=mysql_query("SELECT V.image_id, V.up, V.down, V.black, P.name, P.image, B.name AS Artist, P.approved FROM al_editors_votes AS V, wp_product_list AS P, wp_product_brands AS B 
 							WHERE V.image_id=P.id 
 							AND P.brand = B.id
+							AND P.active = '1'
+							AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))".$sql_brand."
+							ORDER BY P.id DESC
+							Limit 40");
+*/
+			$sql=mysql_query("SELECT V.image_id, V.up, V.down, V.black, P.name, P.image, P.description AS Description, 
+									P.color, B.name AS Artist, P.approved, C.name as Category 
+							FROM al_editors_votes AS V, 
+							wp_product_list AS P, 
+							wp_product_brands AS B, 
+							wp_product_categories AS C,  
+							wp_item_category_associations AS A
+							WHERE V.image_id=P.id 
+							AND P.brand = B.id
+							AND P.id = A.product_id
+							AND C.id = A.category_id
 							AND P.active = '1'
 							AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))".$sql_brand."
 							ORDER BY P.id DESC
@@ -268,8 +291,10 @@ else
 		$img=$row['image'];
 		$imgpath = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$img; 
 		$previewpath = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$img;
-		$imgname=$row['name'];
+		$imgname=nl2br(stripslashes($row['name']));
 		$artist=$row['Artist'];
+		$description=nl2br(stripslashes($row['Description']));
+		$category=$row['Category'];
 		?>
 
 	<div id="main">
@@ -287,9 +312,12 @@ else
 		</div>
 
 		<div class="box3">
-			Название: <? echo ($imgname);?><br>
-			Автор: <? echo ($artist);?><br>
-			Номер: <? echo ($mes_id);?>
+			<span class="gr">Название: </span><? echo ($imgname);?><br>
+			<span class="gr">Категория: </span><? echo ($category);?><br>
+			<span class="gr">Автор: </span><? echo ($artist);?><br>
+			<span class="gr">Описание: </span><? echo ($description);?>
+			<form method="post" action="http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display-items.php"> <input type="hidden" name="edid" value="<? echo ($mes_id);?>"> <input class="borders" type="submit" value="<? echo ($mes_id);?>"> </form>
+			
 		</div>
 
 
@@ -299,3 +327,4 @@ else
 	<?php }?>
 
 </div>
+
