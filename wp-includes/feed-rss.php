@@ -1,4 +1,5 @@
 <?php
+exit;
 /**
  * RSS 0.92 Feed Template for displaying RSS 0.92 Posts feed.
  *

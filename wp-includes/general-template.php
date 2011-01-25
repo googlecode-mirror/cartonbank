@@ -1654,9 +1654,10 @@ function feed_links_extra( $args = array() ) {
 		$title = esc_attr(sprintf( $args['searchtitle'], get_bloginfo('name'), $args['separator'], get_search_query( false ) ));
 		$href = get_search_feed_link();
 	}
-
+/*
 	if ( isset($title) && isset($href) )
 		echo '<link rel="alternate" type="' . feed_content_type() . '" title="' . $title . '" href="' . $href . '" />' . "\n";
+*/
 }
 
 /**

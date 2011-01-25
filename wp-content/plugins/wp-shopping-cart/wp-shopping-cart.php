@@ -191,12 +191,6 @@ var resizeSpeed = 9;
 var borderSize = 10;
 </script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/ajax.js" language='JavaScript' type="text/javascript"></script>
-<!-- 
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/prototype.js" language='JavaScript' type="text/javascript"></script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/effects.js" language='JavaScript' type="text/javascript"></script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/dragdrop.js" language='JavaScript' type="text/javascript"></script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/lightbox.js" language='JavaScript' type="text/javascript"></script>
- -->
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/user.js" language='JavaScript' type="text/javascript">
 </script>
 <?php
@@ -675,7 +669,7 @@ function nzshpcrt_submit_ajax()
       }
     }
     
-    
+  /*  
   if(isset($_GET['rss']) and ($_GET['rss'] == "true") && ($_GET['rss_key'] == 'key') && ($_GET['action'] == "purchase_log"))
     {
     $sql = "SELECT * FROM `wp_purchase_logs` WHERE `date`!='' ORDER BY `date` DESC";
@@ -686,10 +680,10 @@ function nzshpcrt_submit_ajax()
     $output .= "<?xml version='1.0'?>\n\r";
     $output .= "<rss version='2.0'>\n\r";
     $output .= "  <channel>\n\r";
-    $output .= "    <title>WP E-Commerce Product Log</title>\n\r";
+    $output .= "    <title>Cartoonbank</title>\n\r";
     $output .= "    <link>".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-log.php</link>\n\r";
-    $output .= "    <description>This is the WP E-Commerce Product Log RSS feed</description>\n\r";
-    $output .= "    <generator>WP E-Commerce Plugin</generator>\n\r";
+    $output .= "    <description>Cartoonbank RSS feed</description>\n\r";
+    $output .= "    <generator>Cartoonbank Plugin</generator>\n\r";
     
     foreach($purchase_log as $purchase)
       {
@@ -707,32 +701,47 @@ function nzshpcrt_submit_ajax()
     echo $output;
     exit();
     }
-  
+  */
        
   if(isset($_GET['rss']) and ($_GET['rss'] == "true") && ($_GET['action'] == "product_list"))
     {
-    $sql = "SELECT * FROM `wp_product_list` WHERE `active` IN('1')";
+    $sql = "SELECT id, name, description, image FROM `wp_product_list` WHERE active=1 and visible=1 Order by id DESC LIMIT 40";
     $product_list = $wpdb->get_results($sql,ARRAY_A);
-    //header("Content-Type: application/xml; charset=ISO-8859-1"); 
-    //header('Content-Disposition: inline; filename="WP_E-Commerce_Product_List.rss"');
+    header("Content-Type: application/xml; charset=utf-8"); 
+    header('Content-Disposition: inline; filename="cartoonbank.rss"');
     $output = '';
     $output .= "<?xml version='1.0'?>\n\r";
     $output .= "<rss version='2.0'>\n\r";
+
+	$output .= "xmlns:content='http://purl.org/rss/1.0/modules/content/'\n\r";
+	$output .= "xmlns:wfw='http://wellformedweb.org/CommentAPI/'\n\r";
+	$output .= "xmlns:dc='http://purl.org/dc/elements/1.1/'\n\r";
+	$output .= "xmlns:atom='http://www.w3.org/2005/Atom'\n\r";
+	$output .= "xmlns:sy='http://purl.org/rss/1.0/modules/syndication/'\n\r";
+	$output .= "xmlns:slash='http://purl.org/rss/1.0/modules/slash/'\n\r";
+	$output .= "xmlns:georss='http://www.georss.org/georss' xmlns:geo='http://www.w3.org/2003/01/geo/wgs84_pos#' xmlns:media='http://search.yahoo.com/mrss/'>\n\r";
+
     $output .= "  <channel>\n\r";
-    $output .= "    <title>WP E-Commerce Product Log</title>\n\r";
-    $output .= "    <link>".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-log.php</link>\n\r";
-    $output .= "    <description>This is the WP E-Commerce Product List RSS feed</description>\n\r";
-    $output .= "    <generator>WP E-Commerce Plugin</generator>\n\r";
-    
+    $output .= "    <title>Cartoonbank new images</title>\n\r";
+    $output .= "    <link>http://cartoonbank.ru/</link>\n\r";
+    $output .= "    <description>This is the Russian Cartoon Bank RSS feed</description>\n\r";
+    $output .= "    <generator>Cartoonbank.ru</generator>\n\r";
+
     foreach($product_list as $product)
       {
-      $purchase_link = get_option('product_list_url').$seperator."product_id=".$product['id'];
+      $purchase_link = get_option('product_list_url')."&cartoonid=".$product['id'];
       $output .= "    <item>\n\r";
+      //$output .= "      <title>cartoonbank.ru</title>\n\r";
       $output .= "      <title>".stripslashes($product['name'])."</title>\n\r";
-      $output .= "      <link>$purchase_link</link>\n\r";
-      $output .= "      <description>".stripslashes($product['description'])."</description>\n\r";
+      $output .= "      <link>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</link>\n\r";
+      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".stripslashes($product['id'])."'><br><img title='". stripslashes($product['name']) ."' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
       $output .= "      <pubDate>".date("r")."</pubDate>\n\r";
-      $output .= "      <guid>$purchase_link</guid>\n\r";
+      $output .= "      <guid>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</guid>\n\r";
+
+      //$output .= "      <content:encoded><![CDATA[<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".stripslashes($product['id'])."'><img title='". stripslashes($product['name']) ."' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></content:encoded>\n\r";
+
+$output .= '    ';
+
       $output .= "    </item>\n\r";
       }
     $output .= "  </channel>\n\r";
@@ -3127,12 +3136,13 @@ function make_csv($array)
   
 function nzshpcrt_product_log_rss_feed()
   {
-  echo "<link type='application/rss+xml' href='".get_option('siteurl')."/index.php?rss=true&rss_key=key&action=purchase_log&type=rss' title='WP E-Commerce Purchase Log RSS' rel='alternate'/>";
+  //echo "<link type='application/rss+xml' href='".get_option('siteurl')."/index.php?rss=true&rss_key=key&action=purchase_log&type=rss' title='Cartoonbank new images RSS' rel='alternate'/>";
   }
   
 function nzshpcrt_product_list_rss_feed()
   {
-  echo "<link rel='alternate' type='application/rss+xml' title='WP E-Commerce Product List RSS' href='".get_option('siteurl')."/index.php?rss=true&action=product_list&type=rss'/>";
+  // our custom rss feed
+  echo "<link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='".get_option('siteurl')."/index.php?rss=true&action=product_list&type=rss'/>";
   }
     
 require_once('processing_functions.php');
@@ -3192,7 +3202,7 @@ add_action('wp_head', 'nzshpcrt_style');
 add_action('admin_head', 'nzshpcrt_css');
 if(isset($_GET['page']) and $_GET['page'] == "wp-shopping-cart/display-log.php")
   {
-  add_action('admin_head', 'nzshpcrt_product_log_rss_feed');
+  //add_action('admin_head', 'nzshpcrt_product_log_rss_feed');
   }
 add_action('wp_head', 'nzshpcrt_javascript');
 add_action('wp_head', 'nzshpcrt_product_list_rss_feed');

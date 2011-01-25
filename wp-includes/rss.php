@@ -1,4 +1,5 @@
 <?php
+exit;
 /**
  * MagpieRSS: a simple RSS integration tool
  *

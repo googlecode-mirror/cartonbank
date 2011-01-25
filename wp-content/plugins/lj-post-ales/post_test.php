@@ -25,7 +25,7 @@ $text = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoo
 */
 
 	/* ваш ник в ЖЖ */
-	$name = "_cartoonist_";
+	$name = "cartunbank";
 	/* ваш пароль в ЖЖ */
 	$password = "basie5";
 	/* текст который вы хотите опубликовать */
@@ -33,7 +33,7 @@ $text = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoo
 	/* заголовок для текста */
 	$subj = "test";
 	/* комьюнити */
-	$usejournal = "cartoonbank";
+	$usejournal = "cartunbank";
 
 	/* включаем библиотеку XML-RPC */
 

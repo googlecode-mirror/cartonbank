@@ -1,4 +1,5 @@
 <?php
+exit;
 /**
  * RSS2 Feed Template for displaying RSS2 Comments feed.
  *

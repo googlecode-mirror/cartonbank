@@ -1,4 +1,5 @@
 <?php
+exit;
 /**
  * Atom Feed Template for displaying Atom Comments feed.
  *

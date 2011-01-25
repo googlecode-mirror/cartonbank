@@ -3,7 +3,7 @@
 
 if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29" && !isset($_POST['cs']))
 {
-	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,8300));
+	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,9020));
 }
 
 ?>
@@ -15,10 +15,11 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 <meta name="robots" content="follow, all" />
 <meta name="language" content="en, sv" />
 
-<title><?php wp_title(''); ?><?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?></title>
-<meta name="generator" content="WordPress <?php bloginfo('version'); ?>" />
+<title>Картунбанк<?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?></title>
+<meta name="generator" content="cartoonbank" />
 
-<link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank2/images/favicon.ico" type="image/x-icon" />
+<link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
+
 <?php wp_head(); ?>
 <style type="text/css" media="screen">
 <!-- @import url( <?php bloginfo('stylesheet_url'); ?> ); -->
