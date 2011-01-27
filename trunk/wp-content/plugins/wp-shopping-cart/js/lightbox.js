@@ -59,8 +59,8 @@
 //
 //	Configuration
 //
-var fileLoadingImage = "http://cartoonbank.ru/cb3/wp-content/plugins/wp-shopping-cart/images/loading.gif";		
-var fileBottomNavCloseImage = "http://cartoonbank.ru/cb3/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
+var fileLoadingImage = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/loading.gif";		
+var fileBottomNavCloseImage = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
 
 var resizeSpeed = 7;	// controls the speed of the image resizing (1=slowest and 10=fastest)
 
