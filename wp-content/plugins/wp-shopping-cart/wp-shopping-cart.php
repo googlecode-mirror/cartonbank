@@ -2678,7 +2678,7 @@ $_SESSION['total'] = round($total*(100-$_discount)/100);
 
 	$output .= "На Личном счёте <b>".round($_wallet)."</b> р.<br>";
 
-if ($total > $_wallet)
+if (($total > $_wallet) && ($_wallet!=0))
 	$output .= "<div style='color:#CC0000;'>Не хватает средств для покупки выбранных изображений.</div>";
 
     if(get_option('permalink_structure') != '')
@@ -2694,7 +2694,7 @@ if ($total > $_wallet)
 global $user_identity;
 if ($user_identity == '')
 {
-	$output .= "Доступ к корзине возможен только после входа";
+	$output .= "<div style='color:#CC0000;'><b>Оплата возможна только после входа</b></div>";
 }
 else
 {
