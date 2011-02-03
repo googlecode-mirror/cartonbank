@@ -40,7 +40,6 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 </head>
 
 <body>
-
 <?
 //Except 666:
 //$cartoon_number = $wpdb->get_results("SELECT count( l.id ) AS cartoon_number FROM `wp_product_list` AS l, `wp_item_category_associations` AS a WHERE l.id = a.product_id AND l.active =1 AND l.visible =1 AND a.category_id in (select id from wp_product_categories WHERE active = 1 and id <> '666') AND l.brand in (SELECT DISTINCT id FROM `wp_product_brands` where `wp_product_brands`.active = 1)");
@@ -93,6 +92,7 @@ function selected_style()
 	<ul> 
 		<li><a href="?page_id=95" <? $_GET['page_id']=='95'? selected_style():"" ?> >О проекте</a></li>
 		<li><a href="?page_id=29&offset=0" <? $_GET['page_id']=='29'? selected_style():"" ?> title='на первую страницу'>Банк изображений</a></li>
+		<li><a href="?page_id=942" <? $_GET['page_id']=='942'? selected_style():"" ?> >Новости</a></li>
 		<li><a href="?page_id=73" <? $_GET['page_id']=='73'? selected_style():"" ?> >Авторам</a></li>
 		<li><a href="?page_id=97" <? $_GET['page_id']=='97'? selected_style():"" ?> >Клиентам</a></li>
 		<li><a href="?page_id=907" <? $_GET['page_id']=='907'? selected_style():"" ?> >Зрителям</a></li>
@@ -100,3 +100,4 @@ function selected_style()
 		<li><a href="?page_id=976" <? $_GET['page_id']=='976'? selected_style():"" ?> >Контакты</a></li>
 	</ul>
 </div>
+<A NAME="pagetop"></a>
