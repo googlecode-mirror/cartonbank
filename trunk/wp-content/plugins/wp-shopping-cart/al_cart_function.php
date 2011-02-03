@@ -153,8 +153,12 @@ if (!$licensecolumn)
 		else
 		{
 		// Download link
+			$current_user = wp_get_current_user();
 			$result .= "  <td width='70'>";
-			$result .= "<a href='$link'>Скачать</a>";
+			if (isset($current_user) && $current_user->last_name == 'demo')
+			{$result .= "<a href='http://cartoonbank.ru/demo/demo.jpg'>Скачать demo</a>";}
+			else
+			{$result .= "<a href='$link'>Скачать</a>";}
 			$result .= "  </td>";
 
 		}

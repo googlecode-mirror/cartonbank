@@ -56,13 +56,15 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 		AND st.purchid=c.purchaseid
 		AND p.brand=b.id
 		AND u.id = l.user_id
-	AND (`date` BETWEEN '$start_timestamp' AND '$end_timestamp')
 	GROUP BY c.license
 	ORDER BY `date` DESC";
 
+//	AND (`date` BETWEEN '$start_timestamp' AND '$end_timestamp')
+
+
 //$sql = "SELECT date, totalprice, firstname, lastname, email, address, phone, s.name as processed, gateway FROM `wp_purchase_logs` as l, `wp_purchase_statuses` as s, `wp_cart_contents` as c WHERE l.`processed`=s.`id` AND l.id=c.purchaseid  AND (`date` BETWEEN '$start_timestamp' AND '$end_timestamp') ORDER BY `date` DESC";
 
-	//pokazh($purchase_log,"purchase_log");
+	//pokazh($sql,"sql");
 
     require_once($abspath.'wp-content/RGrid/RGrid.php');
     
@@ -112,7 +114,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 
     }
 
-    $grid->SetPerPage(40);
+    $grid->SetPerPage(100);
 ?>
 	<style type="text/css">
     <!--
