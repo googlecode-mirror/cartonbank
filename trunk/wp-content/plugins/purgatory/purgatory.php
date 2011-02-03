@@ -222,6 +222,7 @@ function sendcomment()
 	{
 	color:#838383;
 	text-decoration:none;
+	padding-top:14px;
 	}
 
 	.box1
@@ -332,14 +333,14 @@ else
 		?>
 
 <?
-	$result = mysql_query("select C.comment_content, C.comment_date, U.display_name as author from wp_comments as C, wp_users as U where U.id = C.comment_author order by C.comment_date DESC LIMIT 10");
+	$result = mysql_query("select C.comment_content, C.comment_date, U.display_name as author from wp_comments as C, wp_users as U where U.id = C.comment_author order by C.comment_date DESC LIMIT 20");
 
 	$comments_output = "";
 	while($r = mysql_fetch_array($result)) {
 		$_date = $r['comment_date'];
 		$_comment = nl2br(stripslashes($r['comment_content']));
 		$_author = $r['author'];
-		$comments_output .= "<span class='gr' title='".$_date."'>".$_author.":</span><span class='c_body'>".$_comment."</span><br>";
+		$comments_output .= "<div style='margin-top:4px;'><span class='gr' title='".$_date."'>".$_author.":</span><span class='c_body'>".$_comment."</span></div>";
 	}
 ?>
 
