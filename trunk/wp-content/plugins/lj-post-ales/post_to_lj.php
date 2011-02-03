@@ -21,8 +21,8 @@ elseif (isset($_GET['id']))
 	$row=mysql_fetch_array($result);
 	$_artist=$row['artist'];
 	$_title=$row['name'];
-	$_description=$row['description'];
-	$_additional_description=$row['additional_description'];
+	$_description=nl2br(stripslashes($row['description']));
+	$_additional_description=nl2br(stripslashes($row['additional_description']));
 	$_image=$row['image'];
 
 
