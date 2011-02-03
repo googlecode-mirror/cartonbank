@@ -29,7 +29,7 @@ else
 </div>
 
 	<div style="clear:both;"></div>
-	<div id="topfooter" style="border-top:1px solid #C0C0C0; background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat-y;"><b>Популярные темы:</b>
+	<div id="topfooter" style="padding-top:10px;border-top:1px solid #C0C0C0; background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat-y;"><h1>Популярные темы:</h1>
 	<?
 		$filepath = WP_CONTENT_DIR . '/tags/ales-tag_cloud_small.php' ;
 		if ( file_exists( $filepath ) )
