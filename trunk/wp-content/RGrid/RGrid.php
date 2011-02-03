@@ -452,7 +452,9 @@
                 <?php call_user_func($this->rowcallback, &$row)?>
             <?php endif?>
 			<?
-				if ($row['contract']!='')
+				if ($row['display_name']=='demo')
+					{echo("<tr style='background-color:#999999'>");}
+				else if ($row['contract']!='')
 					if ($row['gateway']!='wallet')
 					{echo("<tr style='background-color:#CCFF66;'>");}
 					else
