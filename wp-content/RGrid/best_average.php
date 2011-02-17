@@ -25,7 +25,7 @@
     $params['username'] = 'z58365_cbru3';
     $params['password'] = 'greenbat';
     $params['database'] = 'cartoonbankru';
-
+/*
     $sql = "SELECT post as ID, wp_product_list.image as image, wp_product_list.name AS title, wp_product_brands.name AS author, COUNT(*) AS votes, SUM(wp_fsr_user.points) AS points, AVG(points) AS average, vote_date  
 					FROM wp_fsr_user, wp_product_list, wp_product_brands 
 					WHERE wp_fsr_user.post = wp_product_list.id 
@@ -34,6 +34,16 @@
 					AND wp_product_list.visible = 1
 					GROUP BY 1
 					ORDER BY 7 DESC, 5 DESC";
+*/
+    $sql = "SELECT post as ID, wp_product_list.image as image, wp_product_list.name AS title, wp_product_brands.name AS author, COUNT(*) AS votes, SUM(wp_fsr_user.points) AS points, AVG(points)*SQRT(COUNT(*)) AS average, vote_date  
+					FROM wp_fsr_user, wp_product_list, wp_product_brands 
+					WHERE wp_fsr_user.post = wp_product_list.id 
+					AND wp_product_list.brand = wp_product_brands.id 
+					AND wp_product_list.active = 1
+					AND wp_product_list.visible = 1
+					GROUP BY 1
+					ORDER BY 7 DESC, 5 DESC";
+
 //pokazh ($sql);
 //$sql = "SELECT * FROM `wp_fsr_post` as p, `wp_fsr_user` as u WHERE p.id = u.post order by vote_date desc";
 
@@ -76,7 +86,7 @@
                                  'title'   => 'название',
                                  'image'   => 'иконка',
                                  'author'   => 'автор',
-                                 'average'   => 'средн.',
+                                 'average'   => 'рейт',
                                  'ip'    => 'ip'));
 
     /**
