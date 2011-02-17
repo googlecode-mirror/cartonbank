@@ -46,17 +46,19 @@ if($comment != '')
 
 
 	//read comments:
-	$result = mysql_query("select C.comment_content, C.comment_date, U.display_name as author from wp_comments as C, wp_users as U where U.id = C.comment_author order by C.comment_date DESC LIMIT 20");
+	$result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U.display_name as author from wp_comments as C, wp_users as U where U.id = C.comment_author order by C.comment_date DESC LIMIT 50");
 
-	$output = "";
+$result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U.display_name as author from wp_comments as C, wp_users as U where U.id = C.comment_author order by C.comment_date DESC LIMIT 50");
+	$comments_output = "";
 	while($r = mysql_fetch_array($result)) {
 		$_date = $r['comment_date'];
 		$_comment = nl2br(stripslashes($r['comment_content']));
 		$_author = $r['author'];
-		$output .= "<span class='gr' title='".$_date."'>".$_author.":</span><span class='c_body'>".$_comment."</span><br>";
+		$_id = $r['comment_id'];
+		$comments_output .= "<div style='margin-top:4px;'><span class='gr' title='".$_date."'>".$_author.":&nbsp; </span><span class='c_body'>".$_comment."</span> [<a title='стереть комментарий' href='http://cartoonbank.ru/wp-content/plugins/purgatory/delete_comment.php?id=".$_id."'>x</a>]</div>";
 	}
 
-echo $output;
+echo $comments_output;
 }
 
 function fw($text)
