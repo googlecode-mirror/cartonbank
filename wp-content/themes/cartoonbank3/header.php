@@ -3,7 +3,7 @@
 
 if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29" && !isset($_POST['cs']))
 {
-	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,9020));
+	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,9790));
 }
 
 ?>
@@ -71,7 +71,8 @@ default:
 
 
 <div id="header">
-<table style="width:100%;margin:0;padding:0;"><tr>
+<table style="width:100%;margin:0;padding:0;">
+<tr>
 <td style="font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#668bb7"><span style="color:#13223f;font-size:2em;"><b><? echo ($cartoon_number);?></b></span><br><?echo ($license_text);?></td>
 <td>
 	<a href="<?php echo get_option('home'); ?>/"><img src="<?php echo get_option('home'); ?>/wp-admin/images/cb-logo.gif" border="0"></a><br />
