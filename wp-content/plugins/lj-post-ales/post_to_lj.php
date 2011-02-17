@@ -32,7 +32,7 @@ elseif (isset($_GET['id']))
 	/* ваш ник в ЖЖ */
 	$name = "_cartoonist_";
 	/* ваш пароль в ЖЖ */
-	$password = "basie5";
+	$password = "basie5670659";
 	/* комьюнити */
 	$usejournal = "cartoonbank";
 
