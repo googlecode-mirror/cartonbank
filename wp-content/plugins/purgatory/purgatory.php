@@ -12,7 +12,7 @@ include("config.php");
 	$sql=mysql_query("SELECT id, name FROM wp_product_brands where active = 1 order by name");
 	?>
 	
-	<b>Минимальный балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса.
+	<b>Минимальный балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса. Чёрная метка блокирует появление картинки в хранилище до выяснения обстоятельств.
 
 	<br><b>Фильтр по авторам</b>: <?
 
@@ -24,8 +24,22 @@ include("config.php");
 	<a href="http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php&brand=<?echo $id;?>"><?echo $name;?></a>; 
 	<?
 	}
-?><br><br>
+?>
+<br><br>
+<b><a href="http://cartoonbank.ru/?page_id=1148" target="_blank">Меморандум редактора</a></b> <-подробнее <br>
+Коллеги, мы не <i>оцениваем</i> тут работы. Мы просто <i>отсекаем</i> мусор. Не пускаем а) антиконституционное б) антиинтеллектуальное.
 
+<?
+$result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U.display_name as author from wp_comments as C, wp_users as U where U.id = C.comment_author order by C.comment_date DESC LIMIT 50");
+	$comments_output = "";
+	while($r = mysql_fetch_array($result)) {
+		$_date = $r['comment_date'];
+		$_comment = nl2br(stripslashes($r['comment_content']));
+		$_author = $r['author'];
+		$_id = $r['comment_id'];
+		$comments_output .= "<div style='margin-top:4px;'><span class='gr' title='".$_date."'>".$_author.":&nbsp; </span><span class='c_body'>".$_comment."</span> [<a title='стереть комментарий' href='http://cartoonbank.ru/wp-content/plugins/purgatory/delete_comment.php?id=".$_id."'>x</a>]</div>";
+	}
+?>
 
 <script type="text/javascript" src="http://cartoonbank.ru/wp-includes/js/jquery/jquery.js"></script>
 <script type="text/javascript" src="http://cartoonbank.ru/wp-includes/js/jquery/jquery.form.js"></script>
@@ -41,7 +55,6 @@ include("config.php");
 
 	if(name=='up')
 	{
-	alert ('up');
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
@@ -59,8 +72,6 @@ include("config.php");
 
 	if (name=='black')
 	{
-	alert ('black');
-
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
@@ -76,7 +87,6 @@ include("config.php");
 
 	if(name=='down')
 	{
-	alert ('down');
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
@@ -138,8 +148,16 @@ function sendcomment()
 	var myelemname = "comment";
 	var mydiv = document.getElementById(myelemname);
 	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/add_comment.php", function(html){ mydiv.textContent=html;},"");
+	mydiv.value = "";
    }
 
+function deletecomment()
+   {
+	var myelemname = "comment";
+	var mydiv = document.getElementById(myelemname);
+	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/add_comment.php", function(html){ mydiv.textContent=html;},"");
+	mydiv.value = "";
+   }
 
 </script>
 
@@ -253,9 +271,8 @@ function sendcomment()
 
 	.box5
 	{
-	float:left; width:350px; text-align:left;
+	float:left; width:550px; text-align:left;
 	margin-left:6px;height:800px;margin-top:0px;
-	background-color:white;
 	padding:2px;
 	}
 
@@ -283,7 +300,7 @@ function sendcomment()
 	</style>
 
 
-<table border=1><tr><td  valign="top">
+<table><tr><td  valign="top">&nbsp;
 
 <div>
 
@@ -333,15 +350,18 @@ else
 		?>
 
 <?
+	/*
 	$result = mysql_query("select C.comment_content, C.comment_date, U.display_name as author from wp_comments as C, wp_users as U where U.id = C.comment_author order by C.comment_date DESC LIMIT 20");
 
-	$comments_output = "";
+	$comments_output = "<div style='margin-top:4px;'><span class='gr' title=''></span><span class='c_body'></span></div>";
 	while($r = mysql_fetch_array($result)) {
 		$_date = $r['comment_date'];
 		$_comment = nl2br(stripslashes($r['comment_content']));
+		//$_comment = escape(removeCrLf(htmlspecialchars($r['comment_content'])));
 		$_author = $r['author'];
 		$comments_output .= "<div style='margin-top:4px;'><span class='gr' title='".$_date."'>".$_author.":</span><span class='c_body'>".$_comment."</span></div>";
 	}
+	*/
 ?>
 
 	<div id="main">
@@ -372,18 +392,16 @@ else
 	<?php }?>
 </div>
 </td>
-<td valign="top"> 
+<td valign="top"> &nbsp;
 	<div class="box5">
-	<b>комментарии редакторов:</b>
-
-		<div id="divToUpdate" style="padding:2px;font-size:0.9em;background-color:#FFFFD7;"><? echo ($comments_output) ?></div>
+	<b>50 последних комментариев редакторов:</b>
 
 		<div id="commentsform">
 		<? //echo("<pre>вы пишете от юзера:".print_r($current_user->last_name,true)."</pre>"); ?>
 			<form action="http://cartoonbank.ru/wp-content/plugins/purgatory/add_comment.php" method="post" id="commentform">
-			<p>оставьте комментарий:<br>
-			<textarea name="comment" id="comment" cols="40" rows="3" tabindex="4"></textarea>
-			</p>
+			пишите тут, нажмите кнопку:<br>
+			
+			<textarea id="comment" name="comment" id="comment" cols="60" rows="3" tabindex="4"></textarea>
 		  
 			<p>
 			<input name="submit" type="submit" value="послать">
@@ -395,6 +413,9 @@ else
 			</form>
 		</div>
 
+		<div id="divToUpdate" style="padding:2px;font-size:0.9em;background-color:#FFFFD7;"><? echo ($comments_output) ?></div>
+
+
 </div>
 
 	
@@ -404,9 +425,13 @@ else
 </table>
 
 <div>
-<? //echo("<pre>current_user:".print_r($current_user->id,true)."</pre>"); ?>
-</div>
 
+<?
+
+//echo("<pre>тестовый вывод, не обращайте внимания:".print_r($comments_output,true)."</pre>"); 
+
+?>
+</div>
 
 <script type="text/javascript">
 
@@ -422,7 +447,7 @@ else
 				$('#divToUpdate').fadeIn('slow'); 
 			}
 			//success: successResponse
-		}); 
+		});
 	});
 
 	function successResponse(text)
