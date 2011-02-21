@@ -1,4 +1,6 @@
 <?php
+// run this several times to wipe out extra double votes
+
 include("config.php");
 global $wpdb;
 
@@ -6,12 +8,57 @@ $link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
 mysql_set_charset('utf8',$link);
 
 
-pokazh ($wpdb->query("select * from 'wp_fsr_user' where post=5902 order by ip"),"query");
+//$result = mysql_query("select user, points, ip from `wp_fsr_user` where post=5902 order by ip");
+$result = mysql_query("select post, user, points, ip from `wp_fsr_user` order by post, ip, points desc");
+//$result = mysql_query("select distinct user, points, ip from `wp_fsr_user` where post=5902 order by ip");
+//$result = mysql_query("select user, points, ip from `wp_fsr_user` where post=5902 group by  points, ip order by ip");
 
-exit;
+if (!$result) {
+                die('Invalid query: ' . mysql_error());
+            }
 
-//:
-$result = mysql_query("select * from 'wp_fsr_user' where post=5902 order by ip");
+//
+$count=mysql_num_rows($result);
+pokazh($count,"всего рядов"); 
+
+//
+$row=mysql_fetch_array($result);
+
+$current_points = $row['points'];
+$current_ip = $row['ip'];
+$current_post = $row['post'];
+
+echo "первый ряд " . $row['post']. " <b>" . $row['points']. "</b> " .$row['ip']."!!<br>";
+
+$count=$count-1;
+		while($row=mysql_fetch_array($result))
+		{
+			//echo "<br>";
+			//pokazh($count,"count");
+			//echo $row['user'] . " " . $row['points']." <b>". $row['post']. "</b> " .$row['ip'].":<br>";
+			
+			//if ($row['post']==$current_post && $row['points']==$current_points && $row['ip']==$current_ip)
+			if ($row['post']==$current_post && $row['ip']==$current_ip)
+			{
+				echo "<br><font color='#FF00FF'><b>this will be deleted!:</b> </font>".$row['user']."' and ip='".$row['ip']."' and post=".$current_post;
+				$del_sql = "delete from `wp_fsr_user` where user='".$row['user']."' and ip='".$row['ip']."' and post=".$current_post;
+				$res = mysql_query($del_sql);
+				/*
+				if (!$res) {
+								die('<br>'.$del_sql.'<br>Invalid delete query: ' . mysql_error());
+						}
+				*/
+
+			}
+				$current_points = $row['points'];
+				$current_ip = $row['ip'];
+				$current_post = $row['post'];
+			//pokazh($row,"result");
+			$count=$count-1;
+
+		}
+
+/*
 $comments_output = "";
 
 	while($r = mysql_fetch_array($result)) {
@@ -23,7 +70,9 @@ $comments_output = "";
 	}
 
 echo $comments_output;
-}
+*/
+
+echo "<br>done!";
 
 function fw($text)
 {
