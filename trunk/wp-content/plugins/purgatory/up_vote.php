@@ -34,7 +34,7 @@ elseif (isset($_GET['id']))
 	$up_value=$row['up'];
 
 			//fw("\n\r up_value=".$up_value);
-			if ($up_value == $limit_plus) // 3 плюса - проходит, 3 минуса - не проходит
+			if ($up_value >= $limit_plus) // 3 плюса - проходит, 3 минуса - не проходит
 			{
 				// approve it to the main collection
 				$sql = "update wp_product_list set approved=1 where id='$id'";
