@@ -286,15 +286,15 @@ switch($license_num)
         break;
         
         case 2:
-        $filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."Livense_standard_template.htm";
+        $filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."license_standard_template.htm";
         break;
 
         case 3:
-        $filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."Livense_extended_template.htm";
+        $filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."license_extended_template.htm";
         break;
 
         default:
-        $filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."Livense_limited_template.htm";
+        $filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."license_limited_template.htm";
         break;
 }
 
