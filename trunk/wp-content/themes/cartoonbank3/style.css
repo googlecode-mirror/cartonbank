@@ -95,7 +95,7 @@ a:hover{
 	
 #navbar ul li a {
 	font-family: Times New Roman, Helvetica, Sans-Serif;
-	font-size: 18px;
+	font-size: 16px;
 	color: #333333;
 	padding: 0px 10px 0px 10px;
 	margin: 0px;
@@ -170,7 +170,7 @@ a:hover{
 	font-family: Times New Roman, Verdana, Arial, Sans-Serif;
 	font-weight: normal;
 	padding: 0px 0px 0px 0px;
-	margin: 0px;
+	margin-top: 10px;
 	}
 	
 #content h1 a  {
@@ -188,8 +188,8 @@ a:hover{
 	font-size: 14px;
 	font-family: Times New Roman, Verdana, Arial, Sans-Serif;
 	font-weight: bold;
-	padding: 5px 0px 5px 0px;
-	margin: 0px;
+	padding: 5px 0px 0px 0px;
+	margin-top: 6px;
 	border-top: 1px dotted #C0C0C0;
 	}
 	
