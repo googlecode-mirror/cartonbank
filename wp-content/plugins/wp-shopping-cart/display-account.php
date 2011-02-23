@@ -24,6 +24,12 @@ else if (strstr($_SERVER['DOCUMENT_ROOT'],'cb/'))
     //$params['database'] = 'z58365_cbru';
 	$params['database'] = 'cartoonbankru';
 }
+else if (strstr($_SERVER['DOCUMENT_ROOT'],'/home/www/')) 
+{
+	$abspath = $abspath_1;
+    //$params['database'] = 'z58365_cbru';
+	$params['database'] = 'cartoonbankru';
+}
 else
 {
     //$params['database'] = 'z58365_cbru3';
@@ -57,6 +63,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 		AND p.brand=b.id
 		AND u.id = l.user_id
 		AND l.user_id != '106'
+                AND st.downloads != '5'
 	GROUP BY c.license
 	ORDER BY `date` DESC";
 
@@ -120,7 +127,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
     }
 
 	//$grid->HideColumn('column', ...)
-	$grid->HideColumn('address','totalprice','display_name','user_id','lastname','email','gateway','processed','downloads','active','downloadid');
+	$grid->HideColumn('address','totalprice','display_name','user_id','lastname','email','processed','downloads','active','downloadid');
 
     $grid->SetPerPage(100);
 ?>

@@ -3,8 +3,9 @@ $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
 
-//pokazh($_SERVER);
+//pokazh($_SERVER['DOCUMENT_ROOT'],"DOCUMENT_ROOT");
 //[DOCUMENT_ROOT] => /home/www/cb3/
+
 if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
 {
 	$abspath = $abspath_2;
@@ -19,6 +20,12 @@ if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
 	$params['database'] = 'cartoonbankru';
 }
 else if (strstr($_SERVER['DOCUMENT_ROOT'],'cb/')) 
+{
+	$abspath = $abspath_1;
+    //$params['database'] = 'z58365_cbru';
+	$params['database'] = 'cartoonbankru';
+}
+else if (strstr($_SERVER['DOCUMENT_ROOT'],'/home/www/')) 
 {
 	$abspath = $abspath_1;
     //$params['database'] = 'z58365_cbru';
