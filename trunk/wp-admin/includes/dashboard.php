@@ -1,4 +1,5 @@
 <?php
+header( 'Location: '.get_option('siteurl'));
 if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
 {
 header( 'Location: '.get_option('siteurl').'/wp-admin/admin.php?page=wp-shopping-cart/display-items.php' ) ;
@@ -13,7 +14,8 @@ header( 'Location: '.get_option('siteurl').'/wp-admin/admin.php?page=wp-shopping
 }
 else
 {
-header( 'Location: '.get_option('siteurl').'/wp-admin/profile.php' ) ;
+//header( 'Location: '.get_option('siteurl').'/wp-admin/profile.php' ) ;
+header( 'Location: '.get_option('siteurl')) ;
 }
 /**
  * WordPress Dashboard Widget Administration Panel API
