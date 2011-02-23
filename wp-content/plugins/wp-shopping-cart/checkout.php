@@ -58,6 +58,30 @@ if (isset($_SESSION['wallet']))
  <input type="hidden" name="total" value="<?echo $_SESSION['total'];?>">
 
  <?php
+
+$totalsum = (float) $_SESSION['total']; 
+//pokazh($userdata->wallet,"wallet");
+//pokazh($totalsum,"totalsum");
+//pokazh($userdata,"userdata");
+
+$canpay = false;
+$disabaled = "";
+
+	 if ($userdata->wallet >= $totalsum && $userdata->wallet > 0)
+	 {
+		 //pokazh("we can pay");
+		 $canpay = true;
+	 }
+	 else
+	 {
+		 //pokazh("we can't pay");
+	 }
+if ($canpay==false or $totalsum == 0)
+{
+	$disabaled = " disabled=disabled ";
+}
+
+
  echo "<tr><td style='padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan='2'><b>Подтвердите информацию о себе:</b></td></tr>";
 
 ?>
@@ -112,13 +136,15 @@ if (isset($_SESSION['wallet']))
 
 //pokazh($curgateway,"curgateway");
 //pokazh($GLOBALS['nzshpcrt_gateways'],"GLOBALS['nzshpcrt_gateways']");
+//pokazh($_SESSION,"session");
 $rooturl = get_option('siteurl');
 		?>
 	  <tr>
         <td width='270'>
-		<input type="radio" name="payment_method" value="wallet" id="payment_method_2"/> 
+		<input type="radio" name="payment_method" value="wallet" id="payment_method_2" <? echo ($disabaled); ?>/> 
         <label for='payment_method_2'>Оплата через<br><b>Личный Счёт (по предоплате) </b></label>
 		<br><img src="<?php echo($rooturl);?>/img/gate_beznal.png">
+		<br><div style="font-size:0.7em;color:#CC0033;"><?if ($canpay==false){echo "У вас недостаточно денег на Личном счёте для этого метода оплаты.";}?></div>
         </td>
 		<td>
 		После нажатия на кнопку "Оплатить" произойдет уменьшение вашего Личного Счета на размер стоимости подтвержденной вами Лицензии. Вы перейдёте на страницу с прямыми ссылками на заказанные файлы высокого разрешения. На указанный вами при регистрации электронный почтовый адрес будет отправлено сообщение, содержащее:<br>1. Ссылку на выбранное изображение в виде файла качественного разрешения, доступный вам для скачивания в течение 1 недели со дня получения сообщения.<br>2. Лицензионный Договор на использование каждого выбранного изображения.
@@ -126,7 +152,7 @@ $rooturl = get_option('siteurl');
       </tr>
 	  <tr>
         <td width='270'>
-		<input type="radio" name="payment_method" value="check" id="payment_method_4"/> 
+		<input type="radio" name="payment_method" value="check" id="payment_method_4" <? echo ($disabaled); ?>/> 
         <label for='payment_method_4'>Оплата через<br><b>Сбербанк</b></label>
 		<br><!-- <img src="<?php echo($rooturl);?>/img/gate_beznal.png"> -->
         </td>
@@ -137,7 +163,7 @@ $rooturl = get_option('siteurl');
 		</td>
       </tr>
 	  <tr><td>
-		<input type="radio" name="payment_method" value="robokassa" id="payment_method_3"><!-- disabled="disabled" -->
+		<input type="radio" name="payment_method" value="robokassa" id="payment_method_3" <? echo ($disabaled); ?>>
 		<label for='payment_method_3'>Оплата через<br><b>Робокассу</b></label>
 		<br><img src="<?php echo($rooturl);?>/img/gate_robokassa.png">
 		<br><div style="font-size:0.7em;"><ul>
@@ -158,7 +184,7 @@ $rooturl = get_option('siteurl');
 
 	  <?if (WP_DEBUG) {?>
 	  <tr><td>
-		<input type="radio" name="payment_method" value="paypal_multiple" id="payment_method_1"><!--  disabled="disabled" -->
+		<input type="radio" name="payment_method" value="paypal_multiple" id="payment_method_1"  <? echo ($disabaled); ?>>
 		<label for='payment_method_1'>Оплата через <b>PayPal</b></label>
 		<br><img src="<?php echo($rooturl);?>/img/gate_paypal.png">
 	  </td>
@@ -174,7 +200,7 @@ $rooturl = get_option('siteurl');
       </td>
       <td style='padding-top:5px;border-top: 1px solid #c8c8c8;'>
       <input type='hidden' value='true' name='submitwpcheckout' />
-      <input type='submit' value='Оплатить' name='submit' />
+      <input type='submit' value='Оплатить' name='submit'  <? echo ($disabaled); ?>/>
       </td>
     </tr>
 	<tr>
