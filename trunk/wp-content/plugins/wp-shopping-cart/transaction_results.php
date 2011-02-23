@@ -81,11 +81,6 @@ if(isset($cart) && $cart != null && ($errorcode == 0))
 			   "Content-Type: text/html; charset=utf-8\r\n" .
 			   "Content-Transfer-Encoding: 8bit\r\n\r\n";
 
-  if($email != '')
-    {
-    mail($email, 'Подтверждение покупки изображения. Cartoonbank.ru', $message, $headers);
-	mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru', $message, $headers);
-    }
   
   $purch_sql = "SELECT * FROM `wp_purchase_logs` WHERE `id`!='".$check[0]['id']."'";
   $purch_data = $wpdb->get_results($purch_sql,ARRAY_A) ; 
@@ -114,11 +109,24 @@ if(isset($cart) && $cart != null && ($errorcode == 0))
   
   $report_user .= "\n\r";
   $report = $report_user . $report;
+
+  if($email != '')
+    {
+    mail($email, 'Подтверждение покупки изображения. Cartoonbank.ru .', $message, $headers);
+	mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru ..', $report." <br> ".$message, $headers);
+    }
+
+
+/*
   if(get_option('purch_log_email') != null)
     {
-    mail(get_option('purch_log_email'), 'Подтверждение покупки изображения. Cartoonbank.ru', $report, $headers);
-    mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru', $report."\n\r\n\r".$message, $headers);
+    mail(get_option('purch_log_email'), 'Подтверждение покупки изображения. Cartoonbank.ru ...', $report, $headers);
+    mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru ....', $report."\n\r\n\r".$message, $headers);
     }
+*/
+
+
+
 
 	// todo: 
   $_SESSION['nzshpcrt_cart'] = '';
