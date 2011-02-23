@@ -526,7 +526,20 @@ $search_sql = NULL;
 				$limit = $items_on_page;
 				if (isset($_GET['category'])&&is_numeric($_GET['category'])) {$catid=$_GET['category'];}else{$catid='';}
 
-				$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=",$filter_list);
+	// Brand filter
+	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
+	{
+		$_brand = $_GET['brand'];
+		$brand_group_sql = "&brand=".$_brand;
+	}
+	else
+	{
+		$_brand = '';
+		$brand_group_sql = '';
+	}
+		$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$brand_group_sql."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=",$filter_list);
+				
+				//$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=",$filter_list);
 				
 			  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
 
