@@ -65,7 +65,7 @@ $totalsum = (float) $_SESSION['total'];
 //pokazh($userdata,"userdata");
 
 $canpay = false;
-$disabaled = "";
+$disabled = "";
 
 	 if ($userdata->wallet >= $totalsum && $userdata->wallet > 0)
 	 {
@@ -78,7 +78,7 @@ $disabaled = "";
 	 }
 if ($canpay==false or $totalsum == 0)
 {
-	$disabaled = " disabled=disabled ";
+	$disabled = " disabled=disabled ";
 }
 
 
@@ -141,7 +141,7 @@ $rooturl = get_option('siteurl');
 		?>
 	  <tr>
         <td width='270'>
-		<input type="radio" name="payment_method" value="wallet" id="payment_method_2" <? echo ($disabaled); ?>/> 
+		<input type="radio" name="payment_method" value="wallet" id="payment_method_2" <? echo ($disabled); ?>/> 
         <label for='payment_method_2'>Оплата через<br><b>Личный Счёт (по предоплате) </b></label>
 		<br><img src="<?php echo($rooturl);?>/img/gate_beznal.png">
 		<br><div style="font-size:0.7em;color:#CC0033;"><?if ($canpay==false){echo "У вас недостаточно денег на Личном счёте для этого метода оплаты.";}?></div>
@@ -152,7 +152,7 @@ $rooturl = get_option('siteurl');
       </tr>
 	  <tr>
         <td width='270'>
-		<input type="radio" name="payment_method" value="check" id="payment_method_4" <? echo ($disabaled); ?>/> 
+		<input type="radio" name="payment_method" value="check" id="payment_method_4" <? //echo ($disabled); ?>/> 
         <label for='payment_method_4'>Оплата через<br><b>Сбербанк</b></label>
 		<br><!-- <img src="<?php echo($rooturl);?>/img/gate_beznal.png"> -->
         </td>
@@ -163,7 +163,7 @@ $rooturl = get_option('siteurl');
 		</td>
       </tr>
 	  <tr><td>
-		<input type="radio" name="payment_method" value="robokassa" id="payment_method_3" <? echo ($disabaled); ?>>
+		<input type="radio" name="payment_method" value="robokassa" id="payment_method_3" <? echo ($disabled); ?>>
 		<label for='payment_method_3'>Оплата через<br><b>Робокассу</b></label>
 		<br><img src="<?php echo($rooturl);?>/img/gate_robokassa.png">
 		<br><div style="font-size:0.7em;"><ul>
@@ -184,7 +184,7 @@ $rooturl = get_option('siteurl');
 
 	  <?if (WP_DEBUG) {?>
 	  <tr><td>
-		<input type="radio" name="payment_method" value="paypal_multiple" id="payment_method_1"  <? echo ($disabaled); ?>>
+		<input type="radio" name="payment_method" value="paypal_multiple" id="payment_method_1"  <? echo ($disabled); ?>>
 		<label for='payment_method_1'>Оплата через <b>PayPal</b></label>
 		<br><img src="<?php echo($rooturl);?>/img/gate_paypal.png">
 	  </td>
@@ -200,7 +200,7 @@ $rooturl = get_option('siteurl');
       </td>
       <td style='padding-top:5px;border-top: 1px solid #c8c8c8;'>
       <input type='hidden' value='true' name='submitwpcheckout' />
-      <input type='submit' value='Оплатить' name='submit'  <? echo ($disabaled); ?>/>
+      <input type='submit' value='Оплатить' name='submit'  <? //echo ($disabled); ?>/>
       </td>
     </tr>
 	<tr>
