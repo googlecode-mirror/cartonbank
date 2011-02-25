@@ -8,10 +8,7 @@ $link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
 mysql_set_charset('utf8',$link);
 
 
-//$result = mysql_query("select user, points, ip from `wp_fsr_user` where post=5902 order by ip");
 $result = mysql_query("select post, user, points, ip from `wp_fsr_user` order by post, ip, points desc");
-//$result = mysql_query("select distinct user, points, ip from `wp_fsr_user` where post=5902 order by ip");
-//$result = mysql_query("select user, points, ip from `wp_fsr_user` where post=5902 group by  points, ip order by ip");
 
 if (!$result) {
                 die('Invalid query: ' . mysql_error());
@@ -28,8 +25,6 @@ $current_points = $row['points'];
 $current_ip = $row['ip'];
 $current_post = $row['post'];
 
-echo "первый ряд " . $row['post']. " <b>" . $row['points']. "</b> " .$row['ip']."!!<br>";
-
 $count=$count-1;
 		while($row=mysql_fetch_array($result))
 		{
@@ -40,7 +35,7 @@ $count=$count-1;
 			//if ($row['post']==$current_post && $row['points']==$current_points && $row['ip']==$current_ip)
 			if ($row['post']==$current_post && $row['ip']==$current_ip)
 			{
-				echo "<br><font color='#FF00FF'><b>this will be deleted!:</b> </font>".$row['user']."' and ip='".$row['ip']."' and post=".$current_post;
+				echo "<br><font color='#FF00FF'><b>this will be deleted!:</b> </font> ip='".$row['ip']."' cartoon=<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".$current_post."'>".$current_post."</a>";
 				$del_sql = "delete from `wp_fsr_user` where user='".$row['user']."' and ip='".$row['ip']."' and post=".$current_post;
 				$res = mysql_query($del_sql);
 				/*
