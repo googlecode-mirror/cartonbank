@@ -1451,8 +1451,8 @@ function wtrmark($sourcefile, $watermarkfile) {
     //                   $watermarkfile_width, $watermarkfile_height);
 
     
-    $opacity = 15;
-    $opacity_logo = 80;
+    $opacity = 5;
+    $opacity_logo = 60;
 
    ImageCopyMerge($sourcefile_id, $watermarkfile_id, $dest_x, $dest_y, 0, 0, $watermarkfile_width, $watermarkfile_height, $opacity);
   
