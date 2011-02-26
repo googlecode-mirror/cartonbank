@@ -4,7 +4,9 @@
 //
 
 // configuration
-$howmanyimages = 7;
+$howmanyimages = 7; // how many images to send
+//$mailto = "igor.aleshin@gmail.com"; // destination email box
+$mailto = "cartoonbankru@gmail.com"; // destination email box
 
 include("config.php");
 
@@ -97,7 +99,7 @@ $count=mysql_num_rows($result);
 
 					if(file_exists($export_dir.$slidename))
 					{
-						wtrmark($export_dir.$slidename,$wm,$author);
+						wtrmark($export_dir.$slidename,$wm,$author.' © cartoonbank.ru');
 						//echo "\n\r>>>> watermarked";
 					}
 
@@ -131,7 +133,7 @@ $count=mysql_num_rows($result);
 					$my_message = $content;
 
 					//send email 2
-					mail_attachment($my_file, $my_path, $my_mail, $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
+					mail_attachment($my_file, $my_path, $mailto, $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
 
 				$count=$count-1;
 
@@ -224,24 +226,30 @@ function wtrmark($sourcefile, $watermarkfile, $text) {
 		   $sourcefile_id = $tempimage;
 	   }
 
+
+		   // create an empty truecolor container
+		   $tempimage = imagecreatetruecolor($sourcefile_width+20,$sourcefile_height);
+			$bgColor = imagecolorallocate($tempimage, 255,255,255);
+			imagefill($tempimage , 0,0 , $bgColor);
+		  
+		   // copy the 8-bit gif into the truecolor image
+		   imagecopy($tempimage, $sourcefile_id, 0, 0, 0, 0,
+							   $sourcefile_width, $sourcefile_height);
+		  
+		   // copy the source_id int
+		   $sourcefile_id = $tempimage;
+
 	//text
-	$black = ImageColorAllocate($sourcefile_id, 0, 0, 0); 
+	$black = ImageColorAllocate($sourcefile_id, 200, 200, 200); 
 	$white = ImageColorAllocate($sourcefile_id, 255, 255, 255); 
 
 	//The canvas's (0,0) position is the upper left corner 
 	//So this is how far down and to the right the text should start 
-	$start_x = $sourcefile_width - 295;//10; 
-	$start_y = $sourcefile_height - 4; //20; 
+	$start_x = $sourcefile_width;
+	$start_y = $sourcefile_height; 
 
 	// write text
-	// write white twice
-	Imagettftext($sourcefile_id, 10, 0, $start_x-1, $start_y-1, $white, '/home/www/cb3/ales/arial.ttf', $text); 
-	Imagettftext($sourcefile_id, 10, 0, $start_x+1, $start_y+1, $white, '/home/www/cb3/ales/arial.ttf', $text); 
-	Imagettftext($sourcefile_id, 10, 0, $start_x-1, $start_y+1, $white, '/home/www/cb3/ales/arial.ttf', $text); 
-	Imagettftext($sourcefile_id, 10, 0, $start_x+1, $start_y-1, $white, '/home/www/cb3/ales/arial.ttf', $text); 
-
-	//write black over
-	Imagettftext($sourcefile_id, 10, 0, $start_x, $start_y, $black, '/home/www/cb3/ales/arial.ttf', $text); 
+	Imagettftext($sourcefile_id, 10, 90, $sourcefile_width+11, $sourcefile_height, $black, '/home/www/cb3/ales/arial.ttf', $text); 
 
 
 	$opacity_logo = 30;
@@ -264,6 +272,7 @@ function wtrmark($sourcefile, $watermarkfile, $text) {
 	 
 	   imagedestroy($sourcefile_id);
 	   imagedestroy($logofile_id);
+
 }
 
 function al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file,  $idhash_path, $product_images, $slidename, $thumb, $resample_quality = '100') {

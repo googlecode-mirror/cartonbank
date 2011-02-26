@@ -5,7 +5,7 @@
 
 // configuration
 $howmanyimages = 1; // how many images to send
-$mailto = "cartoonbank.ru@gmail.com"; // destination email box
+$mailto = "igor.aleshin@gmail.com"; // destination email box
 
 include("config.php");
 
