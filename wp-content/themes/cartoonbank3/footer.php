@@ -1,6 +1,8 @@
 <!-- footer begins -->
 <div style="clear:both;"><br><br></div>
-<div id="b"><a href="http://www.redburda.ru/" tagret=_blank><img title="Красная Бурда" src="<? echo (get_option('siteurl').'/img/b/kb88x31.gif');?>"></a>
+<div id="b">
+ <a href="http://www.redburda.ru/" tagret=_blank><img title="Красная Бурда" src="<? echo (get_option('siteurl').'/img/b/kb88x31.gif');?>"></a>
+ <a href="http://anekdot.ru/" tagret=_blank><img title="Анекдоты из России" src="<? echo (get_option('siteurl').'/img/b/anek88x31.gif');?>"></a>
  <a href="http://www.spbdnevnik.ru/" tagret=_blank><img title="Петербургский дневник" src="<? echo (get_option('siteurl').'/img/b/pd88x31.gif');?>"></a>
  <a href="http://www.izvestia.ru/spb/" tagret=_blank><img title="Известия-СПб" src="<? echo (get_option('siteurl').'/img/b/iz88x31.gif');?>"></a>
  <a href="https://money.yandex.ru" target="_blank"><img src="https://money.yandex.ru/img/yamoney_logo88x31.gif " alt="Я принимаю Яндекс.Деньги" title="Я принимаю Яндекс.Деньги" border="0" width="88" height="31"/></a>
