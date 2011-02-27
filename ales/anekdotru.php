@@ -1,12 +1,14 @@
 <?php
 //
-// send top 7($howmanyimages?) rating images to anekdot.ru
+// send top 7($howmanyemails?) rating images to anekdot.ru
 //
 
 // configuration
-$howmanyimages = 7; // how many images to send
-//$mailto = "igor.aleshin@gmail.com"; // destination email box
-$mailto = "cartoonbankru@gmail.com"; // destination email box
+$howmanyrows = 100; // how many rows to select from database
+$howmanyemails = 8; // how many images to send (plus ignored artists)
+
+$mailto = "igor.aleshin@gmail.com"; // destination email box
+//$mailto = "cartoonbank.ru@gmail.com"; // destination email box 
 
 include("config.php");
 
@@ -14,25 +16,26 @@ $link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
 mysql_set_charset('utf8',$link);
 
 $sql = "SELECT	post as ID, 
-				wp_product_list.image as image, 
-				wp_product_list.name AS title, 
-				wp_product_brands.name AS author, 
-				COUNT(*) AS votes, 
-				SUM(wp_fsr_user.points) AS points, 
-				AVG(wp_fsr_user.points)*SQRT(COUNT(*)) AS average,
-				wp_product_files.idhash,
-				wp_product_files.mimetype
-					FROM wp_fsr_user,  wp_fsr_post, wp_product_list, wp_product_brands, wp_product_files 
-					WHERE wp_fsr_user.post = wp_product_list.id 
-					AND wp_fsr_user.post =  wp_fsr_post.ID 
-					AND wp_product_list.file = wp_product_files.id
-					AND wp_product_list.brand = wp_product_brands.id 
-					AND wp_product_list.active = 1
-					AND wp_product_list.visible = 1
-					AND wp_fsr_post.anekdotru_date is NULL
-					GROUP BY 1
-					ORDER BY 7 DESC, 5 DESC
-					LIMIT ".$howmanyimages;
+	wp_product_list.image as image, 
+	wp_product_list.name AS title, 
+	wp_product_brands.name AS author, 
+	COUNT(*) AS votes, 
+	SUM(wp_fsr_user.points) AS points, 
+	AVG(wp_fsr_user.points)*SQRT(COUNT(*)) AS average,
+	wp_product_files.idhash,
+	wp_product_list.brand AS brand,
+	wp_product_files.mimetype
+		FROM wp_fsr_user,  wp_fsr_post, wp_product_list, wp_product_brands, wp_product_files 
+		WHERE wp_fsr_user.post = wp_product_list.id 
+		AND wp_fsr_user.post =  wp_fsr_post.ID 
+		AND wp_product_list.file = wp_product_files.id
+		AND wp_product_list.brand = wp_product_brands.id 
+		AND wp_product_list.active = 1
+		AND wp_product_list.visible = 1
+		AND wp_fsr_post.anekdotru_date is NULL
+		GROUP BY 1
+		ORDER BY 7 DESC, 5 DESC
+		LIMIT ".$howmanyrows;
 
 $result = mysql_query("$sql");
 
@@ -42,6 +45,7 @@ if (!$result) {die('Invalid query: ' . mysql_error());}
 $count=mysql_num_rows($result);
 //
 
+$arrAuthors = array('Светозаров Георгий');
 		
 		while($row=mysql_fetch_array($result))
 		{
@@ -49,6 +53,7 @@ $count=mysql_num_rows($result);
 				$image = $row['image'];
 				$title = $row['title'];
 				$author = $row['author'];
+				$brand = $row['brand'];
 				$votes = $row['votes'];
 				$points = $row['points'];
 				$average = $row['average'];
@@ -66,15 +71,23 @@ $count=mysql_num_rows($result);
 					   break;
 					  
 				   case('png'):
-					   $extension = 'png';;
+					   $extension = 'png';
 					   break;
 					  
 				   default:
-					   $extension = 'jpg';;
+					   $extension = 'jpg';
 				}
 
 				// echo the name of the image
-				echo "<br><br><font color='#FF00FF'><b>$count:</b> </font>".$ID." <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."' width='40'> <b>&quot;".$title."&quot;</b> ".$author." рейт: ".$average."<br>";
+				if (!in_array($author, $arrAuthors))
+				{
+					
+					echo "<br><br><font color='#FF00FF'><b>".count($arrAuthors).":</b> </font>".$ID." <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."' width='40'> <b>&quot;".$title."&quot;</b> ".$author." рейт: ".$average."<br>";
+
+					array_push($arrAuthors, $author);
+
+				
+
 
 				//image 
 				$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/product_images/".$image;
@@ -103,11 +116,6 @@ $count=mysql_num_rows($result);
 						//echo "\n\r>>>> watermarked";
 					}
 
-				// Mark image as sent to the Anekdot.ru
-												$update_sql = "update wp_fsr_post set anekdotru_date='".date("d.m.y H:m:s")."' where ID=".$ID;
-												$res = mysql_query($update_sql);
-													if (!$res) {die('<br>'.$update_sql.'<br>Invalid delete query: ' . mysql_error());}
-													//echo ("<br>".$update_sql."<br>");
 				
 				//send email
 					// To send HTML mail, the Content-type header must be set
@@ -118,7 +126,9 @@ $count=mysql_num_rows($result);
 					//email content
 												$content = "Автор: ".$author."\n\r";
 												$content .= "Название: ".$title."\n\r";
-												$content .= "Ссылка: http://cartoonbank.ru/?page_id=29&cartoonid=".$ID."\n\r";
+												$content .= "Ссылка: http://cartoonbank.ru/?page_id=29&brand=".$brand."\n\r";
+												$content .= "Код ссылки на страницу автора: <a href='http://cartoonbank.ru/?page_id=29&brand=".$brand."'>".$author."</a>\n\r";
+
 
 
 					$my_file = $slidename;
@@ -144,7 +154,22 @@ $count=mysql_num_rows($result);
 					}
 
 
+
+
+					// Mark image as sent to the Anekdot.ru
+					$update_sql = "update wp_fsr_post set anekdotru_date='".date("d.m.y H:m:s")."' where ID=".$ID;
+						$res = mysql_query($update_sql);
+						if (!$res) {die('<br>'.$update_sql.'<br>Invalid delete query: ' . mysql_error());}
+				}
+
+			if (count($arrAuthors) >= $howmanyemails)
+			{
+				pokazh($arrAuthors);
+				exit;
+			}
+
 		}
+
 
 function mail_attachment($filename, $path, $mailto, $from_mail, $from_name, $replyto, $subject, $message) {
     $file = $path.$filename;

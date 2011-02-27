@@ -1,11 +1,16 @@
 <?php
 //
-// send top 7($howmanyimages?) rating images to anekdot.ru
+// send top 7($howmanyemails?) rating images to anekdot.ru
 //
 
 // configuration
-$howmanyimages = 1; // how many images to send
-$mailto = "igor.aleshin@gmail.com"; // destination email box
+$howmanyrows = 100; // how many rows to select from database
+$howmanyemails = 8; // how many images to send (plus ignored artists)
+
+//$mailto = "igor.aleshin@gmail.com"; // destination email box
+$mailto = "cartoonbank.ru@gmail.com"; // destination email box 
+$mailto1 = "verner@anekdot.ru"; // destination email box 
+$mailto2 = "Kalininskiy@yandex.ru"; // destination email box 
 
 include("config.php");
 
@@ -13,25 +18,26 @@ $link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
 mysql_set_charset('utf8',$link);
 
 $sql = "SELECT	post as ID, 
-				wp_product_list.image as image, 
-				wp_product_list.name AS title, 
-				wp_product_brands.name AS author, 
-				COUNT(*) AS votes, 
-				SUM(wp_fsr_user.points) AS points, 
-				AVG(wp_fsr_user.points)*SQRT(COUNT(*)) AS average,
-				wp_product_files.idhash,
-				wp_product_files.mimetype
-					FROM wp_fsr_user,  wp_fsr_post, wp_product_list, wp_product_brands, wp_product_files 
-					WHERE wp_fsr_user.post = wp_product_list.id 
-					AND wp_fsr_user.post =  wp_fsr_post.ID 
-					AND wp_product_list.file = wp_product_files.id
-					AND wp_product_list.brand = wp_product_brands.id 
-					AND wp_product_list.active = 1
-					AND wp_product_list.visible = 1
-					AND wp_fsr_post.anekdotru_date is NULL
-					GROUP BY 1
-					ORDER BY 7 DESC, 5 DESC
-					LIMIT ".$howmanyimages;
+	wp_product_list.image as image, 
+	wp_product_list.name AS title, 
+	wp_product_brands.name AS author, 
+	COUNT(*) AS votes, 
+	SUM(wp_fsr_user.points) AS points, 
+	AVG(wp_fsr_user.points)*SQRT(COUNT(*)) AS average,
+	wp_product_files.idhash,
+	wp_product_list.brand AS brand,
+	wp_product_files.mimetype
+		FROM wp_fsr_user,  wp_fsr_post, wp_product_list, wp_product_brands, wp_product_files 
+		WHERE wp_fsr_user.post = wp_product_list.id 
+		AND wp_fsr_user.post =  wp_fsr_post.ID 
+		AND wp_product_list.file = wp_product_files.id
+		AND wp_product_list.brand = wp_product_brands.id 
+		AND wp_product_list.active = 1
+		AND wp_product_list.visible = 1
+		AND wp_fsr_post.anekdotru_date is NULL
+		GROUP BY 1
+		ORDER BY 7 DESC, 5 DESC
+		LIMIT ".$howmanyrows;
 
 $result = mysql_query("$sql");
 
@@ -41,6 +47,7 @@ if (!$result) {die('Invalid query: ' . mysql_error());}
 $count=mysql_num_rows($result);
 //
 
+$arrAuthors = array('Светозаров Георгий');
 		
 		while($row=mysql_fetch_array($result))
 		{
@@ -48,6 +55,7 @@ $count=mysql_num_rows($result);
 				$image = $row['image'];
 				$title = $row['title'];
 				$author = $row['author'];
+				$brand = $row['brand'];
 				$votes = $row['votes'];
 				$points = $row['points'];
 				$average = $row['average'];
@@ -65,15 +73,23 @@ $count=mysql_num_rows($result);
 					   break;
 					  
 				   case('png'):
-					   $extension = 'png';;
+					   $extension = 'png';
 					   break;
 					  
 				   default:
-					   $extension = 'jpg';;
+					   $extension = 'jpg';
 				}
 
 				// echo the name of the image
-				//echo "<br><br><font color='#FF00FF'><b>$count:</b> </font>".$ID." <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."' width='40'> <b>&quot;".$title."&quot;</b> ".$author." рейт: ".$average."<br>";
+				if (!in_array($author, $arrAuthors))
+				{
+					
+					echo "<br><br><font color='#FF00FF'><b>".count($arrAuthors).":</b> </font>".$ID." <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."' width='40'> <b>&quot;".$title."&quot;</b> ".$author." рейт: ".$average."<br>";
+
+					array_push($arrAuthors, $author);
+
+				
+
 
 				//image 
 				$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/product_images/".$image;
@@ -98,15 +114,10 @@ $count=mysql_num_rows($result);
 
 					if(file_exists($export_dir.$slidename))
 					{
-						wtrmark($export_dir.$slidename,$wm,$author);
+						wtrmark($export_dir.$slidename,$wm,$author.' © cartoonbank.ru');
 						//echo "\n\r>>>> watermarked";
 					}
 
-				// Mark image as sent to the Anekdot.ru
-												$update_sql = "update wp_fsr_post set anekdotru_date='".date("d.m.y H:m:s")."' where ID=".$ID;
-												$res = mysql_query($update_sql);
-													if (!$res) {die('<br>'.$update_sql.'<br>Invalid delete query: ' . mysql_error());}
-													//echo ("<br>".$update_sql."<br>");
 				
 				//send email
 					// To send HTML mail, the Content-type header must be set
@@ -117,7 +128,9 @@ $count=mysql_num_rows($result);
 					//email content
 												$content = "Автор: ".$author."\n\r";
 												$content .= "Название: ".$title."\n\r";
-												$content .= "Ссылка: http://cartoonbank.ru/?page_id=29&cartoonid=".$ID."\n\r";
+												$content .= "Ссылка: http://cartoonbank.ru/?page_id=29&brand=".$brand."\n\r";
+												$content .= "Код ссылки на страницу автора: <a href='http://cartoonbank.ru/?page_id=29&brand=".$brand."'>".$author."</a>\n\r";
+
 
 
 					$my_file = $slidename;
@@ -131,8 +144,14 @@ $count=mysql_num_rows($result);
 					$my_subject = "ежедневная карикатура для анекдота.ру от картунбанка.ру";
 					$my_message = $content;
 
-					//send email 2
+					//send email
+					// self
 					mail_attachment($my_file, $my_path, $mailto, $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
+					// verner
+					mail_attachment($my_file, $my_path, $mailto1, $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
+					// kalininsky
+					mail_attachment($my_file, $my_path, $mailto2, $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
+
 
 				$count=$count-1;
 
@@ -143,7 +162,22 @@ $count=mysql_num_rows($result);
 					}
 
 
+
+
+					// Mark image as sent to the Anekdot.ru
+					$update_sql = "update wp_fsr_post set anekdotru_date='".date("d.m.y H:m:s")."' where ID=".$ID;
+						$res = mysql_query($update_sql);
+						if (!$res) {die('<br>'.$update_sql.'<br>Invalid delete query: ' . mysql_error());}
+				}
+
+			if (count($arrAuthors) >= $howmanyemails)
+			{
+				pokazh($arrAuthors);
+				exit;
+			}
+
 		}
+
 
 function mail_attachment($filename, $path, $mailto, $from_mail, $from_name, $replyto, $subject, $message) {
     $file = $path.$filename;
@@ -169,13 +203,11 @@ function mail_attachment($filename, $path, $mailto, $from_mail, $from_name, $rep
     $header .= "Content-Disposition: attachment; filename=\"".$filename."\"\r\n\r\n";
     $header .= $content."\r\n\r\n";
     $header .= "--".$uid."--";
-	/*
     if (mail($mailto, $subject, "", $header)) {
         echo "mail send ... OK"; // or use booleans here
     } else {
         echo "mail send ... ERROR!";
     }
-	*/
 }
 
 function wtrmark($sourcefile, $watermarkfile, $text) {
@@ -227,24 +259,30 @@ function wtrmark($sourcefile, $watermarkfile, $text) {
 		   $sourcefile_id = $tempimage;
 	   }
 
+
+		   // create an empty truecolor container
+		   $tempimage = imagecreatetruecolor($sourcefile_width+20,$sourcefile_height);
+			$bgColor = imagecolorallocate($tempimage, 255,255,255);
+			imagefill($tempimage , 0,0 , $bgColor);
+		  
+		   // copy the 8-bit gif into the truecolor image
+		   imagecopy($tempimage, $sourcefile_id, 0, 0, 0, 0,
+							   $sourcefile_width, $sourcefile_height);
+		  
+		   // copy the source_id int
+		   $sourcefile_id = $tempimage;
+
 	//text
-	$black = ImageColorAllocate($sourcefile_id, 0, 0, 0); 
+	$black = ImageColorAllocate($sourcefile_id, 200, 200, 200); 
 	$white = ImageColorAllocate($sourcefile_id, 255, 255, 255); 
 
 	//The canvas's (0,0) position is the upper left corner 
 	//So this is how far down and to the right the text should start 
-	$start_x = $sourcefile_width - 295;//10; 
-	$start_y = $sourcefile_height - 4; //20; 
+	$start_x = $sourcefile_width;
+	$start_y = $sourcefile_height; 
 
 	// write text
-	// write white twice
-	Imagettftext($sourcefile_id, 10, 0, $start_x-1, $start_y-1, $white, '/home/www/cb3/ales/arial.ttf', $text); 
-	Imagettftext($sourcefile_id, 10, 0, $start_x+1, $start_y+1, $white, '/home/www/cb3/ales/arial.ttf', $text); 
-	Imagettftext($sourcefile_id, 10, 0, $start_x-1, $start_y+1, $white, '/home/www/cb3/ales/arial.ttf', $text); 
-	Imagettftext($sourcefile_id, 10, 0, $start_x+1, $start_y-1, $white, '/home/www/cb3/ales/arial.ttf', $text); 
-
-	//write black over
-	Imagettftext($sourcefile_id, 10, 0, $start_x, $start_y, $black, '/home/www/cb3/ales/arial.ttf', $text); 
+	Imagettftext($sourcefile_id, 10, 90, $sourcefile_width+11, $sourcefile_height, $black, '/home/www/cb3/ales/arial.ttf', $text); 
 
 
 	$opacity_logo = 30;
@@ -267,6 +305,7 @@ function wtrmark($sourcefile, $watermarkfile, $text) {
 	 
 	   imagedestroy($sourcefile_id);
 	   imagedestroy($logofile_id);
+
 }
 
 function al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file,  $idhash_path, $product_images, $slidename, $thumb, $resample_quality = '100') {
