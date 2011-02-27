@@ -64,11 +64,15 @@ class FSR {
 	function getVotingStars($starType) {
 		global $picture_id, $wpdb, $table_prefix;
 		$rated = false;
+		$ip = $_SERVER['REMOTE_ADDR'];
 		if (isset($this->_user)) {
 			$user = $wpdb->escape($this->_user);
 			$table_name = $table_prefix . "fsr_user";
-			$rated = (bool) $wpdb->get_var("SELECT COUNT(*) FROM {$table_name} WHERE user='{$user}' AND post={$picture_id}");
+			//$rated = (bool) $wpdb->get_var("SELECT COUNT(*) FROM {$table_name} WHERE user='{$user}' AND post={$picture_id}");
+			$rated = (bool) $wpdb->get_var("SELECT COUNT(*) FROM {$table_name} WHERE ip='{$ip}' AND post={$picture_id}"); //ales
 		}
+
+
 		if (($this->_points > 0) && !$rated) {
 			$user = $wpdb->escape($this->_user);
 			$table_name = $table_prefix . "fsr_user";
@@ -77,7 +81,16 @@ class FSR {
 			$wpdb->query("INSERT INTO {$table_name} (user, post, points, ip, vote_date) VALUES ('{$user}', {$picture_id}, {$this->_points}, '{$ip}', '{$vote_date}')");
 			$table_name = $table_prefix . "fsr_post";
 			if ($wpdb->get_var("SELECT COUNT(*) FROM {$table_name} WHERE ID={$picture_id}")) {
-				$wpdb->query("UPDATE {$table_name} SET votes=votes+1, points=points+{$this->_points} WHERE ID={$picture_id};");
+
+				//$wpdb->query("UPDATE {$table_name} SET votes=votes+1, points=points+{$this->_points} WHERE ID={$picture_id};");
+
+				//  recalculate point and sum
+				$_votes = $wpdb->get_var("SELECT COUNT( * ) FROM  `wp_fsr_user` WHERE post = $picture_id");
+				$_points = $wpdb->get_var("SELECT SUM( points ) FROM  `wp_fsr_user` WHERE post = $picture_id");
+
+				$wpdb->query("UPDATE {$table_name} SET votes=$_votes+1, points=$_points+{$this->_points} WHERE ID={$picture_id};");
+
+
 			} else {
 				$wpdb->query("INSERT INTO {$table_name} (ID, votes, points) VALUES ({$picture_id}, 1, {$this->_points});");
 			}
