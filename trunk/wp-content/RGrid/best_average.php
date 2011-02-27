@@ -123,7 +123,7 @@
     * Here just for show. This function sets the number of rows to set per page.
     * The default is 20.
     */
-    $grid->SetPerPage(10);
+    $grid->SetPerPage(30);
     
     /**
 		* Again, this is purely here for show. It doesn't do anything, but simply shows
