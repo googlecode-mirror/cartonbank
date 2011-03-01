@@ -102,7 +102,10 @@ $total_cartoons = $total_cartoons - 1;
 		}
 		else
 		{
+			if (is_numeric($brandid))
 			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&category=".$option['id']."'>".stripslashes($option['name'])."";
+			else
+			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&category=".$option['id']."'>".stripslashes($option['name'])."";
 		}
 		
 		foreach ($category_count as $cat_row)
@@ -218,6 +221,7 @@ echo $avatar_url."<br>";
 //echo $author_name;
 echo $authors;
 echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
+echo "<br><a href='".get_option('siteurl')."/?page_id=33&brand=".$brandid."'>100 лучших работ</a>";
 }
 ?>
 
