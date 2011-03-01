@@ -38,6 +38,15 @@ $count=$count-1;
 				echo "<br><font color='#FF00FF'><b>this will be deleted!:</b> </font> ip='".$row['ip']."' cartoon=<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".$current_post."'>".$current_post."</a>";
 				$del_sql = "delete from `wp_fsr_user` where user='".$row['user']."' and ip='".$row['ip']."' and post=".$current_post;
 				$res = mysql_query($del_sql);
+
+				//  recalculate point and sum
+				$_votes = $wpdb->get_var("SELECT COUNT( * ) FROM  `wp_fsr_user` WHERE post = $picture_id");
+				$_points = $wpdb->get_var("SELECT SUM( points ) FROM  `wp_fsr_user` WHERE post = $picture_id");
+
+				$wpdb->query("UPDATE `wp_fsr_post` SET votes=$_votes+1, points=$_points+{$this->_points} WHERE ID={$picture_id};");
+
+
+
 				/*
 				if (!$res) {
 								die('<br>'.$del_sql.'<br>Invalid delete query: ' . mysql_error());
