@@ -43,7 +43,7 @@ $count=$count-1;
 				$_votes = $wpdb->get_var("SELECT COUNT( * ) FROM  `wp_fsr_user` WHERE post = $picture_id");
 				$_points = $wpdb->get_var("SELECT SUM( points ) FROM  `wp_fsr_user` WHERE post = $picture_id");
 
-				$wpdb->query("UPDATE `wp_fsr_post` SET votes=$_votes+1, points=$_points+{$this->_points} WHERE ID={$picture_id};");
+				$wpdb->query("UPDATE `wp_fsr_post` SET votes=$_votes, points=$_points WHERE ID={$picture_id};");
 
 
 
