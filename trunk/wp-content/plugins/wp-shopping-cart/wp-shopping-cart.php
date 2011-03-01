@@ -999,7 +999,7 @@ $output .= '    ';
   
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "Описание картинки (текстовое): ";
+  $output .= "Описание картинки<br>(текстовое): ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<textarea id='productdescredit' name='description' cols='40' rows='3' >".stripslashes($product['description'])."</textarea>";
@@ -1008,7 +1008,7 @@ $output .= '    ';
   
   $output .= "          <tr>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "Ключевые слова, разделённые запятыми: ";
+  $output .= "Ключевые слова,<br>разделённые запятыми: ";
 
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
@@ -1289,14 +1289,14 @@ $output .= '    ';
   
   $output .= "<br><input type=\"button\" class='edit_button' style='padding:6px; background-color:#93F273;' name='sendit' value='сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
 
-if ($product['approved'] != '1' | $current_user->wp_capabilities['administrator']!=1)
+if ($product['approved'] != '1' & $current_user->wp_capabilities['administrator']!=1)
 	{
-		$output .= "<br><br><br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >стереть изображение</a>";
+		$output .= "<br><br><br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение!</a>";
 	}
 
-if ($product['approved'] == '1' | $current_user->wp_capabilities['administrator']==1)
+if ($product['approved'] == '1' & $current_user->wp_capabilities['administrator']==1)
 	{
-		$output .= "<br><br><br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >стереть изображение</a>";
+		$output .= "<br><br><br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение</a>";
 	}
 
   
