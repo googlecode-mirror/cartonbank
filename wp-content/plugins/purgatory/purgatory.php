@@ -165,7 +165,7 @@ function deletecomment()
 	#main
 	{
 	height:140px; border:1px dashed #29ABE2;margin-bottom:7px;
-	width:500px;
+	width:400px;
 	}
 
 	a
@@ -246,18 +246,18 @@ function deletecomment()
 	.box1
 	{
 	font-family:'Georgia', Times New Roman, Times, serif;
-	float:left; height:140px; width:50px;
+	float:left; height:140px; width:40px;
 	}
 
 	.box2
 	{
 	float:left; width:150px; text-align:left;
-	margin-left:10px;height:140px;margin-top:0px;
+	margin-left:0px;height:140px;margin-top:0px;
 	}
 
 	.box3
 	{
-	float:left; width:270px; text-align:left;
+	float:left; width:200px; text-align:left;
 	margin-left:10px;height:140px;margin-top:0px;
 	font-size:0.8em;
 	}
