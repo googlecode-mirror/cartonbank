@@ -37,6 +37,46 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	<input type="submit" id="searchsubmit" class='borders' value="Искать" />
 	</form>
 
+<?
+// Theme of the day
+	$thedate = date("Y.m.d");
+
+	$sql = "Select id from tema_dnya where datetime = '".$thedate."'";
+	$cartoon_of_the_day = $wpdb->get_results($sql);
+
+if ($cartoon_of_the_day!= null)
+{
+	$cartoon_of_the_day_id = $cartoon_of_the_day[0]->id;
+	$sql = "Select image, name from wp_product_list where id = $cartoon_of_the_day_id";
+	$image = $wpdb->get_results($sql);
+	$image_name = $image[0]->image;
+	$image_title = $image[0]->name;
+
+}
+else
+{
+	$cartoon_of_the_day_id = 0;
+}
+
+?>
+
+
+<?if ($cartoon_of_the_day_id != 0){?>
+<br><br>
+
+<div style="text-align:center; padding-top:6px; border: 1px solid #962d2a;width:178px;height:174px;background-color:#fdfd00;">
+<span style="color:#668bb7"><b>Тема дня</b></span>
+<div class=""><a href="<?echo get_option('siteurl');?>/?page_id=29&category=777"><img src="<?echo get_option('siteurl')?>/wp-content/plugins/wp-shopping-cart/images/<?echo $image_name;?>" title="<?echo $image_title;?>" alt="<?echo $image_title;?>" class="thumb"></a><br></div>
+</div>
+
+<?}?>
+<!-- 
+<br><br>
+
+<div style="text-align:center; padding-top:4px; border: 1px solid silver;width:100%;height:174px;">
+<span style="color:#838383"><b>Тема дня</b></span>
+<div class=""><a href="<?echo get_option('siteurl');?>/?page_id=29&category=777"><img src="http://karikashop.com/cb/wp-content/plugins/wp-shopping-cart/images/4d4698230eeb57.30758191mumia.jpg" title="Тур в Египет" alt="Тур в Египет" class="thumb"></a><br></div>
+</div> -->
 
 <br><h2>Категории</h2> 
 

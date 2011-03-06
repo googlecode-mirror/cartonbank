@@ -3,7 +3,7 @@
 
 if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29" && !isset($_POST['cs']))
 {
-	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,9790));
+	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,10000));
 }
 
 ?>
@@ -97,6 +97,8 @@ function selected_style()
 		<li><a href="?page_id=73" <? $_GET['page_id']=='73'? selected_style():"" ?> >Авторам</a></li>
 		<li><a href="?page_id=97" <? $_GET['page_id']=='97'? selected_style():"" ?> >Клиентам</a></li>
 		<li><a href="?page_id=907" <? $_GET['page_id']=='907'? selected_style():"" ?> >Зрителям</a></li>
+		<li><a href="?page_id=1215" <? $_GET['page_id']=='1215'? selected_style():"" ?> >Партнёры</a></li>
+		<li><a href="?page_id=1260" <? $_GET['page_id']=='1260'? selected_style():"" ?> >Друзья</a></li>
 		<li><a href="?page_id=2" <? $_GET['page_id']=='2'? selected_style():"" ?> >Ответы</a></li>
 		<li><a href="?page_id=976" <? $_GET['page_id']=='976'? selected_style():"" ?> >Контакты</a></li>
 	</ul>
