@@ -669,40 +669,6 @@ function nzshpcrt_submit_ajax()
       update_option('language_setting', $_POST['language_setting']);
       }
     }
-    
-  /*  
-  if(isset($_GET['rss']) and ($_GET['rss'] == "true") && ($_GET['rss_key'] == 'key') && ($_GET['action'] == "purchase_log"))
-    {
-    $sql = "SELECT * FROM `wp_purchase_logs` WHERE `date`!='' ORDER BY `date` DESC";
-    $purchase_log = $wpdb->get_results($sql,ARRAY_A);
-    header("Content-Type: application/xml; charset=ISO-8859-1"); 
-    header('Content-Disposition: inline; filename="WP_E-Commerce_Purchase_Log.rss"');
-    $output = '';
-    $output .= "<?xml version='1.0'?>\n\r";
-    $output .= "<rss version='2.0'>\n\r";
-    $output .= "  <channel>\n\r";
-    $output .= "    <title>Cartoonbank</title>\n\r";
-    $output .= "    <link>".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-log.php</link>\n\r";
-    $output .= "    <description>Cartoonbank RSS feed</description>\n\r";
-    $output .= "    <generator>Cartoonbank Plugin</generator>\n\r";
-    
-    foreach($purchase_log as $purchase)
-      {
-      $purchase_link = get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-log.php&amp;purchaseid=".$purchase['id'];
-      $output .= "    <item>\n\r";
-      $output .= "      <title>Purchase No. ".$purchase['id']."</title>\n\r";
-      $output .= "      <link>$purchase_link</link>\n\r";
-      $output .= "      <description>This is an entry in the purchase log.</description>\n\r";
-      $output .= "      <pubDate>".date("r",$purchase['date'])."</pubDate>\n\r";
-      $output .= "      <guid>$purchase_link</guid>\n\r";
-      $output .= "    </item>\n\r";
-      }
-    $output .= "  </channel>\n\r";
-    $output .= "</rss>";
-    echo $output;
-    exit();
-    }
-  */
        
   if(isset($_GET['rss']) and ($_GET['rss'] == "true") && ($_GET['action'] == "product_list"))
     {
@@ -1037,6 +1003,17 @@ $output .= '    ';
     $colored = " checked='checked' ";
 
 
+  $temadnya = "";
+
+	  $istemadnya_sql = "SELECT * FROM `wp_item_category_associations` where `category_id` = '777' and `product_id` = ".$product['id'];
+//pokazh ($istemadnya_sql);
+	  $istemadnya = $wpdb->get_results($istemadnya_sql);
+
+  if($istemadnya != null)
+    $temadnya = " checked='checked' ";
+
+//pokazh($istemadnya,"istemadnya: ");
+
   $not_for_sale = "";
   if ($product['not_for_sale'] == '1')
     $not_for_sale = " checked='checked' ";
@@ -1099,24 +1076,15 @@ $output .= '    ';
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
-  /*
-	
-	  $check_variation_values = $wpdb->get_results("SELECT COUNT(*) as `count` FROM `wp_variation_values_associations` WHERE `product_id` = '".$product['id']."'",ARRAY_A);
-	  $check_variation_value_count = $check_variation_values[0]['count'];
-	  if($check_variation_value_count > 0)
-		{
-		$output .= "          <tr>\n\r";
-		$output .= "            <td>\n\r";
-		$output .= TXT_WPSC_EDIT_VAR.": ";
-		$output .= "            </td>\n\r";
-		$output .= "            <td>\n\r";
-		$variations_procesor = new nzshpcrt_variations;
-		$output .= $variations_procesor->display_attached_variations($product['id']);
-		$output .= "            </td>\n\r";
-		$output .= "          </tr>\n\r";
-		}
+  $output .= "          <tr>\n\r";
+  $output .= "            <td style='background-color:#FFFF33;'>\n\r";
+  $output .= "Тема дня:";
+  $output .= "            </td>\n\r";
+  $output .= "            <td style='background-color:#FFFF33;'>\n\r";
+  $output .= "<input type='checkbox' name='temadnya'".$temadnya."/>";
+  $output .= "            </td>\n\r";
+  $output .= "          </tr>\n\r";
 
-*/
 
   $output .= "          <tr>\n\r";
   $output .= "            <td colspan='2'>\n\r";
@@ -1319,6 +1287,8 @@ function nzshpcrt_getcategoryform($catid)
     {
     global $wpdb,$category_data;
     $options = "";
+	$selected = "";
+	$concat = "";
     $values = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `category_parent`='0' AND `active` = '1' AND `id` != '$category_id' ORDER BY `id` ASC",ARRAY_A);
     $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=wp-shopping-cart/display-items.php";
     $options .= "<option value='$url'>".TXT_WPSC_SELECT_PARENT."</option>\r\n";
@@ -2297,81 +2267,13 @@ $current_user = wp_get_current_user();
           $price_modifier = 0;
           }
     
-    $price = $cart_item->price;//($product_data['price'] - $price_modifier); 
-    /*  
-    if($product_list[0]['notax'] != 1)
-      {
-      $price = nzshpcrt_calculate_tax($price, $_SESSION['selected_country'], $_SESSION['selected_region']);
-      if(get_option('base_country') == $_SESSION['selected_country'])
-        {
-        $country_data = $wpdb->get_row("SELECT * FROM `wp_currency_list` WHERE `isocode` IN('".get_option('base_country')."') LIMIT 1",ARRAY_A);
-        if(($country_data['has_regions'] == 1))
-          {
-          if(get_option('base_region') == $_SESSION['selected_region'])
-            {
-            $region_data = $wpdb->get_row("SELECT `wp_region_tax`.* FROM `wp_region_tax` WHERE `wp_region_tax`.`country_id` IN('".$country_data['id']."') AND `wp_region_tax`.`id` IN('".get_option('base_region')."') ",ARRAY_A) ;
-            }
-          $gst =  $region_data['tax'];
-          }
-          else
-            {
-            $gst =  $country_data['tax'];
-            }
-          }
-      }
-      else { */
-	  $gst = ''; 
-	  /*}*/
-        
-            
-    //$country = $wpdb->get_results("SELECT * FROM `wp_submited_form_data` WHERE `log_id`=".$getid[0]['id']." AND `form_id` = '".get_option('country_form_field')."' LIMIT 1",ARRAY_A);
-    $country = '';//$country[0]['value'];
-     
-     $country_data = ''; //$wpdb->get_row("SELECT * FROM `wp_currency_list` WHERE `isocode` IN('".get_option('base_country')."') LIMIT 1",ARRAY_A);
-     
-     // $shipping = $base_shipping + ($additional_shipping * $quantity);
-     $shipping = 0;
-	 //$_SESSION['nzshpcrt_cart'][$cart_key]->license
-/*
-pokazh($getid,"getid");
-pokazh($cart_item,"cart_item");	 
-exit;
+    $price = $cart_item->price; 
 
-getid: Array
-(
-    [0] => Array
-        (
-            [id] => 166
-            [totalprice] => 0
-            [statusno] => 0
-            [sessionid] => 5881285871982
-            [transactid] => 
-            [authcode] => 
-            [firstname] => РќРµРєС‚Рѕ
-            [lastname] => Р’ РЁР»СЏРїРµ
-            [email] => aleshin@dataart.com
-            [address] => bb
-            [phone] => aa
-            [downloadid] => 0
-            [processed] => 1
-            [date] => 1285871982
-            [gateway] => 
-            [shipping_country] => 
-            [shipping_region] => 
-        )
+	$gst = ''; 
+	$country = '';
+    $country_data = ''; 
+    $shipping = 0;
 
-)
-cart_item: cart_item Object
-(
-    [product_id] => 3310
-    [product_variations] => 
-    [quantity] => 1
-    [name] => 111
-    [price] => 0
-    [license] => l1_price
-    [author] => a1
-)
-*/
 	$license_num = $getid[0]['sessionid']."_".$cart_item->product_id;
 	$cartsql = "INSERT INTO `wp_cart_contents` ( `id` , `prodid` , `purchaseid`, `price`, `pnp`, `gst`, `quantity`, `license` ) VALUES ('', '".$row."', '".$getid[0]['id']."','".$price."','".$shipping."', '".$gst."','".$quantity."', '".$license_num."')";
      $wpdb->query($cartsql);

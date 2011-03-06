@@ -3,12 +3,12 @@ global $wpdb, $colorfilter, $color;
 
 	if (isset($_GET['category']) && $_GET['category'] == '666')
 		{
-			$exclude_category_sql = "";
+			$exclude_category_sql = " AND `wp_item_category_associations`.`category_id` != '777' ";
 			$approved_or_not = "";
 		}
 		else
 		{
-			$exclude_category_sql = " AND `wp_item_category_associations`.`category_id` != '666' ";
+			$exclude_category_sql = " AND `wp_item_category_associations`.`category_id` != '666' AND `wp_item_category_associations`.`category_id` != '777' ";
 			$approved_or_not = " AND `wp_product_list`.`approved` = '1' ";
 		}
 
@@ -232,7 +232,15 @@ $search_sql = NULL;
 			else
 				$_product_start_num = 0;
 
+if (isset($_GET['category']) && $_GET['category'] == '777')
+		{
+			$sql = "SELECT  `wp_product_list` . * ,  `wp_product_files`.`width` ,  `wp_product_files`.`height` ,  `wp_product_brands`.`id` AS brandid,  `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id` ,  `wp_product_categories`.`name` AS kategoria, `tema_dnya`.`datetime` FROM  `wp_product_list` LEFT JOIN `wp_item_category_associations` ON `wp_product_list`.`id` =  `wp_item_category_associations`.`product_id`  LEFT JOIN `wp_product_files` ON `wp_product_list`.`file` =  `wp_product_files`.`id` LEFT JOIN `wp_product_brands` ON `wp_product_brands`.`id` =  `wp_product_list`.`brand` LEFT JOIN `wp_product_categories` ON `wp_item_category_associations`.`category_id` =  `wp_product_categories`.`id` LEFT JOIN `tema_dnya` ON wp_product_list.id =  tema_dnya.id  WHERE   `wp_product_list`.`active` =  '1' AND  `wp_product_list`.`approved` =  '1' AND  `wp_product_list`.`visible` =  '1' AND  `wp_item_category_associations`.`category_id` =  '777' AND `tema_dnya`.`datetime` <= '".date("Y.m.d")."' AND  `wp_product_categories`.`id` =777 ORDER BY  tema_dnya.datetime DESC, `wp_product_list`.`id` DESC LIMIT 0 , 15";
+
+		}
+else
+		{
 				$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
+		}
 
                 if (isset($_GET['offset']) && is_numeric($_GET['offset']))
                  {
@@ -289,6 +297,8 @@ $search_sql = NULL;
                     {
                         $keywords = '';
                     }
+
+
 	// we inject here direct link to the image
 	// $_GET['cartoonid'] : &cartoonid=666
 	if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
@@ -298,6 +308,8 @@ $search_sql = NULL;
 		$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria, `wp_item_category_associations`.`category_id`, `wp_product_brands`.`id` as brandid FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = '".$_cartoon_id."' AND `wp_product_list`.`active`='1' ".$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC "; 
 	    $sql = $search_sql;
     }
+
+	
 	// список картинок
     $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
 
@@ -546,7 +558,7 @@ $search_sql = NULL;
               
 			  echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
               }
-     }
+     }// if $display_items == true
 
 function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1, $targetpage = "/", $pagestring = "?page=", $filter_list = '')
 {		

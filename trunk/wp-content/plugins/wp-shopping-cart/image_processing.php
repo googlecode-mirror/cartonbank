@@ -8,7 +8,7 @@ else
 	$imagetype = '';
 }
  
-if(isset($height) && is_numeric($height) && isset($width) && is_numeric($width))
+if(isset($_FILES['file']['tmp_name']) && isset($height) && is_numeric($height) && isset($width) && is_numeric($width))
   {
 	$image = $wpdb->escape($_FILES['file']['name']);
 	$destdir = $imagedir.$image;
@@ -165,7 +165,7 @@ if(isset($height) && is_numeric($height) && isset($width) && is_numeric($width))
     usleep(250000);  //wait 0.25 of of a second to process and save the new image
     }
   }
-  else
+  elseif (isset($_FILES['file']['tmp_name']))
     {
     move_uploaded_file($_FILES['file']['tmp_name'], ($imagedir.$_FILES['file']['name']));
     $image = $wpdb->escape($_FILES['file']['name']);
