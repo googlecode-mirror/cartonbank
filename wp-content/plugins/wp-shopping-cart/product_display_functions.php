@@ -8,12 +8,12 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
     $category='';
 	if (isset($_GET['category']) && $_GET['category'] == '666')
 		{
-			$exclude_category_sql = "";
+			$exclude_category_sql = " AND `wp_item_category_associations`.`category_id` != '777' ";
 			$approved_or_not = "";
 		}
 		else
 		{
-			$exclude_category_sql = " AND `wp_item_category_associations`.`category_id` != '666' ";
+			$exclude_category_sql = " AND `wp_item_category_associations`.`category_id` != '666' AND `wp_item_category_associations`.`category_id` != '777' ";
 			$approved_or_not = " AND `wp_product_list`.`approved` = '1' ";
 		}
 
@@ -81,11 +81,44 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 					{
 						//echo("<pre>_cartoon_id ".print_r($_GET['cartoonid'],true)."</pre>");
 						$_cartoon_id = $_GET['cartoonid'];
-						$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = ".$_cartoon_id.$approved_or_not." AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` ".$exclude_category_sql." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC "; 
+						$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = ".$_cartoon_id.$approved_or_not." AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` ".$exclude_category_sql." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_files`.`date` DESC "; 
 					
                     $sql = $search_sql;
                     }
 
+
+
+if (isset($_GET['category']) && $_GET['category'] == '777')
+{
+$sql = "
+		SELECT  `wp_product_list` . * ,  `wp_product_files`.`width` ,  `wp_product_files`.`height` ,  `wp_product_brands`.`id` AS brandid,  `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id` ,  `wp_product_categories`.`name` AS kategoria, `tema_dnya`.`datetime`
+		FROM  
+		`wp_product_list` 
+		LEFT JOIN 
+		`wp_item_category_associations` ON `wp_product_list`.`id` =  `wp_item_category_associations`.`product_id`  
+		LEFT JOIN 
+		`wp_product_files` ON `wp_product_list`.`file` =  `wp_product_files`.`id`
+		LEFT JOIN 
+		`wp_product_brands` ON `wp_product_brands`.`id` =  `wp_product_list`.`brand`
+		LEFT JOIN 
+		`wp_product_categories` ON `wp_item_category_associations`.`category_id` =  `wp_product_categories`.`id`
+		LEFT JOIN `tema_dnya` ON wp_product_list.id =  tema_dnya.id 
+		WHERE  
+		`wp_product_list`.`active` =  '1'
+		AND  `wp_product_list`.`approved` =  '1'
+		AND  `wp_product_list`.`visible` =  '1'
+		AND  `wp_item_category_associations`.`category_id` =  '777'
+		AND  `wp_product_categories`.`id` = 777
+		ORDER BY  tema_dnya.datetime DESC, `wp_product_list`.`id` DESC 
+		LIMIT 0 , 15
+";
+
+//pokazh($sql,"search_sql: ");
+
+}
+
+
+//pokazh ($sql);
 
 	$product_list = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
 

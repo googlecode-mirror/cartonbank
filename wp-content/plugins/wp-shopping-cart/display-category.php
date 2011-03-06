@@ -137,6 +137,7 @@ function display_category_row($category,$subcategory_level = 0)
 
   $basepath =  str_replace("/wp-admin", "" , getcwd());
   $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/category_images/";
+  $image = '';
 
   if(isset($_POST['submit_action']) && $_POST['submit_action'] == "add")
     { 

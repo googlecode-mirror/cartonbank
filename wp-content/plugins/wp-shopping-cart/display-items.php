@@ -32,6 +32,7 @@
 		$author_group_sql = "";
 	}
 
+
 $category_data = null;
 $basepath = str_replace("/wp-admin", "" , getcwd()); 
 $basepath = str_replace("\\wp-admin", "" , $basepath);
@@ -227,12 +228,16 @@ else
        $display_frontpage = 0;
        }
        
+$temadnya = '0';
 $visible = '0';
 $_price='';
 $_pnp = '';
 $_international_pnp = '';
 $approved = Null;
 
+
+if (isset($_POST['temadnya']) && $_POST['temadnya'] == 'on')
+    {$temadnya = '1';} else {$temadnya = '0';}  
 if (isset($_POST['approved']) && $_POST['approved'] == 'on')
     {$approved = '1';} else {$approved = '0';}  
 if (isset($_POST['visible']) && $_POST['visible'] == 'on')
@@ -313,7 +318,7 @@ if (isset($_POST['brand']) && is_numeric($_POST['brand']))
 	{$_brand = $wpdb->escape($_POST['brand']);}
 else {$_brand = $user_brand;}
 
-  $insertsql = "INSERT INTO `wp_product_list` ( `id` , `name` , `description` , `additional_description` , `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `approved`, `color`, `not_for_sale`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$_brand."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', NULL, '$colored', '$not_for_sale', '$portfolio', $l1_price, $l2_price, $l3_price);";
+  $insertsql = "INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_description`, `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `approved`, `color`, `not_for_sale`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$wpdb->escape($_POST['category'])."', '".$_brand."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', NULL, '$colored', '$not_for_sale', '$portfolio', $l1_price, $l2_price, $l3_price);";
 
 	// To send HTML mail, the Content-type header must be set
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -325,10 +330,13 @@ else {$_brand = $user_brand;}
 	
   if($wpdb->query($insertsql))
     {
-    $product_id_data = $wpdb->get_results("SELECT LAST_INSERT_ID() AS `id` FROM `wp_product_list` LIMIT 1",ARRAY_A);
-    $product_id = $product_id_data[0]['id'];
+    //$product_id_data = $wpdb->get_results("SELECT LAST_INSERT_ID() AS `id` FROM `wp_product_list` LIMIT 1",ARRAY_A);
+    //$product_id = $product_id_data[0]['id'];
 	
 	$new_id = mysql_insert_id();
+	$product_id = $new_id;
+
+	
 	//mail("igor.aleshin@gmail.com","добавлена картинка ".$new_id,$new_id);
 
 	$sql_purgery = "insert into al_editors_votes (image_id, up, down) values ('".$new_id."','0','0')";
@@ -341,25 +349,23 @@ else {$_brand = $user_brand;}
 
 	// bogorad
 	$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br>[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=vbogorad@mail.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=vbogorad@mail.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
-	mail("vbogorad@mail.ru","Новая картинка в Прихожей!",$votecontent,$headers);
+	//mail("vbogorad@mail.ru","Новая картинка в Прихожей!",$votecontent,$headers);
 
 	// shilov
 	$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br>[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=vfshilov@gmail.com&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=vfshilov@gmail.com&id=".$new_id."'>Отправить в Стол</a> </body></html>";
-	mail("vfshilov@gmail.com","Новая картинка в Прихожей!",$votecontent,$headers);
+	//mail("vfshilov@gmail.com","Новая картинка в Прихожей!",$votecontent,$headers);
 
 	// popov
  	$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br>[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=popov.a.a@bk.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=popov.a.a@bk.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
-	mail("popov.a.a@bk.ru","Новая картинка в Прихожей!",$votecontent,$headers);
+	//mail("popov.a.a@bk.ru","Новая картинка в Прихожей!",$votecontent,$headers);
 
 	// alexandrov
  	$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br>[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=Alexandrov_Vasil@mail.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=Alexandrov_Vasil@mail.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
-	mail("Alexandrov_Vasil@mail.ru","Новая картинка в Прихожей!",$votecontent,$headers);
+	//mail("Alexandrov_Vasil@mail.ru","Новая картинка в Прихожей!",$votecontent,$headers);
 
 	// elkin
  	$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br>[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=elkin99@yandex.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=elkin99@yandex.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
-	mail("elkin99@yandex.ru","Новая картинка в Прихожей!",$votecontent,$headers);
-
-
+	//mail("elkin99@yandex.ru","Новая картинка в Прихожей!",$votecontent,$headers);
 
   if(isset ($_FILES['extra_image']) && ($_FILES['extra_image'] != null) && function_exists('edit_submit_extra_images'))
     {
@@ -379,20 +385,13 @@ else {$_brand = $user_brand;}
     foreach($_POST['category'] as $category_id)
       {
         $sql_delete = "DELETE `wp_item_category_associations`.* FROM `wp_item_category_associations` WHERE `product_id` = '".$product_id."'";
-//        exit($sql_delete);
         $wpdb->query($sql_delete);
-//        $check_existing = $wpdb->get_var("SELECT `id` FROM `wp_item_category_associations` WHERE `product_id` = ".$product_id." AND `category_id` = '$category_id' LIMIT 1");
-//      if($check_existing == null)
-//        {
         $wpdb->query("INSERT INTO `wp_item_category_associations` ( `id` , `product_id` , `category_id` ) VALUES ('', '".$product_id."', '".$category_id."');");        
-//        }
       }
     }
-
     else
     {
       $default_cat = get_option('default_category');
-//      $check_existing = $wpdb->get_var("SELECT `id` FROM `wp_item_category_associations` WHERE `product_id` = ".$product_id." AND `category_id` = '".$default_cat."' LIMIT 1");
       $check_existing = $wpdb->get_var("SELECT `id` FROM `wp_item_category_associations` WHERE `product_id` = ".$product_id." LIMIT 1");
       if($check_existing == null)
         {
@@ -400,7 +399,14 @@ else {$_brand = $user_brand;}
         }
      }
 
- 
+	// insert temadnya
+		if ($temadnya == '1') // insert category 777
+		{
+			$sql_temadnya = "insert into `wp_item_category_associations` (product_id, category_id) values ('".$product_id."','777')";
+			$res = $wpdb->query($sql_temadnya);
+		}
+
+
   $display_added_product = "filleditform(".$product_id.");";
   
   echo "<div class='updated'><p align='center'>".TXT_WPSC_ITEMHASBEENADDED."</p></div>";
@@ -438,7 +444,7 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
       $_FILES['file']['name'] = rus2translit($_FILES['file']['name']); 
       //rename the file  
       $_FILES['file']['name'] = uniqid('', true).$_FILES['file']['name'];
-      
+
       $id = $_POST['prodid'];
       if(function_exists('edit_submit_extra_images'))
         {
@@ -584,7 +590,8 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
           {
           $item_list = "'0'";
           }
-      $wpdb->query("DELETE FROM `wp_item_category_associations` WHERE `product_id`= '$id' AND `category_id` NOT IN (".$item_list.")"); 
+		  $sql_delete_query = "DELETE FROM `wp_item_category_associations` WHERE `product_id`= '$id' AND `category_id` NOT IN (".$item_list.")";
+      $wpdb->query($sql_delete_query); 
       }
     
    if(isset($_POST['quantity']) && is_numeric($_POST['quantity']) && ($_POST['quantity_limited'] == "yes"))
@@ -636,8 +643,10 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
         $visible = '1'; 
     if (isset($_POST['approved']) && $_POST['approved'] == 'on')
         {$approved = '1';} else {$approved = Null;}
-    if (isset($_POST['colored']) && $_POST['colored'] == 'on'){$colored = '1';}
+	if (isset($_POST['colored']) && $_POST['colored'] == 'on'){$colored = '1';}
         else {$colored = '0';}
+	if (isset($_POST['temadnya']) && $_POST['temadnya'] == 'on'){$temadnya = '1';}
+        else {$temadnya = '0';}
     if (isset($_POST['not_for_sale']) && $_POST['not_for_sale'] == 'on'){$not_for_sale = '1';}
         else {$not_for_sale = '0';}
 
@@ -711,8 +720,24 @@ else
 
       $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'])."', `brand` = '".$_brand."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `approved`='$approved', `color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
 
+	  $wpdb->query($updatesql);
 
-      $wpdb->query($updatesql);
+
+
+	// update temadnya
+		if ($temadnya == '1') // insert category 777
+		{
+			$sql_temadnya = "insert into `wp_item_category_associations` (product_id, category_id) values ('".$_POST['prodid']."','777')";
+			$wpdb->query($sql_temadnya);
+		}
+		elseif ($temadnya == '0') // remove category 777
+		{
+			$sql_temadnya = "delete from `wp_item_category_associations` where product_id=".$_POST['prodid']." and category_id='777'";
+			$wpdb->query($sql_temadnya);
+		}
+	
+
+
       if($image != null)
         {
         $updatesql2 = "UPDATE `wp_product_list` SET `image` = '".$image."' WHERE `id`='".$_POST['prodid']."' LIMIT 1";
@@ -779,24 +804,26 @@ if(current_user_can('publish_posts'))
 else
     $visiblesql = " AND `wp_product_list`.`visible`='1' ";
 
+$exclude_category_777 = " AND `wp_item_category_associations`.`category_id` != '777' ";
+
 if(isset($_GET['catid']) && is_numeric($_GET['catid']))
   {
   // if we are getting items from only one category
-  $sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
+  $sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
    $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."'",ARRAY_A);
    }
    else if (isset($_GET['brand']) && is_numeric($_GET['brand']))
    {
         // if we are getting items from only one brand
-        $sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`brand`='".$_GET['brand']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
+        $sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`brand`='".$_GET['brand']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
         $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`brand`='".$_GET['brand']."'",ARRAY_A);
    }
   else
     {
     // if not, get everything that is not deleted (denoted by the active column, 1 = present, 0 = deleted, no real deletion because that would screw up the product log)
-    $sql = "SELECT `wp_product_list`.*, `wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
+    $sql = "SELECT `wp_product_list`.*, `wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
     $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`;",ARRAY_A);
 
@@ -958,15 +985,15 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
         //echo "".$category_data[$product['category_id']]."";
         //echo "            </td>\n\r";
 
-        echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px;'>\n\r";
-        echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'>".TXT_WPSC_EDIT."</a>";
-  if (isset($current_user->wp_capabilities['author']) &&	$current_user->wp_capabilities['author']==1) 
+        echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px; text-align:center;'>\n\r";
+        echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'><img src='../img/edit.jpg' title='редактировать'></a>";
+  if (isset($current_user->wp_capabilities['administrator']) &&	$current_user->wp_capabilities['administrator']==1) 
 	  {
-		echo "";
+		echo "<br><br><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'><img src='../img/trash.gif' title='удалить'></a>";
 	  }
   else {
-		echo "<br><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'>del</a>";
-	  }
+		echo "";
+	   }
         echo "            </td>\n\r";
 
         echo "            <td style='font-size:10px;'>\n\r";
@@ -993,6 +1020,20 @@ echo "</form>";
 echo "        </div>";
 
 ?>
+<style type="text/css" media="all">
+	td.r{
+		text-align: right;
+	}
+	td.ralt{
+		text-align: right;
+		background-color:#FFFF00;
+	}
+	td.lalt{
+		text-align: left;
+		background-color:#FFFF00;
+	}
+</style>
+
 <div id='additem'>
   <form  id='editproductform' method='POST' enctype='multipart/form-data'>
   <table class='additem'>
@@ -1010,7 +1051,7 @@ echo "        </div>";
       </td>
     </tr>
     <tr class='tdfirstcol'>
-      <td class='tdfirstcol'>
+      <td class='r'>
         Укажите файл:
       </td>
       <td>
@@ -1024,7 +1065,7 @@ echo "        </div>";
       </td>
     </tr>
     <tr>
-      <td class='tdfirstcol'>
+      <td class='r'>
         Название:
       </td>
       <td>
@@ -1032,23 +1073,23 @@ echo "        </div>";
       </td>
     </tr>
     <tr>
-      <td class='itemfirstcol'>
-        Краткое описание:
+      <td class='r'>
+        Краткое<br>описание:
       </td>
       <td>
         <textarea id='picturedescription' name='description' cols='50' rows='3'></textarea><br />
       </td>
     </tr>
     <tr>
-      <td class='itemfirstcol'>
-       Ключевые слова, разделённые запятыми:
+      <td class='r'>
+       Ключевые слова,<br>разделённые<br>запятыми:
       </td>
       <td>
         <textarea id='tags' name='additional_description' cols='50' rows='4'></textarea><br />
       </td>
     </tr>
     <tr>
-      <td class='itemfirstcol'>
+      <td class='r'>
        Всем видно:
       </td>
       <td>
@@ -1056,15 +1097,15 @@ echo "        </div>";
       </td>
     </tr>
     <tr>
-      <td class='itemfirstcol' style="background-color:#FFFF33;">
+      <td class='r' style="background-color:#FFFF33;">
        Цветное:
       </td>
-      <td style="background-color:#FFFF33;">
+      <td class="lalt">
         <input id='colored' type="checkbox" name="colored" checked="checked"> Отключите для ч/б<br />
       </td>
     </tr>
     <tr>
-      <td class='itemfirstcol'>
+      <td class='r'>
        Не для продажи:
       </td>
       <td>
@@ -1072,19 +1113,27 @@ echo "        </div>";
       </td>
     </tr>
     <tr>
-      <td>
-        Выберите категорию:
+      <td class='ralt'>
+        Выберите<br>категорию:
       </td>
-      <td>
+      <td class='lalt'>
         <?php echo categorylist(); ?>
       </td>
     </tr>
     <tr>
-      <td class='itemfirstcol'>
-       Доступны лицензии:
+      <td class='r'>
+       Тема дня:
       </td>
       <td>
-        Огр:&nbsp;<input id='license1' type="checkbox" name="license1" checked="checked">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type="checkbox" name="license2" checked="checked">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type="checkbox" name="license3" checked="checked"><br />
+        <input id='temadnya' type="checkbox" name="temadnya"> Горячая тема<br />
+      </td>
+    </tr>
+    <tr>
+      <td class='ralt'>
+       Доступны лицензии:
+      </td>
+      <td class='lalt'>
+        &nbsp;&nbsp;&nbsp;Огр:&nbsp;<input id='license1' type="checkbox" name="license1" checked="checked">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type="checkbox" name="license2" checked="checked">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type="checkbox" name="license3" checked="checked"><br />
       </td>
     </tr>
 	<tr>
