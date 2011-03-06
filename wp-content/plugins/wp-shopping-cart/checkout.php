@@ -174,7 +174,7 @@ $rooturl = get_option('siteurl');
 			<li>- SMS (СМС) платежи</li>
 			<li>- <b>терминалы</b> QIWI и другие</li>
 			<li>- <b>карты</b> VISA и MasterCard</li>
-		</ul></div>
+		</ul><a href="https://money.yandex.ru" target="_blank"><img src="https://money.yandex.ru/img/yamoney_logo88x31.gif " alt="Я принимаю Яндекс.Деньги" title="Я принимаю Яндекс.Деньги" border="0" width="88" height="31"/></a></div>
 
 	  </td>
 		<td>
