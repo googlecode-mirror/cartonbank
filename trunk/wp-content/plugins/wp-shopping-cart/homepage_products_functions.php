@@ -64,4 +64,3 @@ if (isset($product_list[0]))
   return preg_replace("/\[homepage_products\]/", $output, $content);
   }
 ?>
-?>
