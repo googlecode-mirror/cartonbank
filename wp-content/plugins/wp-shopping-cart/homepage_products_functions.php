@@ -35,9 +35,15 @@ else
   $product_list = $wpdb->get_results($sql,ARRAY_A);
     
   $output = "<div id='homepage_products' class='items'>";
+$output = '';    
+if (isset($product_list[0]))
+	  {
+		  $output .= "<div id='homepage_products' class='items'>";
   if (isset($product_list[0]))
 	  {
+			$output .= "<div><h1>".$product_list[0]['author'].". Сто лучших работ</h1><div style='color:#818181;'>Рейт равен среднему баллу, умноженному на квадратный корень из количества поданных голосов.</div></div>";
 		$output .= "<div><h1>".$product_list[0]['author'].". Сто лучших работ</h1><div style='color:#818181;'>Рейт равен среднему баллу, умноженному на квадратный корень из количества поданных голосов.</div></div>";
+	  }
 	  }
 
   foreach((array)$product_list as $product)
@@ -57,4 +63,5 @@ else
   
   return preg_replace("/\[homepage_products\]/", $output, $content);
   }
+?>
 ?>
