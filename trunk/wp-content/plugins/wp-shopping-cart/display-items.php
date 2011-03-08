@@ -781,7 +781,7 @@ if(isset($_GET['deleteid']) && is_numeric($_GET['deleteid']))
 	  {
 		  $deletesql = "UPDATE `wp_product_list` SET  `active` = '0' WHERE `id`='".$_GET['deleteid']."' LIMIT 1";
 		  $wpdb->query($deletesql);
-		  pokazh($deletesql,"deletesql: ");
+		  //pokazh($deletesql,"deletesql: ");
 	  }
 
 	  if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
