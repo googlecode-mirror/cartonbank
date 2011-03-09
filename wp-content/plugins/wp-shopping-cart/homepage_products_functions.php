@@ -81,7 +81,18 @@ function nszhpcrt_homepage_products($content = '')
 function top_votes($content = '')
 {
 	  global $wpdb;
-	  $pageURL = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_NAME"];
+
+	// page_id
+	if (isset($_GET['page_id']) && is_numeric($_GET['page_id']))
+	{
+		$_page_filter = "page_id=".$_GET['page_id'];
+	}
+	else
+	{
+		$_page_filter = "";
+	}
+
+	  $pageURL = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_NAME"].$_page_filter;
 
 	// Brand filter 
 	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
@@ -251,7 +262,7 @@ $sql = "SELECT
 				$output .= "<div><h1>".$product_list[0]['author'].". Сто лучших работ</h1><div style='color:#818181;'>".$_order_description." Сортировать по дате: по возрастанию, по убыванию; по среднему баллу: <a href='".$pageURL."?ord=81&brand=".$_brand."'>по возрастанию</a>, <a href='".$pageURL."?ord=82&brand=".$_brand."'>по убыванию</a>; по количеству голосов: <a href='".$pageURL."?ord=61&brand=".$_brand."'>по возрастанию</a>, <a href='".$pageURL."?ord=62&brand=".$_brand."'>по убыванию</a>; </div></div>";
 			  }
 		  }
-pokazh("$SERVER");
+
 	  foreach((array)$product_list as $product)
 		{
 		$output .= "<div class='item'>";
