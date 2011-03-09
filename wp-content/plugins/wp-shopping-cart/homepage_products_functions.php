@@ -80,10 +80,6 @@ function top_votes($content = '')
 		$_brand_filter = "";
 	}
 
-
-
-
-
 	  $siteurl = get_option('siteurl');
 	  if(get_option('permalink_structure') != '')
 		{
@@ -100,7 +96,7 @@ function top_votes($content = '')
 						AND wp_product_list.brand = wp_product_brands.id 
 						AND wp_product_list.active = 1
 						AND wp_product_list.visible = 1
-						AND wp_product_list.brand = ".$_brand."
+						".$_brand_filter."
 						GROUP BY 1
 						ORDER BY 7 DESC, 5 DESC
 						LIMIT 100";
