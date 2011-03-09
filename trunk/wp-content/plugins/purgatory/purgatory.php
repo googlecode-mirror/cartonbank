@@ -328,6 +328,7 @@ else
 					AND P.brand = B.id
 					AND P.id = A.product_id
 					AND C.id = A.category_id
+					AND C.id != '777'
 					AND P.active = '1'
 					AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))".$sql_brand."
 					ORDER BY P.id DESC
