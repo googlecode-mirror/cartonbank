@@ -34,7 +34,7 @@ function nszhpcrt_homepage_products($content = '')
 						LIMIT 100";
 	  $product_list = $wpdb->get_results($sql,ARRAY_A);
 		
-//pokazh($sql);
+pokazh($sql);
 
 	  $output = "<div id='homepage_products' class='items'>";
 	$output = '';    
