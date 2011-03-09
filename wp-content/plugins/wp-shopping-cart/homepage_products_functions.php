@@ -34,8 +34,6 @@ function nszhpcrt_homepage_products($content = '')
 						LIMIT 100";
 	  $product_list = $wpdb->get_results($sql,ARRAY_A);
 		
-pokazh($sql);
-
 	  $output = "<div id='homepage_products' class='items'>";
 	$output = '';    
 	if (isset($product_list[0]))
@@ -120,7 +118,7 @@ function top_votes($content = '')
 		if($product['image'] != '')
 		  {
 		  //$output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' />\n\r";
-		  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['author'].". &quot;".$product['title']."&quot;. Голосов: ".$product['votes'].". Баллов: " . $product['points'] . ". Рейт: " . $product['average'] . "' class='thumb'/>";
+		  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['author'].". &quot;".$product['title']."&quot;. Голосов: ".$product['votes'].". Баллов: " . $product['points'] . ". Рейт: " . round($product['average'],3) . "' class='thumb'/>";
 		  }
 		$output .= "</a>";
 		$output .= "</div>\n\r";
