@@ -101,7 +101,7 @@ function top_votes($content = '')
 	}
 	else
 	{
-		$_limit = 100;
+		$_limit = " LIMIT 100 ";
 	}
 
 	// Offset filter 
