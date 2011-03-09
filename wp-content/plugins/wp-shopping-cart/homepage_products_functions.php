@@ -136,7 +136,7 @@ function top_votes($content = '')
 		$_order = 0;
 	}
 
-switch ($_order)
+switch ($_order){
 	case 11:
 		$_order_filter = " ORDER BY id ASC";
 		$_order_description = "Отсортировано по регистрационному номеру. По возрастанию.";
@@ -209,18 +209,19 @@ switch ($_order)
 		$_order_filter = " ORDER BY vote_date DESC";
 		$_order_description = "Отсортировано по дате голосования. По убыванию.";
 		break;
-	  
+}
+
 	  $sql = "SELECT post as ID, wp_product_list.image as image, wp_product_list.name AS title, wp_product_brands.name AS author, COUNT(*) AS votes, SUM(wp_fsr_user.points) AS points, AVG(points)*SQRT(SQRT(COUNT(*))) AS average, vote_date  
-						FROM wp_fsr_user, wp_product_list, wp_product_brands 
-						WHERE wp_fsr_user.post = wp_product_list.id 
-						AND wp_product_list.brand = wp_product_brands.id 
-						AND wp_product_list.active = 1
-						AND wp_product_list.visible = 1
-						".$_brand_filter."
-						GROUP BY 1
-						".$_order_filter."
-						".$_limit."
-						".$_offset;
+			FROM wp_fsr_user, wp_product_list, wp_product_brands 
+			WHERE wp_fsr_user.post = wp_product_list.id 
+			AND wp_product_list.brand = wp_product_brands.id 
+			AND wp_product_list.active = 1
+			AND wp_product_list.visible = 1
+			".$_brand_filter."
+			GROUP BY 1
+			".$_order_filter."
+			".$_limit."
+			".$_offset;
 	  $product_list = $wpdb->get_results($sql,ARRAY_A);
 		
 	  $output = "<div id='homepage_products' class='items'>";
