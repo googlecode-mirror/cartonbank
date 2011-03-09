@@ -21,7 +21,7 @@ function nszhpcrt_homepage_products($content = '')
 		  {
 		  $seperator ="&amp;";
 		  }
-	  $sql = "SELECT * FROM `wp_product_list` WHERE `active`='1'  AND `visible`='1' AND `approved`='1' ORDER BY `id` ASC LIMIT 20";
+	  //$sql = "SELECT * FROM `wp_product_list` WHERE `active`='1'  AND `visible`='1' AND `approved`='1' ORDER BY `id` ASC LIMIT 20";
 	  $sql = "SELECT post as ID, wp_product_list.image as image, wp_product_list.name AS title, wp_product_brands.name AS author, COUNT(*) AS votes, SUM(wp_fsr_user.points) AS points, AVG(points)*SQRT(COUNT(*)) AS rate, AVG(points) as average, vote_date  
 						FROM wp_fsr_user, wp_product_list, wp_product_brands 
 						WHERE wp_fsr_user.post = wp_product_list.id 
@@ -34,6 +34,8 @@ function nszhpcrt_homepage_products($content = '')
 						LIMIT 100";
 	  $product_list = $wpdb->get_results($sql,ARRAY_A);
 		
+pokazh($sql);
+
 	  $output = "<div id='homepage_products' class='items'>";
 	$output = '';    
 	if (isset($product_list[0]))
