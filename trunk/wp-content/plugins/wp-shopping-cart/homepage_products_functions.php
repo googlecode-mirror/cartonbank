@@ -34,7 +34,7 @@ function nszhpcrt_homepage_products($content = '')
 						LIMIT 100";
 	  $product_list = $wpdb->get_results($sql,ARRAY_A);
 		
-pokazh($sql);
+//pokazh($sql);
 
 	  $output = "<div id='homepage_products' class='items'>";
 	$output = '';    
@@ -72,11 +72,17 @@ function top_votes($content = '')
 	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	{
 		$_brand = $_GET['brand'];
+		$_brand_filter = " AND wp_product_list.brand = ".$_brand. " ";
 	}
 	else
 	{
 		$_brand = 0;
+		$_brand_filter = "";
 	}
+
+
+
+
 
 	  $siteurl = get_option('siteurl');
 	  if(get_option('permalink_structure') != '')
