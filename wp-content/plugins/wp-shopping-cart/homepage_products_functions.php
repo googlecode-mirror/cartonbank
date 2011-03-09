@@ -136,6 +136,9 @@ function top_votes($content = '')
 		$_order = 0;
 	}
 
+$_order_filter = " ORDER BY rate DESC";
+$_order_description = "Отсортировано по рейтингу (произведению среднего балла и корня четвёртой степени из количества голосов). По убыванию.";
+
 switch ($_order){
 	case 11:
 		$_order_filter = " ORDER BY id ASC";
