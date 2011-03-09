@@ -1,7 +1,7 @@
 <?php
 function nszhpcrt_homepage_products($content = '')
 {
-	  global $wpdb;
+  global $wpdb;
 
 	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	{
@@ -21,19 +21,8 @@ function nszhpcrt_homepage_products($content = '')
 		  {
 		  $seperator ="&amp;";
 		  }
-
-	  //$sql = "SELECT * FROM `wp_product_list` WHERE `active`='1'  AND `visible`='1' AND `approved`='1' ORDER BY `id` ASC LIMIT 20";
-	
-	  $sql = "SELECT 
-				post as ID, 
-				wp_product_list.image as image, 
-				wp_product_list.name AS title, 
-				wp_product_brands.name AS author, 
-				COUNT(*) AS votes, 
-				SUM(wp_fsr_user.points) AS points, 
-				AVG(points)*SQRT(COUNT(*)) AS rate, 
-				AVG(points) as average, 
-				vote_date  
+	  $sql = "SELECT * FROM `wp_product_list` WHERE `active`='1'  AND `visible`='1' AND `approved`='1' ORDER BY `id` ASC LIMIT 20";
+	  $sql = "SELECT post as ID, wp_product_list.image as image, wp_product_list.name AS title, wp_product_brands.name AS author, COUNT(*) AS votes, SUM(wp_fsr_user.points) AS points, AVG(points)*SQRT(COUNT(*)) AS average, vote_date  
 						FROM wp_fsr_user, wp_product_list, wp_product_brands 
 						WHERE wp_fsr_user.post = wp_product_list.id 
 						AND wp_product_list.brand = wp_product_brands.id 
@@ -41,7 +30,7 @@ function nszhpcrt_homepage_products($content = '')
 						AND wp_product_list.visible = 1
 						AND wp_product_list.brand = ".$_brand."
 						GROUP BY 1
-						ORDER BY rate
+						ORDER BY 7 DESC, 5 DESC
 						LIMIT 100";
 	  $product_list = $wpdb->get_results($sql,ARRAY_A);
 		
@@ -50,14 +39,10 @@ function nszhpcrt_homepage_products($content = '')
 	if (isset($product_list[0]))
 		  {
 			  $output .= "<div id='homepage_products' class='items'>";
-	  if (isset($product_list[0]) && $_brand == 0)
-			  {
-				$output .= "<div><h1>Все авторы. Сто лучших работ</h1><div style='color:#818181;'>Рейт равен среднему баллу, умноженному на квадратный корень из количества поданных голосов.</div></div>";
-			  }
-			  else
-			  {
-				$output .= "<div><h1>".$product_list[0]['author'].". Сто лучших работ</h1><div style='color:#818181;'>Рейт равен среднему баллу, умноженному на квадратный корень из количества поданных голосов.</div></div>";
-			  }
+	  if (isset($product_list[0]))
+		  {
+			$output .= "<div><h1>".$product_list[0]['author'].". Сто лучших работ</h1><div style='color:#818181;'>Рейт равен среднему баллу, умноженному на квадратный корень из количества поданных голосов.</div></div>";
+		  }
 		  }
 
 	  foreach((array)$product_list as $product)
@@ -67,7 +52,7 @@ function nszhpcrt_homepage_products($content = '')
 		if($product['image'] != '')
 		  {
 		  //$output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' />\n\r";
-		  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['author'].". &quot;".$product['title']."&quot;. Голосов: ".$product['votes'].". Баллов: " . $product['points'] . ". Рейт: " . $product['rate'] . ". Средний балл: " . $product['average'] . "' class='thumb'/>";
+		  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['author'].". &quot;".$product['title']."&quot;. Голосов: ".$product['votes'].". Баллов: " . $product['points'] . ". Рейт: " . $product['average'] . "' class='thumb'/>";
 		  }
 		$output .= "</a>";
 		$output .= "</div>\n\r";
@@ -92,18 +77,18 @@ function top_votes($content = '')
 		$_page_filter = "";
 	}
 
-	  $pageURL = 'http://'.$_SERVER["SERVER_NAME"].$_page_filter;
+    $pageURL = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["PHP_SELF"].$_page_filter;
 
 	// Brand filter 
-	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
+	if (isset($_GET['br']) && is_numeric($_GET['br']) && $_GET['br'] != '0')
 	{
-		$_brand = $_GET['brand'];
-		$_brand_filter = " AND wp_product_list.brand = ".$_brand. " ";
+		$_br = $_GET['br'];
+		$_br_filter = " AND wp_product_list.brand = ".$_br. " ";
 	}
 	else
 	{
-		$_brand = 0;
-		$_brand_filter = "";
+		$_br = 0;
+		$_br_filter = "";
 	}
 
 	// Limit filter 
@@ -209,11 +194,11 @@ switch ($_order){
 		$_order_description = "Отсортировано по рейтингу (произведению среднего балла и корня четвёртой степени из количества голосов). По убыванию.";
 		break;
 	case 81:
-		$_order_filter = " ORDER BY average ASC";
+		$_order_filter = " ORDER BY average ASC, points DESC";
 		$_order_description = "Отсортировано по среднему баллу. По возрастанию.";
 		break;
 	case 82:
-		$_order_filter = " ORDER BY average DESC";
+		$_order_filter = " ORDER BY average DESC, points DESC ";
 		$_order_description = "Отсортировано по среднему баллу. По убыванию.";
 		break;
 	case 91:
@@ -241,26 +226,34 @@ $sql = "SELECT
 			AND wp_product_list.brand = wp_product_brands.id 
 			AND wp_product_list.active = 1
 			AND wp_product_list.visible = 1
-			".$_brand_filter."
+			".$_br_filter."
 			GROUP BY 1
 			".$_order_filter."
 			".$_limit."
 			".$_offset;
 	  $product_list = $wpdb->get_results($sql,ARRAY_A);
-		
+
+
 	  $output = "<div id='homepage_products' class='items'>";
 	$output = '';    
 	if (isset($product_list[0]))
 		  {
 			  $output .= "<div id='homepage_products' class='items'>";
-	  if (isset($product_list[0]) && $_brand == 0)
+	  if (isset($product_list[0]) && $_br == 0)
 			  {
-				$output .= "<div><h1>Все авторы. Сто лучших работ</h1><div style='color:#818181;'>Рейт равен среднему баллу, умноженному на квадратный корень из количества поданных голосов.</div></div>";
+				$output .= "<div><h1>Все авторы.";
 			  }
 			  else
 			  {
-				$output .= "<div><h1>".$product_list[0]['author'].". Сто лучших работ</h1><div style='color:#818181;'>".$_order_description." Сортировать по дате: по возрастанию, по убыванию; по среднему баллу: <a href='".$pageURL."&ord=81&brand=".$_brand."'>по возрастанию</a>, <a href='".$pageURL."&ord=82&brand=".$_brand."'>по убыванию</a>; по количеству голосов: <a href='".$pageURL."&ord=61&brand=".$_brand."'>по возрастанию</a>, <a href='".$pageURL."&ord=62&brand=".$_brand."'>по убыванию</a>; </div></div>";
+				$output .= "<div><h1>".$product_list[0]['author'].".";
 			  }
+			  $output .= " Сто лучших работ</h1><div style='color:white;background-color:#668bb7;padding:2px;font-weight:bold;display:block;'>".$_order_description."</div><div style='color:#818181;'>Сортировать 
+			  по дате последнего голосования: <a href='".$pageURL."&ord=91&br=".$_br."'>старые впереди</a>, <a href='".$pageURL."&ord=92&br=".$_br."'>новые впереди</a>; 
+			  по среднему баллу: <a href='".$pageURL."&ord=81&br=".$_br."'>по возрастанию</a>, <a href='".$pageURL."&ord=82&br=".$_br."'>по убыванию</a>; 
+			  по количеству баллов: <a href='".$pageURL."&ord=61&br=".$_br."'>по возрастанию</a>, <a href='".$pageURL."&ord=62&br=".$_br."'>по убыванию</a>; 
+			  по количеству голосов: <a href='".$pageURL."&ord=51&br=".$_br."'>по возрастанию</a>, <a href='".$pageURL."&ord=52&br=".$_br."'>по убыванию</a>; 
+			  по рейтингу: <a href='".$pageURL."&ord=71&br=".$_br."'>по возрастанию</a>, <a href='".$pageURL."&ord=72&br=".$_br."'>по убыванию</a>;
+			  </div></div>";
 		  }
 
 	  foreach((array)$product_list as $product)
