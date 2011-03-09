@@ -85,14 +85,14 @@ function top_votes($content = '')
 	// page_id
 	if (isset($_GET['page_id']) && is_numeric($_GET['page_id']))
 	{
-		$_page_filter = "page_id=".$_GET['page_id'];
+		$_page_filter = "?page_id=".$_GET['page_id'];
 	}
 	else
 	{
 		$_page_filter = "";
 	}
 
-	  $pageURL = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_NAME"].$_page_filter;
+	  $pageURL = 'http://'.$_SERVER["SERVER_NAME"].$_page_filter;
 
 	// Brand filter 
 	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
