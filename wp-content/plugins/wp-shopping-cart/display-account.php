@@ -45,18 +45,9 @@ else
 $year = date("Y");
 $month = date("m");
 
-$this_date = getdate();
+$start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
+$end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
 
-if (isset($_GET['m']) && is_numeric($_GET['m']))
-{
-	$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $year);
-	$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 0, $year);
-}
-else
-{
-	$start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
-	$end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
-}
 $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id,firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
@@ -72,11 +63,14 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 		AND p.brand=b.id
 		AND u.id = l.user_id
 		AND l.user_id != '106'
-        AND st.downloads != '5'
-		AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
+                AND st.downloads != '5'
 	GROUP BY c.license
-	ORDER BY `date` DESC
-	LIMIT 100";
+	ORDER BY `date` DESC";
+
+//	AND (`date` BETWEEN '$start_timestamp' AND '$end_timestamp')
+
+
+//$sql = "SELECT date, totalprice, firstname, lastname, email, address, phone, s.name as processed, gateway FROM `wp_purchase_logs` as l, `wp_purchase_statuses` as s, `wp_cart_contents` as c WHERE l.`processed`=s.`id` AND l.id=c.purchaseid  AND (`date` BETWEEN '$start_timestamp' AND '$end_timestamp') ORDER BY `date` DESC";
 
 	//pokazh($sql,"sql");
 
@@ -91,8 +85,8 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 
 
     $grid->SetDisplayNames(array('ID'       => '№',
-                                 'totalprice'   => 'со скидкой',
-                                 'id'   => '# изобр.',
+                                 'totalprice'   => 'сумма заказа',
+                                 'id'   => 'номер изобр.',
                                  'artist'   => 'автор изобр.',
                                  'discount'   => 'скидка %',
                                  'display_name'   => 'логин',
@@ -100,15 +94,15 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
                                  'purchaseid'   => 'номер заказа',
                                  'active'   => 'активно',
                                  'date'   => 'дата покупки',
-                                 'price'   => 'цена',
+                                 'price'   => 'цена картинки',
                                  'firstname'   => 'покупатель',
                                  'lastname'   => 'фамилия покупателя',
                                  'address'   => 'СМИ',
                                  'phone'   => 'телефон  покупателя',
                                  'gateway'   => 'метод оплаты',
                                  'processed'   => 'прохождение заказа',
-                                 'title'   => 'название ',
-                                 'license'   => 'лицензия',
+                                 'title'   => 'название изображения',
+                                 'license'   => 'номер лицензии',
                                  'downloadid'   => 'скачать',
                                  'downloads'   => 'осталось скачиваний',
                                  'contract'   => 'номер договора'));
@@ -123,17 +117,17 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
     function RowCallback(&$row)
     {
 		//$row['date'] = date("jS M Y",$row['date']);
-		$row['firstname'] = $row['firstname'].' '.$row['lastname'].' '.$row['address'].' т.'.$row['phone'];
+		$row['firstname'] = $row['firstname'].' '.$row['lastname'].' '.$row['address'];
 		$row['date'] = date("d.m.y H:m:s",$row['date']);
 		$row['title'] = "<a target='_blank' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$row['id']."'>".nl2br(stripslashes($row['title']))."</a>";
 		//$row['average'] = round($row['average'],2);
 		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."'>скачать</a>";
 		//$link = $siteurl."?downloadid=".$download_data['id'];
-		$row['totalprice'] = $row['price'] - $row['price'] * $row['discount']/100;
-	}
+
+    }
 
 	//$grid->HideColumn('column', ...)
-	$grid->HideColumn('address','phone','display_name','user_id','lastname','email','processed','downloads','active','downloadid');
+	$grid->HideColumn('address','totalprice','display_name','user_id','lastname','email','processed','downloads','active','downloadid');
 
     $grid->SetPerPage(100);
 ?>
@@ -179,19 +173,6 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
     // -->
     </style>
 <?
-	$this_date = getdate();
-	//$dateMinusOneMonth = mktime(0, 0, 0, (3-1), 31,  2007 );
-	$d_month_previous = date('n', mktime(0,0,0,($month-1),28,$year));         // PREVIOUS month of year (1-12)
-	$d_monthname_previous = date('F', mktime(0,0,0,($month-1),28,$year));     // PREVIOUS Month Long name (July)
-
-
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m='>Показать 100 последних продаж</a> ";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$month."'>".$this_date['month']."</a> ";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> ";
-
-
-	echo "<br>";
 	echo 'Всего записей: ' . $grid->GetRowCount() . '<br>';
 	$grid->Display() 
 ?>
-
