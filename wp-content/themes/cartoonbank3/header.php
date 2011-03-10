@@ -3,7 +3,7 @@
 
 if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29" && !isset($_POST['cs']))
 {
-	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,90000));
+	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,9000));
 }
 
 ?>
