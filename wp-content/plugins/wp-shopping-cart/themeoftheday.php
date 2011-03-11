@@ -125,6 +125,12 @@ if($product_list != null)
 	  if ($cartoon_of_the_day_id == $product['id'])
 	  {
 		echo "<div class='item'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1'  title='".$product['id']."'></a>";
+	  echo "<form method=post action=''>
+		<input type='hidden' name='temadnyaid' value='".$product['id']."'>
+		<input type='hidden' name='temadnyadate' value='".$sqlthedate."'>
+		<input type='submit' value='тема выбрана!' style='background-color:#FF00FF;color:white;'></form>
+		<input type='hidden' name='deleteid' value='".$product['id']."'>
+		<input type='image' src='../img/trash.gif' title='уже не убрать'>";
 	  }
 	  else
 	  {
@@ -152,6 +158,12 @@ echo "<div style='clear:both;'></div>";
 	  if ($cartoon_of_tomorrow_id == $product['id'])
 	  {
 		echo "<div class='item'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1' title='".$product['id']."'></a>";
+	  echo "<form method=post action=''>
+		<input type='hidden' name='temadnyaid' value='".$product['id']."'>
+		<input type='hidden' name='temadnyadate' value='".$sqlthedate."'>
+		<input type='submit' value='тема выбрана!' style='background-color:#FF00FF;color:white;'></form>
+		<input type='hidden' name='deleteid' value='".$product['id']."'>
+		<input type='image' src='../img/trash.gif' title='уже не убрать'>";
 	  }
 	  else
 	  {
