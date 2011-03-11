@@ -34,6 +34,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 		<option value="bw">чёрно-белые</option>
 		<option value="color">цветные</option>
 	</select>
+	<input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
 	<input type="submit" id="searchsubmit" class='borders' value="Искать" />
 	</form>
 
@@ -70,13 +71,6 @@ else
 </div>
 
 <?}?>
-<!-- 
-<br><br>
-
-<div style="text-align:center; padding-top:4px; border: 1px solid silver;width:100%;height:174px;">
-<span style="color:#838383"><b>Тема дня</b></span>
-<div class=""><a href="<?echo get_option('siteurl');?>/?page_id=29&category=777"><img src="http://karikashop.com/cb/wp-content/plugins/wp-shopping-cart/images/4d4698230eeb57.30758191mumia.jpg" title="Тур в Египет" alt="Тур в Египет" class="thumb"></a><br></div>
-</div> -->
 
 <br><h2>Категории</h2> 
 
@@ -87,16 +81,9 @@ if (!$author_section)
 { // all categories
 // Categories
 
-	// exclude category 666 (rokfor)
-	//$categories = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' AND `category_parent` = '0' AND `id` <> '666' ORDER BY `order` ASC",ARRAY_A);
-	//$category_count = $wpdb->get_results("SELECT `wp_item_category_associations`.`category_id`, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id` <> '666' GROUP BY `wp_item_category_associations`.`category_id`;",ARRAY_A);
-
-
 	// include category 666 (rokfor)
 	$categories = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' AND `category_parent` = '0' ORDER BY `order` ASC",ARRAY_A);
 	$category_count = $wpdb->get_results("SELECT `wp_item_category_associations`.`category_id`, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`approved`='1' AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` GROUP BY `wp_item_category_associations`.`category_id`;",ARRAY_A);
-
-
 
 
 	// number of bw cartoons
