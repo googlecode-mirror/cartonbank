@@ -18,10 +18,7 @@ if (isset($_REQUEST['email']) && isset($_REQUEST['message']))
   $email = $_REQUEST['email'] ;
   $message = $_REQUEST['message'] ;
   $message = $message . ' <br><br> ' .$email;
-  // mail("cartoonbank.ru@gmail.com", "Письмо от посетителья сайта cartoonbank.ru", $message, "From: $email" );
-  // header( "Location: http://www.example.com/thankyou.html" );
-
-	$headers = "From: ".$email."\r\n" .
+  $headers = "From: ".$email."\r\n" .
 			   'X-Mailer: PHP/' . phpversion() . "\r\n" .
 			   "MIME-Version: 1.0\r\n" .
 			   "Content-Type: text/html; charset=utf-8\r\n" .
@@ -152,8 +149,7 @@ if(is_numeric($_brand) || (is_numeric(get_option('default_brand')) && (get_optio
       }
       else
         {
-        //$catid = get_option('default_category');
-		$catid = '';
+  		$catid = '';
         }
 
 		if ($catid==0)
@@ -193,8 +189,8 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
   }
 
   $num = 0;
-  //else if(is_numeric($_GET['category']) || (is_numeric(get_option('default_category')) && (get_option('show_categorybrands') != 3)))
-  if((is_numeric($_category) || is_numeric(get_option('default_category'))) && ((get_option('show_categorybrands') == 1) || (get_option('show_categorybrands') == 2)))
+  
+if((is_numeric($_category) || is_numeric(get_option('default_category'))) && ((get_option('show_categorybrands') == 1) || (get_option('show_categorybrands') == 2)))
     {
     $display_items = true;
     }
@@ -258,33 +254,72 @@ else
 
                 if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
                 {
+
                     if(isset($_POST['cs']) && $_POST['cs']!= ''){
                         $keywords = strtolower(trim($_POST['cs']));
                     }
                     if(isset($_GET['cs']) && $_GET['cs']!= ''){
                         $keywords = strtolower(trim($_GET['cs']));
                     }
+
+
+						// MULTIPLE KEYWORDS SEARCH
+
+								// make array of keywords
+								$aKeywords = split(" ",$keywords);
+
+								// trim spaces in array
+								array_walk($aKeywords, 'trim_value');
+
+								// if more than one search word
+								if (count($aKeywords) > 1)
+									{
+										$search_keywords_filter = " AND (";
+										foreach ($aKeywords as $key => $value)
+										{
+											$search_keywords_filter .= "(`wp_product_list`.`id` LIKE '%".$value."%' OR `wp_product_list`.`name` LIKE '%".$value."%' OR `wp_product_list`.`description` LIKE '%".$value."%' OR `wp_product_list`.`additional_description` LIKE '%".$value."%') AND ";
+										}
+
+										// remove extra chars from right side
+										$search_keywords_filter = substr($search_keywords_filter, 0, -5);
+										$search_keywords_filter .= ")";
+									}
+									else
+									{
+										$search_keywords_filter = " AND (`wp_product_list`.`id` LIKE '%".$keywords."%' OR `wp_product_list`.`name` LIKE '%".$keywords."%' OR `wp_product_list`.`description` LIKE '%".$keywords."%' OR `wp_product_list`.`additional_description` LIKE '%".$keywords."%')";
+									}
+
+
+									// add brand to search
+									if (isset($_POST['brand']) && is_numeric($_POST['brand']))
+									{
+										$search_keywords_filter .=  " AND `wp_product_list`.`brand`= ".$_POST['brand'];
+									}
+
+
 					$filter_list .= 'Поиск: ('.$keywords.") ";
                     // search request
                     // count found results
 					if (isset($_brand) && isset($_brand)!='')
 					{
-						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' ".$cat_group_sql.$brand_group_sql.$approved_or_not." AND `wp_product_list`.`visible`='1' ".$colorfilter." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
+						
+						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' " . $cat_group_sql . $brand_group_sql . $approved_or_not . " AND `wp_product_list`.`visible`='1' " . $colorfilter . $search_keywords_filter;
 					}
                     else
 					{
-						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' ".$colorfilter.$approved_or_not." AND (id LIKE '%".$keywords."%' OR name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')";
+						$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' " . $colorfilter . $approved_or_not . $search_keywords_filter;
 					}
 
                     $items_count = $GLOBALS['wpdb']->get_results($search_sql,ARRAY_A);
 
-                    if (isset($items_count[0]['count']) && is_numeric($items_count[0]['count']))
+					if (isset($items_count[0]['count']) && is_numeric($items_count[0]['count']))
                     {
                         $items_count = $items_count[0]['count'];
                         // search request
-                        //$search_sql = "SELECT * FROM wp_product_list WHERE active='1' AND `wp_product_list`.`visible`='1' AND (name LIKE '%".$keywords."%' OR description LIKE '%".$keywords."%' OR additional_description LIKE '%".$keywords."%')"; 
+   
+						
+                        $search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_categories`.`name` as kategoria, `wp_item_category_associations`.`category_id` FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cat_group_sql . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
 
-                        $search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_categories`.`name` as kategoria, `wp_item_category_associations`.`category_id` FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' ".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not." AND `wp_product_list`.`visible`='1' AND (LOWER(`wp_product_list`.`name`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`id`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`description`) LIKE '%".$keywords."%' OR LOWER(`wp_product_list`.`additional_description`) LIKE '%".$keywords."%') AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
                     }
                     else
                     {
@@ -297,7 +332,6 @@ else
                     {
                         $keywords = '';
                     }
-
 
 	// we inject here direct link to the image
 	// $_GET['cartoonid'] : &cartoonid=666
@@ -425,8 +459,6 @@ else
 				else
 					$_rating_html = "";
 					
-				//$_share_it_code = "<br><br><div class='addthis_toolbox addthis_default_style' addthis:url='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."' addthis:title='Классная картинка!'><a class='addthis_button_preferred_1'></a><a class='addthis_button_preferred_2'></a><a class='addthis_button_preferred_3'></a><a class='addthis_button_preferred_4'></a><a class='addthis_button_compact'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca706da2e6d8d4d'></script>";
-
 				if (current_user_can('manage_options'))
 				{
 					$_edid = " <form method='post' action='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php'> <input type='hidden' name='edid' value='".$_number."' /> <input class='borders' type='submit' value='Редактировать изображение'> </form> ";
@@ -668,4 +700,9 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 
 }
 //    pokazh($wpdb->queries,"queries");
+
+function trim_value(&$value) 
+{ 
+    $value = trim($value); 
+}
 ?>
