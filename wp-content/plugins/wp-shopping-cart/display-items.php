@@ -1538,6 +1538,7 @@ function wtrmark($sourcefile, $watermarkfile) {
 
 wp_enqueue_script('jquery');
 
+
 if (current_user_can('manage_options') && isset($_POST['edid']) && is_numeric($_POST['edid']))
 {
 	$_edid = $_POST['edid'];
@@ -1548,14 +1549,20 @@ elseif (current_user_can('manage_options') && isset($_GET['edid']) && is_numeric
 }
 else
 {
-	$_edid = '';
+	$_edid = 0;
 }
 
-
+	pokazh ($_edid,"_edid");
 ?>
 <script type="text/javascript">
 	  jQuery(document).ready(function(){
-				filleditform(<?echo($_edid);?>);
-
+			var edid = <? echo $_edid; ?>;
+		  if (edid!=0)
+		  {
+				filleditform(edid);
+		  }
 	   });
 </script>
+<?
+
+?>
