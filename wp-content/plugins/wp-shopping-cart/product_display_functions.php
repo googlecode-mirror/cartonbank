@@ -211,7 +211,7 @@ $sql = "
 				{
 					//$_edid = " <form method=\'post\' action=\'".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php\'> <input type=\'hidden\' name=\'edid\' value=\'".$_number."\' /> <input type=\'image\'  src=\'".get_option('siteurl')."/img/edit.jpg\' title=\'edit\'></form> <a href=\'".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number."\' target=_blank\'><img src=\'".get_option('siteurl')."/img/reload.gif\' title=\'image update\'></a>";
 
-					$_edid = " <a href=".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&edid=".$_number."  target=_blank><img src=".get_option('siteurl')."/img/edit.jpg title=edit></a> <a href=".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number." target=_blank><img src=".get_option('siteurl')."/img/reload.gif title=img></a>";
+					$_edid = " <a href=".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&edid=".$_number."  target=_blank><img border=0 src=".get_option('siteurl')."/img/edit.jpg title=edit></a> <a href=".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number." target=_blank><img border=0 src=".get_option('siteurl')."/img/reload.gif title=img></a>";
 
 				}
 				else
