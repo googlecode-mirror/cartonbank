@@ -34,7 +34,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 
 // next page function
 	isset($_GET['offset'])&&is_numeric($_GET['offset'])?$_offset=$_GET['offset']:$_offset=0;
-	$_offset = $_offset + 15;
+	$_offset = $_offset + 20;
 
 	isset($_GET['brand'])&&is_numeric($_GET['brand'])?$_brand=$_GET['brand']:$_brand='';
 
@@ -51,7 +51,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	else
 		{$_cs = '';}
 	
-	//$_offset = $_offset + 15;
+	//$_offset = $_offset + 20;
 
 	$javascript_functions ='';
 	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29&brand='.$_brand.'&color='.$_color.'&category='.$category.'&cs='.$_cs.'&offset='.$_offset.'";}';
@@ -110,7 +110,7 @@ $sql = "
 		AND  `wp_item_category_associations`.`category_id` =  '777'
 		AND  `wp_product_categories`.`id` = 777
 		ORDER BY  tema_dnya.datetime DESC, `wp_product_list`.`id` DESC 
-		LIMIT 0 , 15
+		LIMIT 0 , 20
 ";
 
 //pokazh($sql,"search_sql: ");
@@ -207,21 +207,21 @@ $sql = "
 
 	//$_share_it_code = "<br><br><div class='addthis_toolbox addthis_default_style' addthis:url='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."' addthis:title='Классная картинка!'><a class='addthis_button_preferred_1'></a><a class='addthis_button_preferred_2'></a><a class='addthis_button_preferred_3'></a><a class='addthis_button_preferred_4'></a><a class='addthis_button_compact'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca706da2e6d8d4d'></script>";
 
-	//pokazh($_share_it_code,"_share_it_code");
-	//exit;
-
 	if (current_user_can('manage_options'))
 				{
-					$_edid = " <form method=\'post\' action=\'".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php\'> <input type=\'hidden\' name=\'edid\' value=\'".$_number."\' /> <input class=\'borders\' type=\'submit\' value=\'Редактировать изображение\'> </form> ";
+					//$_edid = " <form method=\'post\' action=\'".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php\'> <input type=\'hidden\' name=\'edid\' value=\'".$_number."\' /> <input type=\'image\'  src=\'".get_option('siteurl')."/img/edit.jpg\' title=\'edit\'></form> <a href=\'".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number."\' target=_blank\'><img src=\'".get_option('siteurl')."/img/reload.gif\' title=\'image update\'></a>";
+
+					$_edid = " <a href=".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&edid=".$_number."  target=_blank><img src=".get_option('siteurl')."/img/edit.jpg title=edit></a> <a href=".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number." target=_blank><img src=".get_option('siteurl')."/img/reload.gif title=img></a>";
+
 				}
 				else
 				{
 					$_edid = "";
 				}
 	
-	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>".$_edid."№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
 
-	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br><br><b>Размер:</b><br>".$_size."<br><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b>".$_file_format."<br><br><b>Оценка:</b><br>".$_rating_html;
+	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br><br><b>Размер:</b><br>".$_size."<br><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b>".$_file_format."<br><br><b>Оценка:</b><br>".$_rating_html.$_edid;
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\' border=0>";
 
 	if($product['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
@@ -239,7 +239,7 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 }
 
 	$_next_item = $counter + 1;
-	if ($_next_item == 15)
+	if ($_next_item == 20)
 		{
 			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующая страница > \" href=\"#pagetop\" onclick=\"next_page();\">".$_bigpic."</a>';";
 		}
@@ -254,7 +254,7 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 	
     $output .= "<a href=\"#pagetop\"  onclick=\"get_item". ($_next_item - 1) ."();\">";
 /*
-	if ($_next_item == 15)
+	if ($_next_item == 20)
 		{
 			$output .= "<a href=\"#\"  onclick=\"alert('last item');next_page();\">";
 		}

@@ -1540,14 +1540,22 @@ wp_enqueue_script('jquery');
 
 if (current_user_can('manage_options') && isset($_POST['edid']) && is_numeric($_POST['edid']))
 {
-	pokazh ($_POST['edid'],"_POST['edid']");
-?>
-		<script type="text/javascript">
-			  jQuery(document).ready(function(){
-						filleditform(<?echo($_POST['edid']);?>);
-
-			   });
-		</script>
-<?
+	$_edid = $_POST['edid'];
 }
+elseif (current_user_can('manage_options') && isset($_GET['edid']) && is_numeric($_GET['edid']))
+{
+	$_edid = $_GET['edid'];
+}
+else
+{
+	$_edid = '';
+}
+
+
 ?>
+<script type="text/javascript">
+	  jQuery(document).ready(function(){
+				filleditform(<?echo($_edid);?>);
+
+	   });
+</script>

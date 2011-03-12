@@ -190,17 +190,7 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
 
   $num = 0;
   
-if((is_numeric($_category) || is_numeric(get_option('default_category'))) && ((get_option('show_categorybrands') == 1) || (get_option('show_categorybrands') == 2)))
-    {
-    $display_items = true;
-    }
-    else if((is_numeric($_brand) || is_numeric(get_option('default_brand'))) && ((get_option('show_categorybrands') == 3) || (get_option('show_categorybrands') == 1)))
-      {
-      $display_items = true;
-      }
-      
-  if($display_items == true)
-    {
+
 			// how many records total?
 			if ($_brand == '')
 			{
@@ -230,7 +220,7 @@ $search_sql = NULL;
 
 if (isset($_GET['category']) && $_GET['category'] == '777')
 		{
-			$sql = "SELECT  `wp_product_list` . * ,  `wp_product_files`.`width` ,  `wp_product_files`.`height` ,  `wp_product_brands`.`id` AS brandid,  `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id` ,  `wp_product_categories`.`name` AS kategoria, `tema_dnya`.`datetime` FROM  `wp_product_list` LEFT JOIN `wp_item_category_associations` ON `wp_product_list`.`id` =  `wp_item_category_associations`.`product_id`  LEFT JOIN `wp_product_files` ON `wp_product_list`.`file` =  `wp_product_files`.`id` LEFT JOIN `wp_product_brands` ON `wp_product_brands`.`id` =  `wp_product_list`.`brand` LEFT JOIN `wp_product_categories` ON `wp_item_category_associations`.`category_id` =  `wp_product_categories`.`id` LEFT JOIN `tema_dnya` ON wp_product_list.id =  tema_dnya.id  WHERE   `wp_product_list`.`active` =  '1' AND  `wp_product_list`.`approved` =  '1' AND  `wp_product_list`.`visible` =  '1' AND  `wp_item_category_associations`.`category_id` =  '777' AND `tema_dnya`.`datetime` <= '".date("Y.m.d")."' AND  `wp_product_categories`.`id` =777 ORDER BY  tema_dnya.datetime DESC, `wp_product_list`.`id` DESC LIMIT 0 , 15";
+			$sql = "SELECT  `wp_product_list` . * ,  `wp_product_files`.`width` ,  `wp_product_files`.`height` ,  `wp_product_brands`.`id` AS brandid,  `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id` ,  `wp_product_categories`.`name` AS kategoria, `tema_dnya`.`datetime` FROM  `wp_product_list` LEFT JOIN `wp_item_category_associations` ON `wp_product_list`.`id` =  `wp_item_category_associations`.`product_id`  LEFT JOIN `wp_product_files` ON `wp_product_list`.`file` =  `wp_product_files`.`id` LEFT JOIN `wp_product_brands` ON `wp_product_brands`.`id` =  `wp_product_list`.`brand` LEFT JOIN `wp_product_categories` ON `wp_item_category_associations`.`category_id` =  `wp_product_categories`.`id` LEFT JOIN `tema_dnya` ON wp_product_list.id =  tema_dnya.id  WHERE   `wp_product_list`.`active` =  '1' AND  `wp_product_list`.`approved` =  '1' AND  `wp_product_list`.`visible` =  '1' AND  `wp_item_category_associations`.`category_id` =  '777' AND `tema_dnya`.`datetime` <= '".date("Y.m.d")."' AND  `wp_product_categories`.`id` =777 ORDER BY  tema_dnya.datetime DESC, `wp_product_list`.`id` DESC LIMIT 0 , 20";
 
 		}
 else
@@ -296,6 +286,10 @@ else
 										$search_keywords_filter .=  " AND `wp_product_list`.`brand`= ".$_POST['brand'];
 									}
 
+									if (isset($_GET['brand']) && is_numeric($_GET['brand']))
+									{
+										$search_keywords_filter .=  " AND `wp_product_list`.`brand`= ".$_GET['brand'];
+									}
 
 					$filter_list .= 'Поиск: ('.$keywords.") ";
                     // search request
@@ -327,11 +321,11 @@ else
                         $search_sql ='';
                     }
                 $sql = $search_sql;
-				}
+				} // if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
                 else 
-                    {
-                        $keywords = '';
-                    }
+				{
+					$keywords = '';
+				}
 
 	// we inject here direct link to the image
 	// $_GET['cartoonid'] : &cartoonid=666
@@ -461,15 +455,15 @@ else
 					
 				if (current_user_can('manage_options'))
 				{
-					$_edid = " <form method='post' action='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php'> <input type='hidden' name='edid' value='".$_number."' /> <input class='borders' type='submit' value='Редактировать изображение'> </form> ";
+					$_edid = " <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&edid=".$_number."' target=_blank'><img src='".get_option('siteurl')."/img/edit.jpg' title='image update'></a> <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number."' target=_blank'><img src='".get_option('siteurl')."/img/reload.gif' title='image update'></a>";
 				}
 				else
 				{
 					$_edid = "";
 				}
 
-                $_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Название:</a> </b>" .$_name."</div> "."<div >".$_edid."№&nbsp;<a title='уникальный адрес страницы с этим изображением' id='cuid' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
-                $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение'>Категория:</a> </b><br>".$_category."<br><br><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Описание:</a> </b> ".$_description."<br><br><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение'>Тэги:</a> </b><br>".$_tags."<br><br><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br><br><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение'>Размер:</a></b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение'>Формат:</a> </b> ".$_file_format."<br><br><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение'>Оценка:</a></b><br>".$_rating_html;
+				$_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Название:</a> </b>" .$_name."</div> "."<div >№&nbsp;<a title='уникальный адрес страницы с этим изображением' id='cuid' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
+                $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение'>Категория:</a> </b><br>".$_category."<br><br><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Описание:</a> </b> ".$_description."<br><br><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение'>Тэги:</a> </b><br>".$_tags."<br><br><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br><br><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение'>Размер:</a></b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение'>Формат:</a> </b> ".$_file_format."<br><br><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение'>Оценка:</a></b><br>".$_rating_html.$_edid;
 
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\" border=0>";
@@ -552,23 +546,18 @@ else
 				else
 					 {$search_sql = '';}
                      
-                     
-			 // FIRST PAGE icons OUTPUT
-              if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
-              {
-                  echo "";
-              }
-              else
-			  {
+					 
+// FIRST PAGE icons OUTPUT
 
-             // PAGINATION
-             $offset = $offset;// + $items_on_page;
-			 $page_id = $_GET['page_id'];
 
-				$page = round($offset/$items_on_page)+1;
-				$totalitems = $items_count;
-				$limit = $items_on_page;
-				if (isset($_GET['category'])&&is_numeric($_GET['category'])) {$catid=$_GET['category'];}else{$catid='';}
+ // PAGINATION
+ $offset = $offset;// + $items_on_page;
+ $page_id = $_GET['page_id'];
+
+	$page = round($offset/$items_on_page)+1;
+	$totalitems = $items_count;
+	$limit = $items_on_page;
+		if (isset($_GET['category'])&&is_numeric($_GET['category'])) {$catid=$_GET['category'];}else{$catid='';}
 
 	// Brand filter
 	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
@@ -576,29 +565,35 @@ else
 		$_brand = $_GET['brand'];
 		$brand_group_sql = "&brand=".$_brand;
 	}
+	elseif (isset($_POST['brand']) && is_numeric($_POST['brand']))
+	{
+		$_brand = $_POST['brand'];
+		$brand_group_sql = "&brand=".$_brand;
+	}
 	else
 	{
 		$_brand = '';
 		$brand_group_sql = '';
 	}
-		$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$brand_group_sql."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=",$filter_list);
-				
-				//$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29&brand=".$brandid."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=",$filter_list);
-				
-			  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
 
-              
-			  echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
-              }
-     }// if $display_items == true
+	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$brand_group_sql."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=",$filter_list);
+		
 
-function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1, $targetpage = "/", $pagestring = "?page=", $filter_list = '')
+	  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
+
+	  
+	  echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
+
+
+function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1, $targetpage = "/", $pagestring = "?page=", $filter_list = '')
 {		
 	//function to return the pagination string
-	//getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?brand=".$brandid."&category=".$catid."&offset=".$offset."&cs=".$keywords."&page_id=29");
+	//getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?brand=".$brandid."&category=".$catid."&offset=".$offset."&cs=".$keywords."&page_id=29");
+
+
 	//defaults
 	if(!$adjacents) $adjacents = 1;
-	if(!$limit) $limit = 15;
+	if(!$limit) $limit = 20;
 	if(!$page) $page = 1;
 	if(!$targetpage) $targetpage = "/";
 	
@@ -656,7 +651,7 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 			elseif($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2))
 			{
 				$pagination .= "<a href=\"" . $targetpage . $pagestring . "0\">1</a>";
-				$pagination .= "<a href=\"" . $targetpage . $pagestring . "15\">2</a>";
+				$pagination .= "<a href=\"" . $targetpage . $pagestring . "20\">2</a>";
 				$pagination .= "<span class=\"elipses\">...</span>";
 				for ($counter = $page - $adjacents; $counter <= $page + $adjacents; $counter++)
 				{
@@ -673,7 +668,7 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 			else
 			{
 				$pagination .= "<a href=\"" . $targetpage . $pagestring . "0\">1</a>";
-				$pagination .= "<a href=\"" . $targetpage . $pagestring . "15\">2</a>";
+				$pagination .= "<a href=\"" . $targetpage . $pagestring . "20\">2</a>";
 				$pagination .= "<span class=\"elipses\">...</span>";
 				for ($counter = $lastpage - (1 + ($adjacents * 3)); $counter <= $lastpage; $counter++)
 				{
@@ -699,7 +694,6 @@ function getPaginationString($page = 1, $totalitems, $limit = 15, $adjacents = 1
 	return $pagination;
 
 }
-//    pokazh($wpdb->queries,"queries");
 
 function trim_value(&$value) 
 { 
