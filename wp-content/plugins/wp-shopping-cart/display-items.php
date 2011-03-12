@@ -1552,7 +1552,6 @@ else
 	$_edid = 0;
 }
 
-	pokazh ($_edid,"_edid");
 ?>
 <script type="text/javascript">
 	  jQuery(document).ready(function(){
