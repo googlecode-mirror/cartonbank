@@ -3,7 +3,7 @@
 
 if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29" && !isset($_POST['cs']))
 {
-	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,9000));
+	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,9500));
 }
 
 ?>
@@ -78,7 +78,7 @@ default:
 	<a href="<?php echo get_option('home'); ?>/"><img src="<?php echo get_option('home'); ?>/wp-admin/images/cb-logo.gif" border="0"></a><br />
 	<?php bloginfo('description'); ?>
 </td>
-<td style="align:right;font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#668bb7">Рисунки художников<br>из семи<br>стран мира</td>
+<td style="font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#668bb7">Рисунки художников<br>из семи<br>стран мира</td>
 </tr></table>
 </div>
 
