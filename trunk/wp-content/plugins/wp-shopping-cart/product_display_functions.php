@@ -194,7 +194,7 @@ $sql = "
 		}
 	$_tags_imploded = implode(", ", $_tags_array);
 	$_tags = $_tags_imploded;
-
+/*
 	if (function_exists('five_star_rating_func_2'))
 		$_rating_html = five_star_rating_func_2($_number);
 	else
@@ -202,7 +202,11 @@ $sql = "
 
 	$_rating_html = str_replace("\"","\'",$_rating_html);
 	$_rating_html = str_replace("'","\'",$_rating_html);
+*/
 
+$_rating_html = "<div id='star_rating'></div>";
+	$_rating_html = str_replace("\"","\'",$_rating_html);
+	$_rating_html = str_replace("'","\'",$_rating_html);
 
 
 	//$_share_it_code = "<br><br><div class='addthis_toolbox addthis_default_style' addthis:url='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."' addthis:title='Классная картинка!'><a class='addthis_button_preferred_1'></a><a class='addthis_button_preferred_2'></a><a class='addthis_button_preferred_3'></a><a class='addthis_button_preferred_4'></a><a class='addthis_button_compact'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca706da2e6d8d4d'></script>";
@@ -264,7 +268,14 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 		}
 
 */	
-	$javascript_functions .= " function get_item".$counter."() { ".$vstavka." FSR_starlet();} "; 
+	$jq_stars = ' get_5stars(); ';
+
+	//$jq_stars = ' jQuery(document).ready(function() {var cuid = document.getElementById("cuid").innerHTML;var starurl = "http://karikashop.com/cb/wp-content/plugins/five-star-rating/fsr-ajax-stars.php?p="+cuid+"&starType=star"; jQuery("#star_rating").load(starurl,function(){jQuery(function(){jQuery("label[for^=fsr_star_]").click(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().attr("action"),d=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_");FSR_save_vote(a[2],a[3],b,d)});jQuery("label[for^=fsr_star_]").mouseover(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_")[3];FSR_star_over(this,a,b)})});FSR_current_post=null;FSR_isWorking=false;}); }); ';
+
+	//$javascript_functions .= " function get_item".$counter."() { ".$vstavka." FSR_starlet();} "; 
+$javascript_functions .= " function get_item".$counter."() { ".$vstavka.$jq_stars." } "; 
+
+
 	
 	$fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['image'];
 
