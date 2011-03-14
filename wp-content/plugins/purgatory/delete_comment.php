@@ -17,8 +17,6 @@ elseif (isset($_GET['id']))
 
 	$ip_sql=mysql_query($sql);
 	header('Location: http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php');
-	echo $sql;
-
 }
 
 function fw($text)
