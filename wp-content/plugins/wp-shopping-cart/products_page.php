@@ -447,11 +447,14 @@ else
                     }
                 $_tags_imploded = implode(", ", $_tags_array);
                 $_tags = $_tags_imploded;
-
+/*
 				if (function_exists('five_star_rating_func_2'))
 					$_rating_html = five_star_rating_func_2($_number);
 				else
 					$_rating_html = "";
+					//pokazh($_rating_html);
+*/
+					$_rating_html = "<div id='star_rating'></div>";
 					
 				if (current_user_can('manage_options'))
 				{
@@ -700,3 +703,14 @@ function trim_value(&$value)
     $value = trim($value); 
 }
 ?>
+<script type="text/javascript">
+get_5stars();
+function get_5stars()
+{
+jQuery(document).ready(function() {
+var cuid = document.getElementById('cuid').innerHTML;
+var starurl = "http://karikashop.com/cb/wp-content/plugins/five-star-rating/fsr-ajax-stars.php?p="+cuid+"&starType=star";
+jQuery("#star_rating").load(starurl,function(){jQuery(function(){jQuery("label[for^=fsr_star_]").click(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().attr("action"),d=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_");FSR_save_vote(a[2],a[3],b,d)});jQuery("label[for^=fsr_star_]").mouseover(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_")[3];FSR_star_over(this,a,b)})});FSR_current_post=null;FSR_isWorking=false;});
+});
+}
+</script>
