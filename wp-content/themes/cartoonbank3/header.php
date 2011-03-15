@@ -88,7 +88,7 @@ default:
 <?
 function selected_style()
 {
-	echo "style='color:#658cb3'";
+	echo "style='color:#668bb7'";
 }
 ?>
 
