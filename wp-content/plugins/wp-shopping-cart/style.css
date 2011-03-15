@@ -1,3 +1,11 @@
+div#categorydisplay{
+	display: block;
+	}
+
+div#branddisplay{
+	display: block;
+	}
+
 div#shoppingcart{
  float: right;
  width: 148px;

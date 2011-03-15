@@ -152,48 +152,15 @@ class wp_shopping_cart
 function nzshpcrt_style()
     {
   ?>
-  <link href='<?php echo get_option('siteurl'); ?>/wp-content/plugins/wp-shopping-cart/style.css' rel="stylesheet" type="text/css" />
-  <style type="text/css" media="screen">
-    <?php
-    if(isset($_GET['brand']) && is_numeric($_GET['brand']) || (get_option('show_categorybrands') == 3))
-    {
-    $brandstate = 'block';
-    $categorystate = 'none';
-    }
-    else
-      {
-    $brandstate = 'none';
-    $categorystate = 'block';
-      }
-    ?>
-    div#categorydisplay{
-    display: <?php echo $categorystate; ?>;
-    }
-    div#branddisplay{
-    display: <?php echo $brandstate; ?>;
-    }
-  </style>
+<link href='<?php echo get_option('siteurl'); ?>/wp-content/plugins/wp-shopping-cart/style.css' rel="stylesheet" type="text/css" />
   <?php
     }
     
 function nzshpcrt_javascript()
     {
-  $siteurl = get_option('siteurl'); 
-    ?>
-<script language='JavaScript' type='text/javascript'>
-var base_url = "<?php echo $siteurl; ?>";
-<?
-$loadgif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/loading.gif";
-$closegif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
-?>
-var fileLoadingImage = "<?php echo $loadgif; ?>";    
-var fileBottomNavCloseImage = "<?php echo $closegif; ?>";
-var resizeSpeed = 9;
-var borderSize = 10;
-</script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/ajax.js" language='JavaScript' type="text/javascript"></script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/user.js" language='JavaScript' type="text/javascript">
-</script>
+$siteurl = get_option('siteurl');
+?><script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/ajax.js" language='JavaScript' type="text/javascript"></script>
+<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/user.js" language='JavaScript' type="text/javascript"></script>
 <?php
   }
 
