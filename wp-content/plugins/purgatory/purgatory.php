@@ -240,7 +240,8 @@ function deletecomment()
 	{
 	color:#838383;
 	text-decoration:none;
-	padding-top:14px;
+	padding-top:0px;
+	line-height:90%;
 	}
 
 	.box1
@@ -259,7 +260,8 @@ function deletecomment()
 	{
 	float:left; width:200px; text-align:left;
 	margin-left:10px;height:140px;margin-top:0px;
-	font-size:0.8em;
+	font-size:0.8em;	
+	line-height:150%;
 	}
 
 	.box4
