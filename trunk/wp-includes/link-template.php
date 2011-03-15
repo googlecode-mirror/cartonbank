@@ -1066,6 +1066,7 @@ function get_adjacent_post($in_same_cat = false, $excluded_categories = '', $pre
  * @return string
  */
 function get_adjacent_post_rel_link($title = '%title', $in_same_cat = false, $excluded_categories = '', $previous = true) {
+	return;
 	if ( $previous && is_attachment() && is_object( $GLOBALS['post'] ) )
 		$post = & get_post($GLOBALS['post']->post_parent);
 	else
@@ -1128,7 +1129,7 @@ function adjacent_posts_rel_link_wp_head() {
  * @param string $excluded_categories Optional. Excluded categories IDs.
  */
 function next_post_rel_link($title = '%title', $in_same_cat = false, $excluded_categories = '') {
-	echo get_adjacent_post_rel_link($title, $in_same_cat, $excluded_categories = '', false);
+	//echo get_adjacent_post_rel_link($title, $in_same_cat, $excluded_categories = '', false);
 }
 
 /**
@@ -1141,7 +1142,7 @@ function next_post_rel_link($title = '%title', $in_same_cat = false, $excluded_c
  * @param string $excluded_categories Optional. Excluded categories IDs.
  */
 function prev_post_rel_link($title = '%title', $in_same_cat = false, $excluded_categories = '') {
-	echo get_adjacent_post_rel_link($title, $in_same_cat, $excluded_categories = '', true);
+	//echo get_adjacent_post_rel_link($title, $in_same_cat, $excluded_categories = '', true);
 }
 
 /**
@@ -2147,6 +2148,7 @@ function network_admin_url( $path = '', $scheme = 'admin' ) {
  * @since 2.9.0
 */
 function rel_canonical() {
+	return;
 	if ( !is_singular() )
 		return;
 

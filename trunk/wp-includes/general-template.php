@@ -1667,6 +1667,7 @@ function feed_links_extra( $args = array() ) {
  * @since 2.0.0
  */
 function rsd_link() {
+	return;
 	echo '<link rel="EditURI" type="application/rsd+xml" title="RSD" href="' . get_bloginfo('wpurl') . "/xmlrpc.php?rsd\" />\n";
 }
 
@@ -1677,6 +1678,7 @@ function rsd_link() {
  * @since 2.3.1
  */
 function wlwmanifest_link() {
+	return;
 	echo '<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="'
 		. get_bloginfo('wpurl') . '/wp-includes/wlwmanifest.xml" /> ' . "\n";
 }
@@ -2173,6 +2175,8 @@ function the_generator( $type ) {
  * @return string The HTML content for the generator.
  */
 function get_the_generator( $type = '' ) {
+	return;
+
 	if ( empty( $type ) ) {
 
 		$current_filter = current_filter();

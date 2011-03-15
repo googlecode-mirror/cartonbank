@@ -3,7 +3,7 @@
 
 if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29" && !isset($_POST['cs']))
 {
-	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,9500));
+	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,9000));
 }
 
 ?>
@@ -78,7 +78,10 @@ default:
 	<a href="<?php echo get_option('home'); ?>/"><img src="<?php echo get_option('home'); ?>/wp-admin/images/cb-logo.gif" border="0"></a><br />
 	<?php bloginfo('description'); ?>
 </td>
-<td style="font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#668bb7">Рисунки художников<br>из семи<br>стран мира</td>
+<?
+//<td style="align:right;font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#990000">Во вторник утром<br>возможны перерывы<br>в работе сайта</td>
+?>
+<td style="align:right;font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#668bb7">Рисунки художников<br>из семи<br>стран мира</td>
 </tr></table>
 </div>
 
@@ -91,16 +94,16 @@ function selected_style()
 
 <div id="navbar">
 	<ul> 
-		<li><a href="?page_id=95" <? $_GET['page_id']=='95'? selected_style():"" ?> >О проекте</a></li>
-		<li><a href="?page_id=29&offset=0" <? $_GET['page_id']=='29'? selected_style():"" ?> title='на первую страницу'>Банк изображений</a></li>
-		<li><a href="?page_id=942" <? $_GET['page_id']=='942'? selected_style():"" ?> >Новости</a></li>
-		<li><a href="?page_id=73" <? $_GET['page_id']=='73'? selected_style():"" ?> >Авторам</a></li>
-		<li><a href="?page_id=97" <? $_GET['page_id']=='97'? selected_style():"" ?> >Клиентам</a></li>
-		<li><a href="?page_id=907" <? $_GET['page_id']=='907'? selected_style():"" ?> >Зрителям</a></li>
-		<li><a href="?page_id=1215" <? $_GET['page_id']=='1215'? selected_style():"" ?> >Партнёры</a></li>
-		<li><a href="?page_id=1260" <? $_GET['page_id']=='1260'? selected_style():"" ?> >Друзья</a></li>
-		<li><a href="?page_id=2" <? $_GET['page_id']=='2'? selected_style():"" ?> >Ответы</a></li>
-		<li><a href="?page_id=976" <? $_GET['page_id']=='976'? selected_style():"" ?> >Контакты</a></li>
+		<li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style():"" ?>>О проекте</a></li>
+		<li><a href="?page_id=29&offset=0"<? $_GET['page_id']=='29'? selected_style():"" ?> title='на первую страницу'>Банк изображений</a></li>
+		<li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style():"" ?>>Новости</a></li>
+		<li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style():"" ?>>Авторам</a></li>
+		<li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style():"" ?>>Клиентам</a></li>
+		<li><a href="?page_id=907"<? $_GET['page_id']=='907'? selected_style():"" ?>>Зрителям</a></li>
+		<li><a href="?page_id=1215"<? $_GET['page_id']=='1215'? selected_style():"" ?>>Партнёры</a></li>
+		<li><a href="?page_id=1260"<? $_GET['page_id']=='1260'? selected_style():"" ?>>Друзья</a></li>
+		<li><a href="?page_id=2"<? $_GET['page_id']=='2'? selected_style():"" ?>>Ответы</a></li>
+		<li><a href="?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?>>Контакты</a></li>
 	</ul>
 </div>
 <A NAME="pagetop"></a>
