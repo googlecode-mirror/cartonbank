@@ -204,7 +204,7 @@ $sql = "
 	$_rating_html = str_replace("'","\'",$_rating_html);
 */
 
-$_rating_html = "<div id='star_rating'></div>";
+$_rating_html = "<div id='star_rating'><img src='".get_option('site_url')."/img/ldng.gif'></div>";
 	$_rating_html = str_replace("\"","\'",$_rating_html);
 	$_rating_html = str_replace("'","\'",$_rating_html);
 
