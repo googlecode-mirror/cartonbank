@@ -270,10 +270,7 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 */	
 	$jq_stars = ' get_5stars(); ';
 
-	//$jq_stars = ' jQuery(document).ready(function() {var cuid = document.getElementById("cuid").innerHTML;var starurl = "http://karikashop.com/cb/wp-content/plugins/five-star-rating/fsr-ajax-stars.php?p="+cuid+"&starType=star"; jQuery("#star_rating").load(starurl,function(){jQuery(function(){jQuery("label[for^=fsr_star_]").click(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().attr("action"),d=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_");FSR_save_vote(a[2],a[3],b,d)});jQuery("label[for^=fsr_star_]").mouseover(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_")[3];FSR_star_over(this,a,b)})});FSR_current_post=null;FSR_isWorking=false;}); }); ';
-
-	//$javascript_functions .= " function get_item".$counter."() { ".$vstavka." FSR_starlet();} "; 
-$javascript_functions .= " function get_item".$counter."() { ".$vstavka.$jq_stars." } "; 
+	$javascript_functions .= " function get_item".$counter."() { ".$vstavka.$jq_stars." } "; 
 
 
 	
