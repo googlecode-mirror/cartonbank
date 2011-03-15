@@ -454,7 +454,7 @@ else
 					$_rating_html = "";
 					//pokazh($_rating_html);
 */
-					$_rating_html = "<div id='star_rating'></div>";
+					$_rating_html = "<div id='star_rating'><img src='".get_option('siteurl')."/img/ldng.gif'></div>";
 					
 				if (current_user_can('manage_options'))
 				{
