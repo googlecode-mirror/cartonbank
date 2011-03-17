@@ -8,39 +8,30 @@ $abspath_2 = "/home/www/cb3/";
 if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
 {
 	$abspath = $abspath_2;
-	//$params['database'] = 'z58365_cbru3';
 	$params['database'] = 'cartoonbankru';
 }
-
 if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
 {
 	$abspath = $abspath_2;
-	//$params['database'] = 'z58365_cbru3';
 	$params['database'] = 'cartoonbankru';
 }
 else if (strstr($_SERVER['DOCUMENT_ROOT'],'cb/')) 
 {
 	$abspath = $abspath_1;
-    //$params['database'] = 'z58365_cbru';
 	$params['database'] = 'cartoonbankru';
 }
 else if (strstr($_SERVER['DOCUMENT_ROOT'],'/home/www/')) 
 {
 	$abspath = $abspath_1;
-    //$params['database'] = 'z58365_cbru';
 	$params['database'] = 'cartoonbankru';
 }
 else
 {
-    //$params['database'] = 'z58365_cbru3';
 	$params['database'] = 'cartoonbankru';
 }
-
     $params['hostname'] = 'localhost';
     $params['username'] = 'z58365_cbru3';
     $params['password'] = 'greenbat';
-
-
 
 $year = date("Y");
 $month = date("m");
@@ -113,8 +104,6 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
                                  'downloads'   => 'осталось скачиваний',
                                  'contract'   => 'номер договора'));
 
-                               
-	
     
 	$grid->NoSpecialChars('title','downloadid');
     

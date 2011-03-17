@@ -1,6 +1,6 @@
 
  <?php 
-// Filter for the authors
+// Filter for authors
 // pokazh($current_user->wp_capabilities['author'],"wp_capabilities"); // Автор 
 // pokazh($current_user->wp_capabilities['administrator'],"wp_capabilities"); Админ
 
@@ -847,7 +847,6 @@ $product_list = $wpdb->get_results($sql,ARRAY_A) ;
 
 <div class="wrap">
   <h2><?php echo TXT_WPSC_DISPLAYPRODUCTS;?></h2>
-  <a href="" onclick="return showaddform()" class="add_item_link"><span>Добавить новое изображение в базу данных (очистить форму)</span></a><br><br>
   
   <?php
   echo topcategorylist($offset);
@@ -900,7 +899,7 @@ if (isset($_GET['catid'])){$_category = $_GET['catid'];}else{$_category = '';}
                 {
                     // "Previous page" link
                     $offset_back = $offset - $items_on_page;
-                    $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_brand."&category=".$_GET['catid']."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a><br>";
+                    $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_brand."&category=".$_category."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a><br>";
                 }
                 if(($offset < $items_count - $items_on_page) && ($items_count>0))
                 {
@@ -915,8 +914,8 @@ echo "    <table id='productpage'>\n\r";
 echo "      <tr><td valign='top'>\n\r";
 
 // left table (item list)
-echo "        <table id='itemlist' style='padding:4px;width:120px;background-color:#CCFFFF;'>\n\r";
-    echo "          <tr style='background-color:#CCCCFF;'>\n\r";
+echo "        <table id='itemlist' style='padding:2px;width:120px;background-color:#dfdfdf;'>\n\r";
+    echo "          <tr style='background-color:#dfdfdf;'>\n\r";
     // selection message:
     echo "            <td colspan='6' style='padding:4px;text-align:center;'>\n\r";
     $from_num = $offset+1;
@@ -979,18 +978,8 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
         
         echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px;'>\n\r";
 		echo "№ ".$product['id']."<br>";
-        //echo $authors[$product['brand']]['name']."<br>";
         echo "<b>".stripslashes($product['name'])."</b><br>[".$category_data[$product['category_id']]."]";
         echo "            </td>\n\r";
-
-        //echo "            <td>\n\r";
-        //echo nzshpcrt_currency_display($product['price'], 1);
-        //echo "            </td>\n\r";
-        
-        //echo "            <td style='font-size:10px;background-color:#DFEFCF;padding:2px;'>\n\r";
-        //echo "".$category_data[$product['category_id']]."";
-        //echo "            </td>\n\r";
-
         echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px; text-align:center;'>\n\r";
         echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'><img src='../img/edit.jpg' title='редактировать'></a>";
   if (isset($current_user->wp_capabilities['administrator']) &&	$current_user->wp_capabilities['administrator']==1) 
@@ -1012,14 +1001,11 @@ echo "        <table id='itemlist' style='padding:4px;width:120px;background-col
 echo "        </table>\n\r";
 echo "      </td><td class='secondcol' valign='top' style='padding:4px;background-color:#FFFF99'>\n\r";
 ?>
-<div style='color:#660066'><b>Это форма для отправки нового изображения и правки старого</b></div>
+<div style='color:#006699'><b>Форма для отправки и редактирования изображения</b> <a href="#" onclick="return showaddform()" class="button add-new-h2" style='color:#000099;'>очистить форму</a></div>
 <?
 
 echo "        <div id='productform' style='background-color:#FFFF99;'>";
 echo "<form method='POST'  id='editproductformtop' enctype='multipart/form-data' name='editproduct$num'>";
-//echo "        <table class='producttext'>\n\r";;    
-
-//echo "        </table>\n\r";
 echo "        <div id='formcontent'>\n\r";
 echo "        </div>\n\r";
 echo "</form>";
@@ -1029,14 +1015,17 @@ echo "        </div>";
 <style type="text/css" media="all">
 	td.r{
 		text-align: right;
+		vertical-align: top;
 	}
 	td.ralt{
 		text-align: right;
 		background-color:#FFFF00;
+		vertical-align: top;
 	}
 	td.lalt{
 		text-align: left;
 		background-color:#FFFF00;
+		vertical-align: top;
 	}
 </style>
 
@@ -1044,16 +1033,11 @@ echo "        </div>";
   <form  id='editproductform' method='POST' enctype='multipart/form-data'>
   <table class='additem'>
     <tr>
-      <td>
+      <td class="r">
         Автор:
       </td>
       <td>
         <?php echo brandslist(); ?> <!-- <input id='approved' type="checkbox" name="approved"> Утверждено. -->
-      </td>
-    </tr>
-    <tr>
-      <td colspan='2'>
-        <strong>Файл для печати</strong>
       </td>
     </tr>
     <tr class='tdfirstcol'>
@@ -1064,18 +1048,12 @@ echo "        </div>";
         <input id='fileupload' type='file' name='file' value='' />
       </td>
     </tr>
-
-    <tr>
-      <td colspan='2'>
-        <strong class='form_group'>Описание картинки (внимательно заполните поля)</strong>
-      </td>
-    </tr>
     <tr>
       <td class='r'>
-        Название:
+        Название рисунка:
       </td>
       <td>
-        <input id='picturename' size='30' type='text' name='name' value='***'  />
+        <input id='picturename' size='40' type='text' name='name' value=''  />
       </td>
     </tr>
     <tr>
@@ -1099,15 +1077,15 @@ echo "        </div>";
        Всем видно:
       </td>
       <td>
-        <input id='visible' type="checkbox" name="visible" checked="checked"> Если выключить — не будет видно покупателям<br />
+        <input id='visible' type="checkbox" name="visible" checked="checked"> <span style="color:#999;">Если выключить — не будет видно покупателям</span>
       </td>
     </tr>
     <tr>
       <td class='r' style="background-color:#FFFF33;">
-       Цветное:
+       Цветной рисунок:
       </td>
       <td class="lalt">
-        <input id='colored' type="checkbox" name="colored" checked="checked"> Отключите для ч/б<br />
+        <input id='colored' type="checkbox" name="colored" checked="checked"> <span style="color:#999;">Отключите для ч/б рисунков</span>
       </td>
     </tr>
     <tr>
@@ -1115,7 +1093,7 @@ echo "        </div>";
        Не для продажи:
       </td>
       <td>
-        <input id='not_for_sale' type="checkbox" name="not_for_sale"> Не продаётся, если включено<br />
+        <input id='not_for_sale' type="checkbox" name="not_for_sale"> <span style="color:#999;">Не продаётся, если включено</span>
       </td>
     </tr>
     <tr>
@@ -1131,7 +1109,7 @@ echo "        </div>";
        Тема дня:
       </td>
       <td>
-        <input id='temadnya' type="checkbox" name="temadnya"> Горячая тема<br />
+        <input id='temadnya' type="checkbox" name="temadnya"> <span style="color:#999;">считаю актуальной темой</span>
       </td>
     </tr>
     <tr>
@@ -1386,9 +1364,6 @@ function al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, 
 
         if (is_writable($gallery_root.$thatdir.$ifolder)){
 
-        // exit("gallery_root.thatdir.ifolder : ".$gallery_root.$thatdir.$ifolder);
-        // /home/www/cb/wp-content/plugins/wp-shopping-cart/product_images/
-
             switch(strtolower($path["extension"])){
                 case "jpeg":
                 case "jpg":
@@ -1427,12 +1402,6 @@ function al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, 
                 break;
         }
     }
-    //    imagedestroy($img); 
-    //
-    //    if (file_exists($gallery_root.$thatdir.$ifolder.'/'.$file)) {
-    //        @chmod($gallery_root.$thatdir.$ifolder, 0777);
-    //        @chmod($gallery_root.$thatdir.$ifolder.'/'.$file, 0666);
-    //    }
  }
 function wtrmark($sourcefile, $watermarkfile) {
    #
@@ -1551,7 +1520,6 @@ else
 {
 	$_edid = 0;
 }
-
 ?>
 <script type="text/javascript">
 	  jQuery(document).ready(function(){
@@ -1562,6 +1530,3 @@ else
 		  }
 	   });
 </script>
-<?
-
-?>
