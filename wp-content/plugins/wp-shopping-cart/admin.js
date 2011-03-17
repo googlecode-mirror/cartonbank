@@ -125,9 +125,11 @@ function checkthefields()
                     $selectedradiobutton = radio[ii].value;
             }
 
+
 	if ($selectedradiobutton == null) //todo
 	{
-		$message += 'Кликните категорию.\n';
+		radio[1].checked = true;
+		$message += 'Автоматически выбрана категория cartoon. Проверьте.\n';
 	}
 	if (picturename.value == '' | picturename.value == '***') 
 	{
