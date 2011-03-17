@@ -343,13 +343,6 @@ function nzshpcrt_submit_ajax()
     {
     $sql = "SELECT * FROM `wp_product_list` WHERE `id`='".$_POST['prodid']."' LIMIT 1";
     $item_data = $wpdb->get_results($sql,ARRAY_A) ;
-
-	// echo("<pre>".print_r($item_data,true)."</pre>");
-    // if(is_array($_SESSION['nzshpcrt_cart']))
-    //   {
-    //   $cartquantities = array_count_values($_SESSION['nzshpcrt_cart']);
-    //   }
-    
     
     $item_quantity = 0;
     if(isset($_SESSION['nzshpcrt_cart']) and $_SESSION['nzshpcrt_cart'] != null)
@@ -375,7 +368,6 @@ function nzshpcrt_submit_ajax()
 	if (isset($_SESSION['nzshpcrt_cart']))
 	
 	{
-	//echo("<pre>_SESSION['nzshpcrt_cart']<br>".print_r($_SESSION['nzshpcrt_cart'],true)."</pre>");
 		if((($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
 		  {
 		  $cartcount = count($_SESSION['nzshpcrt_cart']);
@@ -405,17 +397,6 @@ function nzshpcrt_submit_ajax()
 
 				if($_SESSION['nzshpcrt_cart'][$cart_key]->product_variations === $variations) 
 				  {
-					/*
-				  if(is_numeric($_POST['quantity']))
-					{
-					//$_SESSION['nzshpcrt_cart'][$cart_key]->quantity += $_POST['quantity'];
-					$_SESSION['nzshpcrt_cart'][$cart_key]->quantity = 1;
-					}
-					else
-					  {
-					  $_SESSION['nzshpcrt_cart'][$cart_key]->quantity++;
-					  }
-					*/
 				  $_SESSION['nzshpcrt_cart'][$cart_key]->quantity = 1;
 				  $updated_quantity = true;
 				  }
@@ -459,16 +440,18 @@ function nzshpcrt_submit_ajax()
     }
     else if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && (isset($_POST['user']) and $_POST['user'] == "true") && ($_POST['emptycart'] == "true"))
       {
-      //$_SESSION['nzshpcrt_cart'] = '';
       $_SESSION['nzshpcrt_cart'] = Array();
 	  $cart = $_SESSION['nzshpcrt_cart'];
       echo nzshpcrt_shopping_basket_internals($cart);
       exit();
       }
-      
+
   /* fill product form */    
   if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['admin'] == "true") && isset($_POST['prodid']) && is_numeric($_POST['prodid']))
     {
+	  if ($_POST['prodid']=='000')
+		{echo ("<h3>Нет картинки с таким номером</h3>");
+		  exit;}
     echo nzshpcrt_getproductform($_POST['prodid']);
     exit();
     }  /* fill category form */   
@@ -488,24 +471,7 @@ function nzshpcrt_submit_ajax()
           exit();
           }
           
-  /*
-  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && is_numeric($_POST['currencyid']))
-    {
-    $currency_data = $wpdb->get_results("SELECT `symbol`,`symbol_html`,`code` FROM `wp_currency_list` WHERE `id`='".$_POST['currencyid']."' LIMIT 1",ARRAY_A) ;
-    $price_out = null;
-    if($currency_data[0]['symbol'] != '')
-      {
-      $currency_sign = $currency_data[0]['symbol_html'];
-      }
-      else
-        {
-        $currency_sign = $currency_data[0]['code'];
-        }
-    echo $currency_sign;
-    exit();
-    }
-  */
-  
+ 
   /* rate item */    
   if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['rate_item'] == "true") && is_numeric($_POST['product_id']) && is_numeric($_POST['rating']))
     {
@@ -594,33 +560,6 @@ function nzshpcrt_submit_ajax()
     exit();
     }
 
-  /*
-  if(isset($_POST['ajax']) and ($_POST['ajax'] == "true") && ($_POST['get_country_tax'] == "true") && preg_match("/[a-zA-Z]{2,4}/",$_POST['country_id']))  
-    {
-    $country_id = $_POST['country_id'];
-    $region_list = $wpdb->get_results("SELECT `wp_region_tax`.* FROM `wp_region_tax`, `wp_currency_list`  WHERE `wp_currency_list`.`isocode` IN('".$country_id."') AND `wp_currency_list`.`id` = `wp_region_tax`.`country_id`",ARRAY_A) ;
-    if($region_list != null)
-      {
-      echo "<select name='base_region'>\n\r";
-      foreach($region_list as $region)
-        {
-        if(get_option('base_region')  == $region['id'])
-          {
-          $selected = "selected='true'";
-          }
-          else
-            {
-            $selected = "";
-            }
-        echo "<option value='".$region['id']."' $selected>".$region['name']."</option>\n\r";
-        }
-      echo "</select>\n\r";    
-      }
-      else { echo "&nbsp;"; }
-    exit();
-    }
-   */
-   
    if(isset($_POST['language_setting']) && ($_GET['page'] = 'wp-shopping-cart/options.php'))
     {
     if($user_level >= 7)
@@ -665,17 +604,12 @@ function nzshpcrt_submit_ajax()
       {
       $purchase_link = get_option('product_list_url')."&cartoonid=".$product['id'];
       $output .= "    <item>\n\r";
-      //$output .= "      <title>cartoonbank.ru</title>\n\r";
       $output .= "      <title>".stripslashes($product['name'])."</title>\n\r";
       $output .= "      <link>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</link>\n\r";
       $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".stripslashes($product['id'])."'><br><img title='". stripslashes($product['name']) ."' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
       $output .= "      <pubDate>".date("r")."</pubDate>\n\r";
       $output .= "      <guid>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</guid>\n\r";
-
-      //$output .= "      <content:encoded><![CDATA[<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".stripslashes($product['id'])."'><img title='". stripslashes($product['name']) ."' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></content:encoded>\n\r";
-
-$output .= '    ';
-
+	  $output .= '    ';
       $output .= "    </item>\n\r";
       }
     $output .= "  </channel>\n\r";
@@ -851,10 +785,8 @@ $output .= '    ';
     {
     global $wpdb;
     $options = "";
-    //$options .= "<option value=''>".TXT_WPSC_SELECTACATEGORY."</option>\r\n";
     $values = $wpdb->get_results("SELECT * FROM `wp_product_variations` ORDER BY `id` ASC",ARRAY_A);
     $options .= "<option  $selected value='0'>".TXT_WPSC_SELECTAVARIATION."</option>\r\n";
-    //$options .= "<option  $selected value='add'>".TXT_WPSC_NEW_VARIATION."</option>\r\n";
     if($values != null)
       {
       foreach($values as $option)
@@ -880,11 +812,12 @@ $output .= '    ';
   */ 
   $sql = "SELECT * FROM `wp_product_list` WHERE `id`=$prodid LIMIT 1";
   $product_data = $wpdb->get_results($sql,ARRAY_A) ;
+
   $product = $product_data[0];
   
   $output = "        <table>\n\r";
   $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "            <td class='r'>\n\r";
   $output .= "Автор: ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
@@ -922,30 +855,30 @@ $output .= '    ';
   $output .= "          </tr>\n\r";
   
   $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "Имя картинки (<a href='".get_option('siteurl')."/?page_id=29&cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>): ";
+  $output .= "            <td class='r'>\n\r";
+  $output .= "Название рисунка: ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' />";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
-  
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "Описание картинки<br>(текстовое): ";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "<textarea id='productdescredit' name='description' cols='40' rows='3' >".stripslashes($product['description'])."</textarea>";
+  $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' /> # <a href='".get_option('siteurl')."/?page_id=29&cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   
   $output .= "          <tr>\n\r";
+  $output .= "            <td class='r'>\n\r";
+  $output .= "Краткое описание: ";
+  $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
+  $output .= "<textarea id='productdescredit' name='description' cols='45' rows='3' >".stripslashes($product['description'])."</textarea>";
+  $output .= "            </td>\n\r";
+  $output .= "          </tr>\n\r";
+  
+  $output .= "          <tr>\n\r";
+  $output .= "            <td class='r'>\n\r";
   $output .= "Ключевые слова,<br>разделённые запятыми: ";
 
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<textarea id='tagsedit' name='additional_description' cols='40' rows='3' >".stripslashes($product['additional_description'])."</textarea>";
+  $output .= "<textarea id='tagsedit' name='additional_description' cols='45' rows='3' >".stripslashes($product['additional_description'])."</textarea>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
@@ -957,11 +890,11 @@ $output .= '    ';
   $output .= "          </tr>\n\r";
 
   $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "            <td class='r'>\n\r";
   $output .= "Видно всем:";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<input type='checkbox' name='visible'".$visible."/>";
+  $output .= "<input type='checkbox' name='visible'".$visible."/> <span style='color:#999;'>Если выключить — не будет видно покупателям</span>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
@@ -998,21 +931,21 @@ $output .= '    ';
     $license3checked = " checked='checked' ";
 
   $output .= "          <tr>\n\r";
-  $output .= "            <td style='background-color:#FFFF33;'>\n\r";
-  $output .= "Цветная:";
+  $output .= "            <td class='ralt'>\n\r";
+  $output .= "Цветной рисунок:";
   $output .= "            </td>\n\r";
   $output .= "            <td style='background-color:#FFFF33;'>\n\r";
-  $output .= "<input type='checkbox' name='colored'".$colored."/>";
+  $output .= "<input type='checkbox' name='colored'".$colored."/> <span style='color:#999;'>Отключите для ч/б рисунков</span>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
 
   $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "            <td class='r'>\n\r";
   $output .= "Не для продажи:";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<input type='checkbox' name='not_for_sale'".$not_for_sale."/>";
+  $output .= "<input type='checkbox' name='not_for_sale'".$not_for_sale."/> <span style='color:#999;'>Не продаётся, если включено</span>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
@@ -1044,153 +977,34 @@ $output .= '    ';
   $output .= "          </tr>\n\r";
 
   $output .= "          <tr>\n\r";
-  $output .= "            <td style='background-color:#FFFF33;'>\n\r";
+  $output .= "            <td class='ralt'>\n\r";
   $output .= "Тема дня:";
   $output .= "            </td>\n\r";
-  $output .= "            <td style='background-color:#FFFF33;'>\n\r";
-  $output .= "<input type='checkbox' name='temadnya'".$temadnya."/>";
+  $output .= "            <td class='lalt'>\n\r";
+  $output .= "<input type='checkbox' name='temadnya'".$temadnya."/> <span style='color:#999;'>считаю актуальной темой</span>";
+  $output .= "            </td>\n\r";
+  $output .= "          </tr>\n\r";
+  $output .= "          <tr>\n\r";
+  $output .= "            <td class='r'>\n\r";
+  $output .= "Доступны лицензии:";
+  $output .= "            </td>\n\r";
+  $output .= "            <td>\n\r";
+  $output .= "&nbsp;&nbsp;&nbsp;Огр:&nbsp;<input id='license1' type='checkbox' name='license1'".$license1checked.">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type='checkbox' name='license2'".$license2checked.">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type='checkbox' name='license3'".$license3checked."><br />";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
 
   $output .= "          <tr>\n\r";
   $output .= "            <td colspan='2'>\n\r";
-  $output .= "<br><a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id']."' >обновить иконку и слайд с водяными знаками</a>";
-  // class='button'
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
-
-    
-
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "Доступны лицензии:";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "Огр:&nbsp;<input id='license1' type='checkbox' name='license1'".$license1checked.">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type='checkbox' name='license2'".$license2checked.">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type='checkbox' name='license3'".$license3checked."><br />";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
-
-
- /*
-  if(function_exists("getimagesize"))
-    {
-    if($product['image'] != '')
-      {
-      $basepath =  str_replace("/wp-admin", "" , getcwd());
-      $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/thumbnails/";
-      $imagepath = $imagedir . $product['image'];
-      include('getimagesize.php');
-      $output .= "          <tr>\n\r";
-      $output .= "            <td>\n\r";
-      $output .= TXT_WPSC_RESIZEIMAGE.": <br />";
-      
-      $basepath =  str_replace("/wp-admin", "" , getcwd());
-      $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/thumbnails/";
-      $image_size = @getimagesize($imagedir.$product['image']);
-      $output .= "<span class='image_size_text'>".$image_size[0]."x".$image_size[1]."</span>";
-      
-      $output .= "            </td>\n\r";  
-      
-      $output .= "            <td>\n\r";
-      $output .= "<table>";
-      $output .= "  <tr>";
-      $output .= "    <td>";
-      
-      $output .= "<table>";
-      
-      $output .= "  <tr>";
-      $output .= "    <td>";
-      $output .= "<input type='radio' checked='true' name='image_resize' value='0' id='image_resize0' class='image_resize' /> <label for='image_resize0'> ".TXT_WPSC_DONOTRESIZEIMAGE."<br />
-        ";
-      $output .= "    </td>";
-      $output .= "  </tr>";
-      
-      $output .= "  <tr>";
-      $output .= "    <td>";
-      $output .= "<input type='radio' name='image_resize' value='1' id='image_resize1' class='image_resize' /> <label for='image_resize1'>".TXT_WPSC_USEDEFAULTHEIGHTANDWIDTH." (".get_option('product_image_height') ."x".get_option('product_image_width').")";
-      $output .= "    </td>";
-      $output .= "  </tr>";
-
-      
-      $output .= "</table>";
-      $output .= "    </td>";
-
-      $output .= "    <td>";
- 
-         if(file_exists($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']))
-                {
-                $image_location = "product_images/".$product['image'];
-                }
-                else
-                  {
-                  $image_location = "images/".$product['image'];
-                  }
-        $preview_location = "product_images/".$product['image'];
-        $icon_location = "images/".$product['image'];
-
-        $m_image_link = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/".$preview_location;
-
-        $output .= "<a href='".$m_image_link."' target=_blank><img id='previewimage' src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/$icon_location' alt='".TXT_WPSC_PREVIEW."' title='".TXT_WPSC_PREVIEW."' /></a>";
-
-
-      $output .= "    </td>";
-      $output .= "  </tr>";
-
-      $output .= "</table>";
-      $output .= "            </td>\n\r";
-      $output .= "          </tr>\n\r";
-      }
-    }
-    
-  if(function_exists("getimagesize"))
-    {
-    if($product['image'] == '')
-      {
-      $output .= "          <tr>\n\r";
-      $output .= "            <td>\n\r";
-      $output .= "";
-      $output .= "            </td>\n\r";
-      $output .= "            <td>\n\r";
-      $output .= "<input type='radio' checked='true' name='image_resize' value='1' id='image_resize1' class='image_resize' /> <label for='image_resize1'>".TXT_WPSC_USEDEFAULTHEIGHTANDWIDTH." (".get_option('product_image_height') ."x".get_option('product_image_width').")";
-      $output .= "            </td>\n\r";
-      $output .= "          </tr>\n\r";
-
-      $output .= "          <tr>\n\r";
-      $output .= "            <td>\n\r";
-      $output .= "";
-      $output .= "            </td>\n\r";
-      $output .= "            <td>\n\r";
-      $output .= "<input type='radio' name='image_resize' value='2' id='image_resize2' class='image_resize'  />
-        <label for='image_resize2'>".TXT_WPSC_USE." </label><input onclick='checkimageresize()' type='text' size='4' name='height' value='' /><label for='image_resize2'>".TXT_WPSC_PXHEIGHTBY." </label><input onclick='checkimageresize()' type='text' size='4' name='width' value='' /><label for='image_resize2'>".TXT_WPSC_PXWIDTH."</label>";
-      $output .= "            </td>\n\r";
-      $output .= "          </tr>\n\r";
-      }
-    }
-
-  if(function_exists('edit_multiple_image_form'))
-    {
-    $output .= edit_multiple_image_form($product['id']); 
-    }
+  $output .= "<a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id']."' ><img src='".get_option('siteurl')."/img/reload.gif' title='Обновить иконку и слайд с водяными знаками'></a>";
+   $output .= "&nbsp;<a href='index.php?admin_preview=true&product_id=".$product['id']."' style='float: left;' ><img src='../wp-content/plugins/wp-shopping-cart/images/download.gif' title='Скачать оригинальный файл' /></a>";
   
-  */
+  $output .= "            </td>\n\r";
+  $output .= "          </tr>\n\r";
+
   // download original image  
   if($product['file'] > 0)
     {
-    $output .= "          <tr>\n\r";
-    $output .= "            <td colspan='2'>\n\r";
-    $output .= "<br /><strong class='form_group'>".TXT_WPSC_PRODUCTDOWNLOAD."</strong>";
-    $output .= "            </td>\n\r";
-    $output .= "          </tr>\n\r";
-    
-    $output .= "          <tr>\n\r";
-    $output .= "            <td>\n\r";
-    $output .= TXT_WPSC_PREVIEW_FILE.": ";
-    $output .= "            </td>\n\r";
-    $output .= "            <td>\n\r";    
-    
-    $output .= "<a class='admin_download' href='index.php?admin_preview=true&product_id=".$product['id']."' style='float: left;' ><img align='absmiddle' src='../wp-content/plugins/wp-shopping-cart/images/download.gif' alt='' title='' /><span>".TXT_WPSC_CLICKTODOWNLOAD."</span></a>";
-    
     if(is_numeric($product['file']) && ($product['file'] > 0))
       {
       $file_data = $wpdb->get_results("SELECT * FROM `wp_product_files` WHERE `id`='".$product['file']."' LIMIT 1",ARRAY_A);
@@ -1205,11 +1019,11 @@ $output .= '    ';
   
               
     $output .= "          <tr>\n\r";
-    $output .= "            <td>\n\r";
-    $output .= TXT_WPSC_REPLACE_PRODUCT.": ";
+    $output .= "            <td class='r'>\n\r";
+    $output .= "Заменить файл:";
     $output .= "            </td>\n\r";
     $output .= "            <td>\n\r";
-    $output .= "<input type='file' name='file' value='' /> <span class='small'><br />".TXT_WPSC_FILETOBEPRODUCT."</span><br /><br />";
+    $output .= "<input type='file' name='file' value='' /> <div style='color:#999;'>Это тот файл, ссылка на который<br>будет отправлена заказчику</div>";
     $output .= "            </td>\n\r";
     $output .= "          </tr>\n\r";
     }
@@ -1219,7 +1033,7 @@ $output .= '    ';
   $output .= "            <td>\n\r";
   $output .= "<input type='hidden' name='prodid' value='".$product['id']."' />";
   $output .= "<input type='hidden' name='submit_action' value='edit' />";
-  $output .= "<br><input type=\"button\" class='edit_button' style='padding:6px; background-color:#93F273;' name='sendit' value='сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
+  $output .= "<br><input type=\"button\" class='edit_button' style='padding:6px; background-color:#84DF88;' name='sendit' value='Сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
 
 if ($product['approved'] != '1' && isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabilities['editor']==1)
 	{
@@ -1454,7 +1268,6 @@ function nzshpcrt_getvariationform($variation_id)
     if($variation_value_count > 1)
       {
       $output .= " <a  class='image_link' onclick='remove_variation_value(\"variation_value_".$num."\",".$variation_value['id'].")' href='#'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/trash.gif' alt='".TXT_WPSC_DELETE."' title='".TXT_WPSC_DELETE."' /></a>";
-      //admin.php?page=wp-shopping-cart/display_variations.php&amp;delete_value=true&amp;variation_id=".$variation_id."&amp;value_id=".$variation_value['id']."
       }
     $output .= "<br />";
     $output .= "</span>";
@@ -2892,38 +2705,6 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
   function nzshpcrt_region_list($selected_country = null, $selected_region = null)
     {
 	exit; //ales
-	/*
-    global $wpdb;
-    if($selected_region == null)
-      {
-      $selected_region = get_option('base_region');
-      }
-    $output = "";
-    $region_list = $wpdb->get_results("SELECT `wp_region_tax`.* FROM `wp_region_tax`, `wp_currency_list`  WHERE `wp_currency_list`.`isocode` IN('".$selected_country."') AND `wp_currency_list`.`id` = `wp_region_tax`.`country_id`",ARRAY_A) ;
-    if($region_list != null)
-      {
-      $output .= "<select name='base_region'>\n\r";
-      $output .= "<option value=''>None</option>";
-      foreach($region_list as $region)
-        {
-        if($selected_region == $region['id'])
-          {
-          $selected = "selected='true'";
-          }
-          else
-            {
-            $selected = "";
-            }
-        $output .= "<option value='".$region['id']."' $selected>".$region['name']."</option>\n\r";
-        }
-      $output .= "</select>\n\r";    
-      }
-      else
-        {
-        $output .= "<select name='base_region' disabled='true'><option value=''>None</option></select>\n\r";
-        }
-    return $output;
-	*/
     }
     
   function nzshpcrt_form_field_list($selected_field = null)
