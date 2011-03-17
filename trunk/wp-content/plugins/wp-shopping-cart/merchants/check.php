@@ -112,7 +112,7 @@ $label_line = "";
 $label_line2 = "";
 $label_line3 = "";
 
-	$my_img = "./check-2.png";
+	$my_img = "./img/check-2.png";
 	$my_img = @imagecreatefrompng($my_img);
 	$text_colour = imagecolorallocate( $my_img, 0, 0, 0 );
 	$line_colour = imagecolorallocate( $my_img, 128, 255, 0 );
