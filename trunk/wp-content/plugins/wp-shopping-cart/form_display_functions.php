@@ -4,7 +4,7 @@ function categorylist($product_id = '')
   global $wpdb;
   $selected = '';
   $output = '';
-  $values = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' ORDER BY `id` ASC",ARRAY_A);
+  $values = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' AND id <> '777' ORDER BY `id` ASC",ARRAY_A);
   foreach($values as $option)
     {
     if(is_numeric($product_id) && ($product_id > 0))
