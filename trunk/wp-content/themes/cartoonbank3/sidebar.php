@@ -245,20 +245,15 @@ else
 <br><h2>Автор</h2> 
 <?
 echo $avatar_url."<br>";
-//echo $author_name;
 echo $authors;
 echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
 echo "<br><a href='".get_option('siteurl')."/?page_id=33&brand=".$brandid."'>100 лучших работ</a>";
 }
 ?>
 
-
 <?
 $_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
-
-//echo "<script language='JavaScript'>function rokfor(){if (confirm('Внимание!)) {window.location = '".$_rokfor_url."';} else {window.location = '#';}}</script>";
 ?>
-
 
 <br><h2>Разделы</h2>
 
@@ -285,17 +280,6 @@ $_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
 <br><h2>Разное</h2>
 <div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>
 <div id='tags'><a href='?page_id=390'>Тэги</a></div>
-
-<br><h2>Поделиться</h2>
-
-<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://twitter.com/share?url=' + escape('http://cartoonbank.ru/?page_id=29&cartoonid='); window.open(uu+cuid);"><img src="img/s_twitter.png" border="0"></a>
-
-<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://www.facebook.com/sharer.php?t=cartoonbank.ru&u='+escape('http://cartoonbank.ru/?page_id=29&amp;cartoonid='); window.open(uu+cuid);"><img src="img/s_facebook.png" border="0"></a>
-
-<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://vkontakte.ru/share.php?title=cartoonbank.ru&url='+escape('http://cartoonbank.ru/?page_id=29&amp;cartoonid='); window.open(uu+cuid);"><img src="img/s_vkontakte.png" border="0"></a>
-
-<a href="#" onclick="cuid=document.getElementById('cuid').innerHTML; uu='http://www.livejournal.com/update.bml?subject=cartoonbank.ru&event='+escape('http://cartoonbank.ru/?page_id=29&amp;cartoonid='); window.open(uu+cuid);"><img src="img/s_livejournal.png" border="0"></a>
-
 <div style="float:right;width:180px;text-align:right;">
 	<br><h2>Вход</h2>
 		<ul style="float:right;width:160px;text-align:right;">
@@ -305,5 +289,4 @@ $_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
 		</ul>
 </div>
 </div>
-
 <!-- sidebar end -->
