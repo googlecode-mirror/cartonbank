@@ -64,8 +64,6 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	{
 		if (isset($_GET['brand']) && $_GET['brand'] == '')
 		{
-        //$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$colorfilter.$exclude_category_sql.$approved_or_not." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
-
 		$sql = "SELECT `wp_product_list`.image, `wp_product_list`.id, `wp_product_list`.description, `wp_product_list`.name, `wp_product_list`.additional_description, `wp_product_list`.l1_price, `wp_product_list`.l2_price, `wp_product_list`.l3_price, `wp_product_list`.not_for_sale, `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_item_category_associations`, `wp_product_files`, `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ". $colorfilter. $exclude_category_sql. $approved_or_not. " AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`   ORDER BY `wp_product_list`.`id` desc LIMIT ".$offset.",".$items_on_page;
 		}
 		else
@@ -140,11 +138,6 @@ $sql = "
 	// thumbs output
 
     $output .= "<div id='item".$counter."' class='item'>"; // start item
-	
-	//$addtocart = "<form name=$num method=POST action=".get_option('product_list_url')." onsubmit=submitform(this);return false; >";
-	//$addtocart .= "<input type=hidden name=prodid value=".$product['id'].">";
-	//$addtocart .= "Добавить в заказ: <input type=image border=0 src=".get_option('siteurl')."/img/cart.gif name=Buy value=".TXT_WPSC_ADDTOCART." />";
-	//$addtocart .= "</form>" ;
 
 	$vstavka = "document.getElementById('bigpic').innerHTML = '<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>';";
 
@@ -194,26 +187,17 @@ $sql = "
 		}
 	$_tags_imploded = implode(", ", $_tags_array);
 	$_tags = $_tags_imploded;
-/*
-	if (function_exists('five_star_rating_func_2'))
-		$_rating_html = five_star_rating_func_2($_number);
-	else
-		$_rating_html = "";
 
-	$_rating_html = str_replace("\"","\'",$_rating_html);
-	$_rating_html = str_replace("'","\'",$_rating_html);
-*/
+	$_sharethis_html = "<div id=\'share_this\' style=\'line-height:200%;\'></div>";
 
-$_rating_html = "<div id='star_rating'><img src='".get_option('siteurl')."/img/ldng.gif'></div>";
+	$_rating_html = "<div id='star_rating'><img src='".get_option('siteurl')."/img/ldng.gif'></div>";
 	$_rating_html = str_replace("\"","\'",$_rating_html);
 	$_rating_html = str_replace("'","\'",$_rating_html);
 
 
-	//$_share_it_code = "<br><br><div class='addthis_toolbox addthis_default_style' addthis:url='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."' addthis:title='Классная картинка!'><a class='addthis_button_preferred_1'></a><a class='addthis_button_preferred_2'></a><a class='addthis_button_preferred_3'></a><a class='addthis_button_preferred_4'></a><a class='addthis_button_compact'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca706da2e6d8d4d'></script>";
 
 	if (current_user_can('manage_options'))
 				{
-					//$_edid = " <form method=\'post\' action=\'".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php\'> <input type=\'hidden\' name=\'edid\' value=\'".$_number."\' /> <input type=\'image\'  src=\'".get_option('siteurl')."/img/edit.jpg\' title=\'edit\'></form> <a href=\'".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number."\' target=_blank\'><img src=\'".get_option('siteurl')."/img/reload.gif\' title=\'image update\'></a>";
 
 					$_edid = " <a href=".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&edid=".$_number."  target=_blank><img border=0 src=".get_option('siteurl')."/img/edit.jpg title=edit></a> <a href=".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number." target=_blank><img border=0 src=".get_option('siteurl')."/img/reload.gif title=img></a>";
 
@@ -225,7 +209,7 @@ $_rating_html = "<div id='star_rating'><img src='".get_option('siteurl')."/img/l
 	
 	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
 
-	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br><br><b>Размер:</b><br>".$_size."<br><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b>".$_file_format."<br><br><b>Оценка:</b><br>".$_rating_html.$_edid;
+	$_bigpictext = "<b>Категория: </b><br>".$_category."<br><br><b>Описание: </b> ".$_description."<br><br><b>Тэги: </b><br>".$_tags."<br><br><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br><br><b>Размер:</b><br>".$_size."<br><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b>Формат: </b>".$_file_format."<br><br><b>Оценка:</b><br>".$_rating_html.$_sharethis_html.$_edid;
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\' border=0>";
 
 	if($product['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
@@ -245,35 +229,24 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 	$_next_item = $counter + 1;
 	if ($_next_item == 20)
 		{
-			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующая страница > \" href=\"#pagetop\" onclick=\"next_page();\">".$_bigpic."</a>';";
+			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующая страница > \" href=\"#pt\" onclick=\"next_page();\">".$_bigpic."</a>';";
 		}
 		else
 		{
-			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующее изображение > \" href=\"#pagetop\" onclick=\"get_item". $_next_item ."();\">".$_bigpic."</a>';";
+			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующее изображение > \" href=\"#pt\" onclick=\"get_item". $_next_item ."();\">".$_bigpic."</a>';";
 		}
 
 	$vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
 	$vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='".$_bigpicstrip."';";
 	$vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
 	
-    $output .= "<a href=\"#pagetop\"  onclick=\"get_item". ($_next_item - 1) ."();\">";
-/*
-	if ($_next_item == 20)
-		{
-			$output .= "<a href=\"#\"  onclick=\"alert('last item');next_page();\">";
-		}
-		else
-		{
-			$output .= "<a href=\"#pagetop\"  onclick=\"get_item".$_next_item."();\">";
-		}
+    $output .= "<a href=\"#pt\"  onclick=\"get_item". ($_next_item - 1) ."();\">";
 
-*/	
 	$jq_stars = ' get_5stars(); ';
 
-	//$jq_stars = ' jQuery(document).ready(function() {var cuid = document.getElementById("cuid").innerHTML;var starurl = "http://karikashop.com/cb/wp-content/plugins/five-star-rating/fsr-ajax-stars.php?p="+cuid+"&starType=star"; jQuery("#star_rating").load(starurl,function(){jQuery(function(){jQuery("label[for^=fsr_star_]").click(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().attr("action"),d=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_");FSR_save_vote(a[2],a[3],b,d)});jQuery("label[for^=fsr_star_]").mouseover(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_")[3];FSR_star_over(this,a,b)})});FSR_current_post=null;FSR_isWorking=false;}); }); ';
+	$share_this = ' get_share_this(); ';
 
-	//$javascript_functions .= " function get_item".$counter."() { ".$vstavka." FSR_starlet();} "; 
-$javascript_functions .= " function get_item".$counter."() { ".$vstavka.$jq_stars." } "; 
+	$javascript_functions .= " function get_item".$counter."() { ".$vstavka.$jq_stars.$share_this." } "; 
 
 
 	
@@ -289,23 +262,6 @@ $javascript_functions .= " function get_item".$counter."() { ".$vstavka.$jq_star
 					}
 					  $output .= "</a>";
 
-					//$output .= "<a href='#' class='additional_description_link' onclick='return show_additional_description(\"description".$product['id']."\",\"link_icon".$product['id']."\");'>";
-					//$output .= "<img id='link_icon".$product['id']."' style='margin-right: 3px;border:0;' src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/icon_window_expand.gif' title='".$product['name']."' alt='".$product['name']."' />";
-					//$output .= "Подробнее!</a>";
-						/*pop-up*/
-						
-						//$output .= "<div class='lev2' id='description".$product['id']."'>";
-
-						    //$output .= "№&nbsp;".$product['id']. " <b>" . stripslashes($product['name'])."</b>";
-							//$output .= "<br><span id='size'>".$product['width']."px X ".$product['height']."px</span><br>";
-						    //$output .= "<span id='title'><i>".stripslashes($product['brand'])."</i></span><br>";
-							//$output .= "<form name='$num' method='POST' action='".get_option('product_list_url')."&category=".$_category_id."' onsubmit='submitform(this);return false;' >";
-							//$output .= "<input type='hidden' name='prodid' value='".$product['id']."'>";
-							//$output .= "Добавить в заказ: <input type='image' border='0' src='".get_option('siteurl')."/img/cart.gif' name='Buy' value='".TXT_WPSC_ADDTOCART."'  />";
-							//$output .= "</form>" ;
-						  //title
-
-						//$output .= nl2br(stripslashes($product['description'])) . " <br /></div>";
 					$output .= "</div>"; // stop item
 				}
 				$counter = $counter + 1;
@@ -322,6 +278,5 @@ function get_random_image(){
 	global $wpdb, $colorfilter;
 	$sql = "SELECT `wp_product_list`.`id` FROM `wp_product_list` WHERE `active`='1' ".$colorfilter.$exclude_category_sql.$approved_or_not." AND `visible`='1' ORDER BY RAND(NOW()) LIMIT 1";
 	$product_list = $wpdb->get_results($sql,ARRAY_A);
-	//echo single_product_display($product_list[0]['id']);
  }
 ?>
