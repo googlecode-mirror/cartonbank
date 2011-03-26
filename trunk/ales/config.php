@@ -3,6 +3,7 @@ $mysql_hostname = "localhost";
 $mysql_user = "z58365_cbru3";
 $mysql_password = "greenbat";
 $mysql_database = "cartoonbankru";
+//$mysql_database = "z58365_cbru";
 
 
 $bd = mysql_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Could not connect database");
