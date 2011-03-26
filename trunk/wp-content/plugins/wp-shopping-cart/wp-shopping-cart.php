@@ -2842,7 +2842,7 @@ add_filter('the_content', 'nzshpcrt_shopping_cart');
 add_filter('the_content', 'nzshpcrt_transaction_results');
 add_filter('the_content', 'nzshpcrt_checkout');
 add_filter('the_content', 'nszhpcrt_homepage_products');
-add_filter('the_content', 'top_votes');
+//add_filter('the_content', 'top_votes');
 
 //add_filter('wp_list_pages', 'nzshpcrt_hidepages');
  

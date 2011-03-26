@@ -83,8 +83,9 @@ if (!$author_section)
 
 	// include category 666 (rokfor)
 	$categories = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' AND `category_parent` = '0' ORDER BY `order` ASC",ARRAY_A);
-	$category_count = $wpdb->get_results("SELECT `wp_item_category_associations`.`category_id`, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`approved`='1' AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` GROUP BY `wp_item_category_associations`.`category_id`;",ARRAY_A);
 
+
+	//$category_count = $wpdb->get_results("SELECT `wp_item_category_associations`.`category_id`, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`approved`='1' AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` GROUP BY `wp_item_category_associations`.`category_id`;",ARRAY_A);
 
 	// number of bw cartoons
 	$bw_number = $wpdb->get_results("SELECT count(*) AS bw_number FROM `wp_product_list` WHERE color=0 AND `active`=1 AND `visible`=1 AND `approved`=1");
@@ -107,11 +108,11 @@ else
 	}
 }
 	$total_cartoons = 0;
-	if($category_count != null)
+	if($categories != null)
 	{
-		foreach ($category_count as $cat)
+		foreach ($categories as $cat)
 		{
-			$total_cartoons = $total_cartoons + $cat['count'];
+			$total_cartoons = $total_cartoons + $cat['image_number'];
 		}
 
 $total_cartoons = $total_cartoons - 1;
@@ -135,12 +136,12 @@ $total_cartoons = $total_cartoons - 1;
 			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&category=".$option['id']."'>".stripslashes($option['name'])."";
 		}
 		
-		foreach ($category_count as $cat_row)
+		foreach ($categories as $cat_row)
 			{
-				if ($cat_row['category_id'] == $option['id'])
+				if ($cat_row['id'] == $option['id'])
 				{
-					$category_in_the_list .= " [".$cat_row['count']."]";
-					$cartoon_counter = $cat_row['count'];
+					$category_in_the_list .= " [".$cat_row['image_number']."]";
+					$cartoon_counter = $cat_row['image_number'];
 				}
 			}
 
@@ -155,17 +156,7 @@ $total_cartoons = $total_cartoons - 1;
 		{
 			$options .= $category_in_the_list;
 		}
-		
-		$subcategory_sql = "SELECT * FROM `wp_product_categories` WHERE `active`='1' AND `category_parent` = '".$option['id']."' ORDER BY `id`";
-        $subcategories = $wpdb->get_results($subcategory_sql,ARRAY_A);
-        if($subcategories != null)
-          {
-          foreach($subcategories as $subcategory)
-            {
-            $options .= "<li><a class='categorylink' href='".get_option('product_list_url').$seperator."&category=".$subcategory['id']."'>-".stripslashes($subcategory['name']);
-			$options .= "</a></li>";
-            }
-          }
+
         }
       }// end: if($categories != null)
 	}
@@ -186,19 +177,12 @@ if (!$author_section) // for not Author section (portfolio)
     $options ='';
 	$seperator = '';
     $brands = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
-	$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( * ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
-    if($brands != null && $cartoons_count != null)
+    if($brands != null)
       {
       foreach($brands as $option)
         {
         $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."&brand=".$option['id']."'>".stripslashes($option['name']);
-		foreach ($cartoons_count as $count_row)
-			{
-				if ($count_row['id'] == $option['id'])
-				{
-					$options .= " [".$count_row['count']."]";
-				}
-			}
+		$options .= " [".$option['count']."]";
 		$options .= "</a><br />";
         }
       }

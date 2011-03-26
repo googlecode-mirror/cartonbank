@@ -194,7 +194,8 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
 			// how many records total?
 			if ($_brand == '')
 			{
-			$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$brand_group_sql.$cat_group_sql.$exclude_category_sql." ".$colorfilter.$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`"; 
+				$sql = "select option_value from wp_options where option_name = 'total_cartoons_to_show'";
+				//$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$brand_group_sql.$cat_group_sql.$exclude_category_sql." ".$colorfilter.$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`"; 
 			}
 			else
 			{
@@ -245,13 +246,15 @@ else
                 if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
                 {
 
-                    if(isset($_POST['cs']) && $_POST['cs']!= ''){
+
+pokazh($_POST,"post ");
+
+					if(isset($_POST['cs']) && $_POST['cs']!= ''){
                         $keywords = strtolower(trim($_POST['cs']));
                     }
                     if(isset($_GET['cs']) && $_GET['cs']!= ''){
                         $keywords = strtolower(trim($_GET['cs']));
                     }
-
 
 						// MULTIPLE KEYWORDS SEARCH
 
@@ -279,6 +282,7 @@ else
 										$search_keywords_filter = " AND (`wp_product_list`.`id` LIKE '%".$keywords."%' OR `wp_product_list`.`name` LIKE '%".$keywords."%' OR `wp_product_list`.`description` LIKE '%".$keywords."%' OR `wp_product_list`.`additional_description` LIKE '%".$keywords."%')";
 									}
 
+pokazh($search_keywords_filter,"search_keywords_filter ");
 
 									// add brand to search
 									if (isset($_POST['brand']) && is_numeric($_POST['brand']))
