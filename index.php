@@ -1,4 +1,6 @@
 <?php
+$time_start = microtime(true);
+
 /**
  * Front to the WordPress application. This file doesn't do anything, but loads
  * wp-blog-header.php which does and tells WordPress to load the theme.
@@ -15,4 +17,10 @@ define('WP_USE_THEMES', true);
 
 /** Loads the WordPress Environment and Template */
 require('./wp-blog-header.php');
+?>
+
+<?php
+$time_end = microtime(true);
+$time = $time_end - $time_start;
+echo "<br>$time сек.";
 ?>
