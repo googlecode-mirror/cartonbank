@@ -194,8 +194,8 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
 			// how many records total?
 			if ($_brand == '')
 			{
-				$sql = "select option_value from wp_options where option_name = 'total_cartoons_to_show'";
-				//$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$brand_group_sql.$cat_group_sql.$exclude_category_sql." ".$colorfilter.$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`"; 
+				//$sql = "select option_value from wp_options where option_name = 'total_cartoons_to_show'";
+				$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$brand_group_sql.$cat_group_sql.$exclude_category_sql." ".$colorfilter.$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`"; 
 			}
 			else
 			{
@@ -203,6 +203,8 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
 			}
 
 			$items_count = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
+
+			//pokazh($items_count,"items_count1");
 
 			if (isset($items_count[0]['count']) && is_numeric($items_count[0]['count']))
 			{
@@ -227,41 +229,9 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 		}
 else
 		{
-				//$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
-				$sql = "SELECT `wp_product_list` . `id` 
-							FROM `wp_product_list` , `wp_item_category_associations` 
-							WHERE `wp_product_list`.`active` = '1'  
-							AND `wp_product_list`.`approved` = '1'  
-							AND `wp_product_list`.`visible` = '1' 
-							".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not."
-							AND `wp_item_category_associations`.`category_id` NOT IN ('666','777')
-							AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
-							ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1";
-
-pokazh ($sql);
-
-							$itemid = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
-
-					if (isset($itemid[0]['id']) && is_numeric($itemid[0]['id']))
-                    {
-                        $_itemid = $items_count[0]['id'];
-
-						$sql = "SELECT  `wp_product_list`. * ,  `wp_product_files`.`width` ,  `wp_product_files`.`height` ,  `wp_product_brands`.`id` AS brandid,  `wp_product_brands`.`name` AS brand,  `wp_item_category_associations`.`category_id` ,  `wp_product_categories`.`name` AS kategoria
-						FROM  `wp_product_list` ,  `wp_item_category_associations` ,  `wp_product_files` ,  `wp_product_brands` ,  `wp_product_categories` 
-						WHERE  `wp_product_list`.`id` =  '".$_itemid."'
-						AND  `wp_product_list`.`id` =  `wp_item_category_associations`.`product_id` 
-						AND  `wp_product_list`.`file` =  `wp_product_files`.`id` 
-						AND  `wp_product_brands`.`id` =  `wp_product_list`.`brand` 
-						AND  `wp_item_category_associations`.`category_id` =  `wp_product_categories`.`id`";
-					}
-					else
-					{
-						$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
-					}
-   pokazh ($sql);
-
-
+				$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
 		}
+
 
                 if (isset($_GET['offset']) && is_numeric($_GET['offset']))
                  {
@@ -275,13 +245,13 @@ pokazh ($sql);
                 $items_on_page = get_option('posts_per_page');
     
     
-                // SEARCH
+     // SEARCH
 
                 if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
                 {
 
 
-pokazh($_POST,"post ");
+				//pokazh($_POST,"post ");
 
 					if(isset($_POST['cs']) && $_POST['cs']!= ''){
                         $keywords = strtolower(trim($_POST['cs']));
@@ -316,7 +286,7 @@ pokazh($_POST,"post ");
 										$search_keywords_filter = " AND (`wp_product_list`.`id` LIKE '%".$keywords."%' OR `wp_product_list`.`name` LIKE '%".$keywords."%' OR `wp_product_list`.`description` LIKE '%".$keywords."%' OR `wp_product_list`.`additional_description` LIKE '%".$keywords."%')";
 									}
 
-pokazh($search_keywords_filter,"search_keywords_filter ");
+									//pokazh($search_keywords_filter,"search_keywords_filter ");
 
 									// add brand to search
 									if (isset($_POST['brand']) && is_numeric($_POST['brand']))
@@ -348,8 +318,7 @@ pokazh($search_keywords_filter,"search_keywords_filter ");
                     {
                         $items_count = $items_count[0]['count'];
                         // search request
-   
-						
+   					
                         $search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_categories`.`name` as kategoria, `wp_item_category_associations`.`category_id` FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cat_group_sql . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
 
                     }
@@ -360,10 +329,15 @@ pokazh($search_keywords_filter,"search_keywords_filter ");
                     }
                 $sql = $search_sql;
 				} // if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
+
+		//Search end
                 else 
 				{
 					$keywords = '';
 				}
+
+				//pokazh($items_count,"items_count");
+
 
 	// we inject here direct link to the image
 	// $_GET['cartoonid'] : &cartoonid=666
