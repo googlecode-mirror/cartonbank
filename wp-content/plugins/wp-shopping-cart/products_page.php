@@ -212,7 +212,8 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
 			{
 				$items_count = 0;
 			}
-$search_sql = NULL;
+			
+			$search_sql = NULL;
 			
 			if (isset($_GET['offset']) && is_numeric($_GET['offset']))
 				$_product_start_num = $_GET['offset'];
@@ -226,7 +227,40 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 		}
 else
 		{
-				$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
+				//$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
+				$sql = "SELECT `wp_product_list` . `id` 
+							FROM `wp_product_list` , `wp_item_category_associations` 
+							WHERE `wp_product_list`.`active` = '1'  
+							AND `wp_product_list`.`approved` = '1'  
+							AND `wp_product_list`.`visible` = '1' 
+							".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not."
+							AND `wp_item_category_associations`.`category_id` NOT IN ('666','777')
+							AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
+							ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1";
+
+pokazh ($sql);
+
+							$itemid = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
+
+					if (isset($itemid[0]['id']) && is_numeric($itemid[0]['id']))
+                    {
+                        $_itemid = $items_count[0]['id'];
+
+						$sql = "SELECT  `wp_product_list`. * ,  `wp_product_files`.`width` ,  `wp_product_files`.`height` ,  `wp_product_brands`.`id` AS brandid,  `wp_product_brands`.`name` AS brand,  `wp_item_category_associations`.`category_id` ,  `wp_product_categories`.`name` AS kategoria
+						FROM  `wp_product_list` ,  `wp_item_category_associations` ,  `wp_product_files` ,  `wp_product_brands` ,  `wp_product_categories` 
+						WHERE  `wp_product_list`.`id` =  '".$_itemid."'
+						AND  `wp_product_list`.`id` =  `wp_item_category_associations`.`product_id` 
+						AND  `wp_product_list`.`file` =  `wp_product_files`.`id` 
+						AND  `wp_product_brands`.`id` =  `wp_product_list`.`brand` 
+						AND  `wp_item_category_associations`.`category_id` =  `wp_product_categories`.`id`";
+					}
+					else
+					{
+						$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
+					}
+   pokazh ($sql);
+
+
 		}
 
                 if (isset($_GET['offset']) && is_numeric($_GET['offset']))
