@@ -24,9 +24,9 @@
 $databases = array(
                    array("dbasa"     => "mysql",    //The identifier of a database mysql
                          "host"      => "localhost",// MySQL host
-                         "db"        => "phpmm",    // MySQL DataBase
-                         "user"      => "phpmm",    // MySQL user
-                         "pass"      => "123",      // MySQL Password
+                         "db"        => "cartoonbank",    // MySQL DataBase
+                         "user"      => "z58365_cbru3",    // MySQL user
+                         "pass"      => "greenbat",      // MySQL Password
                          "query"     => "SELECT mail FROM mymail",// MySQL query
                          "imp_query" => "INSERT INTO mymail(mail)",
                          ),
@@ -46,50 +46,6 @@ $databases = array(
                          "query"     => "SELECT mail FROM mymail",
                          "imp_query" => "INSERT INTO mymail(mail)",
                          ),
-                   /*
-                   array("dbasa" => "msql",
-                         "host"  => "localhost",
-                         "db"    => "phpmm",
-                         "user"  => "phpmm",
-                         "pass"  => "123",
-                         "query" => "SELECT mail FROM mymail"
-                         ),
-                   array("dbasa" => "fbsql",
-                         "host"  => "localhost",
-                         "db"    => "phpmm",
-                         "user"  => "phpmm",
-                         "pass"  => "123",
-                         "query" => "SELECT mail FROM mymail"
-                         ),
-                   array("dbasa" => "sqli",
-                         "host"  => "localhost",
-                         "db"    => "phpmm",
-                         "user"  => "phpmm",    //Please leave not the necessary parameters.
-                         "pass"  => "123",
-                         "query" => "SELECT mail FROM mymail"
-                         ),
-                   array("dbasa" => "oci",
-                         "host"  => "localhost", //Please leave not the necessary parameters.
-                         "db"    => "phpmm",
-                         "user"  => "phpmm",
-                         "pass"  => "123",
-                         "query" => "SELECT mail FROM mymail"
-                         ),
-                   array("dbasa" => "sybase",
-                         "host"  => "localhost", //Please leave not the necessary parameters.
-                         "db"    => "phpmm",
-                         "user"  => "phpmm",
-                         "pass"  => "123",
-                         "query" => "SELECT mail FROM mymail"
-                         ),
-                   array("dbasa" => "ingres",
-                         "host"  => "localhost", //Please leave not the necessary parameters.
-                         "db"    => "phpmm",
-                         "user"  => "phpmm",
-                         "pass"  => "123",
-                         "query" => "SELECT mail FROM mymail"
-                         )
-                   */
                    array("dbasa"     => "phpmm", // Do not touch it
                          "host"      => "phpmm",
                          "db"        => "phpmm",
