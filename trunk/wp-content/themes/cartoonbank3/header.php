@@ -46,10 +46,10 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 
 //Including 666:
 //$cartoon_number = $wpdb->get_results("SELECT count( l.id ) AS cartoon_number FROM `wp_product_list` AS l, `wp_item_category_associations` AS a WHERE l.id = a.product_id AND l.active =1 AND l.visible =1 AND l.approved =1 AND l.brand in (SELECT DISTINCT id FROM `wp_product_brands` where `wp_product_brands`.active = 1)");
+$cartoon_number = $wpdb->get_results("SELECT count( l.id ) AS cartoon_number FROM `wp_product_list` AS l WHERE l.active = 1 AND l.visible = 1 AND l.approved = 1 AND l.brand in (SELECT DISTINCT id FROM `wp_product_brands` where `wp_product_brands`.active = 1)");
 
-$cartoon_number = $wpdb->get_results("select option_value from wp_options where option_name = 'total_cartoons_to_show'");
 
-$cartoon_number = $cartoon_number[0]->option_value;
+$cartoon_number = $cartoon_number[0]->cartoon_number;
 $cartoon_number = $cartoon_number - 1; // strange difference??? strlen($cartoon_number-1)
 
 $switcher = substr($cartoon_number,strlen($cartoon_number)-1,1);
