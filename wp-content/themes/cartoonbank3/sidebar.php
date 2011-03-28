@@ -256,7 +256,8 @@ echo "<br><a href='".get_option('siteurl')."/?page_id=33&brand=".$brandid."'>100
 ?>
 
 <?
-$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
+//$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
+$_rokfor_url = get_option('siteurl').'/?page_id=29&category=666';
 ?>
 
 <br><h2>Разделы</h2>
