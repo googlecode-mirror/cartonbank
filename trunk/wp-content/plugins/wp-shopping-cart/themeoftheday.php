@@ -20,10 +20,15 @@
 if (isset($_POST['addid']) && is_numeric($_POST['addid']))
 {
 	// add id to the theme of the day
+	$_product_id = trim($_POST['addid']);
 	
-	$sql = "insert into wp_item_category_associations (product_id,category_id) values ('".trim($_POST['addid'])."','777')";
-	$wpdb->query($sql);
-	//pokazh ($sql,"sql: ");
+	// check if exists
+	//$sql = "select category_id from wp_item_category_associations where product_id ='".$_product_id."'";
+	//$_category_id = $wpdb->get_results($sql);
+
+		$sql = "insert into wp_item_category_associations (product_id,category_id) values ('".$_product_id."','777')";
+		$wpdb->query($sql);
+		//pokazh ($sql,"sql: ");
 }
 
 if (isset($_POST['temadnyaid']) && isset($_POST['temadnyadate']))
