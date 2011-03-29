@@ -11,8 +11,7 @@ Update total cartoon number
 
 	//insert into wp_options ('option_name') values ('total_cartoons_to_show')
 
-
-		$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_item_category_associations`.`category_id` != '777'   AND `wp_product_list`.`approved` = '1'  AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`";
+		$sql = "SELECT COUNT(wp_product_list.id) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_item_category_associations`.`category_id` != '777'   AND `wp_product_list`.`approved` = '1'  AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`";
 
 		if (!($result = mysql_query($sql))) {die('Invalid query: ' . mysql_error());}
 
@@ -39,7 +38,7 @@ Update total BW cartoon number
 	//insert into wp_options ('option_name') values ('total_cartoons_to_show')
 
 
-		$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1'  AND `wp_item_category_associations`.`category_id` != '666' AND `wp_item_category_associations`.`category_id` != '777'   AND (`wp_product_list`.`color` = '0'  OR `wp_product_list`.`color` = '') AND `wp_product_list`.`approved` = '1'  AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`";
+		$sql = "SELECT COUNT(wp_product_list.id) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1'  AND `wp_item_category_associations`.`category_id` != '666' AND `wp_item_category_associations`.`category_id` != '777'   AND (`wp_product_list`.`color` = '0'  OR `wp_product_list`.`color` = '') AND `wp_product_list`.`approved` = '1'  AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`";
 
 		if (!($result = mysql_query($sql))) {die('Invalid query: ' . mysql_error());}
 
@@ -66,7 +65,7 @@ Update total COLOR cartoon number
 	//insert into wp_options ('option_name') values ('total_cartoons_to_show')
 
 
-		$sql = "SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1'  AND `wp_item_category_associations`.`category_id` != '666' AND `wp_item_category_associations`.`category_id` != '777'   AND `wp_product_list`.`color` = '1'  AND `wp_product_list`.`approved` = '1'  AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`";
+		$sql = "SELECT COUNT(wp_product_list.id) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1'  AND `wp_item_category_associations`.`category_id` != '666' AND `wp_item_category_associations`.`category_id` != '777'   AND `wp_product_list`.`color` = '1'  AND `wp_product_list`.`approved` = '1'  AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`";
 
 		if (!($result = mysql_query($sql))) {die('Invalid query: ' . mysql_error());}
 
@@ -118,7 +117,7 @@ Update total cartoon number per author
 
 */
 
-	$sql = "SELECT `b`.`id` , COUNT( * ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand`";
+	$sql = "SELECT `b`.`id` , COUNT( p.id ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand`";
 
 	if (!($result = mysql_query($sql))) {die('Invalid query: ' . mysql_error());}
 
@@ -142,7 +141,7 @@ Update BW cartoon number per author
 
 */
 
-	$sql = "SELECT `b`.`id` , COUNT( * ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND (`p`.`color` = 0 OR `p`.`color` = '') AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand`";
+	$sql = "SELECT `b`.`id` , COUNT( p.id ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND (`p`.`color` = 0 OR `p`.`color` = '') AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand`";
 
 	if (!($result = mysql_query($sql))) {die('Invalid query: ' . mysql_error());}
 
@@ -167,7 +166,7 @@ Update COLOR cartoon number per author
 
 */
 
-	$sql = "SELECT `b`.`id` , COUNT( * ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`color` = 1 AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand`";
+	$sql = "SELECT `b`.`id` , COUNT( p.id ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`color` = 1 AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand`";
 
 	if (!($result = mysql_query($sql))) {die('Invalid query: ' . mysql_error());}
 
