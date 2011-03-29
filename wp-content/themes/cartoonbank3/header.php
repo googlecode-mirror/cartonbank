@@ -86,7 +86,7 @@ default:
 <?
 //<td style="align:right;font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#990000">Во вторник утром<br>возможны перерывы<br>в работе сайта</td>
 ?>
-<td style="align:right;font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#668bb7">Рисунки художников<br>из семи<br>стран мира</td>
+<td style="text-align:right;font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#668bb7">Рисунки художников<br>из семи<br>стран мира</td>
 </tr></table>
 </div>
 
