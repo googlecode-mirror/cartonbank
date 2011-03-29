@@ -830,7 +830,7 @@ if(isset($_GET['catid']) && is_numeric($_GET['catid']))
 
    //$category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."'",ARRAY_A);
 
-   $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`category`='".$_GET['catid']."'",ARRAY_A);
+   $category_count = $wpdb->get_results("SELECT COUNT(id) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`category`='".$_GET['catid']."'",ARRAY_A);
 
    }
    else if (isset($_GET['brand']) && is_numeric($_GET['brand']))
@@ -840,7 +840,7 @@ if(isset($_GET['catid']) && is_numeric($_GET['catid']))
 
 		$sql = "SELECT `wp_product_list`.*,`wp_product_list`.`category` AS `category_id` FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`brand`='".escape($_GET['brand'])."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
-        $category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`brand`='".$_GET['brand']."'",ARRAY_A);
+        $category_count = $wpdb->get_results("SELECT COUNT(id) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`brand`='".$_GET['brand']."'",ARRAY_A);
    }
   else
     {
@@ -851,7 +851,7 @@ if(isset($_GET['catid']) && is_numeric($_GET['catid']))
 
     //$category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`;",ARRAY_A);
 
-	$category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.";",ARRAY_A);
+	$category_count = $wpdb->get_results("SELECT COUNT(id) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.";",ARRAY_A);
 
     }
 $product_list = $wpdb->get_results($sql,ARRAY_A) ;
