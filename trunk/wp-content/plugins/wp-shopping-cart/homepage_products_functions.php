@@ -1,7 +1,14 @@
 <?php
 function nszhpcrt_homepage_products($content = '')
 {
-  global $wpdb;
+	global $wpdb;
+
+	if(isset($_GET['page_id']) && $wpdb->escape($_GET['page_id'])=='29')
+		{
+			return $content;
+		}
+
+
 
 	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	{
@@ -22,16 +29,7 @@ function nszhpcrt_homepage_products($content = '')
 		  $seperator ="&amp;";
 		  }
 	  $sql = "SELECT * FROM `wp_product_list` WHERE `active`='1'  AND `visible`='1' AND `approved`='1' ORDER BY `id` ASC LIMIT 20";
-	  $sql = "SELECT post as ID, wp_product_list.image as image, wp_product_list.name AS title, wp_product_brands.name AS author, COUNT(*) AS votes, SUM(wp_fsr_user.points) AS points, AVG(points)*SQRT(COUNT(*)) AS average, vote_date  
-						FROM wp_fsr_user, wp_product_list, wp_product_brands 
-						WHERE wp_fsr_user.post = wp_product_list.id 
-						AND wp_product_list.brand = wp_product_brands.id 
-						AND wp_product_list.active = 1
-						AND wp_product_list.visible = 1
-						AND wp_product_list.brand = ".$_brand."
-						GROUP BY 1
-						ORDER BY 7 DESC, 5 DESC
-						LIMIT 100";
+	  $sql = "SELECT post as ID, wp_product_list.image as image, wp_product_list.name AS title, wp_product_brands.name AS author, COUNT(*) AS votes, SUM(wp_fsr_user.points) AS points, AVG(points)*SQRT(COUNT(*)) AS average, vote_date FROM wp_fsr_user, wp_product_list, wp_product_brands  WHERE wp_fsr_user.post = wp_product_list.id  AND wp_product_list.brand = wp_product_brands.id  AND wp_product_list.active = 1 AND wp_product_list.visible = 1 AND wp_product_list.brand = ".$_brand." GROUP BY 1 ORDER BY 7 DESC, 5 DESC LIMIT 100";
 	  $product_list = $wpdb->get_results($sql,ARRAY_A);
 		
 	  $output = "<div id='homepage_products' class='items'>";
