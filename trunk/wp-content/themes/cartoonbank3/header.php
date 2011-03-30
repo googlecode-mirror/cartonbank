@@ -14,8 +14,10 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 <meta name="distribution" content="global" />
 <meta name="robots" content="follow, all" />
 <meta name="language" content="en, sv" />
+<meta name="description" content="Лицензионные карикатуры для газет, журналов и электронных СМИ" />
+<meta name="keywords" content="картунбанк, cartoonbank, карикатуры, приколы, смешное, картинки, комиксы, скачать, карикатура, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, comics, comix">
 
-<title>Картунбанк<?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?></title>
+<title>Картунбанк<?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.  Карикатуры</title>
 <meta name="generator" content="cartoonbank" />
 
 <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
