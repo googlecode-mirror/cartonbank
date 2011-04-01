@@ -97,7 +97,7 @@ default:
 <?
 function selected_style()
 {
-	echo "style='color:#668bb7'";
+	echo " style='color:#668bb7'";
 }
 ?>
 

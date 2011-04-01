@@ -471,7 +471,7 @@ else
 					$_brandid = '';
 				 }
 
-				$_category = "<a href=\'".get_option('product_list_url')."&category=".$product[0]['category_id']."\'>".$_categor."</a>";
+				$_category = "<a href=\'".get_option('product_list_url')."&amp;category=".$product[0]['category_id']."\'>".$_categor."</a>";
 
 
                 $_tags = nl2br(stripslashes($product[0]['additional_description']));
@@ -497,7 +497,7 @@ else
 					$_edid = "";
 				}
 
-				$_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Название:</a> </b>" .$_name."</div> "."<div >№&nbsp;<a title='уникальный адрес страницы с этим изображением' id='cuid' href='".get_option('siteurl')."/?page_id=29&amp;cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
+				$_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Название:</a> </b>" .$_name."</div> "."<div >№&nbsp;<a title='уникальный адрес страницы с этим изображением' id='cuid' href='".get_option('siteurl')."/?page_id=29&amp;cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&amp;brand=".$_brandid."\">".$_author."</a></b></div>";
                 $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение'>Категория:</a> </b><br />".$_category."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Описание:</a> </b> ".$_description."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение'>Тэги:</a> </b><br />".$_tags."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&amp;cartoonid=".$_number."'>№&nbsp;".$_number."</a><br /><br /><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение'>Размер:</a></b><br />".$_size."<br /><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение'>Формат:</a> </b> ".$_file_format."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение'>Оценка:</a></b><br />".$_rating_html.$_sharethis_html.$_edid;
 
                 $siteurl = get_option('siteurl');
@@ -528,9 +528,9 @@ else
 					  </tr>
 					  <tr>
 						<td class='wh' style='vertical-align:top;'><b>лицензии:</b></td>
-						<td colspan='2' style='padding-left:6px;'><a target='_blank'href='".get_option('siteurl')."/?page_id=238' title='подробнее об ограниченной лицензии'>ограниченная</a></td>
-						<td colspan='2' style='padding-left:6px;'><a target='_blank'href='".get_option('siteurl')."/?page_id=242' title='подробнее о стандартной лицензии'>стандартная</a></td>
-						<td colspan='2' style='padding-left:6px;'><a target='_blank'href='".get_option('siteurl')."/?page_id=245' title='подробнее об расширенной лицензии'>расширенная</a></td>
+						<td colspan='2' style='padding-left:6px;'><a target='_blank' href='".get_option('siteurl')."/?page_id=238' title='подробнее об ограниченной лицензии'>ограниченная</a></td>
+						<td colspan='2' style='padding-left:6px;'><a target='_blank' href='".get_option('siteurl')."/?page_id=242' title='подробнее о стандартной лицензии'>стандартная</a></td>
+						<td colspan='2' style='padding-left:6px;'><a target='_blank' href='".get_option('siteurl')."/?page_id=245' title='подробнее об расширенной лицензии'>расширенная</a></td>
 					  </tr>
 					  </table><input type='hidden' value='".$_number."' name='prodid'>  </form></div>";
 				}
@@ -598,12 +598,12 @@ else
 	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	{
 		$_brand = $_GET['brand'];
-		$brand_group_sql = "&brand=".$_brand;
+		$brand_group_sql = "&amp;brand=".$_brand;
 	}
 	elseif (isset($_POST['brand']) && is_numeric($_POST['brand']))
 	{
 		$_brand = $_POST['brand'];
-		$brand_group_sql = "&brand=".$_brand;
+		$brand_group_sql = "&amp;brand=".$_brand;
 	}
 	else
 	{
@@ -611,7 +611,7 @@ else
 		$brand_group_sql = '';
 	}
 
-	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$brand_group_sql."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=",$filter_list);
+	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$brand_group_sql."&amp;color=".$color."&amp;category=".$catid."&amp;cs=".$keywords."&amp;offset=",$filter_list);
 		
 
 	  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
@@ -623,7 +623,7 @@ else
 function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1, $targetpage = "/", $pagestring = "?page=", $filter_list = '')
 {		
 	//function to return the pagination string
-	//getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?brand=".$brandid."&category=".$catid."&offset=".$offset."&cs=".$keywords."&page_id=29");
+	//getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?brand=".$brandid."&amp;category=".$catid."&amp;offset=".$offset."&amp;cs=".$keywords."&page_id=29");
 
 
 	//defaults

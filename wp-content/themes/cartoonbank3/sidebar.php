@@ -29,7 +29,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 
 	<h2>Поиск</h2>
 	<form method="post" id="searchform" action="?page_id=29">
-	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" id="search_input" onfocus="this.value='';"/><br /><select id="colorselect" name="color" class='borders'>
+	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" onfocus="this.value='';"/><br /><select id="colorselect" name="color" class='borders'>
 		<option value="all" selected>все</option>
 		<option value="bw">чёрно-белые</option>
 		<option value="color">цветные</option>
@@ -134,9 +134,9 @@ $total_cartoons = $total_cartoons - 1;
 		else
 		{
 			if (is_numeric($brandid))
-			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&category=".$option['id']."'>".stripslashes($option['name'])."";
+			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&amp;brand=".$brandid."&amp;category=".$option['id']."'>".stripslashes($option['name'])."";
 			else
-			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&category=".$option['id']."'>".stripslashes($option['name'])."";
+			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&amp;category=".$option['id']."'>".stripslashes($option['name'])."";
 		}
 		
 		foreach ($category_count as $cat_row)
@@ -166,7 +166,7 @@ $total_cartoons = $total_cartoons - 1;
           {
           foreach($subcategories as $subcategory)
             {
-            $options .= "<li><a class='categorylink' href='".get_option('product_list_url').$seperator."&category=".$subcategory['id']."'>-".stripslashes($subcategory['name']);
+            $options .= "<li><a class='categorylink' href='".get_option('product_list_url').$seperator."&amp;category=".$subcategory['id']."'>-".stripslashes($subcategory['name']);
 			$options .= "</a></li>";
             }
           }
@@ -195,7 +195,7 @@ if (!$author_section) // for not Author section (portfolio)
       {
       foreach($brands as $option)
         {
-        $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."&brand=".$option['id']."'>".stripslashes($option['name']);
+        $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."&amp;brand=".$option['id']."'>".stripslashes($option['name']);
 		foreach ($cartoons_count as $count_row)
 			{
 				if ($count_row['id'] == $option['id'])
@@ -256,7 +256,7 @@ echo "<br /><a href='".get_option('siteurl')."/?page_id=33&amp;brand=".$brandid.
 ?>
 
 <?
-//$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
+//$_rokfor_url = get_option('siteurl').'/?page_id=29&amp;brand=8&amp;category=666';
 $_rokfor_url = get_option('siteurl').'/?page_id=29&amp;category=666';
 ?>
 
@@ -267,15 +267,15 @@ $_rokfor_url = get_option('siteurl').'/?page_id=29&amp;category=666';
       {
 		if ($author_section)
 		{
-		   $options = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&category=0&color=all'>Все изображения [".$total_cartoons."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&color=color'>Цветные [".$color_number."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&color=bw'>Чёрно-белые [".$bw_number."]</a><br />";
+		   $options = "<a href='".get_option('product_list_url').$seperator."&amp;brand=".$brandid."&amp;category=0&amp;color=all'>Все изображения [".$total_cartoons."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&amp;brand=".$brandid."&amp;color=color'>Цветные [".$color_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&amp;brand=".$brandid."&amp;color=bw'>Чёрно-белые [".$bw_number."]</a><br />";
 		}
 		else
 		{
-		   $options = "<a href='".get_option('product_list_url').$seperator."&category=0&color=all'>Все изображения [".$total_cartoons."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=color'>Цветные [".$color_number."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=bw'>Чёрно-белые [".$bw_number."]</a><br />";
+		   $options = "<a href='".get_option('product_list_url').$seperator."&amp;category=0&amp;color=all'>Все изображения [".$total_cartoons."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&amp;color=color'>Цветные [".$color_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&amp;color=bw'>Чёрно-белые [".$bw_number."]</a><br />";
 		}
 
 	   echo $options;
