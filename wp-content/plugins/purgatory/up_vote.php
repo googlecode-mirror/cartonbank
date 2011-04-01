@@ -73,7 +73,7 @@ $result=mysql_query("select l.name, l.description, l.additional_description, l.i
 	$_image=$row['image'];
 
 $subj = "";
-$text = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoonid='.$id.' '.$_description."<br />Тэги: ".$_additional_description;
+$text = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&amp;cartoonid='.$id.' '.$_description."<br />Тэги: ".$_additional_description;
 
 	/* ваш ник в ЖЖ */
 	$name = "_cartoonist_";

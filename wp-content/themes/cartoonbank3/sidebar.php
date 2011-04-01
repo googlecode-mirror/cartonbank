@@ -67,7 +67,7 @@ else
 <br /><br />
 <div style="text-align:center; padding-top:6px; width:180px;height:186px;background-color:#668bb7;">
 <div style="color:white; padding-bottom:4px;"><b>ТЕМА ДНЯ</b></div>
-<div  style="text-align:center; margin-left:11px; padding-top:6px; width:158px;height:154px;background-color:white;"><a href="<?echo get_option('siteurl');?>/?page_id=29&category=777"><img src="<?echo get_option('siteurl')?>/wp-content/plugins/wp-shopping-cart/images/<?echo $image_name;?>" title="<?echo $image_title;?>" alt="<?echo $image_title;?>" class="thumb"></a><br /></div>
+<div  style="text-align:center; margin-left:11px; padding-top:6px; width:158px;height:154px;background-color:white;"><a href="<?echo get_option('siteurl');?>/?page_id=29&amp;category=777"><img src="<?echo get_option('siteurl')?>/wp-content/plugins/wp-shopping-cart/images/<?echo $image_name;?>" title="<?echo $image_title;?>" alt="<?echo $image_title;?>" class="thumb"></a><br /></div>
 </div>
 
 <?}?>
@@ -233,7 +233,7 @@ else
 	{$author_name = $brand_result[0]['name'];}else{$brand_result[0]['name']='';}
 
 	// all authors dropdown
-	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
+	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&amp;brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
 	$_selected = "";
 
 	foreach ($brands_result as $brand)
@@ -250,14 +250,14 @@ else
 <?
 echo $avatar_url."<br />";
 echo $authors;
-echo "<br /><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
-echo "<br /><a href='".get_option('siteurl')."/?page_id=33&brand=".$brandid."'>100 лучших работ</a>";
+echo "<br /><a href='".get_option('siteurl')."/?page_id=29&amp;brand=".$brandid."&amp;bio=1'>Информация об авторе</a>";
+echo "<br /><a href='".get_option('siteurl')."/?page_id=33&amp;brand=".$brandid."'>100 лучших работ</a>";
 }
 ?>
 
 <?
 //$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
-$_rokfor_url = get_option('siteurl').'/?page_id=29&category=666';
+$_rokfor_url = get_option('siteurl').'/?page_id=29&amp;category=666';
 ?>
 
 <br /><h2>Разделы</h2>

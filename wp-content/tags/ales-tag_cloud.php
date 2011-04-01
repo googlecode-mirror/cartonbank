@@ -248,11 +248,11 @@ function create_tag_cloud()
 				{
 			if($popularity > 1)
 					{
-						$return .= " <a class='size{$sizeRange}' href='?page_id=29&cs={$word}' title='$popularity'>{$word}</a> ";
+						$return .= " <a class='size{$sizeRange}' href='?page_id=29&amp;cs={$word}' title='$popularity'>{$word}</a> ";
 					}
 					else
 					{
-						$return .= " <a class='size{$sizeRange}' href='?page_id=29&cs={$word}'>{$word}</a> ";
+						$return .= " <a class='size{$sizeRange}' href='?page_id=29&amp;cs={$word}'>{$word}</a> ";
 					}
 				}
 				}

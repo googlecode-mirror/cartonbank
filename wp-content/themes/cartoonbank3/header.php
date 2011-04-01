@@ -3,14 +3,13 @@
 
 if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29" && !isset($_POST['cs']))
 {
-	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,9000));
+	header("Location: http://cartoonbank.ru/?page_id=29&amp;offset=".rand(0,9000));
 }
 
 
 // <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 // <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>
 <!doctype html>
-<head profile="http://gmpg.org/xfn/11" />
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <meta name="distribution" content="global" />
 <meta name="robots" content="follow, all" />
@@ -105,7 +104,7 @@ function selected_style()
 <div id="navbar">
 	<ul> 
 		<li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style():"" ?>>О проекте</a></li>
-		<li><a href="?page_id=29&offset=0"<? $_GET['page_id']=='29'? selected_style():"" ?> title='на первую страницу'>Банк изображений</a></li>
+		<li><a href="?page_id=29&amp;offset=0"<? $_GET['page_id']=='29'? selected_style():"" ?> title='на первую страницу'>Банк изображений</a></li>
 		<li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style():"" ?>>Новости</a></li>
 		<li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style():"" ?>>Авторам</a></li>
 		<li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style():"" ?>>Клиентам</a></li>
