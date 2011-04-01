@@ -248,7 +248,7 @@ function create_tag_cloud_small()
 				{
 			if($popularity > 50)
 					{
-						$return .= " <a class='size{$sizeRange}' href='?page_id=29&cs={$word}' title='$popularity'>{$word}</a> ";
+						$return .= " <a class='size{$sizeRange}' href='?page_id=29&amp;cs={$word}' title='$popularity'>{$word}</a> ";
 					}
 					else
 					{

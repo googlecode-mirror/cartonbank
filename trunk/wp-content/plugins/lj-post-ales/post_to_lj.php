@@ -27,7 +27,7 @@ elseif (isset($_GET['id']))
 
 
 	$subj = $_title;
-	$text = "<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".$id."'><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$_image."' border='0'></a><br /><b>".$_artist."</b>: &quot;".$_title."&quot;  <br />".$_description."<br />Tags: ".$_additional_description."<br /><a href='http://cartoonbank.ru' title='cartoonbank'>cartoonbank.ru</a>";
+	$text = "<a href='http://cartoonbank.ru/?page_id=29&amp;cartoonid=".$id."'><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$_image."' border='0'></a><br /><b>".$_artist."</b>: &quot;".$_title."&quot;  <br />".$_description."<br />Tags: ".$_additional_description."<br /><a href='http://cartoonbank.ru' title='cartoonbank'>cartoonbank.ru</a>";
 
 	/* ваш ник в ЖЖ */
 	$name = "_cartoonist_";

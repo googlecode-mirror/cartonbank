@@ -18,11 +18,11 @@ $_description=htmlentities($row['Description'], ENT_QUOTES | ENT_IGNORE, "UTF-8"
 
 if (empty($_artist) | empty($_title))
 	{
-		$_message = 'New cartoon at http://cartoonbank.ru/?page_id=29&cartoonid='.$_id;
+		$_message = 'New cartoon at http://cartoonbank.ru/?page_id=29&amp;cartoonid='.$_id;
 	}
 else
 	{
-		$_message = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoonid='.$_id.' '.$_description;
+		$_message = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&amp;cartoonid='.$_id.' '.$_description;
 	}
 
 // cartoonbank.ru@gmail.com twitter:

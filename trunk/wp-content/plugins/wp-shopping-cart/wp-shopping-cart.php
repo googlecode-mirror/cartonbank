@@ -606,7 +606,7 @@ function nzshpcrt_submit_ajax()
       $output .= "    <item>\n\r";
       $output .= "      <title>".stripslashes($product['name'])."</title>\n\r";
       $output .= "      <link>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</link>\n\r";
-      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".stripslashes($product['id'])."'><br /><img title='". stripslashes($product['name']) ."' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
+      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."'><br /><img title='". stripslashes($product['name']) ."' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
       $output .= "      <pubDate>".date("r")."</pubDate>\n\r";
       $output .= "      <guid>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</guid>\n\r";
 	  $output .= '    ';
@@ -859,7 +859,7 @@ function nzshpcrt_submit_ajax()
   $output .= "Название рисунка: ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' /> # <a href='".get_option('siteurl')."/?page_id=29&cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>";
+  $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' /> # <a href='".get_option('siteurl')."/?page_id=29&amp;cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   
@@ -2790,7 +2790,7 @@ function nzshpcrt_product_log_rss_feed()
 function nzshpcrt_product_list_rss_feed()
   {
   // our custom rss feed
-  echo "<link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='".get_option('siteurl')."/index.php?rss=true&action=product_list&type=rss'/>";
+  echo "<link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='".get_option('siteurl')."/index.php?rss=true&amp;action=product_list&amp;type=rss'/>";
   }
     
 require_once('processing_functions.php');

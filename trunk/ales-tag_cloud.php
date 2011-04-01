@@ -238,7 +238,7 @@ echo $cloud->showCloud();
     }
     else if ($returnType == "html")
     {
-    $return .= "<span class='word size{$sizeRange}'> <a href='http://cartoonbank.ru/?page_id=29&cs={$word}'>{$word}</a> </span>";
+    $return .= "<span class='word size{$sizeRange}'> <a href='http://cartoonbank.ru/?page_id=29&amp;cs={$word}'>{$word}</a> </span>";
     }
     }
     return $return;
