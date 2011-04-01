@@ -409,9 +409,9 @@ function al_build_captions_form(){
 				echo '<br />&raquo; '.$img;
 
 				$size = getimagesize($gallery_root.$act_current.$img);
-				echo '<br>'.$size[0]."x".$size[1]." px";
+				echo '<br />'.$size[0]."x".$size[1]." px";
 				?>
-				<br><br><a href="<?php echo AL_FLM_PAGE ?>&amp;captions=<?php echo str_replace(" ", "%20", $act_current); ?>&amp;file_to_delete=<?php echo $righturl ?>" class="button" style="width:50px;display:block;"><?php _e('Delete', $lg_text_domain); ?></a>
+				<br /><br /><a href="<?php echo AL_FLM_PAGE ?>&amp;captions=<?php echo str_replace(" ", "%20", $act_current); ?>&amp;file_to_delete=<?php echo $righturl ?>" class="button" style="width:50px;display:block;"><?php _e('Delete', $lg_text_domain); ?></a>
 				<?
 			} else { // otherwise
 				$righturl = str_replace(" ", "%20", get_option('siteurl')."/wp-content/plugins/lazyest-gallery/".basename(__FILE__).".php?file=". $act_current.$img."&amp;thumb=1");
@@ -433,15 +433,15 @@ function al_build_captions_form(){
 			// Inputs
 			?>
 				<form id="ImageUploadToDB" method="post" action="<?php echo AL_FLM_PAGE; ?>&amp;captions=<?php echo $capdir; ?>">
-				Название: <input type="text" name="img_title" style="width:95%;"><br>
-				Описание: <textarea name="img_description" rows="3" cols="20" style="width:95%;"></textarea><br>
-				Ключевые слова:<input type="text" name="img_tags" style="width:95%;"><br>
-				Категория: <?php echo topcategorylist(0);?><br>
+				Название: <input type="text" name="img_title" style="width:95%;"><br />
+				Описание: <textarea name="img_description" rows="3" cols="20" style="width:95%;"></textarea><br />
+				Ключевые слова:<input type="text" name="img_tags" style="width:95%;"><br />
+				Категория: <?php echo topcategorylist(0);?><br />
 				<!-- categ<input type="hidden" name="category" value="3" /> -->
 				<input type="submit" name="submit" value="Сохранить">
 				<input type="hidden" name="artist_id" value="<?php echo get_artist_id_by_folder_name();?>" />
 				<input type="hidden" name="img_path" value="<?php echo  $gallery_root.$act_current.$img ?>" />
-				<br>
+				<br />
 				</form>
 			<?php
 		}

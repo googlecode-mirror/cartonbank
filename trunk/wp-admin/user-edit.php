@@ -245,7 +245,7 @@ else
 <?php } else{?>
 		<input type="text" name="wallet" id="wallet" value="<?php echo esc_attr($profileuser->wallet) ?>" class="regular-text" />
 <?php } ?>
-	<br><span class="description"><?php _e("Личный Счёт можно пополнить по безналичному расчёту."); ?></td>
+	<br /><span class="description"><?php _e("Личный Счёт можно пополнить по безналичному расчёту."); ?></td>
 </tr>
 
 
@@ -261,7 +261,7 @@ if (esc_attr(round($profileuser->discount,0))>0)
 <?php } else{?>
 		<input type="text" name="discount" id="discount" value="<?php echo esc_attr(round($profileuser->discount,0)) ?>" class="regular-text" />
 <?php }?>
-	<br><span class="description"><?php _e("Размер скидки определяется администрацией."); ?></td>
+	<br /><span class="description"><?php _e("Размер скидки определяется администрацией."); ?></td>
 </tr>
 <?
 }

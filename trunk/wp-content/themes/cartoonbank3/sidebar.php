@@ -29,7 +29,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 
 	<h2>Поиск</h2>
 	<form method="post" id="searchform" action="?page_id=29">
-	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" id="search_input" onfocus="this.value='';"/><br><select id="colorselect" name="color" class='borders'>
+	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" id="search_input" onfocus="this.value='';"/><br /><select id="colorselect" name="color" class='borders'>
 		<option value="all" selected>все</option>
 		<option value="bw">чёрно-белые</option>
 		<option value="color">цветные</option>
@@ -64,15 +64,15 @@ else
 
 <?if ($cartoon_of_the_day_id != 0){//border: 6px solid white;border: 1px solid #962d2a;
 ?>
-<br><br>
+<br /><br />
 <div style="text-align:center; padding-top:6px; width:180px;height:186px;background-color:#668bb7;">
 <div style="color:white; padding-bottom:4px;"><b>ТЕМА ДНЯ</b></div>
-<div  style="text-align:center; margin-left:11px; padding-top:6px; width:158px;height:154px;background-color:white;"><a href="<?echo get_option('siteurl');?>/?page_id=29&category=777"><img src="<?echo get_option('siteurl')?>/wp-content/plugins/wp-shopping-cart/images/<?echo $image_name;?>" title="<?echo $image_title;?>" alt="<?echo $image_title;?>" class="thumb"></a><br></div>
+<div  style="text-align:center; margin-left:11px; padding-top:6px; width:158px;height:154px;background-color:white;"><a href="<?echo get_option('siteurl');?>/?page_id=29&category=777"><img src="<?echo get_option('siteurl')?>/wp-content/plugins/wp-shopping-cart/images/<?echo $image_name;?>" title="<?echo $image_title;?>" alt="<?echo $image_title;?>" class="thumb"></a><br /></div>
 </div>
 
 <?}?>
 
-<br><h2>Категории</h2> 
+<br /><h2>Категории</h2> 
 
 <?
 $seperator = '';
@@ -183,7 +183,7 @@ $total_cartoons = $total_cartoons - 1;
 if (!$author_section) // for not Author section (portfolio)
 {
 
-?><br><h2>Авторы</h2><?
+?><br /><h2>Авторы</h2><?
 
 // Authors
     echo "<div id='branddisplay1'>";
@@ -246,12 +246,12 @@ else
 	$authors .= "</select>";
 
 ?>
-<br><h2>Автор</h2> 
+<br /><h2>Автор</h2> 
 <?
-echo $avatar_url."<br>";
+echo $avatar_url."<br />";
 echo $authors;
-echo "<br><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
-echo "<br><a href='".get_option('siteurl')."/?page_id=33&brand=".$brandid."'>100 лучших работ</a>";
+echo "<br /><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
+echo "<br /><a href='".get_option('siteurl')."/?page_id=33&brand=".$brandid."'>100 лучших работ</a>";
 }
 ?>
 
@@ -260,7 +260,7 @@ echo "<br><a href='".get_option('siteurl')."/?page_id=33&brand=".$brandid."'>100
 $_rokfor_url = get_option('siteurl').'/?page_id=29&category=666';
 ?>
 
-<br><h2>Разделы</h2>
+<br /><h2>Разделы</h2>
 
 <?
 	if($categories != null && $total_cartoons > 0)
@@ -282,11 +282,11 @@ $_rokfor_url = get_option('siteurl').'/?page_id=29&category=666';
 	  }
 ?>
 
-<br><h2>Разное</h2>
+<br /><h2>Разное</h2>
 <div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>
 <div id='tags'><a href='?page_id=390'>Тэги</a></div>
 <div style="float:right;width:180px;text-align:right;">
-	<br><h2>Вход</h2>
+	<br /><h2>Вход</h2>
 		<ul style="float:right;width:160px;text-align:right;">
 		<?php wp_register(); ?>
 		<?php wp_loginout(); ?>

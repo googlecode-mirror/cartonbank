@@ -10,11 +10,11 @@ if ($_POST['action'])
 {
 /*
 $content = '';
-$content .= print_r($_POST['author'],"\n\r<br> author: ");
-$content .= print_r($_POST['title'],"\n\r<br> title: ");
-$content .= print_r($_POST['_link'],"\n\r<br> _link: ");
-$content .= print_r($_POST['my_file'],"\n\r<br> ufile: ");
-$content .= print_r($_POST['email'],"\n\r<br> email: ");
+$content .= print_r($_POST['author'],"\n\r<br /> author: ");
+$content .= print_r($_POST['title'],"\n\r<br /> title: ");
+$content .= print_r($_POST['_link'],"\n\r<br /> _link: ");
+$content .= print_r($_POST['my_file'],"\n\r<br /> ufile: ");
+$content .= print_r($_POST['email'],"\n\r<br /> email: ");
 */
 $content = pokazh($_POST,"Post: ");
 

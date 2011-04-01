@@ -88,14 +88,14 @@ if (!$licensecolumn)
 		$_size = $product_list[0]['width']."px X ".$product_list[0]['height']."px;";
 
 		$_bigpictext = "<b>Номер:</b> ".$product_list[0]['id'];
-		$_bigpictext .= "<br><b>Автор:</b> ".$product_list[0]['brand'];
-		$_bigpictext .= "<br><b>Название: </b> ".nl2br(stripslashes($product_list[0]['name']));
-		$_bigpictext .= "<br><b>Категория: </b> ".$product_list[0]['kategoria'];
-		$_bigpictext .= "<br><b>Описание: </b> ".nl2br(stripslashes($product_list[0]['description']));
-		$_bigpictext .= "<br><b>Тэги: </b>".nl2br(stripslashes($product_list[0]['additional_description']));
-		$_bigpictext .= "<br><b>Размер:</b> ".$_size;
-		$_bigpictext .= "<br><b>Цена (без скидки):</b> ".$_SESSION['nzshpcrt_cart'][$key]->price." руб.";
-		$_bigpictext .= "<br><b>Лицензия:</b> ".license_name($_SESSION['nzshpcrt_cart'][$key]->license);
+		$_bigpictext .= "<br /><b>Автор:</b> ".$product_list[0]['brand'];
+		$_bigpictext .= "<br /><b>Название: </b> ".nl2br(stripslashes($product_list[0]['name']));
+		$_bigpictext .= "<br /><b>Категория: </b> ".$product_list[0]['kategoria'];
+		$_bigpictext .= "<br /><b>Описание: </b> ".nl2br(stripslashes($product_list[0]['description']));
+		$_bigpictext .= "<br /><b>Тэги: </b>".nl2br(stripslashes($product_list[0]['additional_description']));
+		$_bigpictext .= "<br /><b>Размер:</b> ".$_size;
+		$_bigpictext .= "<br /><b>Цена (без скидки):</b> ".$_SESSION['nzshpcrt_cart'][$key]->price." руб.";
+		$_bigpictext .= "<br /><b>Лицензия:</b> ".license_name($_SESSION['nzshpcrt_cart'][$key]->license);
 
 		$_SESSION['nzshpcrt_cart'][$key]->author  = $product_list[0]['brand'];
 
@@ -114,18 +114,18 @@ if (!$licensecolumn)
 			$ch1 = ischecked('l1_price', $product_list[0]['id']);
 			$result .= "<input name='license' value='l1_price' type='radio' $ch1 />"; 
 			$result .= round($product_list[0]['l1_price'])."&nbsp;руб. ";
-			$result .= "<a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=1&item=".$current_item."','текст ограниченной лицензии','height=480,width=640,scrollbars=yes');\">ограниченная</a> <br>";
+			$result .= "<a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=1&item=".$current_item."','текст ограниченной лицензии','height=480,width=640,scrollbars=yes');\">ограниченная</a> <br />";
 
 
 			$ch2 = ischecked('l2_price', $product_list[0]['id']);
 			$result .= "<input name='license' value='l2_price' type='radio' $ch2 />"; 
-			$result .= round($product_list[0]['l2_price'])."&nbsp;руб. <a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=2&item=".$current_item."','текст стандартной лицензии','height=480,width=640,scrollbars=yes');\">стандартная</a><br>";
+			$result .= round($product_list[0]['l2_price'])."&nbsp;руб. <a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=2&item=".$current_item."','текст стандартной лицензии','height=480,width=640,scrollbars=yes');\">стандартная</a><br />";
 			
 			$ch3 = ischecked('l3_price', $product_list[0]['id']);
 			$result .= "<input name='license' value='l3_price' type='radio'  $ch3 />"; 
 			$result .= round($product_list[0]['l3_price'])."&nbsp;руб. <a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=3&item=".$current_item."','текст расширенной лицензии','height=480,width=640,scrollbars=yes');\">расширенная</a>";
 
-			$result .= "<input value='".$product_list[0]['id']."' name='prodid' type='hidden'> <br><br>";
+			$result .= "<input value='".$product_list[0]['id']."' name='prodid' type='hidden'> <br /><br />";
 			
 			$result .= "<input id='searchsubmit' value='Сменить лицензию' type='submit'> </form>";
 
@@ -179,7 +179,7 @@ if (!$licensecolumn)
 		{
 			$license_text = get_license($current_item,1);
 			$result .=  "<tr>";
-			$result .= "<td colspan=3> <a id='displayText".$current_item."' href='javascript:toggle(".$current_item.");'>[+] показать текст лицензии</a><div id='toggleText".$current_item."' style='display:none;background-color:#FFFFCC;padding:8px;'><br>";
+			$result .= "<td colspan=3> <a id='displayText".$current_item."' href='javascript:toggle(".$current_item.");'>[+] показать текст лицензии</a><div id='toggleText".$current_item."' style='display:none;background-color:#FFFFCC;padding:8px;'><br />";
 			$result .= $license_text;
 			$result .= "</div></td>";
 			$result .= "</tr>";
@@ -195,11 +195,11 @@ if (!$licensecolumn)
 		$result .= "var text = document.getElementById('displayText'+item);";
 		$result .= "if(ele.style.display == 'block') {";
 		$result .= "		ele.style.display = 'none';";
-		$result .= "	text.innerHTML = '[+] показать текст лицензии<br>';";
+		$result .= "	text.innerHTML = '[+] показать текст лицензии<br />';";
 		$result .= "}";
 		$result .= "else {";
 		$result .= "	ele.style.display = 'block';";
-		$result .= "	text.innerHTML = '[-] скрыть текст лицензии<br>';";
+		$result .= "	text.innerHTML = '[-] скрыть текст лицензии<br />';";
 		$result .= "}";
 		$result .= "} ";
 		$result .= "</script>";

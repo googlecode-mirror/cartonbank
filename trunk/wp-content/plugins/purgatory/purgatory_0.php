@@ -4,7 +4,7 @@
 <?
 include("config.php");
 ?>
-<br><br>
+<br /><br />
 
 <script>
 
@@ -216,9 +216,9 @@ else
 		</div>
 
 		<div class="box3">
-			<span class="gr">Название: </span><? echo ($imgname);?><br>
-			<span class="gr">Категория: </span><? echo ($category);?><br>
-			<span class="gr">Автор: </span><? echo ($artist);?><br>
+			<span class="gr">Название: </span><? echo ($imgname);?><br />
+			<span class="gr">Категория: </span><? echo ($category);?><br />
+			<span class="gr">Автор: </span><? echo ($artist);?><br />
 			<span class="gr">Описание: </span><? echo ($description);?> 	
 			<form method="post" action="http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display-items.php"> <input type="hidden" name="edid" value="<? echo ($mes_id);?>"> <input class="borders" type="submit" value="<? echo ($mes_id);?>"> </form>
 		</div>
@@ -233,10 +233,10 @@ else
 
 <div id="divToUpdate" style="width:800px;height:200px;font-size:0.6em;background-color:pink;">...</div>
 		<div id="commentsform">
-		.<br>
+		.<br />
 
 			<form action="http://cartoonbank.ru/wp-content/plugins/purgatory/add_comment.php" method="post" id="commentform">
-			<p>текст:<br>
+			<p>текст:<br />
 			<textarea name="comment" id="comment" cols="90" rows="3" tabindex="4"></textarea>
 			</p>
 		  

@@ -7,7 +7,7 @@
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<?php the_content(__('Читать дальше'));?>
 	<?php endwhile; else: ?>
-	<?php _e('<br>Извините, здесь пока ничего нет.<br>'); ?><?php endif; ?>
+	<?php _e('<br />Извините, здесь пока ничего нет.<br />'); ?><?php endif; ?>
 </div>
 
 <div id="contentright">
@@ -23,7 +23,7 @@ else
 ?><div id="user_info"><?php printf(__(TXT_WPSC_HELLO.'<a href="wp-admin/profile.php"><strong>%s</strong></a>.'), $user_identity); echo ($unregged); ?></div><?
 }
 ?>
-<br>
+<br />
 <?php echo nzshpcrt_shopping_basket(); ?>
 <?php get_sidebar(); ?>
 </div>

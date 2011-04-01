@@ -147,7 +147,7 @@ if(is_numeric($_GET['total']) && !isset($_GET['result']))
 </label>
 </fieldset> 
 
-<br>
+<br />
 <fieldset>
 <legend><?php _e('Выберите способ оплаты:'); ?></legend>
 <?php if ($limit >0) {

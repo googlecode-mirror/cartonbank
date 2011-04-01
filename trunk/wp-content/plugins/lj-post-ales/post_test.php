@@ -21,7 +21,7 @@ $result=mysql_query("select l.name, l.description, l.additional_description, l.i
 
 
 $subj = $_title;
-$text = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoonid='.$id.' '.$_description."<br>Тэги: ".$_additional_description;
+$text = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoonid='.$id.' '.$_description."<br />Тэги: ".$_additional_description;
 */
 
 	/* ваш ник в ЖЖ */

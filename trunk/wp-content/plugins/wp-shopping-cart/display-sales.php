@@ -165,6 +165,6 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
     // -->
     </style>
 <?
-	echo 'Всего записей: ' . $grid->GetRowCount() . '<br>';
+	echo 'Всего записей: ' . $grid->GetRowCount() . '<br />';
 	$grid->Display() 
 ?>

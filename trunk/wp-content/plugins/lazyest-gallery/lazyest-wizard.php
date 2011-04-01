@@ -469,7 +469,7 @@ function OnNext()
 
 function OnCancel()
 { // Don't know what this is good for:
-  content.innerHtml+='<br>OnCancel';
+  content.innerHtml+='<br />OnCancel';
 }
 
 function window.onload()

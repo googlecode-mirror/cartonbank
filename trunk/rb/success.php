@@ -65,10 +65,10 @@ while(!feof($f))
   { 
 	echo "Операция прошла успешно\n";
 	echo "Operation of payment is successfully completed\n";
-	echo $out_summ."<br>";
-	echo $inv_id."<br>";
-	echo $shp_item."<br>";
-	echo $crc."<br>";
+	echo $out_summ."<br />";
+	echo $inv_id."<br />";
+	echo $shp_item."<br />";
+	echo $crc."<br />";
   }
 }
 fclose($f);

@@ -606,7 +606,7 @@ function nzshpcrt_submit_ajax()
       $output .= "    <item>\n\r";
       $output .= "      <title>".stripslashes($product['name'])."</title>\n\r";
       $output .= "      <link>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</link>\n\r";
-      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".stripslashes($product['id'])."'><br><img title='". stripslashes($product['name']) ."' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
+      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".stripslashes($product['id'])."'><br /><img title='". stripslashes($product['name']) ."' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
       $output .= "      <pubDate>".date("r")."</pubDate>\n\r";
       $output .= "      <guid>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</guid>\n\r";
 	  $output .= '    ';
@@ -874,7 +874,7 @@ function nzshpcrt_submit_ajax()
   
   $output .= "          <tr>\n\r";
   $output .= "            <td class='r'>\n\r";
-  $output .= "Ключевые слова,<br>разделённые запятыми: ";
+  $output .= "Ключевые слова,<br />разделённые запятыми: ";
 
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
@@ -1023,7 +1023,7 @@ function nzshpcrt_submit_ajax()
     $output .= "Заменить файл:";
     $output .= "            </td>\n\r";
     $output .= "            <td>\n\r";
-    $output .= "<input type='file' name='file' value='' /> <div style='color:#999;'>Это тот файл, ссылка на который<br>будет отправлена заказчику</div>";
+    $output .= "<input type='file' name='file' value='' /> <div style='color:#999;'>Это тот файл, ссылка на который<br />будет отправлена заказчику</div>";
     $output .= "            </td>\n\r";
     $output .= "          </tr>\n\r";
     }
@@ -1033,16 +1033,16 @@ function nzshpcrt_submit_ajax()
   $output .= "            <td>\n\r";
   $output .= "<input type='hidden' name='prodid' value='".$product['id']."' />";
   $output .= "<input type='hidden' name='submit_action' value='edit' />";
-  $output .= "<br><input type=\"button\" class='edit_button' style='padding:6px; background-color:#84DF88;' name='sendit' value='Сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
+  $output .= "<br /><input type=\"button\" class='edit_button' style='padding:6px; background-color:#84DF88;' name='sendit' value='Сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
 
 if ($product['approved'] != '1' && isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabilities['editor']==1)
 	{
-		$output .= "<br><br><br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение!</a>";
+		$output .= "<br /><br /><br /><br /><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение!</a>";
 	}
 
 if ($product['approved'] == '1' && isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
 	{
-		$output .= "<br><br><br><br><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение</a>";
+		$output .= "<br /><br /><br /><br /><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение</a>";
 	}
 
   
@@ -1372,15 +1372,15 @@ Array
           switch($form_data['name'])
             {
             case TXT_WPSC_FIRSTNAME:
-            $bad_input_message .= "Пожалуйста, введите правильное имя<br>";
+            $bad_input_message .= "Пожалуйста, введите правильное имя<br />";
             break;
     
             case TXT_WPSC_LASTNAME:
-            $bad_input_message .= "Пожалуйста, введите правильную фамилию<br>";
+            $bad_input_message .= "Пожалуйста, введите правильную фамилию<br />";
             break;
     
             case TXT_WPSC_EMAIL:
-            $bad_input_message .= "Пожалуйста, введите правильный E-mail<br>";
+            $bad_input_message .= "Пожалуйста, введите правильный E-mail<br />";
             break;
     
             case TXT_WPSC_ADDRESS1:
@@ -2356,7 +2356,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
 
 $_SESSION['total'] = round($total*(100-$_discount)/100);
 
-	$output .= "На Личном счёте <b>".round($_wallet)."</b> р.<br>";
+	$output .= "На Личном счёте <b>".round($_wallet)."</b> р.<br />";
 
 if (($total > $_wallet) && ($_wallet!=0))
 	$output .= "<div style='color:#CC0000;'>Не хватает средств для покупки выбранных изображений.</div>";
@@ -2388,7 +2388,7 @@ else
       {
       $output .= $spacing;
       //$output .= "Корзина заказов пуста.<br />";
-      $output .= "На Личном счёте <b>".round($_wallet)."</b> р.<br>";
+      $output .= "На Личном счёте <b>".round($_wallet)."</b> р.<br />";
       }
 
   return $output;

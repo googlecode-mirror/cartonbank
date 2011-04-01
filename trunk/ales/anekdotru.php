@@ -82,7 +82,7 @@ $arrAuthors = array('Светозаров Георгий');
 				if (!in_array($author, $arrAuthors))
 				{
 					
-					echo "<br><br><font color='#FF00FF'><b>".count($arrAuthors).":</b> </font>".$ID." <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."' width='40'> <b>&quot;".$title."&quot;</b> ".$author." рейт: ".$average."<br>";
+					echo "<br /><br /><font color='#FF00FF'><b>".count($arrAuthors).":</b> </font>".$ID." <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."' width='40'> <b>&quot;".$title."&quot;</b> ".$author." рейт: ".$average."<br />";
 
 					array_push($arrAuthors, $author);
 
@@ -134,7 +134,7 @@ $arrAuthors = array('Светозаров Георгий');
 					$my_file = $slidename;
 
 					$my_path = $_SERVER['DOCUMENT_ROOT']."ales/";
-					//echo "<br>my_path: ".$my_path."<br>";
+					//echo "<br />my_path: ".$my_path."<br />";
 
 					$my_name = "cartoonbank";
 					$my_mail = "cartoonbank.ru@gmail.com";
@@ -159,7 +159,7 @@ $arrAuthors = array('Светозаров Георгий');
 					// Mark image as sent to the Anekdot.ru
 					$update_sql = "update wp_fsr_post set anekdotru_date='".date("d.m.y H:m:s")."' where ID=".$ID;
 						$res = mysql_query($update_sql);
-						if (!$res) {die('<br>'.$update_sql.'<br>Invalid delete query: ' . mysql_error());}
+						if (!$res) {die('<br />'.$update_sql.'<br />Invalid delete query: ' . mysql_error());}
 				}
 
 			if (count($arrAuthors) >= $howmanyemails)

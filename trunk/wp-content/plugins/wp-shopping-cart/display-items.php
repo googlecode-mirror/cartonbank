@@ -351,27 +351,27 @@ INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_descrip
 	if (get_option('editors_notification_send')=='1')
 	{
 		// aleshin <pre>".print_r($_GET,true)."</pre>
-		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br>[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=igor.aleshin@gmail.com&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp;<a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=igor.aleshin@gmail.com&id=".$new_id."'>Отправить в Рабочий стол</a><br> </body></html>";
+		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br /><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br />".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br />[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br /><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br /><br /> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=igor.aleshin@gmail.com&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp;<a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=igor.aleshin@gmail.com&id=".$new_id."'>Отправить в Рабочий стол</a><br /> </body></html>";
 		mail("igor.aleshin@gmail.com","Новая картинка в Прихожей!",$votecontent,$headers);
 
 		// bogorad
-		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br>[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=vbogorad@mail.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=vbogorad@mail.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
+		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br /><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br />".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br />[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br /><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br /><br /> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=vbogorad@mail.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=vbogorad@mail.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
 		mail("vbogorad@mail.ru","Новая картинка в Прихожей!",$votecontent,$headers);
 
 		// shilov
-		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br>[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=vfshilov@gmail.com&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=vfshilov@gmail.com&id=".$new_id."'>Отправить в Стол</a> </body></html>";
+		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br /><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br />".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br />[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br /><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br /><br /> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=vfshilov@gmail.com&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=vfshilov@gmail.com&id=".$new_id."'>Отправить в Стол</a> </body></html>";
 		mail("vfshilov@gmail.com","Новая картинка в Прихожей!",$votecontent,$headers);
 
 		// popov
-		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br>[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=popov.a.a@bk.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=popov.a.a@bk.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
+		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br /><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br />".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br />[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br /><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br /><br /> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=popov.a.a@bk.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=popov.a.a@bk.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
 		mail("popov.a.a@bk.ru","Новая картинка в Прихожей!",$votecontent,$headers);
 
 		// alexandrov
-		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br>[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=Alexandrov_Vasil@mail.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=Alexandrov_Vasil@mail.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
+		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br /><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br />".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br />[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br /><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br /><br /> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=Alexandrov_Vasil@mail.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=Alexandrov_Vasil@mail.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
 		mail("Alexandrov_Vasil@mail.ru","Новая картинка в Прихожей!",$votecontent,$headers);
 
 		// elkin
-		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br>[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br><br> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=elkin99@yandex.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=elkin99@yandex.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
+		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br /><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br />".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br />[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br /><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br /><br /> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=elkin99@yandex.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=elkin99@yandex.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
 		mail("elkin99@yandex.ru","Новая картинка в Прихожей!",$votecontent,$headers);
 	}
 
@@ -912,14 +912,14 @@ if (isset($_GET['brand'])){$_brand = $_GET['brand'];}else{$_brand = '';}
 if (isset($_GET['catid'])){$_category = $_GET['catid'];}else{$_category = '';}
 
              //pagination links
-                $output = "<span id='pagination'><br>";
+                $output = "<span id='pagination'><br />";
                 $from_num = 0;
                 $to_num = 0;
                 if(($offset >= $items_on_page) && ($items_count>0))
                 {
                     // "Previous page" link
                     $offset_back = $offset - $items_on_page;
-                    $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_brand."&category=".$_category."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a><br>";
+                    $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_brand."&category=".$_category."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a><br />";
                 }
                 if(($offset < $items_count - $items_on_page) && ($items_count>0))
                 {
@@ -943,9 +943,9 @@ echo "        <table id='itemlist' style='padding:2px;width:120px;background-col
     if($to_num>$items_count){$to_num=$items_count;}
     if($items_count>0)
     {
-		$diapazon = "<br>(показаны <strong>".$from_num."-".$to_num."</strong> из <strong>".$items_count."</strong>)";
+		$diapazon = "<br />(показаны <strong>".$from_num."-".$to_num."</strong> из <strong>".$items_count."</strong>)";
     }
-	else{$diapazon = "<br>нет картинок для показа или у вас нет полномочий для просмотра";}
+	else{$diapazon = "<br />нет картинок для показа или у вас нет полномочий для просмотра";}
     echo "<strong class='form_group' style='font-size:10px;'>Выбрать работу</strong>".$diapazon;
     echo $output; 
     echo "            </td>\n\r";
@@ -992,19 +992,19 @@ echo "        <table id='itemlist' style='padding:2px;width:120px;background-col
           }
           else
             {
-                        echo "<br><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='70' height='70'  /><br>";
+                        echo "<br /><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='70' height='70'  /><br />";
               }
         echo "            </td>\n\r";
         
         echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px;'>\n\r";
-		echo "№ ".$product['id']."<br>";
-        echo "<b>".stripslashes($product['name'])."</b><br>[".$category_data[$product['category_id']]."]";
+		echo "№ ".$product['id']."<br />";
+        echo "<b>".stripslashes($product['name'])."</b><br />[".$category_data[$product['category_id']]."]";
         echo "            </td>\n\r";
         echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px; text-align:center;'>\n\r";
         echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'><img src='../img/edit.jpg' title='редактировать'></a>";
   if (isset($current_user->wp_capabilities['administrator']) &&	$current_user->wp_capabilities['administrator']==1) 
 	  {
-		echo "<br><br><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'><img src='../img/trash.gif' title='удалить'></a>";
+		echo "<br /><br /><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'><img src='../img/trash.gif' title='удалить'></a>";
 	  }
   else {
 		echo "";
@@ -1078,7 +1078,7 @@ echo "        </div>";
     </tr>
     <tr>
       <td class='r'>
-        Краткое<br>описание:
+        Краткое<br />описание:
       </td>
       <td>
         <textarea id='picturedescription' name='description' cols='50' rows='3'></textarea><br />
@@ -1086,7 +1086,7 @@ echo "        </div>";
     </tr>
     <tr>
       <td class='r'>
-       Ключевые слова,<br>разделённые<br>запятыми:
+       Ключевые слова,<br />разделённые<br />запятыми:
       </td>
       <td>
         <textarea id='tags' name='additional_description' cols='50' rows='4'></textarea><br />
@@ -1118,7 +1118,7 @@ echo "        </div>";
     </tr>
     <tr>
       <td class='ralt'>
-        Выберите<br>категорию:
+        Выберите<br />категорию:
       </td>
       <td class='lalt'>
         <?php echo categorylist(); ?>
@@ -1143,7 +1143,7 @@ echo "        </div>";
 	<tr>
       <td>
       </td>
-      <td><br>
+      <td><br />
         <input type='hidden' name='submit_action' value='add' />
         <input type="button" name='sendit' style='padding:6px;background-color:#84DF88;' value='Добавить в базу данных' onclick="checkthefields();"/>
       </td>

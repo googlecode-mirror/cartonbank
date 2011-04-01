@@ -1,5 +1,5 @@
 <div style="float:right;">
-<br><h2>������ �����</h2>
+<br /><h2>������ �����</h2>
 <?
 function edit_value(&$value) 
 { 
@@ -32,12 +32,12 @@ foreach ($tags as $key => $value) {
    if (is_null($value) or $value=='' or $value == ' ') 
 	   { 
     unset($tags[$key]);
-	//exit("<br>unset<br>");
+	//exit("<br />unset<br />");
   } 
 }
-exit("<pre>tags<br>".print_r($tags,true)."</pre>");
+exit("<pre>tags<br />".print_r($tags,true)."</pre>");
 
-//exit("<pre>tags<br>".print_r($tags,true)."</pre>");
+//exit("<pre>tags<br />".print_r($tags,true)."</pre>");
 
 
 $cloud = new wordCloud($tags);

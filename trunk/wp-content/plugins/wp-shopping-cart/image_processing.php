@@ -23,19 +23,19 @@ if(isset($_FILES['file']['tmp_name']) && isset($height) && is_numeric($height) &
 //			ini_set('display_errors', TRUE); 
 //
 //			set_time_limit (100);
-//			echo ("max_execution_time=".ini_get('max_execution_time')."<br>");
+//			echo ("max_execution_time=".ini_get('max_execution_time')."<br />");
 //			echo (ini_get('memory_limit'));
 //			if(ini_set( 'memory_limit', '3000M' ));
 //				{
 //				//set_time_limit (100);
-//				echo ("<br>".ini_get('memory_limit')."<br>");
-//				echo ("<br>".ini_get('max_execution_time')."<br>");
+//				echo ("<br />".ini_get('memory_limit')."<br />");
+//				echo ("<br />".ini_get('max_execution_time')."<br />");
 //				$src_img = imagecreatefromjpeg($_FILES['file']['tmp_name']);
-////				exit ("<b>success<br>");
+////				exit ("<b>success<br />");
 //				}
 
-				echo ("<br>".ini_get('memory_limit')."<br>");
-				echo ("<br>".ini_get('max_execution_time')."<br>");
+				echo ("<br />".ini_get('memory_limit')."<br />");
+				echo ("<br />".ini_get('max_execution_time')."<br />");
 				$src_img = imagecreatefromjpeg($_FILES['file']['tmp_name']);
 
 			///ales 
