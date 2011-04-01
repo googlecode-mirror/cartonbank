@@ -81,17 +81,17 @@ function create_tag_cloud()
 	   if (is_null($value)) 
 		{ 
 				unset($tags[$key]);
-				//echo "<br>unset null<br>";
+				//echo "<br />unset null<br />";
 		} 
 	   if ($value=='') 
 		{ 
 				unset($tags[$key]);
-				//echo "<br>unset empty<br>";
+				//echo "<br />unset empty<br />";
 		} 
 	   if ($value == ' ') 
 		{ 
 				unset($tags[$key]);
-				//echo "<br>unset space<br>";
+				//echo "<br />unset space<br />";
 		} 
 	}
 

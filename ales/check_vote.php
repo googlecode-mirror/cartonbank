@@ -28,14 +28,14 @@ $current_post = $row['post'];
 $count=$count-1;
 		while($row=mysql_fetch_array($result))
 		{
-			//echo "<br>";
+			//echo "<br />";
 			//pokazh($count,"count");
-			//echo $row['user'] . " " . $row['points']." <b>". $row['post']. "</b> " .$row['ip'].":<br>";
+			//echo $row['user'] . " " . $row['points']." <b>". $row['post']. "</b> " .$row['ip'].":<br />";
 			
 			//if ($row['post']==$current_post && $row['points']==$current_points && $row['ip']==$current_ip)
 			if ($row['post']==$current_post && $row['ip']==$current_ip)
 			{
-				echo "<br><font color='#FF00FF'><b>this will be deleted!:</b> </font> ip='".$row['ip']."' cartoon=<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".$current_post."'>".$current_post."</a>";
+				echo "<br /><font color='#FF00FF'><b>this will be deleted!:</b> </font> ip='".$row['ip']."' cartoon=<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".$current_post."'>".$current_post."</a>";
 				$del_sql = "delete from `wp_fsr_user` where user='".$row['user']."' and ip='".$row['ip']."' and post=".$current_post;
 				$res = mysql_query($del_sql);
 
@@ -49,7 +49,7 @@ $count=$count-1;
 
 				/*
 				if (!$res) {
-								die('<br>'.$del_sql.'<br>Invalid delete query: ' . mysql_error());
+								die('<br />'.$del_sql.'<br />Invalid delete query: ' . mysql_error());
 						}
 				*/
 
@@ -76,7 +76,7 @@ $comments_output = "";
 echo $comments_output;
 */
 
-echo "<br>done!";
+echo "<br />done!";
 
 function fw($text)
 {

@@ -1,5 +1,5 @@
 <div style="float:right;">
-<br><h2>Облако тэгов</h2>
+<br /><h2>Облако тэгов</h2>
 <?
 function edit_value(&$value) 
 { 
@@ -37,26 +37,26 @@ foreach ($tags as $key => $value) {
    if (is_null($value)) 
 	{ 
 			unset($tags[$key]);
-			//echo "<br>unset null<br>";
+			//echo "<br />unset null<br />";
 	} 
    if ($value=='') 
 	{ 
 			unset($tags[$key]);
-			//echo "<br>unset empty<br>";
+			//echo "<br />unset empty<br />";
 	} 
    if ($value == ' ') 
 	{ 
 			unset($tags[$key]);
-			//echo "<br>unset space<br>";
+			//echo "<br />unset space<br />";
 	} 
 }
 
-//exit("<pre>tags<br>".print_r($tags,true)."</pre>");
+//exit("<pre>tags<br />".print_r($tags,true)."</pre>");
 
 $cloud = new wordCloud($tags);
 echo $cloud->showCloud();
 
-echo("<pre>queries<br>".print_r($wpdb->queries)."</pre>");
+echo("<pre>queries<br />".print_r($wpdb->queries)."</pre>");
 ?> 
 </div>
 

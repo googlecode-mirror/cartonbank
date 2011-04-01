@@ -29,11 +29,11 @@ $unregged ='';
 if ($user_identity == '')
 {
 	$user_identity = 'незнакомец';
-	$unregged = "<br><a href='wp-register.php'>Регистрация</a> позволяет скачивать картинки.";
+	$unregged = "<br /><a href='wp-register.php'>Регистрация</a> позволяет скачивать картинки.";
 }
 ?>
 		<div id="user_info"><?php printf(__(TXT_WPSC_HELLO.'<a href="wp-admin/profile.php"><strong>%s</strong></a>.'), $user_identity); echo ($unregged); ?></div>
-		<br>
+		<br />
 		<?php echo nzshpcrt_shopping_basket(); ?>
 
 		<?php get_sidebar(); ?>

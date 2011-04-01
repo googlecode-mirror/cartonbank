@@ -14,7 +14,7 @@ include("config.php");
 	
 	<b>Минимальный балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса. Чёрная метка блокирует появление картинки в хранилище до выяснения обстоятельств.
 
-	<br><b>Фильтр по авторам</b>: <?
+	<br /><b>Фильтр по авторам</b>: <?
 
 	while($row=mysql_fetch_array($sql))
 	{
@@ -25,8 +25,8 @@ include("config.php");
 	<?
 	}
 ?>
-<br><br>
-<b><a href="http://cartoonbank.ru/?page_id=1148" target="_blank">Меморандум редактора</a></b> <-подробнее <br>
+<br /><br />
+<b><a href="http://cartoonbank.ru/?page_id=1148" target="_blank">Меморандум редактора</a></b> <-подробнее <br />
 Коллеги, мы не <i>оцениваем</i> тут работы. Мы просто <i>отсекаем</i> мусор. Не пускаем а) антиконституционное б) антиинтеллектуальное.
 
 <?
@@ -382,9 +382,9 @@ else
 		</div>
 
 		<div class="box3">
-			<span class="gr">Название: </span><? echo ($imgname);?><br>
-			<span class="gr">Категория: </span><? echo ($category);?><br>
-			<span class="gr">Автор: </span><? echo ($artist);?><br>
+			<span class="gr">Название: </span><? echo ($imgname);?><br />
+			<span class="gr">Категория: </span><? echo ($category);?><br />
+			<span class="gr">Автор: </span><? echo ($artist);?><br />
 			<span class="gr">Описание: </span><? echo ($description);?> 	
 			<form method="post" action="http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display-items.php"> <input type="hidden" name="edid" value="<? echo ($mes_id);?>"> <input class="borders" type="submit" value="<? echo ($mes_id);?>"> </form>
 		</div>
@@ -402,7 +402,7 @@ else
 		<div id="commentsform">
 		<? //echo("<pre>вы пишете от юзера:".print_r($current_user->last_name,true)."</pre>"); ?>
 			<form action="http://cartoonbank.ru/wp-content/plugins/purgatory/add_comment.php" method="post" id="commentform">
-			пишите тут, нажмите кнопку:<br>
+			пишите тут, нажмите кнопку:<br />
 			
 			<textarea id="comment" name="comment" id="comment" cols="60" rows="3" tabindex="4"></textarea>
 		  

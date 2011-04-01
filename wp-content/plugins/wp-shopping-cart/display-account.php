@@ -179,8 +179,8 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> ";
 
 
-	echo "<br>";
-	echo 'Всего записей: ' . $grid->GetRowCount() . '<br>';
+	echo "<br />";
+	echo 'Всего записей: ' . $grid->GetRowCount() . '<br />';
 	$grid->Display() 
 ?>
 

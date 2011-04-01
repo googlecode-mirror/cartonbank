@@ -888,7 +888,7 @@ function sanitize_html_class( $class, $fallback = '' ) {
 /**
  * Converts a number of characters from a string.
  *
- * Metadata tags <<title>> and <<category>> are removed, <<br>> and <<hr>> are
+ * Metadata tags <<title>> and <<category>> are removed, <<br />> and <<hr>> are
  * converted into correct XHTML and Unicode characters are converted to the
  * valid range.
  *
@@ -949,7 +949,7 @@ function convert_chars($content, $deprecated = '') {
 	$content = strtr($content, $wp_htmltranswinuni);
 
 	// Just a little XHTML help
-	$content = str_replace('<br>', '<br />', $content);
+	$content = str_replace('<br />', '<br />', $content);
 	$content = str_replace('<hr>', '<hr />', $content);
 
 	return $content;

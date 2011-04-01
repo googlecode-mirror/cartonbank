@@ -344,7 +344,7 @@ function display_plugins_table($plugins, $page = 1, $totalpages = 1){
 				//strip leading/trailing & multiple consecutive lines
 				$description = trim($description);
 				$description = preg_replace("|(\r?\n)+|", "\n", $description);
-				//\n => <br>
+				//\n => <br />
 				$description = nl2br($description);
 				$version = wp_kses($plugin['version'], $plugins_allowedtags);
 

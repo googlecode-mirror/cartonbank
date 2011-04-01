@@ -14,7 +14,7 @@ $transactid = '';
 
 if($sessionid != null)
 {
-  $message = "<div class='wrap'>Спасибо за пользование услугами сайта cartoonbank.ru! На ваш электронный адрес выслано письмо с тестом лицензии и ссылкой для скачивания. Вам доступны ".get_option('max_downloads')." попыток скачивания по ссылке в письме. Вы можете скачать ваш заказ используя ссылки ниже.<br>
+  $message = "<div class='wrap'>Спасибо за пользование услугами сайта cartoonbank.ru! На ваш электронный адрес выслано письмо с тестом лицензии и ссылкой для скачивания. Вам доступны ".get_option('max_downloads')." попыток скачивания по ссылке в письме. Вы можете скачать ваш заказ используя ссылки ниже.<br />
   Вы заказали следующие картинки:</div>";
 
 	include('al_cart_function.php');
@@ -65,7 +65,7 @@ $siteurl = get_option('siteurl');
   
 $previous_download_ids = Array(0);  
 
-  $message_html .= "<br><br>";
+  $message_html .= "<br /><br />";
   $message_html .= "Общая стоимость с учётом скидки: ".$_total." руб.\n\r";
   $message_html .= "\n\r";
 
@@ -113,7 +113,7 @@ if(isset($cart) && $cart != null && ($errorcode == 0))
   if($email != '')
     {
     mail($email, 'Подтверждение покупки изображения. Cartoonbank.ru .', $message, $headers);
-	mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru ..', $report." <br> ".$message, $headers);
+	mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru ..', $report." <br /> ".$message, $headers);
     }
 
 

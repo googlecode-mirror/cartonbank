@@ -247,10 +247,10 @@ function top_votes($content = '')
 				  }
 				  $output .= " Сто лучших работ</h1><div style='color:white;background-color:#668bb7;padding:2px;padding-left:6px;font-weight:bold;display:block;'>".$_order_description."</div><div style='color:#818181;padding-left:150px;'>Сортировать 
 				  <b>по дате</b> последнего голосования: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=91&br=".$_br."'>старые впереди</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=92&br=".$_br."'>новые впереди</a>; 
-				  <br><b>по среднему баллу</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=81&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=82&br=".$_br."'>по убыванию</a>; 
-				  <br><b>по количеству баллов</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=61&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=62&br=".$_br."'>по убыванию</a>; 
-				  <br><b>по количеству голосов</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=51&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=52&br=".$_br."'>по убыванию</a>; 
-				  <br><b>по рейтингу</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=71&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=72&br=".$_br."'>по убыванию</a>;
+				  <br /><b>по среднему баллу</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=81&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=82&br=".$_br."'>по убыванию</a>; 
+				  <br /><b>по количеству баллов</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=61&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=62&br=".$_br."'>по убыванию</a>; 
+				  <br /><b>по количеству голосов</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=51&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=52&br=".$_br."'>по убыванию</a>; 
+				  <br /><b>по рейтингу</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=71&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=72&br=".$_br."'>по убыванию</a>;
 				  </div></div>";
 			  }
 

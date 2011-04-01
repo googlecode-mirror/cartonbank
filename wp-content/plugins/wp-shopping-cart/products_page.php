@@ -21,7 +21,7 @@ if (isset($_REQUEST['email']) && isset($_REQUEST['message']))
 {
   $email = $_REQUEST['email'] ;
   $message = $_REQUEST['message'] ;
-  $message = $message . ' <br><br> ' .$email;
+  $message = $message . ' <br /><br /> ' .$email;
   $headers = "From: ".$email."\r\n" .
 			   'X-Mailer: PHP/' . phpversion() . "\r\n" .
 			   "MIME-Version: 1.0\r\n" .
@@ -404,7 +404,7 @@ else
 				}
 				else 
 					{
-						$bio = 'Автор исключительно талантливый художник. Больше нам про него пока ничего не известно.<br>Ведём бесконечные переговоры об обновлении этой информации.';
+						$bio = 'Автор исключительно талантливый художник. Больше нам про него пока ничего не известно.<br />Ведём бесконечные переговоры об обновлении этой информации.';
 					}
 
 				// email form
@@ -417,7 +417,7 @@ else
 				$brand_contact = "<a href='#' onclick=\"document.getElementById('emailform').style.display='block';document.getElementById('bio').style.display='none';return false;\">Написать письмо</a>";
 
 				$_bigpicstrip = "<b>".$product[0]['brand']. ". Информация об авторе</b>";
-				$_bigpictext = "<br><br>".$brand_contact;
+				$_bigpictext = "<br /><br />".$brand_contact;
 				$_bigpic = "<div style='width:600px;'><div id='bio' style='display:block;'>".$bio."</div></div>"; 
 				$_bottomstriptext = "".$email_form;
 
@@ -445,7 +445,7 @@ else
 
 				$_size_warning = '';
 				if ($product[0]['height']<800 || $product[0]['width']<800)
-					$_size_warning = "<div style='float:left;width:288px;padding-top:8px;font-size:0.8em;'><a style='color:red;' href='".get_option('siteurl')."/?page_id=771'>Внимание! Размеры файла<br>ограничивают применение!</a></div>";
+					$_size_warning = "<div style='float:left;width:288px;padding-top:8px;font-size:0.8em;'><a style='color:red;' href='".get_option('siteurl')."/?page_id=771'>Внимание! Размеры файла<br />ограничивают применение!</a></div>";
 
 				$_sizesm = $_x_sm." см X ".$_y_sm." см";
                 $_author = $product[0]['brand'];
@@ -498,7 +498,7 @@ else
 				}
 
 				$_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Название:</a> </b>" .$_name."</div> "."<div >№&nbsp;<a title='уникальный адрес страницы с этим изображением' id='cuid' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
-                $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение'>Категория:</a> </b><br>".$_category."<br><br><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Описание:</a> </b> ".$_description."<br><br><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение'>Тэги:</a> </b><br>".$_tags."<br><br><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br><br><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение'>Размер:</a></b><br>".$_size."<br><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br>".$_sizesm."</span><br><br><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение'>Формат:</a> </b> ".$_file_format."<br><br><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение'>Оценка:</a></b><br>".$_rating_html.$_sharethis_html.$_edid;
+                $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение'>Категория:</a> </b><br />".$_category."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Описание:</a> </b> ".$_description."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение'>Тэги:</a> </b><br />".$_tags."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br /><br /><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение'>Размер:</a></b><br />".$_size."<br /><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение'>Формат:</a> </b> ".$_file_format."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение'>Оценка:</a></b><br />".$_rating_html.$_sharethis_html.$_edid;
 
                 $siteurl = get_option('siteurl');
                 $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\" border=0>";
@@ -542,7 +542,7 @@ else
 		{// no products
 			if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
               {
-                  echo ("<br><br>Изображения с таким номером нет.");
+                  echo ("<br /><br />Изображения с таким номером нет.");
               }
 			
 		}
@@ -750,7 +750,7 @@ function get_share_this()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-jQuery("#share_this").html('<b>Поделиться:</b><br><a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://twitter.com/share?url=\' + escape(\'http://cartoonbank.ru/?page_id=29&amp;cartoonid=\'); window.open(uu+cuid);"><img src="img/s_twitter.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.facebook.com/sharer.php?t=cartoonbank.ru&amp;u=\'+escape(\'http://cartoonbank.ru/?page_id=29&amp;cartoonid=\'); window.open(uu+cuid);"><img src="img/s_facebook.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://vkontakte.ru/share.php?title=cartoonbank.ru&amp;url=\'+escape(\'http://cartoonbank.ru/?page_id=29&amp;cartoonid=\'); window.open(uu+cuid);"><img src="img/s_vkontakte.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.livejournal.com/update.bml?subject=cartoonbank.ru&amp;event=\'+escape(\'http://cartoonbank.ru/?page_id=29&amp;cartoonid=\'); window.open(uu+cuid);"><img src="img/s_livejournal.png" border="0"></a>');
+jQuery("#share_this").html('<b>Поделиться:</b><br /><a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://twitter.com/share?url=\' + escape(\'http://cartoonbank.ru/?page_id=29&amp;cartoonid=\'); window.open(uu+cuid);"><img src="img/s_twitter.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.facebook.com/sharer.php?t=cartoonbank.ru&amp;u=\'+escape(\'http://cartoonbank.ru/?page_id=29&amp;cartoonid=\'); window.open(uu+cuid);"><img src="img/s_facebook.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://vkontakte.ru/share.php?title=cartoonbank.ru&amp;url=\'+escape(\'http://cartoonbank.ru/?page_id=29&amp;cartoonid=\'); window.open(uu+cuid);"><img src="img/s_vkontakte.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.livejournal.com/update.bml?subject=cartoonbank.ru&amp;event=\'+escape(\'http://cartoonbank.ru/?page_id=29&amp;cartoonid=\'); window.open(uu+cuid);"><img src="img/s_livejournal.png" border="0"></a>');
 });
 }
 </script>

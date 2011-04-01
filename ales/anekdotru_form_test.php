@@ -90,7 +90,7 @@ $arrAuthors = array('Светозаров Георгий','Александро�
 				// echo the name of the image
 				if (!in_array($author, $arrAuthors))
 				{
-					echo "<br>\r\n<font color='#FF00FF'><b>".count($arrAuthors).":</b> </font>".$ID." <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."' width='40'> <b>&quot;".$title."&quot;</b> ".$author." рейт: ".$average."\n\r<br>";
+					echo "<br />\r\n<font color='#FF00FF'><b>".count($arrAuthors).":</b> </font>".$ID." <img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."' width='40'> <b>&quot;".$title."&quot;</b> ".$author." рейт: ".$average."\n\r<br />";
 
 					array_push($arrAuthors, $author);
 
@@ -174,7 +174,7 @@ $arrAuthors = array('Светозаров Георгий','Александро�
 					// Mark image as sent to the Anekdot.ru
 					$update_sql = "update wp_fsr_post set anekdotru_date='".date("d.m.y H:m:s")."' where ID=".$ID;
 						$res = mysql_query($update_sql);
-						if (!$res) {die('<br>'.$update_sql.'<br>Invalid delete query: ' . mysql_error());}
+						if (!$res) {die('<br />'.$update_sql.'<br />Invalid delete query: ' . mysql_error());}
 */				}
 
 			if (count($arrAuthors) >= $howmanyemails)
