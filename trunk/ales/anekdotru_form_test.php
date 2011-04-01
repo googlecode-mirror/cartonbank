@@ -131,7 +131,7 @@ $arrAuthors = array('Светозаров Георгий','Александро�
 						$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
 
 					//email content
-					$_link = "http://cartoonbank.ru/?page_id=29&brand=".$brand;
+					$_link = "http://cartoonbank.ru/?page_id=29&amp;brand=".$brand;
 
 						$content = "Автор: ".$author."\n\r";
 						$content .= "Название: ".$title."\n\r";

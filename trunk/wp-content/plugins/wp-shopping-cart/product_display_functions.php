@@ -56,7 +56,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	//$_offset = $_offset + 20;
 
 	$javascript_functions ='';
-	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29&amp;brand='.$_brand.'&color='.$_color.'&category='.$category.'&cs='.$_cs.'&offset='.$_offset.'";}';
+	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29&amp;brand='.$_brand.'&amp;color='.$_color.'&amp;category='.$category.'&amp;cs='.$_cs.'&amp;offset='.$_offset.'";}';
    
 	if ($search_sql != '')
 	{
@@ -169,8 +169,8 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 	$_author = "<a href=\'".$siteurl."/?page_id=29&amp;brand=".$_brandid."\'>".$product['brand']."</a>";//$product['brand'];
 	$_name = nl2br(stripslashes($product['name']));
 
-	$_category = "<a href=\'".get_option('product_list_url')."&category=".$_category_id."\'>".$product['kategoria']."</a>";
-	//$options .= "<a href='".get_option('product_list_url')."/&category=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
+	$_category = "<a href=\'".get_option('product_list_url')."&amp;category=".$_category_id."\'>".$product['kategoria']."</a>";
+	//$options .= "<a href='".get_option('product_list_url')."/&amp;category=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
 
 	$_tags = nl2br(stripslashes($product['additional_description']));
 	$_tags_array = explode(',',$_tags);

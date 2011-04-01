@@ -22,5 +22,5 @@ require('./wp-blog-header.php');
 <?php
 $time_end = microtime(true);
 $time = $time_end - $time_start;
-echo "<div>$time сек.</div>";
+echo "$time сек.";
 ?>
