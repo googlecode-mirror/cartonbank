@@ -524,7 +524,7 @@ else
 						<td rowspan='2' style='width:20px;'>&nbsp;</td>
 						<td class='wh' style='text-align:left;'><input type='radio' name='license' $l3_disabled value='l3_price'></td>
 						<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l3_price'])."&nbsp;руб.</b></td>
-						<td rowspan='2' class='wh' style='width:80px; text-align:right; vertical-align:bottom;'><input id='searchsubmit' value='В заказ' type='submit' class='borders'></td>
+						<td rowspan='2' class='wh' style='width:80px; text-align:right; vertical-align:bottom;'><input id='tocart' value='В заказ' type='submit' class='borders'></td>
 					  </tr>
 					  <tr>
 						<td class='wh' style='vertical-align:top;'><b>лицензии:</b></td>

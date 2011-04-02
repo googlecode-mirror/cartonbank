@@ -282,39 +282,3 @@ function edit_value_small(&$value)
 		$value = mb_strtolower($value,"UTF8");
 	}
 ?>
-
-<style type="text/css" media="screen">
-			.word {
-				padding: 4px 4px 4px 4px;
-			}
-			a.size1 {
-				font-size: 2.6em;font-weight: 800;
-			}
-			a.size2 {
-				font-size: 2.4em;font-weight: 800;
-			}
-			a.size3 {
-				font-size: 2.2em;font-weight: 700;
-			}
-			a.size4 {
-				font-size: 2.0em;font-weight: 600;
-			}
-			a.size5 {
-				font-size: 1.8em;font-weight: 500;
-			}
-			a.size6 {
-				font-size: 1.6em;font-weight: 400;
-			}
-			a.size7 {
-				font-size: 1.4em;font-weight: 300;
-			}
-			a.size8 {
-				font-size: 1.2em;font-weight: 200;
-			}
-			a.size9 {
-				font-size: 1.0em;font-weight: 100;
-			}
-			a.size0 {
-				font-size: 0.8em;font-weight: 100;
-			}
-</style>
