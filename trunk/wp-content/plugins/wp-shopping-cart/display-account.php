@@ -3,6 +3,8 @@ $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
 
+global $wpdb;
+
 //pokazh($_SERVER);
 //[DOCUMENT_ROOT] => /home/www/cb3/
 if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
@@ -48,6 +50,18 @@ else
 	$start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
 	$end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
 }
+
+$sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b, `wp_users` AS u WHERE l.`processed` = s.`id`  AND l.id = c.purchaseid AND p.id = c.prodid AND st.purchid = c.purchaseid AND p.brand = b.id AND u.id = l.user_id AND l.user_id !=  '106' AND st.downloads !=  '5' AND date BETWEEN '$start_timestamp' AND '$end_timestamp' GROUP BY c.license ORDER BY b.name ) AS temp GROUP BY temp.id order by temp.name
+";
+
+$result = $wpdb->get_results($sql,ARRAY_A);
+if (!$result) {die('<br />'.$del_sql.'<br />Invalid delete query: ' . mysql_error());}
+foreach ($result as $row)
+{
+	echo $row['name']."&nbsp;[".$row['count']."]  ";
+}
+echo "<br>";
+
 $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id,firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
