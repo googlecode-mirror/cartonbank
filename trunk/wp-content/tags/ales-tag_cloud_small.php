@@ -235,26 +235,22 @@ function create_tag_cloud_small()
 				$return = ($returnType == "html" ? "" : ($returnType == "array" ? array() : ""));
 				foreach ($this->wordsArray as $word => $popularity)
 				{
-				$sizeRange = $this->getClassFromPercent(($popularity / $this->max) * 100);
-				if ($returnType == "array")
-				{
-					$return[$word]['word'] = $word;
-					$return[$word]['popularity'] = $popularity;
-					$return[$word]['sizeRange'] = $sizeRange;
-					if ($currentColour)
-					$return[$word]['randomColour'] = $currentColour;
-				}
-					else if ($returnType == "html")
-				{
-			if($popularity > 50)
+					$sizeRange = $this->getClassFromPercent(($popularity / $this->max) * 100);
+					if ($returnType == "array")
 					{
-						$return .= " <a class='size{$sizeRange}' href='?page_id=29&amp;cs={$word}' title='$popularity'>{$word}</a> ";
+						$return[$word]['word'] = $word;
+						$return[$word]['popularity'] = $popularity;
+						$return[$word]['sizeRange'] = $sizeRange;
+						if ($currentColour)
+						$return[$word]['randomColour'] = $currentColour;
 					}
-					else
+						else if ($returnType == "html")
 					{
-						//$return .= " <a class='size{$sizeRange}' href='?page_id=29&cs={$word}'>{$word}</a> ";
+						if($popularity > 50)
+								{
+									$return .= " <a class='size{$sizeRange}' href='?page_id=29&amp;cs={$word}' title='$popularity'>{$word}</a> ";
+								}
 					}
-				}
 				}
 				return $return;
 				}
