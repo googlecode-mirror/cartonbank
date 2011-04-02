@@ -56,7 +56,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	//$_offset = $_offset + 20;
 
 	$javascript_functions ='';
-	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29&amp;brand='.$_brand.'&amp;color='.$_color.'&amp;category='.$category.'&amp;cs='.$_cs.'&amp;offset='.$_offset.'";}';
+	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29&brand='.$_brand.'&color='.$_color.'&category='.$category.'&cs='.$_cs.'&offset='.$_offset.'";}';
    
 	if ($search_sql != '')
 	{
@@ -166,18 +166,18 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 		{$_category_id = $product['category_id'];}
 	else {$_category_id = '';}
 
-	$_author = "<a href=\'".$siteurl."/?page_id=29&amp;brand=".$_brandid."\'>".$product['brand']."</a>";//$product['brand'];
+	$_author = "<a href=\'".$siteurl."/?page_id=29&brand=".$_brandid."\'>".$product['brand']."</a>";//$product['brand'];
 	$_name = nl2br(stripslashes($product['name']));
 
-	$_category = "<a href=\'".get_option('product_list_url')."&amp;category=".$_category_id."\'>".$product['kategoria']."</a>";
-	//$options .= "<a href='".get_option('product_list_url')."/&amp;category=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
+	$_category = "<a href=\'".get_option('product_list_url')."&category=".$_category_id."\'>".$product['kategoria']."</a>";
+	//$options .= "<a href='".get_option('product_list_url')."/&category=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
 
 	$_tags = nl2br(stripslashes($product['additional_description']));
 	$_tags_array = explode(',',$_tags);
 		//$i=0;
 		foreach ($_tags_array as $key => $value)
 		{
-			$_tags_array[$key] = "<a href=\'".get_option('siteurl')."/?page_id=29&amp;cs=".trim($_tags_array[$key])."\'>".trim($_tags_array[$key])."</a>";
+			$_tags_array[$key] = "<a href=\'".get_option('siteurl')."/?page_id=29&cs=".trim($_tags_array[$key])."\'>".trim($_tags_array[$key])."</a>";
 		}
 	$_tags_imploded = implode(", ", $_tags_array);
 	$_tags = $_tags_imploded;
@@ -201,9 +201,9 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 					$_edid = "";
 				}
 	
-	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&amp;cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+	$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
 
-	$_bigpictext = "<b>Категория: </b><br />".$_category."<br /><br /><b>Описание: </b> ".$_description."<br /><br /><b>Тэги: </b><br />".$_tags."<br /><br /><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&amp;cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><br /><b>Размер:</b><br />".$_size."<br /><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b>Формат: </b>".$_file_format."<br /><br /><b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
+	$_bigpictext = "<b>Категория: </b><br />".$_category."<br /><br /><b>Описание: </b> ".$_description."<br /><br /><b>Тэги: </b><br />".$_tags."<br /><br /><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><br /><b>Размер:</b><br />".$_size."<br /><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b>Формат: </b>".$_file_format."<br /><br /><b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\' border=0>";
 
 	if($product['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
