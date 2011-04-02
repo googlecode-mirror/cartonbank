@@ -238,11 +238,11 @@ function create_tag_cloud()
 				$sizeRange = $this->getClassFromPercent(($popularity / $this->max) * 100);
 				if ($returnType == "array")
 				{
-				$return[$word]['word'] = $word;
-				$return[$word]['popularity'] = $popularity;
-				$return[$word]['sizeRange'] = $sizeRange;
-				if ($currentColour)
-				$return[$word]['randomColour'] = $currentColour;
+					$return[$word]['word'] = urlencode($word);
+					$return[$word]['popularity'] = $popularity;
+					$return[$word]['sizeRange'] = $sizeRange;
+					if ($currentColour)
+					$return[$word]['randomColour'] = $currentColour;
 				}
 				else if ($returnType == "html")
 				{
@@ -286,49 +286,3 @@ function edit_value(&$value)
 		$value = mb_strtolower($value,"UTF8");
 	}
 ?>
-		<style>
-			<!--
-			.word {
-			/*font-family: Tahoma;letter-spacing: 3px;*/
-			padding: 4px 4px 4px 4px;
-			
-			}
-			a.size1 {
-			color: #000;
-			font-size: 2.6em;font-weight: 800;
-			}
-			a.size2 {
-			color: #000;
-			font-size:2.4em;font-weight: 800;
-			}
-			a.size3 {
-			color: #000;
-			font-size: 2.2em;font-weight: 700;
-			}
-			a.size4 {
-			color: #000;
-			font-size: 2.0em;font-weight: 600;
-			}
-			a.size5 {
-			color: #000;
-			font-size: 1.8em;font-weight: 500;
-			}
-			a.size6 {
-			color: #000;
-			font-size: 1.6em;font-weight: 400;
-			}
-			a.size7 {
-			color: #000;
-			font-size: 1.4em;font-weight: 300;
-			}
-			a.size8 {
-			color: #000;font-size: 1.2em;font-weight: 200;
-			}
-			a.size9 {
-			color: #000; font-size: 1.0em; font-weight: 100;
-			}
-			a.size0 {
-			color: #000; font-size: 0.8em; font-weight: 100;
-			}
-			//-->
-			</style>
