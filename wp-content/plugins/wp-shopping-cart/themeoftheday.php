@@ -1,18 +1,25 @@
-
 <?
-// settings
-//
-	$grace_days = 7; //how many days the theme of the day picture is active
-	$thedate = date("d.m.y"); 	// current date
-		//pokazh ($thedate,"thedate: ");
-		$sqlthedate = date("Y.m.d"); 	// current date
-		//pokazh ($sqlthedate,"sqlthedate: ");
-	$expirationdate  = date("y.m.d", mktime(0, 0, 0, date("m"), date("d")-$grace_days, date("Y")));
-		//pokazh ($expirationdate,"expirationdate: ");
-	$tomorrow = date("Y.m.d", mktime(0, 0, 0, date("m"), date("d")+1, date("Y")));
-	$tomorrowh = date("d.m.y", mktime(0, 0, 0, date("m"), date("d")+1, date("Y")));
+if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1 || $current_user->tema_dnya_access == '0')
+{
+echo ("<h3>Извините, у вас нет права доступа к этой странице</h3>");
+exit;
+}
 
-//
+
+
+// settings
+	//
+		$grace_days = 7; //how many days the theme of the day picture is active
+		$thedate = date("d.m.y"); 	// current date
+			//pokazh ($thedate,"thedate: ");
+			$sqlthedate = date("Y.m.d"); 	// current date
+			//pokazh ($sqlthedate,"sqlthedate: ");
+		$expirationdate  = date("y.m.d", mktime(0, 0, 0, date("m"), date("d")-$grace_days, date("Y")));
+			//pokazh ($expirationdate,"expirationdate: ");
+		$tomorrow = date("Y.m.d", mktime(0, 0, 0, date("m"), date("d")+1, date("Y")));
+		$tomorrowh = date("d.m.y", mktime(0, 0, 0, date("m"), date("d")+1, date("Y")));
+
+	//
 //
 
 
