@@ -163,7 +163,7 @@ $rooturl = get_option('siteurl');
 		</td>
       </tr>
 	  <tr><td>
-		<input type="radio" name="payment_method" value="robokassa" id="payment_method_3" <? echo ($disabled); ?>>
+		<input type="radio" name="payment_method" value="robokassa" id="payment_method_3" <? //echo ($disabled); ?>>
 		<label for='payment_method_3'>Оплата через<br /><b>Робокассу</b></label>
 		<br /><img src="<?php echo($rooturl);?>/img/gate_robokassa.png">
 		<br /><div style="font-size:0.7em;"><ul>
