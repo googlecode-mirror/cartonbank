@@ -283,6 +283,7 @@ $_rokfor_url = get_option('siteurl').'/?page_id=29&amp;category=666';
 ?>
 
 <br /><h2>Разное</h2>
+<div id='last_sales'><a href='?page_id=1299'>Продажи</a></div>
 <div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>
 <div id='tags'><a href='?page_id=390'>Тэги</a></div>
 <div style="float:right;width:180px;text-align:right;">
