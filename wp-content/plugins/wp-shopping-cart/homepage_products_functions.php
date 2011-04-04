@@ -16,7 +16,7 @@ function nszhpcrt_homepage_products($content = '')
 	}
 	else
 	{
-		$_brand = 0;
+		$_brand = 1;
 	}
 
 	  $siteurl = get_option('siteurl');
