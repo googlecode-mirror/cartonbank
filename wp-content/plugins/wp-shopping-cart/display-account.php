@@ -48,7 +48,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 else
 {
 	//$start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
-	$start_timestamp = mktime(0, 0, 0, 12, 31, 2010);
+	$start_timestamp = mktime(0, 0, 0, 11, 1, 2010);
 	$end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
 }
 
