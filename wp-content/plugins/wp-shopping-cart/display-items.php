@@ -334,7 +334,7 @@ INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_descrip
 	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
 
 	//mail($to, $subject, $message, $headers);
-	mail("igor.aleshin@gmail.com","new cartoon added",print_r($insertsql,true),$headers);
+	//mail("igor.aleshin@gmail.com","new cartoon added",print_r($insertsql,true),$headers);
 	
   if($wpdb->query($insertsql))
     {
