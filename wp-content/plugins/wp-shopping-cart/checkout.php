@@ -143,7 +143,7 @@ $rooturl = get_option('siteurl');
         <td width='270'>
 		<input type="radio" name="payment_method" value="wallet" id="payment_method_2" <? echo ($disabled); ?>/> 
         <label for='payment_method_2'>Оплата через<br /><b>Личный Счёт (по предоплате) </b></label>
-		<br /><img src="<?php echo($rooturl);?>/img/gate_beznal.png">
+		<br /><br /><img src="<?php echo($rooturl);?>/img/gate_beznal.png">
 		<br /><div style="font-size:0.7em;color:#CC0033;"><?if ($canpay==false){echo "У вас недостаточно денег на Личном счёте для этого метода оплаты.";}?></div>
         </td>
 		<td>
@@ -165,7 +165,7 @@ $rooturl = get_option('siteurl');
 	  <tr><td>
 		<input type="radio" name="payment_method" value="robokassa" id="payment_method_3" <? //echo ($disabled); ?>>
 		<label for='payment_method_3'>Оплата через<br /><b>Робокассу</b></label>
-		<br /><img src="<?php echo($rooturl);?>/img/gate_robokassa.png">
+		<br /><br /><img src="<?php echo($rooturl);?>/img/gate_robokassa.png">
 		<br /><div style="font-size:0.7em;"><ul>
 			<li>- Webmoney</li>
 			<li>- Яндекс.Деньги</li>
@@ -174,7 +174,7 @@ $rooturl = get_option('siteurl');
 			<li>- SMS (СМС) платежи</li>
 			<li>- <b>терминалы</b> QIWI и другие</li>
 			<li>- <b>карты</b> VISA и MasterCard</li>
-		</ul><a href="https://money.yandex.ru" target="_blank"><img src="https://money.yandex.ru/img/yamoney_logo88x31.gif " alt="Я принимаю Яндекс.Деньги" title="Я принимаю Яндекс.Деньги" border="0" width="88" height="31"/></a></div>
+		</ul><a href="https://money.yandex.ru" target="_blank"><br /><br /><img src="https://money.yandex.ru/img/yamoney_logo88x31.gif " alt="Я принимаю Яндекс.Деньги" title="Я принимаю Яндекс.Деньги" border="0" width="88" height="31"/></a></div>
 
 	  </td>
 		<td>
@@ -195,12 +195,13 @@ $rooturl = get_option('siteurl');
 
 	  <?} ?>
 
+
     <tr>
       <td style='padding-top:5px;border-top: 1px solid #c8c8c8;'>
       </td>
       <td style='padding-top:5px;border-top: 1px solid #c8c8c8;'>
       <input type='hidden' value='true' name='submitwpcheckout' />
-      <input type='submit' value='Оплатить' name='submit'  <? //echo ($disabled); ?>/>
+      <input type='submit' style="padding:6px;background-color:#84DF88;margin-top:12px;" value='&nbsp;Оплатить заказ и скачать файлы&nbsp;' name='submit'  <? //echo ($disabled); ?>/>
       </td>
     </tr>
 	<tr>
