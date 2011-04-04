@@ -68,7 +68,7 @@ echo "</table></div>";
 
 echo "<br>";
 
-$sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id,firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract
+$sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id,firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
@@ -120,6 +120,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
                                  'processed'   => 'прохождение заказа',
                                  'title'   => 'название ',
                                  'license'   => 'лицензия',
+                                 'wallet'   => 'на счёте',
                                  'downloadid'   => 'скачать',
                                  'downloads'   => 'осталось скачиваний',
                                  'contract'   => 'номер договора'));
