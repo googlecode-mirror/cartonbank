@@ -158,7 +158,7 @@ if (!$licensecolumn)
 			$current_user = wp_get_current_user();
 			$result .= "  <td width='70'>";
 			if (isset($current_user) && $current_user->last_name == 'demo')
-			{$result .= "<a href='http://cartoonbank.ru/demo/demo.jpg'>Скачать demo</a>";}
+			{$result .= "<a href='".get_option('siteurl')."/demo/demo.jpg'>Скачать demo</a>";}
 			else
 			{$result .= "<a href='$link'>Скачать</a>";}
 			$result .= "  </td>";
