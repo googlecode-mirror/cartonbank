@@ -281,10 +281,10 @@ if (isset($_POST['international_pnp ']))
 
 		$category_id = $wpdb->escape($_POST['category'][0]);
 
-
+/*
 pokazh($category_id,"category_id");
 pokazh($_POST['category'],"_POST['category']");
-
+*/
 		switch($category_id)
             {
             case 4:
@@ -322,8 +322,10 @@ if (isset($_POST['brand']) && is_numeric($_POST['brand']))
 	{$_brand = $wpdb->escape($_POST['brand']);}
 else {$_brand = $user_brand;}
 
-  $insertsql = "INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_description`, `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `approved`, `color`, `not_for_sale`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$wpdb->escape(str_replace(",","",$_price))."', '".$wpdb->escape($_pnp)."', '".$wpdb->escape($_international_pnp)."', '".$file."', '".$image."', '".$category_id."', '".$_brand."', '$quantity_limited','$quantity','$special','$special_price','$display_frontpage','$notax', '$visible', NULL, '$colored', '$not_for_sale', '$portfolio', $l1_price, $l2_price, $l3_price);";
+  $insertsql = "INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_description`, `file` , `image` , `category`, `brand`, `display_frontpage`, `visible`, `approved`, `color`, `not_for_sale`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$file."', '".$image."', '".$category_id."', '".$_brand."', '$display_frontpage', '$visible', NULL, '$colored', '$not_for_sale', $l1_price, $l2_price, $l3_price);";
 /*
+INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_description`, `file` , `image` , `category`, `brand`, `display_frontpage`, `visible`, `approved`, `color`, `not_for_sale`,  `l1_price`, `l2_price`, `l3_price`) VALUES ('', 'test', 'test', 'test', '11502', '4d994681b84167.92530082freedom1_Magdalena_Wosik_POLAND[1].png', '666', '8', '0', '1', NULL, '1', '0',  250, 500, 2500)
+
 INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_description`, `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `approved`, `color`, `not_for_sale`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', 'test', 'test', 'test','', '', '', '11361', '4d907748b8e6b0.41193696ales1138645.gif', 'Array', '8', '0','0','0','','0','0', '1', NULL, '1', '0', '0', 250, 500, 2500);
 */
 	// To send HTML mail, the Content-type header must be set
@@ -417,11 +419,11 @@ INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_descrip
 
   $display_added_product = "filleditform(".$product_id.");";
   
-  echo "<div class='updated'><p align='center'>".TXT_WPSC_ITEMHASBEENADDED."</p></div>";
+  echo "<div class='updated'><p align='center'>Файл добавлен</p></div>";
   }
   else
     {
-    echo "<div class='updated'><p align='center'>".TXT_WPSC_ITEMHASNOTBEENADDED."</p></div>";
+    echo "<div class='updated'><p align='center'>Файл не добавлен!</p></div>";
     }
  }
 

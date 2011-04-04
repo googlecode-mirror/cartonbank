@@ -47,7 +47,8 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 }
 else
 {
-	$start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
+	//$start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
+	$start_timestamp = mktime(0, 0, 0, 12, 31, 2010);
 	$end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
 }
 
@@ -55,11 +56,16 @@ $sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `
 ";
 
 $result = $wpdb->get_results($sql,ARRAY_A);
-if (!$result) {die('<br />'.$del_sql.'<br />Invalid delete query: ' . mysql_error());}
+if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_error());}
+echo "<div><table class='datagrid'>";
 foreach ($result as $row)
 {
-	echo $row['name']."&nbsp;[".$row['count']."]  ";
+	echo "<tr>";
+	echo "<td>".$row['name']."</td><td>".$row['count']."</td>";
+	echo "</tr>";
 }
+echo "</table></div>";
+
 echo "<br>";
 
 $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id,firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract
