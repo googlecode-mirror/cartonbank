@@ -87,7 +87,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 		AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
 	GROUP BY c.license
 	ORDER BY `date` DESC
-	LIMIT 100";
+	LIMIT 200";
 
 	//pokazh($sql,"sql");
 
