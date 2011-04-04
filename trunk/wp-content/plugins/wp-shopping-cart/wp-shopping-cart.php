@@ -335,7 +335,7 @@ function nzshpcrt_submit_ajax()
     }
     else
       {
-      $seperator ="&amp;";
+      $seperator ="&";
       }
    
   /* update shopping cart*/    
@@ -605,10 +605,10 @@ function nzshpcrt_submit_ajax()
       $purchase_link = get_option('product_list_url')."&cartoonid=".$product['id'];
       $output .= "    <item>\n\r";
       $output .= "      <title>".stripslashes($product['name'])."</title>\n\r";
-      $output .= "      <link>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</link>\n\r";
-      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."'><br /><img title='". stripslashes($product['name']) ."' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
+      $output .= "      <link>http://cartoonbank.ru/?page_id=29&cartoonid=".stripslashes($product['id'])."</link>\n\r";
+      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".stripslashes($product['id'])."'><br /><img title='". stripslashes($product['name']) ."' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
       $output .= "      <pubDate>".date("r")."</pubDate>\n\r";
-      $output .= "      <guid>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</guid>\n\r";
+      $output .= "      <guid>http://cartoonbank.ru/?page_id=29&cartoonid=".stripslashes($product['id'])."</guid>\n\r";
 	  $output .= '    ';
       $output .= "    </item>\n\r";
       }
@@ -859,7 +859,7 @@ function nzshpcrt_submit_ajax()
   $output .= "Название рисунка: ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' /> # <a href='".get_option('siteurl')."/?page_id=29&amp;cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>";
+  $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' /> # <a href='".get_option('siteurl')."/?page_id=29&cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   
@@ -996,7 +996,7 @@ function nzshpcrt_submit_ajax()
 
   $output .= "          <tr>\n\r";
   $output .= "            <td colspan='2'>\n\r";
-  $output .= "<a  href='admin.php?page=wp-shopping-cart/display-items.php&amp;updateimage=".$product['id']."' ><img src='".get_option('siteurl')."/img/reload.gif' title='Обновить иконку и слайд с водяными знаками'></a>";
+  $output .= "<a  href='admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$product['id']."' ><img src='".get_option('siteurl')."/img/reload.gif' title='Обновить иконку и слайд с водяными знаками'></a>";
    $output .= "&nbsp;<a href='index.php?admin_preview=true&product_id=".$product['id']."' style='float: left;' ><img src='../wp-content/plugins/wp-shopping-cart/images/download.gif' title='Скачать оригинальный файл' /></a>";
   
   $output .= "            </td>\n\r";
@@ -1037,12 +1037,12 @@ function nzshpcrt_submit_ajax()
 
 if ($product['approved'] != '1' && isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabilities['editor']==1)
 	{
-		$output .= "<br /><br /><br /><br /><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение!</a>";
+		$output .= "<br /><br /><br /><br /><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение!</a>";
 	}
 
 if ($product['approved'] == '1' && isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
 	{
-		$output .= "<br /><br /><br /><br /><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение</a>";
+		$output .= "<br /><br /><br /><br /><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение</a>";
 	}
 
   
@@ -1175,7 +1175,7 @@ function nzshpcrt_getcategoryform($catid)
   $output .= "<input type='hidden' name='prodid' value='".$product['id']."' />";
   $output .= "<input type='hidden' name='submit_action' value='edit' />";
   $output .= "<input class='edit_button' type='submit' name='submit' value='".TXT_WPSC_EDIT."' />";
-  $output .= "<a class='delete_button' href='admin.php?page=wp-shopping-cart/display-category.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >".TXT_WPSC_DELETE."</a>";
+  $output .= "<a class='delete_button' href='admin.php?page=wp-shopping-cart/display-category.php&deleteid=".$product['id']."' onclick=\"return conf();\" >".TXT_WPSC_DELETE."</a>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
  $output .= "        </table>\n\r"; 
@@ -1227,7 +1227,7 @@ function nzshpcrt_getbrandsform($catid)
   $output .= "<input type='hidden' name='prodid' value='".$product['id']."' />";
   $output .= "<input type='hidden' name='submit_action' value='edit' />";
   $output .= "<input class='edit_button' type='submit' name='submit' value='".TXT_WPSC_EDIT."' />";
-  $output .= "<a class='delete_button' href='admin.php?page=wp-shopping-cart/display-brands.php&amp;deleteid=".$product['id']."' onclick=\"return conf();\" >стереть</a>";
+  $output .= "<a class='delete_button' href='admin.php?page=wp-shopping-cart/display-brands.php&deleteid=".$product['id']."' onclick=\"return conf();\" >стереть</a>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
  $output .= "        </table>\n\r";
@@ -1286,7 +1286,7 @@ function nzshpcrt_getvariationform($variation_id)
   $output .= "<input type='hidden' name='prodid' value='".$variation['id']."' />";
   $output .= "<input type='hidden' name='submit_action' value='edit' />";
   $output .= "<input class='edit_button' type='submit' name='submit' value='".TXT_WPSC_EDIT."' />";
-  $output .= "<a class='delete_button' href='admin.php?page=wp-shopping-cart/display_variations.php&amp;deleteid=".$variation['id']."' onclick=\"return conf();\" >".TXT_WPSC_DELETE."</a>";
+  $output .= "<a class='delete_button' href='admin.php?page=wp-shopping-cart/display_variations.php&deleteid=".$variation['id']."' onclick=\"return conf();\" >".TXT_WPSC_DELETE."</a>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
  $output .= "        </table>\n\r";
@@ -2367,7 +2367,7 @@ if (($total > $_wallet) && ($_wallet!=0))
       }
       else
          {
-         $seperator ="&amp;";
+         $seperator ="&";
          }
 	$output .= "<a class='button' href='".get_option('product_list_url')."?cart=empty' onclick='emptycart();return false;'>x Очистить корзину</a><br />";
 
@@ -2790,7 +2790,7 @@ function nzshpcrt_product_log_rss_feed()
 function nzshpcrt_product_list_rss_feed()
   {
   // our custom rss feed
-  echo "<link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='".get_option('siteurl')."/index.php?rss=true&amp;action=product_list&amp;type=rss'/>";
+  echo "<link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='".get_option('siteurl')."/index.php?rss=true&action=product_list&type=rss'/>";
   }
     
 require_once('processing_functions.php');
