@@ -919,13 +919,13 @@ if (isset($_GET['catid'])){$_category = $_GET['catid'];}else{$_category = '';}
                 {
                     // "Previous page" link
                     $offset_back = $offset - $items_on_page;
-                    $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&amp;brand=".$_brand."&amp;category=".$_category."&amp;offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a><br />";
+                    $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_brand."&category=".$_category."&offset=".$offset_back."'><< ".TXT_WPSC_PREV_PAGE."</a><br />";
                 }
                 if(($offset < $items_count - $items_on_page) && ($items_count>0))
                 {
                     // "Next page" link
                     $offset_forw = $offset + $items_on_page;
-                    $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&amp;brand=".$_brand."&amp;category=".$_category."&amp;offset=".$offset_forw."'>".TXT_WPSC_NEXT_PAGE." >></a>";
+                    $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&brand=".$_brand."&category=".$_category."&offset=".$offset_forw."'>".TXT_WPSC_NEXT_PAGE." >></a>";
                 }
                 $output .= "</br></div>";
 
@@ -1164,7 +1164,7 @@ function topcategorylist($offset)
   global $wpdb,$category_data;
   $options = "";
   $values = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' ORDER BY `id` ASC",ARRAY_A);
-  $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=wp-shopping-cart/display-items.php&amp;offset=0";
+  $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=wp-shopping-cart/display-items.php&offset=0";
   $options .= "<option value='$url'>".TXT_WPSC_ALLCATEGORIES."</option>\r\n";
   $selected = '';
   if($values != null)
@@ -1176,7 +1176,7 @@ function topcategorylist($offset)
         {
         $selected = "selected='selected'";
         }
-      $options .= "<option $selected value='$url&amp;catid=".$option['id']."'>".$option['name']."</option>\r\n";
+      $options .= "<option $selected value='$url&catid=".$option['id']."'>".$option['name']."</option>\r\n";
       $selected = "";
       }
     }
@@ -1199,7 +1199,7 @@ function al_brandslist($current_brand = '')
   $options = "";
   $values = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
   $authors = $values;
-  $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=wp-shopping-cart/display-items.php&amp;offset=0";
+  $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME']."?page=wp-shopping-cart/display-items.php&offset=0";
   $options .= "<option value='$url'>Выберите автора</option>\r\n";
   $selected = '';
 	$who_is_selected_brand = 0;
@@ -1218,7 +1218,7 @@ function al_brandslist($current_brand = '')
       {
       $selected = "selected='selected'";
       }
-      $options .= "<option $selected value='$url&amp;brand=".$option['id']."'>".$option['name']."</option>\r\n";
+      $options .= "<option $selected value='$url&brand=".$option['id']."'>".$option['name']."</option>\r\n";
       $selected = "";
     }
   $concat = "<select name='brand' $combo_disabled onChange = 'categorylist(this.options[this.selectedIndex].value)'>".$options."</select>\r\n";
