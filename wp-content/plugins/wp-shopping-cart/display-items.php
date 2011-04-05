@@ -185,40 +185,6 @@ else
       $file = '0';
       }
 
-
-
-   if(isset($_POST['special'])&&$_POST['special'] == 'yes')
-     {
-     $special = 1;
-     if(is_numeric($_POST['special_price']))
-       {
-       $special_price = $_POST['price'] - $_POST['special_price'];
-       }
-     }
-     else
-       {
-       $special = 0;
-       $special_price = '';
-       }
-       
-   if(isset($_POST['notax'])&&$_POST['notax'] == 'yes')
-     {
-     $notax = 1;
-     }
-     else
-       {
-       $notax = 0;
-       }
-   if(isset($_POST['quantity']) && is_numeric($_POST['quantity']) && isset($_POST['quantity_limited']) && ($_POST['quantity_limited'] == "yes"))
-     {
-     $quantity_limited = 1;
-     $quantity = $_POST['quantity'];
-     }
-     else
-       {
-       $quantity_limited = 0;
-       $quantity = 0;
-       }
    if(isset($_POST['display_frontpage']) && $_POST['display_frontpage'] == "yes")
      {
      $display_frontpage = 1;
@@ -230,9 +196,6 @@ else
        
 $temadnya = '0';
 $visible = '0';
-$_price='';
-$_pnp = '';
-$_international_pnp = '';
 $approved = Null;
 
 
@@ -256,14 +219,6 @@ if (isset($_POST['license2']) && $_POST['license2'] == 'on'){$license2 = '1'; }
 if (isset($_POST['license3']) && $_POST['license3'] == 'on'){$license3 = '1'; }
     else{$license3="0";}
 
-
-
-if (isset($_POST['price']))
-    $_price = $_POST['price'];
-if (isset($_POST['pnp']))
-    $_pnp = $_POST['pnp'];
-if (isset($_POST['international_pnp ']))
-    $_international_pnp  = $_POST['international_pnp '];
 
 
 
@@ -323,11 +278,7 @@ if (isset($_POST['brand']) && is_numeric($_POST['brand']))
 else {$_brand = $user_brand;}
 
   $insertsql = "INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_description`, `file` , `image` , `category`, `brand`, `display_frontpage`, `visible`, `approved`, `color`, `not_for_sale`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."','".$file."', '".$image."', '".$category_id."', '".$_brand."', '$display_frontpage', '$visible', NULL, '$colored', '$not_for_sale', $l1_price, $l2_price, $l3_price);";
-/*
-INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_description`, `file` , `image` , `category`, `brand`, `display_frontpage`, `visible`, `approved`, `color`, `not_for_sale`,  `l1_price`, `l2_price`, `l3_price`) VALUES ('', 'test', 'test', 'test', '11502', '4d994681b84167.92530082freedom1_Magdalena_Wosik_POLAND[1].png', '666', '8', '0', '1', NULL, '1', '0',  250, 500, 2500)
 
-INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_description`, `price` , `pnp`, `international_pnp`, `file` , `image` , `category`, `brand`, `quantity_limited`, `quantity`, `special`, `special_price`,`display_frontpage`, `notax`, `visible`, `approved`, `color`, `not_for_sale`, `portfolio`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', 'test', 'test', 'test','', '', '', '11361', '4d907748b8e6b0.41193696ales1138645.gif', 'Array', '8', '0','0','0','','0','0', '1', NULL, '1', '0', '0', 250, 500, 2500);
-*/
 	// To send HTML mail, the Content-type header must be set
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
@@ -604,41 +555,6 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
       $wpdb->query($sql_delete_query); 
       }
     
-   if(isset($_POST['quantity']) && is_numeric($_POST['quantity']) && ($_POST['quantity_limited'] == "yes"))
-     {
-     $quantity_limited = 1;
-     $quantity = $_POST['quantity'];
-     }
-     else
-       {
-       $quantity_limited = 0;
-       $quantity = 0;
-       }
-     
-       
-    if(isset($_POST['special']) && $_POST['special'] == 'yes') {
-          $special = 1;
-         if(is_numeric($_POST['special_price']))
-           {
-           $special_price = $_POST['price'] - $_POST['special_price'];
-           }
-      }
-      else {
-            $special = 0;
-            $special_price = '';
-        }
-  
-    if(isset($_POST['notax']) && $_POST['notax'] == 'yes')
-      {
-      $notax = 1;
-      }
-      else
-        {
-        $notax = 0;
-        }
-
-     
-      
    if(isset($_POST['display_frontpage']) && $_POST['display_frontpage'] == "yes")
      {
      $display_frontpage = 1;
@@ -668,11 +584,6 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
 	if (isset($_POST['license3']) && $_POST['license3'] == 'on'){$license3 = '1'; }
 		else{$license3="0";}
 
-    if (isset($_POST['price'])){$_price=$_POST['price'];}else{$_price='';}
-    if (isset($_POST['pnp'])){$_pnp=$_POST['pnp'];}else{$_pnp='';}
-    if (isset($_POST['international_pnp'])){$_international_pnp=$_POST['international_pnp'];}else{$_international_pnp='';}
-    if (isset($_POST['quantity_limited'])){$_quantity_limited=$_POST['quantity_limited'];}else{$_quantity_limited=0;}
-    if (isset($_POST['quantity'])){$_quantity=$_POST['quantity'];}else{$_quantity=1;}
 
 // TODO: take it off to the SQL table
 		// License prices
@@ -728,7 +639,7 @@ else
 
 	
 
-      $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `price` = '".$wpdb->escape(str_replace(",","",$_price))."', `pnp` = '".$wpdb->escape($_pnp)."', `international_pnp` = '".$wpdb->escape($_international_pnp)."', `category` = '".$wpdb->escape($_POST['category'][0])."', `brand` = '".$_brand."', quantity_limited = '".$_quantity_limited."', `quantity` = '".$_quantity."', `special`='$special', `special_price`='$special_price', `display_frontpage`='$display_frontpage', `notax`='$notax', `visible`='$visible', `approved`='$approved', `color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+      $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `category` = '".$wpdb->escape($_POST['category'][0])."', `brand` = '".$_brand."', `display_frontpage`='$display_frontpage', `visible`='$visible', `approved`='$approved', `color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
 
 	  $wpdb->query($updatesql);
 
