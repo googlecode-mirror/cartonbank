@@ -23,6 +23,29 @@ exit;
 //
 
 
+// Approve image to tema dnya
+if (isset($_POST['tema_dnya_approved']) && is_numeric($_POST['image_id']))
+{
+	// add id to the theme of the day
+	$_product_id = trim($_POST['image_id']);
+
+	// visibility trigger
+	if (trim($_POST['tema_dnya_approved']) == 1)
+	{
+		$_is_approved = 0; // uncheck if true
+	}
+	else
+	{
+		$_is_approved = 1; // check if false
+	}
+
+	$sql = "update wp_product_list set tema_dnya_approved = ".$_is_approved." where id = ". $_product_id;
+	$wpdb->query($sql);
+		//pokazh ($sql,"sql: ");
+}
+
+
+
 // Add image to tema dnya
 if (isset($_POST['addid']) && is_numeric($_POST['addid']))
 {
@@ -132,8 +155,22 @@ if($product_list != null)
 {
   echo "<div><h3 style='color:#FF33CC;'>Сегодняшняя тема дня (".$thedate.")</h3></div>";
 
+  // pokazh ($product_list);
+  // pokazh ($_POST);
+
+$is_approved = false;
+
   foreach($product_list as $product)
   {
+		if ($product['tema_dnya_approved'] == '1')
+		{
+			$is_approved = true;
+		}
+		else
+		{
+			$is_approved = false;
+		}
+
 	  if ($cartoon_of_the_day_id == $product['id'])
 	  {
 		echo "<div class='item'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1'  title='".$product['id']."'></a>";
@@ -143,6 +180,12 @@ if($product_list != null)
 		<input type='submit' value='тема выбрана!' style='background-color:#FF00FF;color:white;'></form>
 		<input type='hidden' name='deleteid' value='".$product['id']."'>
 		<input type='image' src='../img/trash.gif' title='уже не убрать'>";
+
+		echo "<form method=post action=''>";
+			echo "<input type='hidden' name='tema_dnya_approved' value='".$is_approved."'>";
+			echo "<input type='hidden' name='image_id' value='".$product['id']."'>";
+			if ($is_approved){echo "<input type='image' src='../img/checked.gif' title='видно'>";}else{echo "<input type='image' src='../img/unchecked.gif' title='не видно до утверждения редактором раздела'>";}
+		echo "</form>";
 	  }
 	  else
 	  {
@@ -154,8 +197,16 @@ if($product_list != null)
 		<form method=post action=''>
 		<input type='hidden' name='deleteid' value='".$product['id']."'>
 		<input type='image' src='../img/trash.gif' alt='убрать' title='убрать'></form>";
+
+		echo "<form method=post action=''>";
+			echo "<input type='hidden' name='tema_dnya_approved' value='".$is_approved."'>";
+			echo "<input type='hidden' name='image_id' value='".$product['id']."'>";
+			if ($is_approved){echo "<input type='image' src='../img/checked.gif' title='видно'>";}else{echo "<input type='image' src='../img/unchecked.gif' title='не видно до утверждения редактором раздела'>";}
+		echo "</form>";
 	  }
 	  echo "</div>";
+
+	  $is_approved = false;
   }
   echo "</div><!-- items -->";
   
@@ -164,9 +215,20 @@ echo "<div style='clear:both;'></div>";
 
   echo "<div><h3 style='color:#FF33CC;'>Завтрашняя тема дня (".$tomorrowh.")</h3></div>";
 
+$is_approved = false;
+
 
   foreach($product_list as $product)
   {
+		if ($product['tema_dnya_approved'] == '1')
+		{
+			$is_approved = true;
+		}
+		else
+		{
+			$is_approved = false;
+		}
+
 	  if ($cartoon_of_tomorrow_id == $product['id'])
 	  {
 		echo "<div class='item'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1' title='".$product['id']."'></a>";
@@ -176,6 +238,12 @@ echo "<div style='clear:both;'></div>";
 		<input type='submit' value='тема выбрана!' style='background-color:#FF00FF;color:white;'></form>
 		<input type='hidden' name='deleteid' value='".$product['id']."'>
 		<input type='image' src='../img/trash.gif' title='уже не убрать'>";
+
+		echo "<form method=post action=''>";
+			echo "<input type='hidden' name='tema_dnya_approved' value='".$is_approved."'>";
+			echo "<input type='hidden' name='image_id' value='".$product['id']."'>";
+			if ($is_approved){echo "<input type='image' src='../img/checked.gif' title='видно'>";}else{echo "<input type='image' src='../img/unchecked.gif' title='не видно до утверждения редактором раздела'>";}
+		echo "</form>";
 	  }
 	  else
 	  {
@@ -187,8 +255,17 @@ echo "<div style='clear:both;'></div>";
 		<form method=post action=''>
 		<input type='hidden' name='deleteid' value='".$product['id']."'>
 		<input type='image' src='../img/trash.gif' alt='убрать' title='убрать'></form>";
+
+		echo "<form method=post action=''>";
+			echo "<input type='hidden' name='tema_dnya_approved' value='".$is_approved."'>";
+			echo "<input type='hidden' name='image_id' value='".$product['id']."'>";
+			if ($is_approved=='1'){echo "<input type='image' src='../img/checked.gif' title='видно'>";}else{echo "<input type='image' src='../img/unchecked.gif' title='не видно до утверждения редактором раздела'>";}
+		echo "</form>";
+				//pokazh ($product['tema_dnya_approved'],"approved:");
+				//pokazh ($is_approved);
 	  }
 	  echo "</div>";
+	  
   }
   echo "</div><!-- items -->";
 
