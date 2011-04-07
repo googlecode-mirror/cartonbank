@@ -113,7 +113,9 @@ if(isset($cart) && $cart != null && ($errorcode == 0))
   if($email != '')
     {
     mail($email, 'Подтверждение покупки изображения. Cartoonbank.ru .', $message, $headers);
-	mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru ..', $report." <br /> ".$message, $headers);
+	mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения.', $report." <br /> ".$message, $headers);
+	mail("sales@cartoonbank.com", 'Подтверждение покупки изображения. Копия.', $report." <br /> ".$message, $headers);
+
     }
 
 
