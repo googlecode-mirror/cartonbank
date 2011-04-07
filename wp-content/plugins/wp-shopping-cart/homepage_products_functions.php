@@ -9,7 +9,6 @@ function nszhpcrt_homepage_products($content = '')
 		}
 
 
-
 	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	{
 		$_brand = $_GET['brand'];
@@ -77,6 +76,8 @@ function top_votes($content = '')
 
 		$pageURL = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["PHP_SELF"].$_page_filter;
 
+$_br=0;
+
 		// Brand filter 
 		if (isset($_GET['br']) && is_numeric($_GET['br']) && $_GET['br'] != '0')
 		{
@@ -89,7 +90,7 @@ function top_votes($content = '')
 			$_br_filter = "";
 		}
 
-		// Limit filter 
+	// Limit filter 
 		if (isset($_GET['lim']) && is_numeric($_GET['lim']))
 		{
 			$_limit = " LIMIT ".$_GET['lim']. " ";
@@ -99,7 +100,7 @@ function top_votes($content = '')
 			$_limit = " LIMIT 100 ";
 		}
 
-		// Offset filter 
+	// Offset filter 
 		if (isset($_GET['off']) && is_numeric($_GET['off']))
 		{
 			$_offset = " OFFSET ".$_GET['off']. " ";
@@ -121,7 +122,7 @@ function top_votes($content = '')
 			  $seperator ="&amp;";
 			  }
 
-		// ORDER BY filter
+	// ORDER BY filter
 		if (isset($_GET['ord']) && is_numeric($_GET['ord']))
 		{
 			$_order = $_GET['ord'];
@@ -177,11 +178,11 @@ function top_votes($content = '')
 			break;
 		case 61:
 			$_order_filter = " ORDER BY points ASC";
-			$_order_description = "Сортировка по количеству баллов. По возрастанию.";
+			$_order_description = "Сортировка по сумме баллов. По возрастанию.";
 			break;
 		case 62:
 			$_order_filter = " ORDER BY points DESC";
-			$_order_description = "Сортировка по количеству баллов. По убыванию.";
+			$_order_description = "Сортировка по сумме баллов. По убыванию.";
 			break;
 		case 71:
 			$_order_filter = " ORDER BY rate ASC";
@@ -209,6 +210,60 @@ function top_votes($content = '')
 			break;
 	}
 
+
+	// Get the Brand (author) data
+		if ($_br==0)
+			{
+				$brand_sql = "SELECT * FROM `wp_product_brands` where active=1 order by name";
+			}
+		else
+			{
+				$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $_br;
+			}
+	
+	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
+			//pokazh($brand_result);
+	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = 1 order by name";
+	$brands_result  = $GLOBALS['wpdb']->get_results($brands_sql,ARRAY_A);
+			//pokazh($brands_result);
+
+
+	// author name
+	if (isset($brand_result[0]['name']) && $brand_result[0]['name'] != '')
+	{$author_name = $brand_result[0]['name'];}else{$brand_result[0]['name']='';}
+
+	// all authors dropdown
+	//$authors = "<select name='authors' style='font-size: 22px;font-family: &apos;Times New Roman&apos;' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=1284&amp;ord=72&br='+options[selectedIndex].value\"><option  value='0'>&nbsp;Все авторы&nbsp;</option>";
+
+	$authors = "<select name='authors' style='font-size: 22px;font-family: &apos;Times New Roman&apos;' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=1284&amp;ord=72&br='+options[selectedIndex].value\">";
+
+	$_selected = "";
+	
+	if ($_br!=0)
+	{
+		$authors .= "<option value='0' style='font-size: 22px;font-family: &apos;Times New Roman&apos;;'>&nbsp;Все авторы&nbsp;</option>";
+		foreach ($brands_result as $brand)
+		{
+			if ($brand_result[0]['id'] == $brand['id'])
+				{$_selected = " selected";}
+			$authors .= "<option $_selected value=".$brand['id']." style='font-size: 22px;font-family: &apos;Times New Roman&apos;;'>&nbsp;".$brand['name']."&nbsp;</option>";
+			$_selected = "";
+		}
+	}
+	else
+	{
+		$authors .= "<option selected value='0' style='font-size: 22px;font-family: &apos;Times New Roman&apos;;'>&nbsp;Все авторы&nbsp;</option>";
+		foreach ($brands_result as $brand)
+		{
+			if ($brand_result[0]['id'] == $brand['id'])
+				{$_selected = " ";}
+			$authors .= "<option $_selected value=".$brand['id']." style='font-size: 22px;font-family: &apos;Times New Roman&apos;;'> &nbsp;".$brand['name']. "&nbsp;</option>";
+			$_selected = "";
+		}
+
+	}
+	$authors .= "</select>";
+
 	$sql = "SELECT 
 			post as ID, 
 			wp_product_list.image as image, 
@@ -231,7 +286,74 @@ function top_votes($content = '')
 				".$_offset;
 		  $product_list = $wpdb->get_results($sql,ARRAY_A);
 
+$output = "<div id='homepage_products' class='items'>";
 
+if (isset($product_list[0]))
+{
+$style_unsorted = "style='vertical-align:text-bottom; background-color: #668bb7; color: #507AA5; cursor: auto; display: block; float: left; height: 20px; margin-top: 10px; margin-bottom: 4px; margin-left: 2px; margin-right: 6px; padding-left: 2px; padding-right: 2px; padding-top: 4px; padding-bottom: 0px; text-align: center; text-decoration: none; width: 138px;'";
+
+$style_sorted   = "style='vertical-align:text-bottom; background-color: #000099; color: #507AA5; cursor: auto; display: block; float: left; height: 20px; margin-top: 10px; margin-bottom: 4px; margin-left: 2px; margin-right: 6px; padding-left: 2px; padding-right: 2px; padding-top: 4px; padding-bottom: 0px; text-align: center; text-decoration: none; width: 138px;'";
+
+
+	if (isset($product_list[0]) && $_br == 0)
+	{
+		$output .= "<div><h1>".$authors."Все авторы.";
+	}
+	else
+	{
+		//$output .= "<div style='color:silver;'><h1>".$authors.$product_list[0]['author'].".";
+		$output .= "<div style='color:silver;'><h1>".$authors;
+	}
+	$output .= "&nbsp;&nbsp;Сто лучших работ.</h1>$_order_description </div>";
+
+// titles
+
+if ($_order == 91) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=92&br=".$_br."' style='color:white;'>по дате голосов. /</a></div>";
+else if ($_order == 92) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=91&br=".$_br."' style='color:white;'>по дате голосов. \</a></div>";
+else $output .= "<div  ".$style_unsorted."><a href='".$pageURL."&ord=92&br=".$_br."' style='color:white;'>по дате голосов.</a></div>";
+
+if ($_order == 81) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=82&br=".$_br."' style='color:white;'>по среднему баллу /</a></div>";
+else if ($_order == 82) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=81&br=".$_br."' style='color:white;'>по среднему баллу \</a></div>";
+else $output .= "<div  ".$style_unsorted."><a href='".$pageURL."&ord=82&br=".$_br."' style='color:white;'>по среднему баллу</a></div>";
+
+if ($_order == 61) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=62&br=".$_br."' style='color:white;'>по сумме баллов /</a></div>";
+else if ($_order == 62) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=61&br=".$_br."' style='color:white;'>по сумме баллов \</a></div>";
+else $output .= "<div  ".$style_unsorted."><a href='".$pageURL."&ord=62&br=".$_br."' style='color:white;'>по сумме баллов</a></div>";
+
+if ($_order == 51) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=52&br=".$_br."' style='color:white;'>по колич. голосов /</a></div>";
+else if ($_order == 52) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=51&br=".$_br."' style='color:white;'>по колич. голосов \</a></div>";
+else $output .= "<div  ".$style_unsorted."><a href='".$pageURL."&ord=52&br=".$_br."' style='color:white;'>по колич. голосов</a></div>";
+
+if ($_order == 71) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=72&br=".$_br."' style='color:white;'>по рейтингу /</a></div>";
+else if ($_order == 72) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=71&br=".$_br."' style='color:white;'>по рейтингу \</a></div>";
+else $output .= "<div  ".$style_unsorted."><a href='".$pageURL."&ord=72&br=".$_br."' style='color:white;'>по рейтингу</a></div>";
+
+
+/*
+if ($_order == 91) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=92&br=".$_br."' style='color:white;'>по дате голосов. /</a></div>";
+else if ($_order == 92) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=91&br=".$_br."' style='color:white;'>по дате голосов. \</a></div>";
+else $output .= "<div class='item' ".$style_unsorted."><a href='".$pageURL."&ord=92&br=".$_br."' style='color:white;'>по дате голосов.</a></div>";
+
+if ($_order == 81) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=82&br=".$_br."' style='color:white;'>по среднему баллу /</a></div>";
+else if ($_order == 82) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=81&br=".$_br."' style='color:white;'>по среднему баллу \</a></div>";
+else $output .= "<div class='item' ".$style_unsorted."><a href='".$pageURL."&ord=82&br=".$_br."' style='color:white;'>по среднему баллу</a></div>";
+
+if ($_order == 61) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=62&br=".$_br."' style='color:white;'>по колич.. баллов /</a></div>";
+else if ($_order == 62) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=61&br=".$_br."' style='color:white;'>по колич. баллов \</a></div>";
+else $output .= "<div class='item' ".$style_unsorted."><a href='".$pageURL."&ord=62&br=".$_br."' style='color:white;'>по колич. баллов</a></div>";
+
+if ($_order == 51) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=52&br=".$_br."' style='color:white;'>по колич. голосов /</a></div>";
+else if ($_order == 52) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=51&br=".$_br."' style='color:white;'>по колич. голосов \</a></div>";
+else $output .= "<div class='item' ".$style_unsorted."><a href='".$pageURL."&ord=52&br=".$_br."' style='color:white;'>по колич. голосов</a></div>";
+
+if ($_order == 71) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=72&br=".$_br."' style='color:white;'>по рейтингу /</a></div>";
+else if ($_order == 72) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=71&br=".$_br."' style='color:white;'>по рейтингу \</a></div>";
+else $output .= "<div class='item' ".$style_unsorted."><a href='".$pageURL."&ord=72&br=".$_br."' style='color:white;'>по рейтингу</a></div>";
+*/
+
+}//if (isset($product_list[0]))
+
+/*
 		  $output = "<div id='homepage_products' class='items'>";
 		$output = '';    
 		if (isset($product_list[0]))
@@ -245,6 +367,8 @@ function top_votes($content = '')
 				  {
 					$output .= "<div><h1>".$product_list[0]['author'].".";
 				  }
+				  $output .= " Сто лучших работ</h1>";
+				
 				  $output .= " Сто лучших работ</h1><div style='color:white;background-color:#668bb7;padding:2px;padding-left:6px;font-weight:bold;display:block;'>".$_order_description."</div><div style='color:#818181;padding-left:150px;'>Сортировать 
 				  <b>по дате</b> последнего голосования: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=91&br=".$_br."'>старые впереди</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=92&br=".$_br."'>новые впереди</a>; 
 				  <br /><b>по среднему баллу</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=81&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=82&br=".$_br."'>по убыванию</a>; 
@@ -252,8 +376,12 @@ function top_votes($content = '')
 				  <br /><b>по количеству голосов</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=51&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=52&br=".$_br."'>по убыванию</a>; 
 				  <br /><b>по рейтингу</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=71&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=72&br=".$_br."'>по убыванию</a>;
 				  </div></div>";
-			  }
+				  
 
+				  $output .= "</div></div>";
+			  }
+*/
+$counter = 1;
 		  foreach((array)$product_list as $product)
 			{
 			$output .= "<div class='item'>";
@@ -261,10 +389,11 @@ function top_votes($content = '')
 			if($product['image'] != '')
 			  {
 			  //$output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' />\n\r";
-			  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['author'].". &quot;".$product['title']."&quot;. Голосов: ".$product['votes'].". Баллов: " . $product['points'] . ". Средний балл: " . round($product['average'],3) .". Рейт: " . round($product['rate'],3) . "' class='thumb'/>";
+			  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$counter.". ".$product['author'].". &quot;".$product['title']."&quot;. Голосов: ".$product['votes'].". Баллов: " . $product['points'] . ". Средний балл: " . round($product['average'],3) .". Рейт: " . round($product['rate'],3) . "' class='thumb'/>";
 			  }
 			$output .= "</a>";
 			$output .= "</div>\n\r";
+			$counter = $counter + 1;
 			}
 		  $output .= "</div>\n\r";
 		  $output .= "<br style='clear: left;'>\n\r";
@@ -388,11 +517,11 @@ function last_sales($content = '')
 			break;
 		case 61:
 			$_order_filter = " ORDER BY points ASC";
-			$_order_description = "Сортировка по количеству баллов. По возрастанию.";
+			$_order_description = "Сортировка по сумме баллов. По возрастанию.";
 			break;
 		case 62:
 			$_order_filter = " ORDER BY points DESC";
-			$_order_description = "Сортировка по количеству баллов. По убыванию.";
+			$_order_description = "Сортировка по сумме баллов. По убыванию.";
 			break;
 		case 71:
 			$_order_filter = " ORDER BY rate ASC";
