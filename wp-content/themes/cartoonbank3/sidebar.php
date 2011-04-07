@@ -251,7 +251,7 @@ else
 echo $avatar_url."<br />";
 echo $authors;
 echo "<br /><a href='".get_option('siteurl')."/?page_id=29&amp;brand=".$brandid."&amp;bio=1'>Информация об авторе</a>";
-echo "<br /><a href='".get_option('siteurl')."/?page_id=33&amp;brand=".$brandid."'>100 лучших работ</a>";
+echo "<br /><a href='".get_option('siteurl')."/?page_id=1284&ord=72&br=".$brandid."'>100 лучших работ</a>";
 }
 ?>
 
