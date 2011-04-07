@@ -297,7 +297,7 @@ $style_sorted   = "style='vertical-align:text-bottom; background-color: #000099;
 
 	if (isset($product_list[0]) && $_br == 0)
 	{
-		$output .= "<div><h1>".$authors;
+		$output .= "<div style='color:silver;'><h1>".$authors;
 	}
 	else
 	{
