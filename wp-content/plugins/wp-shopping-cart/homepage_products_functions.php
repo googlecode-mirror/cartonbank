@@ -133,7 +133,7 @@ $_br=0;
 		}
 
 	$_order_filter = " ORDER BY rate DESC";
-	$_order_description = "Сортировка по рейтингу (произведению среднего балла и корня четвёртой степени из количества голосов). По убыванию.";
+	$_order_description = "Сортировка по рейту (произведению среднего балла и корня четвёртой степени из количества голосов). По убыванию.";
 
 	switch ($_order){
 		case 11:
@@ -186,11 +186,11 @@ $_br=0;
 			break;
 		case 71:
 			$_order_filter = " ORDER BY rate ASC";
-			$_order_description = "Сортировка по рейтингу (произведению среднего балла и корня четвёртой степени из количества голосов). По возрастанию.";
+			$_order_description = "Сортировка по рейту (произведению среднего балла и корня четвёртой степени из количества голосов). По возрастанию.";
 			break;
 		case 72:
 			$_order_filter = " ORDER BY rate DESC";
-			$_order_description = "Сортировка по рейтингу (произведению среднего балла и корня четвёртой степени из количества голосов). По убыванию.";
+			$_order_description = "Сортировка по рейту (произведению среднего балла и корня четвёртой степени из количества голосов). По убыванию.";
 			break;
 		case 81:
 			$_order_filter = " ORDER BY average ASC, points DESC";
@@ -324,9 +324,9 @@ if ($_order == 51) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord
 else if ($_order == 52) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=51&br=".$_br."' style='color:white;'>по колич. голосов \</a></div>";
 else $output .= "<div  ".$style_unsorted."><a href='".$pageURL."&ord=52&br=".$_br."' style='color:white;'>по колич. голосов</a></div>";
 
-if ($_order == 71) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=72&br=".$_br."' style='color:white;'>по рейтингу /</a></div>";
-else if ($_order == 72) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=71&br=".$_br."' style='color:white;'>по рейтингу \</a></div>";
-else $output .= "<div  ".$style_unsorted."><a href='".$pageURL."&ord=72&br=".$_br."' style='color:white;'>по рейтингу</a></div>";
+if ($_order == 71) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=72&br=".$_br."' style='color:white;'>по рейту /</a></div>";
+else if ($_order == 72) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=71&br=".$_br."' style='color:white;'>по рейту \</a></div>";
+else $output .= "<div  ".$style_unsorted."><a href='".$pageURL."&ord=72&br=".$_br."' style='color:white;'>по рейту</a></div>";
 
 
 /*
@@ -472,7 +472,7 @@ function last_sales($content = '')
 		}
 
 	$_order_filter = " ORDER BY rate DESC";
-	$_order_description = "Сортировка по рейтингу (произведению среднего балла и корня четвёртой степени из количества голосов). По убыванию.";
+	$_order_description = "Сортировка по рейту (произведению средн. балла и корня четвёртой степени из количества голосов). По убыванию.";
 
 	switch ($_order){
 		case 11:
@@ -525,11 +525,11 @@ function last_sales($content = '')
 			break;
 		case 71:
 			$_order_filter = " ORDER BY rate ASC";
-			$_order_description = "Сортировка по рейтингу (произведению среднего балла и корня четвёртой степени из количества голосов). По возрастанию.";
+			$_order_description = "Сортировка по рейту (произведению средн. балла и корня четвёртой степени из количества голосов). По возрастанию.";
 			break;
 		case 72:
 			$_order_filter = " ORDER BY rate DESC";
-			$_order_description = "Сортировка по рейтингу (произведению среднего балла и корня четвёртой степени из количества голосов). По убыванию.";
+			$_order_description = "Сортировка по рейту (произведению средн. балла и корня четвёртой степени из количества голосов). По убыванию.";
 			break;
 		case 81:
 			$_order_filter = " ORDER BY average ASC, points DESC";
