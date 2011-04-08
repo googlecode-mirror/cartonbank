@@ -751,7 +751,7 @@ if(isset($_GET['catid']) && is_numeric($_GET['catid']))
         // if we are getting items from only one brand
         //$sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`brand`='".$_GET['brand']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
-		$sql = "SELECT `wp_product_list`.*,`wp_product_list`.`category` AS `category_id` FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`brand`='".escape($_GET['brand'])."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
+		$sql = "SELECT `wp_product_list`.*,`wp_product_list`.`category` AS `category_id` FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`brand`='".$_GET['brand']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
         $category_count = $wpdb->get_results("SELECT COUNT(id) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`brand`='".$_GET['brand']."'",ARRAY_A);
    }
