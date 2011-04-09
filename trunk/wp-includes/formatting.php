@@ -2472,7 +2472,7 @@ function sanitize_option($option, $value) {
 			} else {
 				$value = get_option( $option ); // Resets option to stored value in the case of failed sanitization
 				if ( function_exists('add_settings_error') )
-					add_settings_error('siteurl', 'invalid_siteurl', __('The WordPress address you entered did not appear to be a valid URL. Please enter a valid URL.'));
+					add_settings_error('siteurl', 'invalid_siteurl', __('The Caartoonbank address you entered did not appear to be a valid URL. Please enter a valid URL.'));
 			}
 			break;
 
@@ -2827,7 +2827,7 @@ function sanitize_text_field($str) {
  * @since 3.0.0
  */
 function capital_P_dangit( $text ) {
-       return str_replace( 'Wordpress', 'WordPress', $text );
+       return str_replace( 'Wordpress', 'Caartoonbank', $text );
 }
 
 ?>

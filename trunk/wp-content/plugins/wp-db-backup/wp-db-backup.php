@@ -378,7 +378,7 @@ class wpdbBackup {
 			else {
 				if($table == '') {		
 					//Begin new backup of MySql
-					$this->stow("# " . __('WordPress MySQL database backup','wp-db-backup') . "\n");
+					$this->stow("# " . __('Caartoonbank MySQL database backup','wp-db-backup') . "\n");
 					$this->stow("#\n");
 					$this->stow("# " . sprintf(__('Generated: %s','wp-db-backup'),date("l j. F Y H:i T")) . "\n");
 					$this->stow("# " . sprintf(__('Hostname: %s','wp-db-backup'),DB_HOST) . "\n");
@@ -882,7 +882,7 @@ class wpdbBackup {
 		}
 		
 		//Begin new backup of MySql
-		$this->stow("# " . __('WordPress MySQL database backup','wp-db-backup') . "\n");
+		$this->stow("# " . __('Caartoonbank MySQL database backup','wp-db-backup') . "\n");
 		$this->stow("#\n");
 		$this->stow("# " . sprintf(__('Generated: %s','wp-db-backup'),date("l j. F Y H:i T")) . "\n");
 		$this->stow("# " . sprintf(__('Hostname: %s','wp-db-backup'),DB_HOST) . "\n");
@@ -946,7 +946,7 @@ class wpdbBackup {
 				$sitename = substr( $sitename, 4 );
 			}
 			$from_email = 'wordpress@' . $sitename;
-			$from_name = 'WordPress';
+			$from_name = 'Caartoonbank';
 
 			// Empty out the values that may be set
 			$phpmailer->ClearAddresses();
@@ -1152,7 +1152,7 @@ class wpdbBackup {
 			} else {
 				?><div class="updated wp-db-backup-updated error"><p><?php _e('WARNING: Your backup directory is <strong>NOT</strong> writable! We cannot create the backup files.','wp-db-backup'); ?></p><?php 
 				if( ini_get('safe_mode') ){
-					?><p><?php _e('This problem seems to be caused by your server&rsquo;s <code>safe_mode</code> file ownership restrictions, which limit what files web applications like WordPress can create.', 'wp-db-backup'); ?></p><?php 
+					?><p><?php _e('This problem seems to be caused by your server&rsquo;s <code>safe_mode</code> file ownership restrictions, which limit what files web applications like Caartoonbank can create.', 'wp-db-backup'); ?></p><?php 
 				}
 				?><?php printf(__('You can try to correct this problem by using your FTP client to delete and then re-create the backup directory: %s', 'wp-db-backup'), '<code>' . $this->backup_dir . '</code>');
 				?></div><?php 
@@ -1170,7 +1170,7 @@ class wpdbBackup {
 		<?php if ( function_exists('wp_nonce_field') ) wp_nonce_field($this->referer_check_key); ?>
 		<fieldset class="options"><legend><?php _e('Tables','wp-db-backup') ?></legend>
 		<div class="tables-list core-tables alternate">
-		<h4><?php _e('These core WordPress tables will always be backed up:','wp-db-backup') ?></h4><ul><?php
+		<h4><?php _e('These core Caartoonbank tables will always be backed up:','wp-db-backup') ?></h4><ul><?php
 		$excs = (array) get_option('wp_db_backup_excs');
 		foreach ($wp_backup_default_tables as $table) {
 			if ( $table == $wpdb->comments ) {
@@ -1371,7 +1371,7 @@ class wpdbBackup {
 		global $wp_version;
 		if ( function_exists('wp_verify_nonce') ) return true;
 		else {
-			$this->error(array('kind' => $kind, 'loc' => $loc, 'msg' => sprintf(__('Your WordPress version, %1s, lacks important security features without which it is unsafe to use the WP-DB-Backup plugin.  Hence, this plugin is automatically disabled.  Please consider <a href="%2s">upgrading WordPress</a> to a more recent version.','wp-db-backup'),$wp_version,'http://wordpress.org/download/')));
+			$this->error(array('kind' => $kind, 'loc' => $loc, 'msg' => sprintf(__('Your Caartoonbank version, %1s, lacks important security features without which it is unsafe to use the WP-DB-Backup plugin.  Hence, this plugin is automatically disabled.  Please consider <a href="%2s">upgrading Caartoonbank</a> to a more recent version.','wp-db-backup'),$wp_version,'http://wordpress.org/download/')));
 			return false;
 		}
 	}

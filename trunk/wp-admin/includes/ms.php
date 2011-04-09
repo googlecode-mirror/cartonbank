@@ -687,7 +687,7 @@ function secret_salt_warning() {
 			$out .= "define( '$key', '" . esc_html( wp_generate_password( 64, true, true ) ) . "' );<br />";
 	}
 	if ( $out != '' ) {
-		$msg  = __( 'Warning! WordPress encrypts user cookies, but you must add the following lines to <strong>wp-config.php</strong> for it to be more secure.' );
+		$msg  = __( 'Warning! Caartoonbank encrypts user cookies, but you must add the following lines to <strong>wp-config.php</strong> for it to be more secure.' );
 		$msg .= '<br/>' . __( "Before the line <code>/* That's all, stop editing! Happy blogging. */</code> please add this code:" );
 		$msg .= "<br/><br/><code>$out</code>";
 
