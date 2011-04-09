@@ -351,7 +351,7 @@ else
                     if(isset($_GET['cs_exact']) && $_GET['cs_exact']!= ''){
                         $exact_keywords = strtolower(trim($_GET['cs_exact']));
                     }
-					$exact_keywords_filter = " AND (`wp_product_list`.`id` = '".$exact_keywords."' OR `wp_product_list`.`name` = '".$exact_keywords."' OR `wp_product_list`.`description` = '".$exact_keywords."' OR `wp_product_list`.`additional_description` = '".$exact_keywords."')";
+					$exact_keywords_filter = " AND (`wp_product_list`.`id` LIKE '%".$exact_keywords."%' OR `wp_product_list`.`name` LIKE '%".$exact_keywords."%' OR `wp_product_list`.`description` LIKE '%".$exact_keywords."%' OR `wp_product_list`.`additional_description` LIKE '%".$exact_keywords."%')";
 				}
 
 			// All words search match
