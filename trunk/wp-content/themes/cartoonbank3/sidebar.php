@@ -37,6 +37,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	<input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
 	<input type="submit" id="searchsubmit" class='borders' value="Искать" />
 	</form>
+	<a href="?page_id=927">расширенный поиск</a>
 
 <?
 // Theme of the day
