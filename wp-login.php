@@ -84,7 +84,7 @@ function login_header($title = 'Log In', $message = '', $wp_error = '') {
 </head>
 <body class="login">
 <?php   if ( !is_multisite() ) { ?>
-<div id="login"><h1><a href="<?php echo apply_filters('login_headerurl', get_option('siteurl')); ?>" title="<?php echo apply_filters('login_headertitle', __('Powered by WordPress')); ?>"><?php bloginfo('name'); ?></a></h1>
+<div id="login"><h1><a href="<?php echo apply_filters('login_headerurl', get_option('siteurl')); ?>" title="<?php echo apply_filters('login_headertitle', __('Powered by Caartoonbank')); ?>"><?php bloginfo('name'); ?></a></h1>
 <?php   } else { ?>
 <div id="login"><h1><a href="<?php echo apply_filters('login_headerurl', network_home_url() ); ?>" title="<?php echo apply_filters('login_headertitle', $current_site->site_name ); ?>"><span class="hide"><?php bloginfo('name'); ?></span></a></h1>
 <?php   }
@@ -568,7 +568,7 @@ default:
 
 	// If cookies are disabled we can't log in even with a valid user+pass
 	if ( isset($_POST['testcookie']) && empty($_COOKIE[TEST_COOKIE]) )
-		$errors->add('test_cookie', __("<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href='http://www.google.com/cookies.html'>enable cookies</a> to use WordPress."));
+		$errors->add('test_cookie', __("<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href='http://www.google.com/cookies.html'>enable cookies</a> to use Caartoonbank."));
 
 	// Some parts of this script use the main login form to display a message
 	if		( isset($_GET['loggedout']) && TRUE == $_GET['loggedout'] )
