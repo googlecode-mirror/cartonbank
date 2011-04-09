@@ -1,18 +1,27 @@
 <?php
 global $wpdb, $colorfilter, $color;
 
+			//pokazh ($_POST);
+
+	// Rabochy stol filter
+	$_666 = '';
+
 	if (isset($_GET['category']) && $_GET['category'] == '666')
 		{
-			//$exclude_category_sql = " AND `wp_item_category_associations`.`category_id` != '777' ";
 			$exclude_category_sql = " ";
 			$approved_or_not = "";
 		}
+		else if ((isset($_POST['666']) && $_POST['666']=='on') or (isset($_GET['666']) && $_GET['666']==1))
+		{
+			// include in search results
+			$exclude_category_sql = " ";
+			$approved_or_not = "";
+			$_666 = 'on';
+		}
 		else
 		{
-			//$exclude_category_sql = " AND `wp_item_category_associations`.`category_id` != '666' AND `wp_item_category_associations`.`category_id` != '777' ";
-
+			// exclude from search results
 			$exclude_category_sql = " AND `wp_product_list`.`category` != '666' ";
-
 			$approved_or_not = " AND `wp_product_list`.`approved` = '1' ";
 		}
 
@@ -118,10 +127,15 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 			$colorfilter = '';
 		}
 
-if (isset($_GET['category']) && is_numeric($_GET['category']))
+if ((isset($_GET['category']) && is_numeric($_GET['category'])) OR (isset($_POST['category']) && is_numeric($_POST['category'])))
 {
-	$_category = $_GET['category'];
-    //$cat_group_sql = " AND `wp_item_category_associations`.`category_id`=".$_category;
+	if(isset($_POST['category']) && $_POST['category']!= ''){
+		$_category = strtolower(trim($_POST['category']));
+	}
+	if(isset($_GET['category']) && $_GET['category']!= ''){
+		$_category = strtolower(trim($_GET['category']));
+	}
+
 	$cat_group_sql = " AND `wp_product_list`.`category`=".$_category;
 	}
 	else
@@ -265,12 +279,88 @@ else
     
      // SEARCH
 
-                if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
+
+			// Any search word match
+
+				$any_keywords = '';
+				$any_keywords_filter = '';
+
+				if((isset($_POST['cs_any']) && $_POST['cs_any']!= '') or (isset($_GET['cs_any']) && $_GET['cs_any']!= ''))
                 {
+					if(isset($_POST['cs_any']) && $_POST['cs_any']!= ''){
+                        $any_keywords = strtolower(trim($_POST['cs_any']));
+                    }
+                    if(isset($_GET['cs_any']) && $_GET['cs_any']!= ''){
+                        $any_keywords = strtolower(trim($_GET['cs_any']));
+                    }
 
 
-				//pokazh($_POST,"post ");
 
+								$aKeywords = split(" ",$any_keywords);
+
+								// trim spaces in array
+								array_walk($aKeywords, 'trim_value');
+
+								// if more than one search word
+								if (count($aKeywords) > 1)
+									{
+										$any_keywords_filter = " AND (";
+										foreach ($aKeywords as $key => $value)
+										{
+											$any_keywords_filter .= "(`wp_product_list`.`id` LIKE '%".$value."%' OR `wp_product_list`.`name` LIKE '%".$value."%' OR `wp_product_list`.`description` LIKE '%".$value."%' OR `wp_product_list`.`additional_description` LIKE '%".$value."%') OR ";
+										}
+
+										// remove extra chars from right side
+										$any_keywords_filter = substr($any_keywords_filter, 0, -4);
+										$any_keywords_filter .= ")";
+									}
+									else if ($any_keywords!='')
+									{
+										$any_keywords_filter = " AND (`wp_product_list`.`id` LIKE '%".$any_keywords."%' OR `wp_product_list`.`name` LIKE '%".$any_keywords."%' OR `wp_product_list`.`description` LIKE '%".$any_keywords."%' OR `wp_product_list`.`additional_description` LIKE '%".$any_keywords."%')";
+									}
+
+				}
+
+			// Exclude keywords match
+				
+				$exclude_keywords = '';
+				$exclude_keywords_filter = '';
+
+				if((isset($_POST['cs_exclude']) && $_POST['cs_exclude']!= '') or (isset($_GET['cs_exclude']) && $_GET['cs_exclude']!= ''))
+                {
+					if(isset($_POST['cs_exclude']) && $_POST['cs_exclude']!= ''){
+                        $exclude_keywords = strtolower(trim($_POST['cs_exclude']));
+                    }
+                    if(isset($_GET['cs_exclude']) && $_GET['cs_exclude']!= ''){
+                        $exclude_keywords = strtolower(trim($_GET['cs_exclude']));
+                    }
+					$exclude_keywords_filter = " AND (`wp_product_list`.`id` NOT LIKE '%".$exclude_keywords."%' OR `wp_product_list`.`name` NOT LIKE '%".$exclude_keywords."%' OR `wp_product_list`.`description` NOT LIKE '%".$exclude_keywords."%' OR `wp_product_list`.`additional_description` NOT LIKE '%".$exclude_keywords."%')";
+				}
+
+
+			// Exact keywords match
+				
+				$exact_keywords = '';
+				$exact_keywords_filter = '';
+
+				if((isset($_POST['cs_exact']) && $_POST['cs_exact']!= '') or (isset($_GET['cs_exact']) && $_GET['cs_exact']!= ''))
+                {
+					if(isset($_POST['cs_exact']) && $_POST['cs_exact']!= ''){
+                        $exact_keywords = strtolower(trim($_POST['cs_exact']));
+                    }
+                    if(isset($_GET['cs_exact']) && $_GET['cs_exact']!= ''){
+                        $exact_keywords = strtolower(trim($_GET['cs_exact']));
+                    }
+					$exact_keywords_filter = " AND (`wp_product_list`.`id` LIKE '%".$exact_keywords."%' OR `wp_product_list`.`name` LIKE '%".$exact_keywords."%' OR `wp_product_list`.`description` LIKE '%".$exact_keywords."%' OR `wp_product_list`.`additional_description` LIKE '%".$exact_keywords."%')";
+				}
+
+			// All words search match
+
+				$keywords = '';
+				$search_keywords_filter = '';
+
+                if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= '') or (isset($_POST['cs_exact']) && $_POST['cs_exact']!= '') or (isset($_GET['cs_exact']) && $_GET['cs_exact']!= '') or (isset($_POST['cs_any']) && $_POST['cs_any']!= '') or (isset($_GET['cs_any']) && $_GET['cs_any']!= ''))
+                {
 					if(isset($_POST['cs']) && $_POST['cs']!= ''){
                         $keywords = strtolower(trim($_POST['cs']));
                     }
@@ -299,12 +389,14 @@ else
 										$search_keywords_filter = substr($search_keywords_filter, 0, -5);
 										$search_keywords_filter .= ")";
 									}
-									else
+									else if ($keywords!='')
 									{
 										$search_keywords_filter = " AND (`wp_product_list`.`id` LIKE '%".$keywords."%' OR `wp_product_list`.`name` LIKE '%".$keywords."%' OR `wp_product_list`.`description` LIKE '%".$keywords."%' OR `wp_product_list`.`additional_description` LIKE '%".$keywords."%')";
 									}
 
-									//pokazh($search_keywords_filter,"search_keywords_filter ");
+									$search_keywords_filter = $exact_keywords_filter.$search_keywords_filter.$any_keywords_filter.$exclude_keywords_filter;
+
+												//pokazh($search_keywords_filter,"search_keywords_filter ");
 
 									// add brand to search
 									if (isset($_POST['brand']) && is_numeric($_POST['brand']))
@@ -337,8 +429,6 @@ else
                         $items_count = $items_count[0]['count'];
                         // search request
    					
-                        //$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_categories`.`name` as kategoria, `wp_item_category_associations`.`category_id` FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cat_group_sql . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
-
 						$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_categories`.`name` as kategoria, `wp_product_list`.`category` as category_id FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cat_group_sql . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC LIMIT ".$offset.",".$items_on_page; 
 
                     }
@@ -348,6 +438,10 @@ else
                         $search_sql ='';
                     }
                 $sql = $search_sql;
+
+
+												//pokazh($sql);
+
 				} // if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
 
 		//Search end
@@ -356,7 +450,7 @@ else
 					$keywords = '';
 				}
 
-				//pokazh($items_count,"items_count");
+												//pokazh($items_count,"items_count");
 
 
 	// we inject here direct link to the image
@@ -576,11 +670,13 @@ else
                 // непонятно зачем эти параметры?
                 $product_list = '';
 
-				if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
+		        if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= '') or (isset($_POST['cs_exact']) && $_POST['cs_exact']!= '') or (isset($_GET['cs_exact']) && $_GET['cs_exact']!= '') or (isset($_POST['cs_any']) && $_POST['cs_any']!= '') or (isset($_GET['cs_any']) && $_GET['cs_any']!= ''))
+
                      {$search_sql = $sql;}
 				else
 					 {$search_sql = '';}
-                     
+
+									//pokazh($search_sql);
 					 
 // FIRST PAGE icons OUTPUT
 
@@ -611,7 +707,13 @@ else
 		$brand_group_sql = '';
 	}
 
-	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$brand_group_sql."&color=".$color."&category=".$catid."&cs=".$keywords."&offset=",$filter_list);
+if ($keywords!='') {$_url_cs="&cs=".$keywords;}else{$_url_cs='';}
+if ($exact_keywords!='') {$_url_cs_exact="&cs_exact=".$exact_keywords;}else{$_url_cs_exact='';}
+if ($any_keywords!='') {$_url_cs_any="&cs_any=".$any_keywords;}else{$_url_cs_any='';}
+if ($_666!='') {$_url_666="&666=on";}else{$_url_666='';}
+if ($exclude_keywords!='') {$_url_cs_exclude="&cs_exclude=".$exclude_keywords;}else{$_url_cs_exclude='';}
+
+	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$brand_group_sql."&color=".$color."&category=".$catid.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&offset=",$filter_list);
 		
 
 	  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
