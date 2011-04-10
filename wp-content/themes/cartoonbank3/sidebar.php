@@ -31,7 +31,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	<form method="post" id="searchform" action="?page_id=29">
 	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" onfocus="this.value='';"/><br />
 	<input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
-	<input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:2px;" />
+	<input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:6px;margin-bottom:4px;" />
 	</form>
 	<a href="?page_id=927">Расширенный поиск</a>
 
