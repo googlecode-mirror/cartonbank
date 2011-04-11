@@ -876,6 +876,8 @@ function nzshpcrt_submit_ajax()
   $output .= "            <td class='r'>\n\r";
   $output .= "Ключевые слова,<br />разделённые запятыми: ";
 
+  $output .= "<a href='".get_option('siteurl')."/ales/wordassociations/words.php?id='".$product['id'].">добавить ассоциаций</a>";
+
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
   $output .= "<textarea id='tagsedit' name='additional_description' cols='45' rows='3' >".stripslashes($product['additional_description'])."</textarea>";
