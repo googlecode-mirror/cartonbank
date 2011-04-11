@@ -876,11 +876,11 @@ function nzshpcrt_submit_ajax()
   $output .= "            <td class='r'>\n\r";
   $output .= "Ключевые слова,<br />разделённые запятыми:<br>";
 
-  $output .= "<a href='".get_option('siteurl')."/ales/wordassociations/words.php?id='".$product['id']."' target=_blank>добавить<br>ассоциаций</a>";
+  $output .= "<a href='".get_option('siteurl')."/ales/wordassociations/words.php?id=".$product['id']."' target=_blank>добавить<br>ассоциаций</a>";
 
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<textarea id='tagsedit' name='additional_description' cols='45' rows='3' >".stripslashes($product['additional_description'])."</textarea>";
+  $output .= "<textarea id='tagsedit' name='additional_description' cols='45' rows='4' >".stripslashes($product['additional_description'])."</textarea>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
