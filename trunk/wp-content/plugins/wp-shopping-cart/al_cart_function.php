@@ -132,16 +132,9 @@ if (!$licensecolumn)
 			$result .= " </td>";
 
 		}
-
-		$price_modifier = 0;
-	    
-		if($product_list[0]['notax'] == 1)
-	      {
-	      $total += $number * ($product_list[0]['price']-$price_modifier);
-	      }
-	      else
-		{
-		$total += $number * ($product_list[0]['price']-$price_modifier) * get_option('gst_rate');
+		if (isset($product_list[0]['price']))
+	    {
+			$total += $number * ($product_list[0]['price']);
 		}
 
 		if ($licensecolumn)
