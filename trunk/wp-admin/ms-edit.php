@@ -468,7 +468,7 @@ switch ( $_GET['action'] ) {
 	?>
 			<!DOCTYPE html>
 			<head>
-				<title><?php _e( 'Caartoonbank &rsaquo; Confirm your action' ); ?></title>
+				<title><?php _e( 'Cartoonbank &rsaquo; Confirm your action' ); ?></title>
 
 				<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 				<?php
@@ -477,7 +477,7 @@ switch ( $_GET['action'] ) {
 				?>
 			</head>
 			<body>
-				<h1 id="logo"><img alt="Caartoonbank" src="<?php echo esc_attr( admin_url( 'images/wordpress-logo.png' ) ); ?>" /></h1>
+				<h1 id="logo"><img alt="Cartoonbank" src="<?php echo esc_attr( admin_url( 'images/wordpress-logo.png' ) ); ?>" /></h1>
 				<form action="ms-edit.php?action=<?php echo esc_attr( $_GET['action2'] ) ?>" method="post">
 					<input type="hidden" name="action" value="<?php echo esc_attr( $_GET['action2'] ) ?>" />
 					<input type="hidden" name="id" value="<?php echo esc_attr( $id ); ?>" />

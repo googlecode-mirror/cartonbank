@@ -648,7 +648,7 @@ function wpmu_signup_blog_notification($domain, $path, $title, $user, $user_emai
 	$admin_email = get_site_option( 'admin_email' );
 	if ( $admin_email == '' )
 		$admin_email = 'support@' . $_SERVER['SERVER_NAME'];
-	$from_name = get_site_option( 'site_name' ) == '' ? 'Caartoonbank' : esc_html( get_site_option( 'site_name' ) );
+	$from_name = get_site_option( 'site_name' ) == '' ? 'Cartoonbank' : esc_html( get_site_option( 'site_name' ) );
 	$message_headers = "From: \"{$from_name}\" <{$admin_email}>\n" . "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
 	$message = sprintf( apply_filters( 'wpmu_signup_blog_notification_email', __( "To activate your blog, please click the following link:\n\n%s\n\nAfter you activate, you will receive *another email* with your login.\n\nAfter you activate, you can visit your site here:\n\n%s" ) ), $activate_url, esc_url( "http://{$domain}{$path}" ), $key );
 	// TODO: Don't hard code activation link.
@@ -665,7 +665,7 @@ function wpmu_signup_user_notification($user, $user_email, $key, $meta = '') {
 	$admin_email = get_site_option( 'admin_email' );
 	if ( $admin_email == '' )
 		$admin_email = 'support@' . $_SERVER['SERVER_NAME'];
-	$from_name = get_site_option( 'site_name' ) == '' ? 'Caartoonbank' : esc_html( get_site_option( 'site_name' ) );
+	$from_name = get_site_option( 'site_name' ) == '' ? 'Cartoonbank' : esc_html( get_site_option( 'site_name' ) );
 	$message_headers = "From: \"{$from_name}\" <{$admin_email}>\n" . "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
 	$message = sprintf( apply_filters( 'wpmu_signup_user_notification_email', __( "To activate your user, please click the following link:\n\n%s\n\nAfter you activate, you will receive *another email* with your login.\n\n" ) ), site_url( "wp-activate.php?key=$key" ), $key );
 	// TODO: Don't hard code activation link.
@@ -882,7 +882,7 @@ function install_blog($blog_id, $blog_title = '') {
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 	if ( $wpdb->get_results("SELECT ID FROM $wpdb->posts") )
-		die(__('<h1>Already Installed</h1><p>You appear to have already installed Caartoonbank. To reinstall please clear your old database tables first.</p>') . '</body></html>');
+		die(__('<h1>Already Installed</h1><p>You appear to have already installed Cartoonbank. To reinstall please clear your old database tables first.</p>') . '</body></html>');
 
 	$wpdb->suppress_errors(false);
 
@@ -962,12 +962,12 @@ Thanks!
 	if ( $admin_email == '' )
 		$admin_email = 'support@' . $_SERVER['SERVER_NAME'];
 
-	$from_name = get_site_option( 'site_name' ) == '' ? 'Caartoonbank' : esc_html( get_site_option( 'site_name' ) );
+	$from_name = get_site_option( 'site_name' ) == '' ? 'Cartoonbank' : esc_html( get_site_option( 'site_name' ) );
 	$message_headers = "From: \"{$from_name}\" <{$admin_email}>\n" . "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
 	$message = $welcome_email;
 
 	if ( empty( $current_site->site_name ) )
-		$current_site->site_name = 'Caartoonbank MU';
+		$current_site->site_name = 'Cartoonbank MU';
 
 	$subject = apply_filters( 'update_welcome_subject', sprintf(__('New %1$s Site: %2$s'), $current_site->site_name, stripslashes( $title ) ) );
 	wp_mail($user->user_email, $subject, $message, $message_headers);
@@ -995,12 +995,12 @@ function wpmu_welcome_user_notification($user_id, $password, $meta = '') {
 	if ( $admin_email == '' )
 		$admin_email = 'support@' . $_SERVER['SERVER_NAME'];
 
-	$from_name = get_site_option( 'site_name' ) == '' ? 'Caartoonbank' : esc_html( get_site_option( 'site_name' ) );
+	$from_name = get_site_option( 'site_name' ) == '' ? 'Cartoonbank' : esc_html( get_site_option( 'site_name' ) );
 	$message_headers = "From: \"{$from_name}\" <{$admin_email}>\n" . "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
 	$message = $welcome_email;
 
 	if ( empty( $current_site->site_name ) )
-		$current_site->site_name = 'Caartoonbank MU';
+		$current_site->site_name = 'Cartoonbank MU';
 
 	$subject = apply_filters( 'update_welcome_user_subject', sprintf(__('New %1$s User: %2$s'), $current_site->site_name, $user->user_login) );
 	wp_mail($user->user_email, $subject, $message, $message_headers);
