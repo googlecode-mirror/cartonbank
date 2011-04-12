@@ -368,61 +368,55 @@ function nzshpcrt_submit_ajax()
 	if (isset($_SESSION['nzshpcrt_cart']))
 	
 	{
-		if(isset($item_data[0]) && (($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
+	  $cartcount = count($_SESSION['nzshpcrt_cart']);
+
+		//echo "cartcount: ".$cartcount;
+
+	  if(isset($_POST['variation']) && is_array($_POST['variation'])) {  $variations = $_POST['variation'];  }  else  { $variations = null; }
+	  
+	  $updated_quantity = false;
+	  if($_SESSION['nzshpcrt_cart'] != null)
+		{ 
+		foreach($_SESSION['nzshpcrt_cart'] as $cart_key => $cart_item)
 		  {
-		  $cartcount = count($_SESSION['nzshpcrt_cart']);
-
-			//echo "cartcount: ".$cartcount;
-
-		  if(isset($_POST['variation']) && is_array($_POST['variation'])) {  $variations = $_POST['variation'];  }  else  { $variations = null; }
-		  
-		  $updated_quantity = false;
-		  if($_SESSION['nzshpcrt_cart'] != null)
-			{ 
-			foreach($_SESSION['nzshpcrt_cart'] as $cart_key => $cart_item)
-			  {
-			  if($cart_item->product_id == $_POST['prodid'])
-				{
-				//ales
-				
-				if (isset($_POST['license']))
-					{$_SESSION['nzshpcrt_cart'][$cart_key]->license = $_POST['license'];}
-				else
-					{$_SESSION['nzshpcrt_cart'][$cart_key]->license = 'l1_price';}
-
-				if (isset($brand_id))
-				{
-					$_SESSION['nzshpcrt_cart'][$cart_key]->author = get_brand($brand_id);
-				}
-
-				if($_SESSION['nzshpcrt_cart'][$cart_key]->product_variations === $variations) 
-				  {
-				  $_SESSION['nzshpcrt_cart'][$cart_key]->quantity = 1;
-				  $updated_quantity = true;
-				  }
-				}
-			  }
-			}
-		  if($updated_quantity === false)
+		  if($cart_item->product_id == $_POST['prodid'])
 			{
-			if(isset($_POST['quantity']) && is_numeric($_POST['quantity']))
+			//ales
+			
+			if (isset($_POST['license']))
+				{$_SESSION['nzshpcrt_cart'][$cart_key]->license = $_POST['license'];}
+			else
+				{$_SESSION['nzshpcrt_cart'][$cart_key]->license = 'l1_price';}
+
+			if (isset($brand_id))
+			{
+				$_SESSION['nzshpcrt_cart'][$cart_key]->author = get_brand($brand_id);
+			}
+
+			if($_SESSION['nzshpcrt_cart'][$cart_key]->product_variations === $variations) 
 			  {
-			  if($_POST['quantity'] > 0)
-				{
-				$new_cart_item = new cart_item($_POST['prodid'],$variations,$_POST['quantity']);
-				}
+			  $_SESSION['nzshpcrt_cart'][$cart_key]->quantity = 1;
+			  $updated_quantity = true;
 			  }
-			  else
-				{
-				$new_cart_item = new cart_item($_POST['prodid'],$variations);
-				}
-			$_SESSION['nzshpcrt_cart'][$cartcount + 1] = $new_cart_item;
 			}
 		  }
-		  else 
+		}
+	  if($updated_quantity === false)
+		{
+		if(isset($_POST['quantity']) && is_numeric($_POST['quantity']))
+		  {
+		  if($_POST['quantity'] > 0)
 			{
-			$quantity_limit = true;
+			$new_cart_item = new cart_item($_POST['prodid'],$variations,$_POST['quantity']);
 			}
+		  }
+		  else
+			{
+			$new_cart_item = new cart_item($_POST['prodid'],$variations);
+			}
+		$_SESSION['nzshpcrt_cart'][$cartcount + 1] = $new_cart_item;
+		}
+	  
 
 	}	
 	
