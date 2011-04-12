@@ -368,7 +368,7 @@ function nzshpcrt_submit_ajax()
 	if (isset($_SESSION['nzshpcrt_cart']))
 	
 	{
-		if((($item_data[0]['quantity_limited'] == 1) && ($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) || ($item_data[0]['quantity_limited'] == 0)) 
+		if(($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) 
 		  {
 		  $cartcount = count($_SESSION['nzshpcrt_cart']);
 
