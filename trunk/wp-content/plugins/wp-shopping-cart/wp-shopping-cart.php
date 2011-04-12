@@ -366,7 +366,7 @@ function nzshpcrt_submit_ajax()
 	}
 
 	if (isset($_SESSION['nzshpcrt_cart']))
-	
+	pokazh($_SESSION['nzshpcrt_cart']);
 	{
 		if(($item_data[0]['quantity'] != 0) && ($item_data[0]['quantity'] > $item_quantity)) 
 		  {
