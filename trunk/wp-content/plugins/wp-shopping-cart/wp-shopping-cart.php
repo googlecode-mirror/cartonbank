@@ -2031,14 +2031,8 @@ $current_user = wp_get_current_user();
        {
        $wpdb->query("INSERT INTO `wp_download_status` ( `id` , `fileid` , `purchid` , `downloads` , `active` , `datetime` ) VALUES ( '', '".$product_data['file']."', '".$getid[0]['id']."', '$downloads', '0', NOW( ));");
        }
-      if($product_data['special']==1)
-        {
-        $price_modifier = $product_data['special_price'];
-        }
-        else
-          {
-          $price_modifier = 0;
-          }
+
+    $price_modifier = 0;
     
     $price = $cart_item->price; 
 
@@ -2291,8 +2285,6 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
 	  $cart_item->name = $product[0]['name'];
 
       $price_modifier = 0; // for compatibility
-
-
 
 		if (isset($_POST['license']) && ($cart_item->product_id == $_POST['prodid']) && !isset($_POST['Buy']))
 		  {
