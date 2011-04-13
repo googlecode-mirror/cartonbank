@@ -79,7 +79,7 @@ if($product_list != null)
 		echo "            </td>";
 
 		echo "            <td class='t'>";
-		echo $product['wallet'];
+		echo round($product['wallet'],0);
 		echo "            </td>";
 
 		echo "            <td class='t'>";
