@@ -35,6 +35,8 @@ echo "редактировать";
 echo "            </td>\n\r";
 
 echo "          </tr>\n\r";
+
+http://109.120.143.27/cb/wp-admin/user-edit.php?user_id=90&wp_http_referer=%2Fcb%2Fwp-admin%2Fusers.php
 */
 if($product_list != null)
   {
@@ -43,9 +45,9 @@ if($product_list != null)
 		echo "          <tr style='background-color:white;'>\n\r";
 		echo "            <td>\n\r";
 		echo "            </td>\n\r";
-		echo "            <td>\n\r";
+		echo "            <td>\n\r<a href=".get_option('siteurl')"/wp-admin/user-edit.php?user_id=".$product['id'].">";
 		echo $product['id'];
-		echo "            </td>\n\r";
+		echo "</a>            </td>\n\r";
 		echo "            <td>\n\r";
 		echo $product['user_login'];
 		echo "            </td>\n\r";
