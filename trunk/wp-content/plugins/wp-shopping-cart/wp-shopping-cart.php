@@ -94,8 +94,9 @@ class wp_shopping_cart
       add_submenu_page($base_page,'Продукты', 'Продукты', 7, 'wp-shopping-cart/display-items.php');
       add_submenu_page($base_page,'Категория', 'Категория', 7, 'wp-shopping-cart/display-category.php');
       add_submenu_page($base_page,'Автор', 'Автор', 7, 'wp-shopping-cart/display-brands.php');
+      add_submenu_page($base_page,'Юзеры', 'Юзеры', 7, 'wp-shopping-cart/display-users.php');
       
-      add_submenu_page($base_page,'Варьирование', 'Варьирование', 7, 'wp-shopping-cart/display_variations.php');
+      //add_submenu_page($base_page,'Варьирование', 'Варьирование', 7, 'wp-shopping-cart/display_variations.php');
       add_submenu_page($base_page,'Параметры доступа', 'Параметры доступа', 7, 'wp-shopping-cart/gatewayoptions.php');
       if(get_option('nzshpcrt_first_load') != 0)
         {
