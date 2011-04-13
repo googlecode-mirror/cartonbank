@@ -70,7 +70,8 @@ if($product_list != null)
 		echo "            </td>";
 
 		echo "            <td class='t'>";
-		echo "<a href='".$product['user_url']."'>url</a>";
+		if($product['user_url']!='')
+			echo "<a href='".$product['user_url']."'>url</a>";
 		echo "            </td>";
 
 		echo "            <td class='t'>";
