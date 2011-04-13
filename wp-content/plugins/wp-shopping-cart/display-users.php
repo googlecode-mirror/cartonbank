@@ -7,36 +7,45 @@ $product_list = $wpdb->get_results($sql,ARRAY_A) ;
   <h2>Юзеры</h2>
 
 <?php
-echo "    <table id='productpage' style='padding:4px;'>\n\r";
-echo "      <tr><td>\n\r";
 echo "        <table id='itemlist' style='padding:4px;background-color:silver;'>\n\r";
-/*
+
 echo "          <tr class='firstrow' style='border:1px solid black;background-color:#c0c0c0;'>\n\r";
 echo "            <td>\n\r";
-echo "фото";
+echo "id";
 echo "            </td>\n\r";
 
 echo "            <td>\n\r";
-echo "имя";
+echo "user_login";
 echo "            </td>\n\r";
 
 echo "            <td>\n\r";
-echo "описание";
+echo "user_nicename";
 echo "            </td>\n\r";
 
 echo "            <td>\n\r";
-echo "user_id";
+echo "display_name";
 echo "            </td>\n\r";
 
 
 echo "            <td>\n\r";
-echo "редактировать";
+echo "user_email";
+echo "            </td>\n\r";
+
+echo "            <td>\n\r";
+echo "wallet";
+echo "            </td>\n\r";
+
+echo "            <td>\n\r";
+echo "discount";
+echo "            </td>\n\r";
+
+echo "            <td>\n\r";
+echo "contract";
 echo "            </td>\n\r";
 
 echo "          </tr>\n\r";
 
-http://109.120.143.27/cb/wp-admin/user-edit.php?user_id=90&wp_http_referer=%2Fcb%2Fwp-admin%2Fusers.php
-*/
+
 if($product_list != null)
   {
   foreach($product_list as $product)
@@ -80,8 +89,4 @@ if($product_list != null)
   }
   
 echo "        </table>\n\r";
-echo "      </td><td class='secondcol'>\n\r";
-echo "      </td></tr>\n\r";
-echo "     </table>\n\r";
-  ?>
-</div>
+?>
