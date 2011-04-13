@@ -1,0 +1,24 @@
+AddHandler x-httpd-php .php
+# BEGIN WordPress
+
+# END WordPress
+
+AddDefaultCharset utf-8
+AddCharset utf-8 *
+<IfModule mod_charset.c>
+CharsetSourceEnc utf-8
+CharsetDefault utf-8
+</IfModule>
+
+<Files ~ "^.*\.([Ll][Oo][Gg]|[bB][aA][kK])">
+ Order allow,deny
+ Deny from all
+ Satisfy All
+</Files>
+
+Options +FollowSymLinks
+RewriteEngine On
+RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+RewriteRule ^(.*)$ index.php [F,L]
