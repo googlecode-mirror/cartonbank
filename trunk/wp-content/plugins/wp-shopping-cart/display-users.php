@@ -9,12 +9,12 @@ $product_list = $wpdb->get_results($sql,ARRAY_A) ;
 <?php
 echo "        <table id='itemlist' style='padding:4px;'>\n\r";
 
-echo "          <tr class='firstrow' style='padding:2px; border:1px solid black; background-color:#c0c0c0;'>\n\r";
-echo "            <td>\n\r";
+echo "          <tr style='border:1px solid black; background-color:#c0c0c0;'>\n\r";
+echo "            <td class='username'>\n\r";
 echo "id";
 echo "            </td>\n\r";
 
-echo "            <td>\n\r";
+echo "            <td class='username'>\n\r";
 echo "user_login";
 echo "            </td>\n\r";
 
