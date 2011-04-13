@@ -63,7 +63,7 @@ echo "<div><table style='width:250px;background-color:#E8E8E8;'>";
 foreach ($result as $row)
 {
 	echo "<tr class='alternate'>";
-	echo "<td class='username' style='padding:4px;wisth:200px;'>".$row['name']."</td><td class='posts' style='padding:4px;wisth:200px;text-align:right;'>".$row['count']."</td>";
+	echo "<td class='username' style='padding:4px;width:200px;'>".$row['name']."</td><td class='posts' style='padding:4px;wisth:200px;text-align:right;'>".$row['count']."</td>";
 	echo "</tr>";
 }
 echo "</table></div>";
