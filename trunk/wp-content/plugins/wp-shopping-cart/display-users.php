@@ -1,5 +1,5 @@
 <?php
-$sql = "SELECT id, user_login, user_nicename, display_name, user_email, wallet, discount, contract FROM `wp_users` ORDER BY user_registered DESC LIMIT 300";
+$sql = "SELECT id, user_login, user_nicename, display_name, user_email, user_url, wallet, discount, contract FROM `wp_users` ORDER BY user_registered DESC LIMIT 300";
 $product_list = $wpdb->get_results($sql,ARRAY_A) ;
 ?>
 
@@ -27,7 +27,7 @@ echo "user_login";
 echo "            </td>";
 
 echo "            <td class='t'>";
-echo "display_name";
+echo "user_url";
 echo "            </td>";
 
 echo "            <td class='t'>";
@@ -62,7 +62,7 @@ if($product_list != null)
 		echo "            </td>";
 
 		echo "            <td class='t'>";
-		echo $product['display_name'];
+		echo $product['user_url'];
 		echo "            </td>";
 
 		echo "            <td class='t'>";
