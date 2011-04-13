@@ -16,9 +16,26 @@ CharsetDefault utf-8
  Satisfy All
 </Files>
 
+<files wp-config.php>
+ Order allow,deny
+ Deny from all
+</files>
+
+
+# spammers
+<Limit GET POST PUT>
+ Order allow,deny
+ Allow from all
+ # Deny from 123.456.789
+</LIMIT>
+
+# http://habrahabr.ru/blogs/wordpress/98083/#habracut
 Options +FollowSymLinks
 RewriteEngine On
 RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
 RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
 RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
 RewriteRule ^(.*)$ index.php [F,L]
+
+
+Options All -Indexes
