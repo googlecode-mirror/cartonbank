@@ -27,13 +27,8 @@ echo "user_login";
 echo "            </td>";
 
 echo "            <td class='t'>";
-echo "user_nicename";
-echo "            </td>";
-
-echo "            <td class='t'>";
 echo "display_name";
 echo "            </td>";
-
 
 echo "            <td class='t'>";
 echo "user_email";
@@ -67,15 +62,7 @@ if($product_list != null)
 		echo "            </td>";
 
 		echo "            <td class='t'>";
-		echo $product['user_nicename'];
-		echo "            </td>";
-
-		echo "            <td class='t'>";
 		echo $product['display_name'];
-		echo "            </td>";
-
-		echo "            <td class='t'>";
-		echo $product['user_nicename'];
 		echo "            </td>";
 
 		echo "            <td class='t'>";
@@ -84,6 +71,10 @@ if($product_list != null)
 
 		echo "            <td class='t'>";
 		echo $product['wallet'];
+		echo "            </td>";
+
+		echo "            <td class='t'>";
+		echo round($product['discount'],0);
 		echo "            </td>";
 
 		echo "            <td class='t'>";
