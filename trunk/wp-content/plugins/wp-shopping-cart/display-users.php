@@ -1,5 +1,5 @@
 <?php
-$sql = "SELECT id, user_login, user_nicename, display_name, user_email, wallet, discount, contract FROM `wp_users` WHERE `active`=1 ORDER BY user_registered DESC";
+$sql = "SELECT id, user_login, user_nicename, display_name, user_email, wallet, discount, contract FROM `wp_users` ORDER BY user_registered DESC LIMIT 300";
 $product_list = $wpdb->get_results($sql,ARRAY_A) ;
 ?>
 
