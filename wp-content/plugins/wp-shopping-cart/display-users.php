@@ -9,7 +9,7 @@ $product_list = $wpdb->get_results($sql,ARRAY_A) ;
 <?php
 echo "        <table id='itemlist' style='padding:4px;background-color:silver;'>\n\r";
 
-echo "          <tr class='firstrow' style='border:1px solid black;background-color:#c0c0c0;'>\n\r";
+echo "          <tr class='firstrow' style='padding:2px; border:1px solid black; background-color:#c0c0c0;'>\n\r";
 echo "            <td>\n\r";
 echo "id";
 echo "            </td>\n\r";
@@ -50,9 +50,7 @@ if($product_list != null)
   {
   foreach($product_list as $product)
 	{
-		echo "          <tr style='background-color:white;'>\n\r";
-		echo "            <td>\n\r";
-		echo "            </td>\n\r";
+		echo "          <tr style='padding:2px; background-color:white;'>\n\r";
 		echo "            <td>\n\r<a href='". get_option('siteurl')."/wp-admin/user-edit.php?user_id=".$product['id']."'>";
 		echo $product['id'];
 		echo "</a>            </td>\n\r";
