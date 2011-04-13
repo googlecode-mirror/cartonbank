@@ -6,8 +6,7 @@ $product_list = $wpdb->get_results($sql,ARRAY_A) ;
 <div class="wrap">
   <h2>Юзеры</h2>
 
-<?php<a href="">
-  $num = 0;</a>
+<?php
 echo "    <table id='productpage' style='padding:4px;'>\n\r";
 echo "      <tr><td>\n\r";
 echo "        <table id='itemlist' style='padding:4px;background-color:silver;'>\n\r";
