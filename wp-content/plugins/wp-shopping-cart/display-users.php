@@ -44,7 +44,7 @@ if($product_list != null)
 		echo "          <tr style='background-color:white;'>\n\r";
 		echo "            <td>\n\r";
 		echo "            </td>\n\r";
-		echo "            <td>\n\r<a href=".get_option('siteurl')"/wp-admin/user-edit.php?user_id=".$product['id'].">";
+		echo "            <td>\n\r<a href='".get_option('siteurl')"/wp-admin/user-edit.php?user_id=".$product['id']."'>";
 		echo $product['id'];
 		echo "</a>            </td>\n\r";
 		echo "            <td>\n\r";
