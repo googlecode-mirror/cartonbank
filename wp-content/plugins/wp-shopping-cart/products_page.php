@@ -607,7 +607,7 @@ else
 
 				$_sharethis_html = "<div id='share_this' style='color:#51779b;line-height:200%;'></div>";
 
-				$_bigpicimgalt = addslashes("Карикатура. ".$_name.". ".$_description.". ".$_category.". ".$_tags);
+				$_bigpicimgalt = addslashes("Карикатура. ".$_name.". ".$_description.". ".$_tags);
 					
 				if (current_user_can('manage_options'))
 				{
