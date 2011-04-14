@@ -209,6 +209,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 	$_rating_html = str_replace("\"","\'",$_rating_html);
 	$_rating_html = str_replace("'","\'",$_rating_html);
 
+	$_bigpicimgalt = "Карикатура. "$_name.". ".$_description.". ".$_category.". ".$_tags;
 
 
 	if (current_user_can('manage_options'))
@@ -269,7 +270,7 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 
 					if (file_exists($fiilename))
 					{
-							  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' class='thumb' />";
+							  $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$_bigpicimgalt."' class='thumb' />";
 					}
 					else
 					{
