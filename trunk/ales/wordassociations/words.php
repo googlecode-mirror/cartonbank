@@ -62,10 +62,10 @@ $tagsarray = get_cartoon($id);
 	background-clip: border-box; background-color: #FFD1C6; background-image: none; background-origin: padding-box; border-color: #999; border-style: solid; border-width: 1px; color: #333; cursor: pointer; display: block; float: left; font-family: 'Lucida Grande', Verdana, Arial, 'Bitstream Vera Sans', sans-serif; font-size: 11px; height: 18px; line-height: 18px; margin:1px; outline-color: #333; outline-style: none; outline-width: 0px; padding: 2px; 
 	}
 </style>
-<table border=0 style="padding:4px;">
+<table border=0 style="padding:4px;width:100%;">
 <tr>
 	<td style="width:600px;vertical-align:top;"><div><b>Текущие тэги:</b><br /><div id="currenttags"><? echo get_currenttags($original_tags,$id); ?></div><br /></div></td>
-	<td style="width:400px;vertical-align:top;" rowspan="2"><b>Предлагаем тэги:</b><br />
+	<td style="vertical-align:top;" rowspan="2"><b>Предлагаем тэги:</b><br />
 
     <?
 	//echo "<span class='t' onclick='sendup(this.innerHTML,".$id.");return false;'>test_tag</span> ";
