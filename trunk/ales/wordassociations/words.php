@@ -32,9 +32,24 @@ $tagsarray = get_cartoon($id);
 		mydiv.textContent = mydiv.textContent+', '+wrd;
    }
 
+	function senddown(wrd,id)
+   {
+	   	var mydiv = document.getElementById('currenttags');
+		var newtext; 
+		newtext = mydiv.innerHTML.replace(wrd, '');
+		//alert (newtext);
+		//jQuery.post("http://109.120.143.27/cb/ales/wordassociations/add_tag.php?id="+id, function(html){ mydiv.textContent=html;},"&wrd="+wrd);
+		jQuery.post("http://cartoonbank.ru/ales/wordassociations/remove_tag.php?id="+id+"&wrd="+wrd);
+		mydiv.innerHTML = newtext;
+   }
+
+
 //-->
 </script>
-
+<?
+//$output .=  "<span class='td' onclick='senddown(this.innerHTML,".$id.");return false;'>".$value."</span> ";
+// 1896 дворник, балет, исскуство, кризис, работа, старость, пенсия
+?>
 
  </head>
 
@@ -43,10 +58,13 @@ $tagsarray = get_cartoon($id);
 .t{
 	background-clip: border-box; background-color: #EFEFEF; background-image: none; background-origin: padding-box; border-color: #999; border-style: solid; border-width: 1px; color: #333; cursor: pointer; display: block; float: left; font-family: 'Lucida Grande', Verdana, Arial, 'Bitstream Vera Sans', sans-serif; font-size: 11px; height: 18px; line-height: 18px; margin:1px; outline-color: #333; outline-style: none; outline-width: 0px; padding: 2px; 
 	}
+.td{
+	background-clip: border-box; background-color: #FFD1C6; background-image: none; background-origin: padding-box; border-color: #999; border-style: solid; border-width: 1px; color: #333; cursor: pointer; display: block; float: left; font-family: 'Lucida Grande', Verdana, Arial, 'Bitstream Vera Sans', sans-serif; font-size: 11px; height: 18px; line-height: 18px; margin:1px; outline-color: #333; outline-style: none; outline-width: 0px; padding: 2px; 
+	}
 </style>
 <table border=0 style="padding:4px;">
 <tr>
-	<td style="width:600px;"><div><b>Текущие тэги:</b><br /><div id="currenttags"><? echo $original_tags; ?></div><br /></div></td>
+	<td style="width:600px;vertical-align:top;"><div><b>Текущие тэги:</b><br /><div id="currenttags"><? echo get_currenttags($original_tags,$id); ?></div><br /></div></td>
 	<td style="width:400px;vertical-align:top;" rowspan="2"><b>Предлагаем тэги:</b><br />
 
     <?
@@ -63,7 +81,7 @@ $tagsarray = get_cartoon($id);
 	</td>
 </tr>
 <tr>
-	<td style="width:600px;height:600px;vertical-align:top;"><? echo ($imagepath);?></td>
+	<td style="vertical-align:top;width:600px;"><? echo ($imagepath);?></td>
 
 	<!-- <td></td> -->
 </tr>
@@ -149,9 +167,30 @@ function get_cartoon($id)
 		}
 	//pokazh ($output);
 
+	//unique
+	$output = array_unique($output);
+
 	return $output;
 
 }
+
+function get_currenttags ($additional_description,$id)
+{
+	$output = '';
+	$_tags = nl2br(stripslashes($additional_description));
+	$_tags_array = explode(',',$_tags);
+
+	if (count($_tags_array)>0)
+	{
+		foreach ($_tags_array as $key => $value)
+			{
+			$output .=  "<span class='td' onclick='senddown(this.innerHTML,".$id.");return false;'>".$value."</span> ";
+			}
+	}
+
+	return $output;
+}
+
 
 function fw($text)
 {
