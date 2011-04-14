@@ -45,6 +45,7 @@ $siteurl = get_option('siteurl');
 $_SESSION['selected_country'] = '';
 $brandid = '';
 $_bigpictext = '';
+$_bigpicimgalt = '';
 $_bigpicstrip = '';
 $_bigpic = '';
 $_bottomstriptext = '';
@@ -605,6 +606,8 @@ else
 				$_rating_html = "<div id='star_rating'><img src='".get_option('siteurl')."/img/ldng.gif'></div>";
 
 				$_sharethis_html = "<div id='share_this' style='color:#51779b;line-height:200%;'></div>";
+
+				$_bigpicimgalt = "Карикатура. "$_name.". ".$_description.". ".$_category.". ".$_tags;
 					
 				if (current_user_can('manage_options'))
 				{
@@ -619,7 +622,7 @@ else
                 $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение'>Категория:</a> </b><br />".$_category."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Описание:</a> </b> ".$_description."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение'>Тэги:</a> </b><br />".$_tags."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br /><br /><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение'>Размер:</a></b><br />".$_size."<br /><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение'>Формат:</a> </b> ".$_file_format."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение'>Оценка:</a></b><br />".$_rating_html.$_sharethis_html.$_edid;
 
                 $siteurl = get_option('siteurl');
-                $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\" border=0>";
+                $_bigpic =  "<img src=\"".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."\" border=0  alt=\"".$_bigpicimgalt."\">";
 
 				if($product[0]['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
 				if($product[0]['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
