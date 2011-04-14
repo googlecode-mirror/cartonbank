@@ -209,7 +209,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 	$_rating_html = str_replace("\"","\'",$_rating_html);
 	$_rating_html = str_replace("'","\'",$_rating_html);
 
-	$_bigpicimgalt = "Карикатура. ".$_name.". ".$_description.". ".$_category.". ".$_tags;
+	$_bigpicimgalt = addslashes("Карикатура. ".$_name.". ".$_description.". ".$_category.". ".$_tags);
 
 
 	if (current_user_can('manage_options'))
