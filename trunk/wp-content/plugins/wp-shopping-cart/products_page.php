@@ -594,7 +594,11 @@ else
 
 
                 $_tags = nl2br(stripslashes($product[0]['additional_description']));
-                $_tags_array = explode(',',$_tags);
+
+				$_bigpicimgalt = addslashes("Карикатура. ".$_name.". ".$_description.". ".$_tags);
+
+
+				$_tags_array = explode(',',$_tags);
                     //$i=0;
                     foreach ($_tags_array as $key => $value)
                     {
@@ -607,7 +611,6 @@ else
 
 				$_sharethis_html = "<div id='share_this' style='color:#51779b;line-height:200%;'></div>";
 
-				$_bigpicimgalt = addslashes("Карикатура. ".$_name.". ".$_description.". ".$_tags);
 					
 				if (current_user_can('manage_options'))
 				{
