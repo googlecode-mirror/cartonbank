@@ -194,6 +194,9 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 	//$options .= "<a href='".get_option('product_list_url')."/&category=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
 
 	$_tags = nl2br(stripslashes($product['additional_description']));
+
+	$_bigpicimgalt = addslashes("Карикатура. ".$_name.". ".$_description.". ".$_tags);
+
 	$_tags_array = explode(',',$_tags);
 		//$i=0;
 		foreach ($_tags_array as $key => $value)
@@ -209,7 +212,6 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 	$_rating_html = str_replace("\"","\'",$_rating_html);
 	$_rating_html = str_replace("'","\'",$_rating_html);
 
-	$_bigpicimgalt = addslashes("Карикатура. ".$_name.". ".$_description.". ".$_tags);
 
 
 	if (current_user_can('manage_options'))
