@@ -37,8 +37,6 @@ if(isset($_GET['wrd']) && $_GET['wrd']!='' && isset($_GET['id']) && is_numeric($
 			}
 		}
 
-fw("_remove_this_one=".$_remove_this_one);
-
 	if ($_remove_this_one!='')
 	{
 		unset($_tags_array[$_remove_this_one]);
@@ -46,10 +44,12 @@ fw("_remove_this_one=".$_remove_this_one);
 		var_dump($_tags_array);
 	}
 
+	// remove duplcates
+	$_tags_array = remove_duplicates($_tags_array);
+
 	$original_tags = implode(", ",$_tags_array);
 	$original_tags = str_replace("  ", " ", $original_tags);
 
-fw("original_tags: ".$original_tags);
 
 /*
 	$original_tags = str_replace(",", ", ", $original_tags);
@@ -58,7 +58,6 @@ fw("original_tags: ".$original_tags);
 */	
 	$sql = "update wp_product_list set additional_description = '".$original_tags."' where id=".$id;
 
-fw($sql);
 
 	$result = mysql_query($sql);
 
@@ -67,6 +66,14 @@ fw($sql);
 }
 
 return;
+
+
+
+function remove_duplicates($array)
+{
+	$array = array_unique($array);
+	return $array;
+}
 
 function fw($text)
 {
