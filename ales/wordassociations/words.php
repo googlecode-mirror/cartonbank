@@ -26,8 +26,6 @@ $tagsarray = get_cartoon($id);
 	function sendup(wrd,id)
    {
 	   	var mydiv = document.getElementById('currenttags');
-		//alert (mydiv.textContent+', '+wrd);
-		//jQuery.post("http://109.120.143.27/cb/ales/wordassociations/add_tag.php?id="+id, function(html){ mydiv.textContent=html;},"&wrd="+wrd);
 		jQuery.post("http://cartoonbank.ru/ales/wordassociations/add_tag.php?id="+id+"&wrd="+wrd);
 		mydiv.textContent = mydiv.textContent+', '+wrd;
    }
@@ -37,12 +35,9 @@ $tagsarray = get_cartoon($id);
 	   	var mydiv = document.getElementById('currenttags');
 		var newtext; 
 		newtext = mydiv.innerHTML.replace(wrd, '');
-		//alert (newtext);
-		//jQuery.post("http://109.120.143.27/cb/ales/wordassociations/add_tag.php?id="+id, function(html){ mydiv.textContent=html;},"&wrd="+wrd);
 		jQuery.post("http://cartoonbank.ru/ales/wordassociations/remove_tag.php?id="+id+"&wrd="+wrd);
 		mydiv.innerHTML = newtext;
    }
-
 
 //-->
 </script>
