@@ -28,7 +28,7 @@ $tagsarray = get_cartoon($id);
 	   	var mydiv = document.getElementById('currenttags');
 		//alert (mydiv.textContent+', '+wrd);
 		//jQuery.post("http://109.120.143.27/cb/ales/wordassociations/add_tag.php?id="+id, function(html){ mydiv.textContent=html;},"&wrd="+wrd);
-		jQuery.post("http://109.120.143.27/cb/ales/wordassociations/add_tag.php?id="+id+"&wrd="+wrd);
+		jQuery.post("http://cartoonbank.ru/ales/wordassociations/add_tag.php?id="+id+"&wrd="+wrd);
 		mydiv.textContent = mydiv.textContent+', '+wrd;
    }
 
