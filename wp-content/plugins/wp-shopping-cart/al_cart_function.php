@@ -252,7 +252,19 @@ $_SESSION['total'] = round($total*(100-$_discount)/100);
 	$license_unique_number = $_GET['sessionid']."_".$_SESSION['nzshpcrt_cart'][$sequence_of_image]->product_id;
 	$agreement_number = $license_unique_number;//uniqid();
 	$agreement_date = date("m.d.y");
+
+	
 	$customer_name = $current_user->last_name. " " . $current_user->first_name;
+
+	if (trim($customer_name)=='')
+	{
+		if (isset( $_SESSION['collected_data']))
+		{
+			$customer_name_from_form = trim($_SESSION['collected_data'][1])." ".trim($_SESSION['collected_data'][2]);
+			$customer_name = $customer_name_from_form;
+		}
+	}
+
 	$media_name = '[не указано]';
 	if (isset($current_user->discount))
 		$_discount = $current_user->discount;
@@ -270,6 +282,7 @@ if(isset($_SESSION['nzshpcrt_cart']))
 	$image_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> name;
 	$image_number = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> product_id;
 	$author_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> author;
+
 }
 
 //load Livense template
