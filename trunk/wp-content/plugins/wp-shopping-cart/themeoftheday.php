@@ -267,7 +267,19 @@ $is_approved = false;
 	  echo "</div>";
 	  
   }
-  echo "</div><!-- items -->";
+  echo "</div><!-- items -->"; 
+
+?>
+<div id=calend>
+<h3>Календари</h3>
+<a href=http://www.calend.ru/holidays/russtate/ target=_blank><img src="http://www.calend.ru/img/export/informer_1.png" width="150" alt="Праздники России" border="0"></a>
+<a href=http://www.calend.ru/holidays/wholeworld/ target=_blank><img src="http://www.calend.ru/img/export/informer_15.png" width="150" alt="Международные праздники" border="0"></a>
+<a href=http://www.calend.ru/holidays/unusual/ target=_blank><img src="http://www.calend.ru/img/export/informer_unusual.png" width="150" alt="Необычные праздники" border="0"></a>
+<a href=http://www.calend.ru/holidays/network/ target=_blank><img src="http://www.calend.ru/img/export/informer_network.png" width="150" alt="Сетевые праздники" border="0"></a>
+<a href=http://www.calend.ru/holidays/sport/ target=_blank><img src="http://www.calend.ru/img/export/informer_sport.png" width="150" alt="Спортивные праздники" border="0"></a>
+<a href=http://www.calend.ru/holidays/prof/ target=_blank><img src="http://www.calend.ru/img/export/informer_prof.png" width="150" alt="Профессиональные праздники" border="0"></a>
+</div>
+<?	
 
 }
 else
