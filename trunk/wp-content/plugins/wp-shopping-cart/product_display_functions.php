@@ -56,7 +56,7 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 	//$_offset = $_offset + 20;
 
 	$javascript_functions ='';
-	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29&brand='.$_brand.'&color='.$_color.'&category='.$category.'&cs='.$_cs.'&offset='.$_offset.'";}';
+	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29&brand='.$_brand.'&color='.$_color.'&category='.$category.'&cs='.$_cs.'&offset='.$_offset.'";	var cuid = document.getElementById("cuid").innerHTML; document.getElementById("navbar").innerHTML = cuid; window.location.hash = "bububu="+cuid; 	}';
    
 	if ($search_sql != '')
 	{
@@ -264,7 +264,9 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 
 	$share_this = ' get_share_this(); ';
 
-	$javascript_functions .= " function get_item".$counter."() { ".$vstavka.$jq_stars.$share_this." } "; 
+	$add_hash_2url = ' change_url(); ';
+
+	$javascript_functions .= " function get_item".$counter."() { ".$vstavka.$jq_stars.$share_this.$add_hash_2url." } "; 
 
 
 	
