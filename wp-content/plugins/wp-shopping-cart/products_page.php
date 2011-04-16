@@ -533,7 +533,7 @@ else
 								  <input type='submit' value='Отправить письмо' class='borders'/>
 								</form></div>";
 				// contact
-				$brand_contact = "<a href='#' onclick=\"document.getElementById('emailform').style.display='block';document.getElementById('bio').style.display='none';return false;\">Написать письмо</a>";
+				$brand_contact = "<a href='#pt' onclick=\"document.getElementById('emailform').style.display='block';document.getElementById('bio').style.display='none';return false;\">Написать письмо</a>";
 
 				$_bigpicstrip = "<b>".$product[0]['brand']. ". Информация об авторе</b>";
 				$_bigpictext = "<br /><br />".$brand_contact;
@@ -680,8 +680,8 @@ else
                 
                echo "<div id='bigpictopstrip'>".$_bigpicstrip."</div>";
                echo "<div id='bigpictext'>".$_bigpictext."</div>";
-               echo "<div id='bigpic'><a href='#' onclick=\"get_item1()\">".$_bigpic."</a></div>";
-
+               echo "<div id='bigpic'><a href='#pt' onclick=\"get_item1();\">".$_bigpic."</a></div>";
+				//jQuery(this).attr('id')
 			   //<div id="right"><a href="#"  onclick="var next=document.getElementById('image1').innerHTML;document.getElementById('right').innerHTML = next; "><div style='height:200px;width:200px;background color:#CCFF66;'>main image </div></a></div>
                echo "<div style='clear:both;'></div>";
                echo "<div id='bigpicbottomstrip' style='float:right;margin-bottom:6px;'>".$_bottomstriptext."</div>";
@@ -868,8 +868,21 @@ function trim_value(&$value)
 }
 ?>
 <script type="text/javascript">
+on_start();
 get_5stars();
 get_share_this();
+
+function on_start()
+{
+	if(!!location.hash) {
+		var cid = location.hash.substring(1);
+		window.location.hash='';
+		var thisurl = window.location.href.slice(0, -1);
+		cleanurl = thisurl+cid;
+		location.href = cleanurl;
+	}
+}
+
 function get_5stars()
 {
 jQuery(document).ready(function() {
@@ -885,4 +898,20 @@ var cuid = document.getElementById('cuid').innerHTML;
 jQuery("#share_this").html('<b>Поделиться:</b><br /><a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://twitter.com/share?url=\' + escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_twitter.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.facebook.com/sharer.php?t=cartoonbank.ru&u=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_facebook.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://vkontakte.ru/share.php?title=cartoonbank.ru&url=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_vkontakte.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.livejournal.com/update.bml?subject=cartoonbank.ru&event=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_livejournal.png" border="0"></a>');
 });
 }
+
+function change_url()
+{
+	jQuery(document).ready(function() {
+	function locationHashChanged() {
+		// add cartoonid to the hash
+		if (location.hash === "#pt" || location.hash === "#") {
+			var cuid = document.getElementById('cuid').innerHTML;
+			document.getElementById('navbar').innerHTML = cuid;
+			window.location.hash = '&cartoonid='+cuid;
+		}
+	}
+	window.onhashchange = locationHashChanged;
+	});
+}
+
 </script>
