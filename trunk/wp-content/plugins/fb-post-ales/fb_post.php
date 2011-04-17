@@ -1,33 +1,56 @@
 <?php
-// http://www.facebook.com/developers/apps.php?app_id=264530743602 -- application
-// http://www.facebook.com/apps/application.php?id=264530743602&sk=wall -- the Wall
+$post_id = '0';
+if (isset($_GET['id']) && is_numeric($_GET['id']))
+	$post_id=$_GET['id'];
+
+
+						// http://www.facebook.com/developers/apps.php?app_id=264530743602 -- application
+						// http://www.facebook.com/apps/application.php?id=264530743602&sk=wall -- the Wall
 // application settings
-	$redirect_url = 'http://cartoonbank.ru/wp-content/plugins/fb-post-ales/';
-	$app_id = '264530743602'; //“YOUR_APP_ID”; Cartoonist.name app
-	$app_secret = '05e24c30ac95a33d726f6d087c3c00f4'; //"YOUR_APP_SECRET";
-	$theMessage = 'DA';
+		global $redirect_url, $app_id, $app_secret;
+		$redirect_url = 'http://cartoonbank.ru/wp-content/plugins/fb-post-ales/';
+		$app_id = '264530743602'; //â€œYOUR_APP_IDâ€; Cartoonist.name app
+		$app_secret = '05e24c30ac95a33d726f6d087c3c00f4'; //"YOUR_APP_SECRET";
 
-
+if ($post_id!='0')
+{
 // 1
 $theCode = get_code();
 
-ee($theCode,"theCode");
+				//ee($theCode,"theCode");
 
 // 2
 $theAccessToken = get_token($theCode);
 
-ee($theAccessToken, "theAccessToken2");
+				//ee($theAccessToken, "theAccessToken2");
 
 // 3
-//$result = publish_post($theAccessToken);
+$result = make_post($post_id);
+}
 
-// 4
+function make_post($post_id)
+{
+	global $theAccessToken, $app_id;
+	global $cartoon_id, $cartoon_name, $cartoon_description, $cartoon_additional_description, $cartoon_image, $cartoon_kategoria, $cartoon_brand;
+
+	get_cartoon($post_id);
+
+$cartoon_link = 'http://cartoonbank.ru/?page_id=29&cartoonid='. $post_id;
+
 	  $apprequest_url = "https://graph.facebook.com/feed";
-	  $parameters = "?" . $theAccessToken . "&message=" . $theMessage . "&id=" . $app_id . "&method=post";
+	  $parameters = "?" . $theAccessToken  . "&message=" . urlencode($cartoon_brand . ". " . $cartoon_kategoria). "&name=" . urlencode(stripslashes($cartoon_name)) ."&description=" . urlencode(stripslashes($cartoon_description) . " [" . stripslashes($cartoon_additional_description)."]")."&link=". urlencode($cartoon_link) ."&id=" . $app_id . "&picture=http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". $cartoon_image ."&method=post" . "&caption=Cartoonbank";
 	  $myurl = $apprequest_url . $parameters;
-		echo $myurl;
-	  $result = file_get_contents($myurl);
-	  echo "result = " . $result;
+echo $myurl;
+	if ($cartoon_id!='')
+	{
+		$result = file_get_contents($myurl);
+		echo "result = " . $result;
+	}
+	else
+	{
+		echo ('<br>no image to post');
+	}
+}
 
 function fw($text)
 {
@@ -99,7 +122,7 @@ function get_token($code)
 			'redirect_uri'  => $redirect_url,
 			'client_secret' => $app_secret));
 
-		ee($URL,"access token url");
+				//ee($URL,"access token url");
 		
 		curl_setopt($ch, CURLOPT_URL, $URL);
 		
@@ -107,52 +130,12 @@ function get_token($code)
 		//Execute the fetch
 		$theAccessToken = curl_exec($ch);
 
-		ee($theAccessToken,"theAccessToken1");
+				//ee($theAccessToken,"theAccessToken1");
 
 		//Close the connection
 		curl_close($ch);
 		
 		return $theAccessToken;
-}
-
-function publish_post($theAccessToken)
-{
-
-	  //$access_token = file_get_contents($access_token_url . "?" . $parameters);
-	  //echo $access_token;
-
-	// make a post
-	/*
-	curl -F 'access_token=...' \
-		 -F 'message=Check out this funny article' \
-		 -F 'link=http://www.example.com/article.html' \
-		 -F 'picture=http://www.example.com/article-thumbnail.jpg' \
-		 -F 'name=Article Title' \
-		 -F 'caption=Caption for the link' \
-		 -F 'description=Longer description of the link' \
-		 -F 'actions={"name": "View on Zombo", "link": "http://www.zombo.com"}' \
-		 -F 'privacy={"value": "ALL_FRIENDS"}' \
-		 -F 'targeting= {"countries":"US","regions":"6,53","locales":"6"}' \
-		 https://graph.facebook.com/me/feed
-		 */
-		$ch = curl_init();
-		//Set curl to return the data instead of printing it to the browser.
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		//Set the URL
-		$URL = 'https://graph.facebook.com/me/feed?' . http_build_query(array(
-			'access_token'     => $theAccessToken,
-			'message'          => 'test...',
-			'link'          => 'http://cartoonbank.ru'));
-		curl_setopt($ch, CURLOPT_URL, $URL);
-		
-		ee ($URL, "The post URL");
-		//Execute the fetch
-		$publish = curl_exec($ch);
-
-		fw("publish = " .$publish);
-		//Close the connection
-		curl_close($ch);
-
 }
 
 function ee($to_print,$comment = '')
@@ -161,4 +144,35 @@ function ee($to_print,$comment = '')
 	echo ($response); 
 }
 
+function get_cartoon($post_id)
+{
+	global $cartoon_id, $cartoon_name, $cartoon_description, $cartoon_additional_description, $cartoon_image, $cartoon_kategoria, $cartoon_brand, $post_id;
+		
+	$sql = "SELECT `wp_product_list`.id, `wp_product_list`.name, `wp_product_list`.description, `wp_product_list`.additional_description, `wp_product_list`.image, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` AND `wp_product_list`.`id`='".$post_id."' LIMIT 1";
+
+
+	include("config.php");
+
+	$link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
+	mysql_set_charset('utf8',$link);
+
+				//pokazh($sql);
+
+	$result = mysql_query($sql);
+
+	if (!$result) {die('Invalid query: ' . mysql_error());}
+
+	$row=mysql_fetch_array($result);
+	$cartoon_id = $row['id'];
+	$cartoon_name = $row['name'];
+	$cartoon_description = $row['description'];
+	$cartoon_additional_description = $row['additional_description'];
+	$cartoon_image = $row['image'];
+	$cartoon_kategoria = $row['kategoria'];
+	$cartoon_brand = $row['brand'];
+	
+
+				//pokazh ($cartoon_id." ".$cartoon_name." ".$cartoon_description." ".$cartoon_additional_description." ".$cartoon_image." ".$cartoon_brand." ".$cartoon_kategoria);
+
+}
 ?>
