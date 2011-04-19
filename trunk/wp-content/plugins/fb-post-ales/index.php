@@ -1,7 +1,7 @@
 <?php
-if (isset($_REQUEST["code"]))
+if (isset($_GET["code"]))
 {
-	$code=trim($_REQUEST["code"]);
+	$code=trim($_GET["code"]);
 	fw ($code);
 }
 else

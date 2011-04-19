@@ -37,8 +37,15 @@ function make_post($post_id)
 
 $cartoon_link = 'http://cartoonbank.ru/?page_id=29&cartoonid='. $post_id;
 
-	  $apprequest_url = "https://graph.facebook.com/feed";
-	  $parameters = "?" . $theAccessToken  . "&message=" . urlencode($cartoon_brand . ". " . $cartoon_kategoria). "&name=" . urlencode(stripslashes($cartoon_name)) ."&description=" . urlencode(stripslashes($cartoon_description) . " [" . stripslashes($cartoon_additional_description)."]")."&link=". urlencode($cartoon_link) ."&id=" . $app_id . "&picture=http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". $cartoon_image ."&method=post" . "&caption=Cartoonbank";
+	  //$apprequest_url = "https://graph.facebook.com/feed";
+/*
+  	  $apprequest_url = "https://graph.facebook.com/cartoonbank.of.russia/feed";
+	  $parameters = "?" . $theAccessToken  . "&message=" . urlencode($cartoon_brand . ". " . $cartoon_kategoria). "&name=" . urlencode(stripslashes($cartoon_name)) ."&description=" . urlencode(stripslashes($cartoon_description) . " [" . stripslashes($cartoon_additional_description)."]")."&link=". urlencode($cartoon_link) ."&id=" . $app_id . "&picture=http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". $cartoon_image ."&method=post" . "&caption=".urlencode("New cartoon in Cartoonbank.ru");
+*/
+	  $apprequest_url = "https://graph.facebook.com/cartoonbank.of.russia/feed";
+	  $parameters = "?" . $theAccessToken  . "&message=" . urlencode($cartoon_brand . ". " . $cartoon_kategoria). "&name=" . urlencode(stripslashes($cartoon_name)) ."&description=" . urlencode(stripslashes($cartoon_description) . " [" . stripslashes($cartoon_additional_description)."]")."&link=". urlencode($cartoon_link) . "&picture=http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". $cartoon_image ."&method=post" . "&caption=".urlencode("New cartoon in Cartoonbank.ru");
+
+
 	  $myurl = $apprequest_url . $parameters;
 echo $myurl;
 	if ($cartoon_id!='')
@@ -67,30 +74,8 @@ function get_code()
 {
 	//http://sudocode.net/article/368/how-to-get-the-access-token-for-a-facebook-application-in-php/
 	global $redirect_url,$app_id,$app_secret;
-	$code = 'QBf8NZkGokBqk_zJFhlqggV-bBqv1xL-FJMrGPm0yaE.eyJpdiI6IkN0ZkZBVTdDeE1fUU1iWXpMN0NlaFEifQ.zH5YTazRlWZiJEmoNvwmVNfIanjUzDXJ8U0wKOD_JPVg5i27XhOGI2wgErcjcfD1Dw5q5BEj60sV0jMOe8j90tBHgb08uXqDarisYSJepKhh7HDcvmlznzrf_cUpH_BJ';
-
-	if (isset($_REQUEST["code"]))
-	{
-		$code=$_REQUEST["code"];
-		fw ("new code = " . $code);
-		return $code;
-	}
-	else
-	{
-		fw ("old code = " . $code);
-		return $code;
-	}
-
-	// get Code
-	// code = Bp82F2_-jiewKiK3Igewst42NyVhmpZ49ZKWOGOFrig.eyJpdiI6Im1ZcnJOSHp5cVBPaTRETGR6RXpWZFEifQ._P4JcJ7hLCYpxHi1e3R9QTLSiQIw9Wrkid_fmtxjW4Fa570efRxL9yRbGolwyv13fpz3fiI3q8NntLUOs4faZabxM8oQSe6pZniQ7Za9nlZ28HyGEuDvW2cy0NEqQepx
-			$authorize_url = "https://graph.facebook.com/oauth/authorize"; 
-			$parameters = "client_id=" . $app_id . '&redirect_uri=' . $redirect_url;
-	
-	
-	//$result = file_get_contents($authorize_url . "?" . $parameters);
-	//fw (".result = " . $result);
-	//fw (".authorize_url = " . $authorize_url . "?" . $parameters); //access_code=https://graph.facebook.com/oauth/authorize?client_id=264530743602&redirect_uri=http://cartoonbank.ru/wp-content/plugins/fb-post-ales/
-
+	$code = 'SK7iwrSgPU-fYmXYLft9fBaevkadoEm0rtCsrGJCKYA.eyJpdiI6ImhSbzN1VW9QcjZWVVkyeExWc0hxMWcifQ.iGEzIiW6GhJXnxLfqaheqxroP3TOcQtHBKO7hjqi367gujkBZQ1DA9d8rOci4k7EH5qT6HBGhDp3zkhE0I6JFkrxykH3sLryrgR9-oyvK3irCYy_AmTfbmL3LuroQniA';
+	return $code;
 }
 
 function get_token($code)
