@@ -118,6 +118,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 		WHERE `wp_product_list`.`active`='1'  
 		AND `wp_item_category_associations`.`category_id` != '666'  
 		AND `wp_product_list`.`approved` = '1'  
+		AND `wp_product_list`.`tema_dnya_approved` = '1'  
 		AND `wp_product_list`.`visible`='1' 
 		AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
 		AND `wp_product_list`.`file` = `wp_product_files`.`id` 

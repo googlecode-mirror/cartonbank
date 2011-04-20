@@ -260,6 +260,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 			FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories`
 			WHERE `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
 			AND `wp_product_list`.`file` = `wp_product_files`.`id` 
+			AND `wp_product_list`.`tema_dnya_approved` = '1'  
 			AND `wp_product_brands`.`id` = `wp_product_list`.`brand` 
 			AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` 
 			AND  wp_product_list.id = (select id from tema_dnya where DATETIME = DATE( NOW( ) ) ) LIMIT 1
@@ -269,6 +270,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 			WHERE `wp_product_list`.`active`='1'  
 			AND `wp_item_category_associations`.`category_id` != '666'  
 			AND `wp_product_list`.`approved` = '1'  
+			AND `wp_product_list`.`tema_dnya_approved` = '1'  
 			AND `wp_product_list`.`visible`='1' 
 			AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
 			AND `wp_product_list`.`file` = `wp_product_files`.`id` 
