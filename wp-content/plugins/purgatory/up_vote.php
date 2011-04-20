@@ -50,7 +50,7 @@ elseif (isset($_GET['id']))
 				$handle = fopen("http://cartoonbank.ru/wp-content/plugins/lj-post-ales/post_to_lj.php?id=".$id, "r");
 				fclose($handle);
 
-				// send update to Livejournal
+				// send update to Facebook
 				$handle = fopen("http://cartoonbank.ru/wp-content/plugins/fb-post-ales/fb_post.php?id=".$id, "r");
 
 				fclose($handle);
@@ -80,7 +80,7 @@ $result=mysql_query("select l.name, l.description, l.additional_description, l.i
 	$_image=$row['image'];
 
 $subj = "";
-$text = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&amp;cartoonid='.$id.' '.$_description."<br />Тэги: ".$_additional_description;
+$text = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoonid='.$id.' '.$_description."<br />Тэги: ".$_additional_description;
 
 	/* ваш ник в ЖЖ */
 	$name = "_cartoonist_";
