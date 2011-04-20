@@ -42,6 +42,25 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 </head>
 
 <body>
+<center><div id="y" style="float:center;width:960px;background-color:white;">
+<!-- Яндекс.Директ -->
+<script type="text/javascript">
+yandex_partner_id = 67799;
+yandex_site_bg_color = 'FFFFFF';
+yandex_site_charset = 'utf-8';
+yandex_ad_format = 'direct';
+yandex_font_size = 1;
+yandex_direct_type = 'horizontal';
+yandex_direct_limit = 4;
+yandex_direct_title_color = '666666';
+yandex_direct_url_color = '333333';
+yandex_direct_all_color = '333333';
+yandex_direct_text_color = '999999';
+yandex_direct_hover_color = '666666';
+yandex_direct_favicon = false;
+document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/system/context.js"></sc'+'ript>');
+</script>
+</div></center>
 <?
 //Except 666:
 //$cartoon_number = $wpdb->get_results("SELECT count( l.id ) AS cartoon_number FROM `wp_product_list` AS l, `wp_item_category_associations` AS a WHERE l.id = a.product_id AND l.active =1 AND l.visible =1 AND a.category_id in (select id from wp_product_categories WHERE active = 1 and id <> '666') AND l.brand in (SELECT DISTINCT id FROM `wp_product_brands` where `wp_product_brands`.active = 1)");
