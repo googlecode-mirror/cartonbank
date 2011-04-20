@@ -28,6 +28,8 @@ $theAccessToken = get_token($theCode);
 $result = make_post($post_id);
 }
 
+exit;
+
 function make_post($post_id)
 {
 	global $theAccessToken, $app_id;
@@ -35,27 +37,22 @@ function make_post($post_id)
 
 	get_cartoon($post_id);
 
-$cartoon_link = 'http://cartoonbank.ru/?page_id=29&cartoonid='. $post_id;
+	$cartoon_link = 'http://cartoonbank.ru/?page_id=29&cartoonid='. $post_id;
 
-	  //$apprequest_url = "https://graph.facebook.com/feed";
-/*
-  	  $apprequest_url = "https://graph.facebook.com/cartoonbank.of.russia/feed";
-	  $parameters = "?" . $theAccessToken  . "&message=" . urlencode($cartoon_brand . ". " . $cartoon_kategoria). "&name=" . urlencode(stripslashes($cartoon_name)) ."&description=" . urlencode(stripslashes($cartoon_description) . " [" . stripslashes($cartoon_additional_description)."]")."&link=". urlencode($cartoon_link) ."&id=" . $app_id . "&picture=http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". $cartoon_image ."&method=post" . "&caption=".urlencode("New cartoon in Cartoonbank.ru");
-*/
 	  $apprequest_url = "https://graph.facebook.com/cartoonbank.of.russia/feed";
 	  $parameters = "?" . $theAccessToken  . "&message=" . urlencode($cartoon_brand . ". " . $cartoon_kategoria). "&name=" . urlencode(stripslashes($cartoon_name)) ."&description=" . urlencode(stripslashes($cartoon_description) . " [" . stripslashes($cartoon_additional_description)."]")."&link=". urlencode($cartoon_link) . "&picture=http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". $cartoon_image ."&method=post" . "&caption=".urlencode("New cartoon in Cartoonbank.ru");
 
 
 	  $myurl = $apprequest_url . $parameters;
-echo $myurl;
+			//echo $myurl;
 	if ($cartoon_id!='')
 	{
 		$result = file_get_contents($myurl);
-		echo "result = " . $result;
+			//echo "result = " . $result;
 	}
 	else
 	{
-		echo ('<br>no image to post');
+			//echo ('<br>no image to post');
 	}
 }
 

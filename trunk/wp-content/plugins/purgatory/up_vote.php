@@ -44,12 +44,16 @@ elseif (isset($_GET['id']))
 				//send update to twitter
 				//'http://cartoonbank.ru/wp-content/totwit/totwit.php?artist=Vasya&cid='.$id
 				$handle = fopen("http://cartoonbank.ru/wp-content/totwit/totwit.php?cid=".$id, "r");
+				fclose($handle);
 
 				// send update to Livejournal
 				$handle = fopen("http://cartoonbank.ru/wp-content/plugins/lj-post-ales/post_to_lj.php?id=".$id, "r");
+				fclose($handle);
 
 				// send update to Livejournal
 				$handle = fopen("http://cartoonbank.ru/wp-content/plugins/fb-post-ales/fb_post.php?id=".$id, "r");
+
+				fclose($handle);
 			}
 
 	echo $up_value;

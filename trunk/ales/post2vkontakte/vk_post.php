@@ -1,4 +1,20 @@
 <?php
+// http://vkontakte.ru/editapp?id=2291953
+// ID приложения:	2291953
+// Защищенный ключ:	SVCpbOeZ1in7PawkEKO8
+/*
+Хачатур Арутюнян, "подключить сайт" -> "Standalone-приложение"
+http://vkontakte.ru/editapp?act=create&site=1
+http://vkontakte.ru/topic-1_24428376#offset=100
+"http://vkontakte.ru/editapp?act=create&site=1"
+*/
+
+/*
+приложение 567 http://vkontakte.ru/editapp?id=2292174
+ключ BcqBcdNTY4bU6pW4KaH2
+id 2292174
+*/
+
 // http://habrahabr.ru/blogs/social_networks/117211/
 // application settings
 		global $redirect_url, $app_id, $app_secret, $user_id;
@@ -19,12 +35,16 @@
 //login_test();
 //$post_result = send_form();
 
+//
 // 1 Get Code
-
-$theCode = get_code();
+//http://api.vk.com/oauth/authorize?client_id=2289864&redirect_uri=http://cartoonbank.ru/ales/post2vkontakte/
+//http://cartoonbank.ru/ales/post2vkontakte/?code=3d9454aa41cd4e7653
+//
+//$theCode = get_code();
 
 				ee($theCode,"theCode");
 // 2 Get Token
+$theCode = '3d9454aa41cd4e7653';
 $theAccessToken = get_token($theCode);
 
 			ee($theAccessToken, "theAccessToken8");
@@ -55,7 +75,7 @@ function make_post($post_id)
 		$get_info_url = 'http://api.vkontakte.ru/method/wall.get?owner_id='.$user_id;
 		*/
 
-	$message = 'проверка'; 
+		$message = 'проверка'; 
 
 
 	  $apprequest_url = "https://api.vkontakte.ru/method/wall.post";
@@ -92,7 +112,11 @@ function get_code()
 
 	ee(read_code(),"old code ");
 
-	$URL = 'http://api.vkontakte.ru/oauth/authorize?client_id='.$app_id.'&scope=offline&redirect_uri='.$redirect_url.'&response_type=code&display=page';
+	$URL = 'http://api.vkontakte.ru/oauth/authorize?client_id='.$app_id.'&scope=offline,wall&redirect_uri='.$redirect_url.'&response_type=code&display=page';
+	/*
+		$auth_url = "http://api.vk.com/oauth/authorize?client_id={$api_id}&redirect_uri=http://{$domain}/index.php?act=callback&display=page&response_type=code&scope={$permissions}";
+		header('Location: '.$auth_url);
+	*/
 
 	echo ($URL);
 
