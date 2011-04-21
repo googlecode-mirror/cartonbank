@@ -637,13 +637,16 @@ if (isset($_POST['brand']) && is_numeric($_POST['brand']))
 else
 		{$_brand = $user_brand;}
 
-	
-
-      $updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `category` = '".$wpdb->escape($_POST['category'][0])."', `brand` = '".$_brand."', `display_frontpage`='$display_frontpage', `visible`='$visible', `approved`='$approved', `color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+	  if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
+	  {
+		$updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `category` = '".$wpdb->escape($_POST['category'][0])."', `brand` = '".$_brand."', `display_frontpage`='$display_frontpage', `visible`='$visible',`color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+	  }
+	  else
+	  {
+		$updatesql = "UPDATE `wp_product_list` SET `name` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['title'])))."', `description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."', `additional_description` = '".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."', `category` = '".$wpdb->escape($_POST['category'][0])."', `brand` = '".$_brand."', `display_frontpage`='$display_frontpage', `visible`='$visible', `approved`='$approved', `color`='$colored', `not_for_sale`='$not_for_sale', `l1_price`='$l1_price', `l2_price`='$l2_price', `l3_price`='$l3_price'  WHERE `id`='".$_POST['prodid']."' LIMIT 1";
+	  }
 
 	  $wpdb->query($updatesql);
-
-
 
 	// update temadnya
 		if ($temadnya == '1') // insert category 777
