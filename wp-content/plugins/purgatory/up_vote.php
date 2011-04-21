@@ -53,7 +53,7 @@ elseif (isset($_GET['id']))
 				// send update to Facebook
 				// $handle = fopen("http://cartoonbank.ru/wp-content/plugins/fb-post-ales/fb_post.php?id=".$id, "r");
 
-				fclose($handle);
+				//fclose($handle);
 			}
 
 	echo $up_value;
