@@ -72,7 +72,7 @@
     * Different to the above - this is the HTML that is shown above the
     * actual datagrid
     */
-    $grid->SetHeaderHTML('<div style="text-align: center">Статистика голосования</div>');
+    $grid->SetHeaderHTML('<div>Статистика голосования</div>');
 
     /**
     * Sets nice(r) display names instead of the raw column names
@@ -167,7 +167,7 @@
             font-family: Arial;
         }
         .datagrid thead th#header {
-            background-color: #ddd;
+            /*background-color: #ddd;*/
         }
         .datagrid thead th {
             color: black;
@@ -183,10 +183,12 @@
         }
         .datagrid tbody td.altrow {
             background-color: #fff;
+			border-bottom: 1px solid silver;
         }
         .datagrid tbody td.altcol
         {
-          background-color: #eee;
+          background-color: #fff;
+			border-bottom: 1px solid silver;
         }
         .datagrid tbody td {
             padding-left: 5px;
@@ -194,6 +196,7 @@
 			border-bottom: 1px solid white;
 			vertical-align:middle;
 			text-align:center;
+			border-bottom: 1px solid silver;
         }
         .datagrid a {
             text-decoration: none;
