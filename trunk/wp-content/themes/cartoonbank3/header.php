@@ -125,7 +125,7 @@ function selected_style()
 <div id="navbar">
 	<ul> 
 		<li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style():"" ?>>О проекте</a></li>
-		<li><a href="?page_id=29&amp;offset=0"<? $_GET['page_id']=='29'? selected_style():"" ?> title='на первую страницу'>Банк изображений</a></li>
+		<li><a href="?page_id=29&offset=0"<? $_GET['page_id']=='29'? selected_style():"" ?> title='на первую страницу'>Банк изображений</a></li>
 		<li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style():"" ?>>Новости</a></li>
 		<li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style():"" ?>>Авторам</a></li>
 		<li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style():"" ?>>Клиентам</a></li>

@@ -126,8 +126,8 @@ $arrAuthors = array('Светозаров Георгий');
 					//email content
 												$content = "Автор: ".$author."\n\r";
 												$content .= "Название: ".$title."\n\r";
-												$content .= "Ссылка: http://cartoonbank.ru/?page_id=29&amp;brand=".$brand."\n\r";
-												$content .= "Код ссылки на страницу автора: <a href='http://cartoonbank.ru/?page_id=29&amp;brand=".$brand."'>".$author."</a>\n\r";
+												$content .= "Ссылка: http://cartoonbank.ru/?page_id=29&brand=".$brand."\n\r";
+												$content .= "Код ссылки на страницу автора: <a href='http://cartoonbank.ru/?page_id=29&brand=".$brand."'>".$author."</a>\n\r";
 
 
 

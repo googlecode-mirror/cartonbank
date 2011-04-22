@@ -235,7 +235,7 @@ $_br=0;
 	// all authors dropdown
 	//$authors = "<select name='authors' style='font-size: 22px;font-family: &apos;Times New Roman&apos;' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=1284&amp;ord=72&br='+options[selectedIndex].value\"><option  value='0'>&nbsp;Все авторы&nbsp;</option>";
 
-	$authors = "<select name='authors' style='font-size: 22px;font-family: &apos;Times New Roman&apos;' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=1284&amp;ord=72&br='+options[selectedIndex].value\">";
+	$authors = "<select name='authors' style='font-size: 22px;font-family: &apos;Times New Roman&apos;' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=1284&ord=72&br='+options[selectedIndex].value\">";
 
 	$_selected = "";
 	

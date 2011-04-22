@@ -174,7 +174,7 @@ function get_limit($user_id){
 }  
 
 function al_direct_download(){
-	$currenturl = get_option('checkout_url').'&amp;total='.$_GET['total'];
+	$currenturl = get_option('checkout_url').'&total='.$_GET['total'];
 	?>
 	<label><h3>- Воспользоваться предоплатой</h3>
 			<form action='<?php echo  $currenturl;?>' method='POST'>
@@ -196,7 +196,7 @@ function al_direct_download(){
 }
 
 function al_paypal_payment_method(){
-	$currenturl = get_option('checkout_url').'&amp;total='.$_GET['total'];
+	$currenturl = get_option('checkout_url').'&total='.$_GET['total'];
 	?>
 	<label><h3>- Оплатить через службу Paypal.com</h3>(карточкой или со счёта Paypal)
 			<form action='<?php echo  $currenturl;?>' method='POST'>

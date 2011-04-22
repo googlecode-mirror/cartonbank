@@ -21,7 +21,7 @@ include("config.php");
 	$id=$row['id'];
 	$name=$row['name'];
 	?>
-	<a href="http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php&amp;brand=<?echo $id;?>"><?echo $name;?></a>; 
+	<a href="http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php&brand=<?echo $id;?>"><?echo $name;?></a>; 
 	<?
 	}
 ?>
