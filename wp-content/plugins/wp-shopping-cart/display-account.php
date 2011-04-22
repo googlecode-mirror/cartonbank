@@ -135,7 +135,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 		//$row['date'] = date("jS M Y",$row['date']);
 		$row['firstname'] = $row['firstname'].' '.$row['lastname'].' '.$row['address'].' т.'.$row['phone'];
 		$row['date'] = date("d.m.y H:m:s",$row['date']);
-		$row['title'] = "<a target='_blank' href='".get_option('siteurl')."/?page_id=29&amp;cartoonid=".$row['id']."'>".nl2br(stripslashes($row['title']))."</a>";
+		$row['title'] = "<a target='_blank' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$row['id']."'>".nl2br(stripslashes($row['title']))."</a>";
 		//$row['average'] = round($row['average'],2);
 		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."'>скачать</a>";
 		//$link = $siteurl."?downloadid=".$download_data['id'];

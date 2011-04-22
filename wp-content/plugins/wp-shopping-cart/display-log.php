@@ -196,7 +196,7 @@ $earliest_year = date("Y",$earliest_timestamp);
                   echo " </td>\n\r";
                   }
                 echo " <td>";
-                echo "<a href='".$_SERVER['REQUEST_URI']."&amp;purchaseid=".$purchase['id']."'>".TXT_WPSC_VIEWDETAILS."</a>";
+                echo "<a href='".$_SERVER['REQUEST_URI']."&purchaseid=".$purchase['id']."'>".TXT_WPSC_VIEWDETAILS."</a>";
                 echo " </td>\n\r";
             
                 echo "</tr>\n\r";

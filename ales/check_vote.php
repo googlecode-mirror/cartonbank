@@ -35,7 +35,7 @@ $count=$count-1;
 			//if ($row['post']==$current_post && $row['points']==$current_points && $row['ip']==$current_ip)
 			if ($row['post']==$current_post && $row['ip']==$current_ip)
 			{
-				echo "<br /><font color='#FF00FF'><b>this will be deleted!:</b> </font> ip='".$row['ip']."' cartoon=<a href='http://cartoonbank.ru/?page_id=29&amp;cartoonid=".$current_post."'>".$current_post."</a>";
+				echo "<br /><font color='#FF00FF'><b>this will be deleted!:</b> </font> ip='".$row['ip']."' cartoon=<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".$current_post."'>".$current_post."</a>";
 				$del_sql = "delete from `wp_fsr_user` where user='".$row['user']."' and ip='".$row['ip']."' and post=".$current_post;
 				$res = mysql_query($del_sql);
 

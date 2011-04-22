@@ -13,7 +13,7 @@
 Следите за нами в 
 <a href="http://community.livejournal.com/cartoonbank/">Живом журнале <img src="http://cartoonbank.ru/img/s_livejournal.png" title="Follow us on LiveJournal"></a>  
 <a href="http://twitter.com/#!/cartoonbankru">в Твиттере <img src="http://cartoonbank.ru/img/s_twitter.png" title="Follow us on Twitter"></a>  
-<a href="http://www.facebook.com/profile.php?id=100001929470986&amp;sk=wall">в Фейсбуке <img src="http://cartoonbank.ru/img/s_facebook.png" title="Follow us on Facebook"></a>  
+<a href="http://www.facebook.com/profile.php?id=100001929470986&sk=wall">в Фейсбуке <img src="http://cartoonbank.ru/img/s_facebook.png" title="Follow us on Facebook"></a>  
 <a href="http://friendfeed.com/cartoonbank">в Френдфиде <img src="http://cartoonbank.ru/img/s_friendfeed.png" title="Follow us on Frienfeed"></a>
 </div>
 
