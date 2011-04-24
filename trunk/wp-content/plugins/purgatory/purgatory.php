@@ -21,7 +21,7 @@ include("config.php");
 	$id=$row['id'];
 	$name=$row['name'];
 	?>
-	<a href="http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php&brand=<?echo $id;?>"><?echo $name;?></a>; 
+	<a href="http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php&amp;brand=<?echo $id;?>"><?echo $name;?></a>; 
 	<?
 	}
 ?>
@@ -141,6 +141,13 @@ function sendblack(id)
 	var myelemname = "black"+id;
 	var mydiv = document.getElementById(myelemname);
 	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/black_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
+   }
+
+function sendblack_remove(id)
+   {
+	alert (id);
+	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/black_vote_remove.php?id="+id);
+	alert ('ok');
    }
 
 function sendcomment()
@@ -372,6 +379,9 @@ else
 			<div class='up'><a href="" id="up<?php echo $mes_id;?>"  onclick="sendup(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="up"><?php echo $up; ?></a></div>
 			<div class='down'><a href="" id="down<?php echo $mes_id;?>" onclick="senddown(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="down"><?php echo $down; ?></a></div>
 			<div class='black'><a href="" id="black<?php echo $mes_id;?>" onclick="sendblack(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black"><?php echo $black; ?></a></div>
+			<? if ($black > 0){?>
+			<div><a href="" id="black_remove<?php echo $mes_id;?>" onclick="sendblack_remove(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black_remove" title="remove black">убрать ч.м.</a></div>
+			<?}?>
 		</div>
 
 		<div class='box2' >
