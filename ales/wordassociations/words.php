@@ -1,5 +1,5 @@
 <?
-include("/home/www/cb/ales/config.php");
+include("/home/www/cb3/ales/config.php");
 global $imagepath;
 
 if(isset($_GET['id']) && $_GET['id']!='')
@@ -26,23 +26,25 @@ $tagsarray = get_cartoon($id);
 	function sendup(wrd,id)
    {
 	   	var mydiv = document.getElementById('currenttags');
+		var oldtext = jQuery(mydiv).html();
+		jQuery(mydiv).html(oldtext + '<span class="td" onclick="senddown(this.innerText,' + id + ');var z=&quot;&quot;;jQuery(this).html(z);return false;">' + wrd + '</span>');
+		wrd = encodeURIComponent(wrd);
 		jQuery.post("http://cartoonbank.ru/ales/wordassociations/add_tag.php?id="+id+"&wrd="+wrd);
-		mydiv.textContent = mydiv.textContent+', '+wrd;
    }
 
 	function senddown(wrd,id)
    {
 	   	var mydiv = document.getElementById('currenttags');
-		var newtext; 
-		newtext = mydiv.innerHTML.replace(wrd, '');
+		var oldtext = jQuery(mydiv).html();
+		wrd = encodeURIComponent(wrd);
 		jQuery.post("http://cartoonbank.ru/ales/wordassociations/remove_tag.php?id="+id+"&wrd="+wrd);
-		mydiv.innerHTML = newtext;
    }
 
 //-->
 </script>
 <?
-//$output .=  "<span class='td' onclick='senddown(this.innerHTML,".$id.");return false;'>".$value."</span> ";
+//<span class="td" onclick="senddown(this.innerText,11351);return false;"> поцелуи</span>
+//$output .=  "<span class='td' onclick='senddown(this.innerText,".$id.");return false;'>".$value."</span> ";
 // 1896 дворник, балет, исскуство, кризис, работа, старость, пенсия
 ?>
 
@@ -63,12 +65,12 @@ $tagsarray = get_cartoon($id);
 	<td style="vertical-align:top;" rowspan="2"><b>Предлагаем тэги:</b><br />
 
     <?
-	//echo "<span class='t' onclick='sendup(this.innerHTML,".$id.");return false;'>test_tag</span> ";
+	//echo "<span class='t' onclick='sendup(this.innerText,".$id.");return false;'>test_tag</span> ";
 	if (count($tagsarray)>0)
 	{
 		foreach ($tagsarray as $key => $value)
 			{
-			echo "<span class='t' onclick='sendup(this.innerHTML,".$id.");return false;'>".$value."</span> ";
+			echo "<span class='t' onclick='sendup(this.innerText,".$id.");var z=\"\";jQuery(this).html(z);return false;'>".$value."</span> ";
 			}
 	}
 	?>
@@ -179,7 +181,7 @@ function get_currenttags ($additional_description,$id)
 	{
 		foreach ($_tags_array as $key => $value)
 			{
-			$output .=  "<span class='td' onclick='senddown(this.innerHTML,".$id.");return false;'>".$value."</span> ";
+			$output .=  "<span class='td' onclick='senddown(this.innerText,".$id.");var z=\"\";jQuery(this).html(z);return false;'>".$value."</span> ";
 			}
 	}
 
