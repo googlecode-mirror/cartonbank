@@ -180,7 +180,7 @@ $total_cartoons = $total_cartoons - 1;
 if (!$author_section) // for not Author section (portfolio)
 {
 
-?><br /><h2>Авторы</h2><?
+?><br /><h2><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы</a></h2><?
 
 // Authors
     echo "<div id='branddisplay1'>";

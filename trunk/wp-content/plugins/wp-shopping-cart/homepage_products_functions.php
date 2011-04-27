@@ -587,4 +587,51 @@ function last_sales($content = '')
 		  return preg_replace("/\[last_sales\]/", $output, $content);
 }
 }
+
+function all_artists($content = '')
+{
+	global $wpdb;
+
+	if(isset($_GET['page_id']) && $wpdb->escape($_GET['page_id'])=='29')
+		{
+			return $content;
+		}
+
+
+	  $siteurl = get_option('siteurl');
+	  if(get_option('permalink_structure') != '')
+		{
+		$seperator ="?";
+		}
+		else
+		  {
+		  $seperator ="&amp;";
+		  }
+	  $sql = "SELECT `id`, `name`, `avatar_url`, `bio_post_id`, `count` FROM `wp_product_brands` WHERE active=1 ORDER BY name";
+	  $product_list = $wpdb->get_results($sql,ARRAY_A);
+		
+	  $output = "<div id='homepage_products' class='items'>";
+	$output = '';    
+	if (isset($product_list[0]))
+		  {
+			  $output .= "<div id='homepage_products' class='items'>";
+		  }
+
+	  foreach((array)$product_list as $product)
+		{
+		$output .= "<div class='item'>";
+		//http://cartoonbank.ru/?page_id=29&brand=22
+		$output .= "<a href='".get_option('product_list_url')."?page_id=29&brand=".$product['id']."'>";
+		if($product['avatar_url'] != '')
+		  {
+		  $output .= "<img src='".$product['avatar_url']."' title='".$product['name']." (".$product['count']." рис.)' class='thumb' style='width:140px;height:140px;'/>";
+		  }
+		$output .= "</a>";
+		$output .= "</div>\n\r";
+		}
+	  $output .= "</div>\n\r";
+	  $output .= "<br style='clear: left;'>\n\r";
+	  
+	  return preg_replace("/\[all_artists\]/", $output, $content);
+}
 ?>
