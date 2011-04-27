@@ -40,15 +40,19 @@ $month = date("m");
 
 $this_date = getdate();
 
-if (isset($_GET['m']) && is_numeric($_GET['m']))
+if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' )
 {
 	$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $year);
 	$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 0, $year);
 }
+else if ($_GET['m']==0)
+{
+	$start_timestamp = mktime(0, 0, 0, 11, 1, $year-1);
+	$end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
+}
 else
 {
-	//$start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
-	$start_timestamp = mktime(0, 0, 0, 11, 1, 2010);
+	$start_timestamp = mktime(0, 0, 0, $month, 1, $year);
 	$end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
 }
 
@@ -57,14 +61,14 @@ $sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `
 
 $result = $wpdb->get_results($sql,ARRAY_A);
 if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_error());}
-echo "<div><table class='datagrid'>";
+echo "<div>";
 foreach ($result as $row)
 {
-	echo "<tr>";
-	echo "<td>".$row['name']."</td><td>".$row['count']."</td>";
-	echo "</tr>";
+	echo "<span>";
+	echo $row['name']."&nbsp;[".$row['count']."], ";
+	echo "</span>";
 }
-echo "</table></div>";
+echo "</div>";
 
 echo "<br>";
 
@@ -195,7 +199,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 	$d_monthname_previous = date('F', mktime(0,0,0,($month-1),28,$year));     // PREVIOUS Month Long name (July)
 
 
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m='>Показать 100 последних продаж</a> ";
+	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=0'>Показать 100 последних продаж</a> ";
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$month."'>".$this_date['month']."</a> ";
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> ";
 
