@@ -211,6 +211,28 @@ if (!$author_section) // for not Author section (portfolio)
 
 // authors dropdown list
 	// all authors dropdown
+	/*
+    if($brands != null && $cartoons_count != null)
+      {
+      foreach($brands as $option)
+        {
+        $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."&brand=".$option['id']."'>".stripslashes($option['name']);
+
+		foreach ($cartoons_count as $count_row)
+			{
+				if ($count_row['id'] == $option['id'])
+				{
+					$options .= " [".$count_row['count']."]";
+				}
+			}
+
+		$options .= "</a><br />";
+        }
+
+      }
+    echo $options;
+*/
+
 	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
 	$_selected = "";
 
@@ -223,6 +245,7 @@ if (!$author_section) // for not Author section (portfolio)
 	}
 	$authors .= "</select>";
 
+	echo $authors;
 
     echo "</div>";
 
