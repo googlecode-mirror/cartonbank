@@ -212,6 +212,13 @@ if (!$author_section) // for not Author section (portfolio)
 }
 else
 {
+		// Get the Brand (author) data
+	$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
+	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
+
+	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = 1 order by name";
+	$brands_result  = $GLOBALS['wpdb']->get_results($brands_sql,ARRAY_A);
+
 	// avatar url
 			
 	if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
