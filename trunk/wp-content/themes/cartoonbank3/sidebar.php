@@ -56,10 +56,8 @@ else
 	$cartoon_of_the_day_id = 0;
 }
 
-?>
+if ($cartoon_of_the_day_id != 0){
 
-
-<?if ($cartoon_of_the_day_id != 0){//border: 6px solid white;border: 1px solid #962d2a;
 ?>
 <br /><br />
 <div style="text-align:center; padding-top:6px; width:180px;height:186px;background-color:#668bb7;">
@@ -80,7 +78,6 @@ if (!$author_section)
 
 	// include category 666 (rokfor)
 	$categories = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' AND `category_parent` = '0' ORDER BY `order` ASC",ARRAY_A);
-	//$category_count = $wpdb->get_results("SELECT `wp_item_category_associations`.`category_id`, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`approved`='1' AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` GROUP BY `wp_item_category_associations`.`category_id`;",ARRAY_A);
 
 	$category_count = $wpdb->get_results("SELECT `wp_product_list`.`category` as category_id, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`approved`='1' AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) GROUP BY `wp_product_list`.`category`;",ARRAY_A);
 
@@ -97,8 +94,6 @@ else
 	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	{
 		$brand = $_GET['brand'];
-
-		//$category_count = $wpdb->get_results("SELECT `wp_item_category_associations`.`category_id`, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.brand=".$brand." AND `wp_product_list`.visible='1' AND `wp_product_list`.approved='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` GROUP BY `wp_item_category_associations`.`category_id`;",ARRAY_A);
 
 		$category_count = $wpdb->get_results("SELECT `wp_product_list`.`category` as category_id, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.brand=".$brand." AND `wp_product_list`.visible='1' AND `wp_product_list`.approved='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) GROUP BY `wp_product_list`.`category`;",ARRAY_A);
 
@@ -237,8 +232,6 @@ else
 	foreach ($brands as $brand)
 	{
 		if (isset($_GET['brand']) && $brand['id'] == $_GET['brand'])
-		//if (isset($_GET['brand']) && $brands[0]['id'] == $_GET['brand'])
-		//if ($brands[0]['id'] == $brand['id'])
 			{$_selected = " selected";$thename =  $brand['name'];}
 		$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']." [".$brand['count']."]&nbsp;</option>";
 		$_selected = "";
@@ -254,10 +247,6 @@ else
 	echo "<br /><a href='".get_option('siteurl')."/?page_id=1284&ord=72&br=".$brandid."'>100 лучших работ</a>";
 }    
 echo "</div>";
-?>
-
-<?
-//$_rokfor_url = get_option('siteurl').'/?page_id=29&category=666';
 ?>
 
 <br /><h2>Разделы</h2>
