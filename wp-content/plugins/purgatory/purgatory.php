@@ -189,8 +189,8 @@ function deletecomment()
 
 	.up
 	{
-	padding-top: 8px;
-	height:30px; font-size:24px; text-align:center; background-color:#009900; margin-bottom:2px;
+	padding-top: 6px;
+	height:25px; font-size:24px; text-align:center; background-color:#009900; margin-bottom:2px;
 	-moz-border-radius: 6px;-webkit-border-radius: 6px;
 	}
 
@@ -208,8 +208,8 @@ function deletecomment()
 
 	.down
 	{
-	padding-top: 8px;
-	height:30px; font-size:24px; text-align:center; background-color:#cc0000; margin-top:2px;
+	padding-top: 6px;
+	height:25px; font-size:24px; text-align:center; background-color:#cc0000; margin-top:2px;
 	-moz-border-radius: 6px;-webkit-border-radius: 6px;
 	}
 
@@ -226,8 +226,8 @@ function deletecomment()
 
 	.black
 	{  
-	padding-top: 8px; color: white;
-	height:30px; font-size:24px; text-align:center; background-color:#4A4A4A; margin-top:2px;
+	padding-top: 6px; color: white;
+	height:25px; font-size:24px; text-align:center; background-color:#4A4A4A; margin-top:2px;
 	-moz-border-radius: 6px;-webkit-border-radius: 6px;
 	}
 
@@ -242,6 +242,27 @@ function deletecomment()
 	color:#FFFFFF;
 	text-decoration:none;
 	}
+
+	.xblack
+	{  
+	padding-top: 6px;
+	height:25px; font-size:24px; text-align:center; background-color:#66CCFF; margin-top:2px;
+	-moz-border-radius: 6px;-webkit-border-radius: 6px;
+	}
+
+	.xblack a
+	{
+	color:#FFFFFF;
+	text-decoration:none;
+	}
+
+	.xblack a:hover
+	{
+	color:#FFFFFF;
+	text-decoration:none;
+	}
+
+
 
 	.gr
 	{
@@ -380,7 +401,7 @@ else
 			<div class='down'><a href="" id="down<?php echo $mes_id;?>" onclick="senddown(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="down"><?php echo $down; ?></a></div>
 			<div class='black'><a href="" id="black<?php echo $mes_id;?>" onclick="sendblack(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black"><?php echo $black; ?></a></div>
 			<? if ($black > 0){?>
-			<div><a href="" id="black_remove<?php echo $mes_id;?>" onclick="sendblack_remove(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black_remove" title="remove black">убрать ч.м.</a></div>
+			<div class='xblack'><a href="" id="black_remove<?php echo $mes_id;?>" onclick="sendblack_remove(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black_remove" title="убрать чёрную метку"><img src="<? get_option('siteurl'); ?>/img/xbmark.gif"></a></div>
 			<?}?>
 		</div>
 
