@@ -180,7 +180,7 @@ $total_cartoons = $total_cartoons - 1;
 		$options ='';
 		$seperator = '';
 		$brands = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
-		//$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( p.id ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
+		$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( p.id ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
 
 
 if (!$author_section) // for not Author section (portfolio)
@@ -224,11 +224,7 @@ else
 	if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
 	{$avatar_url = "<img width=140 src='".$brand_result[0]['avatar_url']."'>";}
 	else {$avatar_url = "<img width=140 src='".get_option('siteurl')."/img/avatar.gif'>";}
-/*
-	// author name
-	if (isset($brands[0]['name']) && $brand_result[0]['name'] != '')
-	{$author_name = $brand_result[0]['name'];}else{$brands[0]['name']='';}
-*/
+
 	// all authors dropdown
 		$_selected = "";
 		if (!isset($_GET['brand'])) {$_selected = ' selected ';}
@@ -238,9 +234,9 @@ else
 
 		$thename = "Автор";
 
-	foreach ($brands_result as $brand)
+	foreach ($brands as $brand)
 	{
-		if ($brand_result[0]['id'] == $brand['id'])
+		if ($brands[0]['id'] == $brand['id'])
 			{$_selected = " selected";$thename=  $brand['name'];}
 		$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']." [".$brand['count']."]&nbsp;</option>";
 		$_selected = "";
