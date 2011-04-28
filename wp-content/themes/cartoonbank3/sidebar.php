@@ -236,17 +236,19 @@ else
 		$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\" style=\"width:180px;margin-top:2px;\"><option ".$_selected." value=''>&nbsp;все авторы&nbsp;</option>";
 		$_selected = "";
 
-		foreach ($brands as $brand)
-		{
-			if ($brands[0]['id'] == $brand['id'])
-				{$_selected = " selected";}
-			$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']." [".$brand['count']."]&nbsp;</option>";
-			$_selected = "";
-		}
-		$authors .= "</select>";
+		$thename = "Автор";
+
+	foreach ($brands_result as $brand)
+	{
+		if ($brand_result[0]['id'] == $brand['id'])
+			{$_selected = " selected";$thename=  $brand['name'];}
+		$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']." [".$brand['count']."]&nbsp;</option>";
+		$_selected = "";
+	}
+	$authors .= "</select>";
 
 	?>
-	<br /><h2><? echo $brand['name'];?></h2> 
+	<br /><h2><? echo $thename;?></h2> 
 	<?
 	echo $avatar_url."<br />";
 	echo $authors;
