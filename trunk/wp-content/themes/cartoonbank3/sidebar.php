@@ -238,7 +238,7 @@ else
 
 		foreach ($brands as $brand)
 		{
-			if (isset($_GET['brand']) && $brands[0]['id'] == $_GET['brand'])
+			if ($brands[0]['id'] == $brand['id'])
 				{$_selected = " selected";}
 			$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']." [".$brand['count']."]&nbsp;</option>";
 			$_selected = "";
@@ -246,7 +246,7 @@ else
 		$authors .= "</select>";
 
 	?>
-	<br /><h2>Автор</h2> 
+	<br /><h2><? echo $brand['name'];?></h2> 
 	<?
 	echo $avatar_url."<br />";
 	echo $authors;
