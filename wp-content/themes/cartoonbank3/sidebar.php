@@ -186,10 +186,10 @@ $total_cartoons = $total_cartoons - 1;
 if (!$author_section) // for not Author section (portfolio)
 {
 
-?><br /><h2><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы</a></h2><?
-
-
-    echo "<div id='branddisplay1'>";
+?>
+<br /><h2><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы</a></h2>
+<?
+echo "<div id='branddisplay1'>";
 
 // Authors
 
@@ -258,8 +258,7 @@ echo "</div>";
 ?>
 
 <?
-//$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
-$_rokfor_url = get_option('siteurl').'/?page_id=29&category=666';
+//$_rokfor_url = get_option('siteurl').'/?page_id=29&category=666';
 ?>
 
 <br /><h2>Разделы</h2>
