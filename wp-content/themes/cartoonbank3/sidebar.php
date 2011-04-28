@@ -180,7 +180,7 @@ $total_cartoons = $total_cartoons - 1;
 if (!$author_section) // for not Author section (portfolio)
 {
 
-?><br /><h2><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы:</a></h2><?
+?><br /><h2><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы</a></h2><?
 
 
 
@@ -200,7 +200,7 @@ if (!$author_section) // for not Author section (portfolio)
 		{
 			if (isset($_GET['brand']) && $brands[0]['id'] == $_GET['brand'])
 				{$_selected = " selected";}
-			$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']."[".$brand['count']."]&nbsp;</option>";
+			$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']." [".$brand['count']."]&nbsp;</option>";
 			$_selected = "";
 		}
 		$authors .= "</select>";
@@ -230,6 +230,9 @@ else
 	{$author_name = $brand_result[0]['name'];}else{$brand_result[0]['name']='';}
 
 	// all authors dropdown
+		$_selected = "";
+		if (!isset($_GET['brand'])) {$_selected = ' selected ';}
+
 		$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\" style=\"width:180px;margin-top:2px;\"><option ".$_selected." value=''>&nbsp;все авторы&nbsp;</option>";
 		$_selected = "";
 
@@ -237,7 +240,7 @@ else
 		{
 			if (isset($_GET['brand']) && $brands[0]['id'] == $_GET['brand'])
 				{$_selected = " selected";}
-			$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']."[".$brand['count']."]&nbsp;</option>";
+			$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']." [".$brand['count']."]&nbsp;</option>";
 			$_selected = "";
 		}
 		$authors .= "</select>";
