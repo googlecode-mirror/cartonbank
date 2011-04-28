@@ -190,24 +190,6 @@ if (!$author_section) // for not Author section (portfolio)
 	$seperator = '';
     $brands = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
 	$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( p.id ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
-/*
-    if($brands != null && $cartoons_count != null)
-      {
-      foreach($brands as $option)
-        {
-        $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."&brand=".$option['id']."'>".stripslashes($option['name']);
-		foreach ($cartoons_count as $count_row)
-			{
-				if ($count_row['id'] == $option['id'])
-				{
-					$options .= " [".$count_row['count']."]";
-				}
-			}
-		$options .= "</a><br />";
-        }
-      }
-    echo $options;
-*/
 
 // authors dropdown list
 	// all authors dropdown
@@ -234,14 +216,14 @@ if (!$author_section) // for not Author section (portfolio)
 */
 	$_selected = "";
 	if (!isset($_GET['brand'])) {$_selected = ' selected ';}
-	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option ".$_selected." value=''> все авторы </option>";
+	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\" style=\"width:180px;\"><option ".$_selected." value=''>&nbsp;все авторы&nbsp;</option>";
 	$_selected = "";
 
 	foreach ($brands as $brand)
 	{
 		if (isset($_GET['brand']) && $brands[0]['id'] == $_GET['brand'])
 			{$_selected = " selected";}
-		$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']."&nbsp;</option>";
+		$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']."[".$brand['count']."]&nbsp;</option>";
 		$_selected = "";
 	}
 	$authors .= "</select>";
