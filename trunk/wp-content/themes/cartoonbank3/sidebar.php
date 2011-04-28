@@ -180,7 +180,7 @@ $total_cartoons = $total_cartoons - 1;
 if (!$author_section) // for not Author section (portfolio)
 {
 
-?><br /><h2><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы</a></h2><?
+?><br /><h2><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы:</a></h2><?
 
 
 
@@ -190,6 +190,7 @@ if (!$author_section) // for not Author section (portfolio)
 	$seperator = '';
     $brands = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
 	$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( p.id ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
+/*
     if($brands != null && $cartoons_count != null)
       {
       foreach($brands as $option)
@@ -206,6 +207,7 @@ if (!$author_section) // for not Author section (portfolio)
         }
       }
     echo $options;
+*/
 
 // authors dropdown list
 	// all authors dropdown
