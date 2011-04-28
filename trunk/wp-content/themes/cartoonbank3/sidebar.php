@@ -217,11 +217,11 @@ else
 	if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
 	{$avatar_url = "<img width=140 src='".$brand_result[0]['avatar_url']."'>";}
 	else {$avatar_url = "<img width=140 src='".get_option('siteurl')."/img/avatar.gif'>";}
-
+/*
 	// author name
 	if (isset($brands[0]['name']) && $brand_result[0]['name'] != '')
 	{$author_name = $brand_result[0]['name'];}else{$brands[0]['name']='';}
-
+*/
 	// all authors dropdown
 		$_selected = "";
 		if (!isset($_GET['brand'])) {$_selected = ' selected ';}
