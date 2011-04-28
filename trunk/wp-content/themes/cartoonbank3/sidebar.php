@@ -232,9 +232,9 @@ if (!$author_section) // for not Author section (portfolio)
       }
     echo $options;
 */
-
-	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
 	$_selected = "";
+	if (!isset($_GET['brand']) $_selected = ' selected '; )
+	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option value='' ".$_selected.">все авторы</option>";
 
 	foreach ($brands as $brand)
 	{
@@ -248,12 +248,9 @@ if (!$author_section) // for not Author section (portfolio)
 	echo $authors;
 
     echo "</div>";
-
 }
 else
 {
-	
-
 	// Get the Brand (author) data
 	$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
 	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
