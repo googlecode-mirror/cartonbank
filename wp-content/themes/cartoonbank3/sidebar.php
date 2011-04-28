@@ -182,6 +182,7 @@ $total_cartoons = $total_cartoons - 1;
 		$brands = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
 		$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( p.id ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
 
+echo "<div id='branddisplay1'>";
 
 if (!$author_section) // for not Author section (portfolio)
 {
@@ -189,7 +190,6 @@ if (!$author_section) // for not Author section (portfolio)
 ?>
 <br /><h2><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы</a></h2>
 <?
-echo "<div id='branddisplay1'>";
 
 // Authors
 
@@ -253,7 +253,6 @@ else
 	echo "<br /><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
 	echo "<br /><a href='".get_option('siteurl')."/?page_id=1284&ord=72&br=".$brandid."'>100 лучших работ</a>";
 }    
-
 echo "</div>";
 ?>
 
