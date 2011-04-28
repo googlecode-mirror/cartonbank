@@ -241,7 +241,7 @@ if (!$author_section) // for not Author section (portfolio)
 	{
 		if (isset($_GET['brand']) && $brands[0]['id'] == $_GET['brand'])
 			{$_selected = " selected";}
-		$authors .= "<option $_selected value="." ".$brand['id']." ".">".$brand['name']."</option>";
+		$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']."&nbsp;</option>";
 		$_selected = "";
 	}
 	$authors .= "</select>";
