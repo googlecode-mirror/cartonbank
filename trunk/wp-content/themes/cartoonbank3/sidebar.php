@@ -182,6 +182,8 @@ if (!$author_section) // for not Author section (portfolio)
 
 ?><br /><h2><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы</a></h2><?
 
+
+
 // Authors
     echo "<div id='branddisplay1'>";
     $options ='';
@@ -204,6 +206,22 @@ if (!$author_section) // for not Author section (portfolio)
         }
       }
     echo $options;
+
+// authors dropdown list
+	// all authors dropdown
+	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&amp;brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
+	$_selected = "";
+
+	foreach ($brands_result as $brand)
+	{
+		if ($brand_result[0]['id'] == $brand['id'])
+			{$_selected = " selected";}
+		$authors .= "<option $_selected value=".$brand['id'].">".$brand['name']."</option>";
+		$_selected = "";
+	}
+	$authors .= "</select>";
+
+
     echo "</div>";
 
 }
