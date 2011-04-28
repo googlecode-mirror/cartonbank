@@ -234,14 +234,14 @@ if (!$author_section) // for not Author section (portfolio)
 */
 	$_selected = "";
 	if (!isset($_GET['brand'])) {$_selected = ' selected ';}
-	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option ".$_selected." value=''>все авторы</option>";
+	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option ".$_selected." value=''> все авторы </option>";
 	$_selected = "";
 
 	foreach ($brands as $brand)
 	{
 		if (isset($_GET['brand']) && $brands[0]['id'] == $_GET['brand'])
 			{$_selected = " selected";}
-		$authors .= "<option $_selected value=".$brand['id'].">".$brand['name']."</option>";
+		$authors .= "<option $_selected value="." ".$brand['id']." ".">".$brand['name']."</option>";
 		$_selected = "";
 	}
 	$authors .= "</select>";
