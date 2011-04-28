@@ -64,7 +64,7 @@ else
 <br /><br />
 <div style="text-align:center; padding-top:6px; width:180px;height:186px;background-color:#668bb7;">
 <div style="color:white; padding-bottom:4px;"><b>ТЕМА ДНЯ</b></div>
-<div  style="text-align:center; margin-left:11px; padding-top:6px; width:158px;height:154px;background-color:white;"><a href="<?echo get_option('siteurl');?>/?page_id=29&amp;category=777"><img src="<?echo get_option('siteurl')?>/wp-content/plugins/wp-shopping-cart/images/<?echo $image_name;?>" title="<?echo $image_title;?>" alt="<?echo $image_title;?>" class="thumb"></a><br /></div>
+<div  style="text-align:center; margin-left:11px; padding-top:6px; width:158px;height:154px;background-color:white;"><a href="<?echo get_option('siteurl');?>/?page_id=29&category=777"><img src="<?echo get_option('siteurl')?>/wp-content/plugins/wp-shopping-cart/images/<?echo $image_name;?>" title="<?echo $image_title;?>" alt="<?echo $image_title;?>" class="thumb"></a><br /></div>
 </div>
 
 <?}?>
@@ -131,9 +131,9 @@ $total_cartoons = $total_cartoons - 1;
 		else
 		{
 			if (is_numeric($brandid))
-			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&amp;brand=".$brandid."&amp;category=".$option['id']."'>".stripslashes($option['name'])."";
+			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&category=".$option['id']."'>".stripslashes($option['name'])."";
 			else
-			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&amp;category=".$option['id']."'>".stripslashes($option['name'])."";
+			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&category=".$option['id']."'>".stripslashes($option['name'])."";
 		}
 		
 		foreach ($category_count as $cat_row)
@@ -163,7 +163,7 @@ $total_cartoons = $total_cartoons - 1;
           {
           foreach($subcategories as $subcategory)
             {
-            $options .= "<li><a class='categorylink' href='".get_option('product_list_url').$seperator."&amp;category=".$subcategory['id']."'>-".stripslashes($subcategory['name']);
+            $options .= "<li><a class='categorylink' href='".get_option('product_list_url').$seperator."&category=".$subcategory['id']."'>-".stripslashes($subcategory['name']);
 			$options .= "</a></li>";
             }
           }
@@ -194,7 +194,7 @@ if (!$author_section) // for not Author section (portfolio)
       {
       foreach($brands as $option)
         {
-        $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."&amp;brand=".$option['id']."'>".stripslashes($option['name']);
+        $options .= "<a class='categorylink' href='".get_option('product_list_url').$seperator."&brand=".$option['id']."'>".stripslashes($option['name']);
 		foreach ($cartoons_count as $count_row)
 			{
 				if ($count_row['id'] == $option['id'])
@@ -209,12 +209,12 @@ if (!$author_section) // for not Author section (portfolio)
 
 // authors dropdown list
 	// all authors dropdown
-	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&amp;brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
+	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
 	$_selected = "";
 
-	foreach ($brands_result as $brand)
+	foreach ($brands as $brand)
 	{
-		if ($brand_result[0]['id'] == $brand['id'])
+		if ($brands[0]['id'] == $brand['id'])
 			{$_selected = " selected";}
 		$authors .= "<option $_selected value=".$brand['id'].">".$brand['name']."</option>";
 		$_selected = "";
@@ -248,7 +248,7 @@ else
 	{$author_name = $brand_result[0]['name'];}else{$brand_result[0]['name']='';}
 
 	// all authors dropdown
-	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&amp;brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
+	$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\"><option value=''>все авторы</option>";
 	$_selected = "";
 
 	foreach ($brands_result as $brand)
@@ -265,14 +265,14 @@ else
 <?
 echo $avatar_url."<br />";
 echo $authors;
-echo "<br /><a href='".get_option('siteurl')."/?page_id=29&amp;brand=".$brandid."&amp;bio=1'>Информация об авторе</a>";
+echo "<br /><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
 echo "<br /><a href='".get_option('siteurl')."/?page_id=1284&ord=72&br=".$brandid."'>100 лучших работ</a>";
 }
 ?>
 
 <?
-//$_rokfor_url = get_option('siteurl').'/?page_id=29&amp;brand=8&amp;category=666';
-$_rokfor_url = get_option('siteurl').'/?page_id=29&amp;category=666';
+//$_rokfor_url = get_option('siteurl').'/?page_id=29&brand=8&category=666';
+$_rokfor_url = get_option('siteurl').'/?page_id=29&category=666';
 ?>
 
 <br /><h2>Разделы</h2>
@@ -282,15 +282,15 @@ $_rokfor_url = get_option('siteurl').'/?page_id=29&amp;category=666';
       {
 		if ($author_section)
 		{
-		   $options = "<a href='".get_option('product_list_url').$seperator."&amp;brand=".$brandid."&amp;category=0&amp;color=all'>Все изображения [".$total_cartoons."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&amp;brand=".$brandid."&amp;color=color'>Цветные [".$color_number."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&amp;brand=".$brandid."&amp;color=bw'>Чёрно-белые [".$bw_number."]</a><br />";
+		   $options = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&category=0&color=all'>Все изображения [".$total_cartoons."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&color=color'>Цветные [".$color_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&color=bw'>Чёрно-белые [".$bw_number."]</a><br />";
 		}
 		else
 		{
-		   $options = "<a href='".get_option('product_list_url').$seperator."&amp;category=0&amp;color=all'>Все изображения [".$total_cartoons."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&amp;color=color'>Цветные [".$color_number."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&amp;color=bw'>Чёрно-белые [".$bw_number."]</a><br />";
+		   $options = "<a href='".get_option('product_list_url').$seperator."&category=0&color=all'>Все изображения [".$total_cartoons."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=color'>Цветные [".$color_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=bw'>Чёрно-белые [".$bw_number."]</a><br />";
 		}
 
 	   echo $options;
