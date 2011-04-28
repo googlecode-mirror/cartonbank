@@ -189,9 +189,9 @@ if (!$author_section) // for not Author section (portfolio)
 ?><br /><h2><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы</a></h2><?
 
 
+    echo "<div id='branddisplay1'>";
 
 // Authors
-    echo "<div id='branddisplay1'>";
 
 		$_selected = "";
 		if (!isset($_GET['brand'])) {$_selected = ' selected ';}
@@ -209,20 +209,11 @@ if (!$author_section) // for not Author section (portfolio)
 
 		echo $authors;
 
-    echo "</div>";
 }
 else
 {
-	// Get the Brand (author) data
-	$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
-	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
-/*
-	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = 1 order by name";
-	$brands_result  = $GLOBALS['wpdb']->get_results($brands_sql,ARRAY_A);
-*/
-
 	// avatar url
-				
+			
 	if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
 	{$avatar_url = "<img width=140 src='".$brand_result[0]['avatar_url']."'>";}
 	else {$avatar_url = "<img width=140 src='".get_option('siteurl')."/img/avatar.gif'>";}
@@ -238,23 +229,25 @@ else
 		$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\" style=\"width:180px;margin-top:2px;\"><option ".$_selected." value=''>&nbsp;все авторы&nbsp;</option>";
 		$_selected = "";
 
-		foreach ($brand_sql as $brand)
+		foreach ($brands as $brand)
 		{
-			if (isset($_GET['brand']) && $brand_sql[0]['id'] == $_GET['brand'])
+			if (isset($_GET['brand']) && $brands[0]['id'] == $_GET['brand'])
 				{$_selected = " selected";}
 			$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']." [".$brand['count']."]&nbsp;</option>";
 			$_selected = "";
 		}
 		$authors .= "</select>";
 
-?>
-<br /><h2>Автор</h2> 
-<?
-echo $avatar_url."<br />";
-echo $authors;
-echo "<br /><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
-echo "<br /><a href='".get_option('siteurl')."/?page_id=1284&ord=72&br=".$brandid."'>100 лучших работ</a>";
-}
+	?>
+	<br /><h2>Автор</h2> 
+	<?
+	echo $avatar_url."<br />";
+	echo $authors;
+	echo "<br /><a href='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>Информация об авторе</a>";
+	echo "<br /><a href='".get_option('siteurl')."/?page_id=1284&ord=72&br=".$brandid."'>100 лучших работ</a>";
+}    
+
+echo "</div>";
 ?>
 
 <?
