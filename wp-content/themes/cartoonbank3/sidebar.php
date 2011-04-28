@@ -214,10 +214,10 @@ else
 	// Get the Brand (author) data
 	$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
 	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
-
+/*
 	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = 1 order by name";
 	$brands_result  = $GLOBALS['wpdb']->get_results($brands_sql,ARRAY_A);
-
+*/
 
 	// avatar url
 				
@@ -236,9 +236,9 @@ else
 		$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&brand='+options[selectedIndex].value\" style=\"width:180px;margin-top:2px;\"><option ".$_selected." value=''>&nbsp;все авторы&nbsp;</option>";
 		$_selected = "";
 
-		foreach ($brands as $brand)
+		foreach ($brands_sql as $brand)
 		{
-			if (isset($_GET['brand']) && $brands[0]['id'] == $_GET['brand'])
+			if (isset($_GET['brand']) && $brands_sql[0]['id'] == $_GET['brand'])
 				{$_selected = " selected";}
 			$authors .= "<option $_selected value=".$brand['id'].">&nbsp;".$brand['name']." [".$brand['count']."]&nbsp;</option>";
 			$_selected = "";
