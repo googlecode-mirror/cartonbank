@@ -250,7 +250,7 @@ else
 
 
 <?
-if (esc_attr(round($profileuser->discount,0))>0)
+if (current_user_can('edit_users') || esc_attr(round($profileuser->discount,0))>0)
 {
 ?>
 <tr>
