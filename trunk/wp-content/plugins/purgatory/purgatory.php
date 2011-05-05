@@ -145,9 +145,7 @@ function sendblack(id)
 
 function sendblack_remove(id)
    {
-	alert (id);
 	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/black_vote_remove.php?id="+id);
-	alert ('ok');
    }
 
 function sendcomment()
