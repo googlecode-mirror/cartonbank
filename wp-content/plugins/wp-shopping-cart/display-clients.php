@@ -61,7 +61,7 @@ $sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `
 
 $result = $wpdb->get_results($sql,ARRAY_A);
 if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_error());}
-echo "<div>";
+echo "<div><h1>Покупатели</h1>";
 foreach ($result as $row)
 {
 	echo "<span>";
@@ -93,7 +93,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
         AND st.downloads != '5'
 		AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
 	GROUP BY c.license
-	ORDER BY `date` DESC
+	ORDER BY l.user_id DESC
 	LIMIT 200";
 
 	//pokazh($sql,"sql");
