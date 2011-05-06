@@ -269,6 +269,11 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 							echo "<div class='t'>".date("d.m.y H:m:s",$sales['date'])." <b>".$sales['artist']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".round($sales['price'],0)*((100-round($sales['discount'],0))/100)."</b></div>";
 						}//foreach($product_list as $product)
 					
+						// print invoice:
+						echo "<div id='invoice'>";
+						echo fill_invoice();
+						echo "</div>";
+
 					}//if($product_list != null)
 			
 		}// foreach($response as $product)
@@ -277,4 +282,61 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 	}//if($response != null)
 }//if (isset($_GET['m']) && is_numeric($_GET['m']))
 
+
+function fill_invoice($invoice_number='',$invoice_date='',$client_details='',$product_list='',$total='')
+{
+
+	if ($invoice_number==''){$invoice_number='____';}
+	if ($invoice_date==''){$invoice_date = getdate();}
+	if ($client_details==''({$client_details = 'данные покупателя неизвестны';}
+	if ($product_list=='')
+		{
+		$product_list = '<tr>
+			<td style="width:13mm;"></td>
+			<td style="width:20mm;"></td>
+			<td></td>
+			<td style="width:20mm;"></td>
+			<td style="width:17mm;"></td>
+			<td style="width:27mm;">Цена
+			<td style="width:27mm;"></td>
+			</tr>';
+		}
+	if ($total==''){$total=0;}
+
+		$filename = "invoice.html";
+		$content=loadFile($filename); 
+
+		$total_rub_text = $total;
+
+	// replace placeholders
+		$content = str_replace ('{invoice_number}',$invoice_number,$content);
+		$content = str_replace ('{invoice_date}',$invoice_date,$content);
+		$content = str_replace ('{client_details}',$client_details,$content);
+		$content = str_replace ('{product_list}',$product_list,$content);
+		$content = str_replace ('{total}',$total,$content);
+		$content = str_replace ('{total_rub_text}',$total_rub_text,$content);
+
+		// output content
+	return $content;
+}
+
+
+function loadFile($sFilename, $sCharset = 'UTF-8')
+{
+    if (floatval(phpversion()) >= 4.3) {
+        $sData = file_get_contents($sFilename);
+    } else {
+        if (!file_exists($sFilename)) return -3;
+        $rHandle = fopen($sFilename, 'r');
+        if (!$rHandle) return -2;
+
+        $sData = '';
+        while(!feof($rHandle))
+            $sData .= fread($rHandle, filesize($sFilename));
+        fclose($rHandle);
+    }
+    if ($sEncoding = mb_detect_encoding($sData, 'auto', true) != $sCharset)
+        $sData = mb_convert_encoding($sData, $sCharset, $sEncoding);
+    return $sData;
+}
 ?>
