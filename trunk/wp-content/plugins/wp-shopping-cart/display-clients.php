@@ -56,106 +56,11 @@ else
 	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
 }
 
-$sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b, `wp_users` AS u WHERE l.`processed` = s.`id`  AND l.id = c.purchaseid AND p.id = c.prodid AND st.purchid = c.purchaseid AND p.brand = b.id AND u.id = l.user_id AND l.user_id !=  '106' AND st.downloads !=  '5' AND date BETWEEN '$start_timestamp' AND '$end_timestamp' GROUP BY c.license ORDER BY b.name ) AS temp GROUP BY temp.id order by temp.name
-";
+$sql = "SELECT c.id, c.user_id, c.name, c.bank_attributes, c.contract, c.contract_date, u.user_email, u.user_url, u.wallet, u.discount
+		FROM  `al_customers` AS c,  `wp_users` AS u
+		WHERE u.id = c.user_id";
+$product_list = $wpdb->get_results($sql,ARRAY_A);
 
-$result = $wpdb->get_results($sql,ARRAY_A);
-if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_error());}
-echo "<div><h1>Покупатели</h1>";
-foreach ($result as $row)
-{
-	echo "<span>";
-	echo $row['name']."&nbsp;[".$row['count']."], ";
-	echo "</span>";
-}
-echo "</div>";
-
-echo "<br>";
-
-$sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
-	FROM `wp_purchase_logs` as l, 
-		`wp_purchase_statuses` as s, 
-		`wp_cart_contents` as c, 
-		`wp_product_list` as p,
-		`wp_download_status` as st,
-		`wp_product_brands` as b,
-		`wp_users` as u,
-		`wp_usermeta` as um
-	WHERE	l.`processed`=s.`id` 
-		AND l.id=c.purchaseid 
-		AND p.id=c.prodid  
-		AND st.purchid=c.purchaseid
-		AND p.brand=b.id
-		AND u.id = l.user_id
-		AND u.id = um.user_id
-		AND um.meta_key = 'description'
-		AND l.user_id != '106'
-        AND st.downloads != '5'
-		AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
-	GROUP BY c.license
-	ORDER BY l.user_id DESC
-	LIMIT 200";
-
-	//pokazh($sql,"sql");
-
-	//http://www.phpguru.org/static/datagrid.html
-    require_once($abspath.'wp-content/RGrid/RGrid.php');
-    
-    $grid = RGrid::Create($params, $sql);
-
-    $grid->showHeaders = true;
-    
-    $grid->SetHeaderHTML('<div style="text-align: center">Статистика продаж</div>');
-
-
-    $grid->SetDisplayNames(array('ID'       => '№',
-                                 'totalprice'   => 'со скидкой',
-                                 'id'   => '# изобр.',
-                                 'artist'   => 'автор изобр.',
-                                 'discount'   => 'скидка %',
-                                 'display_name'   => 'логин',
-								 'user_id' => 'покупатель',
-                                 'purchaseid'   => 'номер заказа',
-                                 'active'   => 'активно',
-                                 'date'   => 'дата покупки',
-                                 'price'   => 'цена',
-                                 'firstname'   => 'покупатель',
-                                 'lastname'   => 'фамилия покупателя',
-                                 'address'   => 'СМИ',
-                                 'phone'   => 'телефон  покупателя',
-                                 'gateway'   => 'метод оплаты',
-                                 'processed'   => 'прохождение заказа',
-                                 'title'   => 'название ',
-                                 'license'   => 'лицензия',
-                                 'wallet'   => 'на счёте',
-                                 'downloadid'   => 'скачать',
-                                 'downloads'   => 'осталось скачиваний',
-                                 'contract'   => 'номер договора'));
-
-    
-	$grid->NoSpecialChars('title','downloadid','firstname');
-    
-    $grid->rowcallback = 'RowCallback';
-
-    function RowCallback(&$row)
-    {
-		//$row['date'] = date("jS M Y",$row['date']);
-		$row['firstname'] = '<a href="http://cartoonbank.ru/wp-admin/user-edit.php?user_id='.$row['user_id'].'">'.$row['firstname'].' '.$row['lastname'].'</a> '.$row['phone'].' «'.$row['smi'].'»';
-		$row['date'] = date("d.m.y H:m:s",$row['date']);
-		$row['title'] = "<a target='_blank' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$row['id']."'>".nl2br(stripslashes($row['title']))."</a>";
-		//$row['average'] = round($row['average'],2);
-		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."'>скачать</a>";
-		//$link = $siteurl."?downloadid=".$download_data['id'];
-		$row['discount'] = round ($row['discount'],0);
-		$row['totalprice'] = $row['price'] - $row['price'] * $row['discount']/100;
-		$row['wallet'] = round($row['wallet'],0);
-		$row['price'] = round($row['price'],0);
-	}
-
-	//$grid->HideColumn('column', ...)
-	$grid->HideColumn('address','phone','display_name','user_id','lastname','email','processed','downloads','active','downloadid','smi');
-
-    $grid->SetPerPage(100);
 ?>
 	<style type="text/css">
     <!--
@@ -196,8 +101,15 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
         .datagrid a {
             text-decoration: none;
         }
+		.t
+		{
+			padding:2px;
+			border-bottom:1px solid silver;
+		}
     // -->
     </style>
+
+<h2>Покупатели</h2>
 <?
 	$this_date = getdate();
 	//$dateMinusOneMonth = mktime(0, 0, 0, (3-1), 31,  2007 );
@@ -213,7 +125,156 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-clients.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> ";
 
 
-	echo "<br />";
-	echo 'Всего записей: ' . $grid->GetRowCount() . '<br />';
-	$grid->Display() 
+
+echo "        <table id='itemlist'>";
+echo "          <tr style='border:1px solid black; background-color:#c0c0c0;'>";
+
+echo "            <td class='t'>";
+echo "#";
+echo "            </td>";
+
+echo "            <td class='t'>";
+echo "юзер";
+echo "            </td>";
+
+echo "            <td class='t'>";
+echo "название";
+echo "            </td>";
+
+echo "            <td class='t'>";
+echo "банковские атрибуты";
+echo "            </td>";
+
+echo "            <td class='t'>";
+echo "договор";
+echo "            </td>";
+
+echo "            <td class='t'>";
+echo "скидка, %";
+echo "            </td class='t'>";
+
+echo "            <td class='t'>";
+echo "на счёте";
+echo "            </td class='t'>";
+
+echo "            <td class='t'>";
+echo "дата контракта";
+echo "            </td>";
+
+echo "          </tr>";
+
+
+if($product_list != null)
+  {
+  foreach($product_list as $product)
+	{
+		echo "          <tr>";
+
+		echo "            <td class='t'>";
+		echo $product['id'];
+		echo "            </td>";
+
+		echo "            <td class='t'><a href='". get_option('siteurl')."/wp-admin/user-edit.php?user_id=".$product['user_id']."'>";
+		echo $product['user_id'];
+		echo "</a>            </td>";
+
+		echo "            <td class='t' style='width:250px;'>";
+		echo $product['name'];
+		echo "            </td>";
+
+		
+		echo "            <td class='t' style='width:250px;'>";
+		echo $product['bank_attributes'];
+		echo "            </td>";
+
+		echo "            <td class='t'>";
+		echo $product['contract'];
+		echo "            </td>";
+
+
+		echo "            <td class='t'>";
+		echo round($product['discount'],0);
+		echo "            </td>";
+
+		echo "            <td class='t'>";
+		echo round($product['wallet'],0);
+		echo "            </td>";
+
+
+		echo "            <td class='t'>";
+		echo date_format(date_create($product['contract_date']),'d-m-Y');
+		echo "            </td>";
+
+
+		echo "          </tr>";
+	}
+  }
+  
+echo "        </table>";
+
+// If the report month known
+if (isset($_GET['m']) && is_numeric($_GET['m']))
+{
+	$_month = $_GET['m'];
+
+	if ($_month==0)
+	{
+		echo "<h3>200 последних</h3>";
+	}
+	else
+	{
+		echo "<h3>".date('F', mktime(0,0,0,($month),28,$year))."</h3>";
+	}
+
+
+	// all clients ids
+	$sql = "select id, user_id, name from al_customers order by contract";
+	$response = $wpdb->get_results($sql,ARRAY_A) ;
+	if($response != null)
+	  {
+	  foreach($response as $product)
+		{
+			// get all sales for the given month
+			$sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
+			FROM `wp_purchase_logs` as l, 
+				`wp_purchase_statuses` as s, 
+				`wp_cart_contents` as c, 
+				`wp_product_list` as p,
+				`wp_download_status` as st,
+				`wp_product_brands` as b,
+				`wp_users` as u,
+				`wp_usermeta` as um
+				WHERE	l.`processed`=s.`id` 
+					AND l.id=c.purchaseid 
+					AND p.id=c.prodid  
+					AND st.purchid=c.purchaseid
+					AND p.brand=b.id
+					AND u.id = l.user_id
+					AND u.id = um.user_id
+					AND um.meta_key = 'description'
+					AND l.user_id != '106'
+					AND u.id = '".$product['user_id']."'
+					AND st.downloads != '5'
+					AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
+				GROUP BY c.license
+				ORDER BY `date` DESC";
+
+				$product_list = $wpdb->get_results($sql,ARRAY_A);
+									///pokazh($sql);
+				if($product_list != null)
+					{
+					echo ("<div class='t' style='background-color:#CCD2FF;padding-left:4px;margin-top:8px;'>".$product['name']."</div>");
+					  foreach($product_list as $sales)
+						{
+							echo "<div class='t'>".date("d.m.y H:m:s",$sales['date'])." <b>".$sales['artist']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".round($sales['price'],0)*((100-round($sales['discount'],0))/100)."</b></div>";
+						}//foreach($product_list as $product)
+					
+					}//if($product_list != null)
+			
+		}// foreach($response as $product)
+
+
+	}//if($response != null)
+}//if (isset($_GET['m']) && is_numeric($_GET['m']))
+
 ?>
