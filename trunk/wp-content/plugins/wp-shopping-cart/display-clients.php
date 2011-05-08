@@ -294,7 +294,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					
 
 						// print invoice:
-						echo "<div id='invoice' style='margin:20px;padding:2px;background-color:#F0F1B8;width: 210mm; border: 1px #efefef solid; font-size: 11pt;'>";
+						echo "<div id='invoice' style='margin:20px; padding:2px; background: white url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat; background-size: 30%; background-position: 90% 100%; width: 210mm; border: 8px white solid; font-size: 10pt;'>";
 						echo fill_invoice('', '', $product['bank_attributes'].". ".$product['name'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 						//fill_invoice($invoice_number='',$invoice_date='',$client_details='',$product_list='',$total='',$count='',$invoice_period='',$contract_number='',$contract_date='')
 						echo "</div>";
