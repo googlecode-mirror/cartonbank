@@ -3,6 +3,9 @@ $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
 
+// начальный номер счёта 
+$_invoce_start_number=500;
+
 global $wpdb;
 
 //pokazh($_SERVER);
@@ -58,7 +61,7 @@ else
 
 $sql = "SELECT c.id, c.user_id, c.name, c.bank_attributes, c.contract, c.contract_date, u.user_email, u.user_url, u.wallet, u.discount
 		FROM  `al_customers` AS c,  `wp_users` AS u
-		WHERE u.id = c.user_id";
+		WHERE u.id = c.user_id ORDER BY c.contract";
 $product_list = $wpdb->get_results($sql,ARRAY_A);
 
 ?>
@@ -73,7 +76,7 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
         .datagrid thead th {
             color: black;
             border-bottom: 1px solid #DBDBDB;
-            font-size: 8pt;
+            font-size: 9pt;
             font-family: Verdana;
             text-align: center;
 			padding:2px;
@@ -92,7 +95,7 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
         }
         .datagrid tbody td {
             padding: 2px;
-			font-size: 8pt;
+			font-size: pt;
 			border-bottom: 1px solid #DBDBDB;
 			border-left:1px solid #DBDBDB;
 			vertical-align:middle;
@@ -124,7 +127,7 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-clients.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> ";
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-clients.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> ";
 
-
+/*
 
 echo "        <table id='itemlist'>";
 echo "          <tr style='border:1px solid black; background-color:#c0c0c0;'>";
@@ -183,7 +186,7 @@ if($product_list != null)
 		echo "            </td>";
 
 		
-		echo "            <td class='t' style='width:300px;font-size:0.8em;'>";
+		echo "            <td class='t' style='width:300px;font-size:1em;'>";
 		echo $product['bank_attributes'];
 		echo "            </td>";
 
@@ -211,6 +214,7 @@ if($product_list != null)
   }
   
 echo "        </table>";
+*/
 
 // If the report month known
 if (isset($_GET['m']) && is_numeric($_GET['m']))
@@ -232,8 +236,10 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 	$response = $wpdb->get_results($sql,ARRAY_A) ;
 	if($response != null)
 	  {
+		$customer_number = 1;
 	  foreach($response as $product)
 		{
+			
 			// get all sales for the given month
 			$sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
 			FROM `wp_purchase_logs` as l, 
@@ -263,10 +269,10 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 									///pokazh($sql);
 				if($product_list != null)
 					{
-						$n = 1;
-						$count = count($product_list);
-						$total = 0;
-						$the_list = '';
+						$n = 1; // sequence number of the cartoon sold to one customer
+						$count = count($product_list); // number of cartoons sold
+						$total = 0; // total price with discount
+						$the_list = ''; // html list of cartoons with row tags
 						$contract_period = $_month.".".date("Y");
 
 						echo ("<div class='t' style='background-color:#CCD2FF;padding-left:4px;margin-top:8px;'>".$product['name']."</div>");
@@ -275,16 +281,16 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 						{
 							$discount_price = round($sales['price'],0)*((100-round($sales['discount'],0))/100);
 							
-							echo "<div class='t'>".date("d.m.y H:m:s",$sales['date'])." <b>".$sales['artist']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b></div>";
+							//echo "<div class='t'>".date("d.m.y H:m:s",$sales['date'])." <b>".$sales['artist']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b></div>";
 							
 							$total = $total + $discount_price;
 							
 							$the_list .= "<tr>
 												<td style='padding:2px;text-align:center;'>".$n."</td>
 												<td style='padding:2px;text-align:center;'>".$sales['purchaseid']."</td>
-												<td style='font-style:bold;font-size:0.7em;padding:2px;'>«".stripslashes($sales['title'])."» (#".$sales['id'].") ".$sales['artist']."</td>
-												<td style='padding:2px;text-align:center;'>1</td>
-												<td style='padding:2px;text-align:center;'>шт.</td>
+												<td style='font-style:bold;font-size:1em;padding:2px;'>«".stripslashes($sales['title'])."» (#".$sales['id'].") ".$sales['artist']."</td>
+												<!-- <td style='padding:2px;text-align:center;'>1</td> -->
+												<td style='padding:2px;text-align:center;'>1шт.</td>
 												<td style='padding:2px;text-align:center;'>".$discount_price."</td>
 												<td style='padding:2px;text-align:center;'>".$discount_price."</td>
 											 </tr>";
@@ -294,11 +300,18 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					
 
 						// print invoice:
-						echo "<div id='invoice' style='margin:20px; padding:2px; background: white url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat; background-size: 30%; background-position: 90% 100%; width: 210mm; border: 8px white solid; font-size: 10pt;'>";
-						echo fill_invoice('', '', $product['bank_attributes'].". ".$product['name'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
-						//fill_invoice($invoice_number='',$invoice_date='',$client_details='',$product_list='',$total='',$count='',$invoice_period='',$contract_number='',$contract_date='')
+						
+						$_invoce_number = $_invoce_start_number + $customer_number;
+						$out = fill_invoice($_invoce_number, '', $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+
+//url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat
+
+						echo "<div id='invoice' style='background: white url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat; background-size: 21%; background-position: 87% 100%; margin:20px; padding:8px;width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>";
+						echo $out;
 						echo "</div>";
 
+						send_mail($out);
+					$customer_number ++;
 					}//if($product_list != null)
 			
 		}// foreach($response as $product)
@@ -332,7 +345,7 @@ function fill_invoice($invoice_number='',$invoice_date='',$client_details='',$pr
 		$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice.html";
 		$content=loadFile($filename); 
 
-		$total_rub_text = "<b>".num2str($total)."</b>";
+		$total_rub_text = "<b>".capitalizefirst(num2str($total))."</b>";
 
 	// replace placeholders
 		$content = str_replace ('{invoice_number}',$invoice_number,$content);
@@ -368,6 +381,15 @@ function loadFile($sFilename, $sCharset = 'UTF-8')
     if ($sEncoding = mb_detect_encoding($sData, 'auto', true) != $sCharset)
         $sData = mb_convert_encoding($sData, $sCharset, $sEncoding);
     return $sData;
+}
+
+function capitalizefirst($string)
+{
+	$string = mb_strtoupper(mb_substr($string, 0, 1)) . mb_substr($string, 1);
+
+	//$string = mb_convert_case($str, MB_CASE_UPPER, "UTF-8");
+
+	return $string;
 }
 
 function num2str($inn, $stripkop=false) {
@@ -449,4 +471,15 @@ function morph($n, $f1, $f2, $f5) {
     if ($n1==1) return $f1;
     return $f5;
 }
+
+function send_mail($votecontent)
+{
+	$votecontent = "<div id='invoice' style='margin:20px; padding:8px; width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>".$votecontent."</div>";
+
+	$headers  = 'MIME-Version: 1.0' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
+	mail("igor.aleshin@gmail.com","Новый счёт от Картунбанка",$votecontent,$headers);
+}
+
 ?>
