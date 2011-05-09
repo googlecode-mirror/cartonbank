@@ -5,9 +5,12 @@
 	table.invoice_items td, table.invoice_items th { border: 1px solid;}
 </style>
 
+<div style="text-align:center; width:100%; font-size:0.8em;margin-bottom:8px;"> 
+		<b>Внимание! Оплата данного счета означает согласие с условиями поставки товара. <br>Товар отпускается по факту прихода денег на р/с Поставщика.<br>Счет действителен к оплате в течение 3-х банковских дней.</b>
+</div>
 <table width="100%" class="invoice_bank_rekv">
     <tr>
-        <td colspan="2" rowspan="2" style="min-height:13mm; width: 105mm;padding:2px;">
+        <td colspan="2" rowspan="2" style="min-height:13mm; width: 105mm; padding:2px;">
             <table border="0" style="width:100%;height:13mm;">
                 <tr>
                     <td valign="top">
@@ -16,7 +19,7 @@
                 </tr>
                 <tr>
                     <td valign="bottom" style="height: 3mm;">
-                        <div style="font-size:10pt;"> Банк получателя</div>
+                        <div style="font-size:8pt;">Банк получателя</div>
                     </td>
                 </tr>
             </table>
@@ -54,12 +57,12 @@
             <table border="0" cellpadding="0" cellspacing="0" style="height: 13mm; width: 105mm;padding:2px;">
                 <tr>
                     <td valign="top">
-                        <div>Общество с ограниченной ответственностью "МедиаГрафика"</div>
+                        <div><b>ООО "МедиаГрафика"</b></div>
                     </td>
                 </tr>
                 <tr>
-                    <td valign="bottom" style="height: 3mm;padding:2px;">
-                        <div style="font-size: 10pt;padding:2px;">Получатель</div>
+                    <td valign="bottom" style="height: 3mm; padding:2px;">
+                        <div style="font-size: 8pt;">Получатель</div>
                     </td>
                 </tr>
             </table>
@@ -69,8 +72,8 @@
 </table>
 <br/>
 
-<div style="font-weight: bold; font-size: 16pt; padding-left:5px;">
-    Счет № {invoice_number} от {invoice_date}</div>
+<div style="font-weight: bold; font-size: 14pt; padding-left:5px;">
+    Счет на оплату № {invoice_number} от {invoice_date}</div>
 <br/>
 
 <div style="background-color:#000000; width:100%; font-size:1px; height:2px;">&nbsp;</div>
@@ -81,16 +84,16 @@
             <div style=" padding-left:2px;"> Поставщик:     </div>
         </td>
         <td>
-            <div style="font-weight:bold;  padding-left:2px;">
-                ИНН 7813470615, КПП 781301001, Общество с ограниченной ответственностью "МедиаГрафика", 197101, Санкт-Петербург г, Рентгена ул, дом № 15/31, кв. 3 </div>
+            <div style="padding-left:2px; font-size: 1em;">
+                ИНН 7813470615, КПП 781301001, Общество с ограниченной ответственностью "МедиаГрафика", 197101, г. Санкт-Петербург, ул. Рентгена, дом № 15/31, кв. 3</div>
         </td>
     </tr>
     <tr>
         <td style="width: 30mm;">
-            <div style=" padding-left:2px;"> Покупатель:     </div>
+            <div style="padding-left:2px;"> Покупатель:     </div>
         </td>
         <td>
-            <div style="font-weight:bold;  padding-left:2px;">
+            <div style="padding-left:2px; border-top: 1px solid; font-size: 1em;">
                 {client_details}</div>
         </td>
     </tr>
@@ -100,18 +103,18 @@
 <table class="invoice_items" width="100%" cellpadding="2" cellspacing="2">
     <thead>
     <tr>
-        <th style="width:13mm;">№</th>
-        <th style="width:20mm;">Код</th>
-        <th>Товар</th>
-        <th style="width:20mm;">Кол-во</th>
-        <th style="width:17mm;">Ед.</th>
-        <th style="width:27mm;">Цена</th>
-        <th style="width:27mm;">Сумма</th>
+        <th style="width:13mm;font-size:0.8em;">№</th>
+        <th style="width:20mm;font-size:0.8em;">Заказ</th>
+        <th style="font-size:0.8em;">Товар</th>
+        <!-- <th style="width:20mm;">Кол-во</th> -->
+        <th style="width:17mm;font-size:0.8em;">Кол-во</th>
+        <th style="width:27mm;font-size:0.8em;">Цена, руб</th>
+        <th style="width:27mm;font-size:0.8em;">Сумма, руб</th>
     </tr>
     </thead>
     <tbody >
 	<tr>
-		<td colspan='7' style='font-style:bold;font-size:0.7em;padding:2px;'>Передача прав на однократное использование изображений {invoice_period} по договору {contract_number} от {contract_date}</td>
+		<td colspan='6' style='font-style:bold;font-size:1em;padding:2px;'>Передача прав на однократное использование изображений {invoice_period}<br>по договору {contract_number} от {contract_date}</td>
 	 </tr>
 	{product_list}
     </tbody>
@@ -120,35 +123,37 @@
 <table border="0" width="100%" cellpadding="1" cellspacing="1">
     <tr>
         <td>&nbsp;</td>
-        <td style="width:47mm; font-weight:bold;  text-align:right;">Итого:</td>
-        <td style="width:27mm; font-weight:bold;  text-align:right;">{total}</td>
+        <td style="width:47mm; font-weight:bold; text-align:right;">Итого:</td>
+        <td style="width:27mm; font-weight:bold; text-align:center;">{total}</td>
     </tr>
     <tr>
         <td>&nbsp;</td>
-        <td style="width:47mm; font-weight:bold;  text-align:right;">Без налога (НДС):</td>
-        <td style="width:27mm; font-weight:bold;  text-align:right;">-</td>
+        <td style="width:47mm; font-weight:bold; text-align:right;">Без налога (НДС):</td>
+        <td style="width:27mm; font-weight:bold; text-align:center;">-</td>
     </tr>
     <tr>
         <td>&nbsp;</td>
-        <td style="width:47mm; font-weight:bold;  text-align:right;">Всего с НДС:</td>
-        <td style="width:27mm; font-weight:bold;  text-align:right;">{total}</td>
+        <td style="width:47mm; font-weight:bold; text-align:right; border-top: 3px solid;">Всего с НДС:</td>
+        <td style="width:27mm; font-weight:bold; text-align:center; border-top: 3px solid;">{total}</td>
     </tr>
 </table>
 
 <br />
 <div>
-Всего наименований {count} на сумму {total} рублей.<br />
+Всего наименований <b>{count}</b> на сумму <b>{total}</b> рублей.<br />
 {total_rub_text}</div>
 
-<div style="background-color:#000000; width:100%; font-size:1px; height:2px;">&nbsp;</div>
+<div style="background-color:#8C8C8C; width:400px; font-size:1px; height:1px;">&nbsp;</div>
 
-<div>Руководитель <b>Шилов Вячеслав Фёдорович</b> <img src="http://cartoonbank.ru/img/shilov_signature.gif" style="width:125px;"></div>
+<div>Руководитель <b>Шилов Вячеслав Фёдорович</b> <img src="http://cartoonbank.ru/img/shilov_signature.gif" style="width:125px;"><br />Главн. бухгалтер <b>Шилов Вячеслав Фёдорович</b> <img src="http://cartoonbank.ru/img/shilov_signature.gif" style="width:125px; vertical-align:text-top;"></div>
 <br/>
+<!-- 
+<div style="z-index: 1; position: absolute; left: 700px; top: 940px;"><img src="http://cartoonbank.ru/img/mg_stamp.gif" width="200"></div> -->
 
-<div>Главный бухгалтер <b>Афанасьева Юлия Михайловна</b> </div>
-<br/>
+<!-- <div>Контактное лицо бухгалтерии <b>Афанасьева Юлия Михайловна</b> </div>
+<br/> -->
 
 <!-- <div style="width: 85mm;text-align:center;">М.П.</div>
 <br/> -->
 
-<div style="width:800px;text-align:left;font-size:10pt;">Счет действителен к оплате в течение трех дней.</div>
+<!-- <div style="width:800px;text-align:left;font-size:10pt;">Счет действителен к оплате в течение трех дней.</div> -->
