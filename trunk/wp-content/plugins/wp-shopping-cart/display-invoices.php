@@ -112,7 +112,7 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
     // -->
     </style>
 
-<h2>Покупатели</h2>
+<h2>Счета</h2>
 <?
 	$this_date = getdate();
 	//$dateMinusOneMonth = mktime(0, 0, 0, (3-1), 31,  2007 );
@@ -127,94 +127,6 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-clients.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> ";
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-clients.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> ";
 
-/*
-
-echo "        <table id='itemlist'>";
-echo "          <tr style='border:1px solid black; background-color:#c0c0c0;'>";
-
-echo "            <td class='t'>";
-echo "#";
-echo "            </td>";
-
-echo "            <td class='t'>";
-echo "юзер";
-echo "            </td>";
-
-echo "            <td class='t'>";
-echo "название";
-echo "            </td>";
-
-echo "            <td class='t'>";
-echo "банковские атрибуты";
-echo "            </td>";
-
-echo "            <td class='t'>";
-echo "договор";
-echo "            </td>";
-
-echo "            <td class='t'>";
-echo "скидка, %";
-echo "            </td class='t'>";
-
-echo "            <td class='t'>";
-echo "на счёте";
-echo "            </td class='t'>";
-
-echo "            <td class='t'>";
-echo "дата контракта";
-echo "            </td>";
-
-echo "          </tr>";
-
-
-if($product_list != null)
-  {
-  foreach($product_list as $product)
-	{
-		echo "          <tr>";
-
-		echo "            <td class='t'>";
-		echo $product['id'];
-		echo "            </td>";
-
-		echo "            <td class='t'><a href='". get_option('siteurl')."/wp-admin/user-edit.php?user_id=".$product['user_id']."'>";
-		echo $product['user_id'];
-		echo "</a>            </td>";
-
-		echo "            <td class='t' style='width:250px;'>";
-		echo $product['name'];
-		echo "            </td>";
-
-		
-		echo "            <td class='t' style='width:300px;font-size:1em;'>";
-		echo $product['bank_attributes'];
-		echo "            </td>";
-
-		echo "            <td class='t'>";
-		echo $product['contract'];
-		echo "            </td>";
-
-
-		echo "            <td class='t'>";
-		echo round($product['discount'],0);
-		echo "            </td>";
-
-		echo "            <td class='t'>";
-		echo round($product['wallet'],0);
-		echo "            </td>";
-
-
-		echo "            <td class='t'>";
-		echo date_format(date_create($product['contract_date']),'d-m-Y');
-		echo "            </td>";
-
-
-		echo "          </tr>";
-	}
-  }
-  
-echo "        </table>";
-*/
 
 // If the report month known
 if (isset($_GET['m']) && is_numeric($_GET['m']))
@@ -310,7 +222,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 						echo $out;
 						echo "</div>";
 
-						send_mail($out);
+						//send_mail($out);
 					$customer_number ++;
 					}//if($product_list != null)
 			
