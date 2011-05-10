@@ -175,6 +175,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					AND l.user_id != '106'
 					AND u.id = '".$product['user_id']."'
 					AND st.downloads != '5'
+					AND gateway = 'wallet'
 					AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
 				GROUP BY c.license
 				ORDER BY `date` DESC";
