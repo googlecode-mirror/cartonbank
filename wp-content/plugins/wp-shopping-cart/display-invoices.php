@@ -2,6 +2,8 @@
 $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
+$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice.html";
+$filename_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice_pdf.html";
 
 // начальный номер счёта 
 $_invoce_start_number=500;
@@ -122,7 +124,7 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
 	$d_month_previous2 = date('n', mktime(0,0,0,($month-2),28,$year));         // PREVIOUS month of year (1-12)
 	$d_monthname_previous2 = date('F', mktime(0,0,0,($month-2),28,$year));     // PREVIOUS Month Long name (July)
 
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=0'>Показать 200 последних продаж</a> ";
+	//echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=0'>Показать 200 последних продаж</a> ";
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$month."'>".$this_date['month']."</a> ";
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> ";
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> ";
@@ -188,6 +190,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 						$contract_period = $_month.".".date("Y");
 
 						echo ("<div class='t' style='background-color:#CCD2FF;padding-left:4px;margin-top:8px;'>".$product['name']."</div>");
+						
 					
 					  foreach($product_list as $sales)
 						{
@@ -197,26 +200,22 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 							
 							$total = $total + $discount_price;
 							
-							$the_list .= "<tr>
-												<td style='padding:2px;text-align:center;'>".$n."</td>
-												<td style='padding:2px;text-align:center;'>".$sales['purchaseid']."</td>
-												<td style='font-style:bold;font-size:1em;padding:2px;'>«".stripslashes($sales['title'])."» (#".$sales['id'].") ".$sales['artist']."</td>
-												<!-- <td style='padding:2px;text-align:center;'>1</td> -->
-												<td style='padding:2px;text-align:center;'>1шт.</td>
-												<td style='padding:2px;text-align:center;'>".$discount_price."</td>
-												<td style='padding:2px;text-align:center;'>".$discount_price."</td>
-											 </tr>";
+							$the_list .= '<tr>
+											<td style="padding:2px;text-align:center;">'.$n.'</td>
+											<td style="padding:2px;text-align:center;">'.$sales["purchaseid"].'</td>
+											<td style="font-style:bold;font-size:1em;padding:2px;">«'.stripslashes($sales["title"]).'» (#'.$sales["id"].') '.$sales["artist"].'</td>
+											<td style="padding:2px;text-align:center;">1шт.</td>
+											<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
+											<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
+										</tr>';
 
 							$n++;
 						}//foreach($product_list as $sales)
 					
-
 						// print invoice:
 						
 						$_invoce_number = $_invoce_start_number + $customer_number;
-						$out = fill_invoice($_invoce_number, '', $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
-
-//url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat
+					$out = fill_invoice($filename, $_invoce_number, '', $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 
 						echo "<div id='invoice' style='background: white url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat; background-size: 21%; background-position: 87% 100%; margin:20px; padding:8px;width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>";
 						echo $out;
@@ -224,6 +223,14 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 
 						//send_mail($out);
 					$customer_number ++;
+
+					// Print PDF
+					$out = fill_invoice($filename_pdf, $_invoce_number, '', $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+
+					echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
+							<input type='submit' value='PDF'>
+							<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
+						</form></div>");
 					}//if($product_list != null)
 			
 		}// foreach($response as $product)
@@ -233,7 +240,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 }//if (isset($_GET['m']) && is_numeric($_GET['m']))
 
 
-function fill_invoice($invoice_number='',$invoice_date='',$client_details='',$product_list='',$total='',$count='',$invoice_period='',$contract_number='',$contract_date='')
+function fill_invoice($filename, $invoice_number='', $invoice_date='', $client_details='', $product_list='', $total='', $count='', $invoice_period='', $contract_number='', $contract_date='')
 {
 	if ($invoice_number==''){$invoice_number='____';}
 	$today = getdate();
@@ -241,20 +248,11 @@ function fill_invoice($invoice_number='',$invoice_date='',$client_details='',$pr
 	if ($client_details==''){$client_details = 'данные покупателя неизвестны';}
 	if ($product_list=='')
 		{
-		$product_list = '<tr>
-			<td style="width:13mm;">&nbsp;</td>
-			<td style="width:20mm;">&nbsp;</td>
-			<td>&nbsp;</td>
-			<td style="width:20mm;">&nbsp;</td>
-			<td style="width:17mm;">&nbsp;</td>
-			<td style="width:27mm;">&nbsp;</td>
-			<td style="width:27mm;">&nbsp;</td>
-			</tr>';
+		$product_list = '<tr><td colspan=6> нет </td></tr>';
 		}
 	if ($total==''){$total=0;}
 	if ($count==''){$count=0;}
 
-		$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice.html";
 		$content=loadFile($filename); 
 
 		$total_rub_text = "<b>".capitalizefirst(num2str($total))."</b>";
@@ -272,6 +270,8 @@ function fill_invoice($invoice_number='',$invoice_date='',$client_details='',$pr
 		$content = str_replace ('{contract_date}',$contract_date,$content);
 
 		// output content
+		//pokazh($content);
+
 	return $content;
 }
 
