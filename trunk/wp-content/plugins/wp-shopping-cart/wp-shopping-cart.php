@@ -91,6 +91,7 @@ class wp_shopping_cart
       add_submenu_page($base_page,'Все продажи', 'Все продажи', 7, 'wp-shopping-cart/display-sales.php');
 	  add_submenu_page($base_page,'Бухгалтеру', 'Бухгалтеру', 7, 'wp-shopping-cart/display-account.php');
 	  add_submenu_page($base_page,'Покупатели', 'Покупатели', 7, 'wp-shopping-cart/display-clients.php');
+	  add_submenu_page($base_page,'Счета', 'Счета', 7, 'wp-shopping-cart/display-invoices.php');
       
       add_submenu_page($base_page,'Продукты', 'Продукты', 7, 'wp-shopping-cart/display-items.php');
       add_submenu_page($base_page,'Категория', 'Категория', 7, 'wp-shopping-cart/display-category.php');
