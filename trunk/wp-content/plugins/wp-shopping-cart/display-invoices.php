@@ -1,12 +1,9 @@
 <?php
 $abspath = 'z:/home/localhost/www/';
-$abspath_1 = "/home/www/cb/";
-$abspath_2 = "/home/www/cb3/";
-$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice.html";
-$filename_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice_pdf.html";
-
-// начальный номер счёта 
-$_invoce_start_number=500;
+	$abspath_1 = "/home/www/cb/";
+	$abspath_2 = "/home/www/cb3/";
+	$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice.html";
+	$filename_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice_pdf.html";
 
 global $wpdb;
 
@@ -14,52 +11,68 @@ global $wpdb;
 //[DOCUMENT_ROOT] => /home/www/cb3/
 if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
 {
-	$abspath = $abspath_2;
-	$params['database'] = 'cartoonbankru';
-}
-if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
+		$abspath = $abspath_2;
+		$params['database'] = 'cartoonbankru';
+	}
+	if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
+	{
+		$abspath = $abspath_2;
+		$params['database'] = 'cartoonbankru';
+	}
+	else if (strstr($_SERVER['DOCUMENT_ROOT'],'cb/')) 
+	{
+		$abspath = $abspath_1;
+		$params['database'] = 'cartoonbankru';
+	}
+	else if (strstr($_SERVER['DOCUMENT_ROOT'],'/home/www/')) 
+	{
+		$abspath = $abspath_1;
+		$params['database'] = 'cartoonbankru';
+	}
+	else
+	{
+		$params['database'] = 'cartoonbankru';
+	}
+		$params['hostname'] = 'localhost';
+		$params['username'] = 'z58365_cbru3';
+		$params['password'] = 'greenbat';
+
+	$year = date("Y");
+	$month = date("m");
+
+	$this_date = getdate();
+
+	if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' )
+	{
+		$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $year);
+		$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 1, $year);
+	}
+	elseif (isset($_GET['m']) && $_GET['m']==0)
+	{
+		$start_timestamp = mktime(0, 0, 0, 11, 1, $year-1);
+		$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
+	}
+	else
+	{
+		$start_timestamp = mktime(0, 0, 0, $month, 1, $year);
+		$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
+	}
+
+if (isset($_POST['new_invoice_start_number']) && is_numeric($_POST['new_invoice_start_number']))
 {
-	$abspath = $abspath_2;
-	$params['database'] = 'cartoonbankru';
-}
-else if (strstr($_SERVER['DOCUMENT_ROOT'],'cb/')) 
-{
-	$abspath = $abspath_1;
-	$params['database'] = 'cartoonbankru';
-}
-else if (strstr($_SERVER['DOCUMENT_ROOT'],'/home/www/')) 
-{
-	$abspath = $abspath_1;
-	$params['database'] = 'cartoonbankru';
+	$_invoice_start_number = trim($_POST['new_invoice_start_number']);
+
+	// update invoice start number in database
+	$sql = "update wp_options set option_value=".$_invoice_start_number." where option_name='invoice_number'";
+	$result = $wpdb->query($sql);
+	if (!$result) {die('<br />'.$sql.'<br />Invalid query: ' . mysql_error());}
 }
 else
 {
-	$params['database'] = 'cartoonbankru';
+	// начальный номер счёта 
+	$_invoice_start_number = get_option('invoice_number');
 }
-    $params['hostname'] = 'localhost';
-    $params['username'] = 'z58365_cbru3';
-    $params['password'] = 'greenbat';
 
-$year = date("Y");
-$month = date("m");
-
-$this_date = getdate();
-
-if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' )
-{
-	$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $year);
-	$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 1, $year);
-}
-elseif (isset($_GET['m']) && $_GET['m']==0)
-{
-	$start_timestamp = mktime(0, 0, 0, 11, 1, $year-1);
-	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
-}
-else
-{
-	$start_timestamp = mktime(0, 0, 0, $month, 1, $year);
-	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
-}
 
 $sql = "SELECT c.id, c.user_id, c.name, c.bank_attributes, c.contract, c.contract_date, u.user_email, u.user_url, u.wallet, u.discount
 		FROM  `al_customers` AS c,  `wp_users` AS u
@@ -116,18 +129,31 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
 
 <h2>Счета</h2>
 <?
-	$this_date = getdate();
-	//$dateMinusOneMonth = mktime(0, 0, 0, (3-1), 31,  2007 );
-	$d_month_previous = date('n', mktime(0,0,0,($month-1),28,$year));         // PREVIOUS month of year (1-12)
-	$d_monthname_previous = date('F', mktime(0,0,0,($month-1),28,$year));     // PREVIOUS Month Long name (July)
 
-	$d_month_previous2 = date('n', mktime(0,0,0,($month-2),28,$year));         // PREVIOUS month of year (1-12)
-	$d_monthname_previous2 = date('F', mktime(0,0,0,($month-2),28,$year));     // PREVIOUS Month Long name (July)
+		echo "<form method=post action='#'>";
+		echo "Счета будут выводится начиная с номера ";
+		echo "<input type='text' name='new_invoice_start_number' style='width:45px;' value='".$_invoice_start_number."'>";
+		echo "<input type='submit' value=' изменить '>";
+		echo "</form>";
 
-	//echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=0'>Показать 200 последних продаж</a> ";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$month."'>".$this_date['month']."</a> ";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> ";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> ";
+
+	// Months navigation
+		$this_date = getdate();
+		//$dateMinusOneMonth = mktime(0, 0, 0, (3-1), 31,  2007 );
+		$d_month_previous = date('n', mktime(0,0,0,($month-1),28,$year));         // PREVIOUS month of year (1-12)
+		$d_monthname_previous = date('F', mktime(0,0,0,($month-1),28,$year));     // PREVIOUS Month Long name (July)
+
+		$d_month_previous2 = date('n', mktime(0,0,0,($month-2),28,$year));         // PREVIOUS month of year (1-12)
+		$d_monthname_previous2 = date('F', mktime(0,0,0,($month-2),28,$year));     // PREVIOUS Month Long name (July)
+
+		$d_month_previous3 = date('n', mktime(0,0,0,($month-3),28,$year));         // PREVIOUS month of year (1-12)
+		$d_monthname_previous3 = date('F', mktime(0,0,0,($month-3),28,$year));     // PREVIOUS Month Long name (July)
+
+		//echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=0'>Показать 200 последних продаж</a> ";
+		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$month."'>".$this_date['month']."</a> &nbsp;";
+		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> &nbsp;";
+		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> &nbsp;";
+		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous3."'>".$d_monthname_previous3."</a> &nbsp;";
 
 
 // If the report month known
@@ -150,6 +176,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 	$response = $wpdb->get_results($sql,ARRAY_A) ;
 	if($response != null)
 	  {
+		$_invoice_number = $_invoice_start_number;
 		$customer_number = 1;
 	  foreach($response as $product)
 		{
@@ -215,23 +242,25 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					
 						// print invoice:
 						
-						$_invoce_number = $_invoce_start_number + $customer_number;
-					$out = fill_invoice($filename, $_invoce_number, '', $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+					$out = fill_invoice($filename, $_invoice_number, '', $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 
 						echo "<div id='invoice' style='background: white url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat; background-size: 21%; background-position: 87% 100%; margin:20px; padding:8px;width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>";
 						echo $out;
 						echo "</div>";
 
 						//send_mail($out);
-					$customer_number ++;
 
 					// Print PDF
-					$out = fill_invoice($filename_pdf, $_invoce_number, '', $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+					$out = fill_invoice($filename_pdf, $_invoice_number, '', $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+							echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
+									<input type='submit' value='скачать PDF '>
+									<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
+									<input type='hidden' name='filename' value='invoice_".$_invoice_number."'>
+								</form></div>");
 
-					echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
-							<input type='submit' value='PDF'>
-							<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
-						</form></div>");
+					$_invoice_number = $_invoice_start_number + $customer_number;
+					$customer_number ++;
+
 					}//if($product_list != null)
 			
 		}// foreach($response as $product)

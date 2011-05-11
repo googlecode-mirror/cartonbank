@@ -18,8 +18,6 @@ echo '<'.'?'.'xml version="1.0" encoding="UTF-8"'.'?'.'>';
 <h1>TCPDF Examples</h1>
 
 <ol>
-<li>ales: [<a href="ales.php" title="PDF [new window]" target="_blank">PDF</a>]</li>
-
 <li>Simple PDF with default Header and Footer: [<a href="example_001.php" title="PDF [new window]" target="_blank">PDF</a>]</li>
 <li>Simple PDF without Header and Footer: [<a href="example_002.php" title="PDF [new window]" target="_blank">PDF</a>]</li>
 <li>Custom Header and Footer: [<a href="example_003.php" title="PDF [new window]" target="_blank">PDF</a>]</li>

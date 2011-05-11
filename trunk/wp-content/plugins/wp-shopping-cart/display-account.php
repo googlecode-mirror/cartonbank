@@ -1,3 +1,6 @@
+<h2>Бухгалтеру</h2>
+<div style='background-color:#FFFF99; padding:4px;'>Продажи, за которые должны придти деньги. Личный счёт (wallet), Робокасса (robokassa), Чек Сбербанка (check). Зеленым цветом выделен Личный счёт.</div>
+
 <?php
 $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
@@ -61,7 +64,7 @@ $sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `
 
 $result = $wpdb->get_results($sql,ARRAY_A);
 if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_error());}
-echo "<div>";
+echo "<div><h3>Сколько продано работ по авторам</h3>";
 foreach ($result as $row)
 {
 	echo "<span>";

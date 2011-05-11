@@ -37,6 +37,14 @@ else
 	exit;
 }
 
+if (isset($_POST['filename']))
+{
+	$filename = $_POST['filename'].'.pdf';
+}
+else
+{
+	$filename = 'invoice.pdf';
+}
 
 
 require_once('../config/lang/eng.php');
@@ -110,7 +118,7 @@ $pdf->writeHTML($html, true, false, true, false, '');
 // ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output('invoce.pdf', 'D');
+$pdf->Output($filename, 'D');
 
 //============================================================+
 // END OF FILE                                                
