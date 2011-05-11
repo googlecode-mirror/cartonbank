@@ -111,32 +111,32 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * document creator
 	 */
-	define ('PDF_CREATOR', 'Cartoonbank');
+	define ('PDF_CREATOR', 'TCPDF');
 
 	/**
 	 * document author
 	 */
-	define ('PDF_AUTHOR', 'Cartoonbank');
+	define ('PDF_AUTHOR', 'TCPDF');
 
 	/**
 	 * header title
 	 */
-	define ('PDF_HEADER_TITLE', 'http://cartoonbank.ru');
+	define ('PDF_HEADER_TITLE', 'TCPDF Example');
 
 	/**
 	 * header description string
 	 */
-	define ('PDF_HEADER_STRING', "bankir@cartoonbank.ru");
+	define ('PDF_HEADER_STRING', "by Nicola Asuni - Tecnick.com\nwww.tcpdf.org");
 
 	/**
 	 * image logo
 	 */
-	define ('PDF_HEADER_LOGO', 'cb-logo.gif');
+	define ('PDF_HEADER_LOGO', 'tcpdf_logo.jpg');
 
 	/**
 	 * header logo image width [mm]
 	 */
-	define ('PDF_HEADER_LOGO_WIDTH', 100);
+	define ('PDF_HEADER_LOGO_WIDTH', 30);
 
 	/**
 	 *  document unit of measure [pt=point, mm=millimeter, cm=centimeter, in=inch]
@@ -176,8 +176,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * default main font name
 	 */
-	//define ('PDF_FONT_NAME_MAIN', 'helvetica');
-	define ('PDF_FONT_NAME_MAIN', 'freeserif');
+	define ('PDF_FONT_NAME_MAIN', 'helvetica');
 
 	/**
 	 * default main font size
@@ -187,8 +186,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * default data font name
 	 */
-	//define ('PDF_FONT_NAME_DATA', 'helvetica');
-	define ('PDF_FONT_NAME_DATA', 'freeserif');
+	define ('PDF_FONT_NAME_DATA', 'helvetica');
 
 	/**
 	 * default data font size
