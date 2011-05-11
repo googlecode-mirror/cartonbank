@@ -121,22 +121,22 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * header title
 	 */
-	define ('PDF_HEADER_TITLE', 'TCPDF Example');
+	define ('PDF_HEADER_TITLE', 'http://cartoonbank.ru');
 
 	/**
 	 * header description string
 	 */
-	define ('PDF_HEADER_STRING', "by Nicola Asuni - Tecnick.com\nwww.tcpdf.org");
+	define ('PDF_HEADER_STRING', "bankir@cartoonbank.ru");
 
 	/**
 	 * image logo
 	 */
-	define ('PDF_HEADER_LOGO', 'tcpdf_logo.jpg');
+	define ('PDF_HEADER_LOGO', 'cb-logo.gif');
 
 	/**
 	 * header logo image width [mm]
 	 */
-	define ('PDF_HEADER_LOGO_WIDTH', 30);
+	define ('PDF_HEADER_LOGO_WIDTH', 120);
 
 	/**
 	 *  document unit of measure [pt=point, mm=millimeter, cm=centimeter, in=inch]
