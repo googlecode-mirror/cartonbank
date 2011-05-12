@@ -345,17 +345,13 @@ else
 	$sql_brand = "";
 }
 
-	$sql=mysql_query("SELECT V.image_id, V.up, V.down, V.black, P.name, P.image, P.description AS Description, 
-							P.color, B.name AS Artist, P.approved, C.name as Category 
-					FROM al_editors_votes AS V, 
-					wp_product_list AS P, 
-					wp_product_brands AS B, 
-					wp_product_categories AS C,  
-					wp_item_category_associations AS A
-					WHERE V.image_id=P.id 
+			$sql=mysql_query("SELECT V.image_id, V.up, V.down, V.black, P.name, P.image, P.description AS Description, P.color, B.name AS Artist, P.approved, C.name AS Category, U.user_email AS email
+					FROM al_editors_votes AS V, wp_product_list AS P, wp_product_brands AS B, wp_product_categories AS C, wp_item_category_associations AS A, wp_users as U
+					WHERE V.image_id = P.id
 					AND P.brand = B.id
 					AND P.id = A.product_id
 					AND C.id = A.category_id
+					AND U.id = B.user_id
 					AND C.id != '777'
 					AND P.active = '1'
 					AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))".$sql_brand."
@@ -370,6 +366,7 @@ else
 		$down=$row['down'];
 		$black=$row['black'];
 		$img=$row['image'];
+		$email=$row['email'];
 		$imgpath = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$img; 
 		$previewpath = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$img;
 		$imgname=nl2br(stripslashes($row['name']));
@@ -397,10 +394,11 @@ else
 		<div class="box1">
 			<div class='up'><a href="" id="up<?php echo $mes_id;?>"  onclick="sendup(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="up"><?php echo $up; ?></a></div>
 			<div class='down'><a href="" id="down<?php echo $mes_id;?>" onclick="senddown(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="down"><?php echo $down; ?></a></div>
-			<div class='black'><a href="" id="black<?php echo $mes_id;?>" onclick="sendblack(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black"><?php echo $black; ?></a></div>
+			<div class='black'><a href="" id="black<?php echo $mes_id;?>" onclick="sendblack(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black"><?php echo $black; ?></a>
+			</div>
 			<? if ($black > 0){?>
 			<div class='xblack'><a href="" id="black_remove<?php echo $mes_id;?>" onclick="sendblack_remove(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black_remove" title="убрать чёрную метку"><img src="<? get_option('siteurl'); ?>/img/xbmark.gif"></a></div>
-			<?}?>
+			<?}?><a href="mailto:<? echo $email;?>?subject=По%20поводу%20рисунка №<? echo ($mes_id);?>. %20Картунбанк&bcc=cartoonbank.ru@gmail.com&body=Уважаемый%20<? echo ($artist);?>!%0A%0A<? echo ($previewpath); ?>%0A%0AСпасибо,%0AКартунбанк"><img src="../img/mail.gif"></a>
 		</div>
 
 		<div class='box2' >
