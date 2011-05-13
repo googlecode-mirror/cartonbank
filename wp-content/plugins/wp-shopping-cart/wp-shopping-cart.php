@@ -66,6 +66,7 @@ class wp_shopping_cart
     
   function displaypages()
     {
+	  global $user_level;
     /*
      * Fairly standard wordpress plugin API stuff for adding the admin pages, rearrange the order to rearrange the pages
      * The bits to display the options page first on first use may be buggy, but tend not to stick around long enough to be identified and fixed
@@ -79,37 +80,37 @@ class wp_shopping_cart
       if(get_option('nzshpcrt_first_load') == 0)
         {
         $base_page = 'wp-shopping-cart/options.php';
-        add_menu_page('e-Commerce', 'e-Commerce', 7, $base_page);
-        add_submenu_page($base_page,'Параметры магазина', 'Параметры магазина', 7, 'wp-shopping-cart/options.php');
+        add_menu_page('Магазин', 'Магазин', 8, $base_page);
+        add_submenu_page($base_page,'Параметры магазина', 'Параметры магазина', 8, 'wp-shopping-cart/options.php');
         }
         else
           {
           $base_page = 'wp-shopping-cart/display-users.php';
-          add_menu_page('Магазин', 'Магазин', 7, $base_page);
-		  add_submenu_page($base_page,'Юзеры', 'Юзеры', 7, 'wp-shopping-cart/display-users.php');
-          //add_submenu_page('wp-shopping-cart/display-log.php','Лог заказов', 'Лог заказов', 7, 'wp-shopping-cart/display-log.php');
+          add_menu_page('Магазин', 'Магазин', 8, $base_page);
+		  add_submenu_page($base_page,'Юзеры', 'Юзеры', 8, 'wp-shopping-cart/display-users.php');
+          //add_submenu_page('wp-shopping-cart/display-log.php','Лог заказов', 'Лог заказов', 8, 'wp-shopping-cart/display-log.php');
           }
-      add_submenu_page($base_page,'Все продажи', 'Все продажи', 7, 'wp-shopping-cart/display-sales.php');
-	  add_submenu_page($base_page,'Бухгалтеру', 'Бухгалтеру', 7, 'wp-shopping-cart/display-account.php');
-	  add_submenu_page($base_page,'Покупатели', 'Покупатели', 7, 'wp-shopping-cart/display-clients.php');
-	  add_submenu_page($base_page,'Счета', 'Счета', 7, 'wp-shopping-cart/display-invoices.php');
+      add_submenu_page($base_page,'Все продажи', 'Все продажи', 8, 'wp-shopping-cart/display-sales.php');
+	  add_submenu_page($base_page,'Бухгалтеру', 'Бухгалтеру', 8, 'wp-shopping-cart/display-account.php');
+	  add_submenu_page($base_page,'Покупатели', 'Покупатели', 8, 'wp-shopping-cart/display-clients.php');
+	  add_submenu_page($base_page,'Счета', 'Счета', 8, 'wp-shopping-cart/display-invoices.php');
       
-      add_submenu_page($base_page,'Каталог', 'Каталог', 7, 'wp-shopping-cart/display-items.php');
-      //add_submenu_page($base_page,'Категории', 'Категории', 7, 'wp-shopping-cart/display-category.php');
-      add_submenu_page($base_page,'Авторы', 'Авторы', 7, 'wp-shopping-cart/display-brands.php');
+      add_submenu_page($base_page,'Каталог', 'Каталог', 8, 'wp-shopping-cart/display-items.php');
+      //add_submenu_page($base_page,'Категории', 'Категории', 8, 'wp-shopping-cart/display-category.php');
+      add_submenu_page($base_page,'Авторы', 'Авторы', 8, 'wp-shopping-cart/display-brands.php');
       
-      //add_submenu_page($base_page,'Варьирование', 'Варьирование', 7, 'wp-shopping-cart/display_variations.php');
-      //add_submenu_page($base_page,'Параметры доступа', 'Параметры доступа', 7, 'wp-shopping-cart/gatewayoptions.php');
+      //add_submenu_page($base_page,'Варьирование', 'Варьирование', 8, 'wp-shopping-cart/display_variations.php');
+      //add_submenu_page($base_page,'Параметры доступа', 'Параметры доступа', 8, 'wp-shopping-cart/gatewayoptions.php');
       if(get_option('nzshpcrt_first_load') != 0)
         {
-        add_submenu_page($base_page,'Параметры магазина', 'Параметры магазина', 7, 'wp-shopping-cart/options.php');
+        add_submenu_page($base_page,'Параметры магазина', 'Параметры магазина', 8, 'wp-shopping-cart/options.php');
         }
       if(function_exists('ext_shpcrt_options'))
         {
         ext_shpcrt_options($base_page);
         }
-      //add_submenu_page($base_page,'Checkout Options', 'Checkout Options', 7, 'wp-shopping-cart/form_fields.php');
-      //add_submenu_page($base_page,'Помощь/Обновить', 'Помощь/Обновить', 7, 'wp-shopping-cart/instructions.php');
+      //add_submenu_page($base_page,'Checkout Options', 'Checkout Options', 8, 'wp-shopping-cart/form_fields.php');
+      //add_submenu_page($base_page,'Помощь/Обновить', 'Помощь/Обновить', 8, 'wp-shopping-cart/instructions.php');
       }
     return;
     }
