@@ -120,8 +120,14 @@ function checkthefields()
 
 	if (fileupload.value.indexOf('.tif') != -1)
 	{
-		$message += 'Файлы формат TIFF нельзя использовать. Замените на JPEG, GIF или PNG.\n';
+		$message += 'Файлы формата TIFF нельзя использовать. Замените на JPEG, GIF или PNG.\n';
 	}
+
+	if (fileupload.value.indexOf('.bmp') != -1)
+	{
+		$message += 'Файлы формата BMP нельзя использовать. Замените на JPEG, GIF или PNG.\n';
+	}
+
 
 	$selectedradiobutton = null;
 			for (var ii = 0; ii < radio.length; ii++)
