@@ -118,6 +118,11 @@ function checkthefields()
 		$message += 'Не забудьте выбрать файл для отправки.\n';
 	}
 
+	if (fileupload.value.indexOf('.tif') != -1)
+	{
+		$message += 'Файлы формат TIFF нельзя использовать. Замените на JPEG, GIF или PNG.\n';
+	}
+
 	$selectedradiobutton = null;
 			for (var ii = 0; ii < radio.length; ii++)
             {
