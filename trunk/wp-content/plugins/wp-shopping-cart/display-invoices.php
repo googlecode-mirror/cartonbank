@@ -4,6 +4,7 @@ $abspath = 'z:/home/localhost/www/';
 	$abspath_2 = "/home/www/cb3/";
 	$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice.html";
 	$filename_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice_pdf.html";
+	$filename_acceptance_certificate_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/acceptance_certificate_pdf.html";
 
 global $wpdb;
 
@@ -206,7 +207,6 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
 				GROUP BY c.license
 				ORDER BY `date` DESC";
-
 				$product_list = $wpdb->get_results($sql,ARRAY_A);
 									///pokazh($sql);
 				if($product_list != null)
@@ -242,7 +242,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					
 						// print invoice:
 						
-					$out = fill_invoice($filename, $_invoice_number, '', $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+					$out = fill_invoice($filename, $_invoice_number, '',  $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 
 						echo "<div id='invoice' style='background: white url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat; background-size: 21%; background-position: 87% 100%; margin:20px; padding:8px;width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>";
 						echo $out;
@@ -250,13 +250,23 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 
 						//send_mail($out);
 
-					// Print PDF
-					$out = fill_invoice($filename_pdf, $_invoice_number, '', $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+					// Print invoice PDF
+					$out = fill_invoice($filename_pdf, $_invoice_number, '', $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 							echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
-									<input type='submit' value='скачать PDF '>
+									<input type='submit' value='скачать счёт (PDF) '>
 									<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
 									<input type='hidden' name='filename' value='invoice_".$_invoice_number."'>
 								</form></div>");
+
+					// Print acceptance certificate PDF
+					$invoice_date = date('d-m-Y',strtotime('-1 second',strtotime('+1 month',strtotime($_month.'/01/'.date('Y').' 00:00:00'))));
+					$out = fill_invoice($filename_acceptance_certificate_pdf, $_invoice_number, $invoice_date, $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+							echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/acceptance_certificate.php'>
+									<input type='submit' value='скачать акт выполненных работ (PDF) '>
+									<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
+									<input type='hidden' name='filename' value='acceptance_certificate_".$_invoice_number."'>
+								</form></div>");
+
 
 					$_invoice_number = $_invoice_start_number + $customer_number;
 					$customer_number ++;
@@ -270,7 +280,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 }//if (isset($_GET['m']) && is_numeric($_GET['m']))
 
 
-function fill_invoice($filename, $invoice_number='', $invoice_date='', $client_details='', $product_list='', $total='', $count='', $invoice_period='', $contract_number='', $contract_date='')
+function fill_invoice($filename, $invoice_number='', $invoice_date='', $smi='',  $client_details='', $product_list='', $total='', $count='', $invoice_period='', $contract_number='', $contract_date='')
 {
 	if ($invoice_number==''){$invoice_number='____';}
 	$today = getdate();
@@ -290,6 +300,7 @@ function fill_invoice($filename, $invoice_number='', $invoice_date='', $client_d
 	// replace placeholders
 		$content = str_replace ('{invoice_number}',$invoice_number,$content);
 		$content = str_replace ('{invoice_date}',$invoice_date,$content);
+		$content = str_replace ('{smi}',$smi,$content);
 		$content = str_replace ('{client_details}',$client_details,$content);
 		$content = str_replace ('{product_list}',$product_list,$content);
 		$content = str_replace ('{total}',$total,$content);
