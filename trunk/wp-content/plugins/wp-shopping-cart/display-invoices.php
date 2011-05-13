@@ -4,7 +4,8 @@ $abspath = 'z:/home/localhost/www/';
 	$abspath_2 = "/home/www/cb3/";
 	$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice.html";
 	$filename_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice_pdf.html";
-	$filename_acceptance_certificate_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice_nostamp_pdf.html";
+	$filename_nostamp_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice_nostamp_pdf.html";
+	$filename_acceptance_certificate_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/acceptance_certificate_pdf.html";
 	$filename_acceptance_certificate_nostamp_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/acceptance_certificate_nostamp_pdf.html";
 
 global $wpdb;
@@ -260,7 +261,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 								</form></div>");
 
 					// Print invoice no stamp PDF
-					//$out = fill_invoice($filename_nostamp_pdf, $_invoice_number, '', $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+					$out = fill_invoice($filename_nostamp_pdf, $_invoice_number, '', $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 							echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
 									<input type='submit' value='скачать счёт (PDF) без печати '>
 									<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
