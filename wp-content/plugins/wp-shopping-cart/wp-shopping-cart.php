@@ -983,6 +983,7 @@ function nzshpcrt_submit_ajax()
   $output .= "<input type='checkbox' name='temadnya'".$temadnya."/> <span style='color:#999;'>считаю актуальной темой</span>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
+	/*
   $output .= "          <tr>\n\r";
   $output .= "            <td class='r'>\n\r";
   $output .= "Доступны лицензии:";
@@ -991,7 +992,7 @@ function nzshpcrt_submit_ajax()
   $output .= "&nbsp;&nbsp;&nbsp;Огр:&nbsp;<input id='license1' type='checkbox' name='license1'".$license1checked.">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type='checkbox' name='license2'".$license2checked.">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type='checkbox' name='license3'".$license3checked."><br />";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
-
+	*/
 
   $output .= "          <tr>\n\r";
   $output .= "            <td colspan='2'>\n\r";
