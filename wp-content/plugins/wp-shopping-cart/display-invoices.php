@@ -269,7 +269,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 
 					// Print acceptance certificate PDF
 					$invoice_date = date('d-m-Y',strtotime('-1 second',strtotime('+1 month',strtotime($_month.'/01/'.date('Y').' 00:00:00'))));
-					$out = fill_invoice($filename_acceptance_certificate_pdf, $_invoice_number, $invoice_date, $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+					//$out = fill_invoice($filename_acceptance_certificate_pdf, $_invoice_number, $invoice_date, $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 							echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/acceptance_certificate.php'>
 									<input type='submit' value='скачать акт выполненных работ (PDF) '>
 									<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
