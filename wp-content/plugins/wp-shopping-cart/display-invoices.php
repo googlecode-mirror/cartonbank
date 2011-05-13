@@ -259,13 +259,6 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 									<input type='hidden' name='filename' value='invoice_".$_invoice_number."'>
 								</form></div>");
 
-					// Print invoice no stamp PDF
-					$out = fill_invoice($filename_nostamp_pdf, $_invoice_number, '', $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
-							echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
-									<input type='submit' value='скачать счёт (PDF) без печати '>
-									<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
-									<input type='hidden' name='filename' value='invoice_".$_invoice_number."'>
-								</form></div>");
 
 					// Print acceptance certificate PDF
 					$invoice_date = date('d-m-Y',strtotime('-1 second',strtotime('+1 month',strtotime($_month.'/01/'.date('Y').' 00:00:00'))));
