@@ -1048,14 +1048,14 @@ echo "        </div>";
         <input id='temadnya' type="checkbox" name="temadnya"> <span style="color:#999;">считаю актуальной темой</span>
       </td>
     </tr>
-    <!-- <tr>
+   <tr>
       <td class='ralt'>
        Доступны лицензии:
       </td>
       <td class='lalt'>
         &nbsp;&nbsp;&nbsp;Огр:&nbsp;<input id='license1' type="checkbox" name="license1" checked="checked">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type="checkbox" name="license2" checked="checked">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type="checkbox" name="license3" checked="checked"><br />
       </td>
-    </tr> -->
+    </tr>
 	<tr>
       <td>
       </td>
