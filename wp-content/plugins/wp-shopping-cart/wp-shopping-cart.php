@@ -972,7 +972,15 @@ function nzshpcrt_submit_ajax()
   
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= categorylist($product['id']);
+
+if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
+	{
+		$output .= categorylist($product['id']);
+	}
+else
+	{
+		$output .= "После утверждения рисунка модераторами Категория может быть изменена администратором";
+	}
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
 
