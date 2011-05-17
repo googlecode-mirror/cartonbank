@@ -202,7 +202,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 	}
 	else
 	{
-		echo "<h3>".date('F', mktime(0,0,0,($month),28,$year))."</h3>";
+		echo "<h3 style='color:#FF00FF'>".date('F', mktime(0,0,0,($_month),28,$year))."</h3>";
 	}
 
 
