@@ -76,6 +76,31 @@ else
 	$_invoice_start_number = get_option('invoice_number');
 }
 
+if (isset($_POST['new_invoice_date']))
+{
+	// дата сейчас изменена 
+	$_invoice_date = trim($_POST['new_invoice_date']);
+	// update invoice date in database
+	$sql = "update wp_options set option_value = '0' where option_name='invoice_date'";
+	$result = $wpdb->query($sql);
+	if (!$result) {die('<br />'.$sql.'<br />Invalid query: ' . mysql_error());}
+
+	$sql = "update wp_options set option_value = '".$_invoice_date."' where option_name='invoice_date'";
+	$result = $wpdb->query($sql);
+	if (!$result) {die('<br />'.$sql.'<br />Invalid query: ' . mysql_error());}
+}
+else
+{
+	// дата по умолчанию 
+	$today = getdate();
+	$this_date = $today[mday].".".$today[mon].".".$today[year];
+	$sql = "update wp_options set option_value='".$this_date."' where option_name='invoice_date'";
+	$result = $wpdb->query($sql);
+	//if (!$result) {die('<br />'.$sql.'<br />Invalid query: ' . mysql_error());}
+	$_invoice_date = $this_date;
+}
+
+
 
 $sql = "SELECT c.id, c.user_id, c.name, c.bank_attributes, c.contract, c.contract_date, u.user_email, u.user_url, u.wallet, u.discount
 		FROM  `al_customers` AS c,  `wp_users` AS u
@@ -134,10 +159,16 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
 <?
 
 		echo "<form method=post action='#'>";
-		echo "Счета будут выводится начиная с номера ";
+		echo "1) Счета будут выводится <b>начиная с номера</b> ";
 		echo "<input type='text' name='new_invoice_start_number' style='width:45px;' value='".$_invoice_start_number."'>";
 		echo "<input type='submit' value=' изменить '>";
 		echo "</form>";
+
+		echo "<form method=post action='#'>";
+		echo "2) <b>Дата выписки</b> счета ";
+		echo "<input type='text' name='new_invoice_date' style='width:85px;' value='".$_invoice_date."'>";
+		echo "<input type='submit' value=' изменить '>";
+		echo " (По умолчанию сегодняшняя дата. Изменение даты действует временно)</form>";
 
 
 	// Months navigation
@@ -153,6 +184,7 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
 		$d_monthname_previous3 = date('F', mktime(0,0,0,($month-3),28,$year));     // PREVIOUS Month Long name (July)
 
 		//echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=0'>Показать 200 последних продаж</a> ";
+		echo "3) Выберите отчётный месяц: ";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$month."'>".$this_date['month']."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> &nbsp;";
@@ -244,7 +276,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					
 						// print invoice:
 						
-					$out = fill_invoice($filename, $_invoice_number, '',  $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+					$out = fill_invoice($filename, $_invoice_number, $_invoice_date,  $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 
 						echo "<div id='invoice' style='background: white url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat; background-size: 21%; background-position: 87% 100%; margin:20px; padding:8px;width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>";
 						echo $out;
@@ -253,7 +285,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 						//send_mail($out);
 
 					// Print invoice PDF
-					$out = fill_invoice($filename_pdf, $_invoice_number, '', $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+					$out = fill_invoice($filename_pdf, $_invoice_number, $_invoice_date, $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 							echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
 									<input type='submit' value='скачать счёт (PDF) '>
 									<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
@@ -261,7 +293,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 								</form></div>");
 
 					// Print invoice no stamp PDF
-					$out = fill_invoice($filename_nostamp_pdf, $_invoice_number, '', $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+					$out = fill_invoice($filename_nostamp_pdf, $_invoice_number, $_invoice_date, $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 							echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
 									<input type='submit' value='скачать счёт (PDF) без печати '>
 									<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
