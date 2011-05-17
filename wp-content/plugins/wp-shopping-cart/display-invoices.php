@@ -158,19 +158,6 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
 <h2>Счета</h2>
 <?
 
-		echo "<form method=post action='#'>";
-		echo "1) Счета будут выводится <b>начиная с номера</b> ";
-		echo "<input type='text' name='new_invoice_start_number' style='width:45px;' value='".$_invoice_start_number."'>";
-		echo "<input type='submit' value=' изменить '>";
-		echo "</form>";
-
-		echo "<form method=post action='#'>";
-		echo "2) <b>Дата выписки</b> счета ";
-		echo "<input type='text' name='new_invoice_date' style='width:85px;' value='".$_invoice_date."'>";
-		echo "<input type='submit' value=' изменить '>";
-		echo " (По умолчанию сегодняшняя дата. Изменение даты действует временно)</form>";
-
-
 	// Months navigation
 		$this_date = getdate();
 		//$dateMinusOneMonth = mktime(0, 0, 0, (3-1), 31,  2007 );
@@ -184,11 +171,24 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
 		$d_monthname_previous3 = date('F', mktime(0,0,0,($month-3),28,$year));     // PREVIOUS Month Long name (July)
 
 		//echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=0'>Показать 200 последних продаж</a> ";
-		echo "3) Выберите отчётный месяц: ";
+		echo "1) Выберите отчётный месяц: ";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$month."'>".$this_date['month']."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous3."'>".$d_monthname_previous3."</a> &nbsp;";
+
+		echo "<form method=post action='#'>";
+		echo "2) Счета будут выводится <b>начиная с номера</b> ";
+		echo "<input type='text' name='new_invoice_start_number' style='width:45px;' value='".$_invoice_start_number."'>";
+		echo "<input type='submit' value=' изменить '>";
+		echo "</form>";
+
+		echo "<form method=post action='#'>";
+		echo "3) <b>Дата выписки</b> счета ";
+		echo "<input type='text' name='new_invoice_date' style='width:85px;' value='".$_invoice_date."'>";
+		echo "<input type='submit' value=' изменить '>";
+		echo " (По умолчанию сегодняшняя дата. Изменение даты действует временно)</form>";
+
 
 
 // If the report month known
