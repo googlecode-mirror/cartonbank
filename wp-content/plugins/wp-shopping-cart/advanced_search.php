@@ -43,8 +43,8 @@ echo "<h1>Расширенный поиск</h1>";
 		<td><? echo (get_category_list()); ?></td></tr>
 	<tr>
 		<td width="15%">&nbsp;</td>
-		<td width="40%">Включая "рабочий стол"</td>
-		<td><input type="checkbox" name="666"></td></tr></tbody></table>
+		<td width="40%">Включая "рабочий стол":</td>
+		<td><input type="checkbox" name="666" checked></td></tr></tbody></table>
 
 </td></tr>
 
