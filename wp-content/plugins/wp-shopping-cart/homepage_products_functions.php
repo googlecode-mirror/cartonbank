@@ -549,7 +549,7 @@ function last_sales($content = '')
 			break;
 	}
 
-	$sql = "SELECT b.id, b.name, p.id as ID, p.image as image, p.name AS title, b.name AS author FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b, `wp_users` AS u WHERE l.`processed` = s.`id`  AND l.id = c.purchaseid AND p.id = c.prodid AND st.purchid = c.purchaseid AND p.brand = b.id AND u.id = l.user_id AND l.user_id !=  '106' AND st.downloads !=  '5' GROUP BY c.license ORDER BY date DESC LIMIT 100";
+	$sql = "SELECT b.id, b.name, p.id as ID, p.image as image, p.name AS title, b.name AS author FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b, `wp_users` AS u WHERE l.`processed` = s.`id`  AND l.id = c.purchaseid AND p.id = c.prodid AND st.purchid = c.purchaseid AND p.brand = b.id AND u.id = l.user_id AND l.user_id !=  '106' AND st.downloads !=  '5' GROUP BY c.license ORDER BY datetime DESC LIMIT 100";
 
 		  $product_list = $wpdb->get_results($sql,ARRAY_A);
 
