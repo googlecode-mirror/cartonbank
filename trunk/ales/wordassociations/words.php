@@ -25,17 +25,15 @@ $tagsarray = get_cartoon($id);
 <!--
 	function sendup(wrd,id)
    {
-	   	var mydiv = document.getElementById('currenttags');
-		var oldtext = jQuery(mydiv).html();
-		jQuery(mydiv).html(oldtext + '<span class="td" onclick="senddown(this.innerText,' + id + ');var z=&quot;&quot;;jQuery(this).html(z);return false;">' + wrd + '</span>');
+		var oldtext = jQuery('#currenttags').html();
+		jQuery('#currenttags').html(oldtext + '<span class="td" onclick="senddown(this.innerText,' + id + ');var z=&quot;&quot;;jQuery(this).html(z);return false;">' + wrd + '</span>');
 		wrd = encodeURIComponent(wrd);
 		jQuery.post("http://cartoonbank.ru/ales/wordassociations/add_tag.php?id="+id+"&wrd="+wrd);
    }
 
 	function senddown(wrd,id)
    {
-	   	var mydiv = document.getElementById('currenttags');
-		var oldtext = jQuery(mydiv).html();
+		var oldtext = jQuery('#currenttags').html();
 		wrd = encodeURIComponent(wrd);
 		jQuery.post("http://cartoonbank.ru/ales/wordassociations/remove_tag.php?id="+id+"&wrd="+wrd);
    }
@@ -70,7 +68,7 @@ $tagsarray = get_cartoon($id);
 	{
 		foreach ($tagsarray as $key => $value)
 			{
-			echo "<span class='t' onclick='sendup(this.innerText,".$id.");var z=\"\";jQuery(this).html(z);return false;'>".$value."</span> ";
+			echo "<span class='t' onclick='sendup(jQuery(this).html(),".$id.");var z=\"\";jQuery(this).html(z);return false;'>".$value."</span> ";
 			}
 	}
 	?>
