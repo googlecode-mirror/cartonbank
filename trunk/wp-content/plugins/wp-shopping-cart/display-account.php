@@ -75,7 +75,7 @@ echo "</div>";
 
 echo "<br>";
 
-$sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
+$sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
@@ -127,7 +127,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
                                  'address'   => 'СМИ',
                                  'phone'   => 'телефон  покупателя',
                                  'gateway'   => 'метод оплаты',
-                                 'processed'   => 'прохождение заказа',
+                                 'processed'   => 'статус заказа',
                                  'title'   => 'название ',
                                  'license'   => 'лицензия',
                                  'wallet'   => 'на счёте',
@@ -136,7 +136,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
                                  'contract'   => 'номер договора'));
 
     
-	$grid->NoSpecialChars('title','downloadid','firstname');
+	$grid->NoSpecialChars('title','downloadid','firstname','processed');
     
     $grid->rowcallback = 'RowCallback';
 
@@ -153,10 +153,18 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 		$row['totalprice'] = $row['price'] - $row['price'] * $row['discount']/100;
 		$row['wallet'] = round($row['wallet'],0);
 		$row['price'] = round($row['price'],0);
+		if ($row['processed_id']==5)
+		{
+			$row['processed'] = '<div style="background-color:#FCF798;" class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].'</div></div>';
+		}
+		else
+		{
+			$row['processed'] = '<div class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].'</div></div>';
+		}
 	}
 
 	//$grid->HideColumn('column', ...)
-	$grid->HideColumn('address','phone','display_name','user_id','lastname','email','processed','downloads','active','downloadid','smi');
+	$grid->HideColumn('address','phone','display_name','user_id','lastname','email','downloads','active','downloadid','smi','processed_id');
 
     $grid->SetPerPage(100);
 ?>
@@ -220,3 +228,42 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 	echo 'Всего записей: ' . $grid->GetRowCount() . '<br />';
 	$grid->Display() 
 ?>
+
+<script language="JavaScript">
+<!--
+	function change_status(purchaseid)
+	{
+		var id = purchaseid.split('_')[1];
+		if (jQuery(purchaseid).text().indexOf("Платёж прошёл")==0)
+		{
+			jQuery(purchaseid).html('<div onclick="change_status(\'' + purchaseid +'\');">Деньги получены</div>');
+			sendup('5',id);
+			jQuery(purchaseid).css('background-color','#FCF798');
+		}
+		else if (jQuery(purchaseid).text().indexOf("Заказано")==0)
+		{
+			jQuery(purchaseid).html('<div onclick="change_status(\'' + purchaseid +'\');">Деньги получены</div>');
+			sendup('5',id);
+			jQuery(purchaseid).css('background-color','#FCF798');
+		}
+		else if (jQuery(purchaseid).text().indexOf("Деньги получены")==0)
+		{
+			jQuery(purchaseid).html('<div onclick="change_status(\'' + purchaseid +'\');">Платёж прошёл</div>');
+			sendup('2',id);
+			jQuery(purchaseid).css('background-color','#e1ffc2');
+		}
+
+	}
+
+	function sendup(wrd,id)
+	{
+		// send purchase status update
+		wrd = encodeURIComponent(wrd);
+		jQuery.post("http://cartoonbank.ru/ales/accountant/purchase_status.php?purch_id="+id+"&sta="+wrd);
+	}
+
+//-->
+</script>
+
+
+
