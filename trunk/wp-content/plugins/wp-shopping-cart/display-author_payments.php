@@ -4,6 +4,7 @@
 $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
+$filename_acceptance_certificate_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/artist_acceptance_certificate_pdf.html";
 
 global $wpdb;
 
@@ -230,16 +231,15 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 			echo "<div class='t'><span style='color:silver;'>".date("d.m.y",$sales['date'])."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
 			
 			$total = $total + round(0.4*($discount_price),0);
-			/*
+			
 			$the_list .= '<tr>
 							<td style="padding:2px;text-align:center;">'.$n.'</td>
-							<td style="padding:2px;text-align:center;">'.$sales["purchaseid"].'</td>
-							<td style="font-style:bold;font-size:1em;padding:2px;">«'.stripslashes($sales["title"]).'» (#'.$sales["id"].') '.$sales["artist"].'</td>
-							<td style="padding:2px;text-align:center;">1шт.</td>
+							<td style="padding:2px;text-align:center;">'.$sales["smi"].'</td>
+							<td style="font-style:bold;font-size:1em;padding:2px;">«'.stripslashes($sales["title"]).'» (#'.$sales["picture_id"].') 1шт.</td>
 							<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
-							<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
+							<td style="padding:2px;text-align:center;">'.round(0.4*($discount_price),0).'</td>
 						</tr>';
-			*/
+			
 			$n++;
 		}//foreach($product_list as $sales)
 
@@ -253,7 +253,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 		// Print acceptance certificate PDF
 		$invoice_date = date('d-m-Y',strtotime('-1 second',strtotime('+1 month',strtotime($_month.'/01/'.date('Y').' 00:00:00'))));
 		$out = fill_invoice($filename_acceptance_certificate_pdf, $_invoice_number, $invoice_date, $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
-		echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/acceptance_certificate.php'>
+		echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/artist_acceptance_certificate.php'>
 			<input type='submit' value='скачать акт выполненных работ (PDF) '>
 			<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
 			<input type='hidden' name='filename' value='acceptance_certificate_".$_invoice_number."'>
