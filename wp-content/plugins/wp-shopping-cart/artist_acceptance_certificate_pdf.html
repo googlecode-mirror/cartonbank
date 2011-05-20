@@ -1,0 +1,67 @@
+<div style="text-align:left; width:100%;"> 
+	<div style="font-weight: bold; font-size: 14pt; padding-left:5px;">Акт выполненных работ № {invoice_number} от {invoice_date} к договору № {contract_number} от {contract_date}</div>
+</div>
+
+	<table width="100%" border="1" cellpadding="4">
+		<tr>
+			<td style="width: 20%;">
+				<div style=" padding-left:2px;">Банк изображений:</div>
+			</td>
+			<td width="80%">
+				ИНН 7813470615, КПП 781301001, Общество с ограниченной ответственностью "МедиаГрафика", 197101, г. Санкт-Петербург, ул. Рентгена, дом № 15/31, кв. 3
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 20%;">
+				<div>Автор:</div>
+			</td>
+			<td width="80%">
+					{smi}
+			</td>
+		</tr>
+	</table>
+
+	<br>
+	<table width="100%" border="1" cellpadding="4">
+		<tr>
+			<td align="center" style="width:5%;font-size: 10pt"><b><br><br>№</b></td>
+			<td align="center" style="width:30%;font-size: 10pt"><b><br><br>Источник получения средств<br>за передачу прав на изображение</b></td>
+			<td align="center" style="width:35%;font-size: 10pt"><b><br><br>Наименование,<br>уникальный номер изображения, услугу по продаже прав на которое осуществил Банк Изображений</b></td>
+			<td align="center" style="width:15%;font-size: 8pt"><b>Сумма,<br>фактически<br>полученная<br>Банком изображений<br>за передачу<br>прав на <br>изображение <br>третьим лицам, <br>руб</b></td>
+			<td align="center" style="width:15%;font-size: 8pt"><b>Сумма<br>к выплате Автору,<br>(40% от<br>фактически<br>полученной<br>суммы), <br>руб</b></td>
+		</tr>
+		 {product_list}
+	</table>
+
+	<table border="0" width="100%" cellpadding="2">
+		<tr>
+			<td rowspan="4" width="70%">&nbsp;
+				<!-- <div><br>
+				Всего оказано услуг <b>{count}</b> на сумму <b>{total}</b> рублей.<br>
+				<b>{total_rub_text}</b></div> -->
+
+			</td>
+			<td style="width:20%; font-weight:bold; text-align:right;">Итого:</td>
+			<td style="width:10%; font-weight:bold; text-align:center;">{total}</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="height:1px;"><hr>&nbsp;</td>
+		</tr>
+	</table>
+	<div>
+		Всего оказано услуг <b>{count}</b> на сумму <b>{total}</b> рублей.<br>
+		<b>{total_rub_text}</b>
+	</div>
+
+	<div>Вышеперечисленные услуги выполнены полностью и в срок.<br>Автор претензий по объему, качеству и срокам оказания услуг не имеет.</div>
+
+	<div style="background-color:#8C8C8C; width:400px; font-size:1px; height:1px;">&nbsp;</div>
+
+	<table width="100%" cellpadding="4">
+	<tr>
+		<td width="50%"><b>Общество с ограниченной ответственностью "МедиаГрафика"</b><br>
+		Банк изображений: Шилов В.Ф. <img src="http://cartoonbank.ru/img/shilov_signature.gif" style="width:125px;"><br><img src="http://cartoonbank.ru/img/mg_stamp.gif" width="130"></td>
+		<td width="50%"><b>{smi}</b><br>
+		Автор</td>
+	</tr>
+	</table>
