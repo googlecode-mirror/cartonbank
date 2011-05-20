@@ -94,6 +94,7 @@ class wp_shopping_cart
 	  add_submenu_page($base_page,'Бухгалтеру', 'Бухгалтеру', 8, 'wp-shopping-cart/display-account.php');
 	  add_submenu_page($base_page,'Покупатели', 'Покупатели', 8, 'wp-shopping-cart/display-clients.php');
 	  add_submenu_page($base_page,'Счета', 'Счета', 8, 'wp-shopping-cart/display-invoices.php');
+	  add_submenu_page($base_page,'Авторские', 'Авторские', 8, 'wp-shopping-cart/display-author_payments.php');
       
       add_submenu_page($base_page,'Каталог', 'Каталог', 8, 'wp-shopping-cart/display-items.php');
       //add_submenu_page($base_page,'Категории', 'Категории', 8, 'wp-shopping-cart/display-category.php');
@@ -980,6 +981,7 @@ if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_
 else
 	{
 		$output .= "После утверждения рисунка модераторами Категория может быть изменена администратором";
+		$output .= "<div  style='display:none;>".categorylist($product['id'])."</div>";
 	}
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
