@@ -42,7 +42,7 @@ $year = date("Y");
 $month = date("m");
 
 $this_date = getdate();
-
+/*
 if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' )
 {
 	$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $year);
@@ -57,6 +57,23 @@ else
 {
 	$start_timestamp = mktime(0, 0, 0, $month, 1, $year);
 	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
+}
+*/
+
+if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' )
+{
+	$start_timestamp = date('y-m-d',mktime(0, 0, 0, $_GET['m'], 1, $year));
+	$end_timestamp = date('y-m-d',mktime(0, 0, 0, $_GET['m']+1, 1, $year));
+}
+elseif (isset($_GET['m']) && $_GET['m']==0)
+{
+	$start_timestamp = date('y-m-d',mktime(0, 0, 0, 11, 1, $year-1));
+	$end_timestamp = date('y-m-d',mktime(0, 0, 0, $month+1, 1, $year));
+}
+else
+{
+	$start_timestamp = date('y-m-d',mktime(0, 0, 0, $month, 1, $year));
+	$end_timestamp = date('y-m-d',mktime(0, 0, 0, ($month+1), 1, $year));
 }
 
 
@@ -102,23 +119,55 @@ else
 
 	// Months navigation
 		$this_date = getdate();
-		//$dateMinusOneMonth = mktime(0, 0, 0, (3-1), 31,  2007 );
 		$d_month_previous = date('n', mktime(0,0,0,($month-1),28,$year));         // PREVIOUS month of year (1-12)
-		$d_monthname_previous = date('F', mktime(0,0,0,($month-1),28,$year));     // PREVIOUS Month Long name (July)
+		$d_monthname_previous = ru_month($d_month_previous, $sklon=false);
+		//$d_monthname_previous = date('F', mktime(0,0,0,($month-1),28,$year));     // PREVIOUS Month Long name (July)
 
 		$d_month_previous2 = date('n', mktime(0,0,0,($month-2),28,$year));         // PREVIOUS month of year (1-12)
-		$d_monthname_previous2 = date('F', mktime(0,0,0,($month-2),28,$year));     // PREVIOUS Month Long name (July)
+		$d_monthname_previous2 = ru_month($d_month_previous2, $sklon=false);
+		//$d_monthname_previous2 = date('F', mktime(0,0,0,($month-2),28,$year));     // PREVIOUS Month Long name (July)
 
 		$d_month_previous3 = date('n', mktime(0,0,0,($month-3),28,$year));         // PREVIOUS month of year (1-12)
-		$d_monthname_previous3 = date('F', mktime(0,0,0,($month-3),28,$year));     // PREVIOUS Month Long name (July)
+		$d_monthname_previous3 = ru_month($d_month_previous3, $sklon=false);
+		//$d_monthname_previous3 = date('F', mktime(0,0,0,($month-3),28,$year));     // PREVIOUS Month Long name (July)
+
+
+		$d_month_previous4 = date('n', mktime(0,0,0,($month-4),28,$year));         
+		$d_monthname_previous4 = ru_month($d_month_previous4, $sklon=false);
+
+		$d_month_previous5 = date('n', mktime(0,0,0,($month-5),28,$year));         
+		$d_monthname_previous5 = ru_month($d_month_previous5, $sklon=false);
+
+		$d_month_previous6 = date('n', mktime(0,0,0,($month-6),28,$year));         
+		$d_monthname_previous6 = ru_month($d_month_previous6, $sklon=false);
+
+
 
 		//echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=0'>Показать 200 последних продаж</a> ";
-		echo "Выберите отчётный месяц: ";
-		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$month."'>".$this_date['month']."</a> &nbsp;";
+		
+		echo "1) Выберите отчётный месяц: ";
+		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$month."'>".ru_month($this_date['mon'],false)."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous3."'>".$d_monthname_previous3."</a> &nbsp;";
+		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous4."'>".$d_monthname_previous4."</a> &nbsp;";
+		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous5."'>".$d_monthname_previous5."</a> &nbsp;";
+		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous6."'>".$d_monthname_previous6."</a> &nbsp;";
 
+
+
+		echo "<form method=post action='#'>";
+		echo "2) Акты выполненных работ будут выводится <b>начиная с номера</b> ";
+		echo "<input type='text' name='new_invoice_start_number' style='width:45px;' value='".$_invoice_start_number."'>";
+		echo "<input type='submit' value=' изменить '>";
+		echo "</form>";
+/*
+		echo "<form method=post action='#'>";
+		echo "3) <b>Дата выписки</b> акта ";
+		echo "<input type='text' name='new_invoice_date' style='width:85px;' value='".$_invoice_date."'>";
+		echo "<input type='submit' value=' изменить '>";
+		echo " (По умолчанию сегодняшняя дата. Изменение даты действует временно)</form>";
+*/
 ?>
 
 
@@ -135,7 +184,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 	}
 	else
 	{
-		echo "<h3 style='color:#FF00FF'>".date('F', mktime(0,0,0,($_month),28,$year))."</h3>";
+		echo "<h3 style='color:#FF00FF'>".ru_month(date('n', mktime(0,0,0,($_month),28,$year)),false)."</h3>";
 	}
 
 /*
@@ -163,7 +212,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 				GROUP BY c.license
 				ORDER BY artist ASC";
 */
-	$sql = "SELECT id, name
+	$sql = "SELECT id, name, contract, contract_date 
 			FROM `wp_product_brands` 
 			WHERE active =1
 			ORDER BY `name`"; 
@@ -173,13 +222,13 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 	$response = $wpdb->get_results($sql,ARRAY_A) ;
 	if($response != null)
 	  {
-		$customer_number = 1;
+		$customer_number = 0;
 		foreach($response as $product)
 		{
 			
 			// get all sales for the given month
 
-			$sql = "SELECT date,  c.purchaseid,  p.id as picture_id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
+			$sql = "SELECT date,  c.purchaseid,  p.id as picture_id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.wallet, um.meta_value as smi
 				FROM `wp_purchase_logs` as l, 
 					`wp_purchase_statuses` as s, 
 					`wp_cart_contents` as c, 
@@ -195,13 +244,13 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					AND p.brand=b.id
 					AND u.id = l.user_id
 					AND u.id = um.user_id
-					AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
+					AND payment_arrived_date BETWEEN '$start_timestamp' AND '$end_timestamp'
 					AND um.meta_key = 'description'
 					AND l.processed = 5
 					AND b.id = '".$product['id']."'
 					AND st.downloads != '5'
 				GROUP BY c.license
-				LIMIT 100";
+				LIMIT 1000";
 									///pokazh($sql);
 									///pokazh("product['id']",$product['id']);
 
@@ -220,8 +269,9 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 		$the_list = ''; // html list of cartoons with row tags
 		$contract_period = $_month.".".date("Y");
 
-		echo ("<div class='t' style='font-size:1.1em;font-weight:bold;background-color:#E6E9FF;padding-left:4px;margin-top:12px;'>".$product['name']."</div>");
-		
+		$_invoice_number = $_invoice_start_number + $customer_number;
+
+		echo ("<div id='white' style='background-color:white;padding:2px;margin-bottom:12px;'><div class='t' style='font-size:1.1em;font-weight:bold;background-color:#E6E9FF;padding-left:4px;'>".$product['name'].". <span style='color:silver;'>Контракт № ".$product['contract']." от ".date_format(date_create($product['contract_date']),'d-m-Y')."</span></div>");
 
 	  foreach($product_list as $sales)
 		{
@@ -234,8 +284,8 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 			
 			$the_list .= '<tr>
 							<td style="padding:2px;text-align:center;">'.$n.'</td>
-							<td style="font-style:bold;font-size:1em;padding:2px;">«'.stripslashes($sales["title"]).'» (#'.$sales["picture_id"].') 1шт.</td>
-							<td style="padding:2px;text-align:center;">'.$sales["smi"].'</td>
+							<td style="font-style:bold;font-size:1em;padding:2px;padding-left:4px;">#'.$sales["picture_id"].' «'.stripslashes($sales["title"]).'»</td>
+							<td style="padding:2px;padding-left:4px;text-align:left;">'.$sales["smi"].'</td>
 							<td style="padding:2px;text-align:center;font-size:.8em;">1 шт.</td>
 							<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
 							<td style="padding:2px;text-align:center;">'.round(0.4*($discount_price),0).'</td>
@@ -246,7 +296,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 
 
 
-		$_invoice_number = $_invoice_start_number + $customer_number;
+		//$_invoice_number = $_invoice_start_number + $customer_number;
 		$customer_number ++;
 		echo "<div style='color:#9900CC;margin-bottom:10px;'>Всего авторских: <b>".$total."</b></div>";
 
@@ -255,13 +305,13 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 		$invoice_date = date('d-m-Y',strtotime('-1 second',strtotime('+1 month',strtotime($_month.'/01/'.date('Y').' 00:00:00'))));
 		$out = fill_invoice($filename_acceptance_certificate_pdf, $_invoice_number, $invoice_date, $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 		echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/artist_acceptance_certificate.php'>
-			<input type='submit' value='скачать акт выполненных работ (PDF) '>
+			<input type='submit' value='скачать акт № ".$_invoice_number." выполненных работ (PDF) '>
 			<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
 			<input type='hidden' name='filename' value='acceptance_certificate_".$_invoice_number."'>
-		</form></div>");
+		</form></div></div>");
 
 
-		echo "<hr>";
+		//echo "<hr>";
 
 	}//if($product_list != null)
 
@@ -429,6 +479,61 @@ function send_mail($votecontent)
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
 	mail("igor.aleshin@gmail.com","Новый счёт от Картунбанка",$votecontent,$headers);
+}
+
+function ru_month ($month, $sklon=false)
+{
+	switch ($month){
+		case 1:
+			if ($sklon) return 'январе';
+			else return 'январь';
+			break;
+		case 2:
+			if ($sklon) return 'феврале';
+			else return 'февраль';
+			break;
+		case 3:
+			if ($sklon) return 'марте';
+			else return 'март';
+			break;
+		case 4:
+			if ($sklon) return 'апреле';
+			else return 'апрель';
+			break;
+		case 5:
+			if ($sklon) return 'мае';
+			else return 'май';
+			break;
+		case 6:
+			if ($sklon) return 'июне';
+			else return 'июнь';
+			break;
+		case 7:
+			if ($sklon) return 'июле';
+			else return 'июль';
+			break;
+		case 8:
+			if ($sklon) return 'августе';
+			else return 'август';
+			break;
+		case 9:
+			if ($sklon) return 'сентябре';
+			else return 'сентябрь';
+			break;
+		case 10:
+			if ($sklon) return 'октябре';
+			else return 'октябрь';
+			break;
+		case 11:
+			if ($sklon) return 'ноябре';
+			else return 'ноябрь';
+			break;
+		case 12:
+			if ($sklon) return 'декабре';
+			else return 'декабрь';
+			break;
+	}
+
 }
 
 ?>

@@ -1,5 +1,5 @@
 <h2>Бухгалтеру</h2>
-<div style='background-color:#FFFF99; padding:4px;'>Продажи, за которые должны придти деньги. Личный счёт (wallet), Робокасса (robokassa), Чек Сбербанка (check). Зеленым цветом выделен Личный счёт.</div>
+<div style='background-color:#FFFF99; padding:4px;font-size:0.8em;'>Продажи, за которые должны прийти деньги. Личный счёт (wallet), Робокасса (robokassa), Чек Сбербанка (check). Зеленым цветом выделен Личный счёт.</div>
 
 <?php
 $abspath = 'z:/home/localhost/www/';
@@ -64,7 +64,7 @@ $sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `
 
 $result = $wpdb->get_results($sql,ARRAY_A);
 if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_error());}
-echo "<div><h3>Сколько продано работ по авторам</h3>";
+echo "<div><h3>Сколько продано работ по авторам за выбранный период</h3>";
 foreach ($result as $row)
 {
 	echo "<span>";
@@ -75,7 +75,7 @@ echo "</div>";
 
 echo "<br>";
 
-$sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
+$sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, l.payment_arrived_date, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
@@ -96,8 +96,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
         AND st.downloads != '5'
 		AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
 	GROUP BY c.license
-	ORDER BY `date` DESC
-	LIMIT 200";
+	ORDER BY `date` DESC";
 
 	//pokazh($sql,"sql");
 
@@ -155,7 +154,10 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
 		$row['price'] = round($row['price'],0);
 		if ($row['processed_id']==5)
 		{
-			$row['processed'] = '<div style="background-color:#FCF798;" class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].'</div></div>';
+			$payment_date = strtotime($row['payment_arrived_date']);
+			$row['processed'] = '<div style="background-color:#FCF798;" class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].' в '.ru_month(date("m",$payment_date),true).' '.date("Y",$payment_date).'</div></div>';
+			//date("M",$row['payment_arrived_date'])
+			//'.$row['payment_arrived_date'].'
 		}
 		else
 		{
@@ -164,10 +166,14 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
 	}
 
 	//$grid->HideColumn('column', ...)
-	$grid->HideColumn('address','phone','display_name','user_id','lastname','email','downloads','active','downloadid','smi','processed_id');
+	$grid->HideColumn('address','phone','display_name','user_id','lastname','email','downloads','active','downloadid','smi','processed_id','payment_arrived_date');
 
     $grid->SetPerPage(100);
 ?>
+
+
+
+
 	<style type="text/css">
     <!--
         table.datagrid {
@@ -209,22 +215,70 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
         }
     // -->
     </style>
+
+
+
 <?
-	$this_date = getdate();
-	//$dateMinusOneMonth = mktime(0, 0, 0, (3-1), 31,  2007 );
-	$d_month_previous = date('n', mktime(0,0,0,($month-1),28,$year));         // PREVIOUS month of year (1-12)
-	$d_monthname_previous = date('F', mktime(0,0,0,($month-1),28,$year));     // PREVIOUS Month Long name (July)
+	// Months navigation
+		$this_date = getdate();
+		$year = date("Y");
+		$month = date("m");
+?>
 
-	$d_month_previous2 = date('n', mktime(0,0,0,($month-2),28,$year));         // PREVIOUS month of year (1-12)
-	$d_monthname_previous2 = date('F', mktime(0,0,0,($month-2),28,$year));     // PREVIOUS Month Long name (July)
+<div style='background-color:#FFFF99; padding:4px;font-size:0.8em;'>Для отмечания прихода денег за рисунки надо выбрать месяц и год, когда пришли деньги в формате dd.mm.yyyy (точный день не имеет значения). При перезагрузке страницы месяц и год установлены в текущие.</div>
+<div><input type="text" id="date_selector" name="date_select" value="<?echo "01.".$month.".".$year;?>"></div>
 
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=0'>Показать 100 последних продаж</a> ";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$month."'>".$this_date['month']."</a> ";
+<?
+		
+		
+		
+		
+		$d_month_previous = date('n', mktime(0,0,0,($month-1),28,$year)); 
+		$d_monthname_previous = ru_month($d_month_previous, $sklon=false);
+
+		$d_month_previous2 = date('n', mktime(0,0,0,($month-2),28,$year));
+		$d_monthname_previous2 = ru_month($d_month_previous2, $sklon=false);
+
+		$d_month_previous3 = date('n', mktime(0,0,0,($month-3),28,$year));
+		$d_monthname_previous3 = ru_month($d_month_previous3, $sklon=false);
+
+		$d_month_previous4 = date('n', mktime(0,0,0,($month-4),28,$year));         
+		$d_monthname_previous4 = ru_month($d_month_previous4, $sklon=false);
+
+		$d_month_previous5 = date('n', mktime(0,0,0,($month-5),28,$year));         
+		$d_monthname_previous5 = ru_month($d_month_previous5, $sklon=false);
+
+		$d_month_previous6 = date('n', mktime(0,0,0,($month-6),28,$year));         
+		$d_monthname_previous6 = ru_month($d_month_previous6, $sklon=false);
+
+
+	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=0'>Показать все продажи</a> ";
+	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$month."'>".ru_month($this_date['mon'])."</a> ";
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> ";
 	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> ";
+	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous3."'>".$d_monthname_previous3."</a> &nbsp;";
+	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous4."'>".$d_monthname_previous4."</a> &nbsp;";
+	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous5."'>".$d_monthname_previous5."</a> &nbsp;";
+	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous6."'>".$d_monthname_previous6."</a> &nbsp;";
 
 
-	echo "<br />";
+	// Month display
+	$_month = $_GET['m'];
+
+	if (isset($_GET['m']) && $_month==0)
+	{
+		echo "<h3 style='color:#FF00FF'>Все продажи</h3>";
+	}
+	else if (isset($_GET['m']))
+	{
+		echo "<h3 style='color:#FF00FF'>".ru_month(date('n', mktime(0,0,0,($_month),28,$year)))."</h3>";
+	}
+	else
+	{
+		echo "<h3 style='color:#FF00FF'>".ru_month(date('m'))."</h3>";
+	}
+
+
 	echo 'Всего записей: ' . $grid->GetRowCount() . '<br />';
 	$grid->Display() 
 ?>
@@ -259,11 +313,69 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
 	{
 		// send purchase status update
 		wrd = encodeURIComponent(wrd);
-		jQuery.post("http://cartoonbank.ru/ales/accountant/purchase_status.php?purch_id="+id+"&sta="+wrd);
+		var date_selector = jQuery('#date_selector').attr('value');
+		date = encodeURIComponent(date_selector);
+		
+		jQuery.post("http://cartoonbank.ru/ales/accountant/purchase_status.php?purch_id="+id+"&sta="+wrd+"&date="+date);
 	}
 
 //-->
 </script>
 
 
+<?
+function ru_month ($month, $sklon=false)
+{
+	switch ($month){
+		case 1:
+			if ($sklon) return 'январе';
+			else return 'январь';
+			break;
+		case 2:
+			if ($sklon) return 'феврале';
+			else return 'февраль';
+			break;
+		case 3:
+			if ($sklon) return 'марте';
+			else return 'март';
+			break;
+		case 4:
+			if ($sklon) return 'апреле';
+			else return 'апрель';
+			break;
+		case 5:
+			if ($sklon) return 'мае';
+			else return 'май';
+			break;
+		case 6:
+			if ($sklon) return 'июне';
+			else return 'июнь';
+			break;
+		case 7:
+			if ($sklon) return 'июле';
+			else return 'июль';
+			break;
+		case 8:
+			if ($sklon) return 'августе';
+			else return 'август';
+			break;
+		case 9:
+			if ($sklon) return 'сентябре';
+			else return 'сентябрь';
+			break;
+		case 10:
+			if ($sklon) return 'октябре';
+			else return 'октябрь';
+			break;
+		case 11:
+			if ($sklon) return 'ноябре';
+			else return 'ноябрь';
+			break;
+		case 12:
+			if ($sklon) return 'декабре';
+			else return 'декабрь';
+			break;
+	}
 
+}
+?>
