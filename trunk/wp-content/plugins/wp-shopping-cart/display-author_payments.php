@@ -234,8 +234,9 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 			
 			$the_list .= '<tr>
 							<td style="padding:2px;text-align:center;">'.$n.'</td>
-							<td style="padding:2px;text-align:center;">'.$sales["smi"].'</td>
 							<td style="font-style:bold;font-size:1em;padding:2px;">«'.stripslashes($sales["title"]).'» (#'.$sales["picture_id"].') 1шт.</td>
+							<td style="padding:2px;text-align:center;">'.$sales["smi"].'</td>
+							<td style="padding:2px;text-align:center;font-size:.8em;">1 шт.</td>
 							<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
 							<td style="padding:2px;text-align:center;">'.round(0.4*($discount_price),0).'</td>
 						</tr>';
