@@ -486,5 +486,59 @@ function send_mail($votecontent)
 	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
 	mail("igor.aleshin@gmail.com","Новый счёт от Картунбанка",$votecontent,$headers);
 }
+function ru_month ($month, $sklon=false)
+{
+	switch ($month){
+		case 1:
+			if ($sklon) return 'январе';
+			else return 'январь';
+			break;
+		case 2:
+			if ($sklon) return 'феврале';
+			else return 'февраль';
+			break;
+		case 3:
+			if ($sklon) return 'марте';
+			else return 'март';
+			break;
+		case 4:
+			if ($sklon) return 'апреле';
+			else return 'апрель';
+			break;
+		case 5:
+			if ($sklon) return 'мае';
+			else return 'май';
+			break;
+		case 6:
+			if ($sklon) return 'июне';
+			else return 'июнь';
+			break;
+		case 7:
+			if ($sklon) return 'июле';
+			else return 'июль';
+			break;
+		case 8:
+			if ($sklon) return 'августе';
+			else return 'август';
+			break;
+		case 9:
+			if ($sklon) return 'сентябре';
+			else return 'сентябрь';
+			break;
+		case 10:
+			if ($sklon) return 'октябре';
+			else return 'октябрь';
+			break;
+		case 11:
+			if ($sklon) return 'ноябре';
+			else return 'ноябрь';
+			break;
+		case 12:
+			if ($sklon) return 'декабре';
+			else return 'декабрь';
+			break;
+	}
+
+}
 
 ?>
