@@ -1,0 +1,53 @@
+﻿<HTML>
+<Head>
+<Script Language=JavaScript>
+
+var largerView = "";
+var winToggle = false;
+
+function openFullSize(Pix,isDesc){
+
+if (winToggle){largerView.close()}
+document.getElementById('nullIMG').src = Pix;
+wStr = document.getElementById('nullIMG').width;
+offsetW = wStr;
+wStr = wStr+20;
+wStr = "width="+wStr;
+hStr = document.getElementById('nullIMG').height;
+offsetH = hStr;
+hStr = hStr+20;
+hStr = "height="+hStr;
+lStr = (screen.width-50-offsetW)/2;
+lStr = "left="+lStr;
+tStr = (screen.availHeight-50-offsetH)/2;
+tStr = "top="+tStr;
+largerView = window.open(Pix,"FullSize","toolbar=0,status=0,"+tStr+","+lStr+","+wStr+","+hStr+"");
+largerView.document.images[0].alt = isDesc;
+winToggle = true;
+}
+
+function buildSupport(){
+
+styleStr = "<Style> .placeHolder {Position:Absolute;Top:-2000}</Style>";
+divStr = "<Div class='placeHolder'><IMG Src=document.images[0].src ID='nullIMG'></Div>"
+document.write(styleStr);
+document.write(divStr);
+}
+
+buildSupport();
+
+window.onunload=function(){
+
+if (winToggle && !largerView.closed){largerView.close()}
+}
+</Script>
+</Head>
+<Body>
+<center>
+<H3>Automatic centering and sizing of popup window</h3>
+<Img Src='s.jpg' width='200' height='200' onclick="openFullSize(this.src,'This is a description')">
+<br>
+<Img Src='b.jpg' width='200' height='200' onclick="openFullSize(this.src,'This is another description')">
+</center>
+</Body>
+</HTML>
