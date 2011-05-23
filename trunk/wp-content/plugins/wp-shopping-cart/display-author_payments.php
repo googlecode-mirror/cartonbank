@@ -245,7 +245,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					AND u.id = l.user_id
 					AND u.id = um.user_id
 					AND payment_arrived_date BETWEEN '$start_timestamp' AND '$end_timestamp'
-					AND um.meta_key = 'description'
+					AND um.meta_key = 'company'
 					AND l.processed = 5
 					AND b.id = '".$product['id']."'
 					AND st.downloads != '5'
