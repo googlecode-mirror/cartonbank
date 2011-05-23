@@ -4,12 +4,17 @@
 
 // configuration
 include("/home/www/cb3/ales/config.php");
+
 //open db connection
 $link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
 mysql_set_charset('utf8',$link);
 
+
+
 $mailto = 'igor.aleshin@gmail.com'; // destination email box
 
+global $license_number;
+$license_number = uniqid();
 
 // get tema dnya cartoon id
 $today = date('y-m-d');
@@ -36,22 +41,22 @@ else
 }
 
 
-$sql = "SELECT wp_product_list.image as image, 
-	wp_product_list.id as ID,
-	wp_product_list.name AS title, 
-	wp_product_brands.name AS author, 
-	wp_product_files.idhash,
-	wp_product_list.brand AS brand,
-	wp_product_files.mimetype
-	FROM wp_product_list, wp_product_brands, wp_product_files 
-	WHERE 
-	wp_product_list.id = ".$image_id."
-	AND wp_product_list.file = wp_product_files.id
-	AND wp_product_list.brand = wp_product_brands.id";
+	$sql = "SELECT wp_product_list.image as image, 
+		wp_product_list.id as ID,
+		wp_product_list.name AS title, 
+		wp_product_brands.name AS author, 
+		wp_product_files.idhash,
+		wp_product_list.brand AS brand,
+		wp_product_files.mimetype
+		FROM wp_product_list, wp_product_brands, wp_product_files 
+		WHERE 
+		wp_product_list.id = ".$image_id."
+		AND wp_product_list.file = wp_product_files.id
+		AND wp_product_list.brand = wp_product_brands.id";
 
-$result = mysql_query("$sql");
+	$result = mysql_query("$sql");
 
-if (!$result) {die('Invalid query: ' . mysql_error());}
+	if (!$result) {die('Invalid query: ' . mysql_error());}
 
 	while($row=mysql_fetch_array($result))
 		{
@@ -109,9 +114,6 @@ if (!$result) {die('Invalid query: ' . mysql_error());}
 		//create resized image
 		al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, $idhash_path, $product_images, $slidename, $thumb, $resample_quality = '100');
 
-		//create icon image
-		//al_create_resized_file(200, 200, $thatdir, $ifolder, $file, $idhash_path, $product_images, $iconname, $thumb, $resample_quality = '100');
-
 		// create icon image
 		$imagedir = $basepath."/home/www/cb3/ales/echo/";
         al_create_cropped_file(200, 200, $imagedir, $ifolder, $slidename, $resample_quality = '100'); 
@@ -139,7 +141,12 @@ if (!$result) {die('Invalid query: ' . mysql_error());}
 		send_email_multi_attachments($content);
 
 
+	//payment for Echo
+	pay_on_behalf_of_echo($image_id);
+
 	mysql_close($link);
+
+
 ?>
 
 
@@ -524,15 +531,13 @@ function send_email_multi_attachments($content='')
 
 function get_echo_license($sequence_of_image='1',$license_num='1', $image_name, $image_number, $author_name)
 {
-	$agreement_number = uniqid();
+	global $license_number;
+
 	$agreement_date = date("m.d.y");
 	$customer_name = "Валерий Нечай, «Эхо Петербурга»";
 	$media_name = "«Эхо Петербурга»";
-
 	$discount = 25;
-
 	$price = 200;
-	
 
 	//load License template
 	$filename = '';
@@ -558,7 +563,7 @@ function get_echo_license($sequence_of_image='1',$license_num='1', $image_name, 
 	$content=loadFile($filename); 
 
 	// replace placeholders
-		$content = str_replace ('#agreement_number#',$agreement_number,$content);
+		$content = str_replace ('#agreement_number#',$license_number,$content);
 		$content = str_replace ('#agreement_date#',$agreement_date,$content);
 		$content = str_replace ('#customer_name#',$customer_name,$content);
 		$content = str_replace ('#image_number#',$image_number,$content);
@@ -588,7 +593,7 @@ function loadFile($sFilename, $sCharset = 'UTF-8')
     if ($sEncoding = mb_detect_encoding($sData, 'auto', true) != $sCharset)
         $sData = mb_convert_encoding($sData, $sCharset, $sEncoding);
     return $sData;
-}
+ }
 
 function save_license($content)
 {
@@ -597,5 +602,41 @@ function save_license($content)
 	$stringData = $content;
 	fwrite($fh, $stringData);
 	fclose($fh);
+}
+
+function pay_on_behalf_of_echo($cartoon_id)
+{
+	// constants
+	global $license_number;
+	$license_num = $license_number."_".$cartoon_id;
+	$sessionid = uniqid();
+	$price = "250";
+	$date_today = time();
+	$date_download = date('y-m-d H:i:s');
+
+	// wp_purchase_logs
+		$sql = "INSERT INTO `cartoonbankru`.`wp_purchase_logs` (`id`, `totalprice`, `statusno`, `sessionid`, `transactid`, `authcode`, `user_id`, `firstname`, `lastname`, `email`, `address`, `phone`, `downloadid`, `processed`, `date`, `payment_arrived_date`, `gateway`, `shipping_country`, `shipping_region`) VALUES (NULL, '".$price."', '0', '".$sessionid."', '0', '0', '131', 'Валерий', 'Нечай', 'vnechay@gmail.com', 'эхомскспбру', '+7(921)9341454', '0', '1', '".$date_today."', '', 'wallet', '', '')";
+
+		$result = mysql_query($sql);
+		if (!$result) {die('Invalid query: ' . mysql_error());}
+
+		$purchase_id = mysql_insert_id();
+		if (!$purchase_id) {die('Can\'t get inserted line id: ' . mysql_error());}
+
+
+	// wp_cart_contents
+		$sql = "INSERT INTO `cartoonbankru`.`wp_cart_contents` (`id`, `prodid`, `purchaseid`, `price`, `pnp`, `gst`, `quantity`, `license`) VALUES (NULL, '".$cartoon_id."', '".$purchase_id."', '".$price."', '0', '', '1', '".$license_num."')";
+
+		$result = mysql_query($sql);
+		if (!$result) {die('Invalid query: ' . mysql_error());}
+
+
+	// wp_status
+		$sql = "INSERT INTO `cartoonbankru`.`wp_download_status` (`id`, `fileid`, `purchid`, `downloads`, `active`, `datetime`) VALUES (NULL, '".$cartoon_id."', '".$purchase_id."', '0', '0', '".$date_download."')";
+
+		$result = mysql_query($sql);
+		if (!$result) {die('Invalid query: ' . mysql_error());}
+
+	echo "done";
 }
 ?>
