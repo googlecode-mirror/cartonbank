@@ -43,10 +43,10 @@ $month = date("m");
 
 $this_date = getdate();
 
-if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' )
+if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' && isset($_GET['y']) && is_numeric($_GET['y']) && $_GET['y']!='0')
 {
-	$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $year);
-	$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 1, $year);
+	$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $_GET['y']);
+	$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 1, $_GET['y']);
 }
 elseif (isset($_GET['m']) && $_GET['m']==0)
 {
@@ -59,11 +59,15 @@ else
 	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
 }
 
-$sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b, `wp_users` AS u WHERE l.`processed` = s.`id`  AND l.id = c.purchaseid AND p.id = c.prodid AND st.purchid = c.purchaseid AND p.brand = b.id AND u.id = l.user_id AND l.user_id !=  '106' AND st.downloads !=  '5' AND date BETWEEN '$start_timestamp' AND '$end_timestamp' GROUP BY c.license ORDER BY b.name ) AS temp GROUP BY temp.id order by temp.name
-";
+$sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b, `wp_users` AS u WHERE l.`processed` = s.`id`  AND l.id = c.purchaseid AND p.id = c.prodid AND st.purchid = c.purchaseid AND p.brand = b.id AND u.id = l.user_id AND l.user_id !=  '106' AND st.downloads !=  '5' AND date BETWEEN '$start_timestamp' AND '$end_timestamp' GROUP BY c.license ORDER BY b.name ) AS temp GROUP BY temp.id order by temp.name";
 
 $result = $wpdb->get_results($sql,ARRAY_A);
-if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_error());}
+		///pokazh($sql);
+
+if (!$result) {die('<br />Продаж за этот период не найдено ' . mysql_error());}
+
+	/// pokazh($sql);
+
 echo "<div><h3>Сколько продано работ по авторам за выбранный период</h3>";
 foreach ($result as $row)
 {
@@ -75,7 +79,7 @@ echo "</div>";
 
 echo "<br>";
 
-$sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, l.payment_arrived_date, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
+$sql = "SELECT date,  c.purchaseid, p.id, s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, c.cart_discount, u.display_name, l.user_id, l.payment_arrived_date, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
@@ -98,7 +102,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
 	GROUP BY c.license
 	ORDER BY `date` DESC";
 
-	//pokazh($sql,"sql");
+	///	pokazh($sql,"sql");
 
 	//http://www.phpguru.org/static/datagrid.html
     require_once($abspath.'wp-content/RGrid/RGrid.php');
@@ -110,14 +114,14 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
     $grid->SetHeaderHTML('<div style="text-align: center">Статистика продаж</div>');
 
 
-    $grid->SetDisplayNames(array('ID'       => '№',
-                                 'totalprice'   => 'со скидкой',
-                                 'id'   => '# изобр.',
+    $grid->SetDisplayNames(array('totalprice'   => 'со скидкой',
+                                 'id'   => '№ изобр.',
                                  'artist'   => 'автор изобр.',
-                                 'discount'   => 'скидка %',
+                                 'discount'   => 'скидка юзера%',
+                                 'cart_discount'   => 'скидка заказа%',
                                  'display_name'   => 'логин',
 								 'user_id' => 'покупатель',
-                                 'purchaseid'   => 'номер заказа',
+                                 'purchaseid'   => '№ заказа',
                                  'active'   => 'активно',
                                  'date'   => 'дата покупки',
                                  'price'   => 'цена',
@@ -132,7 +136,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
                                  'wallet'   => 'на счёте',
                                  'downloadid'   => 'скачать',
                                  'downloads'   => 'осталось скачиваний',
-                                 'contract'   => 'номер договора'));
+                                 'contract'   => '№ договора'));
 
     
 	$grid->NoSpecialChars('title','downloadid','firstname','processed');
@@ -149,19 +153,29 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
 		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."'>скачать</a>";
 		//$link = $siteurl."?downloadid=".$download_data['id'];
 		$row['discount'] = round ($row['discount'],0);
-		$row['totalprice'] = $row['price'] - $row['price'] * $row['discount']/100;
+
+		if ($row['cart_discount'] == '')
+		{
+			$row['totalprice'] = $row['price'] - $row['price'] * $row['discount']/100;
+		}
+		else
+		{
+			$row['totalprice'] = $row['price'] - $row['price'] * $row['cart_discount']/100;
+		}
+
+		
 		$row['wallet'] = round($row['wallet'],0);
 		$row['price'] = round($row['price'],0);
 		if ($row['processed_id']==5)
 		{
 			$payment_date = strtotime($row['payment_arrived_date']);
-			$row['processed'] = '<div style="background-color:#FCF798;cursor:pointer;" class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].' в '.ru_month(date("m",$payment_date),true).' '.date("Y",$payment_date).'</div></div>';
+			$row['processed'] = '<div title="изменить" style="background-color:#FCF798;cursor:pointer;" class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].' в '.ru_month(date("m",$payment_date),true).' '.date("Y",$payment_date).'</div></div>';
 			//date("M",$row['payment_arrived_date'])
 			//'.$row['payment_arrived_date'].'
 		}
 		else
 		{
-			$row['processed'] = '<div style="cursor:pointer;" class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].'</div></div>';
+			$row['processed'] = '<div title="изменить" style="cursor:pointer;" class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].'</div></div>';
 		}
 	}
 
@@ -230,40 +244,28 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
 
 <?
 		
-		
-		
-		
-		$d_month_previous = date('n', mktime(0,0,0,($month-1),28,$year)); 
-		$d_monthname_previous = ru_month($d_month_previous, $sklon=false);
+		$mmonth = intval($month);
+		for ($i = 0; $i <= 11; $i++) {
 
-		$d_month_previous2 = date('n', mktime(0,0,0,($month-2),28,$year));
-		$d_monthname_previous2 = ru_month($d_month_previous2, $sklon=false);
+			if ($mmonth-$i <= 0)
+				{
+					$y = $year-1;
+				}
+			else
+				{
+					$y = $year;
+				}
 
-		$d_month_previous3 = date('n', mktime(0,0,0,($month-3),28,$year));
-		$d_monthname_previous3 = ru_month($d_month_previous3, $sklon=false);
-
-		$d_month_previous4 = date('n', mktime(0,0,0,($month-4),28,$year));         
-		$d_monthname_previous4 = ru_month($d_month_previous4, $sklon=false);
-
-		$d_month_previous5 = date('n', mktime(0,0,0,($month-5),28,$year));         
-		$d_monthname_previous5 = ru_month($d_month_previous5, $sklon=false);
-
-		$d_month_previous6 = date('n', mktime(0,0,0,($month-6),28,$year));         
-		$d_monthname_previous6 = ru_month($d_month_previous6, $sklon=false);
-
-
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=0'>Показать все продажи</a> ";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$month."'>".ru_month($this_date['mon'])."</a> ";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> ";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> ";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous3."'>".$d_monthname_previous3."</a> &nbsp;";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous4."'>".$d_monthname_previous4."</a> &nbsp;";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous5."'>".$d_monthname_previous5."</a> &nbsp;";
-	echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&m=".$d_month_previous6."'>".$d_monthname_previous6."</a> &nbsp;";
+			//pokazh($i.': '.$mmonth.' - '.$y);
+			echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-account.php&y=$y&m=". date('n', mktime(0,0,0,($mmonth-$i),28,$y))."'>".ru_month(date('n', mktime(0,0,0,($mmonth-$i),28,$y)), $sklon=false)." ".$y."</a> ";
+			//$d_month_previous.''.$i = date('n', mktime(0,0,0,($month-$i),28,$y)); 
+			//$d_monthname_previous.$i = ru_month($d_month_previous.$i, $sklon=false);
+		}
 
 
 	// Month display
 	$_month = $_GET['m'];
+	$_year = $_GET['y'];
 
 	if (isset($_GET['m']) && $_month==0)
 	{
@@ -271,11 +273,11 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
 	}
 	else if (isset($_GET['m']))
 	{
-		echo "<h3 style='color:#FF00FF'>".ru_month(date('n', mktime(0,0,0,($_month),28,$year)))."</h3>";
+		echo "<h1 style='color:#FF00FF'>".ru_month(date('n', mktime(0,0,0,($_month),28,$_year)))." $_year</h1>";
 	}
 	else
 	{
-		echo "<h3 style='color:#FF00FF'>".ru_month(date('m'))."</h3>";
+		echo "<h1 style='color:#FF00FF'>".ru_month(date('m'))." $_year</h1>";
 	}
 
 
