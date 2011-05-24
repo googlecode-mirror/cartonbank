@@ -981,7 +981,7 @@ if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_
 else
 	{
 		$output .= "После утверждения рисунка модераторами Категория может быть изменена администратором";
-		$output .= "<div  style='display:none;>".categorylist($product['id'])."</div>";
+		$output .= "<div  style='display:none;'>".categorylist($product['id'])."</div>";
 	}
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
