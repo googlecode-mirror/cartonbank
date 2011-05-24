@@ -155,13 +155,13 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  s.name as processed, processed as pr
 		if ($row['processed_id']==5)
 		{
 			$payment_date = strtotime($row['payment_arrived_date']);
-			$row['processed'] = '<div style="background-color:#FCF798;" class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].' в '.ru_month(date("m",$payment_date),true).' '.date("Y",$payment_date).'</div></div>';
+			$row['processed'] = '<div style="background-color:#FCF798;cursor:pointer;" class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].' в '.ru_month(date("m",$payment_date),true).' '.date("Y",$payment_date).'</div></div>';
 			//date("M",$row['payment_arrived_date'])
 			//'.$row['payment_arrived_date'].'
 		}
 		else
 		{
-			$row['processed'] = '<div class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].'</div></div>';
+			$row['processed'] = '<div style="cursor:pointer;" class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].'</div></div>';
 		}
 	}
 
