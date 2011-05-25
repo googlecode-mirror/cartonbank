@@ -1,15 +1,12 @@
 <?
 // generate images for echo spb
 //
-
 // configuration
 include("/home/www/cb3/ales/config.php");
 
 //open db connection
 $link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
 mysql_set_charset('utf8',$link);
-
-
 
 $mailto = 'igor.aleshin@gmail.com'; // destination email box
 
@@ -491,6 +488,7 @@ function send_email_multi_attachments($content='')
  
 	 // email fields: to, from, subject, and so on
 	$to = "igor.aleshin@gmail.com";
+	$to_2 = "vnechay@gmail.com";
 	$from = "cartoonbank.ru@gmail.com"; 
 	$subject ="карикатура для Эха Петербурга от Картунбанка.ру"; 
 	$message = $content;
@@ -527,6 +525,14 @@ function send_email_multi_attachments($content='')
 	} else { 
 		echo "<p>mail could not be sent!</p>"; 
 	} 
+
+	$ok = @mail($to_2, $subject, $message, $headers); 
+	if ($ok) { 
+		echo "<p>mail sent to $to!</p>"; 
+	} else { 
+		echo "<p>mail could not be sent!</p>"; 
+	} 
+
 }
 
 function get_echo_license($sequence_of_image='1',$license_num='1', $image_name, $image_number, $author_name)
