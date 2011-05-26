@@ -8,7 +8,7 @@ if(isset($_GET['sta']) && is_numeric($_GET['sta']) && isset($_GET['purch_id']) &
 	$new_processed_id = $_GET['sta'];
 	$purch_date = $_GET['date'];
 
-	fw(" purch_date=>".$purch_date);
+	//fw(" purch_date=>".$purch_date);
 
 	// update database
 
