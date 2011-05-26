@@ -1,3 +1,5 @@
+<script src="http://cartoonbank.ru/ales/jquery.jeditable.js" type="text/javascript" charset="utf-8"></script> 
+
 <h2>Бухгалтеру</h2>
 <div style='background-color:#FFFF99; padding:4px;font-size:0.8em;'>Продажи, за которые должны прийти деньги. Личный счёт (wallet), Робокасса (robokassa), Чек Сбербанка (check). Зеленым цветом выделен Личный счёт.</div>
 
@@ -79,7 +81,10 @@ echo "</div>";
 
 echo "<br>";
 
-$sql = "SELECT date,  c.purchaseid, p.id, s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, c.cart_discount, u.display_name, l.user_id, l.payment_arrived_date, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
+$itogo = get_itogo($start_timestamp, $end_timestamp);
+
+
+$sql = "SELECT date,  c.purchaseid, p.id, s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, c.cart_discount, c.actual_money, u.display_name, l.user_id, l.payment_arrived_date, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
@@ -102,7 +107,7 @@ $sql = "SELECT date,  c.purchaseid, p.id, s.name as processed, processed as proc
 	GROUP BY c.license
 	ORDER BY `date` DESC";
 
-	///	pokazh($sql,"sql");
+		///pokazh($sql,"sql");
 
 	//http://www.phpguru.org/static/datagrid.html
     require_once($abspath.'wp-content/RGrid/RGrid.php');
@@ -134,12 +139,13 @@ $sql = "SELECT date,  c.purchaseid, p.id, s.name as processed, processed as proc
                                  'title'   => 'название ',
                                  'license'   => 'лицензия',
                                  'wallet'   => 'на счёте',
+                                 'actual_money'   => 'пришли от РК',
                                  'downloadid'   => 'скачать',
                                  'downloads'   => 'осталось скачиваний',
                                  'contract'   => '№ договора'));
 
     
-	$grid->NoSpecialChars('title','downloadid','firstname','processed');
+	$grid->NoSpecialChars('title','downloadid','firstname','processed','actual_money');
     
     $grid->rowcallback = 'RowCallback';
 
@@ -176,6 +182,20 @@ $sql = "SELECT date,  c.purchaseid, p.id, s.name as processed, processed as proc
 		else
 		{
 			$row['processed'] = '<div title="изменить" style="cursor:pointer;" class="status_'.$row['purchaseid'].'" id="status_'.$row['purchaseid'].'"><div onclick="change_status(\'.status_'.$row['purchaseid'].'\');">'.$row['processed'].'</div></div>';
+		}
+
+		//robokassa
+		//actual_money
+		if ($row['gateway']=='robokassa')
+		{
+			if ($row['actual_money']=='')
+			{
+				$row['actual_money']='<div class="edit" id="'.$row['purchaseid'].'" style="cursor:pointer;">'.$row['totalprice']*.95.'</div>';
+			}
+			else
+			{
+				$row['actual_money']='<div class="edit" id="'.$row['purchaseid'].'" style="cursor:pointer;">'.$row['actual_money'].'</div>';
+			}
 		}
 	}
 
@@ -281,7 +301,8 @@ $sql = "SELECT date,  c.purchaseid, p.id, s.name as processed, processed as proc
 	}
 
 
-	echo 'Всего записей: ' . $grid->GetRowCount() . '<br />';
+	echo 'Всего продаж: <b>' . $grid->GetRowCount() . '</b>. Сумма продаж со скидкой: <b>'.$itogo
+.'</b> руб.<br />';
 	$grid->Display() 
 ?>
 
@@ -320,6 +341,22 @@ $sql = "SELECT date,  c.purchaseid, p.id, s.name as processed, processed as proc
 		
 		jQuery.post("http://cartoonbank.ru/ales/accountant/purchase_status.php?purch_id="+id+"&sta="+wrd+"&date="+date);
 	}
+
+	jQuery(document).ready(function() {
+		 jQuery('.edit').editable('http://cartoonbank.ru/ales/accountant/save_rk.php', {
+			 indicator : 'Сохраняю...',
+			 tooltip   : 'Нажмите для редактирования...'
+		 });
+		 jQuery('.edit_area').editable('http://cartoonbank.ru/ales/accountant/save_rk.php', { 
+			 type      : 'textarea',
+			 cancel    : 'Cancel',
+			 submit    : 'OK',
+			 indicator : '<img src="/img/ldng.gif">',
+			 tooltip   : 'Нажмите для редактирования...'
+		 });
+	});
+
+
 
 //-->
 </script>
@@ -379,5 +416,55 @@ function ru_month ($month, $sklon=false)
 			break;
 	}
 
+}
+
+function get_itogo($start_timestamp, $end_timestamp)
+{
+	// discount total
+
+	global $wpdb;
+
+	$itogo = 0;
+
+	$sql ="SELECT c.price, totalprice, u.discount as discount, c.cart_discount as cart_discount
+			FROM `wp_purchase_logs` as l, 
+				`wp_purchase_statuses` as s, 
+				`wp_cart_contents` as c, 
+				`wp_product_list` as p,
+				`wp_download_status` as st,
+				`wp_product_brands` as b,
+				`wp_users` as u,
+				`wp_usermeta` as um
+			WHERE	l.`processed`=s.`id` 
+				AND l.id=c.purchaseid 
+				AND p.id=c.prodid  
+				AND st.purchid=c.purchaseid
+				AND p.brand=b.id
+				AND u.id = l.user_id
+				AND u.id = um.user_id
+				AND um.meta_key = 'description'
+				AND l.user_id != '106'
+				AND st.downloads != '5'
+				AND date BETWEEN $start_timestamp AND $end_timestamp
+			GROUP BY c.license";
+		$result = $wpdb->get_results($sql,ARRAY_A);
+		if (!$result) 
+			{
+				die('<br />Продаж за этот период не найдено ' . mysql_error());
+			}
+
+		foreach ($result as $row)
+		{
+			if (is_null($row['cart_discount']))
+			{
+				$itogo = $itogo + ($row['price'] * (100 - $row['discount']))/100;
+			}
+			else
+			{
+				$itogo = $itogo + ($row['price'] * (100 - $row['cart_discount']))/100;
+			}
+		}
+
+		return $itogo;
 }
 ?>
