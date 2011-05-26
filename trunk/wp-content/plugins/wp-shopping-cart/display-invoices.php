@@ -45,21 +45,21 @@ if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
 
 	$this_date = getdate();
 
-	if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' )
-	{
-		$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $year);
-		$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 1, $year);
-	}
-	elseif (isset($_GET['m']) && $_GET['m']==0)
-	{
-		$start_timestamp = mktime(0, 0, 0, 11, 1, $year-1);
-		$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
-	}
-	else
-	{
-		$start_timestamp = mktime(0, 0, 0, $month, 1, $year);
-		$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
-	}
+if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' && isset($_GET['y']) && is_numeric($_GET['y']) && $_GET['y']!='0')
+{
+	$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $_GET['y']);
+	$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 1, $_GET['y']);
+}
+elseif (isset($_GET['m']) && $_GET['m']==0)
+{
+	$start_timestamp = mktime(0, 0, 0, 11, 1, $year-1);
+	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
+}
+else
+{
+	$start_timestamp = mktime(0, 0, 0, $month, 1, $year);
+	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
+}
 
 if (isset($_POST['new_invoice_start_number']) && is_numeric($_POST['new_invoice_start_number']))
 {
@@ -160,22 +160,51 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
 
 	// Months navigation
 		$this_date = getdate();
-		//$dateMinusOneMonth = mktime(0, 0, 0, (3-1), 31,  2007 );
-		$d_month_previous = date('n', mktime(0,0,0,($month-1),28,$year));         // PREVIOUS month of year (1-12)
-		$d_monthname_previous = date('F', mktime(0,0,0,($month-1),28,$year));     // PREVIOUS Month Long name (July)
+		$year = date("Y");
+		$month = date("m");
 
-		$d_month_previous2 = date('n', mktime(0,0,0,($month-2),28,$year));         // PREVIOUS month of year (1-12)
-		$d_monthname_previous2 = date('F', mktime(0,0,0,($month-2),28,$year));     // PREVIOUS Month Long name (July)
+		/*
+			//$dateMinusOneMonth = mktime(0, 0, 0, (3-1), 31,  2007 );
+			$d_month_previous = date('n', mktime(0,0,0,($month-1),28,$year));         // PREVIOUS month of year (1-12)
+			$d_monthname_previous = date('F', mktime(0,0,0,($month-1),28,$year));     // PREVIOUS Month Long name (July)
 
-		$d_month_previous3 = date('n', mktime(0,0,0,($month-3),28,$year));         // PREVIOUS month of year (1-12)
-		$d_monthname_previous3 = date('F', mktime(0,0,0,($month-3),28,$year));     // PREVIOUS Month Long name (July)
+			$d_month_previous2 = date('n', mktime(0,0,0,($month-2),28,$year));         // PREVIOUS month of year (1-12)
+			$d_monthname_previous2 = date('F', mktime(0,0,0,($month-2),28,$year));     // PREVIOUS Month Long name (July)
+
+			$d_month_previous3 = date('n', mktime(0,0,0,($month-3),28,$year));         // PREVIOUS month of year (1-12)
+			$d_monthname_previous3 = date('F', mktime(0,0,0,($month-3),28,$year));     // PREVIOUS Month Long name (July)
+		*/
 
 		//echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=0'>Показать 200 последних продаж</a> ";
+		
 		echo "1) Выберите отчётный месяц: ";
+
+
+		$mmonth = intval($month);
+		for ($i = 0; $i <= 11; $i++) {
+
+			if ($mmonth-$i <= 0)
+				{
+					$y = $year-1;
+				}
+			else
+				{
+					$y = $year;
+				}
+
+			//pokazh($i.': '.$mmonth.' - '.$y);
+			echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&y=$y&m=". date('n', mktime(0,0,0,($mmonth-$i),28,$y))."'>".ru_month(date('n', mktime(0,0,0,($mmonth-$i),28,$y)), $sklon=false)." ".$y."</a> ";
+			//$d_month_previous.''.$i = date('n', mktime(0,0,0,($month-$i),28,$y)); 
+			//$d_monthname_previous.$i = ru_month($d_month_previous.$i, $sklon=false);
+		}
+
+
+/*		
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$month."'>".$this_date['month']."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-invoices.php&m=".$d_month_previous3."'>".$d_monthname_previous3."</a> &nbsp;";
+*/
 
 		echo "<form method=post action='#'>";
 		echo "2) Счета будут выводится <b>начиная с номера</b> ";
@@ -195,14 +224,19 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
 if (isset($_GET['m']) && is_numeric($_GET['m']))
 {
 	$_month = $_GET['m'];
+	$_year = $_GET['y'];
 
-	if ($_month==0)
+	if (isset($_GET['m']) && $_month==0)
 	{
-		echo "<h3>200 последних</h3>";
+		echo "<h3 style='color:#FF00FF'>Все продажи</h3>";
+	}
+	else if (isset($_GET['m']))
+	{
+		echo "<h1 style='color:#FF00FF'>".ru_month(date('n', mktime(0,0,0,($_month),28,$_year)))." $_year</h1>";
 	}
 	else
 	{
-		echo "<h3 style='color:#FF00FF'>".date('F', mktime(0,0,0,($_month),28,$year))."</h3>";
+		echo "<h1 style='color:#FF00FF'>".ru_month(date('m'))." $_year</h1>";
 	}
 
 
