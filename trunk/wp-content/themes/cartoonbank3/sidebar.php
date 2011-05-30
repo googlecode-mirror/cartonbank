@@ -249,6 +249,10 @@ else
 echo "</div>";
 ?>
 
+<br />
+<div  style="font-size:.8em;text-align:center;color:white;vertical-align:middle;width:100%;padding-top:10px;padding-bottom:10px;background-color:red"><a href="http://cartoonbank.ru/img/rnd/spbculture.ru.erenburg.png" style="font-size:1.6em;color:white;decoration:none;"><SPAN>В Санкт-Петербурге</SPAN><br>ВЫСТАВКА КАРИКАТУР<br><SPAN style="font-size:1.8em;font-weight:bold;color:white;">БОРИСА ЭРЕНБУРГА</SPAN></a></div>
+
+
 <br /><h2>Разделы</h2>
 
 <?

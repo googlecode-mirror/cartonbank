@@ -528,10 +528,13 @@ flashvars="file=/upload/iblock/19b/19b27428de2bbef684d0b9ed1814ebdb.mp3&logo.hid
 <div class="box"> 
 	<div class="hd">Карикатура дня</div> 
 
-	<div class="cartoon" style="cursor:pointer;"><img src="http://cartoonbank.ru/ales/echo/s.jpg" onclick="var t=Math.random();window.open ('http://cartoonbank.ru/ales/echo/cartoon.html?s='+t, 'child', 'height=600,width=600'); return false" width="200" height="200" title="cartoonbank.ru"></div>
-
+	<div class="cartoon" style="cursor:pointer;"><img id="cim" src="http://cartoonbank.ru/ales/echo/s.jpg" onclick="var t=Math.random();window.open ('http://cartoonbank.ru/ales/echo/cartoon.html?s='+t, 'child', 'height=600,width=600'); return false" width="200" height="200" title="cartoonbank.ru"></div>
+	<script language="JavaScript">
+	<!--
+	var im = document.getElementById('cim');var rnd = new Date().getTime();cim.setAttribute("src", "http://cartoonbank.ru/ales/echo/s.jpg?"+rnd); 
+	//-->
+	</script>
 	<p style="text-align:right;"><a  style="color:silver;text-decoration:none;" href="http://cartoonbank.ru" target=_blank>© Cartoonbank.ru</a></p> 
-
 	<div class="clear"></div> 
 </div> 
 
