@@ -5,6 +5,7 @@ $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
 $filename_acceptance_certificate_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/artist_acceptance_certificate_pdf.html";
+$total_all = 0; // all artists total summ
 
 global $wpdb;
 
@@ -42,39 +43,26 @@ $year = date("Y");
 $month = date("m");
 
 $this_date = getdate();
-/*
-if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' )
-{
-	$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $year);
-	$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 1, $year);
-}
-elseif (isset($_GET['m']) && $_GET['m']==0)
-{
-	$start_timestamp = mktime(0, 0, 0, 11, 1, $year-1);
-	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
-}
-else
-{
-	$start_timestamp = mktime(0, 0, 0, $month, 1, $year);
-	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
-}
-*/
 
-if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' )
+// dates
+if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' && isset($_GET['y']) && is_numeric($_GET['y']) && $_GET['y']!='0')
 {
-	$start_timestamp = date('y-m-d',mktime(0, 0, 0, $_GET['m'], 1, $year));
-	$end_timestamp = date('y-m-d',mktime(0, 0, 0, $_GET['m']+1, 1, $year));
+	$start_timestamp = date('y-m-d',mktime(0, 0, 0, $_GET['m'], 1, $_GET['y']));
+	$end_timestamp = date('y-m-d',mktime(0, 0, 0, $_GET['m']+1, 1, $_GET['y']));
 }
 elseif (isset($_GET['m']) && $_GET['m']==0)
 {
-	$start_timestamp = date('y-m-d',mktime(0, 0, 0, 11, 1, $year-1));
-	$end_timestamp = date('y-m-d',mktime(0, 0, 0, $month+1, 1, $year));
+	$start_timestamp = date('y-m-d',mktime(0, 0, 0, 11, 1, $_GET['y']-1));
+	$end_timestamp = date('y-m-d',mktime(0, 0, 0, $month+1, 1, $_GET['y']));
 }
 else
 {
-	$start_timestamp = date('y-m-d',mktime(0, 0, 0, $month, 1, $year));
-	$end_timestamp = date('y-m-d',mktime(0, 0, 0, ($month+1), 1, $year));
+	$start_timestamp = date('y-m-d',mktime(0, 0, 0, $month, 1, $_GET['y']));
+	$end_timestamp = date('y-m-d',mktime(0, 0, 0, ($month+1), 1, $_GET['y']));
 }
+
+
+
 
 
 if (isset($_POST['new_invoice_start_number']) && is_numeric($_POST['new_invoice_start_number']))
@@ -119,6 +107,9 @@ else
 
 	// Months navigation
 		$this_date = getdate();
+		$year = date("Y");
+		$month = date("m");
+/*
 		$d_month_previous = date('n', mktime(0,0,0,($month-1),28,$year));         // PREVIOUS month of year (1-12)
 		$d_monthname_previous = ru_month($d_month_previous, $sklon=false);
 		//$d_monthname_previous = date('F', mktime(0,0,0,($month-1),28,$year));     // PREVIOUS Month Long name (July)
@@ -141,11 +132,32 @@ else
 		$d_month_previous6 = date('n', mktime(0,0,0,($month-6),28,$year));         
 		$d_monthname_previous6 = ru_month($d_month_previous6, $sklon=false);
 
-
+*/
 
 		//echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=0'>Показать 200 последних продаж</a> ";
 		
 		echo "1) Выберите отчётный месяц: ";
+
+
+		$mmonth = intval($month);
+		for ($i = 0; $i <= 11; $i++) {
+
+			if ($mmonth-$i <= 0)
+				{
+					$y = $year-1;
+				}
+			else
+				{
+					$y = $year;
+				}
+
+			//pokazh($i.': '.$mmonth.' - '.$y);
+			echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&y=$y&m=". date('n', mktime(0,0,0,($mmonth-$i),28,$y))."'>".ru_month(date('n', mktime(0,0,0,($mmonth-$i),28,$y)), $sklon=false)." ".$y."</a> ";
+			//$d_month_previous.''.$i = date('n', mktime(0,0,0,($month-$i),28,$y)); 
+			//$d_monthname_previous.$i = ru_month($d_month_previous.$i, $sklon=false);
+		}
+
+		/*
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$month."'>".ru_month($this_date['mon'],false)."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> &nbsp;";
@@ -153,7 +165,7 @@ else
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous4."'>".$d_monthname_previous4."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous5."'>".$d_monthname_previous5."</a> &nbsp;";
 		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous6."'>".$d_monthname_previous6."</a> &nbsp;";
-
+		*/
 
 
 		echo "<form method=post action='#'>";
@@ -177,14 +189,19 @@ else
 if (isset($_GET['m']) && is_numeric($_GET['m']))
 {
 	$_month = $_GET['m'];
+	$_year = $_GET['y'];
 
-	if ($_month==0)
+	if (isset($_GET['m']) && $_month==0)
 	{
-		echo "<h3>200 последних</h3>";
+		echo "<h3 style='color:#FF00FF'>200 последних</h3>";
+	}
+	else if (isset($_GET['m']))
+	{
+		echo "<h1 style='color:#FF00FF'>".ru_month(date('n', mktime(0,0,0,($_month),28,$_year)))." $_year</h1>";
 	}
 	else
 	{
-		echo "<h3 style='color:#FF00FF'>".ru_month(date('n', mktime(0,0,0,($_month),28,$year)),false)."</h3>";
+		echo "<h1 style='color:#FF00FF'>".ru_month(date('m'))." $_year</h1>";
 	}
 
 /*
@@ -251,7 +268,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					AND st.downloads != '5'
 				GROUP BY c.license
 				LIMIT 1000";
-									///pokazh($sql);
+									//pokazh($sql);
 									///pokazh("product['id']",$product['id']);
 
 				$product_list = $wpdb->get_results($sql,ARRAY_A);
@@ -294,8 +311,6 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 			$n++;
 		}//foreach($product_list as $sales)
 
-
-
 		//$_invoice_number = $_invoice_start_number + $customer_number;
 		$customer_number ++;
 		echo "<div style='color:#9900CC;margin-bottom:10px;'>Всего авторских: <b>".$total."</b></div>";
@@ -310,6 +325,8 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 			<input type='hidden' name='filename' value='acceptance_certificate_".$_invoice_number."'>
 		</form></div></div>");
 
+$total_all = $total_all + $total;
+$total =0;
 
 		//echo "<hr>";
 
@@ -319,13 +336,17 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 		}// foreach($response as $product)
 
 
+
 	}//if($response != null)
 }//if (isset($_GET['m']) && is_numeric($_GET['m']))
 
+
+
+
 ?>
-
-
-
+<div style="padding:2px;background-color:#CCFF99;"><br>
+Общая сумма выплаченных авторских в этом месяце: <b><?echo $total_all;?></b> руб.
+</div>
 <?
 function fill_invoice($filename, $invoice_number='', $invoice_date='', $smi='',  $client_details='', $product_list='', $total='', $count='', $invoice_period='', $contract_number='', $contract_date='')
 {
