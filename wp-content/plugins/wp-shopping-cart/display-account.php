@@ -49,16 +49,24 @@ if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' && isset($_GE
 {
 	$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $_GET['y']);
 	$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 1, $_GET['y']);
+
+$start_timestamp2 = date("Y-m-d", mktime(0, 0, 0, $_GET['m'], 1, $_GET['y']));
+$end_timestamp2 = date("Y-m-d", mktime(0, 0, 0, ($_GET['m']+1), 1, $_GET['y']));
+	//AND st.datetime BETWEEN '2011-05-01' AND '2011-06-01'
 }
 elseif (isset($_GET['m']) && $_GET['m']==0)
 {
 	$start_timestamp = mktime(0, 0, 0, 11, 1, $year-1);
 	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
+$start_timestamp2 = date("Y-m-d", mktime(0, 0, 0, 11, 1, $year-1));
+$end_timestamp2 = date("Y-m-d", mktime(0, 0, 0, ($month+1), 1, $year));
 }
 else
 {
 	$start_timestamp = mktime(0, 0, 0, $month, 1, $year);
 	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
+$start_timestamp2 = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
+$end_timestamp2 = date("Y-m-d", mktime(0, 0, 0, ($month+1), 1, $year));
 }
 
 $sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b, `wp_users` AS u WHERE l.`processed` = s.`id`  AND l.id = c.purchaseid AND p.id = c.prodid AND st.purchid = c.purchaseid AND p.brand = b.id AND u.id = l.user_id AND l.user_id !=  '106' AND st.downloads !=  '5' AND date BETWEEN '$start_timestamp' AND '$end_timestamp' GROUP BY c.license ORDER BY b.name ) AS temp GROUP BY temp.id order by temp.name";
@@ -81,9 +89,9 @@ echo "</div>";
 
 echo "<br>";
 
-$itogo = get_itogo($start_timestamp, $end_timestamp);
+$itogo = get_itogo($start_timestamp2, $end_timestamp2);
 
-
+/*
 $sql = "SELECT date,  c.purchaseid, p.id, s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, c.cart_discount, c.actual_money, u.display_name, l.user_id, l.payment_arrived_date, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
@@ -106,6 +114,29 @@ $sql = "SELECT date,  c.purchaseid, p.id, s.name as processed, processed as proc
 		AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
 	GROUP BY c.license
 	ORDER BY `date` DESC";
+*/
+$sql ="SELECT date, st.datetime,  c.purchaseid, p.id, s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, c.cart_discount, c.actual_money, u.display_name, l.user_id, l.payment_arrived_date, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
+	FROM `wp_purchase_logs` as l, 
+		`wp_purchase_statuses` as s, 
+		`wp_cart_contents` as c, 
+		`wp_product_list` as p,
+		`wp_download_status` as st,
+		`wp_product_brands` as b,
+		`wp_users` as u,
+		`wp_usermeta` as um
+	WHERE	l.`processed`=s.`id` 
+		AND l.id=c.purchaseid 
+		AND p.id=c.prodid  
+		AND st.purchid=c.purchaseid
+		AND p.brand=b.id
+		AND u.id = l.user_id
+		AND u.id = um.user_id
+		AND um.meta_key = 'description'
+		AND l.user_id != '106'
+		AND st.downloads != '5'
+		AND datetime BETWEEN '$start_timestamp2' AND '$end_timestamp2'
+	GROUP BY c.license
+	ORDER BY `datetime` DESC";
 
 		///pokazh($sql,"sql");
 
@@ -425,7 +456,7 @@ function get_itogo($start_timestamp, $end_timestamp)
 	global $wpdb;
 
 	$itogo = 0;
-
+/*
 	$sql ="SELECT c.price, totalprice, u.discount as discount, c.cart_discount as cart_discount
 			FROM `wp_purchase_logs` as l, 
 				`wp_purchase_statuses` as s, 
@@ -447,6 +478,30 @@ function get_itogo($start_timestamp, $end_timestamp)
 				AND st.downloads != '5'
 				AND date BETWEEN $start_timestamp AND $end_timestamp
 			GROUP BY c.license";
+*/
+$sql ="SELECT c.price,st.datetime, totalprice, u.discount as discount, c.cart_discount as cart_discount
+	FROM `wp_purchase_logs` as l, 
+		`wp_purchase_statuses` as s, 
+		`wp_cart_contents` as c, 
+		`wp_product_list` as p,
+		`wp_download_status` as st,
+		`wp_product_brands` as b,
+		`wp_users` as u,
+		`wp_usermeta` as um
+	WHERE	l.`processed`=s.`id` 
+		AND l.id=c.purchaseid 
+		AND p.id=c.prodid  
+		AND st.purchid=c.purchaseid
+		AND p.brand=b.id
+		AND u.id = l.user_id
+		AND u.id = um.user_id
+		AND um.meta_key = 'description'
+		AND l.user_id != '106'
+		AND st.downloads != '5'
+		AND st.datetime BETWEEN '$start_timestamp' AND '$end_timestamp'
+	GROUP BY c.license";
+
+			///pokazh ($sql);
 		$result = $wpdb->get_results($sql,ARRAY_A);
 		if (!$result) 
 			{
