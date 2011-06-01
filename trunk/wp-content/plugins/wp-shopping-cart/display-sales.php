@@ -64,7 +64,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 		AND p.brand=b.id
 		AND u.id = l.user_id
 	GROUP BY c.license
-	ORDER BY `date` DESC";
+	ORDER BY p.id DESC";
 
 //	AND (`date` BETWEEN '$start_timestamp' AND '$end_timestamp')
 
