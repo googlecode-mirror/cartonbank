@@ -49,7 +49,7 @@ $month = date("m");
 $start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
 $end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
 
-$sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id,firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract
+$sql = "SELECT st.datetime, c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id,firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
@@ -91,7 +91,7 @@ $sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c
 								 'user_id' => 'покупатель',
                                  'purchaseid'   => 'номер заказа',
                                  'active'   => 'активно',
-                                 'date'   => 'дата покупки',
+                                 'datetime'   => 'дата покупки',
                                  'price'   => 'цена картинки',
                                  'firstname'   => 'имя покупателя',
                                  'lastname'   => 'фамилия покупателя',
