@@ -50,7 +50,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' && isset($_GE
 	$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $_GET['y']);
 	$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 1, $_GET['y']);
 
-$start_timestamp2 = date("Y-m-d", mktime(0, 0, 0, $_GET['m'], 1, $_GET['y']));
+$start_timestamp2 = date("Y-m-d", mktime(23, 59, 59, $_GET['m'], 1, $_GET['y']));
 $end_timestamp2 = date("Y-m-d", mktime(0, 0, 0, ($_GET['m']+1), 1, $_GET['y']));
 	//AND st.datetime BETWEEN '2011-05-01' AND '2011-06-01'
 }
@@ -68,6 +68,7 @@ else
 $start_timestamp2 = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
 $end_timestamp2 = date("Y-m-d", mktime(0, 0, 0, ($month+1), 1, $year));
 }
+
 
 $sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b, `wp_users` AS u WHERE l.`processed` = s.`id`  AND l.id = c.purchaseid AND p.id = c.prodid AND st.purchid = c.purchaseid AND p.brand = b.id AND u.id = l.user_id AND l.user_id !=  '106' AND st.downloads !=  '5' AND date BETWEEN '$start_timestamp' AND '$end_timestamp' GROUP BY c.license ORDER BY b.name ) AS temp GROUP BY temp.id order by temp.name";
 
@@ -159,7 +160,7 @@ $sql ="SELECT date, st.datetime,  c.purchaseid, p.id, s.name as processed, proce
 								 'user_id' => 'покупатель',
                                  'purchaseid'   => '№ заказа',
                                  'active'   => 'активно',
-                                 'date'   => 'дата покупки',
+                                 'datetime'   => 'дата покупки',
                                  'price'   => 'цена',
                                  'firstname'   => 'покупатель',
                                  'lastname'   => 'фамилия покупателя',
@@ -231,7 +232,7 @@ $sql ="SELECT date, st.datetime,  c.purchaseid, p.id, s.name as processed, proce
 	}
 
 	//$grid->HideColumn('column', ...)
-	$grid->HideColumn('address','phone','display_name','user_id','lastname','email','downloads','active','downloadid','smi','processed_id','payment_arrived_date');
+	$grid->HideColumn('date','address','phone','display_name','user_id','lastname','email','downloads','active','downloadid','smi','processed_id','payment_arrived_date');
 
     $grid->SetPerPage(100);
 ?>
