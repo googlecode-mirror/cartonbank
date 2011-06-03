@@ -49,16 +49,23 @@ if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' && isset($_GE
 {
 	$start_timestamp = mktime(0, 0, 0, $_GET['m'], 1, $_GET['y']);
 	$end_timestamp = mktime(0, 0, 0, ($_GET['m']+1), 1, $_GET['y']);
+	$start_timestamp2 = date("Y-m-d", mktime(23, 59, 59, $_GET['m'], 1, $_GET['y']));
+	$end_timestamp2 = date("Y-m-d", mktime(0, 0, 0, ($_GET['m']+1), 1, $_GET['y']));
+
 }
 elseif (isset($_GET['m']) && $_GET['m']==0)
 {
 	$start_timestamp = mktime(0, 0, 0, 11, 1, $year-1);
 	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
+	$start_timestamp2 = date("Y-m-d", mktime(0, 0, 0, 11, 1, $year-1));
+	$end_timestamp2 = date("Y-m-d", mktime(0, 0, 0, ($month+1), 1, $year));
 }
 else
 {
 	$start_timestamp = mktime(0, 0, 0, $month, 1, $year);
 	$end_timestamp = mktime(0, 0, 0, ($month+1), 1, $year);
+	$start_timestamp2 = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
+	$end_timestamp2 = date("Y-m-d", mktime(0, 0, 0, ($month+1), 1, $year));
 }
 
 if (isset($_POST['new_invoice_start_number']) && is_numeric($_POST['new_invoice_start_number']))
@@ -251,7 +258,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 		{
 			
 			// get all sales for the given month
-			$sql = "SELECT date,  c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
+			$sql = "SELECT date, st.datetime, c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
 			FROM `wp_purchase_logs` as l, 
 				`wp_purchase_statuses` as s, 
 				`wp_cart_contents` as c, 
@@ -272,9 +279,9 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					AND u.id = '".$product['user_id']."'
 					AND st.downloads != '5'
 					AND gateway = 'wallet'
-					AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
+					AND datetime BETWEEN '$start_timestamp2' AND '$end_timestamp2'
 				GROUP BY c.license
-				ORDER BY `date` DESC";
+				ORDER BY datetime DESC";
 				$product_list = $wpdb->get_results($sql,ARRAY_A);
 									///pokazh($sql);
 				if($product_list != null)
