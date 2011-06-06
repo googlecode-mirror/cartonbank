@@ -102,8 +102,8 @@ else
 		$file = $filename.'.'.$extension; 
 		$idhash_path = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/files/".$idhash;
 		$product_images='';
-		$slidename = 'b.'.$extension;
-		$iconname = 's.'.$extension;
+		$slidename = 'b.jpg';
+		$iconname = 's.jpg';
 
 		$thumb='';
 		$resample_quality=100;
@@ -229,7 +229,7 @@ function wtrmark($sourcefile, $watermarkfile, $text) {
 
 
 	   //Create a jpeg out of the modified picture 
-	   switch($fileType) {
+	   switch('jpg') {
 	  
 		   // remember we don't need gif any more, so we use only png or jpeg.
 		   // See the upsaple code immediately above to see how we handle gifs
@@ -293,7 +293,7 @@ function al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, 
 		imagecopyresampled($resized, $img, 0, 0, 0, 0, imagesx($resized)+1,imagesy($resized)+1,imagesx($img),imagesy($img));
 		
 		//echo "\n   ..strtolower(path[extension]):".strtolower($path["extension"]);
-			switch(strtolower($path["extension"])){
+			switch("jpg"){
 				case "jpeg":
 				case "pjpeg":
 				case "jpg":
@@ -318,7 +318,7 @@ function al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, 
 	 else 
 	 {
 		 echo "\n     !!!!shit";
-		switch(strtolower($path["extension"])){
+		switch("jpg"){
 			case "jpeg":
 			case "jpg":
 				imagejpeg($img, $export_dir.$slidename, $resample_quality);
@@ -440,7 +440,7 @@ function al_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, 
     imagecopyresampled ($resized, $img, 0, 0, $out_left, $out_top, $chwidth, $chheight, $out_width, $out_height);
 
         if (is_writable($thatdir.$ifolder)){
-            switch(strtolower($path["extension"])){
+            switch("jpg"){
                 case "jpeg":
                 case "jpg":
                     imagejpeg($resized, $thatdir.$ifolder.'/'.$sfile, $resample_quality);
@@ -464,7 +464,7 @@ function al_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, 
 
         imagedestroy($resized);
     } else {
-        switch(strtolower($path["extension"])){
+        switch("jpg"){
             case "jpeg":
             case "jpg":
                 imagejpeg($img, $thatdir.$ifolder.'/'.$file, $resample_quality);
