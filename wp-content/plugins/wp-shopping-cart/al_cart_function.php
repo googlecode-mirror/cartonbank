@@ -139,32 +139,23 @@ if (!$licensecolumn)
 
 		if ($licensecolumn)
 		{
-		// License select
-		$result .= "  <td width='70'>";
-	    $result .= "<a href='".get_option('shopping_cart_url')."&remove=".$key."'>Убрать из заказа</a>";
-	    $result .= "  </td>";
+			// License select
+			$result .= "  <td width='70'>";
+			$result .= "<a href='".get_option('shopping_cart_url')."&remove=".$key."'>Убрать из заказа</a>";
+			$result .= "  </td>";
 	    }
-		
 		else
 		{
-		// Download link
+			// Download link
 			$current_user = wp_get_current_user();
 			$result .= "  <td width='70'>";
-			if (isset($current_user) && $current_user->last_name == 'demo')
+			if (isset($current_user) && $current_user->ID == '106')
 			{$result .= "<a href='".get_option('siteurl')."/demo/demo.jpg'>Скачать demo</a>";}
 			else
 			{$result .= "<a href='$link'>Скачать</a>";}
 			$result .= "  </td>";
+		}
 
-		}
-		/*
-		if (isset($link))
-		{
-		$result .= "  <td width='70'>";
-	    $result .= "<a href='$link'>Скачать</a>";
-		$result .= "  </td>";
-		}
-		*/
 	    $result .= "</tr>";
 
 		// License text
