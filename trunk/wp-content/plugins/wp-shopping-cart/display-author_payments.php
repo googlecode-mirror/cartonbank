@@ -245,7 +245,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 			
 			// get all sales for the given month
 
-			$sql = "SELECT date,  c.purchaseid,  p.id as picture_id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.wallet, um.meta_value as smi
+			$sql = "SELECT date, st.datetime, c.purchaseid,  p.id as picture_id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.wallet, um.meta_value as smi
 				FROM `wp_purchase_logs` as l, 
 					`wp_purchase_statuses` as s, 
 					`wp_cart_contents` as c, 
@@ -262,13 +262,13 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					AND u.id = l.user_id
 					AND u.id = um.user_id
 					AND payment_arrived_date BETWEEN '$start_timestamp' AND '$end_timestamp'
-					AND um.meta_key = 'company'
+					AND (um.meta_key = 'company' OR um.meta_key = 'description' OR um.meta_key = 'nickname')
 					AND l.processed = 5
 					AND b.id = '".$product['id']."'
 					AND st.downloads != '5'
 				GROUP BY c.license
+				order by purchaseid
 				LIMIT 1000";
-									//pokazh($sql);
 									///pokazh("product['id']",$product['id']);
 
 				$product_list = $wpdb->get_results($sql,ARRAY_A);
@@ -280,6 +280,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 
 	if($product_list != null)
 	{
+									///pokazh($sql);
 		$n = 1; // sequence number of the cartoon sold to one customer
 		$count = count($product_list); // number of cartoons sold
 		$total = 0; // total price with discount
@@ -295,7 +296,8 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 			$discount_price = round($sales['price'],0)*((100-round($sales['discount'],0))/100);
 			
 
-			echo "<div class='t'><span style='color:silver;'>".date("d.m.y",$sales['date'])."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
+			//echo "<div class='t'><span style='color:silver;'>".date("d.m.y",$sales['date'])."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
+			echo "<div class='t'><span style='color:silver;'>".$sales['datetime']."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
 			
 			$total = $total + round(0.4*($discount_price),0);
 			
