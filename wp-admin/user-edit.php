@@ -23,6 +23,13 @@ elseif ( ! $user_id && ! IS_PROFILE_PAGE )
 elseif ( ! get_userdata( $user_id ) )
 	wp_die( __('Invalid user ID.') );
 
+
+if ($user_id == '106')
+{
+	// demo user
+	header("Location: http://cartoonbank.ru/?page_id=29&offset=0");
+}
+
 wp_enqueue_script('user-profile');
 wp_enqueue_script('password-strength-meter');
 
