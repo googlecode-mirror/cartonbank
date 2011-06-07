@@ -28,9 +28,6 @@ if ($cart_content!='')
 	{$message = $message.$cart_content;}
 else {$message = 'Корзина пуста';}
 
-
-	
-
 	//echo $message;
 
 	$message_html = $message;
@@ -75,75 +72,75 @@ $previous_download_ids = Array(0);
   
 if(isset($cart) && $cart != null && ($errorcode == 0))
   {
-	  $headers = "From: ".get_option('return_email')."\r\n" .
-				   'X-Mailer: PHP/' . phpversion() . "\r\n" .
-				   "MIME-Version: 1.0\r\n" .
-				   "Content-Type: text/html; charset=utf-8\r\n" .
-				   "Content-Transfer-Encoding: 8bit\r\n\r\n";
+  $headers = "From: ".get_option('return_email')."\r\n" .
+			   'X-Mailer: PHP/' . phpversion() . "\r\n" .
+			   "MIME-Version: 1.0\r\n" .
+			   "Content-Type: text/html; charset=utf-8\r\n" .
+			   "Content-Transfer-Encoding: 8bit\r\n\r\n";
 
-	  
-	  $purch_sql = "SELECT * FROM `wp_purchase_logs` WHERE `id`!='".$check[0]['id']."'";
-	  $purch_data = $wpdb->get_results($purch_sql,ARRAY_A) ; 
+  
+  $purch_sql = "SELECT * FROM `wp_purchase_logs` WHERE `id`!='".$check[0]['id']."'";
+  $purch_data = $wpdb->get_results($purch_sql,ARRAY_A) ; 
 
-	  $report_user = "О заказчике."; 
-	  
-	  $form_sql = "SELECT * FROM `wp_submited_form_data` WHERE `log_id` = '".$check[0]['id']."'";
-	  $form_data = $wpdb->get_results($form_sql,ARRAY_A);
-	  if($form_data != null)
-		{
-		foreach($form_data as $form_field)
-		  {
-		  $form_sql = "SELECT * FROM `wp_collect_data_forms` WHERE `id` = '".$form_field['form_id']."' LIMIT 1";
-		  $form_data = $wpdb->get_results($form_sql,ARRAY_A);
-		  $form_data = $form_data[0];
-		  if($form_data['type'] == 'country' )
-			{
-			$report_user .= $form_data['name'].": ".get_country($form_field['value'])."\n";
-			}
-			else
-			  {
-			  $report_user .= $form_data['name'].": ".$form_field['value']."\n";
-			  }
-		  }
-		}
-	  
-	  $report_user .= "\n\r";
-	  $report = $report_user . $report;
+  $report_user = "О заказчике."; 
+  
+  $form_sql = "SELECT * FROM `wp_submited_form_data` WHERE `log_id` = '".$check[0]['id']."'";
+  $form_data = $wpdb->get_results($form_sql,ARRAY_A);
+  if($form_data != null)
+    {
+    foreach($form_data as $form_field)
+      {
+      $form_sql = "SELECT * FROM `wp_collect_data_forms` WHERE `id` = '".$form_field['form_id']."' LIMIT 1";
+      $form_data = $wpdb->get_results($form_sql,ARRAY_A);
+      $form_data = $form_data[0];
+      if($form_data['type'] == 'country' )
+        {
+        $report_user .= $form_data['name'].": ".get_country($form_field['value'])."\n";
+        }
+        else
+          {
+          $report_user .= $form_data['name'].": ".$form_field['value']."\n";
+          }
+      }
+    }
+  
+  $report_user .= "\n\r";
+  $report = $report_user . $report;
 
 	  if($email != '')
 		{
-		  $mess = $report." <br /> ".$message;
-		mail($email, 'Подтверждение покупки изображения. Cartoonbank.ru .', $message, $headers);
-		mail("igor.aleshin@gmail.com", 'Подтверждение покупки изображения. Копия.', $mess, $headers);
-		mail("sales@cartoonbank.com", 'Подтверждение покупки изображения. Копия.', $mess, $headers);
-
+			$mess = $report." <br /><br /> ".$message;
+			mail($email, 'Подтверждение покупки изображения. Cartoonbank.ru .', $message, $headers);
+			mail("igor.aleshin@gmail.com", 'Подтверждение покупки изображения. Копия.', $mess, $headers);
+			//mail("sales@cartoonbank.com", 'Подтверждение покупки изображения. Копия.', $mess, $headers);
 		}
 
 
-	/*
-	  if(get_option('purch_log_email') != null)
-		{
-		mail(get_option('purch_log_email'), 'Подтверждение покупки изображения. Cartoonbank.ru ...', $report, $headers);
-		mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru ....', $report."\n\r\n\r".$message, $headers);
-		}
-	*/
+
+/*
+  if(get_option('purch_log_email') != null)
+    {
+    mail(get_option('purch_log_email'), 'Подтверждение покупки изображения. Cartoonbank.ru ...', $report, $headers);
+    mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru ....', $report."\n\r\n\r".$message, $headers);
+    }
+*/
 
 
 
 
-		// todo: 
-	  $_SESSION['nzshpcrt_cart'] = '';
-	  $_SESSION['nzshpcrt_cart'] = Array();
-	  $_SESSION['total'] = 0;
+	// todo: 
+  $_SESSION['nzshpcrt_cart'] = '';
+  $_SESSION['nzshpcrt_cart'] = Array();
+  $_SESSION['total'] = 0;
 
-	  echo '<div class="wrap">';
-	  if($sessionid != null)
-		{
-		echo "<h3>Транзакция прошла успешно</h3>";
-		echo "<br />" . nl2br(str_replace("$",'\$',$message_html));
-		}
-	  echo '</div>';
-	 
+  echo '<div class="wrap">';
+  if($sessionid != null)
+    {
+    echo "<h3>Транзакция прошла успешно</h3>";
+    echo "<br />" . nl2br(str_replace("$",'\$',$message_html));
+    }
+  echo '</div>';
+ 
 
    
 
