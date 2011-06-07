@@ -26,15 +26,13 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 
 ?>
 	<div id="sidebar">
-
-	<h2>Поиск</h2>
+	<h2 style="margin-top:0;">Поиск</h2>
 	<form method="post" id="searchform" action="?page_id=29">
 	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" onfocus="this.value='';" style='width:178px;' /><br />
 	<input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
 	<input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:6px;margin-bottom:4px;" />
 	</form>
 	<a href="?page_id=927">Расширенный поиск</a>
-
 <?
 // Theme of the day
 	$thedate = date("Y.m.d");
@@ -250,7 +248,7 @@ echo "</div>";
 ?>
 
 <br />
-<div  style="font-size:.8em;text-align:center;color:white;vertical-align:middle;width:100%;padding-top:10px;padding-bottom:10px;background-color:red"><a href="http://cartoonbank.ru/img/rnd/spbculture.ru.erenburg.png" style="font-size:1.6em;color:white;decoration:none;"><SPAN>В Санкт-Петербурге</SPAN><br>ВЫСТАВКА КАРИКАТУР<br><SPAN style="font-size:1.8em;font-weight:bold;color:white;">БОРИСА ЭРЕНБУРГА</SPAN></a></div>
+<div  style="font-size:.8em;text-align:center;color:white;vertical-align:middle;width:100%;padding-top:10px;padding-bottom:10px;background-color:red"><a href="http://cartoonbank.ru/?page_id=1741" style="font-size:1.6em;color:white;decoration:none;"><SPAN>В Санкт-Петербурге</SPAN><br>ВЫСТАВКА КАРИКАТУР<br><SPAN style="font-size:1.8em;font-weight:bold;color:white;">БОРИСА ЭРЕНБУРГА</SPAN></a></div>
 
 
 <br /><h2>Разделы</h2>
