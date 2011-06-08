@@ -244,7 +244,32 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 		{
 			
 			// get all sales for the given month
+			$sql = "SELECT cust.name as smi, date, st.datetime, c.purchaseid,  p.id as picture_id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, c.actual_money, st.downloads, st.active,  st.id as downloadid, u.wallet 
+			FROM `wp_purchase_logs` as l, 
+				`wp_purchase_statuses` as s, 
+				`wp_cart_contents` as c, 
+				`wp_product_list` as p,
+				`wp_download_status` as st,
+				`wp_product_brands` as b,
+				`wp_users` as u
+			LEFT JOIN `al_customers` as cust
+			ON u.id = cust.user_id
 
+			WHERE	l.`processed`=s.`id` 
+				AND l.id=c.purchaseid 
+				AND p.id=c.prodid  
+				AND st.purchid=c.purchaseid
+				AND p.brand=b.id
+				AND u.id = l.user_id
+				AND payment_arrived_date BETWEEN '$start_timestamp' AND '$end_timestamp'
+				AND l.processed = 5
+				AND b.id = '".$product['id']."'
+				AND st.downloads != '5'
+			GROUP BY c.license
+			order by purchaseid
+			LIMIT 1000";
+
+/*
 			$sql = "SELECT date, st.datetime, c.purchaseid,  p.id as picture_id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.wallet, um.meta_value as smi
 				FROM `wp_purchase_logs` as l, 
 					`wp_purchase_statuses` as s, 
@@ -269,6 +294,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 				GROUP BY c.license
 				order by purchaseid
 				LIMIT 1000";
+*/
 									///pokazh("product['id']",$product['id']);
 
 				$product_list = $wpdb->get_results($sql,ARRAY_A);
@@ -296,15 +322,35 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 			$discount_price = round($sales['price'],0)*((100-round($sales['discount'],0))/100);
 			
 
+			//robokassa
+			//actual_money
+			if ($sales['gateway']=='robokassa')
+			{
+				$sales['discount'] = 5; // average default discount for Robokassa
+
+				if ($sales['actual_money']=='')
+				{
+					$sales['actual_money'] = ($sales['totalprice']*.95); // average money received from Robokassa
+				}
+				else
+				{
+					$sales['actual_money'] = $sales['actual_money']; //assign corrected by accountant discount to Robokassa purchase
+				}
+
+				$discount_price = $sales['actual_money']; 
+			}
+
+
+
 			//echo "<div class='t'><span style='color:silver;'>".date("d.m.y",$sales['date'])."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
-			echo "<div class='t'><span style='color:silver;'>".$sales['datetime']."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
+			echo "<div class='t' style='font-size:0.8em;'><span style='color:silver;'>".$sales['datetime']."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> <i>".$sales['firstname']." ".$sales['lastname']."</i> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
 			
 			$total = $total + round(0.4*($discount_price),0);
 			
-			$the_list .= '<tr>
+			$the_list .= '<tr style="font-size:8pt">
 							<td style="padding:2px;text-align:center;">'.$n.'</td>
 							<td style="font-style:bold;font-size:1em;padding:2px;padding-left:4px;">#'.$sales["picture_id"].' «'.stripslashes($sales["title"]).'»</td>
-							<td style="padding:2px;padding-left:4px;text-align:left;">'.$sales["smi"].'</td>
+							<td style="padding:2px;padding-left:4px;text-align:left;">'.$sales["smi"].' '.$sales['firstname'].' '.$sales['lastname'].'</td>
 							<td style="padding:2px;text-align:center;font-size:.8em;">1 шт.</td>
 							<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
 							<td style="padding:2px;text-align:center;">'.round(0.4*($discount_price),0).'</td>
@@ -331,7 +377,6 @@ $total_all = $total_all + $total;
 $total =0;
 
 		//echo "<hr>";
-
 	}//if($product_list != null)
 
 
@@ -350,7 +395,7 @@ $total =0;
 Общая сумма выплаченных авторских в этом месяце: <b><?echo $total_all;?></b> руб.
 </div>
 <?
-function fill_invoice($filename, $invoice_number='', $invoice_date='', $smi='',  $client_details='', $product_list='', $total='', $count='', $invoice_period='', $contract_number='', $contract_date='')
+function fill_invoice($filename, $invoice_number='', $invoice_date='', $smi='', $client_details='', $product_list='', $total='', $count='', $invoice_period='', $contract_number='', $contract_date='')
 {
 	if ($invoice_number==''){$invoice_number='____';}
 	$today = getdate();
