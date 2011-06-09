@@ -264,6 +264,7 @@ $_br=0;
 	}
 	$authors .= "</select>";
 
+/*
 	$sql = "SELECT 
 			post as ID, 
 			wp_product_list.image as image, 
@@ -284,7 +285,51 @@ $_br=0;
 				".$_order_filter."
 				".$_limit."
 				".$_offset;
-		  $product_list = $wpdb->get_results($sql,ARRAY_A);
+*/
+	$sql = "SELECT
+			post as ID, 
+			wp_product_list.image as image, 
+			wp_product_list.name AS title, 
+			wp_product_brands.name AS author, 
+			COUNT(wp_fsr_user.post) AS votes, 
+			SUM(wp_fsr_user.points) AS points, 
+			AVG(points)*SQRT(SQRT(COUNT(wp_fsr_user.post))) AS rate, 
+			AVG(points) as average, 
+			vote_date  
+				FROM wp_fsr_user, wp_product_list, wp_product_brands 
+				WHERE wp_fsr_user.post = wp_product_list.id 
+				AND wp_product_list.brand = wp_product_brands.id 
+				AND wp_product_list.active = 1
+				AND wp_product_list.visible = 1
+				".$_br_filter."
+				GROUP BY 1
+				".$_order_filter."
+				".$_limit."
+				".$_offset;
+
+	$product_list = $wpdb->get_results($sql,ARRAY_A);
+/*
+	SELECT
+	post as ID, 
+	wp_product_list.image as image, 
+	wp_product_list.name AS title, 
+	wp_product_brands.name AS author, 
+	COUNT(wp_fsr_user.post) AS votes, 
+	SUM(wp_fsr_user.points) AS points, 
+	AVG(points)*SQRT(SQRT(COUNT(*))) AS rate, 
+	AVG(points) as average, 
+	vote_date  
+		FROM wp_fsr_user, wp_product_list, wp_product_brands 
+		WHERE wp_fsr_user.post = wp_product_list.id 
+		AND wp_product_list.brand = wp_product_brands.id 
+		AND wp_product_list.active = 1
+		AND wp_product_list.visible = 1
+		
+		GROUP BY 1
+		 ORDER BY vote_date DESC
+		 LIMIT 100;
+
+*/
 
 $output = "<div id='homepage_products' class='items'>";
 
