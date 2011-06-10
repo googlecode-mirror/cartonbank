@@ -11,6 +11,7 @@ exit;
 	//
 		$grace_days = 7; //how many days the theme of the day picture is active
 		$thedate = date("d.m.y"); 	// current date
+		$thedate_day = date("d"); 	// current day number
 			//pokazh ($thedate,"thedate: ");
 			$sqlthedate = date("Y.m.d"); 	// current date
 			//pokazh ($sqlthedate,"sqlthedate: ");
@@ -18,6 +19,7 @@ exit;
 			//pokazh ($expirationdate,"expirationdate: ");
 		$tomorrow = date("Y.m.d", mktime(0, 0, 0, date("m"), date("d")+1, date("Y")));
 		$tomorrowh = date("d.m.y", mktime(0, 0, 0, date("m"), date("d")+1, date("Y")));
+		$tomorrow_day = date("d", mktime(0, 0, 0, date("m"), date("d")+1, date("Y")));
 
 	//
 //
@@ -154,6 +156,9 @@ $product_list = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
 if($product_list != null)
 {
   echo "<div><h3 style='color:#FF33CC;'>Сегодняшняя тема дня (".$thedate.")</h3></div>";
+  if (is_odd($thedate_day))
+	  echo "<div style='background-color:#CCFF00;padding:2px;width:200px;'>День Эха Петербурга</div>";
+
 
   // pokazh ($product_list);
   // pokazh ($_POST);
@@ -214,6 +219,8 @@ $is_approved = false;
 echo "<div style='clear:both;'></div>";
 
   echo "<div><h3 style='color:#FF33CC;'>Завтрашняя тема дня (".$tomorrowh.")</h3></div>";
+  if (is_odd($tomorrow_day))
+	  echo "<div style='background-color:#CCFF00;padding:2px;width:200px;'>День Эха Петербурга</div>";
 
 $is_approved = false;
 
@@ -287,5 +294,8 @@ else
 echo "<br /><br />Увы, нет ни одной картинки на тему дня";
 }
 
+function is_odd($number) {
+   return $number & 1; // 0 = even, 1 = odd
+}
 
 ?>
