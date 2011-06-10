@@ -48,20 +48,21 @@ $this_date = getdate();
 if (isset($_GET['m']) && is_numeric($_GET['m']) && $_GET['m']!='0' && isset($_GET['y']) && is_numeric($_GET['y']) && $_GET['y']!='0')
 {
 	$start_timestamp = date('y-m-d',mktime(0, 0, 0, $_GET['m'], 1, $_GET['y']));
-	$end_timestamp = date('y-m-d',mktime(0, 0, 0, $_GET['m']+1, 1, $_GET['y']));
+	$end_timestamp = date('y-m-d',mktime(0, 0, 0, $_GET['m']+1, 0, $_GET['y']));
 }
 elseif (isset($_GET['m']) && $_GET['m']==0)
 {
 	$start_timestamp = date('y-m-d',mktime(0, 0, 0, 11, 1, $_GET['y']-1));
-	$end_timestamp = date('y-m-d',mktime(0, 0, 0, $month+1, 1, $_GET['y']));
+	$end_timestamp = date('y-m-d',mktime(0, 0, 0, $month+1, 0, $_GET['y']));
 }
 else
 {
 	$start_timestamp = date('y-m-d',mktime(0, 0, 0, $month, 1, $_GET['y']));
-	$end_timestamp = date('y-m-d',mktime(0, 0, 0, ($month+1), 1, $_GET['y']));
+	$end_timestamp = date('y-m-d',mktime(0, 0, 0, ($month+1), 0, $_GET['y']));
 }
 
-
+//pokazh ($start_timestamp,"start_timestamp");
+//pokazh ($end_timestamp,"end_timestamp");
 
 
 
@@ -153,19 +154,8 @@ else
 
 			//pokazh($i.': '.$mmonth.' - '.$y);
 			echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&y=$y&m=". date('n', mktime(0,0,0,($mmonth-$i),28,$y))."'>".ru_month(date('n', mktime(0,0,0,($mmonth-$i),28,$y)), $sklon=false)." ".$y."</a> ";
-			//$d_month_previous.''.$i = date('n', mktime(0,0,0,($month-$i),28,$y)); 
-			//$d_monthname_previous.$i = ru_month($d_month_previous.$i, $sklon=false);
 		}
 
-		/*
-		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$month."'>".ru_month($this_date['mon'],false)."</a> &nbsp;";
-		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous."'>".$d_monthname_previous."</a> &nbsp;";
-		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous2."'>".$d_monthname_previous2."</a> &nbsp;";
-		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous3."'>".$d_monthname_previous3."</a> &nbsp;";
-		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous4."'>".$d_monthname_previous4."</a> &nbsp;";
-		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous5."'>".$d_monthname_previous5."</a> &nbsp;";
-		echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=".$d_month_previous6."'>".$d_monthname_previous6."</a> &nbsp;";
-		*/
 
 
 		echo "<form method=post action='#'>";
@@ -173,13 +163,6 @@ else
 		echo "<input type='text' name='new_invoice_start_number' style='width:45px;' value='".$_invoice_start_number."'>";
 		echo "<input type='submit' value=' изменить '>";
 		echo "</form>";
-/*
-		echo "<form method=post action='#'>";
-		echo "3) <b>Дата выписки</b> акта ";
-		echo "<input type='text' name='new_invoice_date' style='width:85px;' value='".$_invoice_date."'>";
-		echo "<input type='submit' value=' изменить '>";
-		echo " (По умолчанию сегодняшняя дата. Изменение даты действует временно)</form>";
-*/
 ?>
 
 
@@ -204,37 +187,10 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 		echo "<h1 style='color:#FF00FF'>".ru_month(date('m'))." $_year</h1>";
 	}
 
-/*
-	$sql = "SELECT u.id, b.name as artist
-				FROM `wp_purchase_logs` as l, 
-					`wp_purchase_statuses` as s, 
-					`wp_cart_contents` as c, 
-					`wp_product_list` as p,
-					`wp_download_status` as st,
-					`wp_product_brands` as b,
-					`wp_users` as u,
-					`wp_usermeta` as um
-				WHERE	l.`processed`=s.`id` 
-					AND l.id=c.purchaseid 
-					AND p.id=c.prodid  
-					AND st.purchid=c.purchaseid
-					AND p.brand=b.id
-					AND u.id = l.user_id
-					AND u.id = um.user_id
-					AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
-					AND um.meta_key = 'description'
-					AND l.processed = 5
-					AND l.user_id != '106'
-					AND st.downloads != '5'
-				GROUP BY c.license
-				ORDER BY artist ASC";
-*/
 	$sql = "SELECT id, name, contract, contract_date 
 			FROM `wp_product_brands` 
 			WHERE active =1
 			ORDER BY `name`"; 
-
-	///pokazh($sql);
 
 	$response = $wpdb->get_results($sql,ARRAY_A) ;
 	if($response != null)
@@ -254,7 +210,6 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 				`wp_users` as u
 			LEFT JOIN `al_customers` as cust
 			ON u.id = cust.user_id
-
 			WHERE	l.`processed`=s.`id` 
 				AND l.id=c.purchaseid 
 				AND p.id=c.prodid  
@@ -263,11 +218,13 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 				AND u.id = l.user_id
 				AND payment_arrived_date BETWEEN '$start_timestamp' AND '$end_timestamp'
 				AND l.processed = 5
+				AND l.user_id != '106'
 				AND b.id = '".$product['id']."'
 				AND st.downloads != '5'
 			GROUP BY c.license
-			order by purchaseid
-			LIMIT 1000";
+			order by purchaseid";
+
+			///pokazh($sql);
 
 /*
 			$sql = "SELECT date, st.datetime, c.purchaseid,  p.id as picture_id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.wallet, um.meta_value as smi
