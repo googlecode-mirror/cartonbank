@@ -28,7 +28,27 @@ function nszhpcrt_homepage_products($content = '')
 		  $seperator ="&amp;";
 		  }
 	  $sql = "SELECT * FROM `wp_product_list` WHERE `active`='1'  AND `visible`='1' AND `approved`='1' ORDER BY `id` ASC LIMIT 20";
-	  $sql = "SELECT post as ID, wp_product_list.image as image, wp_product_list.name AS title, wp_product_brands.name AS author, COUNT(*) AS votes, SUM(wp_fsr_user.points) AS points, AVG(points)*SQRT(COUNT(*)) AS average, vote_date FROM wp_fsr_user, wp_product_list, wp_product_brands  WHERE wp_fsr_user.post = wp_product_list.id  AND wp_product_list.brand = wp_product_brands.id  AND wp_product_list.active = 1 AND wp_product_list.visible = 1 AND wp_product_list.brand = ".$_brand." GROUP BY 1 ORDER BY 7 DESC, 5 DESC LIMIT 100";
+	  //$sql = "SELECT post as ID, wp_product_list.image as image, wp_product_list.name AS title, wp_product_brands.name AS author, COUNT(*) AS votes, SUM(wp_fsr_user.points) AS points, AVG(points)*SQRT(COUNT(*)) AS average, vote_date FROM wp_fsr_user, wp_product_list, wp_product_brands  WHERE wp_fsr_user.post = wp_product_list.id  AND wp_product_list.brand = wp_product_brands.id  AND wp_product_list.active = 1 AND wp_product_list.visible = 1 AND wp_product_list.brand = ".$_brand." GROUP BY 1 ORDER BY 7 DESC, 5 DESC LIMIT 100";
+
+	  	  $sql = "SELECT post as ID, 
+			wp_product_list.image as image, 
+			wp_product_list.name AS title, 
+			wp_product_brands.name AS author, 
+			wp_product_list.votes AS votes, 
+			wp_product_list.votes_sum AS points, 
+			(wp_product_list.votes_sum/wp_product_list.votes) AS average, 
+			(wp_product_list.votes_sum/wp_product_list.votes)*SQRT(wp_product_list.votes) as rate, 
+			wp_fsr_user.vote_date 
+			FROM wp_product_list, wp_fsr_user, wp_product_brands 
+			WHERE 
+			wp_product_list.active = 1 
+			AND wp_product_list.visible = 1 
+			AND wp_fsr_user.post = wp_product_list.id  
+			AND wp_product_list.brand = wp_product_brands.id  
+			AND wp_product_list.brand = ".$_brand." 
+			GROUP BY 1 ORDER BY 7 DESC, 5 DESC 
+			LIMIT 100";
+
 	  $product_list = $wpdb->get_results($sql,ARRAY_A);
 		
 	  $output = "<div id='homepage_products' class='items'>";
@@ -265,14 +285,14 @@ $_br=0;
 	$authors .= "</select>";
 
 /*
-	$sql = "SELECT 
+$sql = "SELECT
 			post as ID, 
 			wp_product_list.image as image, 
 			wp_product_list.name AS title, 
 			wp_product_brands.name AS author, 
-			COUNT(*) AS votes, 
+			COUNT(wp_fsr_user.post) AS votes, 
 			SUM(wp_fsr_user.points) AS points, 
-			AVG(points)*SQRT(SQRT(COUNT(*))) AS rate, 
+			AVG(points)*SQRT(SQRT(COUNT(wp_fsr_user.post))) AS rate, 
 			AVG(points) as average, 
 			vote_date  
 				FROM wp_fsr_user, wp_product_list, wp_product_brands 
@@ -285,7 +305,25 @@ $_br=0;
 				".$_order_filter."
 				".$_limit."
 				".$_offset;
-*/
+
+			
+			SELECT 
+			post as ID, 
+			wp_product_list.name AS title, 
+			wp_product_brands.name AS author, 
+			wp_product_list.votes AS votes, 
+			wp_product_list.votes_sum AS points, 
+			(wp_product_list.votes_sum/wp_product_list.votes) AS average, 
+			(wp_product_list.votes_sum/wp_product_list.votes)*SQRT(wp_product_list.votes) as rate, 
+			wp_fsr_user.vote_date  
+			FROM wp_fsr_user, wp_product_list, wp_product_brands 
+			WHERE wp_fsr_user.post = wp_product_list.id 
+			AND wp_product_list.brand = wp_product_brands.id 
+			AND wp_product_list.active = 1
+			AND wp_product_list.visible = 1
+			GROUP BY 1
+			ORDER BY 7 DESC, 5 DESC;
+
 	$sql = "SELECT
 			post as ID, 
 			wp_product_list.image as image, 
@@ -306,6 +344,30 @@ $_br=0;
 				".$_order_filter."
 				".$_limit."
 				".$_offset;
+*/
+	$sql = "SELECT
+			post as ID, 
+			wp_product_list.image as image, 
+			wp_product_list.name AS title, 
+			wp_product_brands.name AS author, 
+			wp_product_list.votes AS votes, 
+			wp_product_list.votes_sum AS points, 
+			(wp_product_list.votes_sum/wp_product_list.votes) AS average, 
+			(wp_product_list.votes_sum/wp_product_list.votes)*SQRT(wp_product_list.votes) as rate, 
+			wp_fsr_user.vote_date  
+				FROM  wp_product_list, wp_fsr_user, wp_product_brands 
+				WHERE wp_product_list.active = 1
+				AND wp_product_list.visible = 1
+				AND wp_fsr_user.post = wp_product_list.id 
+				AND wp_product_list.brand = wp_product_brands.id 
+				".$_br_filter."
+				GROUP BY 1
+				".$_order_filter."
+				".$_limit."
+				".$_offset;
+
+
+
 
 	$product_list = $wpdb->get_results($sql,ARRAY_A);
 /*
