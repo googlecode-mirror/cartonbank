@@ -5,6 +5,7 @@
  * @package WordPress
  * @subpackage Administration
  */
+/*
 
 /**
  * This is a profile page.
