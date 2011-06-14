@@ -32,7 +32,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	<input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
 	<input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:6px;margin-bottom:4px;" />
 	</form>
-	<a href="?page_id=927">Расширенный поиск</a>
+	<a href="?page_id=927">Расширенный поиск <img src='http://cartoonbank.ru/img/link.gif' border='0'></a>
 <?
 // Theme of the day
 	$thedate = date("Y.m.d");
