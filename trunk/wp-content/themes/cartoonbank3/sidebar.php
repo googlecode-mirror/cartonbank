@@ -272,7 +272,7 @@ echo "</div>";
 <br /><h2>Разное</h2>
 <div id='last_sales'><a href='?page_id=1299'>100 продаж</a></div>
 <div id='last_sales'><a href='?page_id=1284&ord=82&br=0'>100 лучших</a></div>
-<div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>
+<!--<div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>-->
 <div id='tags'><a href='?page_id=390'>Тэги</a></div>
 <div style="float:right;width:180px;text-align:right;">
 	<br /><h2>Вход</h2>
