@@ -34,7 +34,7 @@
 					AND wp_product_list.visible = 1
 					GROUP BY 1
 					ORDER BY 7 DESC, 5 DESC";
-*/
+
     $sql = "SELECT post as ID, wp_product_list.image as image, wp_product_list.name AS title, wp_product_brands.name AS author, COUNT(*) AS votes, SUM(wp_fsr_user.points) AS points, AVG(points)*SQRT(COUNT(*)) AS average, vote_date  
 					FROM wp_fsr_user, wp_product_list, wp_product_brands 
 					WHERE wp_fsr_user.post = wp_product_list.id 
@@ -43,6 +43,16 @@
 					AND wp_product_list.visible = 1
 					GROUP BY 1
 					ORDER BY 7 DESC, 5 DESC";
+*/
+
+	$sql = "SELECT post as ID, wp_product_list.image as image, wp_product_list.name AS title, wp_product_brands.name AS author, wp_product_list.votes AS votes, wp_product_list.votes_sum AS points, (wp_product_list.votes_sum/wp_product_list.votes)*SQRT(wp_product_list.votes) AS average, vote_date  
+	FROM wp_product_list, wp_fsr_user, wp_product_brands 
+	WHERE wp_product_list.active = 1
+	AND wp_product_list.visible = 1
+	AND wp_fsr_user.post = wp_product_list.id 
+	AND wp_product_list.brand = wp_product_brands.id 
+	GROUP BY 1
+	ORDER BY 7 DESC, 5 DESC";
 
 //pokazh ($sql);
 //$sql = "SELECT * FROM `wp_fsr_post` as p, `wp_fsr_user` as u WHERE p.id = u.post order by vote_date desc";
