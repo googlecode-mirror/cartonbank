@@ -718,7 +718,7 @@ function al_write_to_db(){
 					$chheight = get_option('lg_pictheight'); // crop size
 					$thatdir = $product_images; //destination dir
 					$ifolder = ''; //subfolder for artist
-					$resample_quality = 85; //image quality
+					$resample_quality = 100; //image quality
 
 					al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file_name, $resample_quality);	
 					//$wm = "/home/www/z58365/cb/wp-content/plugins/wp-shopping-cart/images/watermark.gif";
@@ -766,7 +766,7 @@ function al_write_to_db(){
 	}
 }
 
-function al_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality = '85') {
+function al_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality = '100') {
 	// Cropped thumbs creation (contributed by: dodo - http://pure-essence.net)
 	global $mimetype; 
 	$gallery_root = '';
@@ -865,7 +865,7 @@ function al_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, 
 	}
  }
 
- function al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, $thumb, $resample_quality = '85') {
+ function al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, $thumb, $resample_quality = '100') {
 	// Default thumbs creation
 	// global $gallery_root;
 	$gallery_root = '';
