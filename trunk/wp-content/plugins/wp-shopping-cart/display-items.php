@@ -81,7 +81,7 @@ if (isset($_GET['updateimage']))
                     //$thatdir = $product_images; //destination dir
                     $ifolder = ''; //subfolder for artist
                     $file = $filename; //
-                    $resample_quality = 85; //image quality
+                    $resample_quality = 100; //image quality
 
                     // slide
                     al_create_resized_file($chwidth, $chheight, $product_images, $ifolder, $file, $resample_quality);    
@@ -142,7 +142,7 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == 'add') {
                 $thatdir = $product_images; //destination dir
                 $ifolder = ''; //subfolder for artist
                 $file = $_FILES['file']['name']; //
-                $resample_quality = 85; //image quality
+                $resample_quality = 100; //image quality
 
                 al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality);    
                 $wm = $basepath."/wp-content/plugins/wp-shopping-cart/images/watermark.png";
@@ -470,7 +470,7 @@ if(isset($_POST['submit_action']) && $_POST['submit_action'] == "edit")
                 $thatdir = $product_images; //destination dir
                 $ifolder = ''; //subfolder for artist
                 $file = $_FILES['file']['name']; //
-                $resample_quality = 85; //image quality
+                $resample_quality = 100; //image quality
 
                 al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality);    
                 $wm = $basepath."/wp-content/plugins/wp-shopping-cart/images/watermark.png";
@@ -1173,7 +1173,7 @@ function al_brandslist($current_brand = '')
     imagedestroy($image);
     imagedestroy($watermark);
  }
-function al_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality = '85') {
+function al_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality = '100') {
     
     $img_location = $thatdir.$file;
 
@@ -1267,7 +1267,7 @@ function al_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, 
         }
     }
  }
-function al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, $thumb, $resample_quality = '85') {
+function al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, $thumb, $resample_quality = '100') {
     // Default thumbs creation
     // global $gallery_root;
     $gallery_root = '';
