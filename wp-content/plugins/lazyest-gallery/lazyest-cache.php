@@ -20,7 +20,7 @@ function createCache($thatdir, $file, $thumb) {
 
 	$resample_quality = get_option('lg_resample_quality');
 	if (strlen($resample_quality) == 0) {
-		$resample_quality = 85;
+		$resample_quality = 100;
 	}
 
 	// Thumbs (true) or Slides (false)
