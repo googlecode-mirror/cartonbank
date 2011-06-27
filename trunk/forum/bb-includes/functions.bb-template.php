@@ -271,11 +271,11 @@ function post_form( $args = array() ) {
 	$add = topic_pages_add();
 	if ( empty( $h2 ) && false !== $h2 ) {
 		if ( bb_is_topic() ) {
-			$h2 = __( 'Reply' );
+			$h2 = __( 'Ответить' );
 		} elseif ( bb_is_forum() ) {
-			$h2 = __( 'New Topic in this Forum' );
+			$h2 = __( 'Новая тема в форуме' );
 		} elseif ( bb_is_tag() || bb_is_front() ) {
-			$h2 = __( 'Add New Topic' );
+			$h2 = __( 'Добавить новую тему' );
 		}
 	}
 
@@ -1388,11 +1388,11 @@ function bb_get_topic_delete_link( $args = '' ) {
 	if ( 0 == $topic->topic_status ) {
 		$query   = array( 'id' => $topic->topic_id, '_wp_http_referer' => $redirect ? rawurlencode( $redirect ) : false );
 		$confirm = __('Are you sure you wanna delete that?');
-		$display = esc_html( $delete_text ? $delete_text : __('Delete entire topic') );
+		$display = esc_html( $delete_text ? $delete_text : __('Удалить всю тему') );
 	} else {
 		$query   = array('id' => $topic->topic_id, 'view' => 'all', '_wp_http_referer' => $redirect ? rawurlencode( $redirect ) : false );
 		$confirm = __('Are you sure you wanna undelete that?');
-		$display = esc_html( $undelete_text ? $undelete_text : __('Undelete entire topic') );
+		$display = esc_html( $undelete_text ? $undelete_text : __('Восстановить всю тему') );
 	}
 	$uri = bb_get_uri('bb-admin/delete-topic.php', $query, BB_URI_CONTEXT_A_HREF + BB_URI_CONTEXT_BB_ADMIN);
 	$uri = esc_url( bb_nonce_url( $uri, 'delete-topic_' . $topic->topic_id ) );
@@ -1415,9 +1415,9 @@ function bb_get_topic_close_link( $args = '' ) {
 		return;
 
 	if ( topic_is_open( $topic->topic_id ) )
-		$display = esc_html( $close_text ? $close_text : __( 'Close topic' ) );
+		$display = esc_html( $close_text ? $close_text : __( 'Закрыть тему' ) );
 	else
-		$display = esc_html( $open_text ? $open_text : __( 'Open topic' ) );
+		$display = esc_html( $open_text ? $open_text : __( 'Открыть тему' ) );
 
 	if ( true === $redirect )
 		$redirect = $_SERVER['REQUEST_URI'];
@@ -1449,18 +1449,18 @@ function bb_get_topic_sticky_link( $args = '' ) {
 	$uri_super = esc_url( bb_nonce_url( $uri_super, 'stick-topic_' . $topic->topic_id ) );
 
 	if ( topic_is_sticky( $topic->topic_id ) )
-		return "$before<a href='" . $uri_stick . "'>". __('Unstick topic') ."</a>$after";
+		return "$before<a href='" . $uri_stick . "'>". __('Отклеить тему') ."</a>$after";
 	else
-		return "$before<a href='" . $uri_stick . "'>". __('Stick topic') . "</a> (<a href='" . $uri_super . "'>" . __('to front') . "</a>)$after";
+		return "$before<a href='" . $uri_stick . "'>". __('Приклеить тему') . "</a> (<a href='" . $uri_super . "'>" . __('наверх') . "</a>)$after";
 }
 
 function topic_show_all_link( $id = 0 ) {
 	if ( !bb_current_user_can( 'browse_deleted' ) )
 		return;
 	if ( 'all' == @$_GET['view'] )
-		echo "<a href='" . esc_attr( get_topic_link( $id ) ) . "'>". __('View normal posts') ."</a>";
+		echo "<a href='" . esc_attr( get_topic_link( $id ) ) . "'>". __('Посмотреть нормальные сообщения') ."</a>";
 	else
-		echo "<a href='" . esc_attr( add_query_arg( 'view', 'all', get_topic_link( $id ) ) ) . "'>". __('View all posts') ."</a>";
+		echo "<a href='" . esc_attr( add_query_arg( 'view', 'all', get_topic_link( $id ) ) ) . "'>". __('Посмотреть все сообщения') ."</a>";
 }
 
 function topic_posts_link( $id = 0 ) {
@@ -1560,7 +1560,7 @@ function topic_class( $class = '', $key = 'topic', $id = 0 ) {
  * @return string The link to the new topic form
  */
 function bb_get_new_topic_link( $args = null ) {
-	$defaults = array( 'text' => __('Add New &raquo;'), 'forum' => 0, 'tag' => '' );
+	$defaults = array( 'text' => __('Добавить новую &raquo;'), 'forum' => 0, 'tag' => '' );
 	if ( $args && is_string($args) && false === strpos($args, '=') )
 		$args = array( 'text' => $args );
 
@@ -2726,7 +2726,7 @@ function bb_get_logout_link( $args = '' ) {
 	if ( $args && is_string($args) && false === strpos($args, '=') )
 		$args = array( 'text' => $args );
 
-	$defaults = array('text' => __('Log Out'), 'before' => '', 'after' => '', 'redirect' => '');
+	$defaults = array('text' => __('Выйти'), 'before' => '', 'after' => '', 'redirect' => '');
 	$args = wp_parse_args( $args, $defaults );
 	extract($args, EXTR_SKIP);
 
@@ -3352,7 +3352,7 @@ function get_favorites_link( $user_id = 0 ) {
 function user_favorites_link($add = array(), $rem = array(), $user_id = 0) {
 	global $topic, $bb_current_user;
 	if ( empty($add) || !is_array($add) )
-		$add = array('mid' => __('Add this topic to your favorites'), 'post' => __(' (%?%)'));
+		$add = array('mid' => __('Добавить тему в избранное'), 'post' => __(' (%?%)'));
 	if ( empty($rem) || !is_array($rem) )
 		$rem = array( 'pre' => __('This topic is one of your %favorites% ['), 'mid' => __('&times;'), 'post' => __(']'));
 	if ( $user_id ) :
