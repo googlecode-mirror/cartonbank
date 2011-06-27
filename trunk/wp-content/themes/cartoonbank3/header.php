@@ -45,31 +45,20 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 <center><div id="y" style="float:center;width:960px;background-color:white;">
 <!-- Яндекс.Директ -->
 <script type="text/javascript">
-(function(w, d, n, s, t) {
-    w[n] = w[n] || [];
-    w[n].push(function() {
-        Ya.Direct.insertInto(67799, "y", {
-            site_charset: "utf-8",
-            ad_format: "direct",
-            font_size: 1,
-            type: "horizontal",
-            limit: 4,
-            title_font_size: 3,
-            site_bg_color: "FFFFFF",
-            title_color: "666666",
-            url_color: "333333",
-            all_color: "333333",
-            text_color: "999999",
-            hover_color: "666666"
-        });
-    });
-    t = d.documentElement.firstChild;
-    s = d.createElement("script");
-    s.type = "text/javascript";
-    s.src = "http://an.yandex.ru/system/context.js";
-    s.setAttribute("async", "true");
-    t.insertBefore(s, t.firstChild);
-})(window, document, "yandex_context_callbacks");
+yandex_partner_id = 67799;
+yandex_site_bg_color = 'FFFFFF';
+yandex_site_charset = 'utf-8';
+yandex_ad_format = 'direct';
+yandex_font_size = 1;
+yandex_direct_type = 'horizontal';
+yandex_direct_limit = 4;
+yandex_direct_title_color = '666666';
+yandex_direct_url_color = '333333';
+yandex_direct_all_color = '333333';
+yandex_direct_text_color = '999999';
+yandex_direct_hover_color = '666666';
+yandex_direct_favicon = false;
+document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/system/context.js"></sc'+'ript>');
 </script>
 </div></center>
 <?
@@ -135,16 +124,17 @@ function selected_style()
 
 <div id="navbar">
 	<ul> 
-		<li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style():"" ?>>О проекте</a></li>
-		<li><a href="?page_id=29&offset=0"<? $_GET['page_id']=='29'? selected_style():"" ?> title='на первую страницу'>Банк изображений</a></li>
-		<li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style():"" ?>>Новости</a></li>
-		<li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style():"" ?>>Авторам</a></li>
-		<li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style():"" ?>>Клиентам</a></li>
-		<li><a href="?page_id=907"<? $_GET['page_id']=='907'? selected_style():"" ?>>Зрителям</a></li>
-		<li><a href="?page_id=1215"<? $_GET['page_id']=='1215'? selected_style():"" ?>>Партнёры</a></li>
-		<li><a href="?page_id=1260"<? $_GET['page_id']=='1260'? selected_style():"" ?>>Друзья</a></li>
-		<li><a href="?page_id=2"<? $_GET['page_id']=='2'? selected_style():"" ?>>Ответы</a></li>
-		<li><a href="?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?>>Контакты</a></li>
+		<li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
+		<li><a href="?page_id=29&offset=0&new=0"<? $_GET['page_id']=='29'? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
+		<li><a href="?page_id=29&offset=0&new=1"<? $_GET['page_id']=='29'? selected_style():"" ?> title='показать новые'>Новые</a></li>
+		<li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
+		<li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style():"" ?> title='художникам'>Авторам</a></li>
+		<li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style():"" ?> title='покупателям'>Клиентам</a></li>
+		<li><a href="?page_id=907"<? $_GET['page_id']=='907'? selected_style():"" ?> title='посетителям'>Зрителям</a></li>
+		<li><a href="?page_id=1215"<? $_GET['page_id']=='1215'? selected_style():"" ?> title='наши партнёры'>Партнёры</a></li>
+		<li><a href="?page_id=1260"<? $_GET['page_id']=='1260'? selected_style():"" ?> title='друзья и коллеги'>Друзья</a></li>
+		<li><a href="?page_id=2"<? $_GET['page_id']=='2'? selected_style():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
+		<li><a href="?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
 	</ul>
 </div>
 <A NAME="pt"></a>
