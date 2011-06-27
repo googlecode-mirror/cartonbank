@@ -1,4 +1,6 @@
-<?php bb_get_header(); ?>
+<?php 
+exit();
+bb_get_header(); ?>
 
 <div class="bbcrumb"><a href="<?php bb_uri(); ?>"><?php bb_option('name'); ?></a> &raquo; <?php _e('Register'); ?></div>
 
