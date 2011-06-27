@@ -5,6 +5,18 @@ global $wpdb, $colorfilter, $color;
 
 	// Rabochy stol filter
 	$_666 = '';
+if (isset($_GET['new']) && is_numeric($_GET['new']) && $_GET['new']=='1')
+{
+	$new = '1';
+}
+else if (!isset($_GET['new']))
+{
+	$new = '0';
+}
+else
+{
+	$new = '0';
+}
 
 	if (isset($_GET['category']) && $_GET['category'] == '666')
 		{
@@ -291,7 +303,6 @@ else
 			$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
 		}
 
-
                 if (isset($_GET['offset']) && is_numeric($_GET['offset']))
                  {
                     $offset = $_GET['offset'];
@@ -472,7 +483,7 @@ else
                 $sql = $search_sql;
 
 
-												//pokazh($sql);
+												///pokazh($sql);
 
 				} // if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
 
@@ -483,7 +494,6 @@ else
 				}
 
 												//pokazh($items_count,"items_count");
-
 
 	// we inject here direct link to the image
 	// $_GET['cartoonid'] : &cartoonid=666
@@ -501,10 +511,10 @@ else
 
 	
 	// список картинок
-    $product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
+    //$product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
 
 
-     if ($product!=null)
+     if (isset($product) && $product!=null)
      {   
 		 if ($bio == 1 && $brandid > 0) // bio
 		 {
@@ -721,13 +731,23 @@ else
 					 
 // FIRST PAGE icons OUTPUT
 
-
  // PAGINATION
  $offset = $offset;// + $items_on_page;
  $page_id = $_GET['page_id'];
 
-	$page = round($offset/$items_on_page)+1;
-	$totalitems = $items_count;
+ 
+ $totalitems = $items_count;
+ $page = round($offset/$items_on_page)+1;
+
+	if ($new == 1 | $keywords != '')
+	{
+		$totalitems = $items_count;
+	}
+	else
+	{
+		$totalitems = 400;
+	}
+
 	$limit = $items_on_page;
 		if (isset($_GET['category'])&&is_numeric($_GET['category'])) {$catid=$_GET['category'];}else{$catid='';}
 
@@ -754,13 +774,27 @@ if ($any_keywords!='') {$_url_cs_any="&cs_any=".$any_keywords;}else{$_url_cs_any
 if ($_666!='') {$_url_666="&666=on";}else{$_url_666='';}
 if ($exclude_keywords!='') {$_url_cs_exclude="&cs_exclude=".$exclude_keywords;}else{$_url_cs_exclude='';}
 
-	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$brand_group_sql."&color=".$color."&category=".$catid.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&offset=",$filter_list);
+if (isset($new) && is_numeric($new))
+{$newfilter = '&new='.$new;}
+else
+{$newfilter = '&new=1';}
+
+	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$newfilter.$brand_group_sql."&color=".$color."&category=".$catid.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&offset=",$filter_list);
 		
 
 	  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
 
-	  
-	  echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
+	  if ($new=='1')
+	  {
+		  //order by new first
+		  echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page, $orderby='1');
+	  }
+	  else
+	  {
+		  //order by best first
+		  echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
+
+	  }
 
 
 function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1, $targetpage = "/", $pagestring = "?page=", $filter_list = '')
@@ -794,9 +828,9 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 
 		//previous button
 		if ($page > 1) 
-			$pagination .= "<a href=\"".$targetpage. $pagestring. ($prev*$limit - $limit). "\">« сюда</a>";
+			$pagination .= "<a href=\"".$targetpage. $pagestring. ($prev*$limit - $limit). "\">« сюда</a> Страница: ";
 		else
-			$pagination .= "<span class=\"disabled\">« сюда</span>";	
+			$pagination .= "<span class=\"disabled\">« сюда</span> Страница: ";	
 		
 		//pages	
 		if ($lastpage < 7 + ($adjacents * 2))	//not enough pages to bother breaking it up
@@ -864,9 +898,9 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 		else
 			$pagination .= "<span class=\"disabled\">туда »</span>";
 		if ($filter_list=='')
-			$pagination .= " Всего найдено изображений: ".$totalitems. "</div>";
+			$pagination .= " Всего найдено: ".$totalitems. "</div>";
 		else
-			$pagination .= " Всего найдено изображений: ".$totalitems. "&nbsp;<b>Фильтр</b>: <span style='color:#c0c0c0;font-size:0.8em;'>".$filter_list."</span></div>";
+			$pagination .= " Всего найдено: ".$totalitems. "&nbsp;<b>Фильтр</b>: <span style='color:#c0c0c0;font-size:0.8em;'>".$filter_list."</span></div>";
 	}
 	
 	return $pagination;
