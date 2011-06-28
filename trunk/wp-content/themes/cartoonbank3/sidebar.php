@@ -37,12 +37,14 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 // Theme of the day
 	$thedate = date("Y.m.d");
 
-	$sql = "Select id from tema_dnya where datetime = '".$thedate."'";
+	$sql = "Select id, comment from tema_dnya where datetime = '".$thedate."'";
 	$cartoon_of_the_day = $wpdb->get_results($sql);
 
 if ($cartoon_of_the_day!= null)
 {
 	$cartoon_of_the_day_id = $cartoon_of_the_day[0]->id;
+	$image_comment = $cartoon_of_the_day[0]->comment;
+
 	$sql = "Select image, name from wp_product_list where id = $cartoon_of_the_day_id";
 	$image = $wpdb->get_results($sql);
 	$image_name = $image[0]->image;
@@ -58,9 +60,9 @@ if ($cartoon_of_the_day_id != 0){
 
 ?>
 <br /><br />
-<div style="text-align:center; padding-top:6px; width:180px;height:186px;background-color:#668bb7;">
+<div style="text-align:center; padding-top:6px;  padding-bottom:16px; width:180px;height:186px;background-color:#668bb7;">
 <div style="color:white; padding-bottom:4px;"><b>ТЕМА ДНЯ</b></div>
-<div  style="text-align:center; margin-left:11px; padding-top:6px; width:158px;height:154px;background-color:white;"><a href="<?echo get_option('siteurl');?>/?page_id=29&category=777"><img src="<?echo get_option('siteurl')?>/wp-content/plugins/wp-shopping-cart/images/<?echo $image_name;?>" title="<?echo $image_title;?>" alt="<?echo $image_title;?>" class="thumb"></a><br /></div>
+<div  style="text-align:center; margin-left:11px; padding-top:6px; width:158px;height:164px;background-color:white;"><a href="<?echo get_option('siteurl');?>/?page_id=29&category=777"><img src="<?echo get_option('siteurl')?>/wp-content/plugins/wp-shopping-cart/images/<?echo $image_name;?>" title="<?echo $image_title;?>" alt="<?echo $image_title;?>" class="thumb"></a><div id='comment' style='font-size:0.8em;'><?echo $image_comment;?></div></div>
 </div>
 
 <?}?>
