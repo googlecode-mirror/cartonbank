@@ -687,7 +687,7 @@ else
 		{// no products
 			if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
               {
-                  echo ("<br /><br />Изображения с таким номером нет.");
+                  //echo ("<br /><br />Изображения с таким номером нет.");
               }
 			
 		}
@@ -828,9 +828,9 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 
 		//previous button
 		if ($page > 1) 
-			$pagination .= "<a href=\"".$targetpage. $pagestring. ($prev*$limit - $limit). "\">« сюда</a> Страница: ";
+			$pagination .= "<a href=\"".$targetpage. $pagestring. ($prev*$limit - $limit). "\">«</a> Страница: ";
 		else
-			$pagination .= "<span class=\"disabled\">« сюда</span> Страница: ";	
+			$pagination .= "<span class=\"disabled\">«</span> Страница: ";	
 		
 		//pages	
 		if ($lastpage < 7 + ($adjacents * 2))	//not enough pages to bother breaking it up
@@ -894,13 +894,13 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 		
 		//next button
 		if ($page < $counter - 1) 
-			$pagination .= "<a href=\"" . $targetpage . $pagestring . ($next*$limit - $limit) . "\">туда »</a>";
+			$pagination .= "<a href=\"" . $targetpage . $pagestring . ($next*$limit - $limit) . "\">»</a>";
 		else
-			$pagination .= "<span class=\"disabled\">туда »</span>";
+			$pagination .= "<span class=\"disabled\">»</span>";
 		if ($filter_list=='')
-			$pagination .= " Всего найдено: ".$totalitems. "</div>";
+			$pagination .= " Всего: ".$totalitems. "</div>";
 		else
-			$pagination .= " Всего найдено: ".$totalitems. "&nbsp;<b>Фильтр</b>: <span style='color:#c0c0c0;font-size:0.8em;'>".$filter_list."</span></div>";
+			$pagination .= " Всего: ".$totalitems. "&nbsp;<b>Фильтр</b>: <span style='color:#c0c0c0;font-size:0.8em;'>".$filter_list."</span></div>";
 	}
 	
 	return $pagination;
