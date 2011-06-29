@@ -739,7 +739,7 @@ else
  $totalitems = $items_count;
  $page = round($offset/$items_on_page)+1;
 
-	if ($new == 1 | $keywords != '' | $_brand != '')
+	if ($new == 1 | $keywords != '' | $_brand != '' | $_category == '777')
 	{
 		$totalitems = $items_count;
 	}

@@ -65,11 +65,24 @@ if (isset($_POST['addid']) && is_numeric($_POST['addid']))
 
 if (isset($_POST['temadnyaid']) && isset($_POST['temadnyadate']))
 {
+	if (isset($_POST['comment']) && $_POST['comment']!='')
+	{
+		$comment = $_POST['comment'];
+		if (isset($_POST['comment_url']) && $_POST['comment_url']!='')
+		{
+			$comment = addslashes("<a href='".trim($_POST['comment_url'])."'>".$comment."</a>");
+		}
+	}
+	else
+	{
+		$comment = "...";
+	}
+
 	$sql = "delete from `tema_dnya` where datetime = '".$_POST['temadnyadate']."'";
 	$wpdb->query($sql);
-	$sql = "insert into `tema_dnya` (id, datetime)values('".trim($_POST['temadnyaid'])."','".$_POST['temadnyadate']."')";
+	$sql = "insert into `tema_dnya` (id, datetime, comment) values('".trim($_POST['temadnyaid'])."','".$_POST['temadnyadate']."','".$comment."')";
 	$wpdb->query($sql);
-	//pokazh ($sql,"sql: ");
+	pokazh ($sql,"sql");
 }
 
 // delete from tema dnya
@@ -108,31 +121,35 @@ if (isset($_POST['deleteid']) && is_numeric($_POST['deleteid']))
 <?
 
 //check if there is a cartoon of the day
-	$sql = "Select id from tema_dnya where datetime = '".$sqlthedate."'";
+	$sql = "Select id, comment from tema_dnya where datetime = '".$sqlthedate."'";
 	//pokazh ($sql,"sql: ");
 	$cartoon_of_the_day = $wpdb->get_results($sql);
 
 if ($cartoon_of_the_day!= null)
 {
 	$cartoon_of_the_day_id = $cartoon_of_the_day[0]->id;
+	$cartoon_of_the_day_comment = $cartoon_of_the_day[0]->comment;
 }
 else
 {
 	$cartoon_of_the_day_id = 0;
+	$cartoon_of_the_day_comment = '';
 }
 
 //find cartoon of tomorrow
-	$sql = "Select id from tema_dnya where datetime = '".$tomorrow."'";
+	$sql = "Select id, comment from tema_dnya where datetime = '".$tomorrow."'";
 	//pokazh ($sql,"sql: ");
 	$cartoon_of_tomorrow = $wpdb->get_results($sql);
 
 if ($cartoon_of_tomorrow!= null)
 {
 	$cartoon_of_tomorrow_id = $cartoon_of_tomorrow[0]->id;
+	$cartoon_of_tomorrow_comment = $cartoon_of_tomorrow[0]->comment;
 }
 else
 {
 	$cartoon_of_tomorrow_id = 0;
+	$cartoon_of_tomorrow_comment = '';
 }
 
 
@@ -149,13 +166,44 @@ $product_list = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
   echo "<div><h2>Картинки на темы дня</h2></div>";
   
 	// wdd image by id
-	echo "<div><h3>Добавить картинку по номеру в темы дня</h3> </div>";
+	echo "<div style='background-color:#FFFF99; padding:4px;font-size:0.8em;'>Добавить картинку по номеру в темы дня. Чтобы добавить подпись к картинке дня надо заполнить форму под картинкой дня и нажать розовую кнопку «тема выбрана». Подпись не обязательна.</div>";
 	echo "<div><form method=post action=''><input type='text' name='addid'><input type='submit' value='добавить в темы дня'></form></div>";
-
 
 if($product_list != null)
 {
-  echo "<div><h3 style='color:#FF33CC;'>Сегодняшняя тема дня (".$thedate.")</h3></div>";
+/*
+	$strlen_total = strlen(utf8_decode($cartoon_of_tomorrow_comment));
+	$strlen_comment = strlen(utf8_decode(strip_tags($cartoon_of_tomorrow_comment)));
+	$strlen_beforeurl = 9;
+	$strlen_afterurl = 20;
+	$cut=15;
+
+	$cartoon_of_the_day_comment_text = htmlspecialchars(stripslashes(strip_tags($cartoon_of_tomorrow_comment)));
+	//$cartoon_of_the_day_comment_url = htmlspecialchars(substr(utf8_decode($cartoon_of_tomorrow_comment),$strlen_beforeurl,$strlen_total-$strlen_comment-$strlen_beforeurl-$strlen_afterurl));
+	$cartoon_of_the_day_comment_url = htmlspecialchars(substr(utf8_decode($cartoon_of_tomorrow_comment),$strlen_beforeurl,$strlen_total-$strlen_comment-$cut));
+
+pokazh($cartoon_of_tomorrow_comment);
+pokazh(utf8_decode($cartoon_of_tomorrow_comment),"utf8_decode");
+pokazh(strip_tags($cartoon_of_tomorrow_comment),"strip_tags");
+pokazh($strlen_total,"strlen_total");
+pokazh($strlen_comment,"strlen_comment");
+pokazh($cartoon_of_the_day_comment_text);
+pokazh($cartoon_of_the_day_comment_url);
+
+*/
+	$strlen_total = strlen(utf8_decode($cartoon_of_the_day_comment));
+	$strlen_comment = strlen(utf8_decode(strip_tags($cartoon_of_the_day_comment)));
+	$strlen_beforeurl = 9;
+	$cut=15;
+
+	$cartoon_of_the_day_comment_text = htmlspecialchars(stripslashes(strip_tags($cartoon_of_the_day_comment)));
+	$cartoon_of_the_day_comment_url = htmlspecialchars(substr(utf8_decode($cartoon_of_the_day_comment),$strlen_beforeurl,$strlen_total-$strlen_comment-$cut));
+	
+	//htmlspecialchars(substr($cartoon_of_the_day_comment,$strlen_beforeurl,$strlen_total-$strlen_comment-$strlen_beforeurl-$strlen_afterurl));
+
+	
+  echo "<div><h3 style='color:#FF33CC;background-color:#FFFF99; padding:4px;'>Сегодняшняя тема дня (".$thedate.")</h3></div>";
+
   if (is_odd($thedate_day))
 	  echo "<div style='background-color:#CCFF00;padding:2px;width:200px;'>День Эха Петербурга</div>";
 
@@ -175,11 +223,16 @@ $is_approved = false;
 		{
 			$is_approved = false;
 		}
-
+		//<input type='submit' value='сохранить подпись' style='background-color:#CC99CC;color:white;'>
 	  if ($cartoon_of_the_day_id == $product['id'])
 	  {
-		echo "<div class='item'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1'  title='".$product['id']."'></a>";
+		echo "<div class='item' style='text-align:center;'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1'  title='".$product['id']."'></a>";
 	  echo "<form method=post action=''>
+
+		<div style='text-align:center;font-size:0.8em;'>Подпись:<br>
+		<input type='text' name='comment' id='comment_today'  value='".$cartoon_of_the_day_comment_text."' style='width:144px;'>  URL: 
+		<textarea rows='4' name='comment_url' id='comment_url' style='width:144px;'>" .$cartoon_of_the_day_comment_url. "</textarea></div>
+
 		<input type='hidden' name='temadnyaid' value='".$product['id']."'>
 		<input type='hidden' name='temadnyadate' value='".$sqlthedate."'>
 		<input type='submit' value='тема выбрана!' style='background-color:#FF00FF;color:white;'></form>
@@ -218,7 +271,27 @@ $is_approved = false;
 
 echo "<div style='clear:both;'></div>";
 
-  echo "<div><h3 style='color:#FF33CC;'>Завтрашняя тема дня (".$tomorrowh.")</h3></div>";
+  echo "<div><h3 style='color:#FF33CC;background-color:#FFFF99; padding:4px;'>Завтрашняя тема дня (".$tomorrowh.")</h3></div>";
+
+
+	$strlen_total = strlen(utf8_decode($cartoon_of_tomorrow_comment));
+	$strlen_comment = strlen(utf8_decode(strip_tags($cartoon_of_tomorrow_comment)));
+	$strlen_beforeurl = 9;
+	$strlen_afterurl = 20;
+	$cut=15;
+
+	$cartoon_of_the_day_comment_text = htmlspecialchars(stripslashes(strip_tags($cartoon_of_tomorrow_comment)));
+	//$cartoon_of_the_day_comment_url = htmlspecialchars(substr(utf8_decode($cartoon_of_tomorrow_comment),$strlen_beforeurl,$strlen_total-$strlen_comment-$strlen_beforeurl-$strlen_afterurl));
+	$cartoon_of_the_day_comment_url = htmlspecialchars(substr(utf8_decode($cartoon_of_tomorrow_comment),$strlen_beforeurl,$strlen_total-$strlen_comment-$cut));
+/*
+pokazh($cartoon_of_tomorrow_comment);
+pokazh(utf8_decode($cartoon_of_tomorrow_comment),"utf8_decode");
+pokazh(strip_tags($cartoon_of_tomorrow_comment),"strip_tags");
+pokazh($strlen_total,"strlen_total");
+pokazh($strlen_comment,"strlen_comment");
+pokazh($cartoon_of_the_day_comment_text);
+pokazh($cartoon_of_the_day_comment_url);
+*/
   if (is_odd($tomorrow_day))
 	  echo "<div style='background-color:#CCFF00;padding:2px;width:200px;'>День Эха Петербурга</div>";
 
@@ -240,8 +313,13 @@ $is_approved = false;
 	  {
 		echo "<div class='item'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1' title='".$product['id']."'></a>";
 	  echo "<form method=post action=''>
+
+		<div style='text-align:center;font-size:0.8em;'>Подпись:<br>
+		<input type='text' name='comment' id='comment_today'  value='".$cartoon_of_the_day_comment_text."' style='width:144px;'>  URL: 
+		<textarea rows='4' name='comment_url' id='comment_url' style='width:144px;'>" .$cartoon_of_the_day_comment_url. "</textarea></div>
+
 		<input type='hidden' name='temadnyaid' value='".$product['id']."'>
-		<input type='hidden' name='temadnyadate' value='".$sqlthedate."'>
+		<input type='hidden' name='temadnyadate' value='".$tomorrow."'>
 		<input type='submit' value='тема выбрана!' style='background-color:#FF00FF;color:white;'></form>
 		<input type='hidden' name='deleteid' value='".$product['id']."'>
 		<input type='image' src='../img/trash.gif' title='уже не убрать'>";
@@ -256,6 +334,7 @@ $is_approved = false;
 	  {
 		echo "<div class='item'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb'  title='".$product['id']."'></a>";
 		echo "<form method=post action=''>
+
 		<input type='hidden' name='temadnyaid' value='".$product['id']."'>
 		<input type='hidden' name='temadnyadate' value='".$tomorrow."'>
 		<input type='submit' value='это тема!'></form>
@@ -276,16 +355,19 @@ $is_approved = false;
   }
   echo "</div><!-- items -->"; 
 
+	echo "<div style='clear:both;'></div>";
+
 ?>
-<div id=calend>
-<h3>Календари</h3>
-<a href=http://www.calend.ru/holidays/russtate/ target=_blank><img src="http://www.calend.ru/img/export/informer_1.png" width="150" alt="Праздники России" border="0"></a>
-<a href=http://www.calend.ru/holidays/wholeworld/ target=_blank><img src="http://www.calend.ru/img/export/informer_15.png" width="150" alt="Международные праздники" border="0"></a>
-<a href=http://www.calend.ru/holidays/unusual/ target=_blank><img src="http://www.calend.ru/img/export/informer_unusual.png" width="150" alt="Необычные праздники" border="0"></a>
-<a href=http://www.calend.ru/holidays/network/ target=_blank><img src="http://www.calend.ru/img/export/informer_network.png" width="150" alt="Сетевые праздники" border="0"></a>
-<a href=http://www.calend.ru/holidays/sport/ target=_blank><img src="http://www.calend.ru/img/export/informer_sport.png" width="150" alt="Спортивные праздники" border="0"></a>
-<a href=http://www.calend.ru/holidays/prof/ target=_blank><img src="http://www.calend.ru/img/export/informer_prof.png" width="150" alt="Профессиональные праздники" border="0"></a>
+<div id="calend" style="color:#FF33CC;background-color:#FFFF99; padding:4px;">
+	<h3>Календари</h3>
+	<a href=http://www.calend.ru/holidays/russtate/ target=_blank><img src="http://www.calend.ru/img/export/informer_1.png" width="150" alt="Праздники России" border="0"></a>
+	<a href=http://www.calend.ru/holidays/wholeworld/ target=_blank><img src="http://www.calend.ru/img/export/informer_15.png" width="150" alt="Международные праздники" border="0"></a>
+	<a href=http://www.calend.ru/holidays/unusual/ target=_blank><img src="http://www.calend.ru/img/export/informer_unusual.png" width="150" alt="Необычные праздники" border="0"></a>
+	<a href=http://www.calend.ru/holidays/network/ target=_blank><img src="http://www.calend.ru/img/export/informer_network.png" width="150" alt="Сетевые праздники" border="0"></a>
+	<a href=http://www.calend.ru/holidays/sport/ target=_blank><img src="http://www.calend.ru/img/export/informer_sport.png" width="150" alt="Спортивные праздники" border="0"></a>
+	<a href=http://www.calend.ru/holidays/prof/ target=_blank><img src="http://www.calend.ru/img/export/informer_prof.png" width="150" alt="Профессиональные праздники" border="0"></a>
 </div>
+
 <?	
 
 }

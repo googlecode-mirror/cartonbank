@@ -32,7 +32,8 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 
 if ($orderby == '')
 	{
-		$orderby = " (`wp_product_list`.`votes_sum`/`wp_product_list`.`votes`) DESC, `wp_product_list`.`votes` DESC ";//best
+		$orderby = " (`wp_product_list`.`votes_sum`/`wp_product_list`.`votes`)*SQRT(SQRT(`wp_product_list`.`votes`)) DESC ";//best
+		//$orderby = " (`wp_product_list`.`votes_sum`/`wp_product_list`.`votes`) DESC, `wp_product_list`.`votes` DESC ";//best
 	}
 else
 	{
