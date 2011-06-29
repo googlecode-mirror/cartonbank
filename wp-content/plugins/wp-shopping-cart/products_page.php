@@ -389,7 +389,7 @@ else
                     if(isset($_GET['cs_exact']) && $_GET['cs_exact']!= ''){
                         $exact_keywords = strtolower(trim($_GET['cs_exact']));
                     }
-					$exact_keywords_filter = " AND (`wp_product_list`.`id` LIKE '%".$exact_keywords."%' OR `wp_product_list`.`name` LIKE '%".$exact_keywords."%' OR `wp_product_list`.`description` LIKE '%".$exact_keywords."%' OR `wp_product_list`.`additional_description` LIKE '%".$exact_keywords."%')";
+					$exact_keywords_filter = " AND (`wp_product_list`.`id` LIKE '".$exact_keywords."' OR `wp_product_list`.`name` LIKE '".$exact_keywords."' OR `wp_product_list`.`description` LIKE '% ".$exact_keywords." %' OR `wp_product_list`.`description` LIKE '% ".$exact_keywords.",%' OR `wp_product_list`.`additional_description` LIKE '% ".$exact_keywords." %'  OR `wp_product_list`.`additional_description` LIKE '% ".$exact_keywords.",%'  OR `wp_product_list`.`additional_description` LIKE '% ".$exact_keywords."'  OR `wp_product_list`.`additional_description` LIKE '".$exact_keywords.",%')";
 				}
 
 			// All words search match
@@ -447,7 +447,7 @@ else
 										$search_keywords_filter .=  " AND `wp_product_list`.`brand`= ".$_GET['brand'];
 									}
 
-					$filter_list .= 'Поиск: ('.$keywords.") ";
+					$filter_list .= 'Поиск: ('.$keywords.$exact_keywords.$exclude_keywords.$any_keywords.") ";
                     // search request
                     // count found results
 					if (isset($_brand) && isset($_brand)!='')
@@ -739,7 +739,7 @@ else
  $totalitems = $items_count;
  $page = round($offset/$items_on_page)+1;
 
-	if ($new == 1 | $keywords != '' | $_brand != '' | $_category == '777')
+	if ($new == 1 | $keywords != '' | $_brand != '' | $_category == '777' | $exact_keywords != '' | $exclude_keywords != '' | $any_keywords != '')
 	{
 		$totalitems = $items_count;
 	}
@@ -900,9 +900,13 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 		if ($filter_list=='')
 			$pagination .= " Всего: ".$totalitems. "</div>";
 		else
-			$pagination .= " Всего: ".$totalitems. "&nbsp;<b>Фильтр</b>: <span style='color:#c0c0c0;font-size:0.8em;'>".$filter_list."</span></div>";
+			// $exact_keywords != '' | $exclude_keywords != '' | $any_keywords != ''
+			$pagination .= " Всего: ".$totalitems. " рис.&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span></div>";
 	}
-	
+	if ($totalitems < 20)
+	//$pagination .= " Всего: ".$totalitems. "&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span></div>";
+	$pagination = " Всего найдено: ".$totalitems. ".&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span>";
+
 	return $pagination;
 
 }
