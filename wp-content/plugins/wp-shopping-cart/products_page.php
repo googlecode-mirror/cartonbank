@@ -779,7 +779,13 @@ if (isset($new) && is_numeric($new))
 else
 {$newfilter = '&new=1';}
 
-	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$newfilter.$brand_group_sql."&color=".$color."&category=".$catid.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&offset=",$filter_list);
+if ($catid == '')
+{$__category = '&category='.$catid;}
+else
+{$__category = '';}
+
+
+	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$newfilter.$brand_group_sql."&color=".$color.$__category.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&offset=",$filter_list);
 		
 
 	  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
