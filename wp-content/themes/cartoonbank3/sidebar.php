@@ -62,7 +62,7 @@ if ($cartoon_of_the_day_id != 0){
 <br /><br />
 <div style="text-align:center; padding-top:6px;  padding-bottom:16px; width:180px;height:186px;background-color:#668bb7;">
 <div style="color:white; padding-bottom:4px;"><b>ТЕМА ДНЯ</b></div>
-<div  style="text-align:center; margin-left:11px; padding-top:6px; width:158px;height:164px;background-color:white;"><a href="<?echo get_option('siteurl');?>/?page_id=29&category=777"><img src="<?echo get_option('siteurl')?>/wp-content/plugins/wp-shopping-cart/images/<?echo $image_name;?>" title="<?echo $image_title;?>" alt="<?echo $image_title;?>" class="thumb"></a><div id='comment' style='font-size:0.8em;'><?echo $image_comment;?></div></div>
+<div  style="text-align:center; margin-left:11px; padding-top:6px; width:158px;height:164px;background-color:white;"><a href="<?echo get_option('siteurl');?>/?page_id=29&category=777"><img src="<?echo get_option('siteurl')?>/wp-content/plugins/wp-shopping-cart/images/<?echo $image_name;?>" title="<?echo $image_title;?>" alt="<?echo $image_title;?>" class="thumb"></a><div id='comment' style='font-size:0.8em;'><?echo stripslashes($image_comment);?></div></div>
 </div>
 
 <?}?>
