@@ -45,25 +45,52 @@ else
 	isset($_GET['offset'])&&is_numeric($_GET['offset'])?$_offset=$_GET['offset']:$_offset=0;
 	$_offset = $_offset + 20;
 
-	isset($_GET['brand'])&&is_numeric($_GET['brand'])?$_brand=$_GET['brand']:$_brand='';
+	isset($_GET['brand'])&&is_numeric($_GET['brand'])?$_brand="&brand=".$_GET['brand']:$_brand='';
 
 	if (isset($_GET['color'])&&$_GET['color']=='color')
-		{$_color = 'color';}
+		{$_color = '&color=color';}
 	elseif (isset($_GET['color'])&&$_GET['color']=='bw')
-		{$_color = 'bw';}
+		{$_color = '&color=bw';}
 	elseif (isset($_GET['color'])&&$_GET['color']=='all')
-		{$_color = 'all';}
+		{$_color = '&color=all';}
 	else {$_color = '';}
-
+/*
 	if (isset($_GET['cs']))
-		{$_cs = htmlspecialchars($_GET['cs']);}
+		{$_cs = "&cs=".htmlspecialchars($_GET['cs']);}
 	else
 		{$_cs = '';}
+*/
+	if (isset($_POST['cs']))
+		{$_cs = "&cs=".htmlspecialchars($_POST['cs']);}
+	else if (isset($_GET['cs']))
+		{$_cs = "&cs=".htmlspecialchars($_GET['cs']);}
+	else
+		{$_cs = '';}
+	
+	if (isset($_POST['cs_exact']))
+		{$_cs_exact = "&cs_exact=".htmlspecialchars($_POST['cs_exact']);}
+	else if (isset($_GET['cs_exact']))
+		{$_cs_exact = "&cs_exact=".htmlspecialchars($_GET['cs_exact']);}
+	else
+		{$_cs_exact = '';}
+
+	if (isset($_POST['cs_any']))
+		{$_cs_any = "&cs_any=".htmlspecialchars($_POST['cs_any']);}
+	else if (isset($_GET['cs_any']))
+		{$_cs_any = "&cs_any=".htmlspecialchars($_GET['cs_any']);}
+	else
+		{$_cs_any = '';}
+
+	if ($category == '')
+		{$_category = "&category=".$category;}
+	else
+		{$_category='';}
+
 	
 	//$_offset = $_offset + 20;
 
 	$javascript_functions ='';
-	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29&brand='.$_brand.'&color='.$_color.'&category='.$category.'&cs='.$_cs.'&offset='.$_offset.'";	var cuid = document.getElementById("cuid").innerHTML; document.getElementById("navbar").innerHTML = cuid; window.location.hash = "bububu="+cuid; 	}';
+	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29'.$_brand.$_color.$category.$_cs.$_cs_exact.$_cs_any.'&offset='.$_offset.'";	var cuid = document.getElementById("cuid").innerHTML; document.getElementById("navbar").innerHTML = cuid; window.location.hash = "bububu="+cuid; 	}';
    
 	if ($search_sql != '')
 	{
