@@ -82,7 +82,7 @@ if (isset($_POST['temadnyaid']) && isset($_POST['temadnyadate']))
 	$wpdb->query($sql);
 	$sql = "insert into `tema_dnya` (id, datetime, comment) values('".trim($_POST['temadnyaid'])."','".$_POST['temadnyadate']."','".$comment."')";
 	$wpdb->query($sql);
-	pokazh ($sql,"sql");
+	//pokazh ($sql,"sql");
 }
 
 // delete from tema dnya
@@ -205,7 +205,7 @@ pokazh($cartoon_of_the_day_comment_url);
   echo "<div><h3 style='color:#FF33CC;background-color:#FFFF99; padding:4px;'>Сегодняшняя тема дня (".$thedate.")</h3></div>";
 
   if (is_odd($thedate_day))
-	  echo "<div style='background-color:#CCFF00;padding:2px;width:200px;'>День Эха Петербурга</div>";
+	  echo "<div style='background-color:#CCFF00;padding:2px;padding-left:6px;width:200px;'>День Эха Петербурга</div>";
 
 
   // pokazh ($product_list);
@@ -226,11 +226,11 @@ $is_approved = false;
 		//<input type='submit' value='сохранить подпись' style='background-color:#CC99CC;color:white;'>
 	  if ($cartoon_of_the_day_id == $product['id'])
 	  {
-		echo "<div class='item' style='text-align:center;'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1'  title='".$product['id']."'></a>";
+		echo "<div class='item' style='text-align:center; background-color:#FFCCFF; width:160px; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1'  title='".$product['id']."'></a>";
 	  echo "<form method=post action=''>
 
 		<div style='text-align:center;font-size:0.8em;'>Подпись:<br>
-		<input type='text' name='comment' id='comment_today'  value='".$cartoon_of_the_day_comment_text."' style='width:144px;'>  URL: 
+		<input type='text' name='comment' id='comment_today'  value='".$cartoon_of_the_day_comment_text."' style='width:144px;'>  <a href='".$cartoon_of_the_day_comment_url."'>URL</a>: 
 		<textarea rows='4' name='comment_url' id='comment_url' style='width:144px;'>" .$cartoon_of_the_day_comment_url. "</textarea></div>
 
 		<input type='hidden' name='temadnyaid' value='".$product['id']."'>
@@ -247,7 +247,7 @@ $is_approved = false;
 	  }
 	  else
 	  {
-		echo "<div class='item'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb' title='".$product['id']."'></a>";
+		echo "<div class='item' style='width:160px; background-color:#E6E6E6; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb' title='".$product['id']."'></a>";
 	  echo "<form method=post action=''>
 		<input type='hidden' name='temadnyaid' value='".$product['id']."'>
 		<input type='hidden' name='temadnyadate' value='".$sqlthedate."'>
@@ -293,7 +293,7 @@ pokazh($cartoon_of_the_day_comment_text);
 pokazh($cartoon_of_the_day_comment_url);
 */
   if (is_odd($tomorrow_day))
-	  echo "<div style='background-color:#CCFF00;padding:2px;width:200px;'>День Эха Петербурга</div>";
+	  echo "<div style='background-color:#CCFF00;padding:2px;padding-left:6px;width:200px;'>День Эха Петербурга</div>";
 
 $is_approved = false;
 
@@ -311,11 +311,11 @@ $is_approved = false;
 
 	  if ($cartoon_of_tomorrow_id == $product['id'])
 	  {
-		echo "<div class='item'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1' title='".$product['id']."'></a>";
+		echo "<div class='item' style='text-align:center; background-color:#FFCCFF; width:160px; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1' title='".$product['id']."'></a>";
 	  echo "<form method=post action=''>
 
 		<div style='text-align:center;font-size:0.8em;'>Подпись:<br>
-		<input type='text' name='comment' id='comment_today'  value='".$cartoon_of_the_day_comment_text."' style='width:144px;'>  URL: 
+		<input type='text' name='comment' id='comment_today'  value='".$cartoon_of_the_day_comment_text."' style='width:144px;'> <a href='".$cartoon_of_the_day_comment_url."'>URL</a>: 
 		<textarea rows='4' name='comment_url' id='comment_url' style='width:144px;'>" .$cartoon_of_the_day_comment_url. "</textarea></div>
 
 		<input type='hidden' name='temadnyaid' value='".$product['id']."'>
@@ -332,7 +332,7 @@ $is_approved = false;
 	  }
 	  else
 	  {
-		echo "<div class='item'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb'  title='".$product['id']."'></a>";
+		echo "<div class='item' style='width:160px; background-color:#E6E6E6; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb'  title='".$product['id']."'></a>";
 		echo "<form method=post action=''>
 
 		<input type='hidden' name='temadnyaid' value='".$product['id']."'>
