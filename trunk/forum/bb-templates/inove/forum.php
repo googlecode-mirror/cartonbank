@@ -2,9 +2,6 @@
 
 <h3 class="bbcrumb"><a href="<?php bb_option('uri'); ?>"><?php bb_option('name'); ?></a><?php bb_forum_bread_crumb(); ?></h3>
 
-<?php if ( bb_is_user_logged_in() ) {?>
-
-
 <?php if ( $topics || $stickies ) : ?>
 
 <table id="latest">
@@ -58,8 +55,6 @@
 <?php endwhile; ?>
 </table>
 <?php endif; ?>
-
-<?php }?>
 
 <?php post_form(); ?>
 

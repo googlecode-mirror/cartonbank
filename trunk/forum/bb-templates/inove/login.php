@@ -21,7 +21,7 @@
 	<tr valign="top" class="error">
 		<th scope="row">Имя пользователя:</th>
 		<td><input name="user_login" type="text" value="<?php echo $user_login; ?>" /><br />
-		Имя пользователя не существует.<!--  <a href="<?php bb_option('uri'); ?>register.php?user=<?php echo $user_login; ?>">Зарегистрируетесь?</a> --></td>
+		Имя пользователя не существует. <a href="<?php bb_option('uri'); ?>register.php?user=<?php echo $user_login; ?>">Зарегистрируетесь?</a></td>
 	</tr>
 	<tr valign="top">
 		<th scope="row">Пароль:</th>
