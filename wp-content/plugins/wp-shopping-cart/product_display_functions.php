@@ -86,11 +86,21 @@ else
 	else
 		{$_category='';}
 
+	$_new='';
+
 	
+	if (isset($_POST['new']) && is_numeric(($_POST['new'])))
+		{$_new = "&new=".htmlspecialchars($_POST['new']);}
+	else if (isset($_GET['new']) && is_numeric(($_GET['new'])))
+		{$_new = "&new=".htmlspecialchars($_GET['new']);}
+	else
+		{$_new = '';}
+
+
 	//$_offset = $_offset + 20;
 
 	$javascript_functions ='';
-	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29'.$_brand.$_color.$category.$_cs.$_cs_exact.$_cs_any.'&offset='.$_offset.'";	var cuid = document.getElementById("cuid").innerHTML; document.getElementById("navbar").innerHTML = cuid; window.location.hash = "bububu="+cuid; 	}';
+	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29'.$_brand.$_color.$_new.$category.$_cs.$_cs_exact.$_cs_any.'&offset='.$_offset.'";	var cuid = document.getElementById("cuid").innerHTML; document.getElementById("navbar").innerHTML = cuid; window.location.hash = "bububu="+cuid; 	}';
    
 	if ($search_sql != '')
 	{
