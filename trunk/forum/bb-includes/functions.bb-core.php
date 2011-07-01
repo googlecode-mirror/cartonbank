@@ -407,13 +407,13 @@ function bb_since( $original, $args = '' )
 		if ( ( $count = floor( $seconds / $chunks[$i] ) ) || $caught ) {
 			if ( $count ) {
 				$trans = array(
-					_n( '%d год', '%d лет', $count ),
-					_n( '%d месяц', '%d месяцев', $count ),
-					_n( '%d неделя', '%d недель', $count ),
-					_n( '%d день', '%d дней', $count ),
-					_n( '%d час', '%d часов', $count ),
-					_n( '%d минута', '%d минут', $count ),
-					_n( '%d секунда', '%d секунд', $count )
+					_n( '%d год', '%d л.', $count ),
+					_n( '%d месяц', '%d мес.', $count ),
+					_n( '%d неделя', '%d нед.', $count ),
+					_n( '%d день', '%d дн.', $count ),
+					_n( '%d час', '%d час.', $count ),
+					_n( '%d минута', '%d мин.', $count ),
+					_n( '%d секунда', '%d сек.', $count )
 				);
 				$parts[] = sprintf( $trans[$i], $count );
 			}
@@ -426,7 +426,7 @@ function bb_since( $original, $args = '' )
 	}
 
 	if ( empty( $parts ) ) {
-		return sprintf( _n( '%d second', '%d seconds', 0 ), 0 );
+		return sprintf( _n( '%d сек.', '%d сек.', 0 ), 0 );
 	}
 
 	return join( $separator, $parts );
