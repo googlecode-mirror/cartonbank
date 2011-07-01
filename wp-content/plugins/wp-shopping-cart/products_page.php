@@ -739,7 +739,7 @@ else
  $totalitems = $items_count;
  $page = round($offset/$items_on_page)+1;
 
-	if ($new == 1 | $keywords != '' | $_brand != '' | $_category == '777' | $exact_keywords != '' | $exclude_keywords != '' | $any_keywords != '')
+	if ($new == 1 | $keywords != '' | $_brand != '' | $_category == '777' | $_category == '666' | $exact_keywords != '' | $exclude_keywords != '' | $any_keywords != '')
 	{
 		$totalitems = $items_count;
 	}
@@ -781,6 +781,10 @@ else
 
 if ($catid == '')
 {$__category = '&category='.$catid;}
+
+else if (isset($_GET['category']) && is_numeric($_GET['category']))
+{$__category = '&category='.$_GET['category'];}
+
 else
 {$__category = '';}
 
