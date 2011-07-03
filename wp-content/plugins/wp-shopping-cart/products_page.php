@@ -509,6 +509,27 @@ else
 	    $sql = $search_sql;
     }
 
+
+
+	// bio	
+	$_artist="художник";
+	$bio = 'Автор исключительно талантливый художник. Больше нам про него пока ничего не известно.<br />Ведём бесконечные переговоры об обновлении этой информации.';
+	// Get the Brand (author) data
+	if (isset($brandid) && is_numeric($brandid)) 
+	{
+		$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
+		$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
+
+		$_artist = $brand_result[0]['name'];
+		
+		if (isset($brand_result[0]['bio_post_id']))
+		{
+			$bio_sql = "SELECT `post_content` FROM `wp_posts` WHERE id = ".$brand_result[0]['bio_post_id'] ; // todo: use page ID!
+			$bio = $GLOBALS['wpdb']->get_results($bio_sql,ARRAY_A);
+			$bio = $bio[0]['post_content'];
+		}
+	}
+
 	
 	// список картинок
     //$product = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
@@ -516,53 +537,7 @@ else
 
      if (isset($product) && $product!=null)
      {   
-		 if ($bio == 1 && $brandid > 0) // bio
-		 {
-		  // display portfolio
-			 
-			 // prepare content
-				
-				// Get the Brand (author) data
-				$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
-				$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
-
-				// bio
-
-				if (isset($brand_result[0]['bio_post_id']))
-				{
-				$bio_sql = "SELECT `post_content` FROM `wp_posts` WHERE id = ".$brand_result[0]['bio_post_id'] ; // todo: use page ID!
-				$bio = $GLOBALS['wpdb']->get_results($bio_sql,ARRAY_A);
-				}
-				
-				if (isset($bio[0]) ) 
-				{
-					$bio = $bio[0]['post_content'];
-				}
-				else 
-					{
-						$bio = 'Автор исключительно талантливый художник. Больше нам про него пока ничего не известно.<br />Ведём бесконечные переговоры об обновлении этой информации.';
-					}
-
-				// email form
-				$email_form = "<div id='emailform' style='display:none;text-align:right;'><form method='post' action='".get_option('siteurl')."/?page_id=29&brand=".$brandid."&bio=1'>
-								  Email для обратной связи: <input name='email' type='text' style='width:400px;'/><br /><br />
-								  <textarea style='width:600px;' name='message' rows='15' cols='40'>Уважаемый ".$product[0]['brand']."!\n\n</textarea><br />
-								  <input type='submit' value='Отправить письмо' class='borders'/>
-								</form></div>";
-				// contact
-				$brand_contact = "<a href='#pt' onclick=\"document.getElementById('emailform').style.display='block';document.getElementById('bio').style.display='none';return false;\">Написать письмо</a>";
-
-				$_bigpicstrip = "<b>".$product[0]['brand']. ". Информация об авторе</b>";
-				$_bigpictext = "<br /><br />".$brand_contact;
-				$_bigpic = "<div style='width:600px;'><div id='bio' style='display:block;'>".$bio."</div></div>"; 
-				$_bottomstriptext = "".$email_form;
-
-			// end of portfolio
-		 } 
-		 else
-		 {
 			// normal workflow: disply big preview image
-
 			// slide preview preparations:
 				if(stristr($product[0]['image'], 'jpg') != FALSE) {
 						$_file_format = 'jpg';
@@ -646,7 +621,7 @@ else
                 $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение'>Категория:</a> </b><br />".$_category."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Описание:</a> </b> ".$_description."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение'>Тэги:</a> </b><br />".$_tags."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br /><br /><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение'>Размер:</a></b><br />".$_size."<br /><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение'>Формат:</a> </b> ".$_file_format."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение'>Оценка:</a></b><br />".$_rating_html.$_sharethis_html.$_edid;
 
                 $siteurl = get_option('siteurl');
-                $_bigpic =  "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."' border=0  alt='".$_bigpicimgalt."'>";
+                $_bigpic =  "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."' border=0  alt='".$_bigpicimgalt."' rel='slideshow'>";
 
 				if($product[0]['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
 				if($product[0]['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
@@ -680,8 +655,6 @@ else
 					  </table><input type='hidden' value='".$_number."' name='prodid'>  </form></div>";
 				}
 		  // end of normal workflow: disply big preview image
-		 }
-		 
 	 }
 		else
 		{// no products
@@ -933,3 +906,34 @@ get_5stars();
 get_share_this();
 //-->
 </script>
+
+
+
+	<link media="screen" rel="stylesheet" href="http://cartoonbank.ru/ales/colorbox/example2/colorbox.css" />
+	<script src="http://cartoonbank.ru/ales/colorbox/jquery.colorbox-min.js"></script>
+
+	<script>
+		jQuery(document).ready(function(){
+			jQuery("a[rel='slideshow']").colorbox({slideshow:true});
+			jQuery(".example8").colorbox({width:"50%", inline:true, href:"#hidden_bio"});
+			jQuery(".cb_emailform").colorbox({width:"50%", inline:true, href:"#emailform1"});
+		});
+	</script>
+
+<!-- This contains the hidden content for inline calls -->
+<div style='display:none'>
+	<div id='hidden_bio' style='text-align:left; padding:10px; background:#fff;'>
+		<? echo ($bio); ?>
+		<br>
+		<p><a class='cb_emailform' href="#">Отправить письмо</a></p>
+	</div>
+</div>
+<div style='display:none'>
+	<div id='emailform1' style='text-align:left; padding:10px; background:#fff;'>
+			<h1>Письмо автору Картунбанка</h1>
+			<form method='post' action='http://cartoonbank.ru/?page_id=29&brand=<? echo $brandid;?>&bio=1'>Email для обратной связи: <input name='email' type='text' style='width:100%;'/><br /><br />
+			<textarea style='width:100%;' name='message' rows='15' cols='30'>Уважаемый <? echo $_artist;?>!</textarea><br />
+			<input type='submit' value='Отправить письмо' class='borders'/>
+			</form>
+	</div>
+</div>
