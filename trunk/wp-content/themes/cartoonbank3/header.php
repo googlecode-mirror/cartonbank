@@ -120,13 +120,22 @@ function selected_style()
 {
 	echo " style='color:#668bb7'";
 }
+
+if (isset($_GET['new']) && is_numeric($_GET['new']))
+{
+	$_new=$_GET['new'];
+}
+else
+{
+	$_new=0;
+}
 ?>
 
 <div id="navbar">
 	<ul> 
 		<li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
-		<li><a href="?page_id=29&offset=0&new=0"<? $_GET['page_id']=='29' & $_GET['new']==0? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
-		<li><a href="?page_id=29&offset=0&new=1"<? $_GET['page_id']=='29'& $_GET['new']==1 ? selected_style():"" ?> title='показать новые'>Новое</a></li>
+		<li><a href="?page_id=29&offset=0&new=0"<? $_GET['page_id']=='29' & $_new==0? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
+		<li><a href="?page_id=29&offset=0&new=1"<? $_GET['page_id']=='29'& $_new==1 ? selected_style():"" ?> title='показать новые'>Новое</a></li>
 		<li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style():"" ?> title='художникам'>Авторам</a></li>
 		<li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style():"" ?> title='покупателям'>Клиентам</a></li>
 		<li><a href="?page_id=907"<? $_GET['page_id']=='907'? selected_style():"" ?> title='посетителям'>Зрителям</a></li>
