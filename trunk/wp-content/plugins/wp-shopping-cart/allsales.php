@@ -72,7 +72,8 @@ foreach ($result as $row)
 		{	
 		if ($current_user->id == $row['user_id']) 
 			{
-				echo "<td class='username' style='padding:4px;width:200px;'><a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php&brand=".$row['id']."'>".$row['name']."</a></td><td class='posts' style='padding:4px;wisth:200px;text-align:right;'>".$row['count'];
+				//echo "<td class='username' style='padding:4px;width:200px;'><a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php&brand=".$row['id']."'>".$row['name']."</a></td><td class='posts' style='padding:4px;wisth:200px;text-align:right;'>".$row['count'];
+				echo "<td class='username' style='padding:4px;width:200px;'>".$row['name']."</td><td class='posts' style='padding:4px;wisth:200px;text-align:right;'>".$row['count'];
 			}
 			else
 			{
