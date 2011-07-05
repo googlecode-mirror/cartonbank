@@ -54,7 +54,6 @@ echo "<h1>Расширенный поиск</h1>";
 	<td colspan="2"><input id="sfio" type="radio" checked="" value="all" name="color"> <label for="sfio">Без фильтрации</label>&nbsp;&nbsp;<input id="ss" type="radio" value="color" name="color"> <label for="ss">Только цветные</label>&nbsp;&nbsp;<input id="ss" type="radio" value="bw" name="color"> <label for="ss">Только чёрно-белые</label>&nbsp;&nbsp;</td></tr></tbody></table></td></tr></tbody></table>
 </form>
 
-
 <?
 function get_artists_list()
 {
@@ -98,3 +97,25 @@ function get_category_list()
 
 
 ?>
+
+<link media="screen" rel="stylesheet" href="http://cartoonbank.ru/ales/colorbox/example2/colorbox.css" />
+<script src="http://cartoonbank.ru/ales/colorbox/jquery.colorbox-min.js"></script>
+
+<script language="JavaScript">
+<!--
+		jQuery(document).ready(function(){
+			jQuery(".example8").colorbox({width:"50%", inline:true, href:"#email_form"});
+		});
+//-->
+</script>
+
+<!-- This contains the hidden content for inline calls -->
+<div style='display:none'>
+	<div id='email_form' style='text-align:left; padding:10px; background:#fff;'>
+		<h1>Запрос на поиск иллюстрации</h1>
+			<form method='post' action='http://cartoonbank.ru/?page_id=29&brand=<? echo $brandid;?>&bio=1'>Email для обратной связи: <input name='email' type='text' style='width:100%;'/><br /><br />
+			<textarea style='width:100%;' name='message' rows='15' cols='30'>Укажите требования к иллюстрации или скопируйте сюда текст статьи.</textarea><br />
+			<input type='submit' value='Отправить запрос' class='borders'/>
+			</form>
+	</div>
+</div>
