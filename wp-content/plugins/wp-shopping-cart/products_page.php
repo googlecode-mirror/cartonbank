@@ -762,7 +762,7 @@ else
 {$__category = '';}
 
 
-	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$newfilter.$brand_group_sql."&color=".$color.$__category.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&offset=",$filter_list, $new);
+	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$newfilter.$brand_group_sql."&color=".$color.$__category.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&offset=", $filter_list, $new, $brand_group_sql);
 		
 
 	  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
@@ -780,7 +780,7 @@ else
 	  }
 
 
-function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1, $targetpage = "/", $pagestring = "?page=", $filter_list = '',$new = 0)
+function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1, $targetpage = "/", $pagestring = "?page=", $filter_list = '',$new = 0,$brand_group_sql='')
 {		
 	//function to return the pagination string
 	//getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?brand=".$brandid."&category=".$catid."&offset=".$offset."&cs=".$keywords."&page_id=29");
@@ -878,11 +878,11 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 		//next button
 		if ($new==1)
 		{
-			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&offset=0&new=0'>показать избранное</a>";
+			$button_sort = "<a href='http://109.120.143.27/cb/?page_id=29&offset=0&new=0".$brand_group_sql."'>показать избранное</a>";
 		}
 		else
 		{
-			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&offset=0&new=1'>сортировать по дате</a>";
+			$button_sort = "<a href='http://109.120.143.27/cb/?page_id=29&offset=0&new=1".$brand_group_sql."'>сортировать по дате</a>";
 		}
 
 		if ($page < $counter - 1) 
