@@ -878,11 +878,11 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 		//next button
 		if ($new==1)
 		{
-			$button_sort = "<a href='http://109.120.143.27/cb/?page_id=29&offset=0&new=0'>показать избранное</a>";
+			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&offset=0&new=0'>показать избранное</a>";
 		}
 		else
 		{
-			$button_sort = "<a href='http://109.120.143.27/cb/?page_id=29&offset=0&new=1'>сортировать по дате</a>";
+			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&offset=0&new=1'>сортировать по дате</a>";
 		}
 
 		if ($page < $counter - 1) 
