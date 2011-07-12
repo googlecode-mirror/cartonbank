@@ -28,7 +28,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	<div id="sidebar">
 	<h2 style="margin-top:0;">Поиск</h2>
 	<form method="post" id="searchform" action="?page_id=29">
-	<input id="s" size="25" type="text" value="введите поисковое слово..." name="cs" onfocus="this.value='';" style='width:178px;' /><br />
+	<input id="s" size="26" type="text" value="введите поисковое слово..." name="cs" onfocus="this.value='';" style='width:178x;' /><br />
 	<input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
 	<input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:6px;margin-bottom:4px;" />
 	</form>
@@ -272,6 +272,9 @@ echo "</div>";
 	   echo $options;
 	  }
 ?>
+
+<br /><br />
+<a href="http://cartoonbank.ru/?page_id=1351" target="_blank"><img src="http://cartoonbank.ru/img/b/exhibition_package.gif" width="180" border="0"></a>
 
 <br /><h2>Разное</h2>
 <div id='last_sales'><a href='?page_id=1299'>100 продаж</a></div>
