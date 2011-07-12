@@ -878,11 +878,11 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 		//next button
 		if ($new==1)
 		{
-			$button_sort = "<a href='http://109.120.143.27/cb/?page_id=29&offset=0&new=0".$brand_group_sql."'>показать избранное</a>";
+			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&offset=0&new=0".$brand_group_sql."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>показать избранное</a>";
 		}
 		else
 		{
-			$button_sort = "<a href='http://109.120.143.27/cb/?page_id=29&offset=0&new=1".$brand_group_sql."'>сортировать по дате</a>";
+			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&offset=0&new=1".$brand_group_sql."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>сортировать по дате</a>";
 		}
 
 		if ($page < $counter - 1) 
@@ -890,7 +890,7 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 		else
 			$pagination .= "<span class=\"disabled\">»</span>";
 		if ($filter_list=='')
-			$pagination .= " Всего: ".$totalitems. "<div style='float:right;padding:4px;font-color:#6C6C6C';font-decoration:none;border:0;>".$button_sort."</div></div>";
+			$pagination .= " Всего: ".$totalitems. "<div style='float:right;'>".$button_sort."</div></div>";
 		else
 			// $exact_keywords != '' | $exclude_keywords != '' | $any_keywords != ''
 			$pagination .= " Всего: ".$totalitems. " рис.&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span></div>";
