@@ -292,7 +292,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 			AND `wp_product_categories`.`id`=777 
 			and wp_product_list.id not in (SELECT id FROM tema_dnya WHERE DATETIME = DATE( NOW( ) ) )";
 
-					//pokazh($sql);
+					///pokazh($sql,"===777");
 		}
 else
 		{
@@ -301,6 +301,9 @@ else
 			//$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_item_category_associations` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
 
 			$sql = "SELECT `wp_product_list` . * , `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`name` AS brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list` , `wp_product_files` , `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ".$cat_group_sql.$exclude_category_sql.$colorfilter.$approved_or_not." AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  $group_sql ORDER BY `wp_product_list`.`id` desc LIMIT ".$_product_start_num.", 1"; 
+
+					///pokazh($sql,"===6666");
+
 		}
 
                 if (isset($_GET['offset']) && is_numeric($_GET['offset']))
@@ -483,7 +486,7 @@ else
                 $sql = $search_sql;
 
 
-												///pokazh($sql);
+												///pokazh($sql,"332222");
 
 				} // if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
 
@@ -493,13 +496,13 @@ else
 					$keywords = '';
 				}
 
-												//pokazh($items_count,"items_count");
+												///pokazh($items_count,"items_count");
 
 	// we inject here direct link to the image
 	// $_GET['cartoonid'] : &cartoonid=666
 	if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
 	{
-		//echo("<pre>_cartoon_id ".print_r($_GET['cartoonid'],true)."</pre>");
+		///echo("<pre>_cartoon_id ".print_r($_GET['cartoonid'],true)."</pre>");
 		$_cartoon_id = $_GET['cartoonid'];
 		
 		//$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria, `wp_item_category_associations`.`category_id`, `wp_product_brands`.`id` as brandid FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = '".$_cartoon_id."' AND `wp_product_list`.`active`='1' ".$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC "; 
@@ -507,6 +510,8 @@ else
 		$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria, `wp_product_list`.`category` as category_id, `wp_product_brands`.`id` as brandid FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = '".$_cartoon_id."' AND `wp_product_list`.`active`='1' ".$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC "; 
 
 	    $sql = $search_sql;
+
+		///pokazh($sql,"sql");
     }
 
 
@@ -537,6 +542,7 @@ else
 
      if (isset($product) && $product!=null)
      {   
+		 ///pokazh("product set");
 			// normal workflow: disply big preview image
 			// slide preview preparations:
 				if(stristr($product[0]['image'], 'jpg') != FALSE) {
@@ -617,6 +623,8 @@ else
 
 				//$_edid .= "<div id=\'fblike\'></div>";
 
+///pokazh($_name,"_name");
+
 				$_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Название:</a> </b>" .$_name."</div> "."<div >№&nbsp;<a title='уникальный адрес страницы с этим изображением' id='cuid' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
                 $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение'>Категория:</a> </b><br />".$_category."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Описание:</a> </b> ".$_description."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение'>Тэги:</a> </b><br />".$_tags."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br /><br /><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение'>Размер:</a></b><br />".$_size."<br /><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение'>Формат:</a> </b> ".$_file_format."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение'>Оценка:</a></b><br />".$_rating_html.$_sharethis_html.$_edid;
 
@@ -658,9 +666,11 @@ else
 	 }
 		else
 		{// no products
+		///pokazh("product not set");
 			if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
               {
                   //echo ("<br /><br />Изображения с таким номером нет.");
+				  ///pokazh("<br /><br />Изображения с таким номером нет.");
               }
 			
 		}
@@ -671,8 +681,11 @@ else
                 // placeholder for the slide preview
                
                $_bigpictext = str_ireplace("\\'","\"",$_bigpictext);
-                
-               echo "<div id='bigpictopstrip'>".$_bigpicstrip."</div>";
+
+				
+///				pokazh($_bigpicstrip,"_bigpicstrip");
+			   
+			   echo "<div id='bigpictopstrip'>".$_bigpicstrip."</div>";
                echo "<div id='bigpictext'>".$_bigpictext."</div>";
                echo "<div id='bigpic'><a href='#pt' onclick=\"get_item1();\">".$_bigpic."</a></div>";
 				//jQuery(this).attr('id')
@@ -700,7 +713,7 @@ else
 				else
 					 {$search_sql = '';}
 
-									//pokazh($search_sql);
+									///pokazh($search_sql,"3333");
 					 
 // FIRST PAGE icons OUTPUT
 
@@ -782,6 +795,9 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 {		
 	//function to return the pagination string
 
+// if the image is single set totalitems to 1
+if (isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']))
+	{$totalitems = 1;}
 
 	//defaults
 	if(!$adjacents) $adjacents = 1;
