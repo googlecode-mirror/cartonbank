@@ -13,7 +13,14 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 		}
 		else
 		{
-			$exclude_category_sql = " AND `wp_product_list`.`category` != '666' ";
+			if  (!isset($_GET['cartoonid']))
+			{
+				$exclude_category_sql = " AND `wp_product_list`.`category` != '666' ";
+			}
+			else
+			{
+				$exclude_category_sql = " ";
+			}
 			$approved_or_not = " AND `wp_product_list`.`approved` = '1' ";
 		}
 
@@ -176,13 +183,12 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 }
 
 
-//pokazh ($sql);
+///pokazh ($sql,"sql");
 
 	$product_list = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
 
 	  if($product_list != null)
 	  {
-		  
 		  $preview_mode=1; // display as popup window
  //		  $preview_mode=0; // display as Lightbox slideshow
 		  $output = "<div id='items' class='items'>";
