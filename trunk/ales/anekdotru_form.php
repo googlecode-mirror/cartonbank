@@ -14,7 +14,7 @@ $url = 'http://anekdot.ru/scripts/upload.php?t=e'; // destination url with form;
 $mailto = 'igor.aleshin@gmail.com'; // destination email box
 //$mailto = 'cartoonbank.ru@gmail.com'; // destination email box 
 $mailto1 = "verner@anekdot.ru"; // destination email box 
-$mailto2 = "Kalininskiy@yandex.ru"; // destination email box 
+//$mailto2 = "Kalininskiy@yandex.ru"; // destination email box 
 
 
 
@@ -162,7 +162,7 @@ $arrAuthors = array('Светозаров Георгий','Александро�
 					// verner
 					mail_attachment($my_file, $my_path, $mailto1, $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
 					// kalininsky
-					mail_attachment($my_file, $my_path, $mailto2, $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
+					// mail_attachment($my_file, $my_path, $mailto2, $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
 
 
 				if(file_exists($export_dir.$slidename))
