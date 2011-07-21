@@ -1,8 +1,8 @@
 <?
 function cart_product_list_string($licensecolumn)
 {
-// the function is for displaying the list of products
-// if $licensecolumn is False we don't diplay extra columns
+	// the function is for displaying the list of products
+	// if $licensecolumn is False we don't diplay extra columns
 	global $wpdb;
 	$siteurl = get_option('siteurl');
 	$current_item = 0;
@@ -42,34 +42,34 @@ function cart_product_list_string($licensecolumn)
 		$variation_list = '';
 		}
 
-	    //$sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE wp_product_list.id='$product_id' AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC LIMIT 1";
 
 		$sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE wp_product_list.id='$product_id' AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id` DESC LIMIT 1";
 
 		$product_list = $wpdb->get_results($sql,ARRAY_A) ;
-if (!$licensecolumn)
+
+		if (!$licensecolumn)
 		{
-// download link start
-		$link ="";
-		$previous_download_ids = Array(0);  
+			// download link start
+			$link ="";
+			$previous_download_ids = Array(0);  
 
-		$sessionid = $_GET['sessionid'];
-		$selectsql = "SELECT * FROM `wp_purchase_logs` WHERE `sessionid`= ".$sessionid." LIMIT 1";
-		$check = $wpdb->get_results($selectsql,ARRAY_A) ;
+			$sessionid = $_GET['sessionid'];
+			$selectsql = "SELECT * FROM `wp_purchase_logs` WHERE `sessionid`= ".$sessionid." LIMIT 1";
+			$check = $wpdb->get_results($selectsql,ARRAY_A) ;
 
-		//pokazh($product_list,"product_list");
+			//pokazh($product_list,"product_list");
 	 
-	 if(isset($product_list[0]['file']) && isset($check[0]['id']) && $product_list[0]['file'] > 0)
-       {
-       $wpdb->query("UPDATE `wp_download_status` SET `active`='1' WHERE `fileid`='".$product_list[0]['file']."' AND `purchid` = '".$check[0]['id']."' LIMIT 1");
-       $download_data = $wpdb->get_results("SELECT * FROM `wp_download_status` WHERE `fileid`='".$product_list[0]['file']."' AND `purchid`='".$check[0]['id']."' AND `id` NOT IN (".make_csv($previous_download_ids).") LIMIT 1",ARRAY_A);
-       $download_data = $download_data[0];
-       $link = $siteurl."?downloadid=".$download_data['id'];
-       $previous_download_ids[] = $download_data['id'];
-       }
+		 if(isset($product_list[0]['file']) && isset($check[0]['id']) && $product_list[0]['file'] > 0)
+		   {
+		   $wpdb->query("UPDATE `wp_download_status` SET `active`='1' WHERE `fileid`='".$product_list[0]['file']."' AND `purchid` = '".$check[0]['id']."' LIMIT 1");
+		   $download_data = $wpdb->get_results("SELECT * FROM `wp_download_status` WHERE `fileid`='".$product_list[0]['file']."' AND `purchid`='".$check[0]['id']."' AND `id` NOT IN (".make_csv($previous_download_ids).") LIMIT 1",ARRAY_A);
+		   $download_data = $download_data[0];
+		   $link = $siteurl."?downloadid=".$download_data['id'];
+		   $previous_download_ids[] = $download_data['id'];
+		   }
 
 
-/// download link stop
+			/// download link stop
 		}
 
 
@@ -170,7 +170,11 @@ if (!$licensecolumn)
 		}
 
 	 } // end of: foreach($cart as $key => $cart_item)
-}
+	} //if (isset($cart) && $cart!='')
+	else
+	{
+		return '';
+	}
 	 $result .= '</table>';
 
 		$result .= "<script language='javascript'> ";
@@ -228,16 +232,16 @@ function get_license($sequence_of_image,$license_num)
 		#media_name#
 		#price#
 
-if (isset($current_user->discount))
-		$_discount = $current_user->discount;
-  else
-		$_discount = 0;
+	if (isset($current_user->discount))
+			$_discount = $current_user->discount;
+	  else
+			$_discount = 0;
 
-$_SESSION['total'] = round($total*(100-$_discount)/100);
+	$_SESSION['total'] = round($total*(100-$_discount)/100);
 
-		*/
+			*/
 
-// load unique license data
+	// load unique license data
 	$current_user = wp_get_current_user();    
 
 	$license_unique_number = $_GET['sessionid']."_".$_SESSION['nzshpcrt_cart'][$sequence_of_image]->product_id;
@@ -262,55 +266,55 @@ $_SESSION['total'] = round($total*(100-$_discount)/100);
 	else
 		$_discount = 0;
 
-if(isset($_SESSION['nzshpcrt_cart']))
-{
-	$price = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> price;
-	if (isset($current_user->discount))
+	if(isset($_SESSION['nzshpcrt_cart']))
 	{
-		$price = round($price*(100-$_discount)/100);
+		$price = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> price;
+		if (isset($current_user->discount))
+		{
+			$price = round($price*(100-$_discount)/100);
+		}
+		
+		$image_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> name;
+		$image_number = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> product_id;
+		$author_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> author;
+
 	}
-	
-	$image_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> name;
-	$image_number = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> product_id;
-	$author_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> author;
 
-}
+	//load License template
+	$filename = '';
+	switch($license_num)
+			{
+			case 1:
+			$filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."license_limited_template.htm";
+			break;
+			
+			case 2:
+			$filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."license_standard_template.htm";
+			break;
 
-//load Livense template
-$filename = '';
-switch($license_num)
-        {
-        case 1:
-        $filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."license_limited_template.htm";
-        break;
-        
-        case 2:
-        $filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."license_standard_template.htm";
-        break;
+			case 3:
+			$filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."license_extended_template.htm";
+			break;
 
-        case 3:
-        $filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."license_extended_template.htm";
-        break;
+			default:
+			$filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."license_limited_template.htm";
+			break;
+	}
 
-        default:
-        $filename = getcwd()."/wp-content/plugins/wp-shopping-cart/"."license_limited_template.htm";
-        break;
-}
+	$content=loadFile($filename);
 
-$content=loadFile($filename);
+	// replace placeholders
+		$content = str_replace ('#agreement_number#',$agreement_number,$content);
+		$content = str_replace ('#agreement_date#',$agreement_date,$content);
+		$content = str_replace ('#customer_name#',$customer_name,$content);
+		$content = str_replace ('#image_number#',$image_number,$content);
+		$content = str_replace ('#image_name#',$image_name,$content);
+		$content = str_replace ('#author_name#',$author_name,$content);
+		$content = str_replace ('#media_name#',$media_name,$content);
+		$content = str_replace ('#price#',$price,$content);
 
-// replace placeholders
-	$content = str_replace ('#agreement_number#',$agreement_number,$content);
-	$content = str_replace ('#agreement_date#',$agreement_date,$content);
-	$content = str_replace ('#customer_name#',$customer_name,$content);
-	$content = str_replace ('#image_number#',$image_number,$content);
-	$content = str_replace ('#image_name#',$image_name,$content);
-	$content = str_replace ('#author_name#',$author_name,$content);
-	$content = str_replace ('#media_name#',$media_name,$content);
-	$content = str_replace ('#price#',$price,$content);
-
-// output content
-return $content;
+	// output content
+	return $content;
 }
 
 function license_name($license_code)

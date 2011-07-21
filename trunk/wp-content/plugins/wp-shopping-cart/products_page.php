@@ -641,17 +641,34 @@ else
 				}
 				else
 				{
+					// отключить лицензию
+					if(isset($product[0]['l1_price']) && $product[0]['l1_price'] != 0)
+						{$l1_price_text = "<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l1_price'])."&nbsp;руб.</b></td>";}
+					else
+						{$l1_price_text = "<td style='vertical-align:middle;text-align:right;'>не доступна</td>";}
+
+					if(isset($product[0]['l2_price']) && $product[0]['l2_price'] != 0)
+						{$l2_price_text = "<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l2_price'])."&nbsp;руб.</b></td>";}
+					else
+						{$l2_price_text = "<td style='vertical-align:middle;text-align:right;'>не доступна</td>";}
+
+					if(isset($product[0]['l3_price']) && $product[0]['l3_price'] != 0)
+						{$l3_price_text = "<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l3_price'])."&nbsp;руб.</b></td>";}
+					else
+						{$l3_price_text = "<td style='vertical-align:middle;text-align:right;'>не доступна</td>";}
+
+
 				$_bottomstriptext = $_size_warning."<div style='width:450px;float:right;'><form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".get_option('siteurl')."/?page_id=29' method='POST'><table class='licenses'>
 					  <tr>
 						<td class='wh' style='width:80px;vertical-align:bottom;'><b>Выбор</b></td>
 						<td class='wh' style='text-align:left;'><input type='radio' name='license' $l1_disabled value='l1_price'></td>
-						<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l1_price'])."&nbsp;руб.</b></td>
+						".$l1_price_text."
 						<td rowspan='2' style='width:20px;'>&nbsp;</td>
 						<td class='wh' style='text-align:left;'><input type='radio' name='license' $l2_disabled value='l2_price'></td>
-						<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l2_price'])."&nbsp;руб.</b></td>
+						".$l2_price_text."
 						<td rowspan='2' style='width:20px;'>&nbsp;</td>
 						<td class='wh' style='text-align:left;'><input type='radio' name='license' $l3_disabled value='l3_price'></td>
-						<td style='vertical-align:middle;text-align:right;'><b>".round($product[0]['l3_price'])."&nbsp;руб.</b></td>
+						".$l3_price_text."
 						<td rowspan='2' class='wh' style='width:80px; text-align:right; vertical-align:bottom;'><input id='tocart' value='В заказ' type='submit' class='borders'></td>
 					  </tr>
 					  <tr>

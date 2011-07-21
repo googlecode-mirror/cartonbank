@@ -2062,7 +2062,7 @@ $current_user = wp_get_current_user();
      $wpdb->query($cartsql);
 
  //pokazh ($cartsql,"cartsql");
-	 
+	 /*
 	 $cart_id = $wpdb->get_results("SELECT LAST_INSERT_ID() AS `id` FROM `wp_product_variations` LIMIT 1",ARRAY_A);
      $cart_id = $cart_id[0]['id'];
      if($variations != null)
@@ -2072,6 +2072,8 @@ $current_user = wp_get_current_user();
          $wpdb->query("INSERT INTO `wp_cart_item_variations` ( `id` , `cart_id` , `variation_id` , `venue_id` ) VALUES ( '', '".$cart_id."', '".$variation."', '".$value."' );");
          }
        }
+	*/
+
      }
 
 	if (isset($_POST['payment_method']))

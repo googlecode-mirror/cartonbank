@@ -14,19 +14,19 @@ $transactid = '';
 
 if($sessionid != null)
 {
+  include('al_cart_function.php');
+  
   $message = "<div class='wrap'>Спасибо за пользование услугами сайта cartoonbank.ru! На ваш электронный адрес выслано письмо с тестом лицензии и ссылкой для скачивания. Вам доступны ".get_option('max_downloads')." попыток скачивания по ссылке в письме. Вы можете скачать ваш заказ используя ссылки ниже.<br />
   Вы заказали следующие картинки:</div>";
-
-	include('al_cart_function.php');
 
 	$license = false;
 	$cart_content = cart_product_list_string($license);
 
-//pokazh($cart_content);
+	//pokazh($cart_content);
 
-if ($cart_content!='')
-	{$message = $message.$cart_content;}
-else {$message = 'Корзина пуста';}
+	if ($cart_content!='')
+		{$message = $message.$cart_content;}
+	else {$message = 'Корзина пуста';}
 
 	//echo $message;
 
@@ -56,21 +56,21 @@ else {$message = 'Корзина пуста';}
   $email_address = $wpdb->get_results("SELECT * FROM `wp_submited_form_data` WHERE `log_id`=".$check[0]['id']." AND `form_id` = '".$email_form_field[0]['id']."' LIMIT 1",ARRAY_A);
   $email = $email_address[0]['value'];
   }
-}
+} //if($sessionid != null)
 
-$siteurl = get_option('siteurl');
-  
-$previous_download_ids = Array(0);  
+	$siteurl = get_option('siteurl');
+	  
+	$previous_download_ids = Array(0);  
 
-  $message_html .= "<br /><br />";
-  $message_html .= "Общая стоимость с учётом скидки: ".$_total." руб.\n\r";
-  $message_html .= "\n\r";
+	$message_html .= "<br /><br />";
+	$message_html .= "Общая стоимость с учётом скидки: ".$_total." руб.\n\r";
+	$message_html .= "\n\r";
 
 	//pokazh($cart,"cart");
 	//pokazh($message,"message");
 	//exit;
   
-if(isset($cart) && $cart != null && ($errorcode == 0))
+if(isset($cart) && $cart != null && $cart_content!='' && ($errorcode == 0))
   {
   $headers = "From: ".get_option('return_email')."\r\n" .
 			   'X-Mailer: PHP/' . phpversion() . "\r\n" .
@@ -117,13 +117,13 @@ if(isset($cart) && $cart != null && ($errorcode == 0))
 
 
 
-/*
-  if(get_option('purch_log_email') != null)
-    {
-    mail(get_option('purch_log_email'), 'Подтверждение покупки изображения. Cartoonbank.ru ...', $report, $headers);
-    mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru ....', $report."\n\r\n\r".$message, $headers);
-    }
-*/
+	/*
+	  if(get_option('purch_log_email') != null)
+		{
+		mail(get_option('purch_log_email'), 'Подтверждение покупки изображения. Cartoonbank.ru ...', $report, $headers);
+		mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru ....', $report."\n\r\n\r".$message, $headers);
+		}
+	*/
 
 
 
