@@ -15,10 +15,7 @@
 	<p><?php _e('Извините, здесь пока ничего нет.'); ?></p><?php endif; ?><br />
 	
 <div id="contentright">
-<h2>Tags</h2>
-<?php jkeywords_post_tags(); ?>
-
-	</div>
+</div>
 
 <?php get_sidebar(); ?>
 
