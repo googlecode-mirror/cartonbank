@@ -49,8 +49,11 @@ if (isset($_REQUEST['email']) && isset($_REQUEST['message']))
 			   "Content-Type: text/html; charset=utf-8\r\n" .
 			   "Content-Transfer-Encoding: 8bit\r\n\r\n";
 
-    mail("cartoonbank.ru@gmail.com", 'Письмо от посетителя сайта cartoonbank.ru', $message, $headers);
-	//mail("igor.aleshin@gmail.com", 'CC: Письмо от посетителя сайта cartoonbank.ru', $message, $headers);
+	// spam filter
+	if (strstr($message,'[url=')==false)
+    {
+	mail("cartoonbank.ru@gmail.com", 'Письмо от посетителя сайта cartoonbank.ru', $message, $headers);
+	}
 }
 
 $siteurl = get_option('siteurl');
@@ -678,6 +681,7 @@ else
 						<td colspan='2' style='padding-left:6px;'><a target='_blank' href='".get_option('siteurl')."/?page_id=245' title='подробнее об расширенной лицензии'>расширенная</a></td>
 					  </tr>
 					  </table><input type='hidden' value='".$_number."' name='prodid'>  </form></div>";
+				$_bottomstriptext = $_bottomstriptext."<div id='fb_comment'><div id='fb-root'></div><script src='http://connect.facebook.net/en_US/all.js#xfbml=1'></script><fb:comments href='cartoonbank.ru' num_posts='2' width='500'></fb:comments></div>";
 				}
 		  // end of normal workflow: disply big preview image
 	 }
