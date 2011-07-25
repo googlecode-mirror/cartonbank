@@ -23,8 +23,9 @@ elseif ( ! $user_id && ! IS_PROFILE_PAGE )
 elseif ( ! get_userdata( $user_id ) )
 	wp_die( __('Invalid user ID.') );
 
+//$current_user->ID !current_user_can( 'manage_network_users' )
 
-if ($user_id == '106')
+if ($user_id == '106' & $current_user->ID=='106')
 {
 	// demo user
 	header("Location: http://cartoonbank.ru/?page_id=29&offset=0");
