@@ -49,11 +49,8 @@ if (isset($_REQUEST['email']) && isset($_REQUEST['message']))
 			   "Content-Type: text/html; charset=utf-8\r\n" .
 			   "Content-Transfer-Encoding: 8bit\r\n\r\n";
 
-	// spam filter
-	if (strstr($message,'[url=')==false)
-    {
-	mail("cartoonbank.ru@gmail.com", 'Письмо от посетителя сайта cartoonbank.ru', $message, $headers);
-	}
+    mail("cartoonbank.ru@gmail.com", 'Письмо от посетителя сайта cartoonbank.ru', $message, $headers);
+	//mail("igor.aleshin@gmail.com", 'CC: Письмо от посетителя сайта cartoonbank.ru', $message, $headers);
 }
 
 $siteurl = get_option('siteurl');
@@ -243,6 +240,8 @@ if(isset($_POST['item']) && is_numeric($_POST['item']))
 			}
 
 			$items_count = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
+
+
 
 			//pokazh($items_count,"items_count1");
 
@@ -473,6 +472,31 @@ else
 
                     $items_count = $GLOBALS['wpdb']->get_results($search_sql,ARRAY_A);
 
+
+
+					// save search terms to database
+						$search_to_save = '';
+						if (isset($any_keywords) && $any_keywords!='')
+						{
+							$search_to_save = $any_keywords;
+						}
+						if (isset($exact_keywords) && $exact_keywords!='')
+						{
+							$search_to_save = $exact_keywords;
+						}
+						if (isset($exclude_keywords) && $exclude_keywords!='')
+						{
+							$search_to_save = $exclude_keywords;
+						}
+						if (isset($keywords) && $keywords!='')
+						{
+							$search_to_save = $keywords;
+						}
+
+						//pokazh($search_to_save,"search_to_save");
+						save_search_terms($search_to_save);
+
+
 					if (isset($items_count[0]['count']) && is_numeric($items_count[0]['count']))
                     {
                         $items_count = $items_count[0]['count'];
@@ -681,7 +705,6 @@ else
 						<td colspan='2' style='padding-left:6px;'><a target='_blank' href='".get_option('siteurl')."/?page_id=245' title='подробнее об расширенной лицензии'>расширенная</a></td>
 					  </tr>
 					  </table><input type='hidden' value='".$_number."' name='prodid'>  </form></div>";
-				$_bottomstriptext = $_bottomstriptext."<div id='fb_comment'><div id='fb-root'></div><script src='http://connect.facebook.net/en_US/all.js#xfbml=1'></script><fb:comments href='cartoonbank.ru' num_posts='2' width='500'></fb:comments></div>";
 				}
 		  // end of normal workflow: disply big preview image
 	 }
@@ -712,8 +735,15 @@ else
 				//jQuery(this).attr('id')
 			   //<div id="right"><a href="#"  onclick="var next=document.getElementById('image1').innerHTML;document.getElementById('right').innerHTML = next; "><div style='height:200px;width:200px;background color:#CCFF66;'>main image </div></a></div>
                echo "<div style='clear:both;'></div>";
-               echo "<div id='bigpicbottomstrip' style='float:right;margin-bottom:6px;'>".$_bottomstriptext."</div>";
-                    
+
+			   echo "<div id='bigpicbottomstrip' style='float:right;margin-bottom:6px;'>".$_bottomstriptext."</div>";
+
+				if (isset($_GET['cartoonid'])&&is_numeric($_GET['cartoonid']))
+				{
+				   echo " <div id='fb_comment' style='text-align:right;width:100%;'><div id='fb-root'></div><script src='http://connect.facebook.net/en_US/all.js#xfbml=1'></script><fb:comments href='http://109.120.143.27/cb/?page_id=29&amp;cartoonid=".trim($_GET['cartoonid'])."' num_posts='0' width='600'></fb:comments></div>";
+				}
+
+
 				if (isset($_GET['offset']) && is_numeric($_GET['offset']))
 				 {
 					$offset = $_GET['offset'];
@@ -794,30 +824,37 @@ else if (isset($_GET['category']) && is_numeric($_GET['category']))
 
 else
 {$__category = '';}
+
 	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$newfilter.$brand_group_sql."&color=".$color.$__category.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&offset=", $filter_list, $new, $brand_group_sql,$_category);
-		
 
-	  echo "<div style='clear:both;'>".$_pages_navigation."</div>";
+if (isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']))
+{
+	echo "";
+}
+else
+{
+	echo "<div style='clear:both;'>".$_pages_navigation."</div>";
+}
 
-	  if ($new=='1')
-	  {
-		  //order by new first
-		  echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page, $orderby='1');
-	  }
-	  else
-	  {
-		  //order by best first
-		  echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
+	if ($new=='1')
+	{
+	  //order by new first
+	  echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page, $orderby='1');
+	}
+	else
+	{
+	  //order by best first
+	  echo product_display_paginated(NULL /* generated notice: always NULL $product_list*/, $group_type, $group_sql, $search_sql, $offset, $items_on_page);
 
-	  }
+	}
 
 
 function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1, $targetpage = "/", $pagestring = "?page=", $filter_list = '',$new = 0,$brand_group_sql='',$_category='')
 {		
 	//function to return the pagination string
 
-// if the image is single set totalitems to 1
-if (isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']))
+	// if the image is single set totalitems to 1
+	if (isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']))
 	{$totalitems = 1;}
 
 	//defaults
@@ -946,6 +983,32 @@ if (isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']))
 function trim_value(&$value) 
 { 
     $value = trim($value); 
+}
+
+function save_search_terms($terms)
+{
+	if (isset($terms) && $terms!='')
+	{
+		$_header = $_SERVER['HTTP_USER_AGENT'];
+		$_remote_ip = $_SERVER['REMOTE_ADDR'];
+
+		if (!(strstr($_header,'bot') || strstr($_header,'Yahoo')))
+		{
+			$sql = "INSERT INTO  `search_terms` (
+						`id` ,
+						`term` ,
+						`datetime`,
+						`header`
+						)
+						VALUES (
+						NULL ,  '".trim($terms)."', 
+						CURRENT_TIMESTAMP,
+						'".$_remote_ip." ".$_header."'
+						);";
+			
+			$result = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
+		}
+	}
 }
 ?>
 <script type="text/javascript">
