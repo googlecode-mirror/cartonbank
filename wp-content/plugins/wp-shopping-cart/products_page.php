@@ -49,8 +49,11 @@ if (isset($_REQUEST['email']) && isset($_REQUEST['message']))
 			   "Content-Type: text/html; charset=utf-8\r\n" .
 			   "Content-Transfer-Encoding: 8bit\r\n\r\n";
 
-    mail("cartoonbank.ru@gmail.com", 'Письмо от посетителя сайта cartoonbank.ru', $message, $headers);
-	//mail("igor.aleshin@gmail.com", 'CC: Письмо от посетителя сайта cartoonbank.ru', $message, $headers);
+	// spam filter
+	if (strstr($message,'[url=')==false)
+    {
+	mail("cartoonbank.ru@gmail.com", 'Письмо от посетителя сайта cartoonbank.ru', $message, $headers);
+	}
 }
 
 $siteurl = get_option('siteurl');
@@ -646,7 +649,7 @@ else
 					$_edid = "";
 				}
 
-				$_edid .= '<div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=130643610343080&amp;xfbml=1"></script><fb:like href="http://cartoonbank.ru/?page_id=29"  width="137" show_faces="true" layout="button_count"></fb:like>';
+				//$_edid .= '<div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=130643610343080&amp;xfbml=1"></script><fb:like href="http://cartoonbank.ru/?page_id=29"  width="137" show_faces="true" layout="button_count"></fb:like>';
 
 				//$_edid .= "<div id=\'fblike\'></div>";
 
@@ -737,12 +740,12 @@ else
                echo "<div style='clear:both;'></div>";
 
 			   echo "<div id='bigpicbottomstrip' style='float:right;margin-bottom:6px;'>".$_bottomstriptext."</div>";
-
+/*
 				if (isset($_GET['cartoonid'])&&is_numeric($_GET['cartoonid']))
 				{
 				   echo " <div id='fb_comment' style='text-align:right;width:100%;'><div id='fb-root'></div><script src='http://connect.facebook.net/en_US/all.js#xfbml=1'></script><fb:comments href='http://109.120.143.27/cb/?page_id=29&amp;cartoonid=".trim($_GET['cartoonid'])."' num_posts='0' width='600'></fb:comments></div>";
 				}
-
+*/
 
 				if (isset($_GET['offset']) && is_numeric($_GET['offset']))
 				 {
