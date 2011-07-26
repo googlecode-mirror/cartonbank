@@ -57,7 +57,7 @@ else
 		echo "<tr class='alternate'>";
 		//todo
 			echo "<td style='text-align:right; padding-right:2px;color:silver;'>$counter</td>";		
-			echo "<td class='username' style='padding:4px;'><a href='http://cartoonbank.ru/?page_id=29&cs=".$row['term']."'>".$row['term']."</a></td><td class='posts' style='padding:4px;text-align:right;'>".$row['cnt']."</td>";
+			echo "<td class='username' style='padding:4px;'><a href='http://cartoonbank.ru/?page_id=29&cs=".$row['term']."'>".urldecode($row['term'])."</a></td><td class='posts' style='padding:4px;text-align:right;'>".$row['cnt']."</td>";
 
 		echo "</tr>";
 
@@ -88,7 +88,7 @@ else
 		echo "<tr class='alternate'>";
 		//todo
 			echo "<td style='text-align:right; padding-right:2px;color:silver;'>$counter</td>";		
-			echo "<td class='username' style='padding:4px;'><a href='http://cartoonbank.ru/?page_id=29&cs=".$row['term']."'>".$row['term']."</a></td><td class='posts' style='padding:4px;width:100px;'>".$row['datetime']."</td>";
+			echo "<td class='username' style='padding:4px;'><a href='http://cartoonbank.ru/?page_id=29&cs=".$row['term']."'>".urldecode($row['term'])."</a></td><td class='posts' style='padding:4px;width:100px;'>".$row['datetime']."</td>";
 			echo "<td class='posts' style='padding:4px;'>".$row['header']."</td>";
 
 		echo "</tr>";
