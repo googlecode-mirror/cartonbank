@@ -94,7 +94,8 @@ class wp_shopping_cart
 	  add_submenu_page($base_page,'Бухгалтеру', 'Бухгалтеру', 8, 'wp-shopping-cart/display-account.php');
 	  add_submenu_page($base_page,'Покупатели', 'Покупатели', 8, 'wp-shopping-cart/display-clients.php');
 	  add_submenu_page($base_page,'Счета', 'Счета', 8, 'wp-shopping-cart/display-invoices.php');
-	  add_submenu_page($base_page,'Авторские', 'Авторские', 8, 'wp-shopping-cart/display-author_payments.php');
+	  add_submenu_page($base_page,'Авторские акты', 'Авторские акты', 8, 'wp-shopping-cart/display-author_payments.php');
+  	  add_submenu_page($base_page,'Авторские выплаты', 'Авторские выплаты', 8, 'wp-shopping-cart/author_payments_complete.php');
   	  add_submenu_page($base_page,'Касса', 'Заработано', 8, 'wp-shopping-cart/display_artist_income.php');
 
       
