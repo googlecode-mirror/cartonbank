@@ -329,11 +329,11 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 //					pokazh($artist['rezident'] );
 					if ($artist['rezident'] == '1')
 					{
-						$tax_ndfl = $total * 0.09;
+						$tax_ndfl = ($total * 0.7) * 0.13; // проф вычет с резидентов
 					}
 					else
 					{
-						$tax_ndfl = $total * 0.13;
+						$tax_ndfl = $total * 0.3; // проф вычет с нерезидентов
 					}
 
 					$reward_topay = $total - $tax_ndfl;
