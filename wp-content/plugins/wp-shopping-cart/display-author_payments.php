@@ -40,6 +40,32 @@ global $wpdb;
 		$params['username'] = 'z58365_cbru3';
 		$params['password'] = 'greenbat';
 
+
+	if (isset($_POST['approve']) && $_POST['approve'] == 1 && isset($_POST['sql']))
+	{
+		$sql = stripslashes($_POST['sql']);
+		$result = $wpdb->query($sql);
+		if (!$result) {die('<br />'.$sql.'<br />Invalid insert query: ' . mysql_error());}
+		//pokazh (stripslashes(htmlspecialchars_decode($_POST['sql'], ENT_QUOTES)),"decoded sql");
+
+		// set max act number
+
+				$sql = "select max(act_number) as max from artist_payments";
+				$result = $wpdb->get_results($sql,ARRAY_A);
+				if ($result)
+				{
+					// get current max
+					$new_max_act_number = $result[0]['max'] +1;
+					//pokazh($new_max_act_number);
+					// set new max
+					$sql = "update wp_options set option_value = ".$new_max_act_number." where option_name = 'artist_act_number'";
+					$result = $wpdb->query($sql);
+					if (!$result) {die('<br />'.$sql.'<br />Can not set new max act number: ' . mysql_error());}
+				}
+	}
+
+
+
 $year = date("Y");
 $month = date("m");
 
@@ -62,24 +88,20 @@ else
 	$end_timestamp = date('y-m-d',mktime(0, 0, 0, ($month+1), 0, $_GET['y']));
 }
 
-//pokazh ($start_timestamp,"start_timestamp");
-//pokazh ($end_timestamp,"end_timestamp");
-
-
 
 if (isset($_POST['new_invoice_start_number']) && is_numeric($_POST['new_invoice_start_number']))
 {
 	$_invoice_start_number = trim($_POST['new_invoice_start_number']);
 
 	// update invoice start number in database
-	$sql = "update wp_options set option_value=".$_invoice_start_number." where option_name='invoice_number'";
+	$sql = "update wp_options set option_value=".$_invoice_start_number." where option_name='artist_act_number'";
 	$result = $wpdb->query($sql);
 	if (!$result) {die('<br />'.$sql.'<br />Invalid query: ' . mysql_error());}
 }
 else
 {
 	// начальный номер счёта 
-	$_invoice_start_number = get_option('invoice_number');
+	$_invoice_start_number = get_option('artist_act_number');
 }
 
 if (isset($_POST['new_invoice_date']))
@@ -111,30 +133,7 @@ else
 		$this_date = getdate();
 		$year = date("Y");
 		$month = date("m");
-/*
-		$d_month_previous = date('n', mktime(0,0,0,($month-1),28,$year));         // PREVIOUS month of year (1-12)
-		$d_monthname_previous = ru_month($d_month_previous, $sklon=false);
-		//$d_monthname_previous = date('F', mktime(0,0,0,($month-1),28,$year));     // PREVIOUS Month Long name (July)
 
-		$d_month_previous2 = date('n', mktime(0,0,0,($month-2),28,$year));         // PREVIOUS month of year (1-12)
-		$d_monthname_previous2 = ru_month($d_month_previous2, $sklon=false);
-		//$d_monthname_previous2 = date('F', mktime(0,0,0,($month-2),28,$year));     // PREVIOUS Month Long name (July)
-
-		$d_month_previous3 = date('n', mktime(0,0,0,($month-3),28,$year));         // PREVIOUS month of year (1-12)
-		$d_monthname_previous3 = ru_month($d_month_previous3, $sklon=false);
-		//$d_monthname_previous3 = date('F', mktime(0,0,0,($month-3),28,$year));     // PREVIOUS Month Long name (July)
-
-
-		$d_month_previous4 = date('n', mktime(0,0,0,($month-4),28,$year));         
-		$d_monthname_previous4 = ru_month($d_month_previous4, $sklon=false);
-
-		$d_month_previous5 = date('n', mktime(0,0,0,($month-5),28,$year));         
-		$d_monthname_previous5 = ru_month($d_month_previous5, $sklon=false);
-
-		$d_month_previous6 = date('n', mktime(0,0,0,($month-6),28,$year));         
-		$d_monthname_previous6 = ru_month($d_month_previous6, $sklon=false);
-
-*/
 
 		//echo "<a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-author_payments.php&m=0'>Показать 200 последних продаж</a> ";
 		
@@ -188,7 +187,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 		echo "<h1 style='color:#FF00FF'>".ru_month(date('m'))." $_year</h1>";
 	}
 
-	$sql = "SELECT id, name, contract, contract_date 
+	$sql = "SELECT id, name, contract, contract_date, rezident 
 			FROM `wp_product_brands` 
 			WHERE active =1
 			ORDER BY `name`"; 
@@ -197,7 +196,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 	if($response != null)
 	  {
 		$customer_number = 0;
-		foreach($response as $product)
+		foreach($response as $artist)
 		{
 			
 			// get all sales for the given month
@@ -220,42 +219,14 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 				AND payment_arrived_date BETWEEN '$start_timestamp' AND '$end_timestamp'
 				AND l.processed = 5
 				AND l.user_id != '106'
-				AND b.id = '".$product['id']."'
+				AND b.id = '".$artist['id']."'
 				AND st.downloads != '5'
 			GROUP BY c.license
 			order by purchaseid";
 
-			///pokazh($sql);
+				///pokazh("product['id']",$artist['id']);
 
-/*
-			$sql = "SELECT date, st.datetime, c.purchaseid,  p.id as picture_id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.wallet, um.meta_value as smi
-				FROM `wp_purchase_logs` as l, 
-					`wp_purchase_statuses` as s, 
-					`wp_cart_contents` as c, 
-					`wp_product_list` as p,
-					`wp_download_status` as st,
-					`wp_product_brands` as b,
-					`wp_users` as u,
-					`wp_usermeta` as um
-				WHERE	l.`processed`=s.`id` 
-					AND l.id=c.purchaseid 
-					AND p.id=c.prodid  
-					AND st.purchid=c.purchaseid
-					AND p.brand=b.id
-					AND u.id = l.user_id
-					AND u.id = um.user_id
-					AND payment_arrived_date BETWEEN '$start_timestamp' AND '$end_timestamp'
-					AND (um.meta_key = 'company' OR um.meta_key = 'description' OR um.meta_key = 'nickname')
-					AND l.processed = 5
-					AND b.id = '".$product['id']."'
-					AND st.downloads != '5'
-				GROUP BY c.license
-				order by purchaseid
-				LIMIT 1000";
-*/
-									///pokazh("product['id']",$product['id']);
-
-				$product_list = $wpdb->get_results($sql,ARRAY_A);
+			$product_list = $wpdb->get_results($sql,ARRAY_A);
 
 
 
@@ -270,10 +241,27 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 		$total = 0; // total price with discount
 		$the_list = ''; // html list of cartoons with row tags
 		$contract_period = $_month.".".date("Y");
+		$_year_month = date('Y-m-d',strtotime('-1 second',strtotime('+1 month',strtotime($_month.'/01/'.$_year.' 00:00:00'))))." 00:00:00";
 
-		$_invoice_number = $_invoice_start_number + $customer_number;
 
-		echo ("<div id='white' style='background-color:white;padding:2px;margin-bottom:12px;'><div class='t' style='font-size:1.1em;font-weight:bold;background-color:#E6E9FF;padding-left:4px;'>".$product['name'].". <span style='color:silver;'>Контракт № ".$product['contract']." от ".date_format(date_create($product['contract_date']),'d-m-Y')."</span></div>");
+		// 
+				// make sure the payment record not exists
+				$sql_artist_payments = "select id, act_number from artist_payments where payment_date = '".$_year_month."' and artist_id = ". $artist['id'];
+				$result_artist_payments = $wpdb->get_results($sql_artist_payments,ARRAY_A) ;
+
+//pokazh($result_artist_payments );
+
+		if ($result_artist_payments) 
+		{
+			$_invoice_number = $result_artist_payments[0]['act_number'];
+		}
+		else
+		{
+			$_invoice_number = $_invoice_start_number + $customer_number;
+		}
+
+
+		echo ("<div id='white' style='background-color:white;padding:2px;margin-bottom:12px;'><div class='t' style='font-size:1.1em;font-weight:bold;background-color:#E6E9FF;padding-left:4px;'>".$artist['name'].". <span style='color:silver;'>Контракт № ".$artist['contract']." от ".date_format(date_create($artist['contract_date']),'d-m-Y')."</span></div>");
 
 	  foreach($product_list as $sales)
 		{
@@ -300,7 +288,6 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 
 
 
-			//echo "<div class='t'><span style='color:silver;'>".date("d.m.y",$sales['date'])."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
 			echo "<div class='t' style='font-size:0.8em;'><span style='color:silver;'>".$sales['datetime']."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> <i>".$sales['firstname']." ".$sales['lastname']."</i> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
 			
 			$total = $total + round(0.4*($discount_price),0);
@@ -322,29 +309,75 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 		echo "<div style='color:#9900CC;margin-bottom:10px;'>Всего авторских: <b>".$total."</b></div>";
 
 
+
+				$_cartoons_amount = $n-1;
+
+
+				//pokazh("insert into artist_payments (artist_id, payment_date, reward, cartoons_sold) values (".$artist['id'].", '".$_year_month."', ".$total.", ".$_cartoons_amount.")");
+
+
+				// make sure the payment record not exists
+				//$sql_artist_payments = "select id from artist_payments where payment_date = '".$_year_month."' and artist_id = ". $artist['id'];
+				//$result_artist_payments = $wpdb->query($sql_artist_payments);
+
+				if ($result_artist_payments) 
+				{
+						echo "<div style='width:80px; text-align:center; padding:6px; background-color:silver; color:#006600;'>Утверждено</div>";
+				}
+				else
+				{
+//					pokazh($artist['rezident'] );
+					if ($artist['rezident'] == '1')
+					{
+						$tax_ndfl = $total * 0.09;
+					}
+					else
+					{
+						$tax_ndfl = $total * 0.13;
+					}
+
+					$reward_topay = $total - $tax_ndfl;
+
+						$sql_encoded = htmlspecialchars("insert into artist_payments (reward_to_pay, tax_ndfl, act_number, artist_id, payment_date, reward, cartoons_sold) values (".$reward_topay.", ".$tax_ndfl.", ".$_invoice_number.", ".$artist['id'].", '".$_year_month."', ".$total.", ".$_cartoons_amount.")", ENT_QUOTES);
+						//pokazh($sql_encoded,"sql_encoded");
+						echo "<div><form method=post action='#'>
+							<input type='submit' value='Утвердить' style='background-color:#FF9966;'>
+							<input type='hidden' name='approve' value='1'>
+							<input type='hidden' name='sql' value='".$sql_encoded."'>
+						</form></div>";
+				}
+
+
 		// Print acceptance certificate PDF
 		$invoice_date = date('d-m-Y',strtotime('-1 second',strtotime('+1 month',strtotime($_month.'/01/'.date('Y').' 00:00:00'))));
-		$out = fill_invoice($filename_acceptance_certificate_pdf, $_invoice_number, $invoice_date, $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+		$out = fill_invoice($filename_acceptance_certificate_pdf, $_invoice_number, $invoice_date, $artist['name'], $artist['bank_attributes'], $the_list, $total, $count, $contract_period, $artist['contract'],date_format(date_create($artist['contract_date']),'d-m-Y'));
 		echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/artist_acceptance_certificate.php'>
 			<input type='submit' value='скачать акт № ".$_invoice_number." выполненных работ (PDF) '>
 			<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
 			<input type='hidden' name='filename' value='acceptance_certificate_".$_invoice_number."'>
 		</form></div>");
-		$out_nostamp = fill_invoice($filename_acceptance_certificate_nostamp_pdf, $_invoice_number, $invoice_date, $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+		$out_nostamp = fill_invoice($filename_acceptance_certificate_nostamp_pdf, $_invoice_number, $invoice_date, $artist['name'], $artist['bank_attributes'], $the_list, $total, $count, $contract_period, $artist['contract'],date_format(date_create($artist['contract_date']),'d-m-Y'));
 		echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/artist_acceptance_certificate.php'>
 			<input type='submit' value='скачать акт № ".$_invoice_number." выполненных работ (PDF) без печати'>
 			<input type='hidden' name='html' value='".htmlspecialchars($out_nostamp)."'>
 			<input type='hidden' name='filename' value='acceptance_certificate_".$_invoice_number."'>
 		</form></div></div>");
 
-$total_all = $total_all + $total;
-$total =0;
+
+
+
+
+
+
+
+		$total_all = $total_all + $total;
+		$total =0;
 
 		//echo "<hr>";
 	}//if($product_list != null)
 
 
-		}// foreach($response as $product)
+		}// foreach($response as $artist)
 
 
 
@@ -352,10 +385,8 @@ $total =0;
 }//if (isset($_GET['m']) && is_numeric($_GET['m']))
 
 
-
-
 ?>
-<div style="padding:2px;background-color:#CCFF99;"><br>
+<div style="padding:6px;background-color:#CCFF99;">
 Общая сумма выплаченных авторских в этом месяце: <b><?echo $total_all;?></b> руб.
 </div>
 <?
