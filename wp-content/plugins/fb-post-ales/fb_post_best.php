@@ -6,7 +6,7 @@
 
 // application settings
 		global $redirect_url, $app_id, $app_secret, $cartoon_id;
-		$redirect_url = 'http://cartoonbank.ru/wp-content/plugins/fb-post-ales/';
+		$redirect_url = 'http://cartoonbank.ru/wp-content/plugins/fb-post-ales/fb_post_best.php';
 		$app_id = '264530743602'; //“YOUR_APP_ID”; Cartoonist.name app
 		$app_secret = '05e24c30ac95a33d726f6d087c3c00f4'; //"YOUR_APP_SECRET";
 
@@ -47,7 +47,7 @@ function make_post_cartoonbank()
 	  $parameters = "?" . $theAccessToken  . "&message=" . urlencode($cartoon_brand . ". " . $cartoon_kategoria). "&name=" . urlencode(stripslashes($cartoon_name)) ."&description=" . urlencode(stripslashes($cartoon_description) . " [" . stripslashes($cartoon_additional_description)."]")."&link=". urlencode($cartoon_link) . "&picture=http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". $cartoon_image ."&method=post" . "&caption=".urlencode("The best of Cartoonbank.ru");
 	  $myurl = $apprequest_url . $parameters;
 		
-			//echo $myurl;
+			//pokazh ($myurl,"myurl");
 
 	if ($cartoon_id!='')
 	{
@@ -96,7 +96,7 @@ function update_facebook_date()
 {
 	global $cartoon_id;
 	// Mark image as sent to the Anekdot.ru
-	$update_sql = "update wp_fsr_post set facebook_date='".date("d.m.y H:m:s")."' where ID=".$cartoon_id;
+	$update_sql = "update wp_fsr_post set facebook_date='".date("y.m.d H:m:s")."' where ID=".$cartoon_id;
 		$res = mysql_query($update_sql);
 		if (!$res) {die('<br />'.$update_sql.'<br />Invalid delete query: ' . mysql_error());}
 }
@@ -148,7 +148,10 @@ function get_code()
 		}
 		fclose($handle);
 		*/
-	$code = 'SK7iwrSgPU-fYmXYLft9fBaevkadoEm0rtCsrGJCKYA.eyJpdiI6ImhSbzN1VW9QcjZWVVkyeExWc0hxMWcifQ.iGEzIiW6GhJXnxLfqaheqxroP3TOcQtHBKO7hjqi367gujkBZQ1DA9d8rOci4k7EH5qT6HBGhDp3zkhE0I6JFkrxykH3sLryrgR9-oyvK3irCYy_AmTfbmL3LuroQniA';
+	//$code = 'SK7iwrSgPU-fYmXYLft9fBaevkadoEm0rtCsrGJCKYA.eyJpdiI6ImhSbzN1VW9QcjZWVVkyeExWc0hxMWcifQ.iGEzIiW6GhJXnxLfqaheqxroP3TOcQtHBKO7hjqi367gujkBZQ1DA9d8rOci4k7EH5qT6HBGhDp3zkhE0I6JFkrxykH3sLryrgR9-oyvK3irCYy_AmTfbmL3LuroQniA';
+	$code = 'AQDqQdE0izRrGrMOPJe-78OfGCRnWi9BDUjCvZxRz-vjoLrufFTfJjrgLsDxI_DlKnxLdEp3SyhAHewvT2E7W_xNtXO_W8lhC5STHraX6QOhSaRYFzlCrZv7nGuL-YjBkjANM1MJFIS78KSHHUQaYWwcKp7FmW9l_lS6s-2-DqA7VNp3deZvnTjde_1wNu9i7Ko';
+	//redirect to http://cartoonbank.ru/wp-content/plugins/fb-post-ales/fb_post_best.php?code=AQDqQdE0izRrGrMOPJe-78OfGCRnWi9BDUjCvZxRz-vjoLrufFTfJjrgLsDxI_DlKnxLdEp3SyhAHewvT2E7W_xNtXO_W8lhC5STHraX6QOhSaRYFzlCrZv7nGuL-YjBkjANM1MJFIS78KSHHUQaYWwcKp7FmW9l_lS6s-2-DqA7VNp3deZvnTjde_1wNu9i7Ko
+
 	return $code;
 }
 
@@ -166,7 +169,7 @@ function get_token($code)
 		
 		$parameters = $parameters . '&redirect_uri=' . $redirect_url;
 
-	  //echo "access_token_url=" . $access_token_url . "?" . $parameters . "<br />";
+	  echo "access_token_url=" . $access_token_url . "?" . $parameters . "<br />";
 	  
 	//Initialize the Curl session
 		$ch = curl_init();
@@ -182,7 +185,7 @@ function get_token($code)
 			'client_secret' => $app_secret));
 
 				//ee($URL,"access token url");
-		
+		//ошибка
 		curl_setopt($ch, CURLOPT_URL, $URL);
 		
 		//echo "The URL is ".$URL;
@@ -190,7 +193,6 @@ function get_token($code)
 		$theAccessToken = curl_exec($ch);
 
 				//ee($theAccessToken,"theAccessToken1");
-
 		//Close the connection
 		curl_close($ch);
 		
