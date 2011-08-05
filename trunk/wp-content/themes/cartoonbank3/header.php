@@ -6,13 +6,11 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,380));
 }
 
-
-// <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-// <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>
+ ?>
 <!doctype html>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <meta name="distribution" content="global" />
-<meta name="robots" content="follow, all" />
+<meta name="robots" content="all" />
 <meta name="language" content="ru, en" />
 <meta name="description" content="Лицензионные карикатуры для газет, журналов и электронных СМИ" />
 <meta name="keywords" content="картунбанк, cartoonbank, карикатуры, скачать, приколы, смешные, картинки, комиксы,  карикатура, ру, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, ru, comics, comix" />
