@@ -275,6 +275,8 @@ echo "</div>";
 
 <br /><br />
 <a href="http://cartoonbank.ru/?page_id=1351" target="_blank"><img src="http://cartoonbank.ru/img/b/exhibition_package.gif" width="180" border="0"></a>
+<br /><br />
+<a href="http://cartoonbank.ru/?page_id=1857" target="_blank"><img src="http://cartoonbank.ru/img/b/postard_project.gif" width="180" border="0"></a>
 
 <br /><h2>Разное</h2>
 <div id='last_sales'><a href='?page_id=1299'>100 продаж</a></div>
