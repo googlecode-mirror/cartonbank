@@ -121,14 +121,14 @@ $total_cartoons = $total_cartoons - 1;
         
 		if ($option['id']=='666')
 		{
-			$category_in_the_list = '<div style="padding-top:2px;color:red;font-size:0.8em;"><a style="color:#006600;" href="'.get_option('siteurl').'/?page_id=649" title="подробнее о категории">Что такое «Рабочий стол»</a></div>'.'<a href="#" onclick="rokfor('.$brandid.');">'.stripslashes($option['name']).'';
+			$category_in_the_list = '<div style="padding-top:2px;color:red;font-size:0.8em;"><a style="color:#006600;" href="'.get_option('siteurl').'/?page_id=649" title="подробнее о категории">Что такое «Рабочий стол»</a></div>'.'<a href="#" onclick="rokfor('.$brandid.');" title=\''.stripslashes($option['description']).'\'>'.stripslashes($option['name']).'';
 		}
 		else
 		{
 			if (is_numeric($brandid))
-			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&category=".$option['id']."'>".stripslashes($option['name'])."";
+			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&category=".$option['id']."' title='".stripslashes($option['description'])."'>".stripslashes($option['name'])."";
 			else
-			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&category=".$option['id']."'>".stripslashes($option['name'])."";
+			$category_in_the_list = "<a href='".get_option('product_list_url').$seperator."&category=".$option['id']."' title='".stripslashes($option['description'])."'>".stripslashes($option['name'])."";
 		}
 		
 		foreach ($category_count as $cat_row)
@@ -259,14 +259,14 @@ echo "</div>";
 		if ($author_section)
 		{
 		   $options = "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&color=all&offset=0'>Все изображения [".$total_cartoons."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&color=color'>Цветные [".$color_number."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&color=bw'>Чёрно-белые [".$bw_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&color=color' title='цветные карикатуры'>Цветные [".$color_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&brand=".$brandid."&color=bw' title='черно-белые карикатуры'>Чёрно-белые [".$bw_number."]</a><br />";
 		}
 		else
 		{
 		   $options = "<a href='".get_option('product_list_url').$seperator."&&color=all&offset=0'>Все изображения [".$total_cartoons."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=color'>Цветные [".$color_number."]</a><br />";
-		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=bw'>Чёрно-белые [".$bw_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=color' title='цветные карикатуры'>Цветные [".$color_number."]</a><br />";
+		   $options .= "<a href='".get_option('product_list_url').$seperator."&color=bw' title='черно-белые карикатуры'>Чёрно-белые [".$bw_number."]</a><br />";
 		}
 
 	   echo $options;
@@ -280,9 +280,9 @@ echo "</div>";
 
 <br /><h2>Разное</h2>
 <div id='last_sales'><a href='?page_id=1299'>100 продаж</a></div>
-<div id='last_sales'><a href='?page_id=1284&ord=82&br=0'>100 лучших</a></div>
-<div id='best_of_month'><a href='?page_id=643'>Рейтинг</a></div>
-<div id='tags'><a href='?page_id=390'>Тэги</a></div>
+<div id='last_sales'><a href='?page_id=1284&ord=82&br=0' title='сто лучших карикатур'>100 лучших</a></div>
+<div id='best_of_month'><a href='?page_id=643' title='рейтинг карикатур'>Рейтинг</a></div>
+<div id='tags'><a href='?page_id=390'  title='популярные карикатуры'>Тэги</a></div>
 <div style="float:right;width:180px;text-align:right;">
 	<br /><h2>Вход</h2>
 		<ul style="float:right;width:160px;text-align:right;">
