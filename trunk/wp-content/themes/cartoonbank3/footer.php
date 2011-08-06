@@ -37,4 +37,26 @@
 <noscript><div><img src="//mc.yandex.ru/watch/5781658" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 
+<!--Openstat-->
+<span id="openstat2196559"></span>
+<script type="text/javascript">
+var openstat = { counter: 2196559, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+
+<!-- begin of Top100 code -->
+
+<script id="top100Counter" type="text/javascript" src="http://counter.rambler.ru/top100.jcn?2529853"></script>
+<noscript>
+<a href="http://top100.rambler.ru/navi/2529853/">
+<img src="http://counter.rambler.ru/top100.cnt?2529853" alt="Rambler's Top100" border="0" />
+</a>
+
+</noscript>
+<!-- end of Top100 code -->
 </body></html>
