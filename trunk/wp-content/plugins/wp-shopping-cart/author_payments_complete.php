@@ -99,7 +99,7 @@ function outputPaymentGroupped($year)
 	$timestamp_start = date('Y-m-d 23:59:59',mktime(0, 0, 0, 12, 31, $year-1));
 	$timestamp_end = date('Y-m-d 23:59:59',mktime(0, 0, 0, 1, 0, $year+1));
 
-		$sql = "select name, artist_id, sum(cartoons_sold) as cartoons_sold, sum(reward) as reward, sum(tax_ndfl) as tax_ndfl, sum(reward_to_pay) as reward_to_pay, sum(reward_payed) as reward_payed, sum(reward_remains) as reward_remains from artist_payments, wp_product_brands 
+		$sql = "select name, rezident, artist_id, sum(cartoons_sold) as cartoons_sold, sum(reward) as reward, sum(tax_ndfl) as tax_ndfl, sum(reward_to_pay) as reward_to_pay, sum(reward_payed) as reward_payed, sum(reward_remains) as reward_remains from artist_payments, wp_product_brands 
 			where artist_payments.artist_id =  wp_product_brands.id 
 			and payment_date between '$timestamp_start' and '$timestamp_end'
 			group by name
@@ -120,6 +120,7 @@ function outputPaymentGroupped($year)
 				$out .= "<div class='htt' >Автор</div>";//1
 				$out .= "<div class='ht'>Кол-во проданных рисунков</div>";//2
 				$out .= "<div class='ht'>Начислено авторское вознаграждение</div>";//3
+				$out .= "<div class='ht'>Резидент</div>";//4
 				$out .= "<div class='ht'>Удержан НДФЛ</div>";//4
 				$out .= "<div class='ht'>К выплате</div>";//5
 				$out .= "<div class='ht'>Выплачено</div>";//6
@@ -142,6 +143,7 @@ function outputPaymentGroupped($year)
 					$out .= "<div class='tt'> <span id='switchdetails".$year.$sales['artist_id']."'><a href='javascript:expandItem(\"details".$year.$sales['artist_id']."\");'>[+]</a></span>&nbsp;<b>".$sales['name']."</b></div>";
 					$out .= "<div class='t'>".$sales['cartoons_sold']."</div>";//2
 					$out .= "<div class='t'>".$sales['reward']."</div>";//3
+					$out .= "<div class='t'>".$sales['rezident']."</div>";//4
 					$out .= "<div class='t'>".$sales['tax_ndfl']."</div>";//4
 					$out .= "<div class='t'>".$sales['reward_to_pay']."</div>";//5
 					$out .= "<div class='t'>".$sales['reward_payed']."</div>";//6
@@ -193,6 +195,7 @@ function outputPaymentPerArtist($year,$artist_id)
 						$out .= "<div class='tt'>Автор</div>";
 						$out .= "<div class='t'>Кол-во проданных рисунков</div>";
 						$out .= "<div class='t'>Начислено авторское вознаграждение</div>";
+						$out .= "<div class='t'>Резидент</div>";
 						$out .= "<div class='t'>Удержан НДФЛ</div>";
 						$out .= "<div class='t'>К выплате</div>";
 						$out .= "<div class='t'>Выплачено</div>";
@@ -213,6 +216,7 @@ function outputPaymentPerArtist($year,$artist_id)
 						$out .= "<div class='tt1' style='clear:left'>".$sales['name']."</div>";
 						$out .= "<div class='t1'>".$sales['cartoons_sold']."</div>";
 						$out .= "<div class='t1'>".$sales['reward']."</div>";
+						$out .= "<div class='t1'>".$sales['rezident']."</div>";
 						$out .= "<div class='t1'>".$sales['tax_ndfl']."</div>";
 						$out .= "<div class='t1'>".$sales['reward_to_pay']."</div>";
 						$out .= "<div class='t1'>".$sales['reward_payed']."</div>";

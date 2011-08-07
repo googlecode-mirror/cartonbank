@@ -39,6 +39,16 @@ global $wpdb;
 		$params['hostname'] = 'localhost';
 		$params['username'] = 'z58365_cbru3';
 		$params['password'] = 'greenbat';
+        
+        
+                if (isset($_GET['y']) && is_numeric($_GET['y']))
+                {
+                    $_year = $_GET['y'];
+                }
+                else
+                {
+                    $_year = date("Y");
+                }
 
 
 	if (isset($_POST['approve']) && $_POST['approve'] == 1 && isset($_POST['sql']))
@@ -50,19 +60,36 @@ global $wpdb;
 
 		// set max act number
 
-				$sql = "select max(act_number) as max from artist_payments";
-				$result = $wpdb->get_results($sql,ARRAY_A);
-				if ($result)
-				{
+				//$sql = "select max(act_number) as max from artist_payments where act_number_year='".$_year."'";
+				//$result = $wpdb->get_results($sql,ARRAY_A);
+				//if ($result)
+				//{
 					// get current max
-					$new_max_act_number = $result[0]['max'] +1;
+					//$new_max_act_number = $result[0]['max'] +1;
 					//pokazh($new_max_act_number);
 					// set new max
-					$sql = "update wp_options set option_value = ".$new_max_act_number." where option_name = 'artist_act_number'";
-					$result = $wpdb->query($sql);
-					if (!$result) {die('<br />'.$sql.'<br />Can not set new max act number: ' . mysql_error());}
-				}
+					//$sql = "update wp_options set option_value = '".$new_max_act_number."' where option_name = 'artist_act_number'";
+					//$result = $wpdb->query($sql);
+					//if (!$result) {die('<br />'.$sql.'<br />Can not set new max act number: ' . mysql_error());}
+				//}
 	}
+    else
+    {
+                $sql = "select max(act_number) as max from artist_payments where act_number_year='".$_year."'";
+                //pokazh($sql);
+                $result = $wpdb->get_results($sql,ARRAY_A);
+                if ($result)
+                {
+                    // get current max
+                    $new_max_act_number = $result[0]['max'] +1;
+                    //pokazh($new_max_act_number);
+                    // set new max
+                    $sql = "update wp_options set option_value = '".$new_max_act_number."' where option_name = 'artist_act_number'";
+                    //pokazh($sql);
+                    $result = $wpdb->query($sql);
+                    //if (!$result) {die('<br />'.$sql.'<br />Can not set new max act number: ' . mysql_error());}
+                }
+    }
 
 
 
@@ -276,7 +303,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 
 				if ($sales['actual_money']=='')
 				{
-					$sales['actual_money'] = ($sales['totalprice']*.95); // average money received from Robokassa
+					$sales['actual_money'] = ($sales['price']*.95); // average money received from Robokassa
 				}
 				else
 				{
@@ -286,7 +313,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 				$discount_price = $sales['actual_money']; 
 			}
 
-
+//pokazh($sales);
 
 			echo "<div class='t' style='font-size:0.8em;'><span style='color:silver;'>".$sales['datetime']."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> <i>".$sales['firstname']." ".$sales['lastname']."</i> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
 			
@@ -327,18 +354,18 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 				else
 				{
 //					pokazh($artist['rezident'] );
-					if ($artist['rezident'] == '1')
+					if ($artist['rezident'] == '1' && $_year!='2010')
 					{
-						$tax_ndfl = ($total * 0.7) * 0.13; // проф вычет с резидентов
+						$tax_ndfl = round(($total * 0.7) * 0.13); // проф вычет с резидентов
 					}
 					else
 					{
-						$tax_ndfl = $total * 0.3; // проф вычет с нерезидентов
+						$tax_ndfl = round($total * 0.3); // проф вычет с нерезидентов
 					}
 
 					$reward_topay = $total - $tax_ndfl;
 
-						$sql_encoded = htmlspecialchars("insert into artist_payments (reward_to_pay, tax_ndfl, act_number, artist_id, payment_date, reward, cartoons_sold) values (".$reward_topay.", ".$tax_ndfl.", ".$_invoice_number.", ".$artist['id'].", '".$_year_month."', ".$total.", ".$_cartoons_amount.")", ENT_QUOTES);
+						$sql_encoded = htmlspecialchars("insert into artist_payments (act_number_year, reward_to_pay, tax_ndfl, act_number, artist_id, payment_date, reward, cartoons_sold) values (".$_year.", ".$reward_topay.", ".$tax_ndfl.", ".$_invoice_number.", ".$artist['id'].", '".$_year_month."', ".$total.", ".$_cartoons_amount.")", ENT_QUOTES);
 						//pokazh($sql_encoded,"sql_encoded");
 						echo "<div><form method=post action='#'>
 							<input type='submit' value='Утвердить' style='background-color:#FF9966;'>

@@ -283,7 +283,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 				GROUP BY c.license
 				ORDER BY datetime DESC";
 				$product_list = $wpdb->get_results($sql,ARRAY_A);
-									///pokazh($sql);
+									//pokazh($sql);
 				if($product_list != null)
 					{
 						$n = 1; // sequence number of the cartoon sold to one customer
@@ -302,11 +302,25 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 							//echo "<div class='t'>".date("d.m.y H:m:s",$sales['date'])." <b>".$sales['artist']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b></div>";
 							
 							$total = $total + $discount_price;
+                            
+                            //license type
+                            $lic_type = '';
+                            switch ($sales['price']){
+                                case 250:
+                                    $lic_type = ' Лицензия ограниченная.';
+                                    break;
+                                case 500:
+                                    $lic_type = ' Лицензия стандартная.';
+                                    break;
+                                case 2500:
+                                    $lic_type = ' Лицензия расширенная.';
+                                    break;
+                            }
 							
 							$the_list .= '<tr>
 											<td style="padding:2px;text-align:center;">'.$n.'</td>
 											<td style="padding:2px;text-align:center;">'.$sales["purchaseid"].'</td>
-											<td style="font-style:bold;font-size:1em;padding:2px;">«'.stripslashes($sales["title"]).'» (#'.$sales["id"].') '.$sales["artist"].'</td>
+											<td style="font-style:bold;font-size:1em;padding:2px;">«'.stripslashes($sales["title"]).'» (#'.$sales["id"].') '.$sales["artist"].'. '.$lic_type.'</td>
 											<td style="padding:2px;text-align:center;">1шт.</td>
 											<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
 											<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
