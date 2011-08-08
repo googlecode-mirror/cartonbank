@@ -95,6 +95,7 @@ function outputPaymentGroupped($year)
 {
 	global $wpdb;
 
+	echo ("<br clear='left' />");
 	echo ("<h1>".$year."</h1>");
 	$timestamp_start = date('Y-m-d 23:59:59',mktime(0, 0, 0, 12, 31, $year-1));
 	$timestamp_end = date('Y-m-d 23:59:59',mktime(0, 0, 0, 1, 0, $year+1));
@@ -113,52 +114,54 @@ function outputPaymentGroupped($year)
 
 	if($payments_list != null)
 	{
-				$out = "<div style='background-color:silver;'>";
+				$out = "<div>";
 
-				$out .= "<div>";
-				$out .= "<br clear='left' />";
-				$out .= "<div class='htt' >Автор</div>";//1
-				$out .= "<div class='ht'>Кол-во проданных рисунков</div>";//2
-				$out .= "<div class='ht'>Начислено авторское вознаграждение</div>";//3
-				$out .= "<div class='ht'>Резидент</div>";//4
-				$out .= "<div class='ht'>Удержан НДФЛ</div>";//4
-				$out .= "<div class='ht'>К выплате</div>";//5
-				$out .= "<div class='ht'>Выплачено</div>";//6
-				$out .= "<div class='ht'>Остаток</div>";//7
-				$out .= "<div class='ht' style='width:100px;'>Дата акта или выплаты</div>";
-				$out .= "<div class='ht'>Номер акта</div>";
-				//$out .= "<div class='ht'>Деньги выданы</div>";
-				$out .= "</div>";
-
-		foreach($payments_list as $sales)
-		{
-										
-				//pokazh($sales);
-
-				// groupped list
-				$reward_remains = floatval($sales['reward_to_pay']) - floatval($sales['reward_payed']);
-
-				$out .= "<div>";
-					$out .= "<br clear='left' />";
-					$out .= "<div class='tt'> <span id='switchdetails".$year.$sales['artist_id']."'><a href='javascript:expandItem(\"details".$year.$sales['artist_id']."\");'>[+]</a></span>&nbsp;<b>".$sales['name']."</b></div>";
-					$out .= "<div class='t'>".$sales['cartoons_sold']."</div>";//2
-					$out .= "<div class='t'>".$sales['reward']."</div>";//3
-					$out .= "<div class='t'>".$sales['rezident']."</div>";//4
-					$out .= "<div class='t'>".$sales['tax_ndfl']."</div>";//4
-					$out .= "<div class='t'>".$sales['reward_to_pay']."</div>";//5
-					$out .= "<div class='t'>".$sales['reward_payed']."</div>";//6
-					$out .= "<div class='t'>".$reward_remains."</div>";//7
-					$out .= "<div class='t' style='width:100px;'>".getMonthYearNames($sales['payment_date'])."</div>";//8
-					$out .= "<div class='t'>".$sales['act_number']."</div>";//9
-				$out .= "</div>";
-				
-					$out .= "<div id='details".$year.$sales['artist_id']."' class='clpsd'>";
-						$out .= "<br clear='left' />";//вкладыш
-						$out .= "<div  style='width:100%'>".outputPaymentPerArtist($year,$sales['artist_id'])."</div>";
+					$out .= "<div>";
+						$out .= "<div class='htt' >Автор</div>";//1
+						$out .= "<div class='ht'>Кол-во проданных рисунков</div>";//2
+						$out .= "<div class='ht'>Начислено авторское вознаграждение</div>";//3
+						$out .= "<div class='ht'>Резидент</div>";//4
+						$out .= "<div class='ht'>Удержан НДФЛ</div>";//4
+						$out .= "<div class='ht'>К выплате</div>";//5
+						$out .= "<div class='ht'>Выплачено</div>";//6
+						$out .= "<div class='ht'>Остаток</div>";//7
+						$out .= "<div class='ht' style='width:100px;'>Дата акта или выплаты</div>";
+						$out .= "<div class='ht'>Номер акта</div>";
 					$out .= "</div>";
-		}
+
+					foreach($payments_list as $sales)
+					{
+													
+							//pokazh($sales);
+
+							// groupped list
+							$reward_remains = floatval(round($sales['reward_to_pay'])) - floatval(round($sales['reward_payed']));
+
+							$out .= "<div>";
+								$out .= "<br clear='left' />";
+								$out .= "<div class='tt'> <span id='switchdetails".$year.$sales['artist_id']."'><a href='javascript:expandItem(\"details".$year.$sales['artist_id']."\");'>[+]</a></span>&nbsp;<b>".$sales['name']."</b></div>";
+								$out .= "<div class='t'>".$sales['cartoons_sold']."</div>";//2
+								$out .= "<div class='t'>".$sales['reward']."</div>";//3
+								$out .= "<div class='t'>".$sales['rezident']."</div>";//4
+								$out .= "<div class='t'>".round($sales['tax_ndfl'])."</div>";//4
+								$out .= "<div class='t'>".round($sales['reward_to_pay'])."</div>";//5
+								$out .= "<div class='t'>".round($sales['reward_payed'])."</div>";//6
+								
+								if ($reward_remains>=5000)
+									$out .= "<div class='t' style='color:red; font-weight:bold;background-color:#FDDE9D;'>".$reward_remains."</div>";
+								else
+									$out .= "<div class='t'>".$reward_remains."</div>";
+
+								$out .= "<div class='t' style='width:100px;'>".getMonthYearNames($sales['payment_date'])."</div>";//8
+								$out .= "<div class='t'>".$sales['act_number']."</div>";//9
+							$out .= "</div>";
+							
+								$out .= "<div id='details".$year.$sales['artist_id']."' class='clpsd'>";
+									$out .= "<br clear='left' />";//вкладыш
+									$out .= "<div  style='width:100%'>".outputPaymentPerArtist($year,$sales['artist_id'])."</div>";
+								$out .= "</div>";
+					}
 				$out .= "</div>";
-				$out .= "<br clear='left' />";
 				
 				echo $out;
 	}
@@ -190,18 +193,17 @@ function outputPaymentPerArtist($year,$artist_id)
 
 		if($payments_list != null)
 		{
-					$out = "<div>";
-						$out .= "<div style='display:none;'>";
-						$out .= "<div class='tt'>Автор</div>";
-						$out .= "<div class='t'>Кол-во проданных рисунков</div>";
-						$out .= "<div class='t'>Начислено авторское вознаграждение</div>";
-						$out .= "<div class='t'>Резидент</div>";
-						$out .= "<div class='t'>Удержан НДФЛ</div>";
-						$out .= "<div class='t'>К выплате</div>";
-						$out .= "<div class='t'>Выплачено</div>";
-						$out .= "<div class='t'>Остаток</div>";
-						$out .= "<div class='t' style='width:100px;'>Дата акта или выплаты</div>";
-						$out .= "<div class='t'>Номер акта</div>";
+					$out = "<div  style='display:none;'>";
+							$out .= "<div class='tt'>Автор</div>";
+							$out .= "<div class='t'>Кол-во проданных рисунков</div>";
+							$out .= "<div class='t'>Начислено авторское вознаграждение</div>";
+							$out .= "<div class='t'>Резидент</div>";
+							$out .= "<div class='t'>Удержан НДФЛ</div>";
+							$out .= "<div class='t'>К выплате</div>";
+							$out .= "<div class='t'>Выплачено</div>";
+							$out .= "<div class='t'>Остаток</div>";
+							$out .= "<div class='t' style='width:100px;'>Дата акта или выплаты</div>";
+							$out .= "<div class='t'>Номер акта</div>";
 					$out .= "</div>";
 
 
@@ -213,92 +215,38 @@ function outputPaymentPerArtist($year,$artist_id)
 					// detailed list
 
 					$out .= "<div style='width:100%;'>";
-						$out .= "<div class='tt1' style='clear:left'>".$sales['name']."</div>";
-						$out .= "<div class='t1'>".$sales['cartoons_sold']."</div>";
-						$out .= "<div class='t1'>".$sales['reward']."</div>";
-						$out .= "<div class='t1'>".$sales['rezident']."</div>";
-						$out .= "<div class='t1'>".$sales['tax_ndfl']."</div>";
-						$out .= "<div class='t1'>".$sales['reward_to_pay']."</div>";
-						$out .= "<div class='t1'>".$sales['reward_payed']."</div>";
-						$out .= "<div class='t1'>".$sales['reward_remains']."</div>";
-						$out .= "<div class='t1' style='width:100px;'>".getMonthYearNames($sales['payment_date'])."</div>";
 
-						if (strlen($sales['act_number'])>10)
+						if ($sales['cartoons_sold']==0 && $sales['reward']==0)
 						{
-							$out .= "<div class='t1' style='color:red;'>Выплата</div>";
+							$out .= "<div class='tt1' style='background-color:#ECFCCF; clear:left'>".$sales['name']."</div>";
+							$out .= "<div class='t1' style='background-color:#ECFCCF;'>".$sales['cartoons_sold']."</div>";
+							$out .= "<div class='t1' style='background-color:#ECFCCF;'>".$sales['reward']."</div>";
+							$out .= "<div class='t1' style='background-color:#ECFCCF;'>".$sales['rezident']."</div>";
+							$out .= "<div class='t1' style='background-color:#ECFCCF;'>".round($sales['tax_ndfl'])."</div>";
+							$out .= "<div class='t1' style='background-color:#ECFCCF;'>".round($sales['reward_to_pay'])."</div>";
+							$out .= "<div class='t1' style='background-color:#ECFCCF;'>".round($sales['reward_payed'])."</div>";
+							$out .= "<div class='t1' style='background-color:#ECFCCF;'>".$sales['reward_remains']."</div>";
+							$out .= "<div class='t1' style='background-color:#ECFCCF; width:100px;'>".getMonthYearNames($sales['payment_date'])."</div>";
+							$out .= "<div class='t1' style='background-color:#ECFCCF; color:red;'>Выплата</div>";
 						}
 						else
 						{
+							$out .= "<div class='tt1' style='clear:left'>".$sales['name']."</div>";
+							$out .= "<div class='t1'>".$sales['cartoons_sold']."</div>";
+							$out .= "<div class='t1'>".$sales['reward']."</div>";
+							$out .= "<div class='t1'>".$sales['rezident']."</div>";
+							$out .= "<div class='t1'>".round($sales['tax_ndfl'])."</div>";
+							$out .= "<div class='t1'>".round($sales['reward_to_pay'])."</div>";
+							$out .= "<div class='t1'>".round($sales['reward_payed'])."</div>";
+							$out .= "<div class='t1'>".$sales['reward_remains']."</div>";
+							$out .= "<div class='t1' style='width:100px;'>".getMonthYearNames($sales['payment_date'])."</div>";
 							$out .= "<div class='t1'>".$sales['act_number']."</div>";
 						}
 					$out .= "</div>";
 
 			}
-					$out .= "</div>";
 			
 				return $out;
-	}
-}
-
-
-function outputPayment($year)
-{
-	global $wpdb;
-	echo ("<h1>".$year."</h1>");
-	$timestamp_start = date('Y-m-d 23:59:59',mktime(0, 0, 0, 12, 31, $year-1));
-	$timestamp_end = date('Y-m-d 23:59:59',mktime(0, 0, 0, 1, 0, $year+1));
-
-		$sql = "select name, artist_id, cartoons_sold, reward, tax_ndfl, reward_to_pay, reward_payed, reward_remains,
-			payment_date, act_number, is_payed from artist_payments, wp_product_brands 
-			where artist_payments.artist_id =  wp_product_brands.id 
-			and payment_date between '$timestamp_start' and '$timestamp_end'
-			order by payment_date desc, name";
-			
-			//pokazh($sql);
-
-			$payments_list = $wpdb->get_results($sql,ARRAY_A);
-
-			//pokazh($payments_list);
-
-	if($payments_list != null)
-	{
-				$out = "<div style='background-color:silver;'>";
-
-				$out .= "<div>";
-				$out .= "<div  class='tt'>Автор</div>";
-				$out .= "<div  class='t'>Кол-во проданных рисунков</div>";
-				$out .= "<div class='t'>Начислено авторское вознаграждение</div>";
-				$out .= "<div class='t'>Удержан НДФЛ</div>";
-				$out .= "<div class='t'>К выплате</div>";
-				$out .= "<div class='t'>Выплачено</div>";
-				$out .= "<div class='t'>Остаток</div>";
-				$out .= "<div class='tt' style='width:100px;'>Дата акта или выплаты</div>";
-				$out .= "<div class='t'>Номер акта</div>";
-				//$out .= "<div class='t'>Деньги выданы</div>";
-				$out .= "</div>";
-
-		foreach($payments_list as $sales)
-		{
-										
-				//pokazh($sales);
-
-				$out .= "<div>";
-				$out .= "<div  class='tt'>".$sales['name']."</div>";
-				$out .= "<div  class='t'>".$sales['cartoons_sold']."</div>";
-				$out .= "<div class='t'>".$sales['reward']."</div>";
-				$out .= "<div class='t'>".$sales['tax_ndfl']."</div>";
-				$out .= "<div class='t'>".$sales['reward_to_pay']."</div>";
-				$out .= "<div class='t'>".$sales['reward_payed']."</div>";
-				$out .= "<div class='t'>".$sales['reward_remains']."</div>";
-				$out .= "<div class='tt'>".getMonthYearNames($sales['payment_date'])."</div>";
-				$out .= "<div class='t'>".$sales['act_number']."</div>";
-				//$out .= "<div class='t'>".$sales['is_payed']."</div>";
-				$out .= "</div>";
-
-		}
-				$out .= "</div>";
-				
-				echo $out;
 	}
 }
 
@@ -347,12 +295,27 @@ function get_months_list()
 function make_payment ($amount, $y, $artist_id, $m)
 {
 	global $wpdb;
-//	make_payment($_POST['amount'],$_POST['year'],$_POST['artists'],$_POST['months']);
-//pokazh ($amount." ".$y." ".$artist_id." ". $m);
 
-$payment_day = date('y-m-d',mktime(0, 0, 0, $m, 1, $y));
-$act_number = uniqid();
+	$payment_day = date('y-m-d',mktime(0, 0, 0, $m, 1, $y));
 
+		// set max act number
+
+				$sql = "select max(act_number) as max from artist_payments";
+				$result = $wpdb->get_results($sql,ARRAY_A);
+				if ($result)
+				{
+					// get current max
+					//pokazh($result[0]['max'],'max');
+					$new_max_act_number = $result[0]['max'] +1;
+					// set new max
+					$sql = "update wp_options set option_value = '".$new_max_act_number."' where option_name = 'artist_act_number'";
+					//pokazh($sql,'sql');
+
+					$result = $wpdb->query($sql);
+					//if (!$result) {die('<br />'.$sql.'<br />Can not set new max act number: ' . mysql_error());}
+				}
+
+$act_number = $new_max_act_number;
 
 $sql = "insert into artist_payments (artist_id, payment_date, reward_payed, act_number) values (".$artist_id.", '".$payment_day."', ".$amount.", '".$act_number."')";
 $result = $wpdb->query($sql);
@@ -436,11 +399,12 @@ function ru_month ($month, $sklon=false)
 		font-size:0.9em;
 		border:1px solid #E0E0E0; 
 		padding:2px;
+		padding-right:4px;
 		width:60px;
 		height:20px;
 		margin:1px;
 		background-color:white;
-		text-align:center;
+		text-align:right;
 		vertical-align:middle;
 		float: left;
 	}
