@@ -56,25 +56,10 @@ global $wpdb;
 		$sql = stripslashes($_POST['sql']);
 		$result = $wpdb->query($sql);
 		if (!$result) {die('<br />'.$sql.'<br />Invalid insert query: ' . mysql_error());}
-		//pokazh (stripslashes(htmlspecialchars_decode($_POST['sql'], ENT_QUOTES)),"decoded sql");
-
-		// set max act number
-
-				//$sql = "select max(act_number) as max from artist_payments where act_number_year='".$_year."'";
-				//$result = $wpdb->get_results($sql,ARRAY_A);
-				//if ($result)
-				//{
-					// get current max
-					//$new_max_act_number = $result[0]['max'] +1;
-					//pokazh($new_max_act_number);
-					// set new max
-					//$sql = "update wp_options set option_value = '".$new_max_act_number."' where option_name = 'artist_act_number'";
-					//$result = $wpdb->query($sql);
-					//if (!$result) {die('<br />'.$sql.'<br />Can not set new max act number: ' . mysql_error());}
-				//}
 	}
     else
     {
+		pokazh ("Начальный номер актов обновлён");
                 $sql = "select max(act_number) as max from artist_payments where act_number_year='".$_year."'";
                 //pokazh($sql);
                 $result = $wpdb->get_results($sql,ARRAY_A);
@@ -83,11 +68,9 @@ global $wpdb;
                     // get current max
                     $new_max_act_number = $result[0]['max'] +1;
                     //pokazh($new_max_act_number);
-                    // set new max
                     $sql = "update wp_options set option_value = '".$new_max_act_number."' where option_name = 'artist_act_number'";
                     //pokazh($sql);
                     $result = $wpdb->query($sql);
-                    //if (!$result) {die('<br />'.$sql.'<br />Can not set new max act number: ' . mysql_error());}
                 }
     }
 
@@ -123,7 +106,7 @@ if (isset($_POST['new_invoice_start_number']) && is_numeric($_POST['new_invoice_
 	// update invoice start number in database
 	$sql = "update wp_options set option_value=".$_invoice_start_number." where option_name='artist_act_number'";
 	$result = $wpdb->query($sql);
-	if (!$result) {die('<br />'.$sql.'<br />Invalid query: ' . mysql_error());}
+	//if (!$result) {die('<br />'.$sql.'<br />Invalid query: ' . mysql_error());}
 }
 else
 {
