@@ -121,11 +121,11 @@ function outputPaymentGroupped($year)
 						$out .= "<div class='ht'>Кол-во проданных рисунков</div>";//2
 						$out .= "<div class='ht'>Начислено авторское вознаграждение</div>";//3
 						$out .= "<div class='ht'>Резидент</div>";//4
-						$out .= "<div class='ht'>Удержан НДФЛ</div>";//4
-						$out .= "<div class='ht'>К выплате</div>";//5
-						$out .= "<div class='ht'>Выплачено</div>";//6
-						$out .= "<div class='ht'>Остаток</div>";//7
-						$out .= "<div class='ht' style='width:100px;'>Дата акта или выплаты</div>";
+						$out .= "<div class='ht'>Удержан НДФЛ</div>";//5
+						$out .= "<div class='ht'>К выплате</div>";//6
+						$out .= "<div class='ht'>Выплачено</div>";//7
+						$out .= "<div class='ht'>Остаток</div>";//8
+						$out .= "<div class='ht' style='width:100px;'>Дата акта или выплаты</div>";..9
 						$out .= "<div class='ht'>Номер акта</div>";
 					$out .= "</div>";
 
@@ -136,6 +136,7 @@ function outputPaymentGroupped($year)
 
 							// groupped list
 							$reward_remains = floatval(round($sales['reward_to_pay'])) - floatval(round($sales['reward_payed']));
+							//$reward_remains_total = floatval(round($sales['reward_to_pay_total'])) - floatval(round($sales['reward_payed_total']));
 
 							$out .= "<div>";
 								$out .= "<br clear='left' />";
@@ -143,16 +144,16 @@ function outputPaymentGroupped($year)
 								$out .= "<div class='t'>".$sales['cartoons_sold']."</div>";//2
 								$out .= "<div class='t'>".$sales['reward']."</div>";//3
 								$out .= "<div class='t'>".$sales['rezident']."</div>";//4
-								$out .= "<div class='t'>".round($sales['tax_ndfl'])."</div>";//4
-								$out .= "<div class='t'>".round($sales['reward_to_pay'])."</div>";//5
-								$out .= "<div class='t'>".round($sales['reward_payed'])."</div>";//6
+								$out .= "<div class='t'>".round($sales['tax_ndfl'])."</div>";//5
+								$out .= "<div class='t'>".round($sales['reward_to_pay'])."</div>";//6
+								$out .= "<div class='t'>".round($sales['reward_payed'])."</div>";//7
 								
 								if ($reward_remains>=5000)
 									$out .= "<div class='t' style='color:red; font-weight:bold;background-color:#FDDE9D;'>".$reward_remains."</div>";
 								else
 									$out .= "<div class='t'>".$reward_remains."</div>";
 
-								$out .= "<div class='t' style='width:100px;'>".getMonthYearNames($sales['payment_date'])."</div>";//8
+								$out .= "<div class='t' style='width:100px;'>".getMonthYearNames($sales['payment_date'])."</div>";//9
 								$out .= "<div class='t'>".$sales['act_number']."</div>";//9
 							$out .= "</div>";
 							

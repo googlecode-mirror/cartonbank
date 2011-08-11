@@ -337,7 +337,15 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 				else
 				{
 //					pokazh($artist['rezident'] );
-					if ($artist['rezident'] == '1' && $_year!='2010')
+					if ($artist['rezident'] == '1' && $_year='2010')
+					{
+						$tax_ndfl = round($total * 0.13); // проф вычет с резидентов
+					}
+					elseif ($artist['rezident'] == '0' && $_year='2010')
+					{
+						$tax_ndfl = round($total * 0.3); // проф вычет с нерезидентов
+					}
+					elseif ($artist['rezident'] == '1' && $_year!='2010')
 					{
 						$tax_ndfl = round(($total * 0.7) * 0.13); // проф вычет с резидентов
 					}
@@ -345,6 +353,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 					{
 						$tax_ndfl = round($total * 0.3); // проф вычет с нерезидентов
 					}
+
 
 					$reward_topay = $total - $tax_ndfl;
 
