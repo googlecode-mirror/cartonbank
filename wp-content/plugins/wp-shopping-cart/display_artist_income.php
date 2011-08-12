@@ -250,7 +250,7 @@ for ($_month = 12; $_month >= 1; $_month--)
 
 				if ($sales['actual_money']=='')
 				{
-					$sales['actual_money'] = ($sales['totalprice']*.95); // average money received from Robokassa
+					$sales['actual_money'] = ($sales['price']*.95); // average money received from Robokassa
 				}
 				else
 				{
