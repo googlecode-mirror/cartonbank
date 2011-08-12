@@ -1,8 +1,10 @@
-<?
-echo "<h1>Расширенный поиск</h1>";
-?>
-<form method=post action="?page_id=29">
+<h1>Расширенный поиск</h1>
 
+<?
+	echo ("Последние запросы: " . get_last_search_terms());
+?>
+
+<form method=post action="?page_id=29">
 	
 <table width="100%" ><tbody><tr bgcolor="#C1E0FF">
 <td>
@@ -95,7 +97,19 @@ function get_category_list()
 	return $categories;
 }
 
+function get_last_search_terms()
+{
+	global $wpdb;
+	$sql = "SELECT distinct(term) FROM `search_terms` order by id desc limit 20";
+	$terms = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
+	$out = "";
+	foreach ($terms as $term)
+	{
+		$out = $out . "<a href='http://cartoonbank.ru/?page_id=29&cs=". $term['term'] . "'>". $term['term'] ."</a> ";
+	}
 
+	return $out;
+}
 ?>
 
 <link media="screen" rel="stylesheet" href="http://cartoonbank.ru/ales/colorbox/example2/colorbox.css" />
