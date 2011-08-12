@@ -999,8 +999,14 @@ function save_search_terms($terms)
 		$_header = $_SERVER['HTTP_USER_AGENT'];
 		$_remote_ip = $_SERVER['REMOTE_ADDR'];
 
-		if (!(strstr($_header,'bot') || strstr($_header,'Yahoo')))
+		if (!(strstr($_header,'bot') || strstr($_header,'Yahoo') || strstr($_header,'DotBot')))
 		{
+			$terms = trim($terms);
+			if (substr($terms,-2)=='pt')
+			{
+				$terms = substr($terms,0,-2);
+			}
+			
 			$sql = "INSERT INTO  `search_terms` (
 						`id` ,
 						`term` ,
@@ -1008,7 +1014,7 @@ function save_search_terms($terms)
 						`header`
 						)
 						VALUES (
-						NULL ,  '".trim($terms)."', 
+						NULL ,  '".$terms."', 
 						CURRENT_TIMESTAMP,
 						'".$_remote_ip." ".$_header."'
 						);";
