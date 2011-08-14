@@ -1,5 +1,5 @@
 <h2>Заработано</h2>
-
+<b>Внимание. В поле "Автору" и в сумме авторских отчислений указана сумма выплаты до вычета налога НДФЛ</b><br>
 <?php
 $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
@@ -148,19 +148,6 @@ else
 				}
 		}
 
-/*
-		echo "<form method=post action='#'>";
-		echo "2) Акты выполненных работ будут выводится <b>начиная с номера</b> ";
-		echo "<input type='text' name='new_invoice_start_number' style='width:45px;' value='".$_invoice_start_number."'>";
-		echo "<input type='submit' value=' изменить '>";
-		echo "</form>";
-*/
-?>
-
-
-
-<?
-
 
 //todo
 isset($_GET['brand'])?$_brand = $_GET['brand']:$_brand = 0;
@@ -177,17 +164,39 @@ isset($_GET['brand'])?$_brand = $_GET['brand']:$_brand = 0;
 		//pokazh($product);
 	}
 /*
-if ($product['id'] != $current_user->id & $current_user->wp_user_level < 10)
-{
-	echo ('Извините, у вас недостаточно полномочий для доступа к этой странице.');
-	exit();
-}
-*/
-echo ("<div class='t' style='padding:4px;font-size:1.1em;font-weight:bold;background-color:#E6E9FF;padding-left:4px;'>".$product['name'].". <span style='color:silver;'>Договор № ".$product['contract']." от ".date_format(date_create($product['contract_date']),'d-m-Y')."</span></div>");
-for ($_year = 2011; $_year >= 2010; $_year--)
-{
-for ($_month = 12; $_month >= 1; $_month--)  
+	if ($product['id'] != $current_user->id & $current_user->wp_user_level < 10)
 	{
+		echo ('Извините, у вас недостаточно полномочий для доступа к этой странице.');
+		exit();
+	}
+*/
+
+/// get dates for payment acts
+	$sql = "select payment_date, artist_id, act_number from artist_payments where artist_id=".$_brand." order by payment_date desc";
+	$result = $wpdb->get_results($sql,ARRAY_A);
+	 foreach($result as $r)
+		{
+			$payday = $r['payment_date'];
+			$list = explode('-', $payday);
+			$_year = $list[0];
+			$_month = $list[1];
+		}
+
+
+
+echo ("<div class='t' style='padding:4px;font-size:1.1em;font-weight:bold;background-color:#E6E9FF;padding-left:4px;'>".$product['name'].". <span style='color:silver;'>Договор № ".$product['contract']." от ".date_format(date_create($product['contract_date']),'d-m-Y')."</span></div>");
+
+	/// get dates for payment acts
+	$sql = "select payment_date, artist_id, act_number from artist_payments where artist_id=".$_brand." order by payment_date desc";
+	$result = $wpdb->get_results($sql,ARRAY_A);
+foreach($result as $r)
+	{
+			$payday = $r['payment_date'];
+			$list = explode('-', $payday);
+			$_year = $list[0];
+			$_month = $list[1];
+			$_invoice_number = $r['act_number'];
+			//pokazh($_invoice_number);
 
 	$start_timestamp = date('y-m-d',mktime(0, 0, 0, $_month, 1, $_year));
 	$end_timestamp = date('y-m-d',mktime(0, 0, 0, ($_month+1), 0, $_year));
@@ -216,10 +225,6 @@ for ($_month = 12; $_month >= 1; $_month--)
 	GROUP BY c.license
 	order by purchaseid";
 
-			// --AND payment_arrived_date BETWEEN '$start_timestamp' AND '$end_timestamp'
-			// AND b.id = '".$product['id']."'				
-					
-			///pokazh("product['id']",$product['id']);
 
 	$product_list = $wpdb->get_results($sql,ARRAY_A);
 
@@ -233,9 +238,8 @@ for ($_month = 12; $_month >= 1; $_month--)
 		$the_list = ''; // html list of cartoons with row tags
 		$contract_period = $_month.".".date("Y");
 
-		$_invoice_number = $_invoice_start_number + $customer_number;
+		//$_invoice_number = $_invoice_start_number + $customer_number;
 
-		//echo ("<div id='white' style='background-color:white;padding:2px;margin-bottom:12px;'><div class='t' style='font-size:1.1em;font-weight:bold;background-color:#E6E9FF;padding-left:4px;'>".$product['name'].". <span style='color:silver;'>Контракт № ".$product['contract']." от ".date_format(date_create($product['contract_date']),'d-m-Y')."</span></div>");
 
 	  foreach($product_list as $sales)
 		{
@@ -297,13 +301,15 @@ for ($_month = 12; $_month >= 1; $_month--)
 		
 		
 		//$out = fill_invoice($filename_acceptance_certificate_pdf, $_invoice_number, $invoice_date, $product['name'], $_bank_attributes, $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
-		$out = fill_invoice($filename_acceptance_certificate_pdf, '', $invoice_date, $product['name'], $_bank_attributes, $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+		$out = fill_invoice($filename_acceptance_certificate_pdf, $_invoice_number, $invoice_date, $product['name'], $_bank_attributes, $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+
 		echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/artist_acceptance_certificate.php'>
 			<!-- <input type='submit' value='скачать акт № ".$_invoice_number." выполненных работ (PDF) '> -->
-			<input type='submit' value='скачать акт выполненных работ (PDF) '>
+			<input type='submit' value='скачать акт выполненных работ № ".$_invoice_number." (PDF) '>
 			<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
 			<input type='hidden' name='filename' value='acceptance_certificate_".$_invoice_number."'>
 		</form></div>");
+
 		$out_nostamp = fill_invoice($filename_acceptance_certificate_nostamp_pdf, $_invoice_number, $invoice_date, $product['name'], $_bank_attributes, $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 		/*
 		echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/artist_acceptance_certificate.php'>
@@ -318,8 +324,8 @@ for ($_month = 12; $_month >= 1; $_month--)
 		$total =0;
 
 	}//if($product_list != null)
-}//for ($_month = 1; $_month <= 12; $_month++)  
-}// for years
+}//foreach payment date //////for ($_month = 1; $_month <= 12; $_month++)  
+//}// for years
 
 ?>
 <div style="margin-top:12px; padding:6px;background-color:#66CC00">
