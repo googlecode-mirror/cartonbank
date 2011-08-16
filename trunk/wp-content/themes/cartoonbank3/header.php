@@ -6,7 +6,20 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,380));
 }
 
- ?>
+// change the header
+$h = '';
+if (isset($_SERVER['QUERY_STRING']))
+{
+	if (isset($_GET['cs']) && $_GET['cs'])
+		{
+			$h = "(".$_GET['cs'].") ";
+		}
+	if (isset($_POST['cs']) && $_POST['cs'])
+		{
+			$h = "(".$_POST['cs'].") ";
+		}
+}
+?>
 <!doctype html>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <meta name="distribution" content="global" />
@@ -15,7 +28,7 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 <meta name="description" content="Лицензионные карикатуры для газет, журналов и электронных СМИ" />
 <meta name="keywords" content="картунбанк, cartoonbank, карикатуры, скачать, приколы, смешные, картинки, комиксы,  карикатура, ру, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, ru, comics, comix" />
 
-<title>Картунбанк<?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.  Карикатуры</title>
+<title><?echo $h;?>Картунбанк<?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.  Карикатуры</title>
 <meta name="generator" content="cartoonbank" />
 
 <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
