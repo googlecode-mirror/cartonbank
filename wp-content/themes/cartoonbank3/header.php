@@ -10,13 +10,44 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 $h = '';
 if (isset($_SERVER['QUERY_STRING']))
 {
+	// search word
 	if (isset($_GET['cs']) && $_GET['cs'])
 		{
-			$h = "(".$_GET['cs'].") ";
+			$h = $h."(".$_GET['cs'].") ";
 		}
 	if (isset($_POST['cs']) && $_POST['cs'])
 		{
-			$h = "(".$_POST['cs'].") ";
+			$h = $h."(".$_POST['cs'].") ";
+		}
+	//category
+	if (isset($_GET['category']) && $_GET['category'] && is_numeric($_GET['category']))
+		{
+			$sql = "select name from wp_product_categories where id=".$_GET['category'];
+			$c = $wpdb->get_results($sql);
+			$cat = $c[0]->name;
+			$h = $h."(".$cat.") ";
+		}
+	if (isset($_POST['category']) && $_POST['category'])
+		{
+			$sql = "select name from wp_product_categories where id=".$_GET['category'];
+			$c = $wpdb->get_results($sql);
+			$cat = $c[0]->name;
+			$h = $h."(".$cat.") ";
+		}
+	//brand
+	if (isset($_GET['brand']) && $_GET['brand'] && is_numeric($_GET['brand']))
+		{
+			$sql = "select name from wp_product_brands where id=".$_GET['brand'];
+			$c = $wpdb->get_results($sql);
+			$brand = $c[0]->name;
+			$h = $h."".$brand.". ";
+		}
+	if (isset($_POST['brand']) && $_POST['brand'])
+		{
+			$sql = "select name from wp_product_brands where id=".$_GET['brand'];
+			$c = $wpdb->get_results($sql);
+			$brand = $c[0]->name;
+			$h = $h."".$brand.". ";
 		}
 }
 ?>
