@@ -1,5 +1,4 @@
 <h2>Заработано</h2>
-<b>Внимание. В поле "Автору" и в сумме авторских отчислений указана сумма выплаты до вычета налога НДФЛ</b><br>
 <?php
 $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
@@ -57,38 +56,50 @@ $customer_number = 0;
 
 $this_date = getdate();
 
-// artist
-$_brand = '';
-if (isset($_GET['brand']) && is_numeric($_GET['brand']))
-{
-	$_brand = $_GET['brand'];
-}
-//pokazh($product['id']);
-//pokazh($current_user->id); //16
-//pokazh($current_user->wp_user_level); //2
-//pokazh($_brand); //8
-
+//////// artist
+//////// who is logged on?
 $sql = "SELECT id FROM `wp_product_brands` WHERE user_id = ".$current_user->id;
 $userbrand = $wpdb->get_results($sql,ARRAY_A);
-//pokazh($sql);
 if($userbrand != null)
 {
-	$userbrandid = $userbrand[0]['id'];
-	//pokazh($product);
+	$userbrandid = $userbrand[0]['id']; // logged on user brand
 }
 else
 {
 	$userbrandid = 0;
 }
 
-//pokazh($userbrand);
-//pokazh($_brand); //8
-if ($_brand == '' | ($_brand != $userbrandid & $current_user->wp_user_level < 10))
+
+/*
+	if ($_brand == '' | ($_brand != $userbrandid))
+	{
+		echo ('Извините, у вас недостаточно полномочий для доступа к этой странице.');
+		exit();
+	}
+	//pokazh($userbrandid,"userbrandid");
+	//pokazh($_brand,"_brand"); //8
+	//pokazh($product['id']);
+	//pokazh($current_user->id,"current_user->id"); //16
+	//pokazh($current_user->wp_user_level,"current_user->wp_user_level"); //2
+	//pokazh($_brand); //8
+
+*/
+
+/// login for admins
+if (($current_user->wp_user_level == 10) && isset($_GET['brand']) && is_numeric($_GET['brand']))
 {
-	echo ('Извините, у вас недостаточно полномочий для доступа к этой странице.');
-	exit();
+	$_brand = $_GET['brand'];
+}
+else
+{
+	$_brand = $userbrandid;
 }
 
+?>
+
+<b>Внимание. В полях "Автору" и "Общая сумма авторских отчислений" указано начисленное авторское вознаграждение до вычета налога НДФЛ</b><br><br>
+
+<?
 
 if (isset($_POST['new_invoice_start_number']) && is_numeric($_POST['new_invoice_start_number']))
 {
@@ -150,7 +161,7 @@ else
 
 
 //todo
-isset($_GET['brand'])?$_brand = $_GET['brand']:$_brand = 0;
+//isset($_GET['brand'])?$_brand = $_GET['brand']:$_brand = 0;
 
 	$sql = "SELECT id, name, contract, contract_date 
 			FROM `wp_product_brands` 
@@ -164,7 +175,7 @@ isset($_GET['brand'])?$_brand = $_GET['brand']:$_brand = 0;
 		//pokazh($product);
 	}
 /*
-	if ($product['id'] != $current_user->id & $current_user->wp_user_level < 10)
+if ($product['id'] != $current_user->id & $current_user->wp_user_level < 10)
 	{
 		echo ('Извините, у вас недостаточно полномочий для доступа к этой странице.');
 		exit();
@@ -265,9 +276,7 @@ foreach($result as $r)
 			}
 
 
-
-			//echo "<div class='t'><span style='color:silver;'>".date("d.m.y",$sales['date'])."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
-			echo "<div class='t' style='font-size:0.8em;'><span style='color:silver;'>".$sales['datetime']."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> <i>".$sales['firstname']." ".$sales['lastname']."</i> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)."% итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
+			echo "<div class='t' style='font-size:0.8em;'><span style='color:silver;'>".$sales['datetime']."</span> Заказ:".$sales['purchaseid']." <b>".$sales['smi']."</b> <i>".$sales['firstname']." ".$sales['lastname']."</i> <a href='http://cartoonbank.ru/?page_id=29&cartoonid=".$sales['picture_id']."'>№".$sales['picture_id']." «".stripslashes($sales['title'])."»</a> цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)."% итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
 			
 			$total = $total + round(0.4*($discount_price),0);
 			$counter_sold_month++;
