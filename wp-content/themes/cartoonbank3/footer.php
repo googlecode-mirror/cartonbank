@@ -15,6 +15,7 @@
 <a href="http://twitter.com/#!/cartoonbankru">в Твиттере <img src="http://cartoonbank.ru/img/s_twitter.png" title="Follow us on Twitter"></a>  
 <a href="http://www.facebook.com/profile.php?id=100001929470986&amp;sk=wall">в Фейсбуке <img src="http://cartoonbank.ru/img/s_facebook.png" title="Follow us on Facebook"></a>  
 <a href="http://friendfeed.com/cartoonbank">в Френдфиде <img src="http://cartoonbank.ru/img/s_friendfeed.png" title="Follow us on Frienfeed"></a>
+<br><a href="http://feedburner.google.com/fb/a/mailverify?uri=Cartoonbankru&amp;loc=ru_RU" title="Подпишитесь на доставку новых рисунков по почте">Email-подписка</a>
 </div>
 
 <?php do_action('wp_footer'); ?>
@@ -59,4 +60,13 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
 
 </noscript>
 <!-- end of Top100 code -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'ru'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
 </body></html>
