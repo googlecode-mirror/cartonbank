@@ -183,7 +183,7 @@ if ($product['id'] != $current_user->id & $current_user->wp_user_level < 10)
 */
 
 /// get dates for payment acts
-	$sql = "select payment_date, artist_id, act_number from artist_payments where artist_id=".$_brand." order by payment_date desc";
+	$sql = "select payment_date, artist_id, act_number from artist_payments where artist_id=".$_brand." and cartoons_sold !=0 order by payment_date desc";
 	$result = $wpdb->get_results($sql,ARRAY_A);
 	 foreach($result as $r)
 		{
@@ -194,11 +194,10 @@ if ($product['id'] != $current_user->id & $current_user->wp_user_level < 10)
 		}
 
 
-
 echo ("<div class='t' style='padding:4px;font-size:1.1em;font-weight:bold;background-color:#E6E9FF;padding-left:4px;'>".$product['name'].". <span style='color:silver;'>Договор № ".$product['contract']." от ".date_format(date_create($product['contract_date']),'d-m-Y')."</span></div>");
 
 	/// get dates for payment acts
-	$sql = "select payment_date, artist_id, act_number from artist_payments where artist_id=".$_brand." order by payment_date desc";
+	$sql = "select payment_date, artist_id, act_number from artist_payments where artist_id=".$_brand." and cartoons_sold !=0 order by payment_date desc";
 	$result = $wpdb->get_results($sql,ARRAY_A);
 foreach($result as $r)
 	{
@@ -236,6 +235,7 @@ foreach($result as $r)
 	GROUP BY c.license
 	order by purchaseid";
 
+//pokazh($sql);
 
 	$product_list = $wpdb->get_results($sql,ARRAY_A);
 
