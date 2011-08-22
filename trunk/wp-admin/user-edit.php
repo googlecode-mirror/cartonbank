@@ -331,6 +331,13 @@ if ( $show_password_fields ) :
 	</td>
 </tr>
 <?php endif; ?>
+
+<tr>
+	<td colspan="2">
+	<a href="http://feedburner.google.com/fb/a/mailverify?uri=Cartoonbankru&loc=ru_RU" target="_blank">Подпишитесь на нашу рассылку новых поступлений.</a>
+	</td>
+</tr>
+
 </table>
 
 <!-- <h3><?php _e('Автору') ?></h3>
