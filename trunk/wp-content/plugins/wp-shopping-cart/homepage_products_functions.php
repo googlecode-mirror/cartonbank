@@ -741,4 +741,92 @@ function all_artists($content = '')
 	  
 	  return preg_replace("/\[all_artists\]/", $output, $content);
 }
+
+function temy_dnya($content = '')
+{
+		 global $wpdb;
+
+		// page_id
+		if (isset($_GET['page_id']) && is_numeric($_GET['page_id']))
+		{
+			$_page_filter = "?page_id=".$_GET['page_id'];
+		}
+		else
+		{
+			$_page_filter = "";
+		}
+
+		$pageURL = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["PHP_SELF"].$_page_filter;
+
+		  $siteurl = get_option('siteurl');
+		  if(get_option('permalink_structure') != '')
+			{
+			$seperator ="?";
+			}
+			else
+			  {
+			  $seperator ="&amp;";
+			  }
+
+
+	$sql = "SELECT b.id, b.name, td.datetime, td.id AS ID, td.comment, p.image AS image, p.name AS title, b.name AS author
+FROM  tema_dnya as td, `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b,  `wp_users` AS u
+WHERE l.`processed` = s.`id` 
+AND td.id = p.id
+AND l.id = c.purchaseid
+AND p.id = c.prodid
+AND st.purchid = c.purchaseid
+AND p.brand = b.id
+AND u.id = l.user_id
+AND l.user_id !=  '106'
+AND st.downloads !=  '5'
+GROUP BY c.license
+ORDER BY td.datetime DESC 
+LIMIT 100";
+
+		  $product_list = $wpdb->get_results($sql,ARRAY_A);
+
+
+		  $output = "<div id='homepage_products' class='items'>";
+		$output = '';    
+		if (isset($product_list[0]))
+		{
+				  $output .= "<div id='item_wrap'><div id='homepage_products' class='items'>";
+		  if (isset($product_list[0]) && $_br == 0)
+				  {
+					$output .= "<div><h1>";
+				  }
+				  else
+				  {
+					$output .= "<div><h1>".$product_list[0]['author'].".";
+				  }
+				  $output .= "Архив тем дня за три месяца</h1></div>";
+
+		  foreach((array)$product_list as $product)
+			{
+			$date_first_part = explode(" ",$product['datetime']);
+			$date_parse = explode("-",$date_first_part[0]);
+			$d = $date_parse[2].".".$date_parse[1].".".$date_parse[0];
+			if (mb_strlen($product['comment'],'utf-8')==0)
+				{$description = 'без ссылки';}
+			else
+				{$description = $product['comment'];}
+
+			$output .= "<div class='item'><div id='date' style='color:silver;'>".$d.":</div><div id='descr' style='font-size:.8em;'>".$description."</div>";
+			$output .= "<a href='".get_option('product_list_url').$seperator."cartoonid=".$product['ID']."'>";
+			if($product['image'] != '')
+			  {
+			  //$output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' />\n\r";
+			  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['author'].". ".$product['title']."' class='thumb'/>";
+			  }
+			$output .= "</a>";
+			$output .= "</div>\n\r";
+			}
+		  $output .= "</div></div>\n\r";
+		  $output .= "<br style='clear: left;'>\n\r";
+		  
+		  return preg_replace("/\[temy_dnya\]/", $output, $content);
+		}
+}
+
 ?>
