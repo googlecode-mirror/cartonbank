@@ -25,17 +25,17 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 		}
 
     $num = 0;
-    if (isset($_GET['category'])){$_category = $_GET['category'];}else{$_category = '';}
+    if (isset($_GET['category']) && is_numeric($_GET['category']) && $_GET['category'] != 0)
+		{
+			$_category = "&category=".$_GET['category'];
+			$andcategory = " AND `wp_product_categories`.`id`=".$_GET['category']." ";
+		}
+		else
+		{
+			$_category = '';
+			$andcategory = "";
+		}
     
-    if (isset($_category) and is_numeric($_category) and ($_category != 0))
-    {
-        $andcategory = " AND `wp_product_categories`.`id`=".$_category." ";
-        $category=$_category;
-    }
-    else
-    {
-        $andcategory = "";
-    }
 
 if ($orderby == '')
 	{
@@ -88,10 +88,6 @@ else
 	else
 		{$_cs_any = '';}
 
-	if ($category == '')
-		{$_category = "&category=".$category;}
-	else
-		{$_category='';}
 
 	$_new='';
 
@@ -107,7 +103,7 @@ else
 	//$_offset = $_offset + 20;
 
 	$javascript_functions ='';
-	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29'.$_brand.$_color.$_new.$category.$_cs.$_cs_exact.$_cs_any.'&offset='.$_offset.'";	var cuid = document.getElementById("cuid").innerHTML; document.getElementById("navbar").innerHTML = cuid; window.location.hash = "bububu="+cuid; 	}';
+	$javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29'.$_brand.$_color.$_new.$_category.$_cs.$_cs_exact.$_cs_any.'&offset='.$_offset.'";	var cuid = document.getElementById("cuid").innerHTML; document.getElementById("navbar").innerHTML = cuid; window.location.hash = "bububu="+cuid; 	}';
    
 	if ($search_sql != '')
 	{
