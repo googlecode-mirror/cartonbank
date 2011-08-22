@@ -769,7 +769,7 @@ function temy_dnya($content = '')
 			  }
 
 
-	$sql = "SELECT b.id, b.name, td.datetime, td.id AS ID, td.comment, p.image AS image, p.name AS title, b.name AS author
+	$sql = "SELECT distinct b.id, b.name, td.datetime, td.id AS ID, td.comment, p.image AS image, p.name AS title, b.name AS author
 FROM  tema_dnya as td, `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b,  `wp_users` AS u
 WHERE l.`processed` = s.`id` 
 AND td.id = p.id
@@ -778,11 +778,9 @@ AND p.id = c.prodid
 AND st.purchid = c.purchaseid
 AND p.brand = b.id
 AND u.id = l.user_id
-AND l.user_id !=  '106'
-AND st.downloads !=  '5'
 GROUP BY c.license
 ORDER BY td.datetime DESC 
-LIMIT 100";
+LIMIT 0, 100";
 
 		  $product_list = $wpdb->get_results($sql,ARRAY_A);
 
