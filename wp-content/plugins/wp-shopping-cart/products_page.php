@@ -145,6 +145,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	else
 		{
 			$colorfilter = '';
+			$color_url = '&color=all';
 		}
 
 if ((isset($_GET['category']) && is_numeric($_GET['category'])) OR (isset($_POST['category']) && is_numeric($_POST['category'])))
