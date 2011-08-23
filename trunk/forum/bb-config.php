@@ -38,20 +38,10 @@ define( 'BBDB_COLLATE', '' );
  *
  * @since 1.0
  */
-define( 'BB_AUTH_KEY', 'впникальную фразу' );
-define( 'BB_SECURE_AUTH_KEY', 'впишите сюльную фразу' );
-define( 'BB_LOGGED_IN_KEY', 'впишьную фразу' );
-define( 'BB_NONCE_KEY', 'никальную фразу' );
-/*
-define('AUTH_KEY',         'впникальную фразу');
-define('SECURE_AUTH_KEY',  'впишите сюльную фразу');
-define('LOGGED_IN_KEY',    'впишьную фразу');
-define('NONCE_KEY',        'никальную фразу');
-define('AUTH_SALT',        'впишите сюда уникальну');
-define('SECURE_AUTH_SALT', 'впишите сюдзу');
-define('LOGGED_IN_SALT',   'впишиу');
-define('NONCE_SALT',       'ишите сюда уникальную фра');
-*/
+define( 'BB_AUTH_KEY', 'put your unique phrase here' );
+define( 'BB_SECURE_AUTH_KEY', 'put your unique phrase here' );
+define( 'BB_LOGGED_IN_KEY', 'put your unique phrase here' );
+define( 'BB_NONCE_KEY', 'put your unique phrase here' );
 /**#@-*/
 
 /**
