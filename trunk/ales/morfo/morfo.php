@@ -1,89 +1,139 @@
-<form method=post action="">
-	<input type="text" name="searchterm" value="врач"><input type="submit" value=" искать ">
-</form>
+<?global $time_start; $time_start = microtime(true);?>
+<!doctype html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<title>Улучшение поиска</title>
+</head> <body>
 
+<style>
+	h1
+	{
+		font-family: Verdana, Helvetica, Sans-Serif;
+		font-size:1.2em;
+		color: #CC00CC;
+	}
+	.term a
+	{
+		font-family: Verdana, Helvetica, Sans-Serif;
+		font-size:.9em;
+		padding:4px;
+		margin:2px;
+		background-color:#CCFFCC;
+		float:left;
+		text-decoration:none;
+
+	}
+	.descr 
+	{
+		font-family: Verdana, Helvetica, Sans-Serif;
+		font-size:.7em;
+	}
+
+	</style>
+
+<form method=post action=""><input type="text" name="searchterm" value="врач"><input type="submit" value=" искать "></form>
 
 <?php
-include("/home/www/cb3/ales/config.php");
-global $path;
-$link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
-mysql_set_charset('utf8',$link);
-$path="/home/www/cb3/ales/morfo/";
-///CONST
-$wordslimit = ''; // LIMIT SQL string
-$start_record = 1;
-$records = 100; // how many word descriptions to check at once?
+// settings
+	include("/home/www/cb3/ales/config.php");
+	global $path;
+	$path="/home/www/cb3/ales/morfo/";
+	$link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
+	mysql_set_charset('utf8',$link);
+	///CONST
+	$wordslimit = ''; // LIMIT SQL string
+	$start_record = 1;
+	$records = 100; // how many word descriptions to check at once?
 
 
-if (isset($_POST['searchterm']) && $_POST['searchterm']!='')
-{
-	$term = filter_var(trim($_POST['searchterm']), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
-}
-else
-{
-	echo "задйте поисковое слово";
-	exit;
-	//$term = "врач";
-}
 
-$original_description = search_images_by_term($term); // returns found images
+// SEARCH TERM:
+	if (isset($_POST['searchterm']) && $_POST['searchterm']!='')
+		{
+			$term = filter_var(trim($_POST['searchterm']), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+		}
+	elseif (isset($_GET['s']) && $_GET['s']!='')
+		{
+			$term = filter_var(trim($_GET['s']), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+		}
+
+	else
+	{
+		echo "задайте поисковое слово";
+		exit;
+	}
+
+
+//// GET NORMAL FORM OF THE SEARCH TERM:
+	$original_description = search_images_by_term($term); // returns found images
+
+	t();
 
 				/// CLEAN UP DESCRIPTION
 				$original_description = trim(preg_replace('#[^\p{L}\p{N}]+#u', ' ', $original_description));
 				$original_description = trim(str_replace('quot', ' ', $original_description));
 
 				//// GET NORMILIZED DESCRIPTION
-				$normalized_description = normalize_string($original_description, $path);
+				$normalized_description = normalize_string($original_description);
 				$arr_normalized_description = explode(" ", $normalized_description);
 
-				
-				$arr_normalized_description = array_filter($arr_normalized_description, "remove_shorts");
+echo ($arr_normalized_description);
 
+
+	$arr_normalized_description = array_filter($arr_normalized_description, "remove_shorts"); // remove short words
 	$arr_terms_count = array_count_values($arr_normalized_description); // count values
+	$arr_terms_count = array_filter($arr_terms_count, "remove_singles"); // remove single instances
+	arsort($arr_terms_count); // sort words by popularity desc
+	array_splice($arr_terms_count, 20);//make array shorter
 
-	arsort($arr_terms_count);
-
-pokazh($arr_terms_count,"Частота слов в описании к найденым рисункам при поиске только по слову '".$term."'");
+	echo "<div><h1>В найденных рисунках используются популярные слова:</h1></div>";
+	echo "<div>".terms_output($arr_terms_count)."</div>";
 
 
 /// SEARCH FOR ALL WORDS IN FOUND IMAGES
 	$original_description = "";
 
-
-
 	foreach ($arr_terms_count as $k=>$v)
 	{
 		if (mb_strlen($k,'utf-8') > 2 && $k!=$term && $k!='' && $v > 1) // excluse initial Term
 			{
-				$original_description = $original_description." ".search_images_by_term_textonly($k);
-				///pokazh($k."- ".$original_description," found");
+				$s = search_images_by_term_textonly($k);
+				//echo ($s);
+				
+						/// CLEAN UP DESCRIPTION
+						$s = trim(preg_replace('#[^\p{L}\p{N}]+#u', ' ', $s));
+						$s = trim(str_replace('quot', ' ', $s));
+
+				$original_description = $original_description." ".$s;
+				//echo($k." : ".$original_description."<br>");
 			}
 
 	}
-	//echo $original_description;
 
-
-
-						/// CLEAN UP DESCRIPTION
-						$original_description = trim(preg_replace('#[^\p{L}\p{N}]+#u', ' ', $original_description));
-						$original_description = trim(str_replace('quot', ' ', $original_description));
+				echo("od : ".$original_description."<br>");
 
 						//// GET NORMILIZED DESCRIPTION
-						$normalized_description = normalize_string($original_description, $path);
+						$normalized_description = normalize_string($original_description);
 						$arr_normalized_description = explode(" ", $normalized_description);
 						$arr_normalized_description = array_filter($arr_normalized_description, "remove_shorts");
 
 			//pokazh($arr_normalized_description,"Вторичный поиск. Частота ассоциированных слов к слову '".$k."'");
 
 			$arr_terms_count = array_count_values($arr_normalized_description); // count words in array
-			arsort($arr_terms_count);
+			$arr_terms_count = array_filter($arr_terms_count, "remove_singles"); // remove single instances
+			arsort($arr_terms_count); // sort words by popularity desc
+			array_splice($arr_terms_count, 20);//make array shorter
 
-			pokazh($arr_terms_count,"Вторичный поиск. Частота ассоциированных описаний к слову '".$term."'");
+			echo "<div><h1>С этим словом ищут также:</h1></div>";
+			echo "<div>".terms_output($arr_terms_count)."</div>";
+			//pokazh($arr_terms_count,"Вторичный поиск. Частота ассоциированных описаний к слову '".$term."'");
 		
-
-
-echo "search function";
+echo $term."<br>";
+$time_end = microtime(true);
+$time = $time_end - $time_start;
+echo "$time seconds\n";
 exit;
+
+
 
 
 
@@ -91,13 +141,13 @@ exit;
 
 	// find ID of uniques normal term
 	$term = 'доктор';
-	$term = normalize_string($term,$path);
+	$term = normalize_string($term);
 
 	$id_list = "";
 
 	pokazh($term,"Ищем слово");
 	$first_id = true;
-	$sql = "select id from terms_normal where term_normal='".$term."'";
+	$sql = "select id from terms_normal where term_normal='".$term."' and exclude != 1";
 	$result = mysql_query($sql);
 	while($row=mysql_fetch_array($result))
 		{
@@ -169,7 +219,7 @@ exit;
 				$original_description = trim(str_replace('quot', ' ', $original_description));
 
 				//// GET NORMILIZED DESCRIPTION
-				$normalized_description = normalize_string($original_description, $path);
+				$normalized_description = normalize_string($original_description);
 				$arr_normalized_description = explode(" ", $normalized_description);
 
 				//// SAVE LINKS TO NORMAILEZED IDS FOR IMAGE
@@ -197,7 +247,7 @@ exit;
 			$original_description = trim(str_replace('quot', ' ', $original_description));
 
 			//// GET NORMILIZED DESCRIPTION
-			$normalized_description = normalize_string($original_description, $path);
+			$normalized_description = normalize_string($original_description);
 
 			$arr_normalized_description = explode(" ", $normalized_description);
 
@@ -221,7 +271,7 @@ exit;
 	//pokazh(strlen($original_description),"");
 
 	//// GET NORMILIZED DESCRIPTION
-	$normalized_description = normalize_string($original_description, $path);
+	$normalized_description = normalize_string($original_description);
 	//pokazh(strlen($normalized_description),"");
 	//echo $normalized_description;
 
@@ -283,7 +333,7 @@ function save_links_to_normalized_terms($id,$arr_normalized_description)
 		//pokazh($term);
 		if (mb_strlen($term,'utf-8') > 2)
 		{
-			$sql = "select id from terms_normal where term_normal = '".$term."'"; // check if normal term exist
+			$sql = "select id from terms_normal where term_normal = '".$term."' and exclude != 1"; // check if normal term exist
 			$result = mysql_query($sql);
 			$_id = mysql_fetch_row($result);
 
@@ -354,8 +404,9 @@ function get_description_from_image_by_id($id)
 	return $out;
 }
 
-function normalize_string($q, $path)
+function normalize_string($q)
 {
+	global $path,$time_start;
 	$q = iconv('utf-8', 'windows-1251', mb_strtolower($q, 'utf-8'));
 	$out = array();
 	exec('echo "'.$q.'" | '.rtrim($path,'/ ').'/mystem -c', $out);
@@ -383,19 +434,22 @@ function normalize_string($q, $path)
 
 function highlight_term($term, $string)
 {
-	$string = trim(str_replace($term, "<span style='padding:1px;background-color:#cccc66;'>".$term."</span>", $string));
+	$string = trim(str_replace(mb_strtolower($term, 'utf-8'), "<span style='padding:1px;background-color:#FFFF99;'>".mb_strtolower($term, 'utf-8')."</span>", mb_strtolower($string, 'utf-8')));
 	return $string;
 }
 
 function search_images_by_term($term = 'доктор')
 {
-	global $path;
+	global $path, $time_start;
 		// find ID of uniques normal term
-		$term = normalize_string($term,$path);
+
+		$term = normalize_string($term);
+
 		$id_list = "";
-		pokazh($term,"Ищем слово");
+		//pokazh($term,"Ищем слово");
+
 		$first_id = true;
-		$sql = "select id from terms_normal where term_normal='".$term."'";
+		$sql = "select id from terms_normal where term_normal='".$term."' and exclude != 1";
 		$result = mysql_query($sql);
 		while($row=mysql_fetch_array($result))
 			{
@@ -407,7 +461,12 @@ function search_images_by_term($term = 'доктор')
 			echo('ничего не найдено');
 			return;
 		}
+		else
+		{
+			echo "<div><h1>Рисунки со словом '".$term."'</h1></div>";
+		}
 		$sql = "select image_id from term_to_image where term_id='".$id."'";
+
 
 		$result = mysql_query($sql);
 		while($row=mysql_fetch_array($result))
@@ -430,26 +489,34 @@ function search_images_by_term($term = 'доктор')
 
 		$description_set = "";
 
+		echo "<div id='imageoutput'>";
 		while($row=mysql_fetch_array($result))
 			{
-				echo "<table><tr><td>";
+				echo "<table width='140' style='float:left;font-size:.8em;'><tr><td>";
 				echo "<img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$row['image']."'>";
-				echo "</td><td>";
-				$descr = highlight_term($term, $row['name']."<br>".$row['description']."<br>".$row['additional_description']);
+				echo "</td></tr><tr><td style='height:100px;'><div class='descr' style='height:100px;'>";
+				$descr = highlight_term($term, mb_strtolower($row['name'], 'utf-8')."<br>".mb_strtolower($row['description'], 'utf-8')."<br>".mb_strtolower($row['additional_description'], 'utf-8'));
 				echo ($descr."");
-				echo "</td></tr></table>";
+				echo "</div></td></tr></table>";
 
 				$description_set = $description_set . $row['name']." ".$row['description']." ".$row['additional_description']. " " ;
 			}
+		echo "<div>";
+		echo "<br style='clear:both;'>";
+
+		
 		return $description_set;
+}
+
+function get_all_ids()
+{
+
 }
 
 function search_images_by_term_textonly($term)
 {
 	if (mb_strlen($k,'utf-8') < 3 && $k!='') // excluse initial Term
-	{
-		return;
-	}
+	{return;}
 
 	global $path;
 		// find ID of uniques normal term
@@ -457,7 +524,7 @@ function search_images_by_term_textonly($term)
 		$id_list = "";
 			///pokazh($term,"Ищем слово");
 		$first_id = true;
-		$sql = "select id from terms_normal where term_normal='".$term."'";
+		$sql = "select id from terms_normal where term_normal='".$term."' and exclude != 1 LIMIT 20";
 		$result = mysql_query($sql);
 		while($row=mysql_fetch_array($result))
 			{
@@ -504,10 +571,44 @@ function search_images_by_term_textonly($term)
 }
 function remove_shorts($var)
 {
+	//echo $var;
 	if (mb_strlen($var,'utf-8') > 2)
 	{
 		return $var;
 	}
 }
+function remove_singles($var)
+{
+	//remove words found once only
+	if ($var != 1)
+	{
+		return $var;
+	}
+}
 
+function terms_output($arr)
+{
+	$i = 0;
+	foreach($arr as $k=>$v)
+	{
+		echo "<div class='term'><a href='http://cartoonbank.ru/ales/morfo/morfo.php?s=$k'>".$k." [".$v."]</a></div>";
+		if (++$i == 20) break;
+	}
+	echo "<br style='clear:both;'";
+}
+function t()
+{
+	global $time_start;
+	$time_end = microtime(true);
+	$time = $time_end - $time_start;
+	pokazh ("$time сек.");
+	exit();
+}
 ?>
+
+
+
+
+  
+ </body>
+</html>
