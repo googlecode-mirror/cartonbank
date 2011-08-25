@@ -207,18 +207,27 @@ if (!$author_section) // for not Author section (portfolio)
 }
 else
 {
-		// Get the Brand (author) data
-	$brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
+	// Get the Brand (author) data
+	$brand_sql = "SELECT `name`, `description`, `active`, `order`, `avatar_url`, `contact`, `bio_post_id`, `user_id`, `count`, `count_bw`, `count_color`, `contract`, `contract_date`, `rezident`, pr.shop_owner, pr.image_link, pr.shop_url FROM `wp_product_brands` as b, `printdirect` as pr where b.id=pr.brand_id and b.id = ". $brandid;
 	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
 
 	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = 1 order by name";
 	$brands_result  = $GLOBALS['wpdb']->get_results($brands_sql,ARRAY_A);
 
 	// avatar url
-			
 	if (isset($brand_result[0]['avatar_url']) && $brand_result[0]['avatar_url'] != '')
 	{$avatar_url = "<img width=140 src='".$brand_result[0]['avatar_url']."'>";}
 	else {$avatar_url = "<img width=140 src='".get_option('siteurl')."/img/avatar.gif'>";}
+
+	// shop url
+	if (isset($brand_result[0]['shop_owner']) && $brand_result[0]['shop_owner']==1)
+	{
+		$shop_url = "<a href='http://".$brand_result[0]['shop_url']."?partner_id=153713' target='_blank'><img src='".get_option('siteurl')."/img/shop/".$brand_result[0]['image_link']."' title='Футболки, кружки, магниты'></a>";
+	}
+	else
+	{
+		$shop_url = '';
+	}
 
 	// all authors dropdown
 		$_selected = "";
@@ -247,6 +256,12 @@ else
 	echo "<br /><a class='example8' href='#'>Информация об авторе</a>";
 	
 	echo "<br /><a href='".get_option('siteurl')."/?page_id=1284&ord=82&br=".$brandid."'>100 лучших работ</a>";
+
+	if (isset($brand_result[0]['shop_url']) && $brand_result[0]['shop_owner']==1)
+	{
+		echo "<br />".$shop_url;
+		echo "<a href='http://".$brand_result[0]['shop_url']."?partner_id=153713'>Магазин авторских сувениров</a>";
+	}
 }    
 echo "</div>";
 ?>
