@@ -260,7 +260,7 @@ else
 	if (isset($brand_result[0]['shop_url']) && $brand_result[0]['shop_owner']==1)
 	{
 		echo "<br />".$shop_url;
-		echo "<a href='http://".$brand_result[0]['shop_url']."?partner_id=153713'>Магазин авторских сувениров</a>";
+		echo "<a href='http://".$brand_result[0]['shop_url']."?partner_id=153713' target='_blank'>Магазин авторских сувениров</a>";
 	}
 }    
 echo "</div>";
