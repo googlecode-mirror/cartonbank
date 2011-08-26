@@ -208,7 +208,7 @@ if (!$author_section) // for not Author section (portfolio)
 else
 {
 	// Get the Brand (author) data
-	$brand_sql = "SELECT `name`, `description`, `active`, `order`, `avatar_url`, `contact`, `bio_post_id`, `user_id`, `count`, `count_bw`, `count_color`, `contract`, `contract_date`, `rezident`, pr.shop_owner, pr.image_link, pr.shop_url FROM `wp_product_brands` as b, `printdirect` as pr where b.id=pr.brand_id and b.id = ". $brandid;
+	$brand_sql = "SELECT `name`, `description`, `active`, `order`, `avatar_url`, `contact`, `bio_post_id`, `user_id`, `count`, `count_bw`, `count_color`, `contract`, `contract_date`, `rezident`, pr.shop_owner, pr.image_link, pr.shop_url FROM `wp_product_brands` as b LEFT JOIN  `printdirect` as pr on b.id=pr.brand_id where b.id = ". $brandid;
 	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
 
 	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = 1 order by name";
