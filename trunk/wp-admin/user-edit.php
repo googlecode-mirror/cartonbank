@@ -273,6 +273,17 @@ if (current_user_can('edit_users') || esc_attr(round($profileuser->discount,0))>
 </tr>
 <?
 }
+if (current_user_can('author'))
+{
+?>
+<tr>
+    <th><label for="sell_notification"><?php _e('Получать сообщения о продаже лицензии'); ?> </span></label></th>
+    <td>
+		<input type="checkbox" name="sell_notification" id="sell_notification" value="1" <?php if($profileuser->sell_notification == '1'){echo 'checked=checked';} ?> style="text-align:left;" />
+	<br /><span class="description"><?php _e("Отключите, чтобы отказаться от получения извещений о продаже лицензии."); ?></td>
+</tr>
+<?
+}
 ?>
 
 </table>
