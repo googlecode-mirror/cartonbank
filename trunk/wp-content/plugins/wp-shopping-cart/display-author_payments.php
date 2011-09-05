@@ -59,7 +59,7 @@ global $wpdb;
 	}
     else
     {
-		pokazh ("Начальный номер актов обновлён");
+		//pokazh ("Начальный номер актов обновлён");
                 $sql = "select max(act_number) as max from artist_payments where act_number_year='".$_year."'";
                 //pokazh($sql);
                 $result = $wpdb->get_results($sql,ARRAY_A);
@@ -337,11 +337,11 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 				else
 				{
 //					pokazh($artist['rezident'] );
-					if ($artist['rezident'] == '1' && $_year='2010')
+					if ($artist['rezident'] == '1' && $_year=='2010')
 					{
 						$tax_ndfl = round($total * 0.13); // проф вычет с резидентов
 					}
-					elseif ($artist['rezident'] == '0' && $_year='2010')
+					elseif ($artist['rezident'] == '0' && $_year=='2010')
 					{
 						$tax_ndfl = round($total * 0.3); // проф вычет с нерезидентов
 					}
