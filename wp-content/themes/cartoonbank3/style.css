@@ -71,40 +71,40 @@ a:hover{
 *	Navbar      								*
 ************************************************/
 
-#navbar {
+#navbar, #navbarbottom {
 	background: #FFFFFF;
 	width: 960px;
 	margin: 0px auto 0px;
-	padding: 10px 0px 10px 0px;
+	padding: 8px 0px 8px 0px;
 	text-align: center;
-	border-top: 1px solid #C0C0C0;
 	border-bottom: 5px solid #658DB5;
 	}
 	
-#navbar li {
+#navbar li, #navbarbottom li {
 	display: inline;
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
 	}
 		
-#navbar ul {
+#navbar ul, #navbarbottom ul {
 	margin: 0px;
 	padding: 0px;
 	}
 	
-#navbar ul li a {
+#navbar ul li a, #navbarbottom ul li a {
 	font-family: Times New Roman, Helvetica, Sans-Serif;
-	font-size: 12px;
+	font-size: 11px;
 	color: #333333;
-	padding: 0px 10px 0px 10px;
+	padding: 0px 7px 0px 7px;
 	margin: 0px;
 	text-decoration: none;
 	text-transform: uppercase;
 	}
 
-#navbar ul li a:hover {
-	color: #658DB5;
+#navbar ul li a:hover, #navbarbottom ul li a:hover {
+	color: #658DB5; 
+	border-bottom:1px #BDAF04 dotted;
 	}
 	
 /************************************************
