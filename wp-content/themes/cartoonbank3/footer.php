@@ -1,5 +1,39 @@
 <!-- footer begins -->
+<?
+function selected_style_footer()
+{
+	echo " style='color:#668bb7'";
+}
+
+if (isset($_GET['new']) && is_numeric($_GET['new']))
+{
+	$_new=$_GET['new'];
+}
+else
+{
+	$_new=0;
+}
+?>
+<!-- footer begins -->
+<div id="navbar">
+<ul> 
+<li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style_footer():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
+<li><a href="?page_id=29&offset=0&new=0"<? $_GET['page_id']=='29' & $_new==0? selected_style_footer():"" ?> title='избранные работы'>Избранное</a></li>
+<li><a href="?page_id=29&offset=0&new=1"<? $_GET['page_id']=='29'& $_new==1 ? selected_style_footer():"" ?> title='показать новые'>Новое</a></li>
+<li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style_footer():"" ?> title='художникам'>Авторам</a></li>
+<li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style_footer():"" ?> title='покупателям'>Клиентам</a></li>
+<li><a href="?page_id=907"<? $_GET['page_id']=='907'? selected_style_footer():"" ?> title='посетителям'>Зрителям</a></li>
+<li><a href="?page_id=1215"<? $_GET['page_id']=='1215'? selected_style_footer():"" ?> title='наши партнёры'>Партнёры</a></li>
+<li><a href="?page_id=1260"<? $_GET['page_id']=='1260'? selected_style_footer():"" ?> title='друзья и коллеги'>Друзья</a></li>
+<li><a href="?page_id=2"<? $_GET['page_id']=='2'? selected_style_footer():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
+<li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style_footer():"" ?> title='новости сайта'>Новости</a></li>
+<li><a href="?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
+<li><a href="?page_id=2041"<? $_GET['page_id']=='2041'? selected_style_footer():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" width="20" border="0" alt="English"></a></li>
+</ul>
+</div>
+
 <div style="clear:both;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;"><br /><br /></div>
+
 <div id="b" style="padding-bottom:20px;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;">
  <a href="http://www.redburda.ru/" tagret="_blank"><img title="Красная Бурда" src="<? echo (get_option('siteurl').'/img/b/kb88x31.gif');?>"></a>
  <a href="http://anekdot.ru/" tagret="_blank"><img title="Анекдоты из России" src="<? echo (get_option('siteurl').'/img/b/anek88x31.gif');?>"></a>
