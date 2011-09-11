@@ -183,7 +183,25 @@ function cart_product_list_string($licensecolumn)
 		// License text
 		if (!$licensecolumn)
 		{
-			$license_text = get_license($current_item,1);
+            if ($_SESSION['nzshpcrt_cart'][$current_item]->price == '250.00')
+            {
+                $lic_type = 1;
+            }
+            elseif ($_SESSION['nzshpcrt_cart'][$current_item]->price == '500.00')
+            {
+                $lic_type = 2;
+            }
+            elseif ($_SESSION['nzshpcrt_cart'][$current_item]->price == '2500.00')
+            {
+                $lic_type = 3;
+            }
+            else 
+            {
+                $lic_type = 1;
+            }
+        
+            
+			$license_text = get_license($current_item,$lic_type);
 			$result .=  "<tr>";
 			$result .= "<td colspan=3> <a id='displayText".$current_item."' href='javascript:toggle(".$current_item.");'>[+] показать текст лицензии</a><div id='toggleText".$current_item."' style='display:none;background-color:#FFFFCC;padding:8px;'><br />";
 			$result .= $license_text;
@@ -287,6 +305,7 @@ function get_license($sequence_of_image,$license_num)
 
 	//load License template
 	$filename = '';
+	//pokazh($license_num,"license_num");
 	switch($license_num)
 			{
 			case 1:
@@ -392,7 +411,17 @@ function loadFile($sFilename, $sCharset = 'UTF-8')
 
 function save_license($content,$filename)
 {
-	$myFile = "/home/www/cb3/licenses/".$filename;
+	$abspath = '/home/www/cb3/licenses/'; 
+	$abspath_1 = "/home/www/cb/licenses/";
+	$abspath_2 = "Z:/home/localhost/www/licenses/";
+
+
+	if (strstr($_SERVER['SCRIPT_FILENAME'],'Z:/home'))
+		{$abspath = $abspath_2;}
+	else if (strstr($_SERVER['SCRIPT_FILENAME'],'cb/')) 
+		{$abspath = $abspath_1;}
+
+	$myFile = $abspath.$filename;
 	$fh = fopen($myFile, 'w') or die("can't open file");
 	$stringData = $content;
 	fwrite($fh, $stringData);

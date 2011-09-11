@@ -15,27 +15,20 @@ if($sessionid != null)
   
   $message = "<div class='wrap'>Спасибо за пользование услугами сайта cartoonbank.ru! В электронном письме содержатся тест лицензии и ссылка для скачивания. Вам доступны ".get_option('max_downloads')." попыток скачивания по ссылке в письме. Вы можете скачать ваш заказ используя ссылки ниже.<br /></div>";
 
-  $license = false;
+	$license = false;
 
-
-//list($cart_content, $cart_content_no_license_text) = cart_product_list_string($license);
-
-//	$cart_content_array = cart_product_list_string($license);
-//
 	$cart_content = cart_product_list_string($license);
 	
 	if ($cart_content!='')
 		{$message = $message.$cart_content;}
 	else {$message = 'Корзина пуста';}
 
-	//echo $message;
-
 	$message_html = $message;
 
-  $report = ""; // 'Были заказаны следующие изображения:';
+	$report = ""; // 'Были заказаны следующие изображения:';
 
-  $selectsql = "SELECT * FROM `wp_purchase_logs` WHERE `sessionid`= ".$sessionid." LIMIT 1";
-  $check = $wpdb->get_results($selectsql,ARRAY_A) ;
+	$selectsql = "SELECT * FROM `wp_purchase_logs` WHERE `sessionid`= ".$sessionid." LIMIT 1";
+	$check = $wpdb->get_results($selectsql,ARRAY_A) ;
 
 	if (isset($check[0]['totalprice']))
 		$_total = $check[0]['totalprice'];
@@ -120,42 +113,25 @@ if(isset($cart) && $cart != null && $cart_content!='' && ($errorcode == 0))
 
 			//mail("sales@cartoonbank.com", 'Подтверждение покупки изображения. Копия.', $mess, $headers);
 		}
-
-
-
-	/*
-	  if(get_option('purch_log_email') != null)
-		{
-		mail(get_option('purch_log_email'), 'Подтверждение покупки изображения. Cartoonbank.ru ...', $report, $headers);
-		mail("igor.aleshin@gmail.com", 'CC: Подтверждение покупки изображения. Cartoonbank.ru ....', $report."\n\r\n\r".$message, $headers);
-		}
-	*/
-
-
-
-
 	// todo: 
-  $_SESSION['nzshpcrt_cart'] = '';
-  $_SESSION['nzshpcrt_cart'] = Array();
-  $_SESSION['total'] = 0;
+	$_SESSION['nzshpcrt_cart'] = '';
+	$_SESSION['nzshpcrt_cart'] = Array();
+	$_SESSION['total'] = 0;
 
-  echo '<div class="wrap">';
-  if($sessionid != null)
-    {
-    echo "<h3>Транзакция прошла успешно</h3>";
-    echo "<br />" . nl2br(str_replace("$",'\$',$message_html));
-    }
-  echo '</div>';
- 
-
-   
+	echo '<div class="wrap">';
+	if($sessionid != null)
+	{
+		echo "<h3>Транзакция прошла успешно</h3>";
+		echo "<br />" . nl2br(str_replace("$",'\$',$message_html));
+	}
+	echo '</div>';
 
   } // end of: if(isset($cart) && $cart != null && ($errorcode == 0))
   else
     {
-    echo '<div class="wrap">';
-    echo '<h3>Сначала добавьте изображение в корзину</h3>';
-    echo '</div>';
+		echo '<div class="wrap">';
+		echo '<h3>Сначала добавьте изображение в корзину</h3>';
+		echo '</div>';
     }   
   
 
@@ -172,12 +148,20 @@ function send_email_multi_attachments($email, $content='')
 {
 	global $license_names_array;
 	$files = $license_names_array;
-	$path = "/home/www/cb3/licenses/";
 
-	// array with filenames to be sent as attachment
-	// $files = array("/home/www/cb3/ales/echo/b.jpg","/home/www/cb3/ales/echo/license.htm");
- 
-	 // email fields: to, from, subject, and so on
+	$abspath = '/home/www/cb3/licenses/'; 
+	$abspath_1 = "/home/www/cb/licenses/";
+	$abspath_2 = "Z:/home/localhost/www/licenses/";
+
+	if (strstr($_SERVER['SCRIPT_FILENAME'],'Z:/home'))
+		{$abspath = $abspath_2;}
+	else if (strstr($_SERVER['SCRIPT_FILENAME'],'cb/')) 
+		{$abspath = $abspath_1;}
+
+
+	$path = $abspath; //"/home/www/cb3/licenses/";
+
+	// email fields: to, from, subject, and so on
 	$to = $email;
 	$to_2 = "igor.aleshin@gmail.com";
 	$from = "bankir@cartoonbank.ru"; 
@@ -193,7 +177,6 @@ function send_email_multi_attachments($email, $content='')
 	$headers .= "\nMIME-Version: 1.0\n" . "Content-Type: multipart/mixed;\n" . " boundary=\"{$mime_boundary}\""; 
 	 
 	// multipart boundary 
-	//$message = "This is a multi-part message in MIME format.\n\n" . "--{$mime_boundary}\n" . "Content-Type: text/html; charset=\"iso-8859-1\"\n" . "Content-Transfer-Encoding: 7bit\n\n" . $message . "\n\n"; 
 	$message = "This is a multi-part message in MIME format.\n\n" . "--{$mime_boundary}\n" . "Content-Type: text/html; charset=\"iso-8859-1\"\n" . "Content-Transfer-Encoding: 7bit\n\n" . $message . "\n\n"; 
 	$message .= "--{$mime_boundary}\n";
 	 
