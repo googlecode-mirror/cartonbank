@@ -1,15 +1,18 @@
 <?
+//echo "<pre>";
 //print_r ($_SERVER);
+//echo "</pre>";
+//exit;
 //echo "<br>";
 
-$abspath = '/home/www/cb3/';
+$abspath = '/home/www/cb3/'; 
 $abspath_1 = "/home/www/cb/";
-$abspath_2 = "/home/www/cb3/";
+$abspath_2 = "Z:/home/localhost/www/";
 
 
-if (strstr($_SERVER['PHP_SELF'],'cb3/'))
+if (strstr($_SERVER['SCRIPT_FILENAME'],'Z:/home'))
 	{$abspath = $abspath_2;}
-else if (strstr($_SERVER['PHP_SELF'],'cb/')) 
+else if (strstr($_SERVER['SCRIPT_FILENAME'],'cb/')) 
 	{$abspath = $abspath_1;}
 
 //echo "<br>";
@@ -85,19 +88,19 @@ switch($license_num)
         {
         case 1:
         $filename = getcwd()."/"."license_limited_template.htm";
-        break;
+		break;
         
         case 2:
         $filename = getcwd()."/"."license_standard_template.htm";
-        break;
+		break;
 
         case 3:
         $filename = getcwd()."/"."license_extended_template.htm";
-        break;
+		break;
 
         default:
         $filename = getcwd()."/"."license_limited_template.htm";
-        break;
+		break;
 }
 
 $content=loadFile($filename); 
