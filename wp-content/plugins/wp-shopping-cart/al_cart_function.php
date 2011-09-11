@@ -160,8 +160,8 @@ function cart_product_list_string($licensecolumn)
 		{
 			// Download link
 			$current_user = wp_get_current_user();
-			$result .= "  <td width='70'>";
-			$result_no_license_text .= "  <td width='70'>";
+			$result .= "  <td width='140'>";
+			$result_no_license_text .= "  <td width='140'>";
 
 			if (isset($current_user) && $current_user->ID == '106')
 			{
