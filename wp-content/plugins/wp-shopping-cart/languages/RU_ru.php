@@ -157,9 +157,9 @@ define('TXT_WPSC_ASTERISK', 'Поля, отмеченные звёздочкой
 define('TXT_WPSC_FIRSTNAME', 'Имя');
 define('TXT_WPSC_LASTNAME', 'Фамилия'); 
 define('TXT_WPSC_EMAIL', 'Email');
-define('TXT_WPSC_ADDRESS', 'Адрес');
+define('TXT_WPSC_ADDRESS', 'Телефон');
 define('TXT_WPSC_ADDRESS1', 'Адрес 1');
-define('TXT_WPSC_ADDRESS2', 'Адрес 2');
+define('TXT_WPSC_ADDRESS2', 'СМИ');
 define('TXT_WPSC_CITY', 'Город');
 define('TXT_WPSC_COUNTRY', 'Страна');
 define('TXT_WPSC_PHONE', 'Телефон');
