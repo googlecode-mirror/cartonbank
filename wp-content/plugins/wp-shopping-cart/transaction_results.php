@@ -1,29 +1,29 @@
 <?php
-global $wpdb;
+global $wpdb, $result_no_license_text;
 $curgateway = get_option('payment_gateway');
 $sessionid = $_GET['sessionid'];
 $errorcode = '';
 $transactid = '';
 
-
 //echo("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
 //echo("<pre>POST:".print_r($_POST,true)."</pre>");
 //echo("<pre>GET:".print_r($_GET,true)."</pre>");
-
-
 
 if($sessionid != null)
 {
   include('al_cart_function.php');
   
-  $message = "<div class='wrap'>Спасибо за пользование услугами сайта cartoonbank.ru! На ваш электронный адрес выслано письмо с тестом лицензии и ссылкой для скачивания. Вам доступны ".get_option('max_downloads')." попыток скачивания по ссылке в письме. Вы можете скачать ваш заказ используя ссылки ниже.<br />
-  Вы заказали следующие картинки:</div>";
+  $message = "<div class='wrap'>Спасибо за пользование услугами сайта cartoonbank.ru! В электронном письме содержатся тест лицензии и ссылка для скачивания. Вам доступны ".get_option('max_downloads')." попыток скачивания по ссылке в письме. Вы можете скачать ваш заказ используя ссылки ниже.<br /></div>";
 
-	$license = false;
+  $license = false;
+
+
+//list($cart_content, $cart_content_no_license_text) = cart_product_list_string($license);
+
+//	$cart_content_array = cart_product_list_string($license);
+//
 	$cart_content = cart_product_list_string($license);
-
-	//pokazh($cart_content);
-
+	
 	if ($cart_content!='')
 		{$message = $message.$cart_content;}
 	else {$message = 'Корзина пуста';}
@@ -32,7 +32,7 @@ if($sessionid != null)
 
 	$message_html = $message;
 
-  $report = 'Были заказаны следующие изображения:';
+  $report = ""; // 'Были заказаны следующие изображения:';
 
   $selectsql = "SELECT * FROM `wp_purchase_logs` WHERE `sessionid`= ".$sessionid." LIMIT 1";
   $check = $wpdb->get_results($selectsql,ARRAY_A) ;
@@ -82,7 +82,7 @@ if(isset($cart) && $cart != null && $cart_content!='' && ($errorcode == 0))
   $purch_sql = "SELECT * FROM `wp_purchase_logs` WHERE `id`!='".$check[0]['id']."'";
   $purch_data = $wpdb->get_results($purch_sql,ARRAY_A) ; 
 
-  $report_user = "О заказчике."; 
+  $report_user = "О заказчике. "; 
   
   $form_sql = "SELECT * FROM `wp_submited_form_data` WHERE `log_id` = '".$check[0]['id']."'";
   $form_data = $wpdb->get_results($form_sql,ARRAY_A);
@@ -110,8 +110,14 @@ if(isset($cart) && $cart != null && $cart_content!='' && ($errorcode == 0))
 	  if($email != '')
 		{
 			$mess = $report." <br /><br /> ".$message;
-			mail($email, 'Подтверждение покупки изображения. Cartoonbank.ru .', $message, $headers);
-			mail("igor.aleshin@gmail.com", 'Подтверждение покупки изображения. Копия.', $mess, $headers);
+			//mail($email, 'Подтверждение покупки изображения. Cartoonbank.ru .', $message, $headers);
+			//mail("igor.aleshin@gmail.com", 'Подтверждение покупки изображения. Копия.', $mess, $headers);
+
+			// Send licenses as attchment
+			send_email_multi_attachments($email, $result_no_license_text);
+			send_email_multi_attachments("igor.aleshin@gmail.com", $result_no_license_text);
+			$result_no_license_text = null;
+
 			//mail("sales@cartoonbank.com", 'Подтверждение покупки изображения. Копия.', $mess, $headers);
 		}
 
@@ -161,7 +167,54 @@ if($check != null)
     $wpdb->query($sql) ;
    }
 
+
+function send_email_multi_attachments($email, $content='')
+{
+	global $license_names_array;
+	$files = $license_names_array;
+	$path = "/home/www/cb3/licenses/";
+
+	// array with filenames to be sent as attachment
+	// $files = array("/home/www/cb3/ales/echo/b.jpg","/home/www/cb3/ales/echo/license.htm");
+ 
+	 // email fields: to, from, subject, and so on
+	$to = $email;
+	$to_2 = "igor.aleshin@gmail.com";
+	$from = "bankir@cartoonbank.ru"; 
+	$subject ="Подтверждение покупки изображения на сайте Картунбанк.ру"; 
+	$message = $content;
+	$headers = "From: $from";
+
+	// boundary 
+	$semi_rand = md5(time()); 
+	$mime_boundary = "==Multipart_Boundary_x{$semi_rand}x"; 
 	 
+	// headers for attachment 
+	$headers .= "\nMIME-Version: 1.0\n" . "Content-Type: multipart/mixed;\n" . " boundary=\"{$mime_boundary}\""; 
+	 
+	// multipart boundary 
+	//$message = "This is a multi-part message in MIME format.\n\n" . "--{$mime_boundary}\n" . "Content-Type: text/html; charset=\"iso-8859-1\"\n" . "Content-Transfer-Encoding: 7bit\n\n" . $message . "\n\n"; 
+	$message = "This is a multi-part message in MIME format.\n\n" . "--{$mime_boundary}\n" . "Content-Type: text/html; charset=\"iso-8859-1\"\n" . "Content-Transfer-Encoding: 7bit\n\n" . $message . "\n\n"; 
+	$message .= "--{$mime_boundary}\n";
+	 
+	// preparing attachments
+	clearstatcache();
+	for($x=0;$x<count($files);$x++){
+		$file = fopen($path.$files[$x],"rb");
+		$data = fread($file,filesize($path.$files[$x]));
+		fclose($file);
+		$data = chunk_split(base64_encode($data));
+		$message .= "Content-Type: {\"application/octet-stream\"};\n" . " name=\"$files[$x]\"\n" . 
+		"Content-Disposition: attachment;\n" . " filename=\"$files[$x]\"\n" . 
+		"Content-Transfer-Encoding: base64\n\n" . $data . "\n\n";
+		$message .= "--{$mime_boundary}\n";
+	}
+	 
+	// send
+	$ok = @mail($to, $subject, $message, $headers); 
+}
+	 
+
 //http://localhost/?page_id=31&sessionid=8061284226824
 //sql:UPDATE `wp_purchase_logs` SET `statusno` = '',`transactid` = '',`authcode` = '',`date` = '1284228427' WHERE `sessionid` = 1171284228397 LIMIT 1
 //echo("<pre>message:".print_r($message,true)."</pre>");
