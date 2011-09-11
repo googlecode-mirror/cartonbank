@@ -3026,13 +3026,14 @@ function send_email_to_artist($price, $image_id, $filename, $cartoonname, $descr
 	$nice_artistname = $nice_artistname[1]." ".$nice_artistname[0];
 
 	// License type
+	$lic_type = "";
 	if (round($price) == 250)
 	{$lic_type = "Ограниченная";}
 	elseif (round($price) == 500)
 	{$lic_type = "Стандартная";}
 	elseif (round($price) == 500)
 	{$lic_type = "Расширенная";}
-
+	
 	$mess = "";
 	$mess .= "<br>Уважаемый ".$nice_artistname."!<br><br>";
 	$mess .= $lic_type." лицензия на использование вашего изображения была только что передана Картунбанком заказчику.<br>Название рисунка: <b>\"".stripslashes($cartoonname)."\"</b> (".stripslashes($description).")<br>";
