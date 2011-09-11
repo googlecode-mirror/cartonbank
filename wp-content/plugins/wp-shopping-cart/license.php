@@ -2,7 +2,7 @@
 //print_r ($_SERVER);
 //echo "<br>";
 
-$abspath = 'z:/home/localhost/www/';
+$abspath = '/home/www/cb3/';
 $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
 
