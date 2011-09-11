@@ -28,98 +28,90 @@ if (isset($_GET['item']) && is_numeric($_GET['item']))
 
 function get_license($sequence_of_image,$license_num)
 {
-	/*
-	#agreement_number#
-	#agreement_date#
-	#customer_name#
-	#image_number#
-	#author_name#
-	#media_name#
-	#price#
-*/
-
-// load unique license data
+	// load unique license data
 	$current_user = wp_get_current_user();    
 
-//echo("<pre>".print_r($current_user,true)."</pre>");
-//echo("<pre>".print_r($_SESSION['nzshpcrt_cart'],true)."</pre>");
+	//echo("<pre>".print_r($current_user,true)."</pre>");
+	//echo("<pre>".print_r($_SESSION['nzshpcrt_cart'],true)."</pre>");
 
 	$agreement_number = uniqid();
 	$agreement_date = date("m.d.y");
 	$customer_name = $current_user->last_name. " " . $current_user->first_name;
-if (isset($current_user->user_description)&& $current_user->user_description!='')
-	$media_name = "«".$current_user->user_description."»";
-else
-	$media_name = '[не указано]';
+	if (isset($current_user->user_description)&& $current_user->user_description!='')
+		$media_name = "«".$current_user->user_description."»";
+	else
+		$media_name = '[не указано]';
 
-if (isset($current_user->discount) && $current_user->discount!='')
-	$discount = (int)$current_user->discount;
-else
-	$discount = 0;
+	if (isset($current_user->discount) && $current_user->discount!='')
+		$discount = (int)$current_user->discount;
+	else
+		$discount = 0;
 
-if(isset($_SESSION['nzshpcrt_cart']))
-{
-	$price = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> price;
-		$percent_to_pay = (100-$discount);
-		$price = ($price/100)*$percent_to_pay;
-
-	$image_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> name;
-	$image_number = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> product_id;
-	$author_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> author;
-}
-
-//pokazh($current_user);
-
-if (isset($current_user) && $current_user->ID == 106)
+	if(isset($_SESSION['nzshpcrt_cart']))
 	{
-		echo "<div style='color:red;'>Демонстрационная лицензия</div>";
-		$agreement_number = "XXXXXXX";
-		$customer_name = "Демо-пользователь";
-		$image_number = "XXXX-номер изображения";
-		$image_name = "Название рисунка";
-		$author_name = "Имя автора";
-		$media_name = "Название компании покупателя";
-		$price = "XXX-Цена";
+		$price = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> price;
+			$percent_to_pay = (100-$discount);
+			$price = ($price/100)*$percent_to_pay;
+
+		$image_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> name;
+		$image_number = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> product_id;
+		$author_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> author;
 	}
 
-//load License template
-$filename = '';
-switch($license_num)
-        {
-        case 1:
-        $filename = getcwd()."/"."license_limited_template.htm";
-		break;
-        
-        case 2:
-        $filename = getcwd()."/"."license_standard_template.htm";
-		break;
+	//pokazh($current_user);
 
-        case 3:
-        $filename = getcwd()."/"."license_extended_template.htm";
-		break;
+	if (isset($current_user) && $current_user->ID == 106)
+		{
+			echo "<div style='color:red;'>Демонстрационная лицензия</div>";
+			$agreement_number = "XXXXXXX";
+			$customer_name = "Демо-пользователь";
+			$image_number = "XXXX-номер изображения";
+			$image_name = "Название рисунка";
+			$author_name = "Имя автора";
+			$media_name = "Название компании покупателя";
+			$price = "XXX-Цена";
+		}
 
-        default:
-        $filename = getcwd()."/"."license_limited_template.htm";
-		break;
-}
+	//load License template
+	$filename = '';
+	//pokazh($license_num,"-license_num");
 
-$content=loadFile($filename); 
+	switch($license_num)
+			{
+			case 1:
+			$filename = getcwd()."/"."license_limited_template.htm";
+			break;
+			
+			case 2:
+			$filename = getcwd()."/"."license_standard_template.htm";
+			break;
 
-//echo $filename;
-//echo $content;
+			case 3:
+			$filename = getcwd()."/"."license_extended_template.htm";
+			break;
 
-// replace placeholders
-	$content = str_replace ('#agreement_number#',$agreement_number,$content);
-	$content = str_replace ('#agreement_date#',$agreement_date,$content);
-	$content = str_replace ('#customer_name#',$customer_name,$content);
-	$content = str_replace ('#image_number#',$image_number,$content);
-	$content = str_replace ('#image_name#',$image_name,$content);
-	$content = str_replace ('#author_name#',$author_name,$content);
-	$content = str_replace ('#media_name#',$media_name,$content);
-	$content = str_replace ('#price#',$price,$content);
+			default:
+			$filename = getcwd()."/"."license_limited_template.htm";
+			break;
+	}
 
-// output content
-echo $content;
+	$content=loadFile($filename); 
+
+	//echo $filename;
+	//echo $content;
+
+	// replace placeholders
+		$content = str_replace ('#agreement_number#',$agreement_number,$content);
+		$content = str_replace ('#agreement_date#',$agreement_date,$content);
+		$content = str_replace ('#customer_name#',$customer_name,$content);
+		$content = str_replace ('#image_number#',$image_number,$content);
+		$content = str_replace ('#image_name#',$image_name,$content);
+		$content = str_replace ('#author_name#',$author_name,$content);
+		$content = str_replace ('#media_name#',$media_name,$content);
+		$content = str_replace ('#price#',$price,$content);
+
+	// output content
+	echo $content;
 }
 
 function loadFile($sFilename, $sCharset = 'UTF-8')
