@@ -1,14 +1,19 @@
 <?
+//print_r ($_SERVER);
+//echo "<br>";
 
 $abspath = 'z:/home/localhost/www/';
 $abspath_1 = "/home/www/cb/";
 $abspath_2 = "/home/www/cb3/";
 
 
-if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
+if (strstr($_SERVER['PHP_SELF'],'cb3/'))
 	{$abspath = $abspath_2;}
-else if (strstr($_SERVER['DOCUMENT_ROOT'],'cb/')) 
+else if (strstr($_SERVER['PHP_SELF'],'cb/')) 
 	{$abspath = $abspath_1;}
+
+//echo "<br>";
+//echo $abspath;
 
 require($abspath.'wp-blog-header.php');
 
@@ -60,28 +65,45 @@ if(isset($_SESSION['nzshpcrt_cart']))
 	$author_name = $_SESSION['nzshpcrt_cart'][$sequence_of_image] -> author;
 }
 
-//load Livense template
+//pokazh($current_user);
+
+if (isset($current_user) && $current_user->ID == 106)
+	{
+		echo "<div style='color:red;'>Демонстрационная лицензия</div>";
+		$agreement_number = "XXXXXXX";
+		$customer_name = "Демо-пользователь";
+		$image_number = "XXXX-номер изображения";
+		$image_name = "Название рисунка";
+		$author_name = "Имя автора";
+		$media_name = "Название компании покупателя";
+		$price = "XXX-Цена";
+	}
+
+//load License template
 $filename = '';
 switch($license_num)
         {
         case 1:
-        $filename = getcwd()."/"."Livense_limited_template.htm";
+        $filename = getcwd()."/"."license_limited_template.htm";
         break;
         
         case 2:
-        $filename = getcwd()."/"."Livense_standard_template.htm";
+        $filename = getcwd()."/"."license_standard_template.htm";
         break;
 
         case 3:
-        $filename = getcwd()."/"."Livense_extended_template.htm";
+        $filename = getcwd()."/"."license_extended_template.htm";
         break;
 
         default:
-        $filename = getcwd()."/"."Livense_limited_template.htm";
+        $filename = getcwd()."/"."license_limited_template.htm";
         break;
 }
 
 $content=loadFile($filename); 
+
+//echo $filename;
+//echo $content;
 
 // replace placeholders
 	$content = str_replace ('#agreement_number#',$agreement_number,$content);
