@@ -82,7 +82,7 @@ if ($canpay==false or $totalsum == 0)
 }
 
 
- echo "<tr><td style='padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan='2'><b>Подтвердите информацию о себе:</b></td></tr>";
+ echo "<tr><td style='padding-bottom:5px;border-bottom: 6px solid #c8c8c8;' colspan='2'><b>Подтвердите информацию о себе:</b></td></tr>";
 
 ?>
 	<tr><td style="padding-bottom: 5px;">Имя*</td>
@@ -114,12 +114,12 @@ if ($canpay==false or $totalsum == 0)
 
     <tr>
       <td style='padding:4px;'>&nbsp;</td>
-      <td style='padding:4px;'><span style='font-size: 7pt;'>* Поля, отмеченные звёздочкой обязательны для заполнения.<br />На указанный электронный ящик будет выслана ссылка для скачивания файла(ов).</span> <input type='hidden' value='yes' name='agree'>
+      <td style='padding:4px;'><span style='font-size: 7pt;'>* Поля, отмеченные звёздочкой, обязательны для заполнения.<br />На указанный электронный ящик будет выслана ссылка для скачивания файла(ов).</span> <input type='hidden' value='yes' name='agree'>
 	  </td>
     </tr>
 	
 	  <tr>
-        <td style='padding-top:15px;padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan="2"><b>Сумма оплаты</b></td>
+        <td style='padding-top:15px;padding-bottom:5px;border-bottom: 6px solid #c8c8c8;' colspan="2"><b>Сумма оплаты</b></td>
       </tr>
 	  
 	  <tr>
@@ -127,7 +127,7 @@ if ($canpay==false or $totalsum == 0)
       </tr>
 
 	  <tr>
-        <td style='padding-top:15px;padding-bottom:5px;border-bottom: 1px solid #c8c8c8;' colspan="2"><b>Методы оплаты</b> (выберите один из способов оплаты)</td>
+        <td style='padding-top:15px;padding-bottom:5px;border-bottom: 6px solid #c8c8c8;' colspan="2"><b>Методы оплаты</b> (выберите один из способов оплаты)</td>
       </tr>
 
 	 <?php
@@ -141,54 +141,53 @@ $rooturl = get_option('siteurl');
 		?>
 	  <tr>
         <td width='270'>
-		<input type="radio" name="payment_method" value="wallet" id="payment_method_2" <? echo ($disabled); ?>/> 
-        <label for='payment_method_2'>Оплата через<br /><b>Личный Счёт (по предоплате) </b></label>
-		<br /><br /><img src="<?php echo($rooturl);?>/img/gate_beznal.png">
-		<br /><div style="font-size:0.7em;color:#CC0033;"><?if ($canpay==false){echo "У вас недостаточно денег на Личном счёте для этого метода оплаты.";}?></div>
+		
+		<div style="float:left;height:100px;width:20px;"><input type="radio" name="payment_method" value="wallet" id="payment_method_2" <? echo ($disabled); ?>/></div> 
+        
+		<div style="margin-left:30px;"><label for='payment_method_2'>Оплата через<br /><b>Личный Счёт (по договору) </b></label>
+		<br /><!-- <img src="<?php echo($rooturl);?>/img/gate_beznal.png"> -->
+		<br /><div style="font-size:0.7em;color:#CC0033;"><?if ($canpay==false){echo "У вас недостаточно денег на Личном счёте для этого метода оплаты.";}?></div></div>
         </td>
-		<td>
+		<td style="font-size:.8em;">
 		После нажатия на кнопку "Оплатить" произойдет уменьшение вашего Личного Счета на размер стоимости подтвержденной вами Лицензии. Вы перейдёте на страницу с прямыми ссылками на заказанные файлы высокого разрешения. На указанный вами при регистрации электронный почтовый адрес будет отправлено сообщение, содержащее:<br />1. Ссылку на выбранное изображение в виде файла качественного разрешения, доступный вам для скачивания в течение 1 недели со дня получения сообщения.<br />2. Лицензионный Договор на использование каждого выбранного изображения.
 		</td>
       </tr>
+
 	  <tr>
-        <td width='270'>
-		<input type="radio" name="payment_method" value="check" id="payment_method_4" <? //echo ($disabled); ?>/> 
-        <label for='payment_method_4'>Оплата через<br /><b>Сбербанк</b></label>
+        <td width='270' style="border-top:1px silver solid;">
+		<div style="float:left;height:100px;width:20px;"><input type="radio" name="payment_method" value="check" id="payment_method_4" /></div>
+        <div style="margin-left:30px;">
+		<label for='payment_method_4'>Оплата через<br /><b>Сбербанк</b></label>
 		<br /><!-- <img src="<?php echo($rooturl);?>/img/gate_beznal.png"> -->
         </td>
-		<td>
+		<td style="font-size:.8em;border-top:1px silver solid;">
 		Распечатать бланк и оплатить его в любом отделении Сбербанка. Также возможен платёж из других российских банков. Будьте внимательны! Возврат внесённых средств не производится.
 		<br />
 		Для вас будет сформирован счёт на оплату. Вы можете его распечатать и оплатить в течение 5 банковских дней. Для ускорения процесса сообщите нам о факте оплаты счета на адрес cartoonbank.ru@gmail.com. Когда счет будет оплачен изображения и лицензии к ним будут отправлены на указанный вами при регистрации e-mail.
-		</td>
+		</td></div>
       </tr>
-	  <tr><td>
-		<input type="radio" name="payment_method" value="robokassa" id="payment_method_3" <? //echo ($disabled); ?>>
+
+	  <tr><td style="border-top:1px silver solid;">
+		<div style="float:left;height:100px;width:20px;"><input type="radio" name="payment_method" value="robokassa" id="payment_method_3" /></div>
+		<div style="margin-left:30px;">
 		<label for='payment_method_3'>Оплата через<br /><b>Робокассу</b></label>
 		<br /><br /><img src="<?php echo($rooturl);?>/img/gate_robokassa.png">
-		<br /><div style="font-size:0.7em;"><ul>
-			<li>- Webmoney</li>
-			<li>- Яндекс.Деньги</li>
-			<li>- RBK Money RUR</li>
-			<li>- другие <b>электронные валюты</b></li>
-			<li>- SMS (СМС) платежи</li>
-			<li>- <b>терминалы</b> QIWI и другие</li>
-			<li>- <b>карты</b> VISA и MasterCard</li>
-		</ul><a href="https://money.yandex.ru" target="_blank"><br /><br /><img src="https://money.yandex.ru/img/yamoney_logo88x31.gif " alt="Я принимаю Яндекс.Деньги" title="Я принимаю Яндекс.Деньги" border="0" width="88" height="31"/></a></div>
-
+		<br />
+		</div>
 	  </td>
-		<td>
-		После нажатия на кнопку "Оплатить" вы перейдёте на сайт <a href="http://robokassa.ru/" target=_blank>Робокассы</a>, где выберете валюту оплаты. После успешной оплаты вы перейдёте на страницу с прямыми ссылками на заказанные файлы высокого разрешения. На указанный вами при регистрации электронный почтовый адрес будет отправлено сообщение, содержащее:<br />1. Ссылку на выбранное изображение в виде файла качественного разрешения, доступный вам для скачивания в течение 1 недели со дня получения сообщения.<br />2. Лицензионный Договор на использование каждого выбранного изображения.
-		</td>
+		<td style="font-size:.8em;border-top:1px silver solid;">
+		После нажатия на кнопку "Оплатить" вы перейдёте на сайт агрегатора электронных платежей <a href="http://robokassa.ru/" target=_blank>Робокассы</a>, где выберете валюту оплаты. После успешной оплаты вы перейдёте на страницу с прямыми ссылками на заказанные файлы высокого разрешения. На указанный вами при регистрации электронный почтовый адрес будет отправлено сообщение, содержащее:<br />1. Ссылку на выбранное изображение в виде файла качественного разрешения, доступный вам для скачивания в течение 1 недели со дня получения сообщения.<br />2. Лицензионный Договор на использование каждого выбранного изображения.
+		<div>Webmoney, Яндекс.Деньги, RBK Money RUR, другие <b>электронные валюты</b>, SMS (СМС) платежи, <b>терминалы</b> QIWI и другие, карты</b> VISA и MasterCard.
+		<!-- <a href="https://money.yandex.ru" target="_blank"><img src="https://money.yandex.ru/img/yamoney_logo88x31.gif " alt="Я принимаю Яндекс.Деньги" title="Я принимаю Яндекс.Деньги" border="0" width="88" height="31"/></a> --></div></td>
 	  </tr>
 
 	  <?if (WP_DEBUG) {?>
-	  <tr><td>
+	  <tr><td width='270' style="border-top:1px silver solid;">
 		<input type="radio" name="payment_method" value="paypal_multiple" id="payment_method_1"  <? echo ($disabled); ?>>
 		<label for='payment_method_1'>Оплата через <b>PayPal</b></label>
 		<br /><img src="<?php echo($rooturl);?>/img/gate_paypal.png">
 	  </td>
-		<td>
+		<td style="font-size:.8em;border-top:1px silver solid;">
 		После нажатия на кнопку "Оплатить" вы перейдёте на сайт <a href="http://paypal.com" target=_blank>Paypal</a>, где оплатите заказ. После успешной оплаты вы перейдёте на страницу с прямыми ссылками на заказанные файлы высокого разрешения. На указанный вами при регистрации электронный почтовый адрес будет отправлено сообщение, содержащее:<br />1. Ссылку на выбранное изображение в виде файла качественного разрешения, доступный вам для скачивания в течение 1 недели со дня получения сообщения.<br />2. Лицензионный Договор на использование каждого выбранного изображения.
 		</td>
 	  </tr>
@@ -201,7 +200,7 @@ $rooturl = get_option('siteurl');
       </td>
       <td style='padding-top:5px;border-top: 1px solid #c8c8c8;'>
       <input type='hidden' value='true' name='submitwpcheckout' />
-      <input type='submit' style="padding:6px;background-color:#84DF88;margin-top:12px;" value='&nbsp;Оплатить заказ и скачать файлы&nbsp;' name='submit'  <? //echo ($disabled); ?>/>
+      <input type='submit' style="padding:6px;background-color:#84DF88;margin-top:12px;font-size:1.2em;" value='&nbsp;Оплатить заказ и скачать файлы&nbsp;' name='submit'  <? //echo ($disabled); ?>/>
       </td>
     </tr>
 	<tr>
