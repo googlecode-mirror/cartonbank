@@ -3,14 +3,14 @@ function cart_product_list_string($licensecolumn)
 {
 	// the function is for displaying the list of products
 	// if $licensecolumn is False we don't diplay extra columns
-	global $wpdb;
+	global $wpdb, $result_no_license_text;
 	$siteurl = get_option('siteurl');
 	$current_item = 0;
 	$total = 0;
 
 	$cart = isset($_SESSION['nzshpcrt_cart'])?$_SESSION['nzshpcrt_cart']:"";
 	$result = '<table class=\'productcart\'>';
-
+	$result_no_license_text = '<table class=\'productcart\'>';
 	if (isset($cart) && $cart!='')
 	{
 	foreach($cart as $key => $cart_item)
@@ -74,16 +74,21 @@ function cart_product_list_string($licensecolumn)
 
 
 	    $result .=  "<tr>";
-	    
 	    $result .= "  <td style='width:144px;'>";
+	    $result_no_license_text .=  "<tr>";
+	    $result_no_license_text .= "  <td style='width:144px;'>";
 
-	    $basepath = get_option('siteurl');
+
+		$basepath = get_option('siteurl');
 	    $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
 	    $previewdir = $basepath."/wp-content/plugins/wp-shopping-cart/product_images/";
-	    $result .= ("<a href='".$previewdir.$product_list[0]['image']."'><img border='0' src='".$imagedir.$product_list[0]['image']."'></a>");
+	    
+		$result .= ("<a href='".$previewdir.$product_list[0]['image']."'><img border='0' src='".$imagedir.$product_list[0]['image']."'></a>");
 	    $result .= "  </td>";
-
-	    $result .= "  <td>";
+		$result .= "  <td>";
+		$result_no_license_text .= ("<a href='".$previewdir.$product_list[0]['image']."'><img border='0' src='".$imagedir.$product_list[0]['image']."'></a>");
+	    $result_no_license_text .= "  </td>";
+		$result_no_license_text .= "  <td>";
 
 		$_size = $product_list[0]['width']."px X ".$product_list[0]['height']."px;";
 
@@ -101,36 +106,43 @@ function cart_product_list_string($licensecolumn)
 
 
 		$result .= "<div style='font-size: 8pt !important;'>".$_bigpictext."</div>";
-
 	    $result .= "  </td>";
-
+		$result_no_license_text .= "<div style='font-size: 8pt !important;'>".$_bigpictext."</div>";
+	    $result_no_license_text .= "  </td>";
 
 		if ($licensecolumn)
 		{
 			$result .= "  <td width='240'>";
-
 			$result .= "<form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".$siteurl."/?page_id=29' method='POST'>";
+			$result_no_license_text .= "  <td width='240'>";
+			$result_no_license_text .= "<form name='licenses' id='licenses' onsubmit='submitform(this);return false;' action='".$siteurl."/?page_id=29' method='POST'>";
 			
 			$ch1 = ischecked('l1_price', $product_list[0]['id']);
+
 			$result .= "<input name='license' value='l1_price' type='radio' $ch1 />"; 
 			$result .= round($product_list[0]['l1_price'])."&nbsp;руб. ";
 			$result .= "<a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=1&item=".$current_item."','текст ограниченной лицензии','height=480,width=640,scrollbars=yes');\">ограниченная</a> <br />";
-
+			$result_no_license_text .= "<input name='license' value='l1_price' type='radio' $ch1 />"; 
+			$result_no_license_text .= round($product_list[0]['l1_price'])."&nbsp;руб. ";
+			$result_no_license_text .= "<a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=1&item=".$current_item."','текст ограниченной лицензии','height=480,width=640,scrollbars=yes');\">ограниченная</a> <br />";
 
 			$ch2 = ischecked('l2_price', $product_list[0]['id']);
 			$result .= "<input name='license' value='l2_price' type='radio' $ch2 />"; 
 			$result .= round($product_list[0]['l2_price'])."&nbsp;руб. <a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=2&item=".$current_item."','текст стандартной лицензии','height=480,width=640,scrollbars=yes');\">стандартная</a><br />";
+			$result_no_license_text .= "<input name='license' value='l2_price' type='radio' $ch2 />"; 
+			$result_no_license_text .= round($product_list[0]['l2_price'])."&nbsp;руб. <a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=2&item=".$current_item."','текст стандартной лицензии','height=480,width=640,scrollbars=yes');\">стандартная</a><br />";
 			
 			$ch3 = ischecked('l3_price', $product_list[0]['id']);
 			$result .= "<input name='license' value='l3_price' type='radio'  $ch3 />"; 
 			$result .= round($product_list[0]['l3_price'])."&nbsp;руб. <a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=3&item=".$current_item."','текст расширенной лицензии','height=480,width=640,scrollbars=yes');\">расширенная</a>";
-
 			$result .= "<input value='".$product_list[0]['id']."' name='prodid' type='hidden'> <br /><br />";
-			
 			$result .= "<input id='searchsubmit' value='Сменить лицензию' type='submit'> </form>";
-
 			$result .= " </td>";
-
+			$result_no_license_text .= "<input name='license' value='l3_price' type='radio'  $ch3 />"; 
+			$result_no_license_text .= round($product_list[0]['l3_price'])."&nbsp;руб. <a title='ваша лицензия' href='#' onclick=\"javascript:window.open('".$siteurl."/wp-content/plugins/wp-shopping-cart/license.php?l=3&item=".$current_item."','текст расширенной лицензии','height=480,width=640,scrollbars=yes');\">расширенная</a>";
+			$result_no_license_text .= "<input value='".$product_list[0]['id']."' name='prodid' type='hidden'> <br /><br />";
+			$result_no_license_text .= "<input id='searchsubmit' value='Сменить лицензию' type='submit'> </form>";
+			$result_no_license_text .= " </td>";
 		}
 		if (isset($product_list[0]['price']))
 	    {
@@ -149,14 +161,24 @@ function cart_product_list_string($licensecolumn)
 			// Download link
 			$current_user = wp_get_current_user();
 			$result .= "  <td width='70'>";
+			$result_no_license_text .= "  <td width='70'>";
+
 			if (isset($current_user) && $current_user->ID == '106')
-			{$result .= "<a href='".get_option('siteurl')."/demo/demo.jpg'>Скачать demo</a>";}
+			{
+				$result .= "<a href='".get_option('siteurl')."/demo/demo.jpg'  style='background-color:#33ff99;padding:7px;border:1px #a3a598 solid;text-decoration:none;margin-top:16px;'>Скачать demo</a>";
+				$result_no_license_text .= "<a href='".get_option('siteurl')."/demo/demo.jpg'  style='background-color:#33ff99;padding:7px;border:1px #a3a598 solid;text-decoration:none;margin-top:16px;'>Скачать demo</a>";
+			}
 			else
-			{$result .= "<a href='$link'>Скачать</a>";}
+			{
+				$result .= "<a href='$link'  style='background-color:#33ff99;padding:7px;border:1px #a3a598 solid;text-decoration:none;margin-top:16px;'>Скачать</a>";
+				$result_no_license_text .= "<a href='$link'  style='background-color:#33ff99;padding:7px;border:1px #a3a598 solid;text-decoration:none;margin-top:16px;'>Скачать</a>";
+			}
 			$result .= "  </td>";
+			$result_no_license_text .= "  </td>";
 		}
 
 	    $result .= "</tr>";
+	    $result_no_license_text .= "</tr>";
 
 		// License text
 		if (!$licensecolumn)
@@ -176,7 +198,8 @@ function cart_product_list_string($licensecolumn)
 		return '';
 	}
 	 $result .= '</table>';
-
+	 $result_no_license_text .= '</table>';
+	
 		$result .= "<script language='javascript'> ";
 		$result .= "function toggle(item) {";
 		$result .= "var ele = document.getElementById('toggleText'+item);";
@@ -192,9 +215,7 @@ function cart_product_list_string($licensecolumn)
 		$result .= "} ";
 		$result .= "</script>";
 
-
 	//$result .= ("<pre>SESSION:".print_r($_SESSION,true)."</pre>");
-
 	return $result;
 }
 
@@ -223,23 +244,7 @@ function ischecked2 ()
 
 function get_license($sequence_of_image,$license_num)
 {
-	/*
-		#agreement_number#
-		#agreement_date#
-		#customer_name#
-		#image_number#
-		#author_name#
-		#media_name#
-		#price#
-
-	if (isset($current_user->discount))
-			$_discount = $current_user->discount;
-	  else
-			$_discount = 0;
-
-	$_SESSION['total'] = round($total*(100-$_discount)/100);
-
-			*/
+	global $license_names_array;
 
 	// load unique license data
 	$current_user = wp_get_current_user();    
@@ -301,7 +306,28 @@ function get_license($sequence_of_image,$license_num)
 			break;
 	}
 
-	$content=loadFile($filename);
+		if (isset($current_user) && $current_user->ID == 106)
+		{
+			$content = "<div style='color:red;'>Демонстрационная лицензия</div>";
+			$content .= loadFile($filename);
+		}
+		else
+		{
+			$content = loadFile($filename);
+		}
+
+
+	if (isset($current_user) && $current_user->ID == 106)
+		{
+			$agreement_number = "XXXXXXX";
+			$customer_name = "Демо-пользователь";
+			$image_number = "XXXX-номер изображения";
+			$image_name = "Название рисунка";
+			$author_name = "Имя автора";
+			$media_name = "Название компании покупателя";
+			$price = "XXX-Цена";
+		}
+
 
 	// replace placeholders
 		$content = str_replace ('#agreement_number#',$agreement_number,$content);
@@ -313,6 +339,11 @@ function get_license($sequence_of_image,$license_num)
 		$content = str_replace ('#media_name#',$media_name,$content);
 		$content = str_replace ('#price#',$price,$content);
 
+	// save_license
+	$license_filename = $agreement_number.".htm";
+	save_license($content,$license_filename);
+	$license_names_array[] = $license_filename;
+
 	// output content
 	return $content;
 }
@@ -322,7 +353,7 @@ function license_name($license_code)
 	switch($license_code)
         {
         case 'l1_price':
-        $license_name = "Ограниченая";
+        $license_name = "Ограниченная";
         break;
         
         case 'l2_price':
@@ -358,4 +389,14 @@ function loadFile($sFilename, $sCharset = 'UTF-8')
         $sData = mb_convert_encoding($sData, $sCharset, $sEncoding);
     return $sData;
 }
+
+function save_license($content,$filename)
+{
+	$myFile = "/home/www/cb3/licenses/".$filename;
+	$fh = fopen($myFile, 'w') or die("can't open file");
+	$stringData = $content;
+	fwrite($fh, $stringData);
+	fclose($fh);
+}
+
 ?>
