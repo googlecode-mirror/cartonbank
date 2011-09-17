@@ -1,7 +1,7 @@
 <?php
 global $wpdb, $colorfilter, $color;
 
-			//pokazh ($_POST);
+			//pokazh ($_SERVER);
 
 	// Rabochy stol filter
 	$_666 = '';
@@ -472,7 +472,23 @@ else
 									}
 
 					$filter_list .= 'Поиск: ('.$keywords.$exact_keywords.$exclude_keywords.$any_keywords.") ";
-                    // search request
+				
+					
+					if (isset($new) && $new==1)
+					{
+						$new_get = $_GET;
+						$new_get['new']=0;
+						$new_get_string = http_build_query($new_get);
+						$filter_list .= "<div style='float:right;'><a href='?".$new_get_string."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>Сортировать по рейту</a></div>";
+					}
+					else
+					{
+						$new_get = $_GET;
+						$new_get['new']=1;
+						$new_get_string = http_build_query($new_get);
+						$filter_list .= "<div style='float:right;'><a href='?".$new_get_string."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>Сортировать по новизне</a></div>";
+					}
+					// search request
                     // count found results
 					if (isset($_brand) && isset($_brand)!='')
 					{
