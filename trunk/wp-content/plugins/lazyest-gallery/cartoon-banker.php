@@ -92,6 +92,7 @@ if (isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabil
 else if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
 	add_submenu_page('lazyest-gallery/al-admin-panel.php','Прихожая', 'Прихожая', 'read', 'purgatory/purgatory.php');
 */
+add_submenu_page('profile.php','Фавориты', 'Фавориты', 'read', 'favorites.php');
 }
 //pokazh($current_user);
 //pokazh($wpdb);

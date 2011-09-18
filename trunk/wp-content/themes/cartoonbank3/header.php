@@ -50,6 +50,9 @@ if (isset($_SERVER['QUERY_STRING']))
 			$h = $h."".$brand.". ";
 		}
 }
+$current_user = wp_get_current_user();
+$_SESSION['uid']= $current_user->ID;
+setcookie('uid', $_SESSION['uid']);
 ?>
 <!doctype html>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
