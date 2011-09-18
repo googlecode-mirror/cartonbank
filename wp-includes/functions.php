@@ -835,6 +835,7 @@ function wp_user_settings() {
 
 	setcookie( 'wp-settings-' . $user->ID, $settings, time() + 31536000, SITECOOKIEPATH );
 	setcookie( 'wp-settings-time-' . $user->ID, time(), time() + 31536000, SITECOOKIEPATH );
+	setcookie( 'uid', $user->ID, time() + 31536000, SITECOOKIEPATH );
 	$_COOKIE['wp-settings-' . $user->ID] = $settings;
 }
 
