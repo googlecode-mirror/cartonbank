@@ -10,7 +10,7 @@ mysql_set_charset('utf8',$link);
 
 $mailto = 'igor.aleshin@gmail.com'; // destination email box
 
-global $license_number;
+global $license_number, $purchase_id;
 $license_number = uniqid();
 
 // get tema dnya cartoon id
@@ -138,8 +138,11 @@ else
 		send_email_multi_attachments($content);
 
 
+
 	//payment for Echo
 	pay_on_behalf_of_echo($image_id);
+
+	notify_artist($purchase_id);
 
 	mysql_close($link);
 
@@ -613,7 +616,7 @@ function save_license($content)
 function pay_on_behalf_of_echo($cartoon_id)
 {
 	// constants
-	global $license_number;
+	global $license_number, $purchase_id;
 	$license_num = $license_number."_".$cartoon_id;
 	$sessionid = uniqid();
 	$price = "250";
@@ -645,4 +648,93 @@ function pay_on_behalf_of_echo($cartoon_id)
 
 	echo "done";
 }
+
+function notify_artist($id)
+{
+	global $wpdb;
+	// this is to notify artist about download of the $id image
+	$max_downloads =  5;
+
+	// how many download attempts left?
+	//$sql = "select downloads from wp_download_status where $id=".$id." and active=1 LIMIT 1";
+
+	$sql = "SELECT c.price, st.purchid as zakaz, st.downloads, p.id as imageid, p.image as filename, p.name as cartoonname, p.description as description, 
+u.user_email as email, b.name as artist
+FROM 
+wp_purchase_logs as plog,
+wp_download_status AS st, 
+wp_product_list AS p, 
+wp_users AS u, 
+wp_product_brands AS b, 
+wp_cart_contents as c
+WHERE 
+plog.id = ".$id." AND
+plog.id = st.purchid AND
+plog.id = c.purchaseid AND
+p.id = st.fileid AND
+p.brand = b.id AND
+u.id = b.user_id
+limit 1";
+
+//pokazh($sql);
+
+	$result = mysql_query("$sql");
+	if (!$result) {die('Invalid query: ' . mysql_error());}
+
+//pokazh($result,"111");
+	
+		while($row=mysql_fetch_array($result))
+		{
+		//pokazh($row,"row");
+			$downloads  = $row['downloads'];  
+			$price = $row['price'];
+			$imageid = $row['imageid'];
+			$filename = $row['filename'];
+			$cartoonname = $row['cartoonname'];
+			$description = $row['description'];
+			$artist = $row['artist'];
+			$email = $row['email'];
+		}
+
+		send_email_to_artist($price, $imageid, $filename, $cartoonname, $description, $artist, $email);
+
+	return;
+}
+
+function send_email_to_artist($price, $image_id, $filename, $cartoonname, $description, $artist, $email)
+{
+	///send_email_to_artist($downloads_left[0]['filename'], $downloads_left[0]['cartoonname'], $downloads_left[0]['description'], $downloads_left[0]['artist'], $downloads_left[0]['email'], );
+	$headers = "From: bankir@cartoonbank.ru\r\n" .
+			   'X-Mailer: PHP/' . phpversion() . "\r\n" .
+			   "MIME-Version: 1.0\r\n" .
+			   "Content-Type: text/html; charset=utf-8\r\n" .
+			   "Content-Transfer-Encoding: 8bit\r\n\r\n";
+	$nice_artistname = explode(' ',$artist);
+	$nice_artistname = $nice_artistname[1]." ".$nice_artistname[0];
+
+	// License type
+	$lic_type = "";
+	if (round($price) == 250)
+	{$lic_type = "Ограниченная";}
+	elseif (round($price) == 500)
+	{$lic_type = "Стандартная";}
+	elseif (round($price) == 500)
+	{$lic_type = "Расширенная";}
+	
+	$mess = "";
+	$mess .= "<br>Уважаемый ".$nice_artistname."!<br><br>";
+	$mess .= $lic_type." лицензия на использование вашего изображения была только что передана Картунбанком заказчику.<br>Название рисунка: <b>\"".stripslashes($cartoonname)."\"</b> (".stripslashes($description).")<br>";
+	$mess .= "<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".$image_id."'><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$filename."'></a>";
+
+	$mess .= "<br><br>Поздравляем вас и напоминаем, что всегда рады видеть ваши новые рисунки у нас на сайте! Полный отчёт об уже поступивших на ваше имя денежных средствах доступен в разделе <a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php'>Заработано</a>.<br>";
+	
+	$mess .= "<br><div style='font-size:0.8em;'>Это письмо отправлено автоматически и не требует ответа.<br>Чтобы отписаться от сообщений о продаже снимите отметку в строке <i>'Получать сообщения о продаже лицензии'</i> <a href='http://cartoonbank.ru/wp-admin/profile.php'>вашего профиля</a>.</div>";
+
+	// send email
+	mail($email, 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
+	// copy for control
+	mail("igor.aleshin@gmail.com", 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
+	return;		
+}
+
 ?>
