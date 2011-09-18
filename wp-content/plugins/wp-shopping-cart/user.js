@@ -237,3 +237,35 @@ jQuery("#share_this").html('<b>Поделиться:</b><br /><a href="#" onclic
 }
 function change_url() { jQuery(document).ready(function() { function locationHashChanged() { if (location.hash === "#pt" || location.hash === "#") { var cuid = document.getElementById('cuid').innerHTML; window.location.hash = '&cartoonid='+cuid; } } window.onhashchange = locationHashChanged; });
 }
+function fave_it()
+{
+jQuery(document).ready(function() {
+var cuid = document.getElementById('cuid').innerHTML;
+var starurl = "http://109.120.143.27/cb/ales/faves/faves_update.php?upd=1&p="+cuid+"&uid="+getCookie('uid');
+jQuery("#thumb").load(starurl,function(){});
+});
+}
+function get_fave()
+{
+jQuery(document).ready(function() {
+var cuid = document.getElementById('cuid').innerHTML;
+var starurl = "http://109.120.143.27/cb/ales/faves/faves_update.php?p="+cuid+"&uid="+getCookie('uid');
+jQuery("#thumb").load(starurl,function(){});
+});
+}
+function getCookie(name) {
+var dc = document.cookie;
+var prefix = name + "=";
+var begin = dc.indexOf("; " + prefix);
+if (begin == -1) {
+begin = dc.indexOf(prefix);
+if (begin != 0) return null;
+} else {
+begin += 2;
+}
+var end = document.cookie.indexOf(";", begin);
+if (end == -1) {
+end = dc.length;
+}
+return unescape(dc.substring(begin + prefix.length, end));
+}

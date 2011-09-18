@@ -1,5 +1,4 @@
 <?php
-global $wpdb, $colorfilter, $color;
 
 			//pokazh ($_SERVER);
 
@@ -604,7 +603,7 @@ else
 
      if (isset($product) && $product!=null)
      {   
-		 ///pokazh("product set");
+		 ///pokazh($product,"product set");
 			// normal workflow: disply big preview image
 			// slide preview preparations:
 				if(stristr($product[0]['image'], 'jpg') != FALSE) {
@@ -685,7 +684,7 @@ else
 
 				//$_edid .= "<div id=\'fblike\'></div>";
 
-///pokazh($_name,"_name");
+pokazh($_name,"_name");
 
 				$_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Название:</a> </b>" .$_name."</div> "."<div >№&nbsp;<a title='уникальный адрес страницы с этим изображением' id='cuid' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
                 $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение'>Категория:</a> </b><br />".$_category."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Описание:</a> </b> ".$_description."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение'>Тэги:</a> </b><br />".$_tags."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br /><br /><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение'>Размер:</a></b><br />".$_size."<br /><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение'>Формат:</a> </b> ".$_file_format."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение'>Оценка:</a></b><br />".$_rating_html.$_sharethis_html.$_edid;
@@ -1057,6 +1056,7 @@ function save_search_terms($terms)
 on_start();
 get_5stars();
 get_share_this();
+get_fave();
 //-->
 </script>
 
