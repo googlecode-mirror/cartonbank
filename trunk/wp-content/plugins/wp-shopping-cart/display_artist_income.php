@@ -58,6 +58,7 @@ $this_date = getdate();
 
 //////// artist
 //////// who is logged on?
+$current_user = wp_get_current_user();
 $sql = "SELECT id FROM `wp_product_brands` WHERE user_id = ".$current_user->id;
 $userbrand = $wpdb->get_results($sql,ARRAY_A);
 if($userbrand != null)
@@ -88,10 +89,20 @@ else
 /// login for admins
 if (($current_user->wp_user_level == 10) && isset($_GET['brand']) && is_numeric($_GET['brand']))
 {
+	//pokazh(".");
 	$_brand = $_GET['brand'];
+}
+elseif ($current_user->wp_user_level == 10)
+{
+	//$_brand = $current_user->ID;
+	//$userbrand
+	//pokazh($sql,"..");
+	//pokazh($current_user,"..");
+	$_brand = $userbrandid;
 }
 else
 {
+	//pokazh("...");
 	$_brand = $userbrandid;
 }
 
