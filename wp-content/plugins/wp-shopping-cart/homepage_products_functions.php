@@ -37,7 +37,7 @@ function nszhpcrt_homepage_products($content = '')
 			wp_product_list.votes AS votes, 
 			wp_product_list.votes_sum AS points, 
 			(wp_product_list.votes_sum/wp_product_list.votes) AS average, 
-			(wp_product_list.votes_sum/wp_product_list.votes)*SQRT(wp_product_list.votes) as rate, 
+			(wp_product_list.votes_sum/wp_product_list.votes)*SQRT(SQRT(wp_product_list.votes)) as rate, 
 			wp_fsr_user.vote_date 
 			FROM wp_product_list, wp_fsr_user, wp_product_brands 
 			WHERE 
@@ -353,7 +353,7 @@ $sql = "SELECT
 			wp_product_list.votes AS votes, 
 			wp_product_list.votes_sum AS points, 
 			(wp_product_list.votes_sum/wp_product_list.votes) AS average, 
-			(wp_product_list.votes_sum/wp_product_list.votes)*SQRT(wp_product_list.votes) as rate, 
+			(wp_product_list.votes_sum/wp_product_list.votes)*SQRT(SQRT(wp_product_list.votes)) as rate, 
 			wp_fsr_user.vote_date  
 				FROM  wp_product_list, wp_fsr_user, wp_product_brands 
 				WHERE wp_product_list.active = 1
