@@ -7,7 +7,7 @@ if (!isset($_GET['p']) || !is_numeric($_GET['p']) || !isset($_GET['uid']) || !is
 }
 
 // configuration
-include("/home/www/cb/ales/config.php");
+include("/home/www/cb3/ales/config.php");
 $ret = ""; // code to return
 $upd = 0; // update database
 
