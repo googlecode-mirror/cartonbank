@@ -241,7 +241,7 @@ function fave_it()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-var starurl = "http://109.120.143.27/cb/ales/faves/faves_update.php?upd=1&p="+cuid+"&uid="+getCookie('uid');
+var starurl = "http://cartoonbank.ru/ales/faves/faves_update.php?upd=1&p="+cuid+"&uid="+getCookie('uid');
 jQuery("#thumb").load(starurl,function(){});
 });
 }
@@ -249,7 +249,7 @@ function get_fave()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-var starurl = "http://109.120.143.27/cb/ales/faves/faves_update.php?p="+cuid+"&uid="+getCookie('uid');
+var starurl = "http://cartoonbank.ru/ales/faves/faves_update.php?p="+cuid+"&uid="+getCookie('uid');
 jQuery("#thumb").load(starurl,function(){});
 });
 }
