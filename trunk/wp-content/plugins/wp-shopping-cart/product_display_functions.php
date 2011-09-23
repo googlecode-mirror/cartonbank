@@ -161,7 +161,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 		AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` 
 		AND  wp_product_list.id = (select id from tema_dnya where DATETIME = DATE( NOW( ) ) ) LIMIT 1
 		UNION
-		SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria 
+		SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria 
 		FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories`
 		WHERE `wp_product_list`.`active`='1'  
 		AND `wp_item_category_associations`.`category_id` != '666'  
@@ -285,19 +285,21 @@ $current_user = wp_get_current_user();
 if (is_user_logged_in())
 {
 	$logged = true; //" залогинен ";
+	$klop = "";//"_";
 }
 else
 {
 	$logged = false; //" не залогинен ";
+	$klop = ""; //"|";
 }
 
 	if ($logged)
 	{
-		$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."&nbsp;<span id=\'thumb\' onclick=\'fave_it();\'><img src=\'".get_option('siteurl')."/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+		$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."&nbsp;$klop<span id=\'thumb\' onclick=\'fave_it();\'>$klop<img src=\'http://cartoonbank.ru/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
 	}
 	else
 	{
-		$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+		$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name." $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
 	}
 	$_bigpictext = "<b>Категория: </b><br />".$_category."<br /><br /><b>Описание: </b> ".$_description."<br /><br /><b>Тэги: </b><br />".$_tags."<br /><br /><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><br /><b>Размер:</b><br />".$_size."<br /><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b>Формат: </b>".$_file_format."<br /><br /><b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\' border=0 alt=\'".$_bigpicimgalt."\' />";
