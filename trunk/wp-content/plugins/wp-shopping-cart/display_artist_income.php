@@ -347,9 +347,21 @@ foreach($result as $r)
 }//foreach payment date //////for ($_month = 1; $_month <= 12; $_month++)  
 //}// for years
 
+	// Get payed amount
+	$payout = 0;
+	$payout_message = "";
+	$sql = "SELECT sum(reward_payed) as payout FROM `artist_payments` where artist_id = $_brand";
+	$result = $wpdb->get_results($sql,ARRAY_A);
+	 foreach($result as $r)
+		{
+			$payout = $r['payout'];
+			$topay = $total_all-$payout;
+			$payout_message = "Уже выплачено: <b>$payout</b> руб.<br>Новые начисления: <b>$topay</b> руб.";
+		}
+
 ?>
-<div style="margin-top:12px; padding:6px;background-color:#66CC00">
-Общая сумма авторских отчислений: <b><?echo $total_all;?></b> руб.<br>Продано рисунков: <?echo $counter_sold_year;?> (деньги получены Картунбанком).
+<div style="margin-top:12px; padding:6px;background-color:#B7FF6F">
+Общая сумма авторских начислений: <b><?echo $total_all;?></b> руб.<br>Продано рисунков: <?echo $counter_sold_year;?> (деньги получены Картунбанком).<br><? echo $payout_message;?>
 </div>
 <?
 function fill_invoice($filename, $invoice_number='', $invoice_date='', $smi='', $client_details='', $product_list='', $total='', $count='', $invoice_period='', $contract_number='', $contract_date='')
