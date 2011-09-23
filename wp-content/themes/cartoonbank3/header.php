@@ -53,6 +53,15 @@ if (isset($_SERVER['QUERY_STRING']))
 $current_user = wp_get_current_user();
 $_SESSION['uid']= $current_user->ID;
 setcookie('uid', $_SESSION['uid']);
+if (current_user_can('manage_options'))
+			{
+				$_edid = "<a href=".get_option('siteurl')."/wp-admin/post.php?post=".$_GET['page_id']."&action=edit target=_blank>edit</a>";
+			}
+			else
+			{
+				$_edid = "";
+			}
+
 ?>
 <!doctype html>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
@@ -191,6 +200,7 @@ else
 		<li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
 		<li><a href="?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
 		<li><a href="?page_id=2041"<? $_GET['page_id']=='2041'? selected_style():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" width="20" border="0" alt="English"></a></li>
+		<li><? echo $_edid;?></li>
 	</ul>
 </div>
 <A NAME="pt"></a>
