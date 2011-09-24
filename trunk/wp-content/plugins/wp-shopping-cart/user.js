@@ -269,3 +269,22 @@ end = dc.length;
 }
 return unescape(dc.substring(begin + prefix.length, end));
 }
+function createCalendarEvent()
+{
+var _text = encodeURIComponent(document.getElementById('text').value);
+var _keyw = encodeURIComponent(document.getElementById('keyword').value);
+var _address = encodeURIComponent("<a href ='" + document.getElementById('details').value + "'>" + _keyw + "</a>");
+var _currentTime = new Date();
+var month = _currentTime.getMonth() + 1 + "";
+if (month.length == 1)
+{month = "0" + month;}
+var day = _currentTime.getDate() + "";
+var day2 = _currentTime.getDate() + 1 + "";
+if (day.length == 1)
+{day = "0" + day;}
+var _today = _currentTime.getFullYear() + "" + month + "" + day;
+var _tomorrow = _currentTime.getFullYear() + "" + month + "" + day2;
+var _url = 'http://www.google.com/calendar/event?src=9ats0457qmvp1mv5kecdut2uhs%40group.calendar.google.com&action=TEMPLATE&text=' + _text +'&dates='  +_today + "/" + _tomorrow + '&details=' + _address + '&trp=false&sprop=http%3A%2F%2FCartoonbank.ru&sprop=name:Cartoonbank.ru';
+window.location = _url;
+return false;
+}
