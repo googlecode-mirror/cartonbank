@@ -237,7 +237,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 	$_author = "<a href=\'".$siteurl."/?page_id=29&brand=".$_brandid."\'>".$product['brand']."</a>";//$product['brand'];
 	$_name = nl2br(stripslashes($product['name']));
 
-	$_avatarurl = "<a href=\"".get_option('siteurl')."/?page_id=29&brand=$_brandid\"><img src=".$product['avatarurl']." width=32 height=32 align=top border=0></a>";
+	$_avatarurl = ""; //"<a href=\"".get_option('siteurl')."/?page_id=29&brand=$_brandid\"><img src=".$product['avatarurl']." width=32 height=32 align=top border=0></a>";
 
 
 	$_category = "<a href=\'".get_option('product_list_url')."&category=".$_category_id."\'>".$product['kategoria']."</a>";
