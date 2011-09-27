@@ -1,5 +1,9 @@
+<style>
+.hilite { background: #FFCC33 }
+</style>
+
 <?php
-global $wpdb, $colorfilter, $color;
+global $wpdb, $colorfilter, $color, $aKeywords;
 
 			//pokazh ($_SERVER);
 
@@ -356,8 +360,6 @@ else
                         $any_keywords = strtolower(trim($_GET['cs_any']));
                     }
 
-
-
 								$aKeywords = split(" ",$any_keywords);
 
 								// trim spaces in array
@@ -382,7 +384,6 @@ else
 									}
 
 				}
-
 			// Exclude keywords match
 				
 				$exclude_keywords = '';
@@ -433,30 +434,41 @@ else
 						// MULTIPLE KEYWORDS SEARCH
 
 								// make array of keywords
-								$aKeywords = split(" ",$keywords);
-
-								// trim spaces in array
-								array_walk($aKeywords, 'trim_value');
-
+								if (strlen($keywords)>0)
+								{
+									$aKeywords = split(" ",$keywords);
+								
+									// trim spaces in array
+									array_walk($aKeywords, 'trim_value');
+								}
+								
 								// if more than one search word
-								if (count($aKeywords) > 1)
-									{
-										$search_keywords_filter = " AND (";
-										foreach ($aKeywords as $key => $value)
+								if ((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
+								{
+									if (count($aKeywords) > 1 )
 										{
-											$search_keywords_filter .= "(`wp_product_list`.`id` LIKE '%".$value."%' OR `wp_product_list`.`name` LIKE '%".$value."%' OR `wp_product_list`.`description` LIKE '%".$value."%' OR `wp_product_list`.`additional_description` LIKE '%".$value."%') AND ";
-										}
+											$search_keywords_filter = " AND (";
+											foreach ($aKeywords as $key => $value)
+											{
+												$search_keywords_filter .= "(`wp_product_list`.`id` LIKE '%".$value."%' OR `wp_product_list`.`name` LIKE '%".$value."%' OR `wp_product_list`.`description` LIKE '%".$value."%' OR `wp_product_list`.`additional_description` LIKE '%".$value."%') AND ";
+											}
 
-										// remove extra chars from right side
-										$search_keywords_filter = substr($search_keywords_filter, 0, -5);
-										$search_keywords_filter .= ")";
-									}
-									else if ($keywords!='')
-									{
-										$search_keywords_filter = " AND (`wp_product_list`.`id` LIKE '%".$keywords."%' OR `wp_product_list`.`name` LIKE '%".$keywords."%' OR `wp_product_list`.`description` LIKE '%".$keywords."%' OR `wp_product_list`.`additional_description` LIKE '%".$keywords."%')";
-									}
+											// remove extra chars from right side
+											$search_keywords_filter = substr($search_keywords_filter, 0, -5);
+											$search_keywords_filter .= ")";
+										}
+										else if ($keywords!='')
+										{
+											$search_keywords_filter = " AND (`wp_product_list`.`id` LIKE '%".$keywords."%' OR `wp_product_list`.`name` LIKE '%".$keywords."%' OR `wp_product_list`.`description` LIKE '%".$keywords."%' OR `wp_product_list`.`additional_description` LIKE '%".$keywords."%')";
+										}
+								}
 
 									$search_keywords_filter = $exact_keywords_filter.$search_keywords_filter.$any_keywords_filter.$exclude_keywords_filter;
+
+//pokazh($exact_keywords_filter,"exact_keywords_filter");
+//pokazh($search_keywords_filter,"search_keywords_filter");
+//pokazh($any_keywords_filter,"any_keywords_filter");
+//pokazh($exclude_keywords_filter,"exclude_keywords_filter");
 
 												//pokazh($search_keywords_filter,"search_keywords_filter ");
 
@@ -505,6 +517,8 @@ else
 						$search_sql = "SELECT COUNT(*) as count  FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cat_group_sql . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id`";
 					}
 
+					//pokazh($search_sql);
+
                     $items_count = $GLOBALS['wpdb']->get_results($search_sql,ARRAY_A);
 
 
@@ -548,7 +562,7 @@ else
                 $sql = $search_sql;
 
 
-												///pokazh($sql,"332222");
+												//pokazh($sql,"332222");
 
 				} // if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= ''))
 
@@ -665,6 +679,7 @@ else
                         $_tags_array[$key] = "<a href=\"".get_option('siteurl')."/?page_id=29&cs=".trim($_tags_array[$key])."\">".trim($_tags_array[$key])."</a>";
                     }
                 $_tags_imploded = implode(", ", $_tags_array);
+
                 $_tags = $_tags_imploded;
 
 				$_rating_html = "<div id='star_rating'><img src='".get_option('siteurl')."/img/ldng.gif'></div>";
@@ -1018,6 +1033,24 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 function trim_value(&$value) 
 { 
     $value = trim($value); 
+	$value = str_ireplace(",","",$value);
+}
+
+function hilite($string)
+{
+	global $aKeywords;
+	//setlocale (LC_ALL, 'ru_RU.UTF8');
+	//setlocale(LC_ALL, array("ru_RU.UTF8", "ru_SU.CP1251", "ru_RU", "russian", "ru_SU", "ru"));  
+	if (count($aKeywords)==0)
+	{return $string;}
+	foreach ($aKeywords as $key => $value)
+	{
+		//pokazh($value,"val");
+		//$string = str_ireplace($value, '<span class="hilite">'.$value.'</span>',  $string);
+		$string = preg_replace('/('.$value.')/ui', '<span class="hilite">$1</span>', $string); 
+		//pokazh($string,"str");
+	}
+	return $string;
 }
 
 function save_search_terms($terms)
