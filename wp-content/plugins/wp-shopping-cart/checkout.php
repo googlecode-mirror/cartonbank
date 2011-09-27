@@ -142,10 +142,10 @@ $rooturl = get_option('siteurl');
 	  <tr>
         <td width='270'>
 		
-		<div style="float:left;height:100px;width:20px;"><input type="radio" name="payment_method" value="wallet" id="payment_method_2" <? echo ($disabled); ?>/></div> 
+		<div style="float:left;height:100px;width:20px;"><input type="radio" name="payment_method" value="wallet" id="payment_method_2" <? if($disabled==''){echo "checked";}else{echo ($disabled);} ?>/></div> 
         
 		<div style="margin-left:30px;"><label for='payment_method_2'>Оплата через<br /><b>Личный Счёт (по договору) </b></label>
-		<br /><!-- <img src="<?php echo($rooturl);?>/img/gate_beznal.png"> -->
+		<br />
 		<br /><div style="font-size:0.7em;color:#CC0033;"><?if ($canpay==false){echo "У вас недостаточно денег на Личном счёте для этого метода оплаты.";}?></div></div>
         </td>
 		<td style="font-size:.8em;">
