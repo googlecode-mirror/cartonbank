@@ -295,10 +295,10 @@ echo "</div>";
 
 <br /><h2>Разное</h2>
 <div id='last_sales'><a href='?page_id=1299' title="свежие продажи">Сто продаж</a></div>
-<div id='100_best'><a href='?page_id=1284&ord=82&br=0' title='сто лучших карикатур'>Сто лучших</a></div>
+<div id='100_best'><a href='?page_id=1284&ord=72&br=0' title='результаты голосования'>Топ сто</a></div>
 <div id='themes'><a href='?page_id=1992' title='архив тем дня'>Темы дня</a></div>
+<div id='calend'><a href='?page_id=2254' title='календарь-газета'>Календарь</a></div>
 <div id='rating'><a href='?page_id=643' title='рейтинг карикатур'>Рейтинг</a></div>
-<div id='tags'><a href='?page_id=390'  title='ключевые слова'>Тэги</a></div>
 <div id='printed'><a href='?page_id=1459' title='вырезки из публикаций'>Публикации</a></div>
 <div id='rewards'><a href='?page_id=2132'  title='награды авторов'>Награды</a></div>
 <div id='lawers'><a href='?page_id=1565'  title='защита авторского права'>Защита прав</a></div>
