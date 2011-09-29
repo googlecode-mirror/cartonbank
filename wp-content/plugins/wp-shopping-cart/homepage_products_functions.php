@@ -153,7 +153,7 @@ $_br=0;
 		}
 
 	$_order_filter = " ORDER BY rate DESC";
-	$_order_description = "Сортировка по рейту (произведению среднего балла и корня четвёртой степени из количества голосов). По убыванию.";
+	$_order_description = "Сортировка по рейту (интегральная характеристика результатов голосования). По убыванию.";
 
 	switch ($_order){
 		case 11:
@@ -206,11 +206,11 @@ $_br=0;
 			break;
 		case 71:
 			$_order_filter = " ORDER BY rate ASC";
-			$_order_description = "Сортировка по рейту (произведению среднего балла и корня четвёртой степени из количества голосов). По возрастанию.";
+			$_order_description = "Сортировка по рейту (интегральная характеристика результатов голосования). По возрастанию.";
 			break;
 		case 72:
 			$_order_filter = " ORDER BY rate DESC";
-			$_order_description = "Сортировка по рейту (произведению среднего балла и корня четвёртой степени из количества голосов). По убыванию.";
+			$_order_description = "Сортировка по рейту (интегральная характеристика результатов голосования). По убыванию.";
 			break;
 		case 81:
 			$_order_filter = " ORDER BY average ASC, points DESC";
@@ -357,6 +357,7 @@ $sql = "SELECT
 			wp_fsr_user.vote_date  
 				FROM  wp_product_list, wp_fsr_user, wp_product_brands 
 				WHERE wp_product_list.active = 1
+				AND wp_product_list.category != 666
 				AND wp_product_list.visible = 1
 				AND wp_fsr_user.post = wp_product_list.id 
 				AND wp_product_list.brand = wp_product_brands.id 
@@ -397,27 +398,30 @@ $output = "<div id='homepage_products' class='items'>";
 
 if (isset($product_list[0]))
 {
+/*
 $style_unsorted = "style='vertical-align:text-bottom; background-color: #668bb7; color: #507AA5; cursor: auto; display: block; float: left; height: 20px; margin-top: 10px; margin-bottom: 4px; margin-left: 2px; margin-right: 6px; padding-left: 2px; padding-right: 2px; padding-top: 4px; padding-bottom: 0px; text-align: center; text-decoration: none; width: 138px;'";
 
 $style_sorted   = "style='vertical-align:text-bottom; background-color: #000099; color: #507AA5; cursor: auto; display: block; float: left; height: 20px; margin-top: 10px; margin-bottom: 4px; margin-left: 2px; margin-right: 6px; padding-left: 2px; padding-right: 2px; padding-top: 4px; padding-bottom: 0px; text-align: center; text-decoration: none; width: 138px;'";
+*/
+$style_unsorted = "style='background-color: #668bb7; color: #507AA5; cursor: pointer; display: block; height: 16px; margin-top: 0px; margin-bottom: 1px; margin-left: 2px; margin-right: 6px; padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 0px; text-align: center; text-decoration: none; width: 138px;'";
 
+$style_sorted   = "style='background-color: #000099; color: #507AA5; cursor: pointer; display: block; height: 16px; margin-top: 0px; margin-bottom: 1px; margin-left: 2px; margin-right: 6px; padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 0px; text-align: center; text-decoration: none; width: 138px;'";
+
+
+$output .= "<div style='color:#666666;width:750px;height:80px;position: relative;margin-top:5px;'>";
 
 	if (isset($product_list[0]) && $_br == 0)
 	{
-		$output .= "<div style='color:silver;'><h1>".$authors;
+		$output .= "<h1 style='float:left;position: absolute; bottom: 0; left: 0;'>Топ сто.<br>".$authors."</h1>"; // dropdown
 	}
 	else
 	{
 		//$output .= "<div style='color:silver;'><h1>".$authors.$product_list[0]['author'].".";
-		$output .= "<div style='color:silver;'><h1>".$authors;
+		$output .= "<h1 style='float:left;position: absolute; bottom: 0; left: 0;'>Топ сто.<br>".$authors."</h1>"; // dropdown
 	}
-	$output .= "&nbsp;&nbsp;Сто лучших работ.</h1>$_order_description </div>";
 
 // titles
-
-if ($_order == 91) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=92&br=".$_br."' style='color:white;'>по дате голосов. /</a></div>";
-else if ($_order == 92) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=91&br=".$_br."' style='color:white;'>по дате голосов. \</a></div>";
-else $output .= "<div  ".$style_unsorted."><a href='".$pageURL."&ord=92&br=".$_br."' style='color:white;'>по дате голосов.</a></div>";
+$output .= "<div id='sorter' style='float:right; position: absolute; bottom: 13px; right: 0;'>";
 
 if ($_order == 81) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=82&br=".$_br."' style='color:white;'>по среднему баллу /</a></div>";
 else if ($_order == 82) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=81&br=".$_br."' style='color:white;'>по среднему баллу \</a></div>";
@@ -435,63 +439,18 @@ if ($_order == 71) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord
 else if ($_order == 72) $output .= "<div  ".$style_sorted."><a href='".$pageURL."&ord=71&br=".$_br."' style='color:white;'>по рейту \</a></div>";
 else $output .= "<div  ".$style_unsorted."><a href='".$pageURL."&ord=72&br=".$_br."' style='color:white;'>по рейту</a></div>";
 
-
-/*
-if ($_order == 91) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=92&br=".$_br."' style='color:white;'>по дате голосов. /</a></div>";
-else if ($_order == 92) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=91&br=".$_br."' style='color:white;'>по дате голосов. \</a></div>";
-else $output .= "<div class='item' ".$style_unsorted."><a href='".$pageURL."&ord=92&br=".$_br."' style='color:white;'>по дате голосов.</a></div>";
-
-if ($_order == 81) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=82&br=".$_br."' style='color:white;'>по среднему баллу /</a></div>";
-else if ($_order == 82) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=81&br=".$_br."' style='color:white;'>по среднему баллу \</a></div>";
-else $output .= "<div class='item' ".$style_unsorted."><a href='".$pageURL."&ord=82&br=".$_br."' style='color:white;'>по среднему баллу</a></div>";
-
-if ($_order == 61) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=62&br=".$_br."' style='color:white;'>по колич.. баллов /</a></div>";
-else if ($_order == 62) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=61&br=".$_br."' style='color:white;'>по колич. баллов \</a></div>";
-else $output .= "<div class='item' ".$style_unsorted."><a href='".$pageURL."&ord=62&br=".$_br."' style='color:white;'>по колич. баллов</a></div>";
-
-if ($_order == 51) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=52&br=".$_br."' style='color:white;'>по колич. голосов /</a></div>";
-else if ($_order == 52) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=51&br=".$_br."' style='color:white;'>по колич. голосов \</a></div>";
-else $output .= "<div class='item' ".$style_unsorted."><a href='".$pageURL."&ord=52&br=".$_br."' style='color:white;'>по колич. голосов</a></div>";
-
-if ($_order == 71) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=72&br=".$_br."' style='color:white;'>по рейтингу /</a></div>";
-else if ($_order == 72) $output .= "<div class='item' ".$style_sorted."><a href='".$pageURL."&ord=71&br=".$_br."' style='color:white;'>по рейтингу \</a></div>";
-else $output .= "<div class='item' ".$style_unsorted."><a href='".$pageURL."&ord=72&br=".$_br."' style='color:white;'>по рейтингу</a></div>";
-*/
+$output .= "</div>"; //sorter
+$output .= "<div style='width:300px;float:left;position: absolute; bottom: 14px; left: 280px;'>$_order_description</div></div>";// sort header div
 
 }//if (isset($product_list[0]))
 
-/*
-		  $output = "<div id='homepage_products' class='items'>";
-		$output = '';    
-		if (isset($product_list[0]))
-			  {
-				  $output .= "<div id='homepage_products' class='items'>";
-		  if (isset($product_list[0]) && $_br == 0)
-				  {
-					$output .= "<div><h1>Все авторы.";
-				  }
-				  else
-				  {
-					$output .= "<div><h1>".$product_list[0]['author'].".";
-				  }
-				  $output .= " Сто лучших работ</h1>";
-				
-				  $output .= " Сто лучших работ</h1><div style='color:white;background-color:#668bb7;padding:2px;padding-left:6px;font-weight:bold;display:block;'>".$_order_description."</div><div style='color:#818181;padding-left:150px;'>Сортировать 
-				  <b>по дате</b> последнего голосования: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=91&br=".$_br."'>старые впереди</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=92&br=".$_br."'>новые впереди</a>; 
-				  <br /><b>по среднему баллу</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=81&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=82&br=".$_br."'>по убыванию</a>; 
-				  <br /><b>по количеству баллов</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=61&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=62&br=".$_br."'>по убыванию</a>; 
-				  <br /><b>по количеству голосов</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=51&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=52&br=".$_br."'>по убыванию</a>; 
-				  <br /><b>по рейтингу</b>: <a style='background-color:#FFDFFA;' href='".$pageURL."&ord=71&br=".$_br."'>по возрастанию</a>, <a style='background-color:#DFFFEF;' href='".$pageURL."&ord=72&br=".$_br."'>по убыванию</a>;
-				  </div></div>";
-				  
+//$output .= "<div id='clear' style='clear:left;'>&nbsp;</div>";
 
-				  $output .= "</div></div>";
-			  }
-*/
 $counter = 1;
+$output .= "<div id='allicons' style=''>";
 		  foreach((array)$product_list as $product)
 			{
-			$output .= "<div class='item'>";
+			$output .= "<div class='item' style='position: relative;'>";
 			$output .= "<a href='".get_option('product_list_url').$seperator."cartoonid=".$product['ID']."'>";
 			if($product['image'] != '')
 			  {
@@ -499,9 +458,11 @@ $counter = 1;
 			  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$counter.". ".$product['author'].". &quot;".$product['title']."&quot;. Голосов: ".$product['votes'].". Баллов: " . $product['points'] . ". Средний балл: " . round($product['average'],3) .". Рейт: " . round($product['rate'],3) . "' class='thumb'/>";
 			  }
 			$output .= "</a>";
+			$output .= "<div id='cntr' class='cntr'>$counter</div>";
 			$output .= "</div>\n\r";
 			$counter = $counter + 1;
 			}
+$output .= "</div>"; //icons
 		  $output .= "</div>\n\r";
 		  $output .= "<br style='clear: left;'>\n\r";
 		  
@@ -579,7 +540,7 @@ function last_sales($content = '')
 		}
 
 	$_order_filter = " ORDER BY rate DESC";
-	$_order_description = "Сортировка по рейту (произведению средн. балла и корня четвёртой степени из количества голосов). По убыванию.";
+	$_order_description = "Сортировка по рейту (интегральная характеристика результатов голосования). По убыванию.";
 
 	switch ($_order){
 		case 11:
@@ -632,11 +593,11 @@ function last_sales($content = '')
 			break;
 		case 71:
 			$_order_filter = " ORDER BY rate ASC";
-			$_order_description = "Сортировка по рейту (произведению средн. балла и корня четвёртой степени из количества голосов). По возрастанию.";
+			$_order_description = "Сортировка по рейту (интегральная характеристика результатов голосования). По возрастанию.";
 			break;
 		case 72:
 			$_order_filter = " ORDER BY rate DESC";
-			$_order_description = "Сортировка по рейту (произведению средн. балла и корня четвёртой степени из количества голосов). По убыванию.";
+			$_order_description = "Сортировка по рейту (интегральная характеристика результатов голосования). По убыванию.";
 			break;
 		case 81:
 			$_order_filter = " ORDER BY average ASC, points DESC";
@@ -802,9 +763,11 @@ LIMIT 0, 100";
 			if (mb_strlen($product['comment'],'utf-8')==0)
 				{$description = 'без ссылки';}
 			else
-				{$description = $product['comment'];}
+				{
+					$description = $product['comment'];
+				}
 
-			$output .= "<div class='item'><div id='date' style='color:silver;'>".$d.":</div><div id='descr' style='font-size:.8em;'>".$description."</div>";
+			$output .= "<div class='item'><div id='date' style='color:#666666;'>".$d.":</div><div id='descr' style='font-size:.8em;'>".$description."</div>";
 			$output .= "<a href='".get_option('product_list_url').$seperator."cartoonid=".$product['ID']."'>";
 			if($product['image'] != '')
 			  {
