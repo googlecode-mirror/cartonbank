@@ -369,7 +369,6 @@ $is_approved = false;
 </div>
 
 <?	
-
 }
 else
 {
