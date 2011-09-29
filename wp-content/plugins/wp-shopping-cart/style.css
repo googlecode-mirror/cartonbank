@@ -524,3 +524,16 @@ tr.tdfirstcol{
 	vertical-align: top; 
 	}
 
+.cntr{
+	text-align:center; 
+	vertical-align:baseline; 
+	padding-top:4px; 
+	width:20px; 
+	height:20px; 
+	background-color:white; 
+	float:left; 
+	position: absolute; 
+	bottom: 10px; 
+	right: 10px; 
+	opacity:0.5;
+}
