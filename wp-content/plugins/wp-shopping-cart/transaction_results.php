@@ -109,6 +109,9 @@ if(isset($cart) && $cart != null && $cart_content!='' && ($errorcode == 0))
 			// Send licenses as attchment
 			send_email_multi_attachments($email, $result_no_license_text);
 			send_email_multi_attachments("igor.aleshin@gmail.com", $result_no_license_text);
+
+			send_email_multi_attachments("vfshilov@gmail.com", $result_no_license_text);
+
 			$result_no_license_text = null;
 
 			//mail("sales@cartoonbank.com", 'Подтверждение покупки изображения. Копия.', $mess, $headers);
