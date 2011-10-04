@@ -44,7 +44,7 @@ if (isset($_SERVER['QUERY_STRING']))
 		}
 	if (isset($_POST['brand']) && $_POST['brand'])
 		{
-			$sql = "select name from wp_product_brands where id=".$_GET['brand'];
+			$sql = "select name from wp_product_brands where id=".$_POST['brand'];
 			$c = $wpdb->get_results($sql);
 			$brand = $c[0]->name;
 			$h = $h."".$brand.". ";
