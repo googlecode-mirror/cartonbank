@@ -425,10 +425,10 @@ else
                 if((isset($_POST['cs']) && $_POST['cs']!= '') or (isset($_GET['cs']) && $_GET['cs']!= '') or (isset($_POST['cs_exact']) && $_POST['cs_exact']!= '') or (isset($_GET['cs_exact']) && $_GET['cs_exact']!= '') or (isset($_POST['cs_any']) && $_POST['cs_any']!= '') or (isset($_GET['cs_any']) && $_GET['cs_any']!= ''))
                 {
 					if(isset($_POST['cs']) && $_POST['cs']!= ''){
-                        $keywords = strtolower(trim($_POST['cs']));
+                        $keywords = strip_tags(strtolower(trim($_POST['cs'])));
                     }
                     if(isset($_GET['cs']) && $_GET['cs']!= ''){
-                        $keywords = strtolower(trim($_GET['cs']));
+                        $keywords = strip_tags(strtolower(trim($_GET['cs'])));
                     }
 
 						// MULTIPLE KEYWORDS SEARCH
@@ -1047,6 +1047,7 @@ function hilite($string)
 	{
 		//pokazh($value,"val");
 		//$string = str_ireplace($value, '<span class="hilite">'.$value.'</span>',  $string);
+		//http://109.120.143.27/cb/?page_id=29&cs=%3Cspan%20class=%22hilite%22%3E%D0%B6%D0%B5%D0%BD%D0%B0%3C/span%3E
 		$string = preg_replace('/('.$value.')/ui', '<span class="hilite">$1</span>', $string); 
 		//pokazh($string,"str");
 	}
