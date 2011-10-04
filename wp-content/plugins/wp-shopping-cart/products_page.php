@@ -9,25 +9,29 @@ global $wpdb, $colorfilter, $color, $aKeywords;
 
 	// Rabochy stol filter
 	$_666 = '';
-if (isset($_GET['new']) && is_numeric($_GET['new']) && $_GET['new']=='1')
-{
-	$new = '1';
-}
-else if (!isset($_GET['new']))
-{
-	$new = '0';
-}
-else
-{
-	$new = '0';
-}
+
+	if (isset($_GET['new']) && is_numeric($_GET['new']) && $_GET['new']=='1')
+	{
+		$new = '1';
+	}
+	else if (!isset($_GET['new']))
+	{
+		$new = '0';
+	}
+	else
+	{
+		$new = '0';
+	}
 
 	if (isset($_GET['category']) && $_GET['category'] == '666')
 		{
 			$exclude_category_sql = " ";
 			$approved_or_not = "";
+			pokazh($approved_or_not,"approved_or_not1");
+
 		}
-		else if ((isset($_POST['666']) && $_POST['666']=='on') or (isset($_GET['666']) && $_GET['666']==1))
+		//else if ((isset($_POST['666']) && $_POST['666']=='on') or (isset($_GET['666']) && $_GET['666']==1))
+		else if (isset($_GET['666']) && $_GET['666']==1)
 		{
 			// include in search results
 			$exclude_category_sql = " ";
@@ -508,6 +512,7 @@ else
 						//$search_sql = "SELECT COUNT(*) as count FROM wp_product_list WHERE active='1' " . $cat_group_sql . $brand_group_sql . $approved_or_not . " AND `wp_product_list`.`visible`='1' " . $colorfilter . $search_keywords_filter;
 						
 						$search_sql = "SELECT COUNT(*) as count  FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cat_group_sql . $exclude_category_sql . $brand_group_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id`";
+
 						$search_sql = "SELECT COUNT(*) as count  FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cat_group_sql . $exclude_category_sql . $brand_group_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id`";
 					}
                     else
@@ -516,7 +521,6 @@ else
 						
 						$search_sql = "SELECT COUNT(*) as count  FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cat_group_sql . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  ORDER BY `wp_product_list`.`id`";
 					}
-
 					//pokazh($search_sql);
 
                     $items_count = $GLOBALS['wpdb']->get_results($search_sql,ARRAY_A);
