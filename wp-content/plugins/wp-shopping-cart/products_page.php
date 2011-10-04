@@ -27,7 +27,6 @@ global $wpdb, $colorfilter, $color, $aKeywords;
 		{
 			$exclude_category_sql = " ";
 			$approved_or_not = "";
-			pokazh($approved_or_not,"approved_or_not1");
 
 		}
 		//else if ((isset($_POST['666']) && $_POST['666']=='on') or (isset($_GET['666']) && $_GET['666']==1))
