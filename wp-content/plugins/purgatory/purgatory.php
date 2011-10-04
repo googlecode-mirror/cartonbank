@@ -270,6 +270,51 @@ function deletecomment()
 	line-height:90%;
 	}
 
+	.gr_raznoe
+	{
+	color:#838383;
+	background-color:#FCFA9E;
+	text-decoration:none;
+	padding-top:0px;
+	line-height:90%;
+	}
+
+	.gr_caricatura
+	{
+	color:#000000;
+	background-color:#00FFCC;
+	text-decoration:none;
+	padding-top:0px;
+	line-height:90%;
+	}
+
+	.gr_cartoon
+	{
+	color:#000000;
+	background-color:#99FF66;
+	text-decoration:none;
+	padding-top:0px;
+	line-height:90%;
+	}
+
+	.gr_artoon
+	{
+	color:#99FF66;
+	background-color:#00CC33;
+	text-decoration:none;
+	padding-top:0px;
+	line-height:90%;
+	}
+
+	.gr_sharzh
+	{
+	color:#99FF66;
+	background-color:#FF9966;
+	text-decoration:none;
+	padding-top:0px;
+	line-height:90%;
+	}
+
 	.box1
 	{
 	font-family:'Georgia', Times New Roman, Times, serif;
@@ -408,9 +453,24 @@ else
 			</div>
 		</div>
 
+<?
+if ($category=='Разное') 	
+	$cat_style = 'gr_raznoe';
+elseif ($category=='Карикатура')
+	$cat_style = 'gr_caricatura';
+elseif ($category=='Cartoon')
+	$cat_style = 'gr_cartoon';
+elseif ($category=='Artoon')
+	$cat_style = 'gr_artoon';
+elseif ($category=='Шарж')
+	$cat_style = 'gr_sharzh';
+else
+	$cat_style = 'gr';
+?>
+
 		<div class="box3">
 			<span class="gr">Название: </span><? echo ($imgname);?><br />
-			<span class="gr">Категория: </span><? echo ($category);?><br />
+			<span class="<? echo $cat_style;?>">Категория: <? echo ($category);?></span><br />
 			<span class="gr">Автор: </span><? echo ($artist);?><br />
 			<span class="gr">Описание: </span><? echo ($description);?> 	
 			<form method="post" action="http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display-items.php"> <input type="hidden" name="edid" value="<? echo ($mes_id);?>"> <input class="borders" type="submit" value="<? echo ($mes_id);?>"> </form>
