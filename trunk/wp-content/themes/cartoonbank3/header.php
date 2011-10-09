@@ -64,13 +64,14 @@ if (current_user_can('manage_options'))
 
 ?>
 <!doctype html>
+<html>
+<head>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <meta name="distribution" content="global" />
 <meta name="robots" content="all" />
 <meta name="content-language" content="ru" />
 <meta name="description" content="Лицензионные карикатуры для газет, журналов и электронных СМИ" />
 <meta name="keywords" content="картунбанк, cartoonbank, карикатуры, скачать, приколы, смешные, картинки, комиксы,  карикатура, ру, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, ru, comics, comix" />
-
 <title><?echo $h;?>Картунбанк<?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.  Карикатуры</title>
 <meta name="generator" content="cartoonbank" />
 
