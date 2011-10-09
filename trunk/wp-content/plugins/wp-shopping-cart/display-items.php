@@ -336,6 +336,11 @@ else {$_brand = $user_brand;}
 		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br /><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br />".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br />[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br /><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br /><br /> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=aserg48@gmail.com&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=aserg48@gmail.com&id=".$new_id."'>Отправить в Стол</a> </body></html>";
 		mail("aserg48@gmail.com","Новая картинка в Прихожей!",$votecontent,$headers);
 
+	
+		// smagin
+		$votecontent = "<html><head><title>Please vote!</title></head> <body><a href='http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br /><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br />".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br />[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br /><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br /><br /> <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php?ip=m_smagin@mail.ru&id=".$new_id."'>Пропустить в Банк</a>&nbsp;&nbsp;&nbsp; <a href='http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php?ip=m_smagin@mail.ru&id=".$new_id."'>Отправить в Стол</a> </body></html>";
+		mail("m_smagin@mail.ru","Новая картинка в Прихожей!",$votecontent,$headers);
+
 	}
 
   if(isset ($_FILES['extra_image']) && ($_FILES['extra_image'] != null) && function_exists('edit_submit_extra_images'))
