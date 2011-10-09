@@ -35,11 +35,11 @@ else
 <div style="clear:both;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;"><br /><br /></div>
 
 <div id="b" style="padding-bottom:20px;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;">
- <a href="http://www.redburda.ru/" tagret="_blank"><img title="Красная Бурда" src="<? echo (get_option('siteurl').'/img/b/kb88x31.gif');?>"></a>
- <a href="http://anekdot.ru/" tagret="_blank"><img title="Анекдоты из России" src="<? echo (get_option('siteurl').'/img/b/anek88x31.gif');?>"></a>
- <a href="http://www.spbdnevnik.ru/" tagret="_blank"><img title="Петербургский дневник" src="<? echo (get_option('siteurl').'/img/b/pd88x31.gif');?>"></a>
- <a href="http://www.izvestia.ru/spb/" tagret="_blank"><img title="Известия-СПб" src="<? echo (get_option('siteurl').'/img/b/iz88x31.gif');?>"></a>
- <a href="http://spbsj.ru/" tagret="_blank"><img title="Союз журналистов" src="<? echo (get_option('siteurl').'/img/b/sjr88x31.jpg');?>"></a>
+ <a href="http://www.redburda.ru/" target="_blank"><img title="Красная Бурда" src="<? echo (get_option('siteurl').'/img/b/kb88x31.gif');?>"></a>
+ <a href="http://anekdot.ru/" target="_blank"><img title="Анекдоты из России" src="<? echo (get_option('siteurl').'/img/b/anek88x31.gif');?>"></a>
+ <a href="http://www.spbdnevnik.ru/" target="_blank"><img title="Петербургский дневник" src="<? echo (get_option('siteurl').'/img/b/pd88x31.gif');?>"></a>
+ <a href="http://www.izvestia.ru/spb/" target="_blank"><img title="Известия-СПб" src="<? echo (get_option('siteurl').'/img/b/iz88x31.gif');?>"></a>
+ <a href="http://spbsj.ru/" target="_blank"><img title="Союз журналистов" src="<? echo (get_option('siteurl').'/img/b/sjr88x31.jpg');?>"></a>
 </div>
 
 <div id="footer" style="background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;padding-bottom:100px;">
