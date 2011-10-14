@@ -3,15 +3,10 @@
 	Theme URL: http:///cartoonbank3.htm
 	Description: cartoonbank two columns.
 	Author: Igor
-	Author URI: http://cartoonist.name
+	Author URI: http://cartoonbank.ru
 	Version: 1.0
-		
 	The CSS, XHTML and design is released under GPL:
 	http://www.opensource.org/licenses/gpl-license.php
-	
-	Changelog:
-		v1.0 - 12.22.06
-			First Release of Blue Zinfandel
 */
 
 body {
@@ -23,6 +18,10 @@ body {
 	padding: 0px;
 	text-align: center;
 	}
+
+img {
+border:none;
+}
 	
 /************************************************
 *	Hyperlinks									*
