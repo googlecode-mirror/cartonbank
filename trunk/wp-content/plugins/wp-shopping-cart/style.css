@@ -1,3 +1,9 @@
+img {
+border:none;
+}
+
+.hilite { background: #FFCC33; }
+
 div#categorydisplay{
 	display: block;
 	}
