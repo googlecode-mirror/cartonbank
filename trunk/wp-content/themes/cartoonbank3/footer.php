@@ -14,12 +14,11 @@ else
 	$_new=0;
 }
 ?>
-<!-- footer begins -->
 <div id="navbar">
 <ul> 
 <li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style_footer():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
-<li><a href="?page_id=29&offset=0&new=0"<? $_GET['page_id']=='29' & $_new==0? selected_style_footer():"" ?> title='избранные работы'>Избранное</a></li>
-<li><a href="?page_id=29&offset=0&new=1"<? $_GET['page_id']=='29'& $_new==1 ? selected_style_footer():"" ?> title='показать новые'>Новое</a></li>
+<li><a href="?page_id=29&amp;offset=0&amp;new=0"<? $_GET['page_id']=='29' & $_new==0? selected_style_footer():"" ?> title='избранные работы'>Избранное</a></li>
+<li><a href="?page_id=29&amp;offset=0&amp;new=1"<? $_GET['page_id']=='29'& $_new==1 ? selected_style_footer():"" ?> title='показать новые'>Новое</a></li>
 <li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style_footer():"" ?> title='художникам'>Авторам</a></li>
 <li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style_footer():"" ?> title='покупателям'>Клиентам</a></li>
 <li><a href="?page_id=907"<? $_GET['page_id']=='907'? selected_style_footer():"" ?> title='посетителям'>Зрителям</a></li>
@@ -28,7 +27,7 @@ else
 <li><a href="?page_id=2"<? $_GET['page_id']=='2'? selected_style_footer():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
 <li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style_footer():"" ?> title='новости сайта'>Новости</a></li>
 <li><a href="?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
-<li><a href="?page_id=2041"<? $_GET['page_id']=='2041'? selected_style_footer():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" width="20" border="0" alt="English"></a></li>
+<li><a href="?page_id=2041"<? $_GET['page_id']=='2041'? selected_style_footer():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" width="20" alt="English"></a></li>
 </ul>
 </div>
 
@@ -58,14 +57,14 @@ else
 <!-- Yandex.Metrika counter -->
 <div style="display:none;"><script type="text/javascript">
 (function(w, c) {
-    (w[c] = w[c] || []).push(function() {
-        try {
-            w.yaCounter5781658 = new Ya.Metrika(5781658);
-             yaCounter5781658.clickmap(true);
-             yaCounter5781658.trackLinks(true);
-        
-        } catch(e) { }
-    });
+(w[c] = w[c] || []).push(function() {
+try {
+w.yaCounter5781658 = new Ya.Metrika(5781658);
+yaCounter5781658.clickmap(true);
+yaCounter5781658.trackLinks(true);
+
+} catch(e) { }
+});
 })(window, 'yandex_metrika_callbacks');
 </script></div>
 <script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script>
@@ -85,22 +84,18 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
 <!--/Openstat-->
 
 <!-- begin of Top100 code -->
-
 <script id="top100Counter" type="text/javascript" src="http://counter.rambler.ru/top100.jcn?2529853"></script>
-<noscript>
-<a href="http://top100.rambler.ru/navi/2529853/">
-<img src="http://counter.rambler.ru/top100.cnt?2529853" alt="Rambler's Top100" border="0" />
-</a>
-
-</noscript>
+<noscript><a href="http://top100.rambler.ru/navi/2529853/">
+<img src="http://counter.rambler.ru/top100.cnt?2529853" alt="Rambler's Top100" />
+</a></noscript>
 <!-- end of Top100 code -->
-<script type="text/javascript">
-  window.___gcfg = {lang: 'ru'};
 
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
+<script type="text/javascript">
+window.___gcfg = {lang: 'ru'};
+(function() {
+var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+po.src = 'https://apis.google.com/js/plusone.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+})();
 </script>
 </body></html>
