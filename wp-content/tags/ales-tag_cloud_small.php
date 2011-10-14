@@ -235,6 +235,7 @@ function create_tag_cloud_small()
 				$return = ($returnType == "html" ? "" : ($returnType == "array" ? array() : ""));
 				foreach ($this->wordsArray as $word => $popularity)
 				{
+					$word = str_ireplace(" ","%20",$word);
 					$sizeRange = $this->getClassFromPercent(($popularity / $this->max) * 100);
 					if ($returnType == "array")
 					{
