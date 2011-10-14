@@ -8,24 +8,10 @@ exit;
 
 <?
 include("config.php");
-
-	$sql=mysql_query("SELECT id, name FROM wp_product_brands where active = 1 order by name");
-	?>
-	
-	<b>Минимальный балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса. Чёрная метка блокирует появление картинки в хранилище до выяснения обстоятельств.
-
-	<br /><b>Фильтр по авторам</b>: <?
-
-	while($row=mysql_fetch_array($sql))
-	{
-	$id=$row['id'];
-	$name=$row['name'];
-	?>
-	<a href="http://cartoonbank.ru/wp-admin/admin.php?page=purgatory/purgatory.php&amp;brand=<?echo $id;?>"><?echo $name;?></a>; 
-	<?
-	}
 ?>
-<br /><br />
+	
+<b>Минимальный балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса. Чёрная метка блокирует появление картинки в хранилище до выяснения обстоятельств.
+
 <b><a href="http://cartoonbank.ru/?page_id=1148" target="_blank">Меморандум редактора</a></b> <-подробнее <br />
 Коллеги, мы не <i>оцениваем</i> тут работы. Мы просто <i>отсекаем</i> мусор. Не пускаем а) антиконституционное б) антиинтеллектуальное.
 
