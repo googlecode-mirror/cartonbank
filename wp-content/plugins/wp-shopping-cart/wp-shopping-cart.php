@@ -8,9 +8,6 @@ Author: Thomas Howard of Instinct Entertainment
 Author URI: http://www.instinct.co.nz
 */
 
-### This next line needs to point at your desired language file ###
-
-
 if(get_option('language_setting') != '')
   {
   include_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/languages/'.get_option('language_setting'));
@@ -19,7 +16,6 @@ if(get_option('language_setting') != '')
     {
     include_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/languages/EN_en.php');
     }
-    
     
 require_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/classes/variations.class.php');
 require_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/classes/cart.class.php');
@@ -124,7 +120,8 @@ class wp_shopping_cart
     ob_start();
     require_once("products_page.php");
     //nzshpcrt_shopping_basket();
-    $output = ob_get_contents();
+	echo "<p>"; // hack to remove closing </p>
+	$output = ob_get_contents();
     ob_end_clean();
     return $output;
     }  
@@ -167,8 +164,8 @@ function nzshpcrt_style()
 function nzshpcrt_javascript()
     {
 $siteurl = get_option('siteurl');
-?><script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/ajax.js" language='JavaScript' type="text/javascript"></script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/user.js" language='JavaScript' type="text/javascript"></script>
+?><script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/ajax.js"></script>
+<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/user.js"></script>
 <?php
   }
 
@@ -2801,7 +2798,7 @@ function nzshpcrt_product_log_rss_feed()
 function nzshpcrt_product_list_rss_feed()
   {
   // our custom rss feed
-  echo "<link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='".get_option('siteurl')."/index.php?rss=true&action=product_list&type=rss'/>";
+  echo "<link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='".get_option('siteurl')."/index.php?rss=true&amp;action=product_list&amp;type=rss'/>";
   }
     
 require_once('processing_functions.php');
