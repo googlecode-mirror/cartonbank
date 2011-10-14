@@ -375,7 +375,7 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 				$counter = $counter + 1;
 		  }
 		  $output .= "</div>";
-		  return "<script type=\"text/javascript\" language=\"JavaScript\"> get_item0();".$javascript_functions. "</script>" . " ". $output;
+		  return "<script>get_item0();".$javascript_functions. "</script>" . " ". $output;
   }
 
   // end function output first page
