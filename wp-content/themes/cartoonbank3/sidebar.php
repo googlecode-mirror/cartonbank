@@ -32,7 +32,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 <input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
 <input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:6px;margin-bottom:4px;" />
 </form>
-<a href="?page_id=927">Расширенный поиск <img src='http://cartoonbank.ru/img/link.gif'></a>
+<a href="?page_id=927">Расширенный поиск <img src="http://cartoonbank.ru/img/link.gif" style="border:0;"></a>
 <?
 // Theme of the day
 	$thedate = date("Y.m.d");
@@ -287,9 +287,9 @@ echo "</div>";
 ?>
 
 <br /><br />
-<a href="http://cartoonbank.ru/?page_id=1351" target="_blank"><img src="http://cartoonbank.ru/img/b/exhibition_package.gif" width="180"></a>
+<a href="http://cartoonbank.ru/?page_id=1351" target="_blank"><img src="http://cartoonbank.ru/img/b/exhibition_package.gif" style="border:0;width:180px;"></a>
 <br /><br />
-<a href="http://cartoonbank.ru/?page_id=1857" target="_blank"><img src="http://cartoonbank.ru/img/b/postard_project.gif" width="180"></a>
+<a href="http://cartoonbank.ru/?page_id=1857" target="_blank"><img src="http://cartoonbank.ru/img/b/postard_project.gif" style="border:0;width:180px;"></a>
 
 <br /><h2>Разное</h2>
 <div id='last_sales'><a href='?page_id=1299' title="свежие продажи">Сто продаж</a></div>
