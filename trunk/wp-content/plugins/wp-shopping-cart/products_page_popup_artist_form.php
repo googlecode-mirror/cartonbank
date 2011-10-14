@@ -605,7 +605,7 @@ else
 					
 				if (current_user_can('manage_options'))
 				{
-					$_edid = " <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&edid=".$_number."' target=_blank'><img border=0 src='".get_option('siteurl')."/img/edit.jpg' title='редактировать'></a> <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number."' target=_blank'><img border=0 src='".get_option('siteurl')."/img/reload.gif' title='обновить водяной знак'></a> <a href=".get_option('siteurl')."/ales/wordassociations/words.php?id=".$_number." target=_blank><img border=0 src=".get_option('siteurl')."/img/tags.gif title='добавить тэгов'></a>";
+					$_edid = " <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&edid=".$_number."' target=_blank'><img src='".get_option('siteurl')."/img/edit.jpg' title='редактировать'></a> <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number."' target=_blank'><img src='".get_option('siteurl')."/img/reload.gif' title='обновить водяной знак'></a> <a href=".get_option('siteurl')."/ales/wordassociations/words.php?id=".$_number." target=_blank><img src=".get_option('siteurl')."/img/tags.gif title='добавить тэгов'></a>";
 				}
 				else
 				{
@@ -620,7 +620,7 @@ else
                 $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение'>Категория:</a> </b><br />".$_category."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Описание:</a> </b> ".$_description."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение'>Тэги:</a> </b><br />".$_tags."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br /><br /><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение'>Размер:</a></b><br />".$_size."<br /><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение'>Формат:</a> </b> ".$_file_format."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение'>Оценка:</a></b><br />".$_rating_html.$_sharethis_html.$_edid;
 
                 $siteurl = get_option('siteurl');
-                $_bigpic =  "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."' border=0  rel='example4'  alt='".$_bigpicimgalt."'>";
+                $_bigpic =  "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."' rel='example4'  alt='".$_bigpicimgalt."'>";
 
 				if($product[0]['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
 				if($product[0]['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
@@ -923,7 +923,7 @@ function get_share_this()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-jQuery("#share_this").html('<b>Поделиться:</b><br /><a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://twitter.com/share?url=\' + escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_twitter.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.facebook.com/sharer.php?t=cartoonbank.ru&u=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_facebook.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://vkontakte.ru/share.php?title=cartoonbank.ru&url=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_vkontakte.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.livejournal.com/update.bml?subject=cartoonbank.ru&event=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_livejournal.png" border="0"></a>');
+jQuery("#share_this").html('<b>Поделиться:</b><br /><a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://twitter.com/share?url=\' + escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_twitter.png"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.facebook.com/sharer.php?t=cartoonbank.ru&u=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_facebook.png"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://vkontakte.ru/share.php?title=cartoonbank.ru&url=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_vkontakte.png"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.livejournal.com/update.bml?subject=cartoonbank.ru&event=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_livejournal.png"></a>');
 });
 }
 function change_url() { jQuery(document).ready(function() { function locationHashChanged() { if (location.hash === "#pt" || location.hash === "#") { var cuid = document.getElementById('cuid').innerHTML; window.location.hash = '&cartoonid='+cuid; } } window.onhashchange = locationHashChanged; });
@@ -963,23 +963,22 @@ function change_url() { jQuery(document).ready(function() { function locationHas
 		});
 	</script>
 
-<!-- This contains the hidden content for inline calls -->
 <div style='display:none'>
-	<div id='inline_example1' style='text-align:left; padding:10px; background:#fff;'>
-	<? echo ($bio); ?>
-	<br>
-	
-	<p><a class='cb_emailform' href="#">Отправить письмо</a></p>
+<div id='inline_example1' style='text-align:left; padding:10px; background:#fff;'>
+<? echo ($bio); ?>
+<br>
 
-	</div>
+<p><a class='cb_emailform' href="#">Отправить письмо</a></p>
+
+</div>
 </div>
 <div style='display:none'>
-	<div id='emailform1' style='text-align:left; padding:10px; background:#fff;'>
-			<h1>Письмо автору Картунбанка</h1>
-			<form method='post' action='http://cartoonbank.ru/?page_id=29&brand=<? echo $brandid;?>&bio=1'>
-			Email для обратной связи: <input name='email' type='text' style='width:100%;'/><br /><br />
-			<textarea style='width:100%;' name='message' rows='15' cols='30'>Уважаемый <? echo $_artist;?>!</textarea><br />
-			<input type='submit' value='Отправить письмо' class='borders'/>
-			</form>
-	</div>
+<div id='emailform1' style='text-align:left; padding:10px; background:#fff;'>
+<h1>Письмо автору Картунбанка</h1>
+<form method='post' action='http://cartoonbank.ru/?page_id=29&brand=<? echo $brandid;?>&bio=1'>
+Email для обратной связи: <input name='email' type='text' style='width:100%;'/><br /><br />
+<textarea style='width:100%;' name='message' rows='15' cols='30'>Уважаемый <? echo $_artist;?>!</textarea><br />
+<input type='submit' value='Отправить письмо' class='borders'/>
+</form>
+</div>
 </div>
