@@ -3,7 +3,7 @@
 
 if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29" && !isset($_POST['cs']))
 {
-	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,380));
+	header("Location: http://cartoonbank.ru/?page_id=29&amp;offset=".rand(0,380));
 }
 
 // change the header
@@ -55,7 +55,7 @@ $_SESSION['uid']= $current_user->ID;
 setcookie('uid', $_SESSION['uid']);
 if (current_user_can('manage_options'))
 			{
-				$_edid = "<a href=".get_option('siteurl')."/wp-admin/post.php?post=".$_GET['page_id']."&action=edit target=_blank>edit</a>";
+				$_edid = "<a href=".get_option('siteurl')."/wp-admin/post.php?post=".$_GET['page_id']."&amp;action=edit target=_blank>edit</a>";
 			}
 			else
 			{
@@ -64,38 +64,30 @@ if (current_user_can('manage_options'))
 
 ?>
 <!doctype html>
-<html>
-<head>
+<html><head>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-<meta name="distribution" content="global" />
 <meta name="robots" content="all" />
-<meta name="content-language" content="ru" />
 <meta name="description" content="Лицензионные карикатуры для газет, журналов и электронных СМИ" />
 <meta name="keywords" content="картунбанк, cartoonbank, карикатуры, скачать, приколы, смешные, картинки, комиксы,  карикатура, ру, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, ru, comics, comix" />
 <title><?echo $h;?>Картунбанк<?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.  Карикатуры</title>
 <meta name="generator" content="cartoonbank" />
-
+<link media="screen" rel="stylesheet" href="http://cartoonbank.ru/ales/colorbox/example2/colorbox.css" />
 <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
-
 <?php wp_head(); ?>
 <style type="text/css" media="screen">
 <!-- @import url( <?php bloginfo('stylesheet_url'); ?> ); -->
 </style>
 <script type="text/javascript">
-
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-127981-7']);
   _gaq.push(['_trackPageview']);
-
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-
 </script>
 </head>
-
 <body>
 <?
 //Except 666:
@@ -131,17 +123,15 @@ default:
 }
 ?>
 
-
-
-<div id="header" style="height:90px;width:960;">
+<div id="header" style="height:90px;width:960px;">
 <div>
 
 <div style="font-size:.8em;color:white;vertical-align:bottom;width:185px;height:90px;background-color:#668bb7;float:left;"><span style="color:#13223f;font-size:2em;"><br><b><? echo ($cartoon_number);?></b></span><br /><?echo ($license_text);?>
 </div>
 
 <div style="width:580px;height:90px;float:left;">
-	<br><a href="<?php echo get_option('home'); ?>/"><img src="<?php echo get_option('home'); ?>/wp-admin/images/cb-logo.gif" border="0"></a><br />
-	<?php bloginfo('description'); ?>
+<br><a href="<?php echo get_option('home'); ?>/"><img src="<?php echo get_option('home'); ?>/wp-admin/images/cb-logo.gif"></a><br />
+<?php bloginfo('description'); ?>
 </div>
 
 <?
@@ -154,7 +144,7 @@ default:
 	//<td style="vertical-align:top;width:185px;height:45px;padding:0px;background-color:#009900"><a href="http://cartoonbank.ru/?page_id=1351" target="_blank" style="font-size:0.8em;color:white;"><div>Спецпредложение:</div><div>ВАША ВЫСТАВКА —<br /> НАШИ РИСУНКИ</div></a></td>
 ?>
 
-<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" width="185" height="90" border="0"></a>
+<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" width="185" height="90"></a>
 </div>
 
 </div>
@@ -178,20 +168,20 @@ else
 ?>
 
 <div id="navbarbottom">
-	<ul> 
-		<li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
-		<li><a href="?page_id=29&offset=0&new=0"<? $_GET['page_id']=='29' & $_new==0? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
-		<li><a href="?page_id=29&offset=0&new=1"<? $_GET['page_id']=='29'& $_new==1 ? selected_style():"" ?> title='показать новые'>Новое</a></li>
-		<li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style():"" ?> title='художникам'>Авторам</a></li>
-		<li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style():"" ?> title='покупателям'>Клиентам</a></li>
-		<li><a href="?page_id=907"<? $_GET['page_id']=='907'? selected_style():"" ?> title='посетителям'>Зрителям</a></li>
-		<li><a href="?page_id=1215"<? $_GET['page_id']=='1215'? selected_style():"" ?> title='наши партнёры'>Партнёры</a></li>
-		<li><a href="?page_id=1260"<? $_GET['page_id']=='1260'? selected_style():"" ?> title='друзья и коллеги'>Друзья</a></li>
-		<li><a href="?page_id=2"<? $_GET['page_id']=='2'? selected_style():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
-		<li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
-		<li><a href="?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
-		<li><a href="?page_id=2041"<? $_GET['page_id']=='2041'? selected_style():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" width="20" border="0" alt="English"></a></li>
-		<li><? echo $_edid;?></li>
-	</ul>
+<ul> 
+<li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
+<li><a href="?page_id=29&amp;offset=0&amp;new=0"<? $_GET['page_id']=='29' & $_new==0? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
+<li><a href="?page_id=29&amp;offset=0&amp;new=1"<? $_GET['page_id']=='29'& $_new==1 ? selected_style():"" ?> title='показать новые'>Новое</a></li>
+<li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style():"" ?> title='художникам'>Авторам</a></li>
+<li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style():"" ?> title='покупателям'>Клиентам</a></li>
+<li><a href="?page_id=907"<? $_GET['page_id']=='907'? selected_style():"" ?> title='посетителям'>Зрителям</a></li>
+<li><a href="?page_id=1215"<? $_GET['page_id']=='1215'? selected_style():"" ?> title='наши партнёры'>Партнёры</a></li>
+<li><a href="?page_id=1260"<? $_GET['page_id']=='1260'? selected_style():"" ?> title='друзья и коллеги'>Друзья</a></li>
+<li><a href="?page_id=2"<? $_GET['page_id']=='2'? selected_style():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
+<li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
+<li><a href="?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
+<li><a href="?page_id=2041"<? $_GET['page_id']=='2041'? selected_style():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" width="20" alt="English"></a></li>
+<li><? echo $_edid;?></li>
+</ul>
 </div>
-<A NAME="pt"></a>
+<div id="pt"></div>
