@@ -1,7 +1,3 @@
-<style>
-.hilite { background: #FFCC33 }
-</style>
-
 <?php
 global $wpdb, $colorfilter, $color, $aKeywords;
 
@@ -134,25 +130,25 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 			{
 			case 'color':
 			$colorfilter = ' AND `wp_product_list`.`color`=1 '; 
-			$color_url = '&color=color';
+			$color_url = '&amp;color=color';
 			break;
 
 			case 'bw':
 			$colorfilter = ' AND `wp_product_list`.`color`=0 '; 
-			$color_url = '&color=bw';
+			$color_url = '&amp;color=bw';
 			break;
 
 			default:
 			$colorfilter = '';
 			$color = 'all';
-			$color_url = '&color=all';
+			$color_url = '&amp;color=all';
 			break;
 			}
 	}
 	else
 		{
 			$colorfilter = '';
-			$color_url = '&color=all';
+			$color_url = '&amp;color=all';
 		}
 
 // "Order by" filter
@@ -679,7 +675,8 @@ else
                     //$i=0;
                     foreach ($_tags_array as $key => $value)
                     {
-                        $_tags_array[$key] = "<a href=\"".get_option('siteurl')."/?page_id=29&cs=".trim($_tags_array[$key])."\">".trim($_tags_array[$key])."</a>";
+                        $_tags_array[$key] = "<a href=\"".get_option('siteurl')."/?page_id=29&cs=".trim(str_ireplace(" ", "%20", $_tags_array[$key]))."\">".trim($_tags_array[$key])."</a>";
+                        //$_tags_array[$key] = "<a href=\"".get_option('siteurl')."/?page_id=29&cs=".trim($_tags_array[$key])."\">".trim($_tags_array[$key])."</a>";
                     }
                 $_tags_imploded = implode(", ", $_tags_array);
 
@@ -692,7 +689,7 @@ else
 					
 				if (current_user_can('manage_options'))
 				{
-					$_edid = " <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&edid=".$_number."' target=_blank'><img border=0 src='".get_option('siteurl')."/img/edit.jpg' title='редактировать'></a> <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number."' target=_blank'><img border=0 src='".get_option('siteurl')."/img/reload.gif' title='обновить водяной знак'></a> <a href=".get_option('siteurl')."/ales/wordassociations/words.php?id=".$_number." target=_blank><img border=0 src=".get_option('siteurl')."/img/tags.gif title='добавить тэгов'></a>";
+					$_edid = " <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&edid=".$_number."' target=_blank'><img src='".get_option('siteurl')."/img/edit.jpg' title='редактировать'></a> <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$_number."' target=_blank'><img src='".get_option('siteurl')."/img/reload.gif' title='обновить водяной знак'></a> <a href=".get_option('siteurl')."/ales/wordassociations/words.php?id=".$_number." target=_blank><img src=".get_option('siteurl')."/img/tags.gif title='добавить тэгов'></a>";
 				}
 				else
 				{
@@ -703,13 +700,13 @@ else
 
 				//$_edid .= "<div id=\'fblike\'></div>";
 
-///pokazh($_name,"_name");
+				///pokazh($_name,"_name");
 
-				$_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Название:</a> </b>" .$_name."</div> "."<div >№&nbsp;<a title='уникальный адрес страницы с этим изображением' id='cuid' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&brand=".$_brandid."\">".$_author."</a></b></div>";
+				$_bigpicstrip = "<div style=\"float:left;\"><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Название:</a> </b>" .$_name."</div> "."<div >№&nbsp;<a title='уникальный адрес страницы с этим изображением' id='cuid' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>".$_number."</a>&nbsp;<b><a href=\"".$siteurl."/?page_id=29&amp;brand=".$_brandid."\">".$_author."</a></b></div>";
                 $_bigpictext = "<b><a href='".get_option('siteurl')."/?page_id=280' target=_blank title='объяснение'>Категория:</a> </b><br />".$_category."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=278' target=_blank title='объяснение'>Описание:</a> </b> ".$_description."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=284' target=_blank title='объяснение'>Тэги:</a> </b><br />".$_tags."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=735' target=_blank title='объяснение'>Ссылка:</a></b> <a title='уникальный адрес страницы с этим изображением' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."'>№&nbsp;".$_number."</a><br /><br /><b><a href='".get_option('siteurl')."/?page_id=727' target=_blank title='объяснение'>Размер:</a></b><br />".$_size."<br /><span style='color:#ACACAC;font-size:0.875em;'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b><a href='".get_option('siteurl')."/?page_id=708' target=_blank title='объяснение'>Формат:</a> </b> ".$_file_format."<br /><br /><b><a href='".get_option('siteurl')."/?page_id=745' target=_blank title='объяснение'>Оценка:</a></b><br />".$_rating_html.$_sharethis_html.$_edid;
 
                 $siteurl = get_option('siteurl');
-                $_bigpic =  "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."' border=0  alt='".$_bigpicimgalt."' rel='slideshow'>";
+                $_bigpic =  "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product[0]['image']."' alt='".$_bigpicimgalt."' rel='slideshow'>";
 
 				if($product[0]['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
 				if($product[0]['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
@@ -845,12 +842,12 @@ else
 	if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 	{
 		$_brand = $_GET['brand'];
-		$brand_group_sql = "&brand=".$_brand;
+		$brand_group_sql = "&amp;brand=".$_brand;
 	}
 	elseif (isset($_POST['brand']) && is_numeric($_POST['brand']))
 	{
 		$_brand = $_POST['brand'];
-		$brand_group_sql = "&brand=".$_brand;
+		$brand_group_sql = "&amp;brand=".$_brand;
 	}
 	else
 	{
@@ -865,20 +862,20 @@ if ($_666!='') {$_url_666="&666=on";}else{$_url_666='';}
 if ($exclude_keywords!='') {$_url_cs_exclude="&cs_exclude=".$exclude_keywords;}else{$_url_cs_exclude='';}
 
 if (isset($new) && is_numeric($new))
-{$newfilter = '&new='.$new;}
+{$newfilter = '&amp;new='.$new;}
 else
-{$newfilter = '&new=1';}
+{$newfilter = '&amp;new=1';}
 
 if ($catid == '')
-{$__category = '&category='.$catid;}
+{$__category = '&amp;category='.$catid;}
 
 else if (isset($_GET['category']) && is_numeric($_GET['category']))
-{$__category = '&category='.$_GET['category'];}
+{$__category = '&amp;category='.$_GET['category'];}
 
 else
 {$__category = '';}
 
-	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$newfilter.$brand_group_sql."&color=".$color.$__category.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&offset=", $filter_list, $new, $brand_group_sql,$_category,$color_url);
+	$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$newfilter.$brand_group_sql."&amp;color=".$color.$__category.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&amp;offset=", $filter_list, $new, $brand_group_sql,$_category,$color_url);
 
 if (isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']))
 {
@@ -1008,11 +1005,11 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 		//next button
 		if ($new==1)
 		{
-			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&offset=0&new=0".$brand_group_sql.$__category.$color_url."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>показать избранное</a>";
+			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&amp;offset=0&amp;new=0".$brand_group_sql.$__category.$color_url."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>показать избранное</a>";
 		}
 		else
 		{
-			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&offset=0&new=1".$brand_group_sql.$__category.$color_url."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>сортировать по дате</a>";
+			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&amp;offset=0&amp;new=1".$brand_group_sql.$__category.$color_url."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>сортировать по дате</a>";
 		}
 
 		if ($page < $counter - 1) 
@@ -1097,11 +1094,7 @@ get_share_this();
 //-->
 </script>
 
-
-
-	<link media="screen" rel="stylesheet" href="http://cartoonbank.ru/ales/colorbox/example2/colorbox.css" />
 	<script src="http://cartoonbank.ru/ales/colorbox/jquery.colorbox-min.js"></script>
-
 	<script>
 		jQuery(document).ready(function(){
 			jQuery("a[rel='slideshow']").colorbox({slideshow:true});
@@ -1110,7 +1103,6 @@ get_share_this();
 		});
 	</script>
 
-<!-- This contains the hidden content for inline calls -->
 <div style='display:none'>
 	<div id='hidden_bio' style='text-align:left; padding:10px; background:#fff;'>
 		<? echo ($bio); ?>
@@ -1121,7 +1113,7 @@ get_share_this();
 <div style='display:none'>
 	<div id='emailform1' style='text-align:left; padding:10px; background:#fff;'>
 			<h1>Письмо автору Картунбанка</h1>
-			<form method='post' action='http://cartoonbank.ru/?page_id=29&brand=<? echo $brandid;?>&bio=1'>Email для обратной связи: <input name='email' type='text' style='width:100%;'/><br /><br />
+			<form method='post' action='http://cartoonbank.ru/?page_id=29&amp;brand=<? echo $brandid;?>&amp;bio=1'>Email для обратной связи: <input name='email' type='text' style='width:100%;'/><br /><br />
 			<textarea style='width:100%;' name='message' rows='15' cols='30'>Уважаемый <? echo $_artist;?>!</textarea><br />
 			<input type='submit' value='Отправить письмо' class='borders'/>
 			</form>
