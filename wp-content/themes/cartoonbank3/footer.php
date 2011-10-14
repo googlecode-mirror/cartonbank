@@ -27,27 +27,27 @@ else
 <li><a href="?page_id=2"<? $_GET['page_id']=='2'? selected_style_footer():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
 <li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style_footer():"" ?> title='новости сайта'>Новости</a></li>
 <li><a href="?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
-<li><a href="?page_id=2041"<? $_GET['page_id']=='2041'? selected_style_footer():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" width="20" alt="English"></a></li>
+<li><a href="?page_id=2041"<? $_GET['page_id']=='2041'? selected_style_footer():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
 </ul>
 </div>
 
 <div style="clear:both;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;"><br /><br /></div>
 
 <div id="b" style="padding-bottom:20px;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;">
- <a href="http://www.redburda.ru/" target="_blank"><img title="Красная Бурда" src="<? echo (get_option('siteurl').'/img/b/kb88x31.gif');?>"></a>
- <a href="http://anekdot.ru/" target="_blank"><img title="Анекдоты из России" src="<? echo (get_option('siteurl').'/img/b/anek88x31.gif');?>"></a>
- <a href="http://www.spbdnevnik.ru/" target="_blank"><img title="Петербургский дневник" src="<? echo (get_option('siteurl').'/img/b/pd88x31.gif');?>"></a>
- <a href="http://www.izvestia.ru/spb/" target="_blank"><img title="Известия-СПб" src="<? echo (get_option('siteurl').'/img/b/iz88x31.gif');?>"></a>
- <a href="http://spbsj.ru/" target="_blank"><img title="Союз журналистов" src="<? echo (get_option('siteurl').'/img/b/sjr88x31.jpg');?>"></a>
+ <a href="http://www.redburda.ru/" target="_blank"><img title="Красная Бурда" src="<? echo (get_option('siteurl').'/img/b/kb88x31.gif');?>" style="border:0;"></a>
+ <a href="http://anekdot.ru/" target="_blank"><img title="Анекдоты из России" src="<? echo (get_option('siteurl').'/img/b/anek88x31.gif');?>" style="border:0;"></a>
+ <a href="http://www.spbdnevnik.ru/" target="_blank"><img title="Петербургский дневник" src="<? echo (get_option('siteurl').'/img/b/pd88x31.gif');?>" style="border:0;"></a>
+ <a href="http://www.izvestia.ru/spb/" target="_blank"><img title="Известия-СПб" src="<? echo (get_option('siteurl').'/img/b/iz88x31.gif');?>" style="border:0;"></a>
+ <a href="http://spbsj.ru/" target="_blank"><img title="Союз журналистов" src="<? echo (get_option('siteurl').'/img/b/sjr88x31.jpg');?>" style="border:0;"></a>
 </div>
 
 <div id="footer" style="background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;padding-bottom:100px;">
 <a href="?page_id=433">Copyright</a> &copy; 2010-2011 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a><br />
 Следите за нами в 
-<a href="http://community.livejournal.com/cartoonbank/">Живом журнале <img src="http://cartoonbank.ru/img/s_livejournal.png" title="Follow us on LiveJournal"></a>  
-<a href="http://twitter.com/#!/cartoonbankru">в Твиттере <img src="http://cartoonbank.ru/img/s_twitter.png" title="Follow us on Twitter"></a>  
-<a href="http://www.facebook.com/profile.php?id=100001929470986&amp;sk=wall">в Фейсбуке <img src="http://cartoonbank.ru/img/s_facebook.png" title="Follow us on Facebook"></a>  
-<a href="http://friendfeed.com/cartoonbank">в Френдфиде <img src="http://cartoonbank.ru/img/s_friendfeed.png" title="Follow us on Frienfeed"></a>
+<a href="http://community.livejournal.com/cartoonbank/">Живом журнале <img src="http://cartoonbank.ru/img/s_livejournal.png" title="Follow us on LiveJournal" style="border:0;"></a>  
+<a href="http://twitter.com/#!/cartoonbankru">в Твиттере <img src="http://cartoonbank.ru/img/s_twitter.png" title="Follow us on Twitter" style="border:0;"></a>  
+<a href="http://www.facebook.com/profile.php?id=100001929470986&amp;sk=wall">в Фейсбуке <img src="http://cartoonbank.ru/img/s_facebook.png" title="Follow us on Facebook" style="border:0;"></a>  
+<a href="http://friendfeed.com/cartoonbank">в Френдфиде <img src="http://cartoonbank.ru/img/s_friendfeed.png" title="Follow us on Frienfeed" style="border:0;"></a>
 <br><a href="http://feedburner.google.com/fb/a/mailverify?uri=Cartoonbankru&amp;loc=ru_RU" title="Подпишитесь на доставку новых рисунков по почте">Email-подписка</a>
 </div>
 
