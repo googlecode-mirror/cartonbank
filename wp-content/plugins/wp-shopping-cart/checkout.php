@@ -163,7 +163,7 @@ $rooturl = get_option('siteurl');
 		<td style="font-size:.8em;border-top:1px silver solid;">
 		Распечатать бланк и оплатить его в любом отделении Сбербанка. Также возможен платёж из других российских банков. Будьте внимательны! Возврат внесённых средств не производится.
 		<br />
-		Для вас будет сформирован счёт на оплату. Вы можете его распечатать и оплатить в течение 5 банковских дней. Для ускорения процесса сообщите нам о факте оплаты счета на адрес cartoonbank.ru@gmail.com. Когда счет будет оплачен изображения и лицензии к ним будут отправлены на указанный вами при регистрации e-mail.
+		Для вас будет сформирован счёт на оплату. Вы можете его распечатать и оплатить в течение 5 банковских дней. Для ускорения процесса сообщите нам о факте оплаты счета письмом на адрес cartoonbank.ru@gmail.com. Когда счет будет оплачен изображения и лицензии к ним будут отправлены на указанный вами при регистрации e-mail.
 		</td></div>
       </tr>
 
@@ -181,7 +181,21 @@ $rooturl = get_option('siteurl');
 		<!-- <a href="https://money.yandex.ru" target="_blank"><img src="https://money.yandex.ru/img/yamoney_logo88x31.gif " alt="Я принимаю Яндекс.Деньги" title="Я принимаю Яндекс.Деньги" border="0" width="88" height="31"/></a> --></div></td>
 	  </tr>
 
+	  <tr>
+	  <td style="border-top:1px silver solid;">
+		<div style="float:left;height:100px;width:20px;"><input type="radio" name="payment_method" value="invoice" id="payment_method_5" /></div>
+		<div style="margin-left:30px;">
+		<label for='payment_method_5'>Выписать счёт для оплаты по безналу</label>
+		<br /><br />
+		<br />
+		</div>
+	  </td>
+		<td style="font-size:.8em;border-top:1px silver solid;">
+		Для вас будет сформирован счёт на оплату. Вы можете его распечатать и оплатить в течение 5 банковских дней. Для ускорения процесса сообщите нам о факте оплаты счета письмом на адрес cartoonbank.ru@gmail.com. Когда счет будет оплачен изображения и лицензии к ним будут отправлены на указанный вами при регистрации e-mail.
+		</td>
+	  </tr>
 	  <?if (WP_DEBUG) {?>
+
 	  <tr><td width='270' style="border-top:1px silver solid;">
 		<input type="radio" name="payment_method" value="paypal_multiple" id="payment_method_1"  <? echo ($disabled); ?>>
 		<label for='payment_method_1'>Оплата через <b>PayPal</b></label>
