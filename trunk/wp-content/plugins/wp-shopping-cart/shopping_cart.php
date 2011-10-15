@@ -63,7 +63,7 @@ function country_list($selected_country = null)
   
   $siteurl = get_option('siteurl');
   
-  $total_shipping = nzshpcrt_determine_base_shipping($total_shipping, $_SESSION['selected_country']);
+  $total_shipping = nzshpcrt_determine_base_shipping($total_shipping, "");
   $total += $total_shipping;   
 
   echo "<tr><td colspan='2'>&nbsp;</td><td colspan='2'>";

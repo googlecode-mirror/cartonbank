@@ -1,0 +1,148 @@
+<style>
+	table.invoice_bank_rekv { border-collapse: collapse; border: 1px solid; padding:2px;}
+	table.invoice_bank_rekv > tbody > tr > td, table.invoice_bank_rekv > tr > td { border: 1px solid; }
+	table.invoice_items { border: 1px solid; border-collapse: collapse;}
+	table.invoice_items td, table.invoice_items th { border: 1px solid;}
+</style>
+
+<div style="text-align:center; width:100%; font-size:0.8em;margin-bottom:8px;"> 
+		<b>Внимание! Оплата данного счета означает согласие с условиями поставки товара. <br>Товар отпускается по факту прихода денег на р/с Поставщика.<br>Счет действителен к оплате в течение пяти банковских дней.</b>
+</div>
+<table width="100%" class="invoice_bank_rekv">
+    <tr>
+        <td colspan="2" rowspan="2" style="min-height:13mm; width: 105mm; padding:2px;">
+            <table border="0" style="width:100%;height:13mm;">
+                <tr>
+                    <td valign="top">
+                        <div>Филиал "Петровский" <br>Банка ОАО "Открытие" г. Санкт-Петербург</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="bottom" style="height: 3mm;">
+                        <div style="font-size:8pt;">Банк получателя</div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td style="min-height:7mm;height:auto; width: 25mm;padding:2px;">
+            <div>БИK</div>
+        </td>
+        <td rowspan="2" style="vertical-align: top; width: 60mm;padding:2px;">
+            <div style=" height: 7mm; line-height: 7mm; vertical-align: middle;">044030766</div>
+            <div>30101810400000000766</div>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 25mm;padding:2px;">
+            <div>Сч. №</div>
+        </td>
+    </tr>
+    <tr>
+        <td style="min-height:6mm; height:auto; width: 50mm;padding:2px;">
+            <div>ИНН 7813470615</div>
+        </td>
+        <td style="min-height:6mm; height:auto; width: 55mm;padding:2px;">
+            <div>КПП 781301001</div>
+        </td>
+        <td rowspan="2" style="min-height:19mm; height:auto; vertical-align: top; width: 25mm;padding:2px;">
+            <div>Сч. №</div>
+        </td>
+        <td rowspan="2" style="min-height:19mm; height:auto; vertical-align: top; width: 60mm;padding:2px;">
+            <div>40702810201073800248</div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="min-height:13mm; height:auto;padding:2px;">
+
+            <table border="0" cellpadding="0" cellspacing="0" style="height: 13mm; width: 105mm;padding:2px;">
+                <tr>
+                    <td valign="top">
+                        <div><b>ООО "МедиаГрафика"</b></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="bottom" style="height: 3mm; padding:2px;">
+                        <div style="font-size: 8pt;">Получатель</div>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+<br/>
+
+<div style="font-weight: bold; font-size: 14pt; padding-left:5px;">
+    Счет на оплату № {invoice_number} от {invoice_date}</div>
+<br/>
+
+<div style="background-color:#000000; width:100%; font-size:1px; height:2px;">&nbsp;</div>
+
+<table width="100%">
+    <tr>
+        <td style="width: 30mm;">
+            <div style=" padding-left:2px;"> Поставщик:     </div>
+        </td>
+        <td>
+            <div style="padding-left:2px; font-size: 1em;">
+                ИНН 7813470615, КПП 781301001, Общество с ограниченной ответственностью "МедиаГрафика", 197101, г. Санкт-Петербург, ул. Рентгена, дом № 15/31, кв. 3</div>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 30mm;">
+            <div style="padding-left:2px;"> Покупатель:     </div>
+        </td>
+        <td>
+            <div style="padding-left:2px; border-top: 1px solid; font-size: 1em;">
+                {client_details}</div>
+        </td>
+    </tr>
+</table>
+
+
+<table class="invoice_items" width="100%" cellpadding="2" cellspacing="2">
+    <thead>
+    <tr>
+        <th style="width:13mm;font-size:0.8em;">№</th>
+        <th style="font-size:0.8em;">Товар</th>
+        <!-- <th style="width:20mm;">Кол-во</th> -->
+        <th style="width:17mm;font-size:0.8em;">Кол-во</th>
+        <th style="width:27mm;font-size:0.8em;">Цена, руб</th>
+        <th style="width:27mm;font-size:0.8em;">Сумма, руб</th>
+    </tr>
+    </thead>
+    <tbody >
+	<tr>
+		<td colspan='5' style='font-style:bold;font-size:1em;padding:2px;'>Передача прав на однократное использование изображений от {contract_date}</td>
+	 </tr>
+	{product_list}
+    </tbody>
+</table>
+
+<table border="0" width="100%" cellpadding="1" cellspacing="1">
+    <tr>
+        <td>&nbsp;</td>
+        <td style="width:47mm; font-weight:bold; text-align:right;">Итого:</td>
+        <td style="width:27mm; font-weight:bold; text-align:center;">{total}</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td style="width:47mm; font-weight:bold; text-align:right;">НДС (без налога):</td>
+        <td style="width:27mm; font-weight:bold; text-align:center;">-</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td style="width:47mm; font-weight:bold; text-align:right; border-top: 3px solid;">Всего с НДС:</td>
+        <td style="width:27mm; font-weight:bold; text-align:center; border-top: 3px solid;">{total}</td>
+    </tr>
+</table>
+
+<br />
+<div>
+Всего наименований <b>{count}</b> на сумму <b>{total}</b> рублей.<br />
+{total_rub_text}</div>
+
+<div style="background-color:#8C8C8C; width:400px; font-size:1px; height:1px;">&nbsp;</div>
+
+<div>Руководитель <b>Шилов Вячеслав Фёдорович</b> <img src="http://cartoonbank.ru/img/shilov_signature.gif" style="width:125px;"><br />Главн. бухгалтер <b>Шилов Вячеслав Фёдорович</b> <img src="http://cartoonbank.ru/img/shilov_signature.gif" style="width:125px; vertical-align:text-top;"></div>
+<br/>

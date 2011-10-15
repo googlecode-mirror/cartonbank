@@ -114,9 +114,9 @@ function conf()
   <span id='loadingindicator_span'></span>
   <?php
   $num = 0;
-echo "    <table id='productpage' style='padding:4px;'>\n\r";
+echo "    <table id='productpage' style='padding:2px;'>\n\r";
 echo "      <tr><td>\n\r";
-echo "        <table id='itemlist' style='padding:4px;'>\n\r";
+echo "        <table id='itemlist' style='padding:2px;'>\n\r";
 echo "          <tr class='firstrow' style='border:1px solid black;background-color:#c0c0c0;'>\n\r";
 echo "            <td>\n\r";
 echo "фото";
@@ -149,11 +149,11 @@ echo "          <tr>\n\r";
 echo "            <td>\n\r";
 if($product['avatar_url'] !=null)
       {
-      echo "<img src='".$product['avatar_url']."' title='".$product['name']."' alt='".$product['name']."' width='50' height='50' />";
+      echo "<img src='".$product['avatar_url']."' title='".$product['name']."' alt='".$product['name']."' width='30' height='30' />";
       }
       else
         {
-        echo "<img src='../wp-content/plugins/wp-shopping-cart/no-image-uploaded.gif' title='".$product['name']."' alt='".$product['name']."' width='50' height='50'  />";
+        echo "<img src='../wp-content/plugins/wp-shopping-cart/no-image-uploaded.gif' title='".$product['name']."' alt='".$product['name']."' width='30' height='30'  />";
         }
 echo "            </td>\n\r";
 
@@ -200,13 +200,13 @@ echo "          </tr>\n\r";
   }
   
 echo "        </table>\n\r";
-echo "      </td><td class='secondcol'>\n\r";
+echo "      </td><td class='secondcol' style='vertical-align:top;'>\n\r";
 echo "        <div id='productform'>";
 echo "<form method='POST'  enctype='multipart/form-data' name='editproduct$num'>";
 echo "        <table class='producttext'>\n\r";;    
 
 echo "          <tr>\n\r";
-echo "            <td colspan='2'>\n\r";
+echo "            <td colspan='2' style='vertical-align:top;'>\n\r";
 echo "<strong>".TXT_WPSC_EDITBRAND."</strong>";
 echo "            </td>\n\r";
 echo "          </tr>\n\r";
@@ -221,7 +221,7 @@ echo "        </div>";
   <form method='POST' enctype='multipart/form-data'>
   <table>
     <tr>
-      <td colspan='2'>
+      <td colspan='2' style='vertical-align:top;'>
         <strong><?php echo TXT_WPSC_ADDBRAND;?></strong>
       </td>
     </tr>
@@ -230,7 +230,7 @@ echo "        </div>";
         <?php echo TXT_WPSC_NAME;?>:
       </td>
       <td>
-        <input type='text' name='name' value=''  />
+        <input type='text' style='width:300px;' name='name' value=''  />
       </td>
     </tr>
     <tr>
