@@ -82,30 +82,30 @@ if ($canpay==false or $totalsum == 0)
 }
 
 
- echo "<tr><td style='padding-bottom:5px;border-bottom: 6px solid #c8c8c8;' colspan='2'><b>Подтвердите информацию о себе:</b></td></tr>";
+ echo "<tr><td style='padding-bottom:5px;border-bottom: 6px solid #c8c8c8;' colspan='2'><h1>1. Подтвердите информацию о себе:</h1></td></tr>";
 
 ?>
-	<tr><td style="padding-bottom: 5px;">Имя*</td>
+	<tr><td style="padding-bottom: 5px; width:350px;"><b>Имя</b>*</td>
 		<td style="padding: 2px;">
 		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="<?if (isset($userdata->user_firstname)){echo $userdata->user_firstname;}?>" name="collected_data[1]" type="text">
 		</td>
 	</tr>
-	<tr><td style="padding-bottom: 5px;">Фамилия*</td>
+	<tr><td style="padding-bottom: 5px;"><b>Фамилия</b>* (Ваши имя и фамилимя будут указано в лицензии, гарантирующей право на публикацию)</td>
 		<td style="padding: 2px;">
 		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="<?if (isset($userdata->user_lastname)){echo $userdata->user_lastname;}?>" name="collected_data[2]" type="text">
 		</td>
 	</tr>
-	<tr><td style="padding-bottom: 5px;">Email*</td>
+	<tr><td style="padding-bottom: 5px;"><b>Email</b>* (укажите ваш адрес для письма со ссылками на файлы)</td>
 		<td style="padding: 2px;">
 		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="<?if (isset($userdata->user_email)){echo $userdata->user_email;}?>" name="collected_data[3]" type="text">
 		</td>
 	</tr>
-	<tr><td style="padding-bottom: 5px;">Телефон</td>
+	<tr><td style="padding-bottom: 5px;"><b>Телефон</b></td>
 		<td style="padding: 2px;">
 		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="" name="collected_data[4]" type="text">
 		</td>
 	</tr>
-	<tr><td style="padding-bottom: 5px;">СМИ</td>
+	<tr><td style="padding-bottom: 5px;"><b>СМИ или цель покупки</b></td>
 		<td style="padding: 2px;">
 		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="" name="collected_data[5]" type="text">
 		</td>
@@ -113,13 +113,12 @@ if ($canpay==false or $totalsum == 0)
 
 
     <tr>
-      <td style='padding:4px;'>&nbsp;</td>
-      <td style='padding:4px;'><span style='font-size: 7pt;'>* Поля, отмеченные звёздочкой, обязательны для заполнения.<br />На указанный электронный ящик будет выслана ссылка для скачивания файла(ов).</span> <input type='hidden' value='yes' name='agree'>
+      <td style='padding:4px;' colspan='2'><span style='font-size: 7pt;'>* Поля, отмеченные звёздочкой, обязательны для заполнения.<br />На указанный электронный ящик будет выслана ссылка для скачивания файла(ов). Картунбанк не передаёт ваши данные третьим лицам.</span> <input type='hidden' value='yes' name='agree'>
 	  </td>
     </tr>
 	
 	  <tr>
-        <td style='padding-top:15px;padding-bottom:5px;border-bottom: 6px solid #c8c8c8;' colspan="2"><b>Сумма оплаты</b></td>
+        <td style='padding-top:15px;padding-bottom:5px;border-bottom: 6px solid #c8c8c8;' colspan="2"><h1>2. Сумма оплаты</h1></td>
       </tr>
 	  
 	  <tr>
@@ -127,7 +126,7 @@ if ($canpay==false or $totalsum == 0)
       </tr>
 
 	  <tr>
-        <td style='padding-top:15px;padding-bottom:5px;border-bottom: 6px solid #c8c8c8;' colspan="2"><b>Методы оплаты</b> (выберите один из способов оплаты)</td>
+        <td style='padding-top:15px;padding-bottom:5px;border-bottom: 6px solid #c8c8c8;' colspan="2"><h1>3. Методы оплаты</h1> (выберите один из способов оплаты)</td>
       </tr>
 
 	 <?php
