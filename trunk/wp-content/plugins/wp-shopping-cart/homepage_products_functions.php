@@ -767,11 +767,10 @@ LIMIT 0, 100";
 					$description = $product['comment'];
 				}
 
-			$output .= "<div class='item'><div id='date' style='color:#666666;'>".$d.":</div><div id='descr' style='font-size:.8em;'>".$description."</div>";
+			$output .= "<div class='item'><div id='date' style='color:#666666;'>".$d.":</div><div id='descr' style='font-size:.8em;'>".stripslashes($description)."</div>";
 			$output .= "<a href='".get_option('product_list_url').$seperator."cartoonid=".$product['ID']."'>";
 			if($product['image'] != '')
 			  {
-			  //$output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' />\n\r";
 			  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['author'].". ".$product['title']."' class='thumb'/>";
 			  }
 			$output .= "</a>";
