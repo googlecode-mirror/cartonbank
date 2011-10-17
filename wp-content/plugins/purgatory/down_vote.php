@@ -1,14 +1,14 @@
 <?php
 include("config.php");
-
 $ip = 'none';
 if (isset($_GET['ip']))
 	{$ip = $_GET['ip'];}
 elseif (isset($_SERVER['REMOTE_ADDR']) and $_SERVER['REMOTE_ADDR'] != '')
 	{$ip=$_SERVER['REMOTE_ADDR'];}
 
-if($_POST['id'] or $_GET['id'])
+if(isset($_POST['id']) || isset($_GET['id']))
 {
+
 if (isset($_POST['id']))
 	$id=$_POST['id'];
 elseif (isset($_GET['id']))
@@ -28,13 +28,15 @@ elseif (isset($_GET['id']))
 		mysql_query( $sql_in);
 	}
 
-	$result=mysql_query("select down from al_editors_votes where image_id='$id'");
+	$sql = "select down, up from al_editors_votes where image_id='$id'";
+	$result=mysql_query($sql);
 
 	$row=mysql_fetch_array($result);
 	$down_value=$row['down'];
+	$up_value=$row['up'];
 
 		//fw("\n\r up_value=".$up_value);
-		if ($down_value >= $limit_minus) // 2 плюса - проходит, 3 минуса - не проходит
+		if ($down_value >= $limit_minus && $up_value < $limit_plus) // 2 плюса - проходит, 3 минуса - не проходит
 		{
 			$sql = "update wp_product_list set approved=1 where id='$id'";
 			//fw("\n\r sql=".$sql);
