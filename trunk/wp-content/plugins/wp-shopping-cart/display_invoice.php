@@ -68,7 +68,7 @@ if (!isset($_SESSION['nzshpcrt_cart']) || count($_SESSION['nzshpcrt_cart'])<1)
 echo "В корзине нет товаров. Счёт выписать невозможно.";
 exit;
 }
-//pokazh($_SESSION['collected_data']);
+//pokazh($_SESSION);
 foreach ($_SESSION['nzshpcrt_cart'] as $it)
 {
 	/*
@@ -194,8 +194,18 @@ else
 
 $sql = "SELECT c.id, c.user_id, c.name, c.bank_attributes, c.contract, c.contract_date, u.user_email, u.user_url, u.wallet, u.discount
 		FROM  `al_customers` AS c,  `wp_users` AS u
-		WHERE u.id = c.user_id ORDER BY c.contract";
+		WHERE u.id = ".$_SESSION['uid'];
+
+//pokazh($sql);
+
 $product_list = $wpdb->get_results($sql,ARRAY_A);
+
+if (isset($product_list[0]['discount']))
+{$_discount = round($product_list[0]['discount'],0);}
+else{$_discount = '0';}
+
+//pokazh($product_list);
+//pokazh($_discount,"discount");
 
 ?>
 	<style type="text/css">
@@ -250,13 +260,13 @@ $product_list = $wpdb->get_results($sql,ARRAY_A);
 	$_invoice_x_number = $_invoice_start_number;
 	$customer_number = 1;
 
-						$n = 1; // sequence number of the cartoon sold to one customer
-						$count = count($_SESSION['nzshpcrt_cart']); // number of cartoons sold
-						$total = 0; // total price with discount
-						$the_list = ''; // html list of cartoons with row tags
-						$contract_period = $month.".".date("Y");
+	$n = 1; // sequence number of the cartoon sold to one customer
+	$count = count($_SESSION['nzshpcrt_cart']); // number of cartoons sold
+	$total = 0; // total price with discount
+	$the_list = ''; // html list of cartoons with row tags
+	$contract_period = $month.".".date("Y");
 
-						//echo ("<div class='t' style='background-color:#CCD2FF;padding-left:4px;margin-top:8px;'>".$product['name']."</div>");
+	//echo ("<div class='t' style='background-color:#CCD2FF;padding-left:4px;margin-top:8px;'>".$product['name']."</div>");
 /*
 foreach ($_SESSION['nzshpcrt_cart'] as $it)
 {
@@ -268,66 +278,66 @@ foreach ($_SESSION['nzshpcrt_cart'] as $it)
 }
 */						
 					
-					  foreach($_SESSION['nzshpcrt_cart'] as $sales)
-						{
-							$discount_price = $sales->price; //round($sales->price,0)*((100-round($sales->discount,0))/100);
-							
-							//echo "<div class='t'>".date("d.m.y H:m:s",$sales['date'])." <b>".$sales['artist']."</b> «".stripslashes($sales['title'])."» цена:".round($sales->price,0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b></div>";
-							
-							$total = $total + $discount_price;
-                            
-                            //license type
-                            $lic_type = '';
-                            switch ($sales->price){
-                                case 250:
-                                    $lic_type = ' Лицензия ограниченная.';
-                                    break;
-                                case 500:
-                                    $lic_type = ' Лицензия стандартная.';
-                                    break;
-                                case 2500:
-                                    $lic_type = ' Лицензия расширенная.';
-                                    break;
-                            }
-							
-							$the_list .= '<tr>
-											<td style="padding:2px;text-align:center;">'.$n.'</td>
-											<td style="font-style:bold;font-size:1em;padding:2px;">«'.stripslashes($sales->name).'» (#'.$sales->product_id.') '.$sales->author.'. '.$lic_type.'</td>
-											<td style="padding:2px;text-align:center;">1шт.</td>
-											<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
-											<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
-										</tr>';
+	foreach($_SESSION['nzshpcrt_cart'] as $sales)
+	{
+		$discount_price = round($sales->price*((100-round($_discount,0))/100)); //$sales->price; //
+		
+		//echo "<div class='t'>".date("d.m.y H:m:s",$sales['date'])." <b>".$sales['artist']."</b> «".stripslashes($sales['title'])."» цена:".round($sales->price,0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b></div>";
+		
+		$total = $total + $discount_price;
+		
+		//license type
+		$lic_type = '';
+		switch ($sales->price){
+			case 250:
+				$lic_type = ' Лицензия ограниченная.';
+				break;
+			case 500:
+				$lic_type = ' Лицензия стандартная.';
+				break;
+			case 2500:
+				$lic_type = ' Лицензия расширенная.';
+				break;
+		}
+		
+		$the_list .= '<tr>
+						<td style="padding:2px;text-align:center;">'.$n.'</td>
+						<td style="font-style:bold;font-size:1em;padding:2px;">«'.stripslashes($sales->name).'» (#'.$sales->product_id.') '.$sales->author.'. '.$lic_type.'</td>
+						<td style="padding:2px;text-align:center;">1шт.</td>
+						<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
+						<td style="padding:2px;text-align:center;">'.$discount_price.'</td>
+					</tr>';
 
-							$n++;
-						}//foreach($product_list as $sales)
+		$n++;
+	}//foreach($product_list as $sales)
 					
-						// print invoice:
-						
-					//$out = fill_invoice($filename, $_invoice_x_number, $_invoice_date,  $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
+		// print invoice:
+		
+	//$out = fill_invoice($filename, $_invoice_x_number, $_invoice_date,  $product['name'], $product['bank_attributes'], $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 
-					$out = fill_invoice($filename, "x".$_invoice_x_number, $_invoice_date,  "", "", $the_list, $total, $count, $contract_period, "" ,$this_date);
+	$out = fill_invoice($filename, "x".$_invoice_x_number, $_invoice_date,  "", "", $the_list, $total, $count, $contract_period, "" ,$this_date,$_discount);
 
-						echo "<div id='invoice' style='background: white url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat; background-size: 21%; background-position: 87% 100%; margin:20px; padding:8px;width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>";
-						echo $out;
-						echo "</div>";
+		echo "<div id='invoice' style='background: white url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat; background-size: 21%; background-position: 87% 100%; margin:20px; padding:8px;width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>";
+		echo $out;
+		echo "</div>";
 
-						send_mail($out);
+		send_mail($out);
 
-					// Print invoice PDF
-					$out = fill_invoice($filename_pdf, "x".$_invoice_x_number, $_invoice_date, "", "", $the_list, $total, $count, $contract_period, "",$this_date);
-							echo ("<div style='margin-left:20px;'><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
-									<input type='submit' value='скачать счёт в формате PDF для распечатывания' style='padding:8px;background-color:#FFFF99;'>
-									<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
-									<input type='hidden' name='filename' value='invoice_".$_invoice_x_number."'>
-								</form></br></br></div>");
-
-
-
-					$_invoice_x_number = $_invoice_start_number + $customer_number;
-					$customer_number ++;
+	// Print invoice PDF
+	$out = fill_invoice($filename_pdf, "x".$_invoice_x_number, $_invoice_date, "", "", $the_list, $total, $count, $contract_period, "",$this_date,$_discount);
+			echo ("<div style='margin-left:20px;'><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
+					<input type='submit' value='скачать счёт в формате PDF для распечатывания' style='padding:8px;background-color:#FFFF99;'>
+					<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
+					<input type='hidden' name='filename' value='invoice_".$_invoice_x_number."'>
+				</form></br></br></div>");
 
 
-function fill_invoice($filename, $invoice_x_number='', $invoice_date='', $smi='',  $client_details='', $product_list='', $total='', $count='', $invoice_period='', $contract_number='', $contract_date='')
+
+	$_invoice_x_number = $_invoice_start_number + $customer_number;
+	$customer_number ++;
+
+
+function fill_invoice($filename, $invoice_x_number='', $invoice_date='', $smi='',  $client_details='', $product_list='', $total='', $count='', $invoice_period='', $contract_number='', $contract_date='', $_discount=0)
 {
 	if ($invoice_x_number==''){$invoice_x_number='____';}
 	$today = getdate();
@@ -356,6 +366,7 @@ function fill_invoice($filename, $invoice_x_number='', $invoice_date='', $smi=''
 		$content = str_replace ('{invoice_period}',$invoice_period,$content);
 		$content = str_replace ('{contract_number}',$contract_number,$content);
 		$content = str_replace ('{contract_date}',$contract_date,$content);
+		$content = str_replace ('{discount}',$_discount,$content);
 
 		// output content
 		//pokazh($content);
