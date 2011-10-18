@@ -70,7 +70,7 @@ function country_list($selected_country = null)
 ?>
 
 <tr><td colspan='2'>
-<input type='checkbox' value='yes' name='agree' onclick='if (this.checked==true){document.getElementById("paybutton").style.display="block";}else{document.getElementById("paybutton").style.display="none";};' /> Я соглашаюсь с лицензионными условиями.<br /><br />
+<input type='checkbox' value='yes' name='agree' onclick='if (this.checked==true){document.getElementById("paybutton").style.display="block";}else{document.getElementById("paybutton").style.display="none";};' /><span style='font-size:1.8em;'> &lt;- Я соглашаюсь с лицензионными условиями.<br /><br /></span>
 </td><td colspan='2'>	   
    
 <?
@@ -82,11 +82,11 @@ if ($user_identity == '')
 }
 else
 {
-  echo "<div align='right' width='100%'><div id='paybutton' style='display:none;clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('checkout_url')."' class='button' style='background-color:#CCFF00;'>Подтвердить выбор и перейти к оплате ></a></div><br />";
+  echo "<div align='right' width='100%'><div id='paybutton' style='display:none;clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('checkout_url')."' class='button' style='background-color:#CCFF00;'> Подтвердить выбор и перейти к оплате > </a></div><br />";
 
 }
-  echo "<div style='clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('product_list_url')."' class='button'>< Продолжить выбор</a></div>";
-  echo "<div style='clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('shopping_cart_url').$seperator."cart=empty' class='button'>x Очистить корзину</a></div></div>";
+  echo "<div style='clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('product_list_url')."' class='button'> < Продолжить выбор </a></div>";
+  echo "<div style='clear:both;width:100%;float:right;margin-bottom:4px;'><a href='".get_option('shopping_cart_url').$seperator."cart=empty' class='button'> x Очистить корзину </a> </div></div>";
   
 
   echo "</td></tr>";
