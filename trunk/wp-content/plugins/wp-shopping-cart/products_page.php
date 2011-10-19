@@ -19,24 +19,31 @@ global $wpdb, $colorfilter, $color, $aKeywords;
 		$new = '0';
 	}
 
+// pokazh($_REQUEST);
+
+	if (isset($_REQUEST['0']) && $_REQUEST['0']=='on') // $_REQUEST['0']  == 'on' -> include 666
+	{
+		// include in search results
+		$exclude_category_sql = ' ';
+	}
+	else
+	{
+		// exclude from search results
+		$exclude_category_sql = " AND `wp_product_list`.`category` != '666' ";
+	}
+
 	if (isset($_GET['category']) && $_GET['category'] == '666')
 		{
-			$exclude_category_sql = " ";
 			$approved_or_not = "";
 
 		}
-		//else if ((isset($_POST['666']) && $_POST['666']=='on') or (isset($_GET['666']) && $_GET['666']==1))
 		else if (isset($_GET['666']) && $_GET['666']==1)
 		{
-			// include in search results
-			$exclude_category_sql = " ";
 			$approved_or_not = "";
 			$_666 = 'on';
 		}
 		else
 		{
-			// exclude from search results
-			$exclude_category_sql = " AND `wp_product_list`.`category` != '666' ";
 			$approved_or_not = " AND `wp_product_list`.`approved` = '1' ";
 		}
 
