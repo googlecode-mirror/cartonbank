@@ -20,40 +20,7 @@ global $wpdb, $colorfilter, $color, $aKeywords;
 	}
 
 // pokazh($_REQUEST);
-if (isset($_GET['category']) && $_GET['category'] == '666')
-	{
-		$exclude_category_sql = " ";
-		$approved_or_not = "";
 
-	}
-	//else if ((isset($_POST['666']) && $_POST['666']=='on') or (isset($_GET['666']) && $_GET['666']==1))
-	else if (isset($_GET['666']) && $_GET['666']==1)
-	{
-		// include in search results
-		$exclude_category_sql = " ";
-		$approved_or_not = "";
-		$_666 = 'on';
-	}
-	else
-	{
-		// exclude from search results
-		$exclude_category_sql = " AND `wp_product_list`.`category` != '666' ";
-		$approved_or_not = " AND `wp_product_list`.`approved` = '1' ";
-	}
-
-
-	if (isset($_REQUEST['0']) && $_REQUEST['0']=='on') // $_REQUEST['0']  == 'on' -> include 666
-	{
-		// include in search results
-		$exclude_category_sql = ' ';
-	}
-	else
-	{
-		// exclude from search results
-		$exclude_category_sql = " AND `wp_product_list`.`category` != '666' ";
-	}
-
-/*
 	if (isset($_REQUEST['0']) && $_REQUEST['0']=='on') // $_REQUEST['0']  == 'on' -> include 666
 	{
 		// include in search results
@@ -79,7 +46,7 @@ if (isset($_GET['category']) && $_GET['category'] == '666')
 		{
 			$approved_or_not = " AND `wp_product_list`.`approved` = '1' ";
 		}
-*/
+
 // send email from feedback form
 if (isset($_REQUEST['email']) && isset($_REQUEST['message']))
 {
@@ -502,7 +469,7 @@ else
 										}
 								}
 
-								$search_keywords_filter = $exact_keywords_filter.$search_keywords_filter.$any_keywords_filter.$exclude_keywords_filter;
+									$search_keywords_filter = $exact_keywords_filter.$search_keywords_filter.$any_keywords_filter.$exclude_keywords_filter;
 
 //pokazh($exact_keywords_filter,"exact_keywords_filter");
 //pokazh($search_keywords_filter,"search_keywords_filter");
@@ -524,7 +491,7 @@ else
 
 					$filter_list .= 'Поиск: ('.$keywords.$exact_keywords.$exclude_keywords.$any_keywords.") ";
 				
-//	pokazh($filter_list,"filter_list");				
+					
 					if (isset($new) && $new==1)
 					{
 						$new_get = $_GET;
