@@ -1,0 +1,100 @@
+
+#img-container{
+	padding: 20px 0;
+	margin: 20px 0 20px 0;
+	background:#232323;
+	border: 2px solid #393939;
+	position:relative;
+}
+#img-container.highlighted{
+	background: #5f5e5e;
+	border: 2px solid #969696;
+}
+#img-container ul{
+	list-style-type: none;
+}
+#img-container ul li{
+	display: inline-block;
+	//display:inline;
+	zoom:1;
+	padding: 10px 12px 0 12px;
+	vertical-align:top;
+	position:relative;
+}
+.photoName{
+	padding: 0 0 5px 5px;
+	color:#fff;
+	font-weight:bold;
+}
+.progress{
+	width: 100%;
+	padding: 5px 0 5px 5px;
+	color:#fff;
+	font-weight:bold;
+}
+.oldFilerField div{
+	padding-bottom: 5px;
+}
+.oldFilerField div input[type=file]{
+	display:inline;
+}
+.oldFilerField div .del{
+	cursor: pointer;
+	text-decoration: underline;
+	color:#fff;
+	position: relative;
+	top: 0;
+	left: 10px;
+}
+.oldFilerField div .del:hover{
+	text-decoration: none;
+}	
+#addMore{
+	display:inline-block;
+	//display: inline;
+	zoom:1;
+	background: #232323;
+	border: 1px solid #393939;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	behavior: url(css/pie.htc);
+	position:relative;
+	cursor:pointer;
+	clear:#fff;
+	padding: 3px 10px;
+}
+#addMore:hover{
+	border-color:#fff;
+}
+.delpreview{
+	position: absolute;
+	bottom: 4px;
+	cursor:pointer;
+	left: 150px;
+	color:red;
+	font-weight:bold;
+}
+#img-container .text{
+	position: absolute;
+	z-index:1;
+	width: 100%;
+	top: 50%;
+	margin-top:-9px;
+	color:#fff;
+	font-size:16px;
+	text-align:center;
+}
+#img-list{
+	position: relative;
+	z-index:2;
+	background:#232323;
+}
+#img-container.highlighted #img-list{
+	background: #5f5e5e;
+}
+#previewAnket.disabled{
+	cursor: default;
+	background-position:0 -79px !important;
+	color:#ccc;
+}
