@@ -283,7 +283,18 @@ function get_license($sequence_of_image,$license_num)
 		}
 	}
 
-	$media_name = '[не указано]';
+	//echo("<pre>".print_r($current_user,true)."</pre>");
+	//echo("<pre>".print_r($_SESSION['nzshpcrt_cart'],true)."</pre>");
+	//echo("<pre>".print_r($_SESSION['collected_data'],true)."</pre>");
+
+	if (isset($_SESSION['collected_data'][5]) && trim($_SESSION['collected_data'][5])!='')
+		$media_name = "«".trim($_SESSION['collected_data'][5])."»";
+	elseif (isset($current_user->user_description) && $current_user->user_description!='')
+		$media_name = "«".$current_user->user_description."»";
+	else
+		$media_name = "[не указано]";
+
+
 	if (isset($current_user->discount))
 		$_discount = $current_user->discount;
 	else
