@@ -514,7 +514,7 @@ div.pagination span.current {
 		border: 5px solid #668bb7;
 		
 		font-weight: bold;
-		background-color: rgb(199, 199, 259);
+		background-color: rgb(199, 199, 255);
 		color: #000099;
 	}
 	div.pagination span.disabled {
