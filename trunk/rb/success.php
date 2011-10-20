@@ -23,18 +23,26 @@ if (isset($purchase_log[0]['id']))
 		$purchaseid = $purchase_log[0]['id'];
 		$transact_url = get_option('transact_url');
 		$sessionid = $purchase_log[0]['sessionid'];
+
+		// send notification
+		$descr = "purchaseid=$purchaseid; sessionid=$sessionid; transact_url=$transact_url; out_summ = $out_summ; inv_id=$inv_id; shp_item=$shp_item; crc=$crc;";
+		send_email($descr);
+
 		header("Location: ".$transact_url."&sessionid=".$sessionid);
 		exit;
 	}
 else
 	{
+		// send notification
+		$descr = "Транзакция прошла, но purchase_log[0]['id']=0; out_summ = $out_summ; inv_id=$inv_id; shp_item=$shp_item; crc=$crc;";
+		send_email($descr);
 		$purchaseid = '0';
 		header("Location: http://cartoonbank.ru/?page_id=918&p=0");
 		exit;
 		
 	}
 
-pokazh($purchaseid,"$purchaseid");
+//pokazh($purchaseid,"$purchaseid");
 
 // регистрационная информация (пароль #1)
 // registration info (password #1)
@@ -72,6 +80,21 @@ while(!feof($f))
   }
 }
 fclose($f);
+
+
+function send_email($description)
+{
+	$headers = "From: bankir@cartoonbank.ru\r\n" .
+			   'X-Mailer: PHP/' . phpversion() . "\r\n" .
+			   "MIME-Version: 1.0\r\n" .
+			   "Content-Type: text/html; charset=utf-8\r\n" .
+			   "Content-Transfer-Encoding: 8bit\r\n\r\n";
+	
+	$mess = $description;
+
+	mail("igor.aleshin@gmail.com", 'успешная транзакция в робокассе', $mess, $headers);
+	return;		
+}
 ?>
 
 
