@@ -107,7 +107,7 @@ if ($canpay==false or $totalsum == 0)
 	</tr>
 	<tr><td style="padding-bottom: 5px;"><b>СМИ или цель покупки</b></td>
 		<td style="padding: 2px;">
-		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="" name="collected_data[5]" type="text">
+		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);"value="<?if (isset($userdata->description)){echo $userdata->description;}?>" name="collected_data[5]" type="text">
 		</td>
 	</tr>
 
