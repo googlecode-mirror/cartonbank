@@ -1,4 +1,4 @@
-﻿$(document).ready(function(){
+$(document).ready(function(){
 
 
 	// Стандарный input для файлов
@@ -35,7 +35,7 @@
 	/* если поддерживется file api и DnD */
 	else {
 		/* динамически создаем компоненты для drag and drop */
-		fileInput.after('<div id="img-container"><div class="text">Сюда можно перетащить одно или одновременно несколько фото</div><ul id="img-list"></ul></div>');
+		fileInput.after('<div id="img-container"><div class="text">Перетащите сюда файл(ы)</div><ul id="img-list"></ul></div>');
 		
     
     	// ul-список, содержащий миниатюрки выбранных файлов
@@ -59,7 +59,7 @@
 		// удаление выбранного фото
 	$(".delpreview").live("click", function(){
 											  
-			$(this).parent().remove();
+			$(this).parent().parent().remove();
 
 	});
 
@@ -94,22 +94,37 @@
 				
 				num++;
 				
-				// Создаем элемент li и помещаем в него название, миниатюру и progress bar,
+				// Создаем элемент li и помещаем в него название, миниатюру и progress bar, 
 				// а также создаем ему свойство file, куда помещаем объект File (при загрузке понадобится)
 				var li = $('<li/>').appendTo(imgList);
-				$('<div class="photoName"/>').text(file.name).appendTo(li);
-				$('<span class="delpreview">X</span>').appendTo(li);
-				var img = $('<img/>').appendTo(li);
-				$('<div/>').addClass('progress').attr('rel', '0').text('0%').appendTo(li);
+
+				var imgcont = $('<div class="imgcontainer" />').appendTo(li);
+
+
+
+				var img = $('<img/>').appendTo(imgcont);
+
+	var descript = $('<div class="descript">    <div><label class="lbl" for="carname">название</label><input type="text" id="carname" name="carname" value="название '+Math.random()+'" class="iname" /></div><div><label class="lbl" for="cardescription">описание</label><textarea rows="3" id="cardescription" name="cardescription" class="idescription">описание '+Math.random()+' </textarea></div><div><label class="lbl" for="cartags">ключевые слова</label><textarea rows="4" id="cartags" name="cartags" class="itags">тэги '+Math.random()+'</textarea></div>           <div>   <input id="colored'+num+'" type="checkbox" name="colored" checked="checked" class="chbcolored"/><label for="colored'+num+'" class="coloredchb">цветной</label>   <input id="tema'+num+'" type="checkbox" name="tema" class="chbtema"/><label for="tema'+num+'" class="temachb">тема дня</label>      </div>                </div> <div class="descriptr"> <input type="radio" id="category4'+num+'" name="category'+num+'" value="4"><label for="category4'+num+'">Карикатура</label><br><input type="radio" id="category5'+num+'" name="category'+num+'" value="5" checked="checked"><label for="category5'+num+'">Cartoon</label><br><input type="radio" id="category6'+num+'" name="category'+num+'" value="6"><label for="category6'+num+'">Artoon</label><br><input type="radio" id="category11'+num+'" name="category'+num+'" value="11"><label for="category11'+num+'">Разное</label><br><input type="radio" id="category13'+num+'" name="category'+num+'" value="13"><label for="category13'+num+'">Коллаж</label><br><input type="radio" id="category14'+num+'" name="category'+num+'" value="14"><label for="category14'+num+'">Шарж</label><br><input type="radio" id="category15'+num+'" name="category'+num+'" value="15"><label for="category15'+num+'">Стрип</label><br><input type="radio" id="category666'+num+'" name="category'+num+'" value="666"><label for="category666'+num+'">Рабочий стол</label></div>').appendTo(li);
+
+				$('<div/>').addClass('progress').attr('rel', '0').text('0%').appendTo(imgcont);
+				$('<div/>').addClass('clearall').appendTo(li);
+
+
+				$('<span class="delpreview">X</span>').appendTo(imgcont);
+				$('<div class="photoName"/>').text(file.name).appendTo(imgcont);
+				$('<div class="photoName" />').text(num).appendTo(imgcont);
+
+
 				li.get(0).file = file;
-	
+
+				
 				// Создаем объект FileReader и по завершении чтения файла, отображаем миниатюру и обновляем
 				// инфу обо всех файлах
 				var reader = new FileReader();
 				reader.onload = (function(aImg) {
 					return function(e) {
 						aImg.attr('src', e.target.result);
-						aImg.attr('width', 150);
+						aImg.attr('width', 140);
 						imgCount++;
 						imgSize += file.size;
 					};
@@ -198,20 +213,44 @@
 		
 		if(result == false)
 		{
+
+
+
+//foreach 2
+
+
+
 			imgList.find('li').each(function() {
 	
 				var uploadItem = this;
+				var valid = true;
+				
+				if (checkEmptyFields(uploadItem, valid) == false) {
+					$('.errormsg').html('<div class="alertmsg" style="clear:both;">Ошибки на странице</div>');
+					valid = false;
+				    return false;
+				}
+
 				var pBar = $(uploadItem).find('.progress');
-	
-	
+
 				new uploaderObject({
 					file:       uploadItem.file,
 					
 					/*переменная ulr - адрес скрипта, который будет принимать фото со стороны сервера (в моём случае это значение action нашей формы)*/
 					
-					url:        $(".regForm").attr('action'),
+					//url:        $(".regForm").attr('action'),
+					url:        "http://cartoonbank.ru/ales/upload/savefiles.php",
 					fieldName:  'my-pic',
-	
+					carName:		$(uploadItem).find('#carname').val(),
+					carDescription:	$(uploadItem).find('#cardescription').val(),
+					carTags:		$(uploadItem).find('#cartags').val(),
+					carCategory:	$(uploadItem).find('.descriptr').find('input:checked').val(),
+					carColor:		$(uploadItem).find('.descript').find('.chbcolored:checked').val(),
+					carTema:		$(uploadItem).find('.descript').find('.chbtema:checked').val(),
+//$(uploadItem).find('#colored1')
+//<input id="colored1" type="checkbox" name="colored" checked="checked" class="chbcolored">
+//$(uploadItem).find('.descript').find('.chbcolored').val()
+//$(uploadItem).find('.descript').find('.chbcolored:checked').val()
 					onprogress: function(percents) {
 						updateProgress(pBar, percents);
 					},
@@ -231,7 +270,13 @@
 						}
 					}
 				});			
-        	});
+        	}
+
+///foreach2
+
+
+
+			);
 		}
 		return result;
     });
@@ -244,9 +289,10 @@
  * file       - объект File (обязателен)
  * url        - строка, указывает куда загружать (обязателен)
  * fieldName  - имя поля, содержащего файл (как если задать атрибут name тегу input)
+ * carName	- cartoon name
  * onprogress - функция обратного вызова, вызывается при обновлении данных
  *              о процессе загрузки, принимает один параметр: состояние загрузки (в процентах)
- * oncopmlete - функция обратного вызова, вызывается при завершении загрузки, принимает два параметра:
+ * oncomplete - функция обратного вызова, вызывается при завершении загрузки, принимает два параметра:
  *              uploaded - содержит true, в случае успеха и false, если возникли какие-либо ошибки;
  *              data - в случае успеха в него передается ответ сервера
  *              
@@ -259,6 +305,7 @@ var uploaderObject = function(params) {
     if(!params.file || !params.url) {
         return false;
     }
+
 
     this.xhr = new XMLHttpRequest();
     this.reader = new FileReader();
@@ -320,16 +367,52 @@ var uploaderObject = function(params) {
 
         self.xhr.open("POST", params.url);
 
-        var boundary = "xxxxxxxxx";
-        self.xhr.setRequestHeader("Content-Type", "multipart/form-data, boundary="+boundary);
+        var boundary = "----------";
+		boundary += Math.floor(Math.random()*32768);
+		boundary += Math.floor(Math.random()*32768);
+		boundary += Math.floor(Math.random()*32768);
+
+        self.xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary="+boundary);
         self.xhr.setRequestHeader("Cache-Control", "no-cache");
 
-        var body = "--" + boundary + "\r\n";
-        body += "Content-Disposition: form-data; name='"+(params.fieldName || 'file')+"'; filename='" + params.file.name + "'\r\n";
+		var body = "--" + boundary + "\r\n";
+
+		body += "Content-Disposition: form-data; name=\"carname\" \r\n";
+        body += "Content-Type:text/plain\r\n\r\n";
+        body += params.carName + "\r\n"; 
+        body += "--" + boundary + "\r\n";
+
+		body += "Content-Disposition: form-data; name=\"cardescription\" \r\n";
+        body += "Content-Type:text/plain\r\n\r\n";
+        body += params.carDescription + "\r\n"; 
+        body += "--" + boundary + "\r\n";
+
+		body += "Content-Disposition: form-data; name=\"cartags\" \r\n";
+        body += "Content-Type:text/plain\r\n\r\n";
+        body += params.carTags + "\r\n"; 
+        body += "--" + boundary + "\r\n";
+
+		body += "Content-Disposition: form-data; name=\"carcategory\" \r\n";
+        body += "Content-Type:text/plain\r\n\r\n";
+        body += params.carCategory + "\r\n"; 
+        body += "--" + boundary + "\r\n";
+
+		body += "Content-Disposition: form-data; name=\"colored\" \r\n";
+        body += "Content-Type:text/plain\r\n\r\n";
+        body += params.carColor + "\r\n"; 
+        body += "--" + boundary + "\r\n";
+
+		body += "Content-Disposition: form-data; name=\"tema\" \r\n";
+        body += "Content-Type:text/plain\r\n\r\n";
+        body += params.carTema + "\r\n"; 
+        body += "--" + boundary + "\r\n";
+
+		body += "Content-Disposition: form-data; name='"+(params.fieldName || 'file')+"'; filename='" + params.file.name + "'\r\n";
         body += "Content-Type: application/octet-stream\r\n\r\n";
         body += self.reader.result + "\r\n";
         body += "--" + boundary + "--";
 
+        
         if(self.xhr.sendAsBinary) {
             // firefox
             self.xhr.sendAsBinary(body);
@@ -342,3 +425,28 @@ var uploaderObject = function(params) {
 
     self.reader.readAsBinaryString(params.file);
 };
+
+function checkEmptyFields(uploadItem, valid) {
+
+	$(uploadItem).find('#carname').parent().removeClass("alertmsg");
+	$(uploadItem).find('#cardescription').parent().removeClass("alertmsg");
+	$(uploadItem).find('#cartags').parent().removeClass("alertmsg");
+
+	if ($(uploadItem).find('#carname').val().length ==0) {
+		$(uploadItem).find('#carname').parent().append('<div class="alertmsg"></div>');
+		$(uploadItem).find('#carname').parent().addClass("alertmsg");
+		valid = false;
+	}
+	if ($(uploadItem).find('#cardescription').val().length ==0) {
+		$(uploadItem).find('#cardescription').parent().append('<div class="alertmsg"></div>');
+		$(uploadItem).find('#cardescription').parent().addClass("alertmsg");
+		valid = false;
+	}
+	else if ($(uploadItem).find('#cartags').val().length ==0) {
+		$(uploadItem).find('#cartags').parent().append('<div class="alertmsg"></div>');
+		$(uploadItem).find('#cartags').parent().addClass("alertmsg");
+		valid = false;
+	}
+
+	return valid;	
+}
