@@ -24,6 +24,7 @@ if (isset($_GET['category']) && $_GET['category'] == '666')
 	{
 		$exclude_category_sql = " ";
 		$approved_or_not = "";
+        $_666 = 'on'; 
 
 	}
 	//else if ((isset($_POST['666']) && $_POST['666']=='on') or (isset($_GET['666']) && $_GET['666']==1))
@@ -42,7 +43,7 @@ if (isset($_GET['category']) && $_GET['category'] == '666')
 	}
 
 
-	if (isset($_REQUEST['0']) && $_REQUEST['0']=='on') // $_REQUEST['0']  == 'on' -> include 666
+	if ((isset($_REQUEST['0']) && $_REQUEST['0']=='on') | $_REQUEST['category']=='666' ) // $_REQUEST['0']  == 'on' -> include 666
 	{
 		// include in search results
 		$exclude_category_sql = ' ';
@@ -1061,14 +1062,14 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 		else
 			// $exact_keywords != '' | $exclude_keywords != '' | $any_keywords != ''
 			$pagination .= " Всего: ".$totalitems. " рис.&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span></div>";
-	}
+	}//if($lastpage > 1)
 	if ($totalitems < 20)
 	//$pagination .= " Всего: ".$totalitems. "&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span></div>";
 	$pagination = " Всего найдено: ".$totalitems. ".&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span>";
 
 	return $pagination;
 
-}
+}//function getPaginationString
 
 function trim_value(&$value) 
 { 
