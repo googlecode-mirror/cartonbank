@@ -110,7 +110,7 @@ else
 			$total_cartoons = $total_cartoons + $cat['count'];
 		}
 
-$total_cartoons = $total_cartoons - 1;
+//$total_cartoons = $total_cartoons - 1;
 
 	$color_number = $total_cartoons - $bw_number;
     if($categories != null)
