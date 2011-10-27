@@ -135,7 +135,7 @@ else
 						//echo("<pre>_cartoon_id ".print_r($_GET['cartoonid'],true)."</pre>");
 						$_cartoon_id = $_GET['cartoonid'];
 
-						$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = ".$_cartoon_id.$approved_or_not." AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' ".$exclude_category_sql." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` ORDER BY ".$orderby; 
+						$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = ".$_cartoon_id.$approved_or_not." AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' ".$exclude_category_sql." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` ORDER BY ".$orderby; 
 					
                     $sql = $search_sql;
                     }
