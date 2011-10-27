@@ -217,8 +217,19 @@ $(document).ready(function(){
 
 
 //foreach 2
+var valid = true;
+imgList.find('li').each(function() {
 
-                 var valid = true;
+    var uploadItem = this;
+    if (checkEmptyFields(uploadItem, valid) == false) {
+        $('.errormsg').html('<div class="alertmsg" style="clear:both;">Ошибки на странице</div>');
+        valid = false;
+    }
+}                 
+);
+if (!valid){
+    return false;
+}
 
 
 			imgList.find('li').each(function() {
@@ -395,32 +406,32 @@ var uploaderObject = function(params) {
 
 		var body = "--" + boundary + "\r\n";
 
-		body += "Content-Disposition: form-data; name=\"carname\" \r\n";
+		body += "Content-Disposition: form-data; name=\"carname\"\r\n";
         body += "Content-Type:text/plain\r\n\r\n";
         body += params.carName + "\r\n"; 
         body += "--" + boundary + "\r\n";
 
-		body += "Content-Disposition: form-data; name=\"cardescription\" \r\n";
+		body += "Content-Disposition: form-data; name=\"cardescription\"\r\n";
         body += "Content-Type:text/plain\r\n\r\n";
         body += params.carDescription + "\r\n"; 
         body += "--" + boundary + "\r\n";
 
-		body += "Content-Disposition: form-data; name=\"cartags\" \r\n";
+		body += "Content-Disposition: form-data; name=\"cartags\"\r\n";
         body += "Content-Type:text/plain\r\n\r\n";
         body += params.carTags + "\r\n"; 
         body += "--" + boundary + "\r\n";
 
-		body += "Content-Disposition: form-data; name=\"carcategory\" \r\n";
+		body += "Content-Disposition: form-data; name=\"carcategory\"\r\n";
         body += "Content-Type:text/plain\r\n\r\n";
         body += params.carCategory + "\r\n"; 
         body += "--" + boundary + "\r\n";
 
-		body += "Content-Disposition: form-data; name=\"colored\" \r\n";
+		body += "Content-Disposition: form-data; name=\"colored\"\r\n";
         body += "Content-Type:text/plain\r\n\r\n";
         body += params.carColor + "\r\n"; 
         body += "--" + boundary + "\r\n";
 
-		body += "Content-Disposition: form-data; name=\"tema\" \r\n";
+		body += "Content-Disposition: form-data; name=\"tema\"\r\n";
         body += "Content-Type:text/plain\r\n\r\n";
         body += params.carTema + "\r\n"; 
         body += "--" + boundary + "\r\n";
