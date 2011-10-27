@@ -218,66 +218,84 @@ $(document).ready(function(){
 
 //foreach 2
 
+                 var valid = true;
 
 
 			imgList.find('li').each(function() {
 	
 				var uploadItem = this;
-				var valid = true;
 				
 				if (checkEmptyFields(uploadItem, valid) == false) {
 					$('.errormsg').html('<div class="alertmsg" style="clear:both;">Ошибки на странице</div>');
 					valid = false;
 				    return false;
 				}
+                
+                
+                if (valid){
 
-				var pBar = $(uploadItem).find('.progress');
 
-				new uploaderObject({
-					file:       uploadItem.file,
-					
-					/*переменная ulr - адрес скрипта, который будет принимать фото со стороны сервера (в моём случае это значение action нашей формы)*/
-					
-					//url:        $(".regForm").attr('action'),
-					url:        "http://cartoonbank.ru/ales/upload/savefiles.php",
-					fieldName:  'my-pic',
-					carName:		$(uploadItem).find('#carname').val(),
-					carDescription:	$(uploadItem).find('#cardescription').val(),
-					carTags:		$(uploadItem).find('#cartags').val(),
-					carCategory:	$(uploadItem).find('.descriptr').find('input:checked').val(),
-					carColor:		$(uploadItem).find('.descript').find('.chbcolored:checked').val(),
-					carTema:		$(uploadItem).find('.descript').find('.chbtema:checked').val(),
-//$(uploadItem).find('#colored1')
-//<input id="colored1" type="checkbox" name="colored" checked="checked" class="chbcolored">
-//$(uploadItem).find('.descript').find('.chbcolored').val()
-//$(uploadItem).find('.descript').find('.chbcolored:checked').val()
-					onprogress: function(percents) {
-						updateProgress(pBar, percents);
-					},
-					
-					oncomplete: function(done, data) {
-						if(done) {
-							updateProgress(pBar, 100);
-							uploadedCount++;
-							if(uploadedCount == jQuery('#img-list li').length)
-							{
-								alldone = 1;
-								result = true;
-								$(".regForm").submit();
-							}
-						} else {
-	
-						}
-					}
-				});			
+
+
+                    var pBar = $(uploadItem).find('.progress');
+
+                    new uploaderObject({
+                        file:       uploadItem.file,
+
+                        /*переменная ulr - адрес скрипта, который будет принимать фото со стороны сервера (в моём случае это значение action нашей формы)*/
+
+                        //url:        $(".regForm").attr('action'),
+                        url:        "http://cartoonbank.ru/ales/upload/savefiles.php",
+                        fieldName:  'my-pic',
+                        carName:		$(uploadItem).find('#carname').val(),
+                        carDescription:	$(uploadItem).find('#cardescription').val(),
+                        carTags:		$(uploadItem).find('#cartags').val(),
+                        carCategory:	$(uploadItem).find('.descriptr').find('input:checked').val(),
+                        carColor:		$(uploadItem).find('.descript').find('.chbcolored:checked').val(),
+                        carTema:		$(uploadItem).find('.descript').find('.chbtema:checked').val(),
+                        //$(uploadItem).find('#colored1')
+                        //<input id="colored1" type="checkbox" name="colored" checked="checked" class="chbcolored">
+                        //$(uploadItem).find('.descript').find('.chbcolored').val()
+                        //$(uploadItem).find('.descript').find('.chbcolored:checked').val()
+                        onprogress: function(percents) {
+                            updateProgress(pBar, percents);
+                        },
+
+                        oncomplete: function(done, data) {
+                            if(done) {
+                                updateProgress(pBar, 100);
+                                uploadedCount++;
+                                if(uploadedCount == jQuery('#img-list li').length)
+                                    {
+                                    alldone = 1;
+                                    result = true;
+                                    $(".regForm").submit();
+                                }
+                            } else {
+
+                            }
+                        }
+                    });
+
+                }//if valid
+                
         	}
 
-///foreach2
 
+  
 
-
-			);
-		}
+			);//imgList.find('li').each
+		}//if(result == false)
+        
+///foreach2    
+/*
+                        if(uploadedCount == jQuery('#img-list li').length)
+                            {
+                                alldone = 1;
+                                result = true;
+                                $(".regForm").submit();
+                            }
+*/                            
 		return result;
     });
 
