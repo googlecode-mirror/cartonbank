@@ -17,15 +17,13 @@
 
 <div class="errormsg">*</div>
 		
-		<form action="index.php" class="regForm" method="POST" action="http://cartoonbank.ru/ales/upload/savefiles.php">
+<form action="index.php" class="regForm" method="POST" action="http://109.120.143.27/cb/ales/upload/savefiles.php">
 		
-				<input type="submit" value="Отправить на сервер">	
-
-					<input type="file" id="fileUpload0" multiple="true" size="60">
+		<input type="submit" value="Отправить на сервер">	
+			<input type="file" id="fileUpload0" multiple="true" size="60">
+		<input type="submit" value="Отправить на сервер">	
 				
-				<input type="submit" value="Отправить на сервер">	
-				
-		</form>
+</form>
 		
 
 
