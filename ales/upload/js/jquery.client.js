@@ -256,7 +256,7 @@ if (!valid){
                         /*переменная ulr - адрес скрипта, который будет принимать фото со стороны сервера (в моём случае это значение action нашей формы)*/
 
                         //url:        $(".regForm").attr('action'),
-                        url:        "http://cartoonbank.ru/ales/upload/savefiles.php",
+                        url:        "http://109.120.143.27/cb/ales/upload/savefiles.php",
                         fieldName:  'my-pic',
                         carName:		$(uploadItem).find('#carname').val(),
                         carDescription:	$(uploadItem).find('#cardescription').val(),
@@ -400,10 +400,12 @@ var uploaderObject = function(params) {
 		boundary += Math.floor(Math.random()*32768);
 		boundary += Math.floor(Math.random()*32768);
 		boundary += Math.floor(Math.random()*32768);
+        imageboundary = Math.floor(Math.random()*32768);
 
         self.xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary="+boundary);
+        //self.xhr.setRequestHeader("Content-Type", "multipart/mixed; boundary="+boundary);
         self.xhr.setRequestHeader("Cache-Control", "no-cache");
-
+         
 		var body = "--" + boundary + "\r\n";
 
 		body += "Content-Disposition: form-data; name=\"carname\"\r\n";
@@ -436,12 +438,23 @@ var uploaderObject = function(params) {
         body += params.carTema + "\r\n"; 
         body += "--" + boundary + "\r\n";
 
-		body += "Content-Disposition: form-data; name='"+(params.fieldName || 'file')+"'; filename='" + params.file.name + "'\r\n";
-        body += "Content-Type: application/octet-stream\r\n\r\n";
-        body += self.reader.result + "\r\n";
+        body += "Content-Disposition: form-data; name=\"submit_action\"\r\n";
+        body += "Content-Type:text/plain\r\n\r\n";
+        body += "add\r\n"; 
+        body += "--" + boundary + "\r\n";
+
+        body += "--" + imageboundary + "\r\n";
+		body += "Content-Disposition: file; name='"+(params.fieldName || 'file')+"'; filename='" + params.file.name + "'\r\n";
+        body += "Content-Type: application/octet-stream\r\n";
+        //body += "Content-Type: image/jpeg\r\n";
+        body += "Content-Transfer-Encoding: base64\r\n\r\n";
+        
+        body += self.reader.result.substr(self.reader.result.indexOf("base64,",0)+7) + "\r\n";
+        //body += self.reader.result + "\r\n";
+        
+        body += "--" + imageboundary + "--\r\n";
         body += "--" + boundary + "--";
 
-        
         if(self.xhr.sendAsBinary) {
             // firefox
             self.xhr.sendAsBinary(body);
@@ -449,10 +462,9 @@ var uploaderObject = function(params) {
             // chrome (W3C spec.)
             self.xhr.send(body);
         }
-
     };
-
-    self.reader.readAsBinaryString(params.file);
+    //self.reader.readAsBinaryString(params.file);
+    self.reader.readAsDataURL(params.file);
 };
 
 function checkEmptyFields(uploadItem, valid) {
