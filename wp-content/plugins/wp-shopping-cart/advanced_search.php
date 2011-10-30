@@ -97,7 +97,7 @@ function get_category_list()
 function get_last_search_terms()
 {
 	global $wpdb;
-	$sql = "SELECT distinct(term) FROM `search_terms` order by id desc limit 20";
+	$sql = "SELECT distinct(term) FROM `search_terms` WHERE `term` NOT LIKE ('%\%%') order by id desc limit 24";
 	$terms = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
 	$out = "";
 	foreach ($terms as $term)
