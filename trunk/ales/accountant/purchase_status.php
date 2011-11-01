@@ -1,5 +1,5 @@
 ﻿<?
-include("/home/www/cb/ales/config.php");
+include("/home/www/cb3/ales/config.php");
 global $imagepath;
 
 if(isset($_GET['sta']) && is_numeric($_GET['sta']) && isset($_GET['purch_id']) && is_numeric($_GET['purch_id']))
