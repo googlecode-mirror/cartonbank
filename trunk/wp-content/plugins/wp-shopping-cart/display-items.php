@@ -752,17 +752,12 @@ if(current_user_can('publish_posts'))
 else
     $visiblesql = " AND `wp_product_list`.`visible`='1' ";
 
-//$exclude_category_777 = " AND `wp_item_category_associations`.`category_id` != '777' ";
 $exclude_category_777 = " ";
 
 if(isset($_GET['catid']) && is_numeric($_GET['catid']))
   {
   // if we are getting items from only one category
-  //$sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
-
   $sql = "SELECT `wp_product_list`.*,`wp_product_list`.`category` AS `category_id` FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`category`='".$_GET['catid']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
-
-   //$category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_item_category_associations`.`category_id`='".$_GET['catid']."'",ARRAY_A);
 
    $category_count = $wpdb->get_results("SELECT COUNT(id) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`category`='".$_GET['catid']."'",ARRAY_A);
 
@@ -770,8 +765,6 @@ if(isset($_GET['catid']) && is_numeric($_GET['catid']))
    else if (isset($_GET['brand']) && is_numeric($_GET['brand']))
    {
         // if we are getting items from only one brand
-        //$sql = "SELECT `wp_product_list`.*,`wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_list`.`brand`='".$_GET['brand']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
-
 		$sql = "SELECT `wp_product_list`.*,`wp_product_list`.`category` AS `category_id` FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`brand`='".$_GET['brand']."' order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
 
         $category_count = $wpdb->get_results("SELECT COUNT(id) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql." AND `wp_product_list`.`brand`='".$_GET['brand']."'",ARRAY_A);
@@ -779,11 +772,7 @@ if(isset($_GET['catid']) && is_numeric($_GET['catid']))
   else
     {
     // if not, get everything that is not deleted (denoted by the active column, 1 = present, 0 = deleted, no real deletion because that would screw up the product log)
-    //$sql = "SELECT `wp_product_list`.*, `wp_item_category_associations`.`category_id` AS `category_id` FROM `wp_product_list`, `wp_item_category_associations`  WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
-
 	$sql = "SELECT `wp_product_list`.*, `wp_product_list`.`category` AS `category_id` FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.$exclude_category_777." order by wp_product_list.id DESC LIMIT ".$offset.",".$items_on_page;
-
-    //$category_count = $wpdb->get_results("SELECT COUNT(*) as count FROM `wp_product_list`,`wp_item_category_associations` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql." AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`;",ARRAY_A);
 
 	$category_count = $wpdb->get_results("SELECT COUNT(id) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' ".$visiblesql.$author_group_sql.";",ARRAY_A);
 
@@ -868,90 +857,120 @@ echo "    <table id='productpage'>\n\r";
 echo "      <tr><td valign='top'>\n\r";
 
 // left table (item list)
-echo "        <table id='itemlist' style='padding:2px;width:120px;background-color:#dfdfdf;'>\n\r";
+echo "        <table id='itemlist' style='width:120px;background-color:#dfdfdf;'>\n\r";
     echo "          <tr style='background-color:#dfdfdf;'>\n\r";
     // selection message:
-    echo "            <td colspan='6' style='padding:4px;text-align:center;'>\n\r";
+    echo "            <td colspan='6' style='padding:4px; text-align:center;'>\n\r";
     $from_num = $offset+1;
     $to_num = $from_num + $items_on_page;
     if($to_num>$items_count){$to_num=$items_count;}
     if($items_count>0)
     {
-		$diapazon = "<br />(показаны <strong>".$from_num."-".$to_num."</strong> из <strong>".$items_count."</strong>)";
+		$diapazon = " (".$from_num."-".$to_num." из ".$items_count.")";
     }
 	else{$diapazon = "<br />нет картинок для показа или у вас нет полномочий для просмотра";}
-    echo "<strong class='form_group' style='font-size:10px;'>Выбрать работу</strong>".$diapazon;
+    echo "Показаны работы $diapazon";
     echo $output; 
-    echo "            </td>\n\r";
-    echo "          </tr>\n\r";
-    echo "          <tr class='firstrow'>\n\r";
+    echo "</td>\n\r";
+    echo "</tr>\n\r";
+    echo "<tr class='firstrow'>\n\r";
 
-    echo "            <td style='width:20px'>\n\r";
+    echo "<td style='width:20px'>";
     echo "#";
-    echo "            </td>\n\r";
+    echo "</td>\n\r";
 
-    echo "            <td>\n\r";
+    echo "<td>\n\r";
 
-    echo "            </td>\n\r";
+    echo "Редактир.</td>\n\r";
 
-    echo "            <td>\n\r";
+    echo "<td>";
     echo "Имя";
-    echo "            </td>\n\r";
+    echo "</td>\n\r";
 
-    echo "            <td>\n\r";
+    echo "<td>";
 	echo "Ред.";
-    echo "            </td>\n\r";
+    echo "</td>\n\r";
 
-    echo "            <td>\n\r";
-    echo "            </td>\n\r";
-
-    echo "          </tr>\n\r";
+    echo "</tr>\n\r";
+    
+    ?>
+    <style>
+    .td_category20{
+        text-align:center; 
+        line-height:1em;
+        background-color:#FFFFFF; 
+        padding:2px;
+    }
+    </style>
+    <?
+    
+    
     if($product_list != null)
-      {
-      foreach($product_list as $product)
         {
-        echo "          <tr>\n\r";
-
-        echo "            <td style='width:20px; text-align:center; background-color:#FFFFFF; padding:2px;'>\n\r";
-        echo $num+$offset;
-        echo "            </td>\n\r";
-
-        echo "            <td style='text-align:center; background-color:#FFFFFF;width:70px;padding:2px;'>\n\r";
-        //$basepath = str_replace("/wp-admin", "" , getcwd());  this defined at the top of the page
-
-        $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
-        if(file_exists($imagedir.$product['image']))
-          {
-          echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'><img src='../wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='70' height='70' /></a>";
-          }
-          else
+            foreach($product_list as $product)
             {
-                        echo "<br /><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='70' height='70'  /><br />";
-              }
-        echo "            </td>\n\r";
-        
-        echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px;'>\n\r";
-		echo "№ ".$product['id']."<br />";
-        echo "<b>".stripslashes($product['name'])."</b><br />[".$category_data[$product['category_id']]."]";
-        echo "            </td>\n\r";
-        echo "            <td style='font-size:10px;background-color:#FFFFFF;padding:2px; text-align:center;'>\n\r";
-        echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'><img src='../img/edit.jpg' title='редактировать'></a>";
-  if (isset($current_user->wp_capabilities['administrator']) &&	$current_user->wp_capabilities['administrator']==1) 
-	  {
-		echo "<br /><br /><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'><img src='../img/trash.gif' title='удалить'></a>";
-	  }
-  else {
-		echo "";
-	   }
-        echo "            </td>\n\r";
 
-        echo "            <td style='font-size:10px;'>\n\r";
-        echo "            </td>\n\r";
-        
-        echo "          </tr>\n\r";
-        $num ++;
+                if ($product['category_id']=='666')
+                {
+                    // рабочий стол
+                    $classstyle = " style='background-color:#C9FCED;'";
+                }
+                elseif ($product['category_id']=='4')
+                {
+                    // карикатура
+                    $classstyle = " style='background-color:#80D6F7;'";
+                }
+                elseif ($product['category_id']=='5')
+                {
+                    // cartoon
+                    $classstyle = " style='background-color:#F3C1A3;'";
+                }
+                elseif ($product['category_id']=='11')
+                {
+                    // разное
+                    $classstyle = " style='background-color:#FFC4E1;'";
+                }
+                else
+                {
+                    $classstyle = '';
+                }
+
+                echo "<tr>\n\r";
+                echo "<td class='td_category20'>";
+                echo $num+$offset;
+                echo "</td>\n\r";
+
+                echo "<td class='td_category20'$classstyle>";
+                $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
+                if(file_exists($imagedir.$product['image']))
+                {
+                    echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'><img src='../wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='70' height='70' /></a>";
+                }
+                else
+                {
+                    echo "<br /><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' width='70' height='70' /><br />";
+                }
+                echo "</td>\n\r";
+
+                echo "<td class='td_category20'$classstyle>";
+                echo "№ ".$product['id']."<br />";
+                echo "<b>".stripslashes($product['name'])."</b><br />[".$category_data[$product['category_id']]."]";
+                echo "</td>\n\r";
+                echo "            <td class='td_category20'>\n\r";
+                echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'><img src='../img/edit.jpg' title='редактировать'></a>";
+                if (isset($current_user->wp_capabilities['administrator']) &&	$current_user->wp_capabilities['administrator']==1) 
+                {
+                    echo "<br /><br /><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'><img src='../img/trash.gif' title='удалить'></a>";
+                }
+                else {
+                    echo "";
+                }
+                echo "            </td>\n\r";
+
+                echo "          </tr>\n\r";
+                $num ++;
+            }
         }
-      }
 echo "        </table>\n\r";
 echo "      </td><td class='secondcol' valign='top' style='padding:4px;background-color:#FFFF99'>\n\r";
 ?>
