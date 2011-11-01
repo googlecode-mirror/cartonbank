@@ -2,8 +2,8 @@
 Праздники, события, темы дня, достойные внимания СМИ.
 
 <?php 
-if ( current_user_can('manage_options') )
-{
+//if ( current_user_can('manage_options') )
+//{
 ?>
 <div id="add_event" style="margin-bottom:12px;">
 <table style="border:1px silver solid;padding:4px;width:100%;"><tr><td valign="top" width="400" style="padding-left:10px;">
@@ -15,7 +15,7 @@ if ( current_user_can('manage_options') )
 </td></table>
 </div>
 <?
-}
+//}
 ?>
 
 <iframe src="https://www.google.com/calendar/b/0/embed?showTitle=0&amp;showPrint=0&amp;height=600&amp;wkst=2&amp;hl=ru&amp;bgcolor=%23ffffff&amp;src=9ats0457qmvp1mv5kecdut2uhs%40group.calendar.google.com&amp;color=%23182C57&amp;src=ru.russian%23holiday%40group.v.calendar.google.com&amp;color=%23856508&amp;ctz=Europe%2FMoscow" style=" border-width:0 " width="750" height="800" frameborder="0" scrolling="no"></iframe>
