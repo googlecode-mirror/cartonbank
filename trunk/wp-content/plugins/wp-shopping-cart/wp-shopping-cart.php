@@ -813,12 +813,12 @@ function nzshpcrt_submit_ajax()
 
   $product = $product_data[0];
   
-  $output = "        <table>\n\r";
-  $output .= "          <tr>\n\r";
-  $output .= "            <td class='r'>\n\r";
+  $output = "<table>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td class='r'>";
   $output .= "Автор: ";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "<td>\n\r";
   $output .= brandslist($product['brand']);
 
   $approved = 0;
@@ -849,54 +849,54 @@ function nzshpcrt_submit_ajax()
 		$output .= "<div style='color:#FF6600'>Картинка находится в <b>прихожей банка</b> в ожидании приёма</div>";
 	  }
   
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
   
-  $output .= "          <tr>\n\r";
-  $output .= "            <td class='r'>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td class='r'>";
   $output .= "Название рисунка: ";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "<td>";
   $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' /> # <a href='".get_option('siteurl')."/?page_id=29&cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
   
-  $output .= "          <tr>\n\r";
-  $output .= "            <td class='r'>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td class='r'>";
   $output .= "Краткое описание: ";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "<td>";
   $output .= "<textarea id='productdescredit' name='description' cols='45' rows='3' >".stripslashes($product['description'])."</textarea>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
   
-  $output .= "          <tr>\n\r";
-  $output .= "            <td class='r'>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td class='r'>";
   $output .= "Ключевые слова,<br />разделённые запятыми:<br>";
 
   $output .= "<a href='".get_option('siteurl')."/ales/wordassociations/words.php?id=".$product['id']."' target=_blank>добавить<br>ассоциаций</a>";
 
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "<td>";
   $output .= "<textarea id='tagsedit' name='additional_description' cols='45' rows='4' >".stripslashes($product['additional_description'])."</textarea>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
 
   $visible = "";
   if ($product['visible'] == '1')
     $visible = " checked='checked'";
  
-  $output .= "          <tr>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "</tr>\n\r";
 
-  $output .= "          <tr>\n\r";
-  $output .= "            <td class='r'>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td class='r'>";
   $output .= "Видно всем:";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "<td>";
   $output .= "<input type='checkbox' name='visible'".$visible."/> <span style='color:#999;'>Если выключить — не будет видно покупателям</span>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
 
   $colored = "";
   if ($product['color'] == '1')
@@ -930,28 +930,28 @@ function nzshpcrt_submit_ajax()
   if ($product['l3_price'] != '0')
     $license3checked = " checked='checked' ";
 
-  $output .= "          <tr>\n\r";
-  $output .= "            <td class='ralt'>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td class='ralt'>";
   $output .= "Цветной рисунок:";
-  $output .= "            </td>\n\r";
-  $output .= "            <td style='background-color:#FFFF33;'>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "<td style='background-color:#FFFF33;'>";
   $output .= "<input type='checkbox' name='colored'".$colored."/> <span style='color:#999;'>Отключите для ч/б рисунков</span>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
 
 
-  $output .= "          <tr>\n\r";
-  $output .= "            <td class='r'>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td class='r'>";
   $output .= "Не для продажи:";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "<td>\n\r";
   $output .= "<input type='checkbox' name='not_for_sale'".$not_for_sale."/> <span style='color:#999;'>Не продаётся, если включено</span>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
 
 
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td>";
 
     $basepath =  str_replace("/wp-admin", "" , getcwd());
     if(file_exists($basepath."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']))
@@ -970,8 +970,8 @@ function nzshpcrt_submit_ajax()
     $output .= "<a href='".$m_image_link."' target=_blank><img id='previewimage' src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/$icon_location' alt='".TXT_WPSC_PREVIEW."' title='".TXT_WPSC_PREVIEW."' /></a>";
 
   
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "<td>\n\r";
 
 if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
 	{
@@ -982,35 +982,35 @@ else
 		$output .= "После утверждения рисунка модераторами Категория может быть изменена администратором";
 		$output .= "<div  style='display:none;'>".categorylist($product['id'])."</div>";
 	}
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
 
-  $output .= "          <tr>\n\r";
-  $output .= "            <td class='ralt'>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td class='ralt'>";
   $output .= "Тема дня:";
-  $output .= "            </td>\n\r";
-  $output .= "            <td class='lalt'>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "<td class='lalt'>";
   $output .= "<input type='checkbox' name='temadnya'".$temadnya."/> <span style='color:#999;'>считаю актуальной темой</span>";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
 	
-  $output .= "          <tr>\n\r";
-  $output .= "            <td class='r'>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td class='r'>";
   $output .= "Доступны лицензии:";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "<td>\n\r";
   $output .= "&nbsp;&nbsp;&nbsp;Огр:&nbsp;<input id='license1' type='checkbox' name='license1'".$license1checked.">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type='checkbox' name='license2'".$license2checked.">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type='checkbox' name='license3'".$license3checked."><br />";
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
 	
 
-  $output .= "          <tr>\n\r";
-  $output .= "            <td colspan='2'>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td colspan='2'>";
   $output .= "<a  href='admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$product['id']."' ><img src='".get_option('siteurl')."/img/reload.gif' title='Обновить иконку и слайд с водяными знаками'></a>";
    $output .= "&nbsp;<a href='index.php?admin_preview=true&product_id=".$product['id']."' style='float: left;' ><img src='../wp-content/plugins/wp-shopping-cart/images/download.gif' title='Скачать оригинальный файл' /></a>";
   
-  $output .= "            </td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
 
   // download original image  
   if($product['file'] > 0)
@@ -1024,23 +1024,23 @@ else
         }
       }
         
-    $output .= "            </td>\n\r";
-    $output .= "          </tr>\n\r";
+    $output .= "</td>\n\r";
+    $output .= "</tr>\n\r";
   
               
-    $output .= "          <tr>\n\r";
-    $output .= "            <td class='r'>\n\r";
+    $output .= "<tr>\n\r";
+    $output .= "<td class='r'>";
     $output .= "Заменить файл:";
-    $output .= "            </td>\n\r";
-    $output .= "            <td>\n\r";
+    $output .= "</td>\n\r";
+    $output .= "<td>\n\r";
     $output .= "<input type='file' name='file' value='' /> <div style='color:#999;'>Это тот файл, ссылка на который<br />будет отправлена заказчику</div>";
-    $output .= "            </td>\n\r";
-    $output .= "          </tr>\n\r";
+    $output .= "</td>\n\r";
+    $output .= "</tr>\n\r";
     }
-  $output .= "          <tr>\n\r";
-  $output .= "            <td>\n\r";
-  $output .= "            </td>\n\r";
-  $output .= "            <td>\n\r";
+  $output .= "<tr>\n\r";
+  $output .= "<td>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "<td>\n\r";
   $output .= "<input type='hidden' name='prodid' value='".$product['id']."' />";
   $output .= "<input type='hidden' name='submit_action' value='edit' />";
   $output .= "<br /><input type=\"button\" class='edit_button' style='padding:6px; background-color:#84DF88;' name='sendit' value='Сохранить изменения' onclick=\"checkthefieldsEditForm();\"/>";
@@ -1056,10 +1056,10 @@ if ($product['approved'] == '1' && isset($current_user->wp_capabilities['adminis
 	}
 
   
-  $output .= "            <td>\n\r";
-  $output .= "          </tr>\n\r";
+  $output .= "</td>\n\r";
+  $output .= "</tr>\n\r";
   
-  $output .= "        </table>\n\r";
+  $output .= "</table>\n\r";
   
   // TODO: Remove before upload to the server! temp! local debug only!
   if ($_SERVER['SERVER_NAME']=='localhost')
