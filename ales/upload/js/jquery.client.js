@@ -1,5 +1,12 @@
 $(document).ready(function(){
+    
+    
+    var $taglist = $('.tag_suggestions');
+     $taglist.click(function() {
+     alert("Hello world!");
+    });
 
+    
 
 	// Стандарный input для файлов
 	var fileInput = $('#fileUpload0'); 
@@ -104,7 +111,7 @@ $(document).ready(function(){
 
 				var img = $('<img/>').appendTo(imgcont);
 
-	var descript = $('<div class="descript">    <div><label class="lbl" for="carname">название</label><input type="text" id="carname" name="carname" value="название '+Math.random()+'" class="iname" /></div><div><label class="lbl" for="cardescription">описание</label><textarea rows="3" id="cardescription" name="cardescription" class="idescription">описание '+Math.random()+' </textarea></div><div><label class="lbl" for="cartags">ключевые слова</label><textarea rows="4" id="cartags" name="cartags" class="itags">тэги '+Math.random()+'</textarea></div>           <div>   <input id="colored'+num+'" type="checkbox" name="colored" checked="checked" class="chbcolored"/><label for="colored'+num+'" class="coloredchb">цветной</label>   <input id="tema'+num+'" type="checkbox" name="tema" class="chbtema"/><label for="tema'+num+'" class="temachb">тема дня</label>      </div>                </div> <div class="descriptr"> <input type="radio" id="category4'+num+'" name="category'+num+'" value="4"><label for="category4'+num+'">Карикатура</label><br><input type="radio" id="category5'+num+'" name="category'+num+'" value="5" checked="checked"><label for="category5'+num+'">Cartoon</label><br><input type="radio" id="category6'+num+'" name="category'+num+'" value="6"><label for="category6'+num+'">Artoon</label><br><input type="radio" id="category11'+num+'" name="category'+num+'" value="11"><label for="category11'+num+'">Разное</label><br><input type="radio" id="category13'+num+'" name="category'+num+'" value="13"><label for="category13'+num+'">Коллаж</label><br><input type="radio" id="category14'+num+'" name="category'+num+'" value="14"><label for="category14'+num+'">Шарж</label><br><input type="radio" id="category15'+num+'" name="category'+num+'" value="15"><label for="category15'+num+'">Стрип</label><br><input type="radio" id="category666'+num+'" name="category'+num+'" value="666"><label for="category666'+num+'">Рабочий стол</label></div>').appendTo(li);
+	var descript = $('<div class="descript">    <div><label class="lbl" for="carname">название</label><input type="text" id="carname" name="carname" class="iname" /></div><div><label class="lbl" for="cardescription">описание</label><textarea rows="3" id="cardescription" name="cardescription" class="idescription"></textarea></div><div><label class="lbl" for="cartags">ключевые слова<br><a href="http://109.120.143.27/cb/ales/wordassociations/words.php?id=13823" target="_blank">Добавить</a></label><textarea rows="4" id="cartags" name="cartags" class="itags"></textarea></div>       <div class="tag_suggestions" style="background-color:silver;padding:4px;" onclick="getTagsSuggestions();">check xmlhttp</div>           <div>   <input id="colored'+num+'" type="checkbox" name="colored" checked="checked" class="chbcolored"/><label for="colored'+num+'" class="coloredchb">цветной</label>   <input id="tema'+num+'" type="checkbox" name="tema" class="chbtema"/><label for="tema'+num+'" class="temachb">тема дня</label>      </div>                </div> <div class="descriptr"> <input type="radio" id="category4'+num+'" name="category'+num+'" value="4"><label for="category4'+num+'">Карикатура</label><br><input type="radio" id="category5'+num+'" name="category'+num+'" value="5" checked="checked"><label for="category5'+num+'">Cartoon</label><br><input type="radio" id="category6'+num+'" name="category'+num+'" value="6"><label for="category6'+num+'">Artoon</label><br><input type="radio" id="category11'+num+'" name="category'+num+'" value="11"><label for="category11'+num+'">Разное</label><br><input type="radio" id="category13'+num+'" name="category'+num+'" value="13"><label for="category13'+num+'">Коллаж</label><br><input type="radio" id="category14'+num+'" name="category'+num+'" value="14"><label for="category14'+num+'">Шарж</label><br><input type="radio" id="category15'+num+'" name="category'+num+'" value="15"><label for="category15'+num+'">Стрип</label><br><input type="radio" id="category666'+num+'" name="category'+num+'" value="666"><label for="category666'+num+'">Рабочий стол</label></div>').appendTo(li);
 
 				$('<div/>').addClass('progress').attr('rel', '0').text('0%').appendTo(imgcont);
 				$('<div/>').addClass('clearall').appendTo(li);
@@ -178,7 +185,9 @@ $(document).ready(function(){
     
     ////////////////////////////////////////////////////////////////////////////
 
-
+$(".tag_suggestions").click(function() {
+    alert('tada');
+});
 
 
     // Обаботка события нажатия на кнопку "Загрузить". Проходим по всем миниатюрам из списка,
@@ -491,3 +500,27 @@ function checkEmptyFields(uploadItem, valid) {
 
 	return valid;	
 }
+
+function getTagsSuggestions(downloadUrl) {
+    jQuery('.result').load('http://xml.wordassociations.ru/search?user=cartoonbank&query=заря');
+    jQuery.get('http://xml.wordassociations.ru/search?user=cartoonbank&query=%D0%B7%D0%B0%D1%80%D1%8F+%D0%B2%D0%BE%D1%81%D1%85%D0%BE%D0%B4+%D1%83%D1%82%D1%80%D0%BE',
+       function(data){
+         $('.result').html(data);
+         alert("Data Loaded: " + data);
+       });
+ }
+
+/*
+
+$.get('ajax/test.html', function(data) {
+  $('.result').html(data);
+  alert('Load was performed.');
+});
+
+function getTagsSuggestions(downloadUrl) {
+    //$.get("http://xml.wordassociations.ru/search", { user: "cartoonbank", query: "%D0%B7%D0%B0%D1%80%D1%8F+%D0%B2%D0%BE%D1%81%D1%85%D0%BE%D0%B4+%D1%83%D1%82%D1%80%D0%BE" },
+       function(data){
+         alert("Data Loaded: " + data);
+       });
+}
+*/

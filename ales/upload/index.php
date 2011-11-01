@@ -16,6 +16,7 @@
 <body>
 
 <div class="errormsg">*</div>
+<div class="result"> empty result </div>
 		
 <form action="index.php" class="regForm" method="POST" action="http://109.120.143.27/cb/ales/upload/savefiles.php">
 		

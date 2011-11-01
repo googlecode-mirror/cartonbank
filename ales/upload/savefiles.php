@@ -1,16 +1,20 @@
 ﻿<?php 
 
-require ('/home/www/cb3/wp-includes/functions.php');
-
-echo "please, upload files";
+include ('/home/www/cb3/wp-includes/functions.php');
+//include ('/home/www/cb3/wp-includes/load.php');                 
+//include ('/home/www/cb3/wp-includes/wp-db.php');                 
+    include("/home/www/cb/ales/config.php"); //todo
+    $link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
+    mysql_set_charset('utf8',$link);
 
     //savefiles
     if (isset($_FILES) && isset($_POST)){
         
         foreach ($_FILES as $key => $_file) { 
-            foreach ($_file as $vkey => $vvalue) { 
-                savefiles($_file);
-            }
+            //foreach ($_file as $vkey => $vvalue) { 
+                $fileid = savefiles($_file);
+                //fill_product_list($fileid);
+            //}
         }
     }
 
@@ -65,7 +69,6 @@ function fw1($text)
 }
 
 function savefiles($_file){
-    global $wpdb;
     // add product
     if(isset($_POST['submit_action']) && $_POST['submit_action'] == 'add') {
 
@@ -106,8 +109,7 @@ function savefiles($_file){
                 
                 
                 chmod($product_images.$_FILES['my-pic']['name'], 0666);
-                //chmod($imagedir.$_FILES['my-pic']['name'], 0666);
-
+                
                 $imgsize = getimagesize($product_images.$_FILES['my-pic']['name']);
 
                 $file_w = $imgsize[0];
@@ -122,7 +124,7 @@ function savefiles($_file){
                 $resample_quality = 100; //image quality
 
                 ales_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality);    
-                $wm = $basepath."/wp-content/plugins/wp-shopping-cart/images/watermark.png";
+                $wm = $basepath."/img/watermark.png";
                 wtrmark($thatdir.$file,$wm);
 
                 // ales here we replace thumbs to that from LG 
@@ -131,20 +133,26 @@ function savefiles($_file){
                 $thatdir = $imagedir; //destination dir
 
                 al_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality);      
-                $image = $wpdb->escape($_FILES['my-pic']['name']);
+                $image = $_FILES['my-pic']['name'];
 
                 /// ales 
             }
             else {
                 move_uploaded_file($_FILES['my-pic']['tmp_name'], ($imagedir.$_FILES['my-pic']['name']));
-                $image = $wpdb->escape($_FILES['my-pic']['name']);
+                $image = $_FILES['my-pic']['name'];
             }
             ///ales
 
             $timestamp = time();
-            $wpdb->query("INSERT INTO `wp_product_files` ( `id` , `filename`  , `mimetype` , `idhash` , `date` , `width`, `height`) VALUES ( '' , '', '', '', '$timestamp', '', '');");
-            $fileid_raw = $wpdb->get_results("SELECT `id` FROM `wp_product_files` WHERE `date` = '$timestamp'",ARRAY_A);
-            $fileid = $fileid_raw[0]['id'];
+            
+            $insert_sql = "INSERT INTO `wp_product_files` ( `id` , `filename`  , `mimetype` , `idhash` , `date` , `width`, `height`) VALUES ( '' , '', '', '', '$timestamp', '', '');";
+            if (!($result = mysql_query($insert_sql))) {die('Invalid query: ' . mysql_error());}
+            
+            $sql = "SELECT `id` FROM `wp_product_files` WHERE `date` = '$timestamp'";
+            if (!($result = mysql_query($sql))) {die('Invalid query: ' . mysql_error());}
+            $fileid = mysql_fetch_row($result);
+            
+            $fileid = $fileid[0];
             $idhash = sha1($fileid);
             $mimetype = $_FILES['my-pic']['type'];
             $splitname = explode(".",$_FILES['my-pic']['name']);
@@ -153,12 +161,73 @@ function savefiles($_file){
 
             if(move_uploaded_file($_FILES['my-pic']['tmp_name'],($filedir.$idhash)))
             {
-                $wpdb->query("UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `idhash` = '$idhash', `width` = '$file_w', `height` = '$file_h' WHERE `id` = '$fileid' LIMIT 1");
+                $update_sql = "UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `idhash` = '$idhash', `width` = '$file_w', `height` = '$file_h' WHERE `id` = '$fileid' LIMIT 1;";
+                if (!($result = mysql_query($update_sql))) {die('Invalid query: ' . mysql_error());}
+
+                //$wpdb->query("UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `idhash` = '$idhash', `width` = '$file_w', `height` = '$file_h' WHERE `id` = '$fileid' LIMIT 1");
             }
             $file = $fileid;
         }    
     }
+    
+    // add line to productlist table:
+    $l1_price = 250;
+    $l2_price = 500;
+    $l3_price = 2500;
+    $not_for_sale = 0;
+    $display_frontpage = 1;
+    $visible = 1;
+    $user_brand = 8; //todo
+    $image = $filename;
 
+        if (isset($_POST['colored']) && $_POST['colored']=='on'){
+            $colored = 1;
+        }
+        else {
+            $colored = 0;
+        }
+
+        if (isset($_POST['carcategory']) && is_numeric($_POST['carcategory'])){
+            $category_id = $_POST['carcategory'];
+        }
+        else {
+            $category_id = 5;//cartoon
+        }
+
+        if (isset($_POST['tema']) && $_POST['tema']=='undefined'){
+            $temadnya = 0;
+        }
+        else {
+            $temadnya = 1;
+        }
+    
+     
+    if (isset($_POST['brand']) && is_numeric($_POST['brand']))
+    {$_brand = mysql_real_escape_string($_POST['brand']);}
+    else {$_brand = trim($user_brand);}
+
+    $insertsql = "INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_description`, `file` , `image` , `category`, `brand`, `display_frontpage`, `visible`, `approved`, `color`, `not_for_sale`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".removeCrLf(htmlspecialchars($_POST['carname']))."', '".removeCrLf(htmlspecialchars($_POST['cardescription']))."', '".correct_comma(removeCrLf(htmlspecialchars($_POST['cartags'])))."','".$fileid."', '".$image."', '".$category_id."', '".$_brand."', '$display_frontpage', '$visible', NULL, '$colored', '$not_for_sale', $l1_price, $l2_price, $l3_price);";
+    
+    if (!($result = mysql_query($insertsql))) {die('Invalid query: ' . mysql_error());}
+    $new_id = mysql_insert_id();
+
+    // add to purgatory
+    $sql_purgery = "insert into al_editors_votes (image_id, up, down) values ('".$new_id."','0','0')";
+    
+    if (!($result = mysql_query($sql_purgery))) {die('Invalid query: ' . mysql_error());}    
+    
+    // insert temadnya
+    if ($temadnya == '1') // insert category 777
+    {
+        $sql_temadnya = "insert into `wp_item_category_associations` (product_id, category_id) values ('".$new_id."','777')";
+        if (!($result = mysql_query($sql_temadnya))) {die('Invalid query: ' . mysql_error());}    
+    }    
+
+    
+    
+    
+    
+    return $fileid;
 }
 
 
@@ -260,7 +329,7 @@ function ales_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file
  }
  
 
-function wtrmark($sourcefile, $watermarkfile, $text) {
+function wtrmark($sourcefile, $watermarkfile) {
 
         $logopath = "/home/www/cb3/img/cb-logo-300.png";
         $logofile_id = imagecreatefrompng($logopath);
@@ -357,4 +426,149 @@ function wtrmark($sourcefile, $watermarkfile, $text) {
        imagedestroy($logofile_id);
 }
 
+
+function al_create_cropped_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality = '100') {
+    
+    $img_location = $thatdir.$file;
+
+    // Getting width ([0]) and height ([1]) maybe add options
+    $size_bits = getimagesize($img_location);
+
+    // Creating a resource image
+    $path = pathinfo($img_location);
+
+    switch(strtolower($path["extension"])){
+        case "jpeg":
+        case "jpg":
+            $img = imagecreatefromjpeg($img_location);
+            break;
+        case "gif":
+            $img = imagecreatefromgif($img_location);
+            break;
+        case "png":
+            $img = imagecreatefrompng($img_location);
+            break;
+        default:
+            break;
+    }
+
+    if($size_bits[0] > $chwidth || $size_bits[1] > $chheight) {
+
+        // Resize the image
+        $resized = imagecreatetruecolor($chwidth, $chheight);
+
+        $o_width = $size_bits[0];
+        $o_height = $size_bits[1];
+
+        // if the image is more wide than high
+        if($o_width > $o_height) {
+            // landscape image
+            $out_width = $o_height;
+            $out_height = $o_height;
+            $cutoff = round(($o_width - $o_height) / 2);
+
+            $out_left = $cutoff;
+            $out_top = 0;
+        } else {
+            $cutoff = round(($o_height - $o_width) / 2);
+
+            $out_width = $o_width;
+            $out_height = $o_width;
+
+            $out_left = 0;
+            $out_top = $cutoff;
+        }
+
+        // Resampling the image
+
+    imagecopyresampled ($resized, $img, 0, 0, $out_left, $out_top, $chwidth, $chheight, $out_width, $out_height);
+
+        if (is_writable($thatdir.$ifolder)){
+            switch(strtolower($path["extension"])){
+                case "jpeg":
+                case "jpg":
+                    imagejpeg($resized, $thatdir.$ifolder.'/'.$file, $resample_quality);
+                    break;
+                case "gif":
+                    imagegif($resized, $thatdir.$ifolder.'/'.$file);
+                    break;
+                case "png":
+                    imagepng($resized, $thatdir.$ifolder.'/'.$file);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            echo "<div class='error'><b>WARNING:</b> Unable to create $ifolder inside $thatdir. <br />";
+            echo "Check your permissions.</div><br />";
+        }
+
+        imagedestroy($resized);
+    } else {
+        switch(strtolower($path["extension"])){
+            case "jpeg":
+            case "jpg":
+                imagejpeg($img, $thatdir.$ifolder.'/'.$file, $resample_quality);
+                break;
+            case "gif":
+                imagegif($img, $thatdir.$ifolder.'/'.$file);
+                break;
+            case "png":
+                imagepng($img, $thatdir.$ifolder.'/'.$file);
+                break;
+            default:
+                break;
+        }
+    }
+ }
+ 
+ 
+ 
+ function fill_product_list ($fileid) {
+
+    $l1_price = 250;
+    $l2_price = 500;
+    $l3_price = 2500;
+    $not_for_sale = 0;
+    $display_frontpage = 1;
+    $visible = 1;
+    $user_brand = 8; //todo
+    $image = '';
+
+        if (isset($_POST['colored']) && $_POST['colored']=='on'){
+            $colored = 1;
+        }
+        else {
+            $colored=0;
+        }
+
+        if (isset($_POST['carcategory']) && is_numeric($_POST['carcategory'])){
+            $category_id = $_POST['carcategory'];
+        }
+        else {
+            $category_id=5;//cartoon
+        }
+
+    
+     
+    if (isset($_POST['brand']) && is_numeric($_POST['brand']))
+    {$_brand = mysql_real_escape_string($_POST['brand']);}
+    else {$_brand = trim($user_brand);}
+
+    $insertsql = "INSERT INTO `wp_product_list` ( `id`, `name`, `description`, `additional_description`, `file` , `image` , `category`, `brand`, `display_frontpage`, `visible`, `approved`, `color`, `not_for_sale`, `l1_price`, `l2_price`, `l3_price`) VALUES ('', '".removeCrLf(htmlspecialchars($_POST['carname']))."', '".removeCrLf(htmlspecialchars($_POST['cardescription']))."', '".correct_comma(removeCrLf(htmlspecialchars($_POST['cartags'])))."','".$fileid."', '".$image."', '".$category_id."', '".$_brand."', '$display_frontpage', '$visible', NULL, '$colored', '$not_for_sale', $l1_price, $l2_price, $l3_price);";
+    
+    if (!($result = mysql_query($insertsql))) {die('Invalid query: ' . mysql_error());}
+    $new_id = mysql_insert_id();
+
+    $sql_purgery = "insert into al_editors_votes (image_id, up, down) values ('".$new_id."','0','0')";
+    
+    if (!($result = mysql_query($sql_purgery))) {die('Invalid query: ' . mysql_error());}
+ }
+ 
+ function correct_comma($string)
+{
+    $string = str_replace(",", ", " , $string); 
+    $string = str_replace(",  ", ", " , $string); 
+    return $string;
+}
 ?>
