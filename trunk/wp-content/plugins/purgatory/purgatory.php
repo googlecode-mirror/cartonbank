@@ -8,11 +8,12 @@ exit;
 
 <?
 include("config.php");
+$_SITEURL = get_option('siteurl');
 ?>
 	
 <b>Минимальный балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса. Чёрная метка блокирует появление картинки в хранилище до выяснения обстоятельств.
 
-<b><a href="http://cartoonbank.ru/?page_id=1148" target="_blank">Меморандум редактора</a></b> <-подробнее <br />
+<b><a href="<?= $_SITEURL; ?>/?page_id=1148" target="_blank">Меморандум редактора</a></b> <-подробнее <br />
 Коллеги, мы не <i>оцениваем</i> тут работы. Мы просто <i>отсекаем</i> мусор. Не пускаем а) антиконституционное б) антиинтеллектуальное.
 
 <?
@@ -23,12 +24,12 @@ $result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U
 		$_comment = nl2br(stripslashes($r['comment_content']));
 		$_author = $r['author'];
 		$_id = $r['comment_id'];
-		$comments_output .= "<div style='margin-top:4px;'><span class='gr' title='".$_date."'>".$_author.":&nbsp; </span><span class='c_body'>".$_comment."</span> [<a title='стереть комментарий' href='http://cartoonbank.ru/wp-content/plugins/purgatory/delete_comment.php?id=".$_id."'>x</a>]</div>";
+		$comments_output .= "<div style='margin-top:4px;'><span class='gr' title='".$_date."'>".$_author.":&nbsp; </span><span class='c_body'>".$_comment."</span> [<a title='стереть комментарий' href='<?= $_SITEURL; ?>/wp-content/plugins/purgatory/delete_comment.php?id=".$_id."'>x</a>]</div>";
 	}
 ?>
 
-<script type="text/javascript" src="http://cartoonbank.ru/wp-includes/js/jquery/jquery.js"></script>
-<script type="text/javascript" src="http://cartoonbank.ru/wp-includes/js/jquery/jquery.form.js"></script>
+<script type="text/javascript" src="<?= $_SITEURL; ?>/wp-includes/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="<?= $_SITEURL; ?>/wp-includes/js/jquery/jquery.form.js"></script>
 <script type="text/javascript">
 	$(function() {
 	$(".vote").click(function() 
@@ -44,7 +45,7 @@ $result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
-	   url: "http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php",
+	   url: "<?= $_SITEURL; ?>/wp-content/plugins/purgatory/up_vote.php",
 	   data: dataString,
 	   cache: false,
 
@@ -61,7 +62,7 @@ $result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
-	   url: "http://cartoonbank.ru/wp-content/plugins/purgatory/black_vote.php",
+	   url: "<?= $_SITEURL; ?>/wp-content/plugins/purgatory/black_vote.php",
 	   data: dataString,
 	   cache: false,
 	   success: function(html)
@@ -76,7 +77,7 @@ $result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U
 	$(this).fadeIn(200).html('<img src="dot.gif" align="absmiddle">');
 	$.ajax({
 	   type: "POST",
-	   url: "http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php",
+	   url: "<?= $_SITEURL; ?>/wp-content/plugins/purgatory/down_vote.php",
 	   data: dataString,
 	   cache: false,
 	   success: function(html)
@@ -94,7 +95,7 @@ $result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U
 
 	var options = { 
 		target:     '#divToUpdate', 
-		url:        'http://cartoonbank.ru/wp-content/plugins/purgatory/add_comment.php', 
+		url:        '<?= $_SITEURL; ?>/wp-content/plugins/purgatory/add_comment.php', 
 		success:    function() { 
 			alert('Thanks for your comment!'); 
 		} 
@@ -112,33 +113,33 @@ function sendup(id)
    {
 	var myelemname = "up"+id;
 	var mydiv = document.getElementById(myelemname);
-	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/up_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
+	ajax.post("<?= $_SITEURL; ?>/wp-content/plugins/purgatory/up_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
    }
 
 function senddown(id)
    {
 	var myelemname = "down"+id;
 	var mydiv = document.getElementById(myelemname);
-	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/down_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
+	ajax.post("<?= $_SITEURL; ?>/wp-content/plugins/purgatory/down_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
    }
 
 function sendblack(id)
    {
 	var myelemname = "black"+id;
 	var mydiv = document.getElementById(myelemname);
-	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/black_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
+	ajax.post("<?= $_SITEURL; ?>/wp-content/plugins/purgatory/black_vote.php", function(html){ mydiv.textContent=html;},"&id="+id);
    }
 
 function sendblack_remove(id)
    {
-	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/black_vote_remove.php?id="+id);
+	ajax.post("<?= $_SITEURL; ?>/wp-content/plugins/purgatory/black_vote_remove.php?id="+id);
    }
 
 function sendcomment()
    {
 	var myelemname = "comment";
 	var mydiv = document.getElementById(myelemname);
-	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/add_comment.php", function(html){ mydiv.textContent=html;},"");
+	ajax.post("<?= $_SITEURL; ?>/wp-content/plugins/purgatory/add_comment.php", function(html){ mydiv.textContent=html;},"");
 	mydiv.value = "";
    }
 
@@ -146,7 +147,7 @@ function deletecomment()
    {
 	var myelemname = "comment";
 	var mydiv = document.getElementById(myelemname);
-	ajax.post("http://cartoonbank.ru/wp-content/plugins/purgatory/add_comment.php", function(html){ mydiv.textContent=html;},"");
+	ajax.post("<?= $_SITEURL; ?>/wp-content/plugins/purgatory/add_comment.php", function(html){ mydiv.textContent=html;},"");
 	mydiv.value = "";
    }
 
@@ -375,7 +376,7 @@ else
 	$brand=0;
 	$sql_brand = "";
 }
-
+/*
 			$sql=mysql_query("SELECT V.image_id, V.up, V.down, V.black, P.name, P.image, P.description AS Description, P.color, B.name AS Artist, P.approved, C.name AS Category, U.user_email AS email
 					FROM al_editors_votes AS V, wp_product_list AS P, wp_product_brands AS B, wp_product_categories AS C, wp_item_category_associations AS A, wp_users as U
 					WHERE V.image_id = P.id
@@ -388,6 +389,18 @@ else
 					AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))".$sql_brand."
 					ORDER BY P.id DESC
 					Limit 40");
+*/
+$sql=mysql_query("SELECT V.image_id, V.up, V.down, V.black, P.name, P.image, P.description AS Description, P.color, B.name AS Artist, P.approved, C.name AS Category, U.user_email AS email
+                    FROM al_editors_votes AS V, wp_product_list AS P, wp_product_brands AS B, wp_product_categories AS C, wp_users as U
+                    WHERE V.image_id = P.id
+                    AND P.brand = B.id
+                    AND C.id = P.brand
+                    AND U.id = B.user_id
+                    AND C.id != '777'
+                    AND P.active = '1'
+                    AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))".$sql_brand."
+                    ORDER BY P.id DESC
+                    Limit 40");
 
 		while($row=mysql_fetch_array($sql))
 		{
@@ -398,8 +411,8 @@ else
 		$black=$row['black'];
 		$img=$row['image'];
 		$email=$row['email'];
-		$imgpath = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$img; 
-		$previewpath = "http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$img;
+		$imgpath = $_SITEURL."/wp-content/plugins/wp-shopping-cart/images/".$img; 
+		$previewpath = $_SITEURL."/wp-content/plugins/wp-shopping-cart/product_images/".$img;
 		$imgname=nl2br(stripslashes($row['name']));
 		$artist=$row['Artist'];
 		$description=nl2br(stripslashes($row['Description']));
@@ -428,7 +441,7 @@ else
 			<div class='black'><a href="" id="black<?php echo $mes_id;?>" onclick="sendblack(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black"><?php echo $black; ?></a>
 			</div>
 			<? if ($black > 0){?>
-			<div class='xblack'><a href="" id="black_remove<?php echo $mes_id;?>" onclick="sendblack_remove(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black_remove" title="убрать чёрную метку"><img src="<? get_option('siteurl'); ?>/img/xbmark.gif"></a></div>
+			<div class='xblack'><a href="" id="black_remove<?php echo $mes_id;?>" onclick="sendblack_remove(<?php echo $mes_id; ?>);return false;" class="vote" id="<?php echo $mes_id; ?>" name="black_remove" title="убрать чёрную метку"><img src="<? echo ($_SITEURL);?>/img/xbmark.gif"></a></div>
 			<?}?><a href="mailto:<? echo $email;?>?subject=По%20поводу%20рисунка №<? echo ($mes_id);?>. %20Картунбанк&bcc=cartoonbank.ru@gmail.com&body=Уважаемый%20<? echo ($artist);?>!%0A%0A<? echo ($previewpath); ?>%0A%0AСпасибо,%0AКартунбанк"><img src="../img/mail.gif"></a>
 		</div>
 
@@ -459,7 +472,7 @@ else
 			<span class="<? echo $cat_style;?>">Категория: <? echo ($category);?></span><br />
 			<span class="gr">Автор: </span><? echo ($artist);?><br />
 			<span class="gr">Описание: </span><? echo ($description);?> 	
-			<form method="post" action="http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display-items.php"> <input type="hidden" name="edid" value="<? echo ($mes_id);?>"> <input class="borders" type="submit" value="<? echo ($mes_id);?>"> </form>
+			<form method="post" action="<?= $_SITEURL; ?>/wp-admin/admin.php?page=wp-shopping-cart/display-items.php"> <input type="hidden" name="edid" value="<? echo ($mes_id);?>"> <input class="borders" type="submit" value="<? echo ($mes_id);?>"> </form>
 		</div>
 
 	</div>
@@ -474,7 +487,7 @@ else
 
 		<div id="commentsform">
 		<? //echo("<pre>вы пишете от юзера:".print_r($current_user->last_name,true)."</pre>"); ?>
-			<form action="http://cartoonbank.ru/wp-content/plugins/purgatory/add_comment.php" method="post" id="commentform">
+			<form action="<?= $_SITEURL; ?>/wp-content/plugins/purgatory/add_comment.php" method="post" id="commentform">
 			пишите тут, нажмите кнопку:<br />
 			
 			<textarea id="comment" name="comment" id="comment" cols="60" rows="3" tabindex="4"></textarea>
