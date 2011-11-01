@@ -43,7 +43,7 @@ if (isset($_GET['category']) && $_GET['category'] == '666')
 	}
 
 
-	if ((isset($_REQUEST['0']) && $_REQUEST['0']=='on') | $_REQUEST['category']=='666' ) // $_REQUEST['0']  == 'on' -> include 666
+	if ((isset($_REQUEST['0']) && $_REQUEST['0']=='on') | isset($_REQUEST['category']) && $_REQUEST['category']=='666' ) // $_REQUEST['0']  == 'on' -> include 666
 	{
 		// include in search results
 		$exclude_category_sql = ' ';
