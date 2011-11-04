@@ -322,22 +322,21 @@ foreach($result as $r)
 		
 		//$out = fill_invoice($filename_acceptance_certificate_pdf, $_invoice_number, $invoice_date, $product['name'], $_bank_attributes, $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
 		$out = fill_invoice($filename_acceptance_certificate_pdf, $_invoice_number, $invoice_date, $product['name'], $_bank_attributes, $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
-
+/*
 		echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/artist_acceptance_certificate.php'>
-			<!-- <input type='submit' value='скачать акт № ".$_invoice_number." выполненных работ (PDF) '> -->
 			<input type='submit' value='скачать акт выполненных работ № ".$_invoice_number." (PDF) '>
 			<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
 			<input type='hidden' name='filename' value='acceptance_certificate_".$_invoice_number."'>
 		</form></div>");
-
+*/
 		$out_nostamp = fill_invoice($filename_acceptance_certificate_nostamp_pdf, $_invoice_number, $invoice_date, $product['name'], $_bank_attributes, $the_list, $total, $count, $contract_period, $product['contract'],date_format(date_create($product['contract_date']),'d-m-Y'));
-		/*
+		
 		echo ("<div><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/artist_acceptance_certificate.php'>
-			<input type='submit' value='скачать акт № ".$_invoice_number." выполненных работ (PDF) без печати'>
+			<input type='submit' value='скачать акт № ".$_invoice_number." выполненных работ (PDF)'>
 			<input type='hidden' name='html' value='".htmlspecialchars($out_nostamp)."'>
 			<input type='hidden' name='filename' value='acceptance_certificate_".$_invoice_number."'>
 		</form></div></div>");
-		*/
+		
 		$total_all = $total_all + $total;
 		$counter_sold_year = $counter_sold_year + $counter_sold_month;
 		$counter_sold_month = 0;
