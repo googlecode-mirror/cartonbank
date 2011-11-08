@@ -282,11 +282,11 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 			//actual_money
 			if ($sales['gateway']=='robokassa')
 			{
-				$sales['discount'] = 5; // average default discount for Robokassa
+				$sales['discount'] = $sales['discount']+5; // average default discount for Robokassa
 
 				if ($sales['actual_money']=='')
 				{
-					$sales['actual_money'] = ($sales['price']*.95); // average money received from Robokassa
+					$sales['actual_money'] = ($sales['price']*(100-$sales['discount'])/100); // average money received from Robokassa
 				}
 				else
 				{
