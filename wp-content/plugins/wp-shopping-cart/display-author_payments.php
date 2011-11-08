@@ -277,28 +277,29 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 		{
 			$discount_price = round($sales['price'],0)*((100-round($sales['discount'],0))/100);
 			
-
+            $robokassa_text = '';
 			//robokassa
 			//actual_money
 			if ($sales['gateway']=='robokassa')
 			{
-				$sales['discount'] = $sales['discount']+5; // average default discount for Robokassa
+				//$sales['discount'] = $sales['discount']+5; // average default discount for Robokassa
+                $robokassa_text = ' robokassa: 5% ';
 
 				if ($sales['actual_money']=='')
 				{
-					$sales['actual_money'] = ($sales['price']*(100-$sales['discount'])/100); // average money received from Robokassa
+					$sales['actual_money'] = ($sales['price']*0.95); // average money received from Robokassa
 				}
 				else
 				{
 					$sales['actual_money'] = $sales['actual_money']; //assign corrected by accountant discount to Robokassa purchase
 				}
 
-				$discount_price = $sales['actual_money']; 
+				$discount_price = $sales['actual_money']*((100-round($sales['discount'],0))/100); 
 			}
 
 //pokazh($sales);
 
-			echo "<div class='t' style='font-size:0.8em;'><span style='color:silver;'>".$sales['datetime']."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> <i>".$sales['firstname']." ".$sales['lastname']."</i> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)." итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
+			echo "<div class='t' style='font-size:0.8em;'><span style='color:silver;'>".$sales['datetime']."</span> Заказ:".$sales['purchaseid']." №:".$sales['picture_id']." <b>".$sales['smi']."</b> <i>".$sales['firstname']." ".$sales['lastname']."</i> «".stripslashes($sales['title'])."» цена:".round($sales['price'],0).$robokassa_text." скидка:".round($sales['discount'],0)."% итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
 			
 			$total = $total + round(0.4*($discount_price),0);
 			
