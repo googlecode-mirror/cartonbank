@@ -82,6 +82,48 @@ if (isset($_POST['amount']) && isset($_POST['year']) && is_numeric($_POST['year'
 </div>
 
 <?
+//вывод суммарной таблицы
+$sql = "SELECT name, artist_id, SUM( cartoons_sold ) AS cartoons_sold, SUM( reward_to_pay ) AS reward_to_pay, SUM( reward_payed ) AS reward_payed FROM artist_payments, wp_product_brands WHERE artist_payments.artist_id = wp_product_brands.id GROUP BY name ORDER BY name ASC";
+$complete_payments_list = $wpdb->get_results($sql,ARRAY_A);
+
+if($complete_payments_list != null)
+    {
+        $out = "<div>";
+
+            $out .= "<div>";
+                $out .= "<div class='htt'>Автор</div>";//1
+                $out .= "<div class='ht'>Всего продано штук</div>";//2
+                $out .= "<div class='ht'>Всего к выплате</div>";//5
+                $out .= "<div class='ht'>Всего выплачено</div>";//6
+                $out .= "<div class='ht'>Суммарный остаток</div>";//7
+            $out .= "</div>";
+
+            foreach($complete_payments_list as $sales)
+            {
+                    // groupped list
+                    $reward_remains = floatval(round($sales['reward_to_pay'])) - floatval(round($sales['reward_payed']));
+
+                    $out .= "<div>";
+                        $out .= "<br clear='left' />";
+                        $out .= "<div class='tt'><b>".$sales['name']."</b></div>";
+                        $out .= "<div class='t'>".$sales['cartoons_sold']."</div>";//2
+                        $out .= "<div class='t'>".round($sales['reward_to_pay'])."</div>";//5
+                        $out .= "<div class='t'>".round($sales['reward_payed'])."</div>";//6
+                        
+                        if ($reward_remains>=5000)
+                            $out .= "<div class='t' style='color:red; font-weight:bold;background-color:#FDDE9D;'>".$reward_remains."</div>";
+                        else
+                            $out .= "<div class='t'>".$reward_remains."</div>";
+
+                    $out .= "</div>";
+                    
+            }
+        $out .= "</div>";
+        echo ("<h1>Суммарные выплаты за всю историю</h1>");
+        echo $out;
+    }
+
+
 
 // Вывод таблицы сгруппированной по авторам и годам
 for ($y = date('Y'); $y>=2010; $y--) 
