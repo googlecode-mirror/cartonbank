@@ -290,6 +290,9 @@ echo "</div>";
 <a href="http://cartoonbank.ru/?page_id=1351" target="_blank"><img src="http://cartoonbank.ru/img/b/exhibition_package.gif" style="border:0;width:180px;"></a>
 <br /><br />
 <a href="http://cartoonbank.ru/?page_id=1857" target="_blank"><img src="http://cartoonbank.ru/img/b/postard_project.gif" style="border:0;width:180px;"></a>
+<br /><br />
+<a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:180x;border:0;"></a>
+
 
 <br /><h2>Разное</h2>
 <div id='last_sales'><a href='?page_id=1299' title="свежие продажи">Сто продаж</a></div>
