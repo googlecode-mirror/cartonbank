@@ -138,6 +138,7 @@ div.producttext{
 
 div.item{
 	width:142px;
+	height:142px;
 	float:left;
 	margin: 2px;
 	padding-top:0;
@@ -542,4 +543,7 @@ tr.tdfirstcol{
 	bottom: 10px; 
 	right: 10px; 
 	opacity:0.5;
+}
+.gift{
+position: relative; top: -138px; left: 4px; background-color: red; width: 60px; text-align: center; opacity: .5; padding:2px;
 }
