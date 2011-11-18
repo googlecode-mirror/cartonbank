@@ -644,7 +644,7 @@ function last_sales($content = '')
             {
                 $gift='<div class="gift"><a href="http://cartoonbank.ru/?page_id=2420" style="color:white;">подарок</a></div>';
             }
-			$output .= "<div class='item'>";
+			$output .= "<div class='item_gift'>";
 			$output .= "<a href='".get_option('product_list_url').$seperator."cartoonid=".$product['ID']."'>";
 			if($product['image'] != '')
 			  {
