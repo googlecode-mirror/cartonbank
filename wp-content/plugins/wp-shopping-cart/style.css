@@ -138,13 +138,22 @@ div.producttext{
 
 div.item{
 	width:142px;
-	height:142px;
 	float:left;
 	margin: 2px;
 	padding-top:0;
 	padding-right:4px;
 	padding-bottom: 2px;
 	text-align: left;
+}
+div.item_gift{
+    width:142px;
+    height:142px;
+    float:left;
+    margin: 2px;
+    padding-top:0;
+    padding-right:4px;
+    padding-bottom: 2px;
+    text-align: left;
 }
 img.thumb{
 	border: 1px solid #b2b2b2;
