@@ -270,6 +270,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 				WHERE	l.`processed`=s.`id` 
 					AND l.id=c.purchaseid 
 					AND p.id=c.prodid  
+					AND c.price > 3
 					AND st.purchid=c.purchaseid
 					AND p.brand=b.id
 					AND u.id = l.user_id
