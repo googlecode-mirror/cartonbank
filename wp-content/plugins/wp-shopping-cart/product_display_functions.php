@@ -333,7 +333,7 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 	$_next_item = $counter + 1;
 	if ($_next_item == 20)
 		{
-			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующая страница > \" href=\"#pt\" onclick=\"next_page();\">".$_bigpic."</a>';";
+			$vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующая страница > \" href=\"#pt\" onclick=\"next_page();return false;\">".$_bigpic."</a>';";
 		}
 		else
 		{
