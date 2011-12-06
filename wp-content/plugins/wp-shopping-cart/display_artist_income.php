@@ -270,25 +270,37 @@ foreach($result as $r)
 
 			//robokassa
 			//actual_money
+            $user_discount = 0;
 			if ($sales['gateway']=='robokassa')
 			{
+                if ($sales['discount']!=0)
+                {
+                    $user_discount = $sales['discount']/100;
+                }
+                
 				$sales['discount'] = 5; // average default discount for Robokassa
 
 				if ($sales['actual_money']=='')
 				{
 					$sales['actual_money'] = ($sales['price']*.95); // average money received from Robokassa
+                    
 				}
 				else
 				{
 					$sales['actual_money'] = $sales['actual_money']; //assign corrected by accountant discount to Robokassa purchase
 				}
-
+                
+                $sales['actual_money'] = $sales['actual_money'] * (1-$user_discount);
 				$discount_price = $sales['actual_money']; 
+                
+            echo "<div class='t' style='font-size:0.8em;'><span style='color:silver;'>".$sales['datetime']."</span> Заказ:".$sales['purchaseid']." <b>".$sales['smi']."</b> <i>".$sales['firstname']." ".$sales['lastname']."</i> <a href='http://cartoonbank.ru/?page_id=29&cartoonid=".$sales['picture_id']."'>№".$sales['picture_id']." «".stripslashes($sales['title'])."»</a> цена:".round($sales['price'],0)."; услуги Робокассы:".round($sales['discount'],0)."%; скидка: ".($user_discount*100)."%; итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
+                
 			}
-
+            else
+            {
 
 			echo "<div class='t' style='font-size:0.8em;'><span style='color:silver;'>".$sales['datetime']."</span> Заказ:".$sales['purchaseid']." <b>".$sales['smi']."</b> <i>".$sales['firstname']." ".$sales['lastname']."</i> <a href='http://cartoonbank.ru/?page_id=29&cartoonid=".$sales['picture_id']."'>№".$sales['picture_id']." «".stripslashes($sales['title'])."»</a> цена:".round($sales['price'],0)." скидка:".round($sales['discount'],0)."% итого:<b>".$discount_price."</b><span style='color:#9900CC;'> Автору: ".round(0.4*($discount_price),0)." руб.</span></div>";
-			
+			}
 			$total = $total + round(0.4*($discount_price),0);
 			$counter_sold_month++;
 			
