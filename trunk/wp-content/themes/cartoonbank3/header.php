@@ -122,6 +122,7 @@ default:
 	break;
 }
 ?>
+<center><div id="suphead" style="float:center;height:20px;width:960px;background-color:#CCFF66;"><a href="http://cartoonbank.ru/?page_id=2440" style="font-size:1.2em;">наши футболки, кружки, календари, альбомы карикатур</a></div></center>
 
 <div id="header" style="height:90px;width:960px;">
 <div>
