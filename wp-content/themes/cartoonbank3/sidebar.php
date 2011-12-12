@@ -287,6 +287,8 @@ echo "</div>";
 ?>
 
 <br /><br />
+<a href="http://cartoonbank.ru/?page_id=2440" target="_blank"><img src="http://cartoonbank.ru/img/b/tshirt-2.jpg" style="border:0;width:180px;"></a>
+<br /><br />
 <a href="http://cartoonbank.ru/?page_id=1351" target="_blank"><img src="http://cartoonbank.ru/img/b/exhibition_package2.gif" style="border:0;width:180px;"></a>
 <br /><br />
 <a href="http://cartoonbank.ru/?page_id=1857" target="_blank"><img src="http://cartoonbank.ru/img/b/postard_project2.gif" style="border:0;width:180px;"></a>
