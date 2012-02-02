@@ -75,7 +75,7 @@ $sql = "SELECT COUNT( * ) as count, temp.name FROM ( SELECT b.id, b.name FROM  `
 $result = $wpdb->get_results($sql,ARRAY_A);
 		///pokazh($sql);
 
-if (!$result) {die('<br />Продаж за этот период не найдено ' . mysql_error());}
+if (!$result) {echo('<br />Продаж за этот период не найдено ' . mysql_error());}
 
 	/// pokazh($sql);
 
@@ -506,7 +506,7 @@ $sql ="SELECT c.price,st.datetime, totalprice, u.discount as discount, c.cart_di
 		$result = $wpdb->get_results($sql,ARRAY_A);
 		if (!$result) 
 			{
-				die('<br />Продаж за этот период не найдено ' . mysql_error());
+				echo('<br />Продаж за этот период не найдено ' . mysql_error());
 			}
 
 		foreach ($result as $row)
