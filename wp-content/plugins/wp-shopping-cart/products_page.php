@@ -695,7 +695,7 @@ else
 				$_category = "<a href=\'".get_option('product_list_url')."&category=".$product[0]['category_id']."\'>".$_categor."</a>";
 
 
-                $_tags = nl2br(stripslashes($product[0]['additional_description']));
+                $_tags = nl2br(htmlspecialchars(stripslashes($product[0]['additional_description'])));
 
 				$_bigpicimgalt = addslashes("Карикатура. ".$_name.". ".$_description.". ".$_tags);
 
@@ -1034,12 +1034,20 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
 		//next button
 		if ($new==1)
 		{
-			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&amp;offset=0&amp;new=0".$brand_group_sql.$__category.$color_url."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>показать избранное</a>";
+			// сбой категории
+			//$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&amp;offset=0&amp;new=0".$brand_group_sql.$__category.$color_url."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>показать избранное</a>";
+			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&amp;offset=0&amp;new=0".$brand_group_sql.$color_url."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>показать избранное</a>";
 		}
 		else
 		{
-			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&amp;offset=0&amp;new=1".$brand_group_sql.$__category.$color_url."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>сортировать по дате</a>";
+			// сбой категории
+			//$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&amp;offset=0&amp;new=1".$brand_group_sql.$__category.$color_url."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>сортировать по дате</a>";
+			$button_sort = "<a href='http://cartoonbank.ru/?page_id=29&amp;offset=0&amp;new=1".$brand_group_sql.$color_url."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>сортировать по дате</a>";
 		}
+
+
+
+//$button_sort = "";
 
 		if ($page < $counter - 1) 
 			$pagination .= "<a href=\"" . $targetpage . $pagestring . ($next*$limit - $limit) . "\">»</a>";
