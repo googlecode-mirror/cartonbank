@@ -211,7 +211,8 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
     } 
     
     $_number = $product['id'];
-    $_description = nl2br(hilite(stripslashes($product['description'])));
+    
+    $_description = nl2br(hilite(htmlspecialchars(stripslashes($product['description']),ENT_QUOTES)));
     $_size = $product['width']."px X ".$product['height']."px;";
         $_x_sm = round(($product['width']/300)*2.54, 1);
         $_y_sm = round(($product['height']/300)*2.54, 1);
@@ -230,7 +231,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
     else {$_category_id = '';}
 
     $_author = "<a href=\'".$siteurl."/?page_id=29&brand=".$_brandid."\'>".$product['brand']."</a>";//$product['brand'];
-    $_name = hilite(nl2br(htmlspecialchars(stripslashes($product['name']))));
+    $_name = hilite(nl2br(htmlspecialchars(stripslashes($product['name']),ENT_QUOTES)));
 
     $_avatarurl = ""; //"<a href=\"".get_option('siteurl')."/?page_id=29&brand=$_brandid\"><img src=".$product['avatarurl']." width=32 height=32 align=top border=0></a>";
 
@@ -238,7 +239,13 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
     $_category = "<a href=\'".get_option('product_list_url')."&category=".$_category_id."\'>".$product['kategoria']."</a>";
     //$options .= "<a href='".get_option('product_list_url')."/&category=".$option['id']."'>".stripslashes($option['name'])."</a><br />";
  
-    $_tags = hilite(nl2br(htmlspecialchars(stripslashes($product['additional_description']))));
+ $product['additional_description'] = stripslashes ($product['additional_description']);
+ $product['additional_description'] = htmlspecialchars($product['additional_description'],ENT_QUOTES);
+ 
+ $_tags = hilite(nl2br($product['additional_description']));
+ 
+    //$_tags = hilite(nl2br(htmlspecialchars(stripslashes($product['additional_description']))));
+    
     //$_tags = hilite($product[0]['additional_description']);
 
     $_bigpicimgalt = addslashes("Карикатура. ".$_name.". ".$_description.". ".$_tags);
