@@ -9,6 +9,7 @@ exit;
 <?
 include("config.php");
 $_SITEURL = get_option('siteurl');
+//echo ($_SITEURL);
 ?>
 	
 <b>Минимальный балл</b> для прохождения в коллекцию - <b><?echo $limit_plus;?></b> плюса, кандидат в «Рабочий стол» - <b><?echo $limit_minus;?></b> минуса. Чёрная метка блокирует появление картинки в хранилище до выяснения обстоятельств.
@@ -390,18 +391,19 @@ else
 					ORDER BY P.id DESC
 					Limit 40");
 */
-$sql=mysql_query("SELECT V.image_id, V.up, V.down, V.black, P.name, P.image, P.description AS Description, P.color, B.name AS Artist, P.approved, C.name AS Category, U.user_email AS email
-                    FROM al_editors_votes AS V, wp_product_list AS P, wp_product_brands AS B, wp_product_categories AS C, wp_users as U
-                    WHERE V.image_id = P.id
-                    AND P.brand = B.id
-                    AND C.id = P.brand
-                    AND U.id = B.user_id
-                    AND C.id != '777'
-                    AND P.active = '1'
-                    AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))".$sql_brand."
-                    ORDER BY P.id DESC
-                    Limit 40");
-
+$sql ="SELECT V.image_id, V.up, V.down, V.black, P.name, P.image, P.description AS Description, P.color, B.name AS Artist, P.approved, C.name AS Category, U.user_email AS email
+FROM al_editors_votes AS V, wp_product_list AS P, wp_product_brands AS B, wp_product_categories AS C, wp_users as U 
+WHERE V.image_id = P.id 
+AND P.brand = B.id
+AND U.id = B.user_id
+AND C.id != '777'
+AND P.active = '1'
+AND C.id = P.category
+AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))".$sql_brand."
+ORDER BY P.id DESC
+Limit 40";
+//pokazh($sql);
+$sql=mysql_query($sql);
 		while($row=mysql_fetch_array($sql))
 		{
 		$msg=$row['image_id'];
