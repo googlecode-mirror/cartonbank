@@ -204,7 +204,7 @@ function zoom(url,ww,hh,id){
 
 function rokfor(brand){
 	if (confirm('Внимание! В категории «Рабочий стол» находятся работы автора, не вошедшие в основную базу Банка Изображений.\n\r\n\rПросьба к зрителям и клиентам отнестись с пониманием к праву автора держать в своем «Рабочем столе» изображения, которые Cartoonbank.ru или сам автор сочли невозможным для показа в общем поиске Банка Изображений. Это могут быть иллюстраторские опыты и эксперименты на различные темы, варианты обложек книг, сюжеты, несущие эротическое или иное содержание \"на грани фола\" и многое другое.\n\r\n\rЕсли вы не хотите видеть такие изображения - нажмите кнопку \"Отмена (Cancel)\".\n\r\n\rЕсли хотите видеть, несмотря на предупреждение - нажмите кнопку \"ОК\"'))
-		{window.location = 'http://cartoonbank.ru/?page_id=29&category=666&brand='+brand;} 
+		{var oorl = location.href.split('?');window.location = oorl[0]+'?page_id=29&category=666&brand='+brand;} 
 	else 
 		{window.location = '#';}
 }
@@ -224,7 +224,8 @@ function get_5stars()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-var starurl = "http://cartoonbank.ru/wp-content/plugins/five-star-rating/fsr-ajax-stars.php?p="+cuid+"&starType=star";
+var oorl = location.href.split('?');
+var starurl = oorl[0]+"wp-content/plugins/five-star-rating/fsr-ajax-stars.php?p="+cuid+"&starType=star";
 jQuery("#star_rating").load(starurl,function(){jQuery(function(){jQuery("label[for^=fsr_star_]").click(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().attr("action"),d=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_");FSR_save_vote(a[2],a[3],b,d)});jQuery("label[for^=fsr_star_]").mouseover(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_")[3];FSR_star_over(this,a,b)})});FSR_current_post=null;FSR_isWorking=false;});
 });
 }
@@ -241,7 +242,8 @@ function fave_it()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-var starurl = "http://cartoonbank.ru/ales/faves/faves_update.php?upd=1&p="+cuid+"&uid="+getCookie('uid');
+var oorl = location.href.split('?');
+var starurl = oorl[0]+"ales/faves/faves_update.php?upd=1&p="+cuid+"&uid="+getCookie('uid');
 jQuery("#thumb").load(starurl,function(){});
 });
 }
@@ -249,7 +251,8 @@ function get_fave()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-var starurl = "http://cartoonbank.ru/ales/faves/faves_update.php?p="+cuid+"&uid="+getCookie('uid');
+var oorl = location.href.split('?');
+var starurl = oorl[0]+"ales/faves/faves_update.php?p="+cuid+"&uid="+getCookie('uid');
 jQuery("#thumb").load(starurl,function(){});
 });
 }

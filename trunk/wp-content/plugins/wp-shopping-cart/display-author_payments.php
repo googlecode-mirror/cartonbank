@@ -328,7 +328,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 
 
 				// make sure the payment record not exists
-				//$sql_artist_payments = "select id from artist_payments where payment_date = '".$_year_month."' and artist_id = ". $artist['id'];
+				$sql_artist_payments = "select id from artist_payments where payment_date = '".$_year_month."' and artist_id = ". $artist['id'];
 				//$result_artist_payments = $wpdb->query($sql_artist_payments);
 
 				if ($result_artist_payments) 
