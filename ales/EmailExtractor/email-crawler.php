@@ -1,6 +1,8 @@
 <?php
+$starturl = "http://www.e-kuzbass.ru/vcard/12566/";
+
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL,"http://www.advmarket.ru/catalog/outdoor_adv/?page=&num_page=1");
+    curl_setopt($ch, CURLOPT_URL,$starturl);
     curl_setopt($ch, CURLOPT_TIMEOUT, 30); //timeout after 30 seconds
     curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
     $result=curl_exec ($ch);
@@ -8,45 +10,41 @@
     // Search The Results From The Starting Site
     if( $result )
     {
-        // I LOOK ONLY FROM TOP domains change this for your usage 
-        preg_match_all( '/<a href="(http:\/\/www.[^0-9].+?)"/', $result, $output, PREG_SET_ORDER );
-
+        $arrurl = split("/",$starturl);
+        $rooturl = ($arrurl[0]."//".$arrurl[2]);
+        $regexp = "<a\s[^>]*href=(\"??)([^\" >]*?)\\1[^>]*>(.*)<\/a>";
+        preg_match_all("/$regexp/siU", $result, $output, PREG_SET_ORDER );
+  
+        
+        $url_array = array();
+        
+        $i=1;
         foreach( $output as $item )
+        {
+            if (!strstr($item[2],"http"))
+            {
+                $item[2] = $rooturl.$item[2];
+            }
+        echo $i.". ".$item[2]."<br>";
+        array_push($url_array,$item[2]);
+        $i++;
+        } 
+        //echo print_r($url_array);
+        
+
+        foreach( $url_array as $item )
 
         {
-            // ALL LINKS DISPLAY HERE 
-            //print_r($item);
-
-            //$html_urls = read_file($item[1]);
-
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL,$item[1]);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 10); //timeout after 30 seconds
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-                $result=curl_exec ($ch);
-                curl_close ($ch);
-                
-            /*
-            preg_match_all ("/a[\s]+[^>]*?href[\s]?=[\s\"\']+".
-                "(.*?)[\"\']+.*?>"."([^<]+|.*?)?<\/a>/",
-                $html_urls, $matches);
-              */  
-            //$matches = $matches[1];
-            //$list = array();
+                $ch1 = curl_init();
+                curl_setopt($ch1, CURLOPT_URL,$item);
+                curl_setopt($ch1, CURLOPT_TIMEOUT, 10); //timeout after 30 seconds
+                curl_setopt($ch1, CURLOPT_RETURNTRANSFER,1);
+                $result=curl_exec ($ch1);
+                curl_close ($ch1);
             
             $email = get_email_from_text ($result);
             fw($email);
             print($email.", ");
-            
-            /*
-            foreach($matches as $var)
-            {    
-                $email = get_email_from_url ($var);
-                fw($email);
-                print($var."<br>");
-            }
-            */
-
         }
 
     }
@@ -64,11 +62,11 @@
           if ($res) {
             foreach(array_unique($matches[0]) as $email) {
                 $emails_string .= $email.', ';
-              echo $email . "<br />";
+              echo $email . ", ";
             }
           }
           else {
-            echo "No emails found.";
+            //echo "No emails found.";
           }
         }
         return $emails_string;
