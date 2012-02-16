@@ -3,7 +3,7 @@ include("config.php");
 
 $id=0;
 
-if($_POST['id'] | $_GET['id'] | $id!=0)
+if($_POST['id'] or $_GET['id'])
 {
 if (isset($_POST['id']))
 	$id=$_POST['id'];
@@ -29,20 +29,20 @@ elseif (isset($_GET['id']))
 	$subj = $_title;
 	$text = "<a href='http://cartoonbank.ru/?page_id=29&cartoonid=".$id."'><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$_image."' border='0'></a><br /><b>".$_artist."</b>: &quot;".$_title."&quot;  <br />".$_description."<br />Tags: ".$_additional_description."<br /><a href='http://cartoonbank.ru' title='cartoonbank'>cartoonbank.ru</a>";
 
-	/* Ð²Ð°Ñˆ Ð½Ð¸Ðº Ð² Ð–Ð– */
+	/* âàø íèê â ÆÆ */
 	$name = "_cartoonist_";
-	/* Ð²Ð°Ñˆ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ Ð² Ð–Ð– */
+	/* âàø ïàðîëü â ÆÆ */
 	$password = "basie5670659";
-	/* ÐºÐ¾Ð¼ÑŒÑŽÐ½Ð¸Ñ‚Ð¸ */
+	/* êîìüþíèòè */
 	$usejournal = "cartoonbank";
 
-	/* Ð²ÐºÐ»ÑŽÑ‡Ð°ÐµÐ¼ Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÑƒ XML-RPC */
+	/* âêëþ÷àåì áèáëèîòåêó XML-RPC */
 
 	include("lib/xmlrpc.inc");
 
 	$xmlrpc_internalencoding = 'UTF-8';
 
-	/* ÐŸÐ¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ñ‚ÐµÐºÑƒÑ‰ÐµÐµ Ð²Ñ€ÐµÐ¼Ñ */
+	/* Ïîëó÷àåì òåêóùåå âðåìÿ */
 
 	$date = time();
 	$year = date("Y", $date);
@@ -51,13 +51,13 @@ elseif (isset($_GET['id']))
 	$hour = date("G", $date);
 	$min = date("i", $date);
 
-	/* (!!!) ÐšÐ¾Ð½Ð²ÐµÑ€Ñ‚Ð¸Ñ€ÑƒÐµÐ¼ Ñ‚ÐµÐºÑÑ‚ Ð¸Ð· Ð¾Ð´Ð½Ð¾Ð¹ ÐºÐ¾Ð´Ð¸Ñ€Ð¾Ð²ÐºÐ¸ Ð² UTF-8 
-	Ð² Ð´Ð°Ð½Ð½Ð¾Ð¼ ÑÐ»ÑƒÑ‡Ð°Ðµ Ñ„Ð°Ð¹Ð» Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑÑ Ð² ÐºÐ¾Ð´Ð¸Ñ€Ð¾Ð²ÐºÐµ CP1251 */
+	/* (!!!) Êîíâåðòèðóåì òåêñò èç îäíîé êîäèðîâêè â UTF-8 
+	â äàííîì ñëó÷àå ôàéë õðàíèòñÿ â êîäèðîâêå CP1251 */
 
 	//$text = iconv("CP1251", "UTF-8", html_entity_decode($text));
 	//$subj = iconv("CP1251", "UTF-8", html_entity_decode($subj));
 
-	/* Ð·Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼ Ð¼Ð°ÑÑÐ¸Ð² Ñ Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ñ‹Ð¼Ð¸ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ð¼Ð¸ */
+	/* çàïîëíÿåì ìàññèâ ñ íåîáõîäèìûìè ïåðåìåííûìè */
 
 	$post = array(
 			"username" => new xmlrpcval($name, "string"),
@@ -74,40 +74,40 @@ elseif (isset($_GET['id']))
 			"ver" => new xmlrpcval(2, "int")
 		);
 
-	/* Ð½Ð° Ð¾ÑÐ½Ð¾Ð²Ðµ Ð¼Ð°ÑÑÐ¸Ð²Ð° ÑÐ¾Ð·Ð´Ð°ÐµÐ¼ ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ñƒ */
+	/* íà îñíîâå ìàññèâà ñîçäàåì ñòðóêòóðó */
 
 	$post2 = array(
 		new xmlrpcval($post, "struct")
 	);
 
-	/* ÑÐ¾Ð·Ð´Ð°ÐµÐ¼ XML ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð´Ð»Ñ ÑÐµÑ€Ð²ÐµÑ€Ð° */
+	/* ñîçäàåì XML ñîîáùåíèå äëÿ ñåðâåðà */
 
 	$f = new xmlrpcmsg('LJ.XMLRPC.postevent', $post2);
 
-	/* Ð¾Ð¿Ð¸ÑÑ‹Ð²Ð°ÐµÐ¼ ÑÐµÑ€Ð²ÐµÑ€ */
+	/* îïèñûâàåì ñåðâåð */
 
 	$c = new xmlrpc_client("/interface/xmlrpc", "www.livejournal.com", 80);
 	$c->request_charset_encoding = "UTF-8";
 
-	/* Ð¿Ð¾ Ð¶ÐµÐ»Ð°Ð½Ð¸ÑŽ ÑÐ¼Ð¾Ñ‚Ñ€Ð¸Ð¼ Ð½Ð° XML-ÐºÐ¾Ð´ Ñ‚Ð¾Ð³Ð¾ Ñ‡Ñ‚Ð¾ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑÑ Ð½Ð° ÑÐµÑ€Ð²ÐµÑ€ */
+	/* ïî æåëàíèþ ñìîòðèì íà XML-êîä òîãî ÷òî îòïðàâèòñÿ íà ñåðâåð */
 
 	//echo nl2br(htmlentities($f->serialize()));
 
-	/* Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÑÐµÐ¼ XML ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð½Ð° ÑÐµÑ€Ð²ÐµÑ€ */
+	/* îòïðàâëÿåì XML ñîîáùåíèå íà ñåðâåð */
 
 	$r = $c->send($f);
 		
-	/* Ð°Ð½Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚ */
+	/* àíàëèçèðóåì ðåçóëüòàò */
 		
 	if(!$r->faultCode())
 	{
-		/* ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð¿Ñ€Ð¸Ð½ÑÑ‚Ð¾ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð¸ Ð²ÐµÑ€Ð½ÑƒÐ»ÑÑ XML-Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚ */
+		/* ñîîáùåíèå ïðèíÿòî óñïåøíî è âåðíóëñÿ XML-ðåçóëüòàò */
 		$v = php_xmlrpc_decode($r->value());
 		print_r($v);
 	}
 	else
 	{
-		/* ÑÐµÑ€Ð²ÐµÑ€ Ð²ÐµÑ€Ð½ÑƒÐ» Ð¾ÑˆÐ¸Ð±ÐºÑƒ */
+		/* ñåðâåð âåðíóë îøèáêó */
 		print "An error occurred: ";
 		print "Code: ".htmlspecialchars($r->faultCode());
 		print "Reason: '".htmlspecialchars($r->faultString())."'\n";
@@ -116,9 +116,9 @@ elseif (isset($_GET['id']))
 
 // post to cartunbank
 
-	/* Ð²Ð°Ñˆ Ð½Ð¸Ðº Ð² Ð–Ð– */
+	/* âàø íèê â ÆÆ */
 	$name = "cartunbank";
-	/* Ð²Ð°Ñˆ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ Ð² Ð–Ð– */
+	/* âàø ïàðîëü â ÆÆ */
 	$password = "basie5";
 
 	$xmlrpc_internalencoding = 'UTF-8';
@@ -130,7 +130,7 @@ elseif (isset($_GET['id']))
 	$hour = date("G", $date);
 	$min = date("i", $date);
 
-	/* Ð·Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼ Ð¼Ð°ÑÑÐ¸Ð² Ñ Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ñ‹Ð¼Ð¸ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ð¼Ð¸ */
+	/* çàïîëíÿåì ìàññèâ ñ íåîáõîäèìûìè ïåðåìåííûìè */
 
 	$post = array(
 			"username" => new xmlrpcval($name, "string"),
@@ -146,36 +146,36 @@ elseif (isset($_GET['id']))
 			"ver" => new xmlrpcval(2, "int")
 		);
 
-	/* Ð½Ð° Ð¾ÑÐ½Ð¾Ð²Ðµ Ð¼Ð°ÑÑÐ¸Ð²Ð° ÑÐ¾Ð·Ð´Ð°ÐµÐ¼ ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ñƒ */
+	/* íà îñíîâå ìàññèâà ñîçäàåì ñòðóêòóðó */
 
 	$post2 = array(
 		new xmlrpcval($post, "struct")
 	);
 
-	/* ÑÐ¾Ð·Ð´Ð°ÐµÐ¼ XML ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð´Ð»Ñ ÑÐµÑ€Ð²ÐµÑ€Ð° */
+	/* ñîçäàåì XML ñîîáùåíèå äëÿ ñåðâåðà */
 
 	$f = new xmlrpcmsg('LJ.XMLRPC.postevent', $post2);
 
-	/* Ð¾Ð¿Ð¸ÑÑ‹Ð²Ð°ÐµÐ¼ ÑÐµÑ€Ð²ÐµÑ€ */
+	/* îïèñûâàåì ñåðâåð */
 
 	$c = new xmlrpc_client("/interface/xmlrpc", "www.livejournal.com", 80);
 	$c->request_charset_encoding = "UTF-8";
 
-	/* Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÑÐµÐ¼ XML ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð½Ð° ÑÐµÑ€Ð²ÐµÑ€ */
+	/* îòïðàâëÿåì XML ñîîáùåíèå íà ñåðâåð */
 
 	$r = $c->send($f);
 		
-	/* Ð°Ð½Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚ */
+	/* àíàëèçèðóåì ðåçóëüòàò */
 		
 	if(!$r->faultCode())
 	{
-		/* ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð¿Ñ€Ð¸Ð½ÑÑ‚Ð¾ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð¸ Ð²ÐµÑ€Ð½ÑƒÐ»ÑÑ XML-Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚ */
+		/* ñîîáùåíèå ïðèíÿòî óñïåøíî è âåðíóëñÿ XML-ðåçóëüòàò */
 		$v = php_xmlrpc_decode($r->value());
 		print_r($v);
 	}
 	else
 	{
-		/* ÑÐµÑ€Ð²ÐµÑ€ Ð²ÐµÑ€Ð½ÑƒÐ» Ð¾ÑˆÐ¸Ð±ÐºÑƒ */
+		/* ñåðâåð âåðíóë îøèáêó */
 		print "An error occurred: ";
 		print "Code: ".htmlspecialchars($r->faultCode());
 		print "Reason: '".htmlspecialchars($r->faultString())."'\n";
