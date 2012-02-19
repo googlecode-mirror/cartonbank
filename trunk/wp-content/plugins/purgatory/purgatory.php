@@ -323,7 +323,7 @@ function deletecomment()
 
     .box3
     {
-    width:100%; text-align:left;
+    text-align:left;
     margin-left:65px;height:140px;
     font-size:0.8em;    
     line-height:150%;
@@ -408,6 +408,8 @@ WHERE
     AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))
 ORDER BY P.id DESC 
 Limit 40";
+
+//pokazh($sql);
 
 $sql=mysql_query($sql);
         while($row=mysql_fetch_array($sql))
