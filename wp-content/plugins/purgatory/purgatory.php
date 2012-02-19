@@ -22,7 +22,7 @@ $result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U
         $_comment = nl2br(stripslashes($r['comment_content']));
         $_author = $r['author'];
         $_id = $r['comment_id'];
-        $comments_output .= "<div style='margin-top:4px;'><span class='gr' title='".$_date."'>".$_author.":&nbsp; </span><span class='c_body'>".$_comment."</span> [<a title='стереть комментарий' href='<?= $_SITEURL; ?>/wp-content/plugins/purgatory/delete_comment.php?id=".$_id."'>x</a>]</div>";
+        $comments_output .= "<div style='margin-top:4px;'><span class='gr' title='".$_date."'>".$_author.":&nbsp; </span><span class='c_body'>".$_comment."</span> [<a title='стереть комментарий' href='#' onclick='deletecomment(".$_id.");'>x</a>]</div>";
     }
 ?>
 
@@ -52,7 +52,6 @@ $result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U
         parent.html(html);
       
       }  });
-      
     }
 
     if (name=='black')
@@ -127,22 +126,17 @@ function sendblack_remove(id)
     ajax.post("<?= $_SITEURL; ?>/wp-content/plugins/purgatory/black_vote_remove.php?id="+id);
    }
 
-function sendcomment()
+function deletecomment(id)
    {
-    var myelemname = "comment";
-    var mydiv = document.getElementById(myelemname);
-    ajax.post("<?= $_SITEURL; ?>/wp-content/plugins/purgatory/add_comment.php", function(html){ mydiv.textContent=html;},"");
-    mydiv.value = "";
+	var myelemname = "divToUpdate";
+	var mydiv = document.getElementById(myelemname);
+	ajax.post(
+		"http://cartoonbank.ru/wp-content/plugins/purgatory/delete_comment.php?id="+id, 
+		function(reply){ jQuery('#divToUpdate').html(reply);});
    }
-
-function deletecomment()
-   {
-    var myelemname = "comment";
-    var mydiv = document.getElementById(myelemname);
-    ajax.post("<?= $_SITEURL; ?>/wp-content/plugins/purgatory/add_comment.php", function(html){ mydiv.textContent=html;},"");
-    mydiv.value = "";
-   }
-
+   //jQuery('#divToUpdate').html('3<b>3</b>3')
+   //mydiv.innerHTML=reply;
+   // mydiv.textContent=reply; yes
 </script>
 
 <style type="text/css">
@@ -537,25 +531,18 @@ if ($already_voted){$current_visibility_class = "radioSetOff";}else{$current_vis
     <div class="box5"><br>
     <b>50 последних комментариев редакторов:</b>
         <div id="commentsform">
-        <? //echo("<pre>вы пишете от юзера:".print_r($current_user->last_name,true)."</pre>"); ?>
             <form action="<?= $_SITEURL; ?>/wp-content/plugins/purgatory/add_comment.php" method="post" id="commentform">
             пишите тут, нажмите кнопку:<br />
-            
             <textarea id="comment" name="comment" id="comment" cols="60" rows="3" tabindex="4"></textarea>
-          
             <p>
             <input name="submit" type="submit" value="послать">
             <input type="hidden" name="cartoon_id" value="1000">
             <input type="hidden" name="author_id" value="<? echo ($current_user->id); ?>">
-            
             </p>
             <input type="hidden" id="_wp_unfiltered_html_comment" name="_wp_unfiltered_html_comment" value="5a3ab88268"><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="8bd460432a"></p>
             </form>
         </div>
-
         <div id="divToUpdate" style="padding:2px;font-size:0.9em;background-color:#FFFFD7;"><? echo ($comments_output) ?></div>
-
-
 </div>
 
     
@@ -576,7 +563,8 @@ if ($already_voted){$current_visibility_class = "radioSetOff";}else{$current_vis
 <script type="text/javascript">
 
     jQuery(document).ready(function($){ 
-        // bind form using ajaxForm 
+
+		// bind form using ajaxForm 
         $('#commentform').ajaxForm({ 
             // target identifies the element(s) to update with the server response 
              target: '#divToUpdate', 
@@ -590,7 +578,7 @@ if ($already_voted){$current_visibility_class = "radioSetOff";}else{$current_vis
         });
     });
 
-    function successResponse(text)
+	function successResponse(text)
     {
         if (text!='')
         {
