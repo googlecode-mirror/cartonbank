@@ -359,6 +359,7 @@ $sql = "SELECT
 				WHERE wp_product_list.active = 1
 				AND wp_product_list.category != 666
 				AND wp_product_list.visible = 1
+				AND wp_product_list.approved = 1
 				AND wp_fsr_user.post = wp_product_list.id 
 				AND wp_product_list.brand = wp_product_brands.id 
 				".$_br_filter."
