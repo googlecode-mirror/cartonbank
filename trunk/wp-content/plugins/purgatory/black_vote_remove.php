@@ -1,9 +1,10 @@
 <?php
-fw("inin");
+//fw("inin");
 
+require_once("../../../wp-config.php");
 include("config.php");
 
-fw("333");
+//fw("333");
 
 $ip = 'none';
 if (isset($_GET['ip']))
@@ -11,7 +12,7 @@ if (isset($_GET['ip']))
 elseif (isset($_SERVER['REMOTE_ADDR']) and $_SERVER['REMOTE_ADDR'] != '')
 	{$ip=$_SERVER['REMOTE_ADDR'];}
 
-fw("\n\r _GET['id']=".$_GET['id']);
+//fw("\n\r _GET['id']=".$_GET['id']);
 
 if($_POST['id'] or $_GET['id'])
 {
@@ -29,9 +30,9 @@ elseif (isset($_GET['id']))
 	$row=mysql_fetch_array($result);
 	$black_value=$row['black'];
 
-fw("\n\r up_value=".$black_value);
+//fw("\n\r up_value=".$black_value);
 	$sql = "update wp_product_list set visible=1 where id='$id'";
-	fw("\n\r sql=".$sql);
+	//fw("\n\r sql=".$sql);
 	mysql_query( $sql);
 
 	echo $black_value;
