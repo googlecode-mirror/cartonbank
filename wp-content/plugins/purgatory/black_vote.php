@@ -1,6 +1,7 @@
 <?php
 //fw("inin");
 
+require_once("../../../wp-config.php");
 include("config.php");
 
 $ip = 'none';
@@ -41,10 +42,9 @@ elseif (isset($_GET['id']))
 		if ($black_value >= $limit_black) // 2 плюса - проходит, 3 минуса - не проходит, 1 чёрн. метка
 		{
 			$sql = "update wp_product_list set visible=0 where id='$id'";
-			fw("\n\r sql=".$sql);
+			//fw("\n\r sql=".$sql);
 			mysql_query( $sql);
 		}
-
 
 	echo $black_value;
 
