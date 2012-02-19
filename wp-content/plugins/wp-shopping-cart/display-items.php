@@ -300,7 +300,7 @@
             $sql_purgery = "insert into al_editors_votes (image_id, up, down) values ('".$new_id."','0','0')";
             $wpdb->query($sql_purgery);
 
-            if (get_option('editors_notification_send')!='1') // todo remove!
+            if (get_option('editors_notification_send')=='1') 
             {
                 $Current_ID = $current_user->id;
 
