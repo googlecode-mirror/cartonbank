@@ -89,7 +89,7 @@ $tagsarray = get_cartoon($id);
 <?
 function get_words($word)
 {
-	$url = 'http://wordassociations.ru/search?hl=ru&q='.$word.'&button=%D0%9F%D0%BE%D0%B8%D1%81%D0%BA'; 
+	$url = 'http://wordassociations.ru/search?hl=ru&w='.$word.'&button=%D0%9F%D0%BE%D0%B8%D1%81%D0%BA'; 
 	$contents = file_get_contents($url); 
 	$tag="a";
 	return (getTextBetweenTags($tag, $contents, $strict=0));
