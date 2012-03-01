@@ -61,7 +61,7 @@ if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_erro
 echo "<div style='vertical-align:top;width:500px;'><div><h3>Продажи работ с ноября 2010</h3></div>";
 echo "<div style='vertical-align:top;width:500px;'>На этой странице в реальном времени показываются все продажи по факту скачивания файлов. Количество ваших продаж на странице '<a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php'>Заработано</a>' обычно меньше, так как указывается с задержкой на время прихода денег в бухгалтерию Картунбанка.</div>";
 ?>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/spreadsheet/tq?key=0AtPperB2fdv5dDZDdEk2cEtNNkpWYXhfVWVHdFM0NUE&transpose=0&headers=0&merge=COLS&range=C3%3AC18%2CT3%3AT18&gid=0&pub=1","options":{"reverseCategories":false,"pointSize":"7","backgroundColor":"#FFFFFF","colors":["#c27ba0","#DC3912","#FF9900","#109618","#990099","#0099C6","#DD4477","#66AA00","#B82E2E","#316395"],"width":477,"vAxis":{"format":"#0.##########"},"logScale":false,"hAxis":{"maxAlternation":1,"maxAlternations":1},"hasLabelsColumn":true,"vAxes":[{"min":null,"title":null,"max":null,"viewWindowMode":"pretty","viewWindow":{}},{"viewWindowMode":"pretty","viewWindow":{}}],"title":"\u041f\u0440\u043e\u0434\u0430\u0436\u0438, \u0448\u0442","height":295,"legend":"none","reverseAxis":false,"isStacked":false},"state":{},"view":"{\"columns\":[0,1]}","chartType":"AreaChart","chartName":"Chart 3"} </script>
+<img src="https://docs.google.com/spreadsheet/oimg?key=0AtPperB2fdv5dDZDdEk2cEtNNkpWYXhfVWVHdFM0NUE&oid=3&zx=9oew9vmk41u6" /> 
 <?
 echo "<div><table style='width:500px;background-color:#E8E8E8;'>";
 echo "<tr><td style='text-align: center;'>автор</td><td style='text-align: center;'>продано штук</td><td style='text-align: center;'> % от работ автора</td><td style='text-align: center;'>всего работ автора</td></tr>";
@@ -69,7 +69,7 @@ foreach ($result as $row)
 {
 	echo "<tr class='alternate'>";
 	//todo
-	if ($current_user->wp_user_level ==10)
+	if ($current_user->wp_user_level >1)
 	{	
 		echo "<td class='username' style='padding:4px;width:200px;'><a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php&brand=".$row['id']."'>".$row['name']."</a></td><td class='posts' style='padding:4px;text-align:right;'>".$row['cntr']."</td><td style='padding:4px;text-align:right;'>".round($row['cntr']*100/$row['atotal'],2)."%</td><td style='padding:4px;text-align:right;'>".$row['atotal']."</td>";
 	}
