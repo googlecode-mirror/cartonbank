@@ -1006,6 +1006,12 @@ else
 
   $output .= "<tr>\n\r";
   $output .= "<td colspan='2'>";
+
+if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
+{
+$output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick='return conf();'><img src='../img/trash.gif' title='удалить'></a>";
+}
+
   $output .= "<a  href='admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$product['id']."' ><img src='".get_option('siteurl')."/img/reload.gif' title='Обновить иконку и слайд с водяными знаками'></a>";
    $output .= "&nbsp;<a href='index.php?admin_preview=true&product_id=".$product['id']."' style='float: left;' ><img src='../wp-content/plugins/wp-shopping-cart/images/download.gif' title='Скачать оригинальный файл' /></a>";
   
