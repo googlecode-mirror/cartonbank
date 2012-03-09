@@ -212,7 +212,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
     
     $_number = $product['id'];
     
-    $_description = nl2br(hilite(htmlspecialchars(stripslashes($product['description']),ENT_QUOTES)));
+    $_description = htmlspecialchars_decode(nl2br(hilite(htmlspecialchars(stripslashes($product['description']),ENT_QUOTES))));
     $_size = $product['width']."px X ".$product['height']."px;";
         $_x_sm = round(($product['width']/300)*2.54, 1);
         $_y_sm = round(($product['height']/300)*2.54, 1);
