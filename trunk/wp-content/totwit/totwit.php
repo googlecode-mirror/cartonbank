@@ -22,7 +22,7 @@ if (empty($_artist) | empty($_title))
 	}
 else
 	{
-		$_message = $_artist.': «'.$_title.'» '.' http://cartoonbank.ru/?page_id=29&cartoonid='.$_id.' '.$_description;
+		$_message = $_artist.': «'.$_title.'» '.' #cartoon http://cartoonbank.ru/?page_id=29&cartoonid='.$_id.' '.$_description;
 	}
 
 // cartoonbank.ru@gmail.com twitter:
