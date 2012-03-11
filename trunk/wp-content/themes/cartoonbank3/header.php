@@ -123,7 +123,7 @@ default:
 }
 ?>
 <center><div id="suphead" style="float:center;height:20px;width:960px;background-color:#668bb7;"><a href="http://cartoonbank.ru/?page_id=2440" style="color:white;font-size:1.2em;line-height:1.8;">футболки, кружки, календари, открытки, альбомы карикатур</a></div></center>
-
+ 
 <div id="header" style="height:90px;width:960px;">
 <div>
 
@@ -146,11 +146,13 @@ default:
 ?>
 
 <!-- <div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2420"><img src="http://cartoonbank.ru/img/b/2012gift.gif" style="width:185px;height:90px;border:0;"></a>
-</div> <div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a>
-</div>-->
+</div> -->
 
-<div style="width:185px;height:90px;float:left;"><a href="http://karikashop.com/#ecwid:category=1620996&mode=category&offset=0&sort=normal" target="_blank"><img src="http://cartoonbank.ru/img/b/karikashop.gif" style="width:185px;height:90px;border:0;"></a>
+<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a>
 </div>
+
+<!-- <div style="width:185px;height:90px;float:left;"><a href="http://karikashop.com/#ecwid:category=1620996&mode=category&offset=0&sort=normal" target="_blank"><img src="http://cartoonbank.ru/img/b/karikashop.gif" style="width:185px;height:90px;border:0;"></a>
+</div> -->
 </div>
 
 </div>
