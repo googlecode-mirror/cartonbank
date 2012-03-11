@@ -577,7 +577,7 @@ function nzshpcrt_submit_ajax()
        
   if(isset($_GET['rss']) and ($_GET['rss'] == "true") && ($_GET['action'] == "product_list"))
     {
-    $sql = "SELECT id, name, description, image FROM `wp_product_list` WHERE active=1 and visible=1 Order by id DESC LIMIT 40";
+    $sql = "SELECT id, name, description, image FROM `wp_product_list` WHERE active=1 and approved=1 and visible=1 Order by id DESC LIMIT 40";
     $product_list = $wpdb->get_results($sql,ARRAY_A);
     header("Content-Type: application/xml; charset=utf-8"); 
     header('Content-Disposition: inline; filename="cartoonbank.rss"');
