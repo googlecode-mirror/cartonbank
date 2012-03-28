@@ -11,7 +11,6 @@
 
 
     $tagsarray = get_cartoon($id);
-    //$tagsarray = array();
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -91,11 +90,7 @@
                 padding: 4px;
                 width: 400px;
             }
-             a{
-                font-weight: bold;
-                font-family: Arial;
-                text-align: left;
-            }
+
             .title{
                 display: block;
 				width: 120px;
@@ -113,8 +108,21 @@
             }
             .currenttags{
             }
+			.newtags{
+				clear:both;
+				margin-top:10px;
+			}
             #left{
             }
+			a.button{
+                font-family: Arial;
+                text-align: left;
+				text-decoration: none;
+				padding:4px;
+				background-color: #d9fdce;
+				color: grey;
+				font-size: 12px;
+			}
         </style>
     </head>
 
@@ -122,7 +130,11 @@
 		<div class="wrapper">        
             <div id="left" class="left">
                 <div style="margin-bottom: 1em;">
-                    <a href="?id=<?=($id+1);?>">Следующий рисунок</a>
+                    <a class="button" href="?id=<?=($id-1);?>"><< [Предыдущий рисунок]</a>&nbsp;
+                    <a class="button" href="?id=<?=rand(251, 16052);?>">[Случайный рисунок]</a>&nbsp;
+                    <a class="button" href="?id=<?=($id+1);?>">[Следующий рисунок] >></a>&nbsp;
+                    <a class="button" href="http://cartoonbank.ru/ales/wordassociations/emotionslist.html">[Список эмоций]</a>&nbsp;
+
                 </div>
 
 				<div class="currenttags">
@@ -145,13 +157,13 @@
             <div class="newtags">
                 <?
                     //echo "<span class='t' onclick='sendup(this.innerText,".$id.");return false;'>test_tag</span> ";
-//                    if (count($tagsarray)>0)
-//                    {
-//                        foreach ($tagsarray as $key => $value)
-//                        {
-//                            echo "<span class='t' onclick='sendup(jQuery(this).html(),".$id.");var z=\"\";jQuery(this).html(z);return false;'>".$value."</span> ";
-//                        }
-//                    }
+                    if (count($tagsarray)>0)
+                    {
+                        foreach ($tagsarray as $key => $value)
+                        {
+                            echo "<span class='t' onclick='sendup(jQuery(this).html(),".$id.");var z=\"\";jQuery(this).html(z);return false;'>".$value."</span> ";
+                        }
+                    }
                 ?>
             </div><!-- newtags -->
 
@@ -257,7 +269,7 @@
         $original_tags = $product['additional_description'];
 
 
-        $imagepath = "<img class='img' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."'>";
+        $imagepath = "<a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display-items.php&edid=".$id."' target='_blank' title='перейти в редактор рисунка'><img class='img' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' border='none'></a>";
 
         $_tags = nl2br(stripslashes($product['additional_description']));
         $_tags_array = explode(',',$_tags);
@@ -265,6 +277,7 @@
         {
             $word = urlencode(trim($value));
             $out = "";//get_words($word); // download array of associations
+            $out = get_words($word); // download array of associations
             if (count($out)>36)
             {
                 //$out = array_slice($out,37,25); // trancate array to meaningfil words
@@ -272,7 +285,6 @@
             }
 
         }
-        //pokazh ($output);
 
         //unique
         $output = array_unique($output);
