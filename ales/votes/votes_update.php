@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 
 if (!isset($_GET['update']) || !is_numeric($_GET['update']))
 {
@@ -35,8 +35,10 @@ while($row=mysql_fetch_array($result))
 		$votes = $row['votes'];
 		$sum = $row['sum'];
 		$avg = $sum/$votes;
+		$rate = ($sum/$votes)*sqrt(sqrt($votes));
 
 	$sql_insert = "update wp_product_list set votes=$votes, votes_sum=$sum where id=$id";
+	$sql_insert = "update wp_product_list set votes=$votes, votes_sum=$sum, votes_rate=$rate where id=$id";
 		//pokazh ($sql_insert);
 
 	$res = mysql_query($sql_insert);

@@ -40,8 +40,8 @@ function product_display_paginated($product_list, $group_type, $group_sql = '', 
 
 if ($orderby == '')
     {
-        $orderby = " (`wp_product_list`.`votes_sum`/`wp_product_list`.`votes`)*SQRT(SQRT(`wp_product_list`.`votes`)) DESC ";//best
-        //$orderby = " (`wp_product_list`.`votes_sum`/`wp_product_list`.`votes`) DESC, `wp_product_list`.`votes` DESC ";//best
+        //$orderby = " (`wp_product_list`.`votes_sum`/`wp_product_list`.`votes`)*SQRT(SQRT(`wp_product_list`.`votes`)) DESC ";//best
+        $orderby = " votes_rate DESC ";
     }
 else
     {
@@ -116,14 +116,18 @@ else
         {
             // All artists:
 
-        $sql = "SELECT `wp_product_list`.image, `wp_product_list`.id, `wp_product_list`.description, `wp_product_list`.name, `wp_product_list`.additional_description, `wp_product_list`.l1_price, `wp_product_list`.l2_price, `wp_product_list`.l3_price, `wp_product_list`.not_for_sale, `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` AS brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ". $colorfilter. $exclude_category_sql. $approved_or_not. " AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`   ORDER BY ".$orderby." LIMIT ".$offset.",".$items_on_page;
+        //$sql = "SELECT `wp_product_list`.image, `wp_product_list`.id, `wp_product_list`.description, `wp_product_list`.name, `wp_product_list`.additional_description, `wp_product_list`.l1_price, `wp_product_list`.l2_price, `wp_product_list`.l3_price, `wp_product_list`.not_for_sale, `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` AS brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ". $colorfilter. $exclude_category_sql. $approved_or_not. " AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`   ORDER BY ".$orderby." LIMIT ".$offset.",".$items_on_page;
+
+        $sql = "SELECT `wp_product_list`.image, `wp_product_list`.id, `wp_product_list`.description, `wp_product_list`.name, `wp_product_list`.additional_description, `wp_product_list`.l1_price, `wp_product_list`.l2_price, `wp_product_list`.l3_price, `wp_product_list`.not_for_sale, `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` AS brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ". $colorfilter. $exclude_category_sql. $approved_or_not. " AND `wp_product_list`.`visible` = '1' AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`   ORDER BY ".$orderby." LIMIT ".$offset.",".$items_on_page;
 
         }
         else
         { 
             // Single Artist
 
-        $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` as brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' ".$colorfilter.$exclude_category_sql.$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY ".$orderby." LIMIT ".$offset.",".$items_on_page; 
+        //$sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` as brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' ".$colorfilter.$exclude_category_sql.$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY ".$orderby." LIMIT ".$offset.",".$items_on_page; 
+        
+        $sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` as brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' ".$colorfilter.$exclude_category_sql.$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY ".$orderby." LIMIT ".$offset.",".$items_on_page;
 
         
         }
@@ -135,8 +139,9 @@ else
                         //echo("<pre>_cartoon_id ".print_r($_GET['cartoonid'],true)."</pre>");
                         $_cartoon_id = $_GET['cartoonid'];
 
-                        $search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = ".$_cartoon_id.$approved_or_not." AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' ".$exclude_category_sql." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` ORDER BY ".$orderby; 
-                    
+                        //$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = ".$_cartoon_id.$approved_or_not." AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' ".$exclude_category_sql." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` ORDER BY ".$orderby; 
+                        $search_sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = ".$_cartoon_id.$approved_or_not." AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' ".$exclude_category_sql." AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` ORDER BY ".$orderby; 
+
                     $sql = $search_sql;
                     }
 
@@ -148,6 +153,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 
 
         // Union to show tema_dnya picture first
+        /*
         $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid,`wp_product_brands`.`avatar_url` AS avatarurl,  `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria 
         FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories`
         WHERE `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
@@ -170,7 +176,31 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
         AND `wp_item_category_associations`.`category_id`='777'  
         AND `wp_product_categories`.`id`=777 
         and wp_product_list.id not in (SELECT id FROM tema_dnya WHERE DATETIME = DATE( NOW( ) ) )";
-
+        */
+        
+// Union to show tema_dnya picture first
+        $sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl,  `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria 
+        FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_brands`, `wp_product_categories`
+        WHERE `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
+        AND `wp_product_brands`.`id` = `wp_product_list`.`brand` 
+        AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` 
+        AND  wp_product_list.id = (select id from tema_dnya where DATETIME = DATE( NOW( ) ) ) LIMIT 1
+        UNION
+        SELECT `wp_product_list`.*, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria 
+        FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_brands`, `wp_product_categories`
+        WHERE `wp_product_list`.`active`='1'  
+        AND `wp_item_category_associations`.`category_id` != '666'  
+        AND `wp_product_list`.`approved` = '1'  
+        AND `wp_product_list`.`tema_dnya_approved` = '1'  
+        AND `wp_product_list`.`visible`='1' 
+        AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
+        AND `wp_product_brands`.`id` = `wp_product_list`.`brand` 
+        AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` 
+        AND `wp_item_category_associations`.`category_id`='777'  
+        AND `wp_product_categories`.`id`=777 
+        and wp_product_list.id not in (SELECT id FROM tema_dnya WHERE DATETIME = DATE( NOW( ) ) )";
+       
+        
                             //pokazh($sql,"");
 }
 
@@ -220,7 +250,8 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
 
     $_size_warning = '';
     if ($product['height']<800 || $product['width']<800)
-        $_size_warning = "<div style=\'float:left;width:286px;padding-top:8px;font-size:0.8em;\'><a style=\'color:red;\' href=\'".get_option('siteurl')."/?page_id=771\'>Внимание! Размеры файла<br />ограничивают применение!</a></div>";
+        //$_size_warning = "<div style=\'float:left;width:286px;padding-top:8px;font-size:0.8em;\'><a style=\'color:red;\' href=\'".get_option('siteurl')."/?page_id=771\'>Внимание! Размеры файла<br />ограничивают применение!</a></div>";
+        $_size_warning="";
 
 
     if (isset($product['brandid']))
@@ -260,6 +291,11 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
     $_tags = $_tags_imploded;
 
     $_sharethis_html = "<div id=\'share_this\' style=\'line-height:200%;\'></div>";
+
+	$_dimensions_html = "<div id='dimensions'><img src='".get_option('siteurl')."/img/ldng.gif'></div>";
+	$_dimensions_html = str_replace("\"","\'",$_dimensions_html);
+    $_dimensions_html = str_replace("'","\'",$_dimensions_html);
+
 
     $_rating_html = "<div id='star_rating'><img src='".get_option('siteurl')."/img/ldng.gif'></div>";
     $_rating_html = str_replace("\"","\'",$_rating_html);
@@ -304,7 +340,10 @@ else
     {
         $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name." $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
-    $_bigpictext = "<b>Категория: </b><br />".$_category."<br /><br /><b>Описание: </b> ".$_description."<br /><br /><b>Тэги: </b><br />".$_tags."<br /><br /><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><br /><b>Размер:</b><br />".$_size."<br /><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b>Формат: </b>".$_file_format."<br /><br /><b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
+    //$_bigpictext = "<b>Категория: </b><br />".$_category."<br /><br /><b>Описание: </b> ".$_description."<br /><br /><b>Тэги: </b><br />".$_tags."<br /><br /><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><br /><b>Размер:</b><br />".$_size."<br /><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b>Формат: </b>".$_file_format."<br /><br /><b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
+
+    $_bigpictext = "<b>Категория: </b><br />".$_category."<br /><br /><b>Описание: </b> ".$_description."<br /><br /><b>Тэги: </b><br />".$_tags."<br /><br /><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><br /><b>Размер:</b><br />".$_dimensions_html."<br /><br /><b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
+    
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\' border=0 alt=\'".$_bigpicimgalt."\' />";
 
     if($product['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
@@ -356,13 +395,15 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
 
     $jq_stars = ' get_5stars(); ';
 
+    $jq_dimensions = ' get_dimensions(); ';
+
     $share_this = ' get_share_this(); ';
 
     $add_hash_2url = ' change_url(); ';
 
     $get_favorite = ' get_fave(); ';
 
-    $javascript_functions .= " function get_item".$counter."() { ".$vstavka.$jq_stars.$get_favorite.$share_this.$add_hash_2url." } "; 
+    $javascript_functions .= " function get_item".$counter."() { ".$vstavka.$jq_stars.$jq_dimensions.$get_favorite.$share_this.$add_hash_2url." } "; 
 
 
     

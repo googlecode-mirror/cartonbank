@@ -54,9 +54,10 @@
 	GROUP BY 1
 	ORDER BY 7 DESC, 5 DESC";
 */  
-    $sql = "SELECT wp_product_list.id AS ID, wp_product_list.image AS image, wp_product_list.name AS title, wp_product_brands.name AS author, wp_product_list.votes AS votes, wp_product_list.votes_sum AS points, (
-            wp_product_list.votes_sum / wp_product_list.votes
-            ) * SQRT( wp_product_list.votes ) AS average
+    $sql = "SELECT wp_product_list.id AS ID, wp_product_list.image AS image, 
+            wp_product_list.name AS title, wp_product_brands.name AS author, 
+            wp_product_list.votes AS votes, wp_product_list.votes_sum AS points, 
+            wp_product_list.votes_rate AS average
             FROM wp_product_list, wp_product_brands
             WHERE wp_product_list.active =1
             AND wp_product_list.visible =1
