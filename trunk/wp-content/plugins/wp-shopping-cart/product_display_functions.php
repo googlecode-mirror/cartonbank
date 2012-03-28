@@ -243,15 +243,18 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
     $_number = $product['id'];
     
     $_description = htmlspecialchars_decode(nl2br(hilite(htmlspecialchars(stripslashes($product['description']),ENT_QUOTES))));
+    /*
     $_size = $product['width']."px X ".$product['height']."px;";
         $_x_sm = round(($product['width']/300)*2.54, 1);
         $_y_sm = round(($product['height']/300)*2.54, 1);
         $_sizesm = $_x_sm." см X ".$_y_sm." см";
-
+    
     $_size_warning = '';
     if ($product['height']<800 || $product['width']<800)
+    */
         //$_size_warning = "<div style=\'float:left;width:286px;padding-top:8px;font-size:0.8em;\'><a style=\'color:red;\' href=\'".get_option('siteurl')."/?page_id=771\'>Внимание! Размеры файла<br />ограничивают применение!</a></div>";
-        $_size_warning="";
+        
+        $_size_warning='';
 
 
     if (isset($product['brandid']))
