@@ -1,8 +1,8 @@
 img {
 border:none;
 }
-
-.hilite { background: #FFCC33; }
+.highlight,
+.hilite { background: #FFCC33; padding-left: 1px; padding-left: 1px;}
 
 div#categorydisplay{
 	display: block;
