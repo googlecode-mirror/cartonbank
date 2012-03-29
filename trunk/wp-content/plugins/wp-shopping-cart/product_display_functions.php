@@ -464,9 +464,10 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
         else
             $pagination .= " Всего: ".$totalitems. " рис.&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span><div style='float:right;'>".$button_sort."</div></div>";
     }//if($lastpage > 1)
-    if ($totalitems < 20)
-    //$pagination .= " Всего: ".$totalitems. "&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span></div>";
-    $pagination = " Всего найдено: ".$totalitems. ".&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span>";
+    if ($totalitems < 20){
+    if (isset($_REQUEST['cs'])&&$_REQUEST['cs']!=''){$filter_list = $_REQUEST['cs'];}else{$filter_list = '';}
+    $pagination .= " Всего найдено: ".$totalitems. ".&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span>";
+    }
 
     return $pagination;
 

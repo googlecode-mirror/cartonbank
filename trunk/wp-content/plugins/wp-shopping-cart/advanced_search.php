@@ -16,6 +16,22 @@
 <td style="text-align:right;">введите слова</td>
 <td><input type="text" value="" name="cs" size="25"></td>
 <td valign="top" rowspan="4"><input type="submit" name="search" value="&nbsp;Искать&nbsp;"></td></tr>
+
+<tr>
+<td style="text-align:right;vertical-align:middle ;">операторы:</td>
+<td colspan="2">
+<ul style="font-size:0.8em;vertical-align: top;">
+<li>оператор OR (ИЛИ): <pre class="programlisting">кот | собака</pre>
+</li>
+<li>оператор NOT (НЕ):
+<pre class="programlisting">
+кошка -кот
+кошка !кот
+</pre>
+</li>
+</ul>
+</td></tr>
+
 </tbody></table>
 
 </td></tr></tbody></table>
