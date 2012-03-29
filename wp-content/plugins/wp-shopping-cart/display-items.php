@@ -1486,7 +1486,6 @@
 
     wp_enqueue_script('jquery');
 
-
     if (current_user_can('manage_options') && isset($_POST['edid']) && is_numeric($_POST['edid']))
     {
         $_edid = $_POST['edid'];

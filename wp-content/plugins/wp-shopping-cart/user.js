@@ -156,7 +156,6 @@ function update_vote_count(prodid)
     }
   ajax.post("index.php",update_vote_count,"ajax=true&get_rating_count=true&product_id="+prodid);
   }
-  
 
 function submit_change_country()
   {
@@ -237,9 +236,15 @@ var cuid = document.getElementById('cuid').innerHTML;
 var oorl = location.href.split('?');
 var dimensionsurl = oorl[0]+"ales/get_dimensions.php?p="+cuid;
 var cuid = document.getElementById('cuid').innerHTML;
-//jQuery("#dimensions").html('n.a.');
 jQuery("#dimensions").load(dimensionsurl);
 });
+}
+
+function highlight(words){
+jQuery(document).ready(function() {
+    jQuery('#bigpictext').highlight(words);
+});
+    
 }
 
 function get_share_this()

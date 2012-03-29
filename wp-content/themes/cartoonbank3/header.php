@@ -11,40 +11,22 @@ $h = '';
 if (isset($_SERVER['QUERY_STRING']))
 {
 	// search word
-	if (isset($_GET['cs']) && $_GET['cs'])
+	if (isset($_REQUEST['cs']) && $_REQUEST['cs'])
 		{
-			$h = $h."(".$_GET['cs'].") ";
-		}
-	if (isset($_POST['cs']) && $_POST['cs'])
-		{
-			$h = $h."(".$_POST['cs'].") ";
+			$h = $h."(".$_REQUEST['cs'].") ";
 		}
 	//category
-	if (isset($_GET['category']) && $_GET['category'] && is_numeric($_GET['category']))
+	if (isset($_REQUEST['category']) && $_REQUEST['category'] && is_numeric($_REQUEST['category']))
 		{
-			$sql = "select name from wp_product_categories where id=".$_GET['category'];
-			$c = $wpdb->get_results($sql);
-			$cat = $c[0]->name;
-			$h = $h."(".$cat.") ";
-		}
-	if (isset($_POST['category']) && $_POST['category'])
-		{
-			$sql = "select name from wp_product_categories where id=".$_GET['category'];
+			$sql = "select name from wp_product_categories where id=".$_REQUEST['category'];
 			$c = $wpdb->get_results($sql);
 			$cat = $c[0]->name;
 			$h = $h."(".$cat.") ";
 		}
 	//brand
-	if (isset($_GET['brand']) && $_GET['brand'] && is_numeric($_GET['brand']))
+	if (isset($_REQUEST['brand']) && $_REQUEST['brand'] && is_numeric($_REQUEST['brand']))
 		{
-			$sql = "select name from wp_product_brands where id=".$_GET['brand'];
-			$c = $wpdb->get_results($sql);
-			$brand = $c[0]->name;
-			$h = $h."".$brand.". ";
-		}
-	if (isset($_POST['brand']) && $_POST['brand'])
-		{
-			$sql = "select name from wp_product_brands where id=".$_POST['brand'];
+			$sql = "select name from wp_product_brands where id=".$_REQUEST['brand'];
 			$c = $wpdb->get_results($sql);
 			$brand = $c[0]->name;
 			$h = $h."".$brand.". ";
@@ -55,7 +37,7 @@ $_SESSION['uid']= $current_user->ID;
 setcookie('uid', $_SESSION['uid']);
 if (current_user_can('manage_options'))
 			{
-				$_edid = "<a href=".get_option('siteurl')."/wp-admin/post.php?post=".$_GET['page_id']."&amp;action=edit target=_blank>edit</a>";
+				$_edid = "<a href=".get_option('siteurl')."/wp-admin/post.php?post=".$_REQUEST['page_id']."&amp;action=edit target=_blank>edit</a>";
 			}
 			else
 			{
@@ -77,6 +59,7 @@ if (current_user_can('manage_options'))
 <style type="text/css" media="screen">
 <!-- @import url( <?php bloginfo('stylesheet_url'); ?> ); -->
 </style>
+<script src="http://109.120.143.27/cb/wp-includes/js/jquery/jquery.highlight-3.js" type="text/javascript"></script>
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-127981-7']);
@@ -163,9 +146,9 @@ function selected_style()
 	echo " style='color:#668bb7'";
 }
 
-if (isset($_GET['new']) && is_numeric($_GET['new']))
+if (isset($_REQUEST['new']) && is_numeric($_REQUEST['new']))
 {
-	$_new=$_GET['new'];
+	$_new=$_REQUEST['new'];
 }
 else
 {
@@ -175,18 +158,18 @@ else
 
 <div id="navbarbottom">
 <ul> 
-<li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
-<li><a href="?page_id=29&amp;offset=0&amp;new=0"<? $_GET['page_id']=='29' & $_new==0? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
-<li><a href="?page_id=29&amp;offset=0&amp;new=1"<? $_GET['page_id']=='29'& $_new==1 ? selected_style():"" ?> title='показать новые'>Новое</a></li>
-<li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style():"" ?> title='художникам'>Авторам</a></li>
-<li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style():"" ?> title='покупателям'>Клиентам</a></li>
-<li><a href="?page_id=907"<? $_GET['page_id']=='907'? selected_style():"" ?> title='посетителям'>Зрителям</a></li>
-<li><a href="?page_id=1215"<? $_GET['page_id']=='1215'? selected_style():"" ?> title='наши партнёры'>Партнёры</a></li>
-<li><a href="?page_id=1260"<? $_GET['page_id']=='1260'? selected_style():"" ?> title='друзья и коллеги'>Друзья</a></li>
-<li><a href="?page_id=2"<? $_GET['page_id']=='2'? selected_style():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
-<li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
-<li><a href="?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
-<li><a href="?page_id=2041"<? $_GET['page_id']=='2041'? selected_style():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
+<li><a href="?page_id=95"<? $_REQUEST['page_id']=='95'? selected_style():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
+<li><a href="?page_id=29&amp;offset=0&amp;new=0"<? $_REQUEST['page_id']=='29' & $_new==0? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
+<li><a href="?page_id=29&amp;offset=0&amp;new=1"<? $_REQUEST['page_id']=='29'& $_new==1 ? selected_style():"" ?> title='показать новые'>Новое</a></li>
+<li><a href="?page_id=73"<? $_REQUEST['page_id']=='73'? selected_style():"" ?> title='художникам'>Авторам</a></li>
+<li><a href="?page_id=97"<? $_REQUEST['page_id']=='97'? selected_style():"" ?> title='покупателям'>Клиентам</a></li>
+<li><a href="?page_id=907"<? $_REQUEST['page_id']=='907'? selected_style():"" ?> title='посетителям'>Зрителям</a></li>
+<li><a href="?page_id=1215"<? $_REQUEST['page_id']=='1215'? selected_style():"" ?> title='наши партнёры'>Партнёры</a></li>
+<li><a href="?page_id=1260"<? $_REQUEST['page_id']=='1260'? selected_style():"" ?> title='друзья и коллеги'>Друзья</a></li>
+<li><a href="?page_id=2"<? $_REQUEST['page_id']=='2'? selected_style():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
+<li><a href="?page_id=942"<? $_REQUEST['page_id']=='942'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
+<li><a href="?page_id=976"<? $_REQUEST['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
+<li><a href="?page_id=2041"<? $_REQUEST['page_id']=='2041'? selected_style():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
 <li><? echo $_edid;?></li>
 </ul>
 </div>

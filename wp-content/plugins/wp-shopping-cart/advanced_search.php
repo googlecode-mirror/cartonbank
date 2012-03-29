@@ -13,15 +13,9 @@
 
 <table width="100%" cellpadding="4" cellspacing="0"><tbody>
 <tr>
-<td style="text-align:right;">со <b>всеми</b> словами</td>
+<td style="text-align:right;">введите слова</td>
 <td><input type="text" value="" name="cs" size="25"></td>
 <td valign="top" rowspan="4"><input type="submit" name="search" value="&nbsp;Искать&nbsp;"></td></tr>
-<tr>
-<td style="text-align:right;">с <b>точной фразой</b></td>
-<td colspan="2"><input type="text" value="" name="cs_exact" size="25"></td></tr>
-<tr>
-<td style="text-align:right;">c <b>любым</b> из слов</td>
-<td colspan="2"><input type="text" size="25" value="" name="cs_any"></td></tr>
 </tbody></table>
 
 </td></tr></tbody></table>

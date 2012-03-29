@@ -1,212 +1,16 @@
 <?php
 //ales
-function product_display_paginated($product_list, $group_type, $group_sql = '', $search_sql = '', $offset, $items_on_page, $orderby = '')
+function product_display_paginated($search_sql = '', $offset, $items_on_page)
 {
-    global $wpdb, $colorfilter;
-
+    global $wpdb, $colorfilter, $totalitems,$siteurl,$sword;
     $siteurl = get_option('siteurl');
-    $andcategory = "";
-    $category='';
-    if (isset($_GET['category']) && $_GET['category'] == '666')
-        {
-            $exclude_category_sql = " ";
-            $approved_or_not = "";
-        }
-        else
-        {
-            if  (!isset($_GET['cartoonid']))
-            {
-                $exclude_category_sql = " AND `wp_product_list`.`category` != '666' ";
-            }
-            else
-            {
-                $exclude_category_sql = " ";
-            }
-            $approved_or_not = " AND `wp_product_list`.`approved` = '1' ";
-        }
-
-    $num = 0;
-    if (isset($_GET['category']) && is_numeric($_GET['category']) && $_GET['category'] != 0)
-        {
-            $_category = "&category=".$_GET['category'];
-            $andcategory = " AND `wp_product_categories`.`id`=".$_GET['category']." ";
-        }
-        else
-        {
-            $_category = '';
-            $andcategory = "";
-        }
-    
-
-if ($orderby == '')
-    {
-        //$orderby = " (`wp_product_list`.`votes_sum`/`wp_product_list`.`votes`)*SQRT(SQRT(`wp_product_list`.`votes`)) DESC ";//best
-        $orderby = " votes_rate DESC ";
-    }
-else
-    {
-        $orderby = " `wp_product_list`.`id` DESC ";//latest
-    }
-
-
-// next page function
-    isset($_GET['offset'])&&is_numeric($_GET['offset'])?$_offset=$_GET['offset']:$_offset=0;
-    $_offset = $_offset + 20;
-
-    isset($_GET['brand'])&&is_numeric($_GET['brand'])?$_brand="&brand=".$_GET['brand']:$_brand='';
-
-    if (isset($_GET['color'])&&$_GET['color']=='color')
-        {$_color = '&color=color';}
-    elseif (isset($_GET['color'])&&$_GET['color']=='bw')
-        {$_color = '&color=bw';}
-    elseif (isset($_GET['color'])&&$_GET['color']=='all')
-        {$_color = '&color=all';}
-    else {$_color = '';}
-/*
-    if (isset($_GET['cs']))
-        {$_cs = "&cs=".htmlspecialchars($_GET['cs']);}
-    else
-        {$_cs = '';}
-*/
-    if (isset($_POST['cs']))
-        {$_cs = "&cs=".htmlspecialchars($_POST['cs']);}
-    else if (isset($_GET['cs']))
-        {$_cs = "&cs=".htmlspecialchars($_GET['cs']);}
-    else
-        {$_cs = '';}
-    
-    if (isset($_POST['cs_exact']))
-        {$_cs_exact = "&cs_exact=".htmlspecialchars($_POST['cs_exact']);}
-    else if (isset($_GET['cs_exact']))
-        {$_cs_exact = "&cs_exact=".htmlspecialchars($_GET['cs_exact']);}
-    else
-        {$_cs_exact = '';}
-
-    if (isset($_POST['cs_any']))
-        {$_cs_any = "&cs_any=".htmlspecialchars($_POST['cs_any']);}
-    else if (isset($_GET['cs_any']))
-        {$_cs_any = "&cs_any=".htmlspecialchars($_GET['cs_any']);}
-    else
-        {$_cs_any = '';}
-
-
-    $_new='';
-
-    
-    if (isset($_POST['new']) && is_numeric(($_POST['new'])))
-        {$_new = "&new=".htmlspecialchars($_POST['new']);}
-    else if (isset($_GET['new']) && is_numeric(($_GET['new'])))
-        {$_new = "&new=".htmlspecialchars($_GET['new']);}
-    else
-        {$_new = '';}
-
-
-    //$_offset = $_offset + 20;
-
     $javascript_functions ='';
-    $javascript_functions .='function next_page(){window.location = "'.get_option('siteurl').'/?page_id=29'.$_brand.$_color.$_new.$_category.$_cs.$_cs_exact.$_cs_any.'&offset='.$_offset.'";    var cuid = document.getElementById("cuid").innerHTML; document.getElementById("navbar").innerHTML = cuid; window.location.hash = "bububu="+cuid;     }';
-   
-    if ($search_sql != '')
-    {
-        $sql = $search_sql;
-    }
-    else
-    {
-        if (isset($_GET['brand']) && $_GET['brand'] == '')
-        {
-            // All artists:
+    
+    
 
-        //$sql = "SELECT `wp_product_list`.image, `wp_product_list`.id, `wp_product_list`.description, `wp_product_list`.name, `wp_product_list`.additional_description, `wp_product_list`.l1_price, `wp_product_list`.l2_price, `wp_product_list`.l3_price, `wp_product_list`.not_for_sale, `wp_product_files`.`width` , `wp_product_files`.`height` , `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` AS brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ". $colorfilter. $exclude_category_sql. $approved_or_not. " AND `wp_product_list`.`visible` = '1' AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`   ORDER BY ".$orderby." LIMIT ".$offset.",".$items_on_page;
-
-        $sql = "SELECT `wp_product_list`.image, `wp_product_list`.id, `wp_product_list`.description, `wp_product_list`.name, `wp_product_list`.additional_description, `wp_product_list`.l1_price, `wp_product_list`.l2_price, `wp_product_list`.l3_price, `wp_product_list`.not_for_sale, `wp_product_brands`.`id` AS brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` AS brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_brands` , `wp_product_categories` WHERE `wp_product_list`.`active` = '1' ". $colorfilter. $exclude_category_sql. $approved_or_not. " AND `wp_product_list`.`visible` = '1' AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`   ORDER BY ".$orderby." LIMIT ".$offset.",".$items_on_page;
-
-        }
-        else
-        { 
-            // Single Artist
-
-        //$sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` as brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' ".$colorfilter.$exclude_category_sql.$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY ".$orderby." LIMIT ".$offset.",".$items_on_page; 
-        
-        $sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` as brand, `wp_product_list`.`category` as category_id, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' ".$colorfilter.$exclude_category_sql.$approved_or_not." AND `wp_product_list`.`visible`='1' AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` $group_sql $andcategory ORDER BY ".$orderby." LIMIT ".$offset.",".$items_on_page;
-
-        
-        }
-    }
-                    // we inject here direct link to the image
-                    // $_GET['cartoonid'] : &cartoonid=666
-                    if(isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']) && $_GET['cartoonid']!='' )
-                    {
-                        //echo("<pre>_cartoon_id ".print_r($_GET['cartoonid'],true)."</pre>");
-                        $_cartoon_id = $_GET['cartoonid'];
-
-                        //$search_sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_files`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = ".$_cartoon_id.$approved_or_not." AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' ".$exclude_category_sql." AND `wp_product_list`.`file` = `wp_product_files`.`id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` ORDER BY ".$orderby; 
-                        $search_sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = ".$_cartoon_id.$approved_or_not." AND `wp_product_list`.`active`='1' AND `wp_product_list`.`visible`='1' ".$exclude_category_sql." AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id` ORDER BY ".$orderby; 
-
-                    $sql = $search_sql;
-                    }
-
-///pokazh($sql);
-
-if (isset($_GET['category']) && $_GET['category'] == '777')
-{
-    // Tema Dnya:
-
-
-        // Union to show tema_dnya picture first
-        /*
-        $sql = "SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid,`wp_product_brands`.`avatar_url` AS avatarurl,  `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria 
-        FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories`
-        WHERE `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
-        AND `wp_product_list`.`file` = `wp_product_files`.`id` 
-        AND `wp_product_brands`.`id` = `wp_product_list`.`brand` 
-        AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` 
-        AND  wp_product_list.id = (select id from tema_dnya where DATETIME = DATE( NOW( ) ) ) LIMIT 1
-        UNION
-        SELECT `wp_product_list`.*, `wp_product_files`.`width`, `wp_product_files`.`height`, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria 
-        FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_files`, `wp_product_brands`, `wp_product_categories`
-        WHERE `wp_product_list`.`active`='1'  
-        AND `wp_item_category_associations`.`category_id` != '666'  
-        AND `wp_product_list`.`approved` = '1'  
-        AND `wp_product_list`.`tema_dnya_approved` = '1'  
-        AND `wp_product_list`.`visible`='1' 
-        AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
-        AND `wp_product_list`.`file` = `wp_product_files`.`id` 
-        AND `wp_product_brands`.`id` = `wp_product_list`.`brand` 
-        AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` 
-        AND `wp_item_category_associations`.`category_id`='777'  
-        AND `wp_product_categories`.`id`=777 
-        and wp_product_list.id not in (SELECT id FROM tema_dnya WHERE DATETIME = DATE( NOW( ) ) )";
-        */
-        
-// Union to show tema_dnya picture first
-        $sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl,  `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria 
-        FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_brands`, `wp_product_categories`
-        WHERE `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
-        AND `wp_product_brands`.`id` = `wp_product_list`.`brand` 
-        AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` 
-        AND  wp_product_list.id = (select id from tema_dnya where DATETIME = DATE( NOW( ) ) ) LIMIT 1
-        UNION
-        SELECT `wp_product_list`.*, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`avatar_url` AS avatarurl, `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria 
-        FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_brands`, `wp_product_categories`
-        WHERE `wp_product_list`.`active`='1'  
-        AND `wp_item_category_associations`.`category_id` != '666'  
-        AND `wp_product_list`.`approved` = '1'  
-        AND `wp_product_list`.`tema_dnya_approved` = '1'  
-        AND `wp_product_list`.`visible`='1' 
-        AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` 
-        AND `wp_product_brands`.`id` = `wp_product_list`.`brand` 
-        AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` 
-        AND `wp_item_category_associations`.`category_id`='777'  
-        AND `wp_product_categories`.`id`=777 
-        and wp_product_list.id not in (SELECT id FROM tema_dnya WHERE DATETIME = DATE( NOW( ) ) )";
-       
-        
-                            //pokazh($sql,"");
-}
-
-
-
-    $product_list = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
+    $product_list = $GLOBALS['wpdb']->get_results($search_sql,ARRAY_A);
+    
+    //$totalitems =  count($product_list);
 
       if($product_list != null)
       {
@@ -243,18 +47,7 @@ if (isset($_GET['category']) && $_GET['category'] == '777')
     $_number = $product['id'];
     
     $_description = htmlspecialchars_decode(nl2br(hilite(htmlspecialchars(stripslashes($product['description']),ENT_QUOTES))));
-    /*
-    $_size = $product['width']."px X ".$product['height']."px;";
-        $_x_sm = round(($product['width']/300)*2.54, 1);
-        $_y_sm = round(($product['height']/300)*2.54, 1);
-        $_sizesm = $_x_sm." см X ".$_y_sm." см";
-    
-    $_size_warning = '';
-    if ($product['height']<800 || $product['width']<800)
-    */
-        //$_size_warning = "<div style=\'float:left;width:286px;padding-top:8px;font-size:0.8em;\'><a style=\'color:red;\' href=\'".get_option('siteurl')."/?page_id=771\'>Внимание! Размеры файла<br />ограничивают применение!</a></div>";
-        
-        $_size_warning='';
+    $_size_warning='';
 
 
     if (isset($product['brandid']))
@@ -337,13 +130,12 @@ else
 
     if ($logged)
     {
-        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."&nbsp;$klop<span id=\'thumb\' onclick=\'fave_it();\'>$klop<img src=\'http://cartoonbank.ru/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."&nbsp;$klop<span id=\'thumb\' onclick=\'fave_it();\'>$klop<img src=\'".$siteurl."/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
     else
     {
         $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name." $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
-    //$_bigpictext = "<b>Категория: </b><br />".$_category."<br /><br /><b>Описание: </b> ".$_description."<br /><br /><b>Тэги: </b><br />".$_tags."<br /><br /><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><br /><b>Размер:</b><br />".$_size."<br /><span style=\'color:#ACACAC;font-size:0.875em;\'>при печати 300dpi:<br />".$_sizesm."</span><br /><br /><b>Формат: </b>".$_file_format."<br /><br /><b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
 
     $_bigpictext = "<b>Категория: </b><br />".$_category."<br /><br /><b>Описание: </b> ".$_description."<br /><br /><b>Тэги: </b><br />".$_tags."<br /><br /><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><br /><b>Размер:</b><br />".$_dimensions_html."<br /><br /><b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
     
@@ -405,8 +197,17 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
     $add_hash_2url = ' change_url(); ';
 
     $get_favorite = ' get_fave(); ';
+    
+    if (isset($sword)&&$sword!=''){
+        $highlight = " highlight(\"".$sword."\"); ";
+    }
+    else{$highlight = "";}
+    
+    
 
-    $javascript_functions .= " function get_item".$counter."() { ".$vstavka.$jq_stars.$jq_dimensions.$get_favorite.$share_this.$add_hash_2url." } "; 
+    //$javascript_functions ='';
+    
+    $javascript_functions .= " function get_item".$counter."() { ".$vstavka.$highlight.$jq_stars.$jq_dimensions.$get_favorite.$share_this.$add_hash_2url." } "; 
 
 
     
@@ -427,7 +228,9 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
                 $counter = $counter + 1;
           }
           $output .= "</div>";
-          return "<script>get_item0();".$javascript_functions. "</script>" . " ". $output;
+          
+          $pagination = pagination($offset,$totalitems,$items_on_page);          
+          return "<script>get_item0();".$javascript_functions. "</script>" . " " . $pagination . $output;
   }
 
   // end function output first page
@@ -439,4 +242,260 @@ function get_random_image(){
     $sql = "SELECT `wp_product_list`.`id` FROM `wp_product_list` WHERE `active`='1' ".$colorfilter.$exclude_category_sql.$approved_or_not." AND `visible`='1' ORDER BY RAND(NOW()) LIMIT 1";
     $product_list = $wpdb->get_results($sql,ARRAY_A);
  }
+
+function pagination($offset,$totalitems,$items_on_page){
+     // PAGINATION
+     $page_id = $_GET['page_id'];
+     
+     $page = round($offset/$items_on_page)+1;
+
+        
+        if (isset($_REQUEST['new']) && $_REQUEST['new']!=1 )
+        {
+            $totalitems = 400;
+        }
+        
+        
+        $limit = $items_on_page;
+            if (isset($_GET['category'])&&is_numeric($_GET['category'])) {$catid=$_GET['category'];}else{$catid='';}
+
+        // Brand filter
+        if (isset($_GET['brand']) && is_numeric($_GET['brand']))
+        {
+            $_brand = $_GET['brand'];
+            $brand_group_sql = "&amp;brand=".$_brand;
+        }
+        elseif (isset($_POST['brand']) && is_numeric($_POST['brand']))
+        {
+            $_brand = $_POST['brand'];
+            $brand_group_sql = "&amp;brand=".$_brand;
+        }
+        else
+        {
+            $_brand = '';
+            $brand_group_sql = '';
+        }
+
+
+    
+    //$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$newfilter.$brand_group_sql."&amp;color=".$color.$__category.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&amp;offset=", $filter_list, $new, $brand_group_sql,$_category,$color_url);
+    
+    $_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?".get_url_vars()."offset=");
+    
+
+    if (isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']))
+    {
+        $output = "";
+    }
+    else
+    {
+        $output = "<div style='clear:both;'>".$_pages_navigation."</div>";
+    }
+    return $output;
+}
+
+function get_url_vars(){
+    $output = '';
+    foreach($_REQUEST as $key=>$val)
+    {
+        if ($key!='offset')
+        $output .= $key."=".urlencode($val)."&";
+    }
+    return htmlentities($output);
+}
+
+function add_or_change_parameter($parameter, $value) 
+ { 
+  $params = array(); 
+  $output = "?"; 
+  $firstRun = true; 
+  foreach($_GET as $key=>$val) 
+  { 
+   if($key != $parameter) 
+   { 
+    if(!$firstRun) 
+    { 
+     $output .= "&"; 
+    } 
+    else 
+    { 
+     $firstRun = false; 
+    } 
+    $output .= $key."=".urlencode($val); 
+   } 
+  } 
+  if(!$firstRun) 
+   $output .= "&"; 
+  $output .= $parameter."=".urlencode($value); 
+  return htmlentities($output); 
+ }
+
+function hilite($string)
+{
+    global $aKeywords;
+    if (count($aKeywords)==0)
+    {return $string;}
+    foreach ($aKeywords as $key => $value)
+    {
+        $string = preg_replace('/('.$value.')/ui', '<span class="hilite">$1</span>', $string); 
+    }
+    return $string;
+}
+
+function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1, $targetpage = "/", $pagestring = "?page=")
+{        
+    //function to return the pagination string
+    global $siteurl;
+    $filter_list='';
+
+    // if the image is single set totalitems to 1
+    if (isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']))
+    {$totalitems = 1;}
+
+    //defaults
+    if(!$adjacents) $adjacents = 1;
+    if(!$limit) $limit = 20;
+    if(!$page) $page = 1;
+    if(!$targetpage) $targetpage = "/";
+    
+    //other vars
+    $prev = $page - 1;                                    //previous page is page - 1
+    $next = $page + 1;                                    //next page is page + 1
+    $lastpage = ceil($totalitems / $limit);                //lastpage is = total items / items per page, rounded up.
+    $lpm1 = $lastpage - 1;                                //last page minus 1
+    
+    /* 
+        Now we apply our rules and draw the pagination object. 
+        We're actually saving the code to a variable in case we want to draw it more than once.
+    */
+    $pagination = "";
+    $margin = '0px';
+    $padding = '0px';
+    if($lastpage > 1)
+    {    
+        $pagination .= "<div class='pagination' style='padding-top:4px;'>";
+
+        //previous button
+        if ($page > 1) 
+            $pagination .= "<a href=\"".$targetpage. $pagestring. ($prev*$limit - $limit). "\">«</a> Страница: ";
+        else
+            $pagination .= "<span class=\"disabled\">«</span> Страница: ";    
+        
+        //pages    
+        if ($lastpage < 7 + ($adjacents * 2))    //not enough pages to bother breaking it up
+        {    
+            for ($counter = 1; $counter <= $lastpage; $counter++)
+            {
+                if ($counter == $page)
+                    $pagination .= "<span class=\"current\">$counter</span>";
+                else
+                    $pagination .= "<a href=\"" . $targetpage . $pagestring . ($counter*$limit - $limit) . "\">$counter</a>";                    
+            }
+        }
+        elseif($lastpage >= 7 + ($adjacents * 2))    //enough pages to hide some
+        {
+            //close to beginning; only hide later pages
+            if($page < 1 + ($adjacents * 3))        
+            {
+                for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++)
+                {
+                    if ($counter == $page)
+                        $pagination .= "<span class=\"current\">$counter</span>";
+                    else
+                        $pagination .= "<a href=\"" . $targetpage . $pagestring . ($counter*$limit - $limit) . "\">$counter</a>";                    
+                }
+                $pagination .= "<span class=\"elipses\">...</span>";
+                $pagination .= "<a href=\"" . $targetpage . $pagestring . ($lpm1*$limit - $limit) . "\">$lpm1</a>";
+                $pagination .= "<a href=\"" . $targetpage . $pagestring . ($lastpage*$limit - $limit) . "\">$lastpage</a>";        
+            }
+            //in middle; hide some front and some back
+            elseif($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2))
+            {
+                $pagination .= "<a href=\"" . $targetpage . $pagestring . "0\">1</a>";
+                $pagination .= "<a href=\"" . $targetpage . $pagestring . "20\">2</a>";
+                $pagination .= "<span class=\"elipses\">...</span>";
+                for ($counter = $page - $adjacents; $counter <= $page + $adjacents; $counter++)
+                {
+                    if ($counter == $page)
+                        $pagination .= "<span class=\"current\">$counter</span>";
+                    else
+                        $pagination .= "<a href=\"" . $targetpage . $pagestring . ($counter*$limit - $limit) . "\">$counter</a>";                    
+                }
+                $pagination .= "...";
+                $pagination .= "<a href=\"" . $targetpage . $pagestring . ($lpm1*$limit - $limit) . "\">$lpm1</a>";
+                $pagination .= "<a href=\"" . $targetpage . $pagestring . ($lastpage*$limit - $limit) . "\">$lastpage</a>";        
+            }
+            //close to end; only hide early pages
+            else
+            {
+                $pagination .= "<a href=\"" . $targetpage . $pagestring . "0\">1</a>";
+                $pagination .= "<a href=\"" . $targetpage . $pagestring . "20\">2</a>";
+                $pagination .= "<span class=\"elipses\">...</span>";
+                for ($counter = $lastpage - (1 + ($adjacents * 3)); $counter <= $lastpage; $counter++)
+                {
+                    if ($counter == $page)
+                        $pagination .= "<span class=\"current\">$counter</span>";
+                    else
+                        $pagination .= "<a href=\"" . $targetpage . $pagestring . ($counter*$limit - $limit) . "\">$counter</a>";                    
+                }
+            }
+        }
+        
+
+        //next button
+        if (isset($_REQUEST['new']) && $_REQUEST['new']==1)
+        {
+            $button_sort = "<a href='".$siteurl."/?".add_or_change_parameter('new','0')."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>показать избранное</a>";
+        }
+        else
+        {
+            $button_sort = "<a href='".$siteurl."/?".add_or_change_parameter('new','1')."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>сортировать по дате</a>";
+        }
+
+
+        if (isset($_REQUEST['cs'])&&$_REQUEST['cs']!=''){$filter_list = $_REQUEST['cs'];}else{$filter_list = '';}
+        
+        if ($page < $counter - 1) 
+            $pagination .= "<a href=\"" . $targetpage . $pagestring . ($next*$limit - $limit) . "\">»</a>";
+        else
+            $pagination .= "<span class=\"disabled\">»</span>";
+        if (isset($filter_list)&&$filter_list=='')
+            $pagination .= " Всего: ".$totalitems. "<div style='float:right;'>".$button_sort."</div></div>";
+        else
+            $pagination .= " Всего: ".$totalitems. " рис.&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span><div style='float:right;'>".$button_sort."</div></div>";
+    }//if($lastpage > 1)
+    if ($totalitems < 20)
+    //$pagination .= " Всего: ".$totalitems. "&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span></div>";
+    $pagination = " Всего найдено: ".$totalitems. ".&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span>";
+
+    return $pagination;
+
+}//function getPaginationString
+
+function ssearch($words){
+    $hostname = "127.0.0.1:9306";
+    $user = "mysql";
+
+    $bd = mysql_connect($hostname, $user) or die("Could not connect database. ". mysql_error());
+
+    //$searchQuery = "select id from wp1i where match('$words') OPTION  ranker=matchany, max_matches=1000";
+    $searchQuery = "select id from wp1i where match('$words') LIMIT 15000 OPTION  ranker=matchany, max_matches=1000";
+
+    $result = mysql_query($searchQuery);
+        if (!$result) {die('Invalid query: ' . mysql_error());}
+   
+    $id_list = "";
+       
+    while ($row = mysql_fetch_array ($result)) {
+        $id_list .= $row['id'].", ";
+    }
+
+    if (strlen($id_list>2))
+    $id_list = substr($id_list,0,-2);
+    
+    mysql_close($bd);
+
+    return $id_list;
+}
+
 ?>
