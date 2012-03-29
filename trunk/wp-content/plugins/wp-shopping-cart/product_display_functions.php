@@ -6,6 +6,7 @@ function product_display_paginated($search_sql = '', $offset, $items_on_page)
     $siteurl = get_option('siteurl');
     $javascript_functions ='';
     
+
     
 
     $product_list = $GLOBALS['wpdb']->get_results($search_sql,ARRAY_A);
@@ -203,12 +204,10 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
     }
     else{$highlight = "";}
     
-    
 
-    //$javascript_functions ='';
-    
     $javascript_functions .= " function get_item".$counter."() { ".$vstavka.$highlight.$jq_stars.$jq_dimensions.$get_favorite.$share_this.$add_hash_2url." } "; 
-
+    $_offset = $offset + 20;
+    $javascript_functions .=' function next_page(){window.location = "'.get_option('siteurl').'/?'.get_url_vars().'offset='.$_offset.'";    var cuid = document.getElementById("cuid").innerHTML; document.getElementById("navbar").innerHTML = cuid; window.location.hash = "bububu="+cuid;     }';
 
     
     $fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['image'];
@@ -301,10 +300,11 @@ function get_url_vars(){
         if ($key!='offset')
         $output .= $key."=".urlencode($val)."&";
     }
-    return htmlentities($output);
+    return $output;
+    //return htmlentities($output);
 }
 
-function add_or_change_parameter($parameter, $value) 
+function add_or_change_parameter($parameter='', $value='') 
  { 
   $params = array(); 
   $output = "?"; 
@@ -327,6 +327,7 @@ function add_or_change_parameter($parameter, $value)
   if(!$firstRun) 
    $output .= "&"; 
   $output .= $parameter."=".urlencode($value); 
+  //return $output; 
   return htmlentities($output); 
  }
 
