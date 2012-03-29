@@ -1,6 +1,7 @@
 <?
 global $wpdb, $totalitems, $sword;
 $sword = '';
+$searchdonebutnothingfound = false;
 //var_dump($_REQUEST);
 
 // Variables
@@ -21,10 +22,15 @@ $approved_or_not= " AND `wp_product_list`.`approved`='1' ";
 if (isset($_REQUEST['cs'])&&!empty($_REQUEST['cs'])){
     $sword = mysql_escape_string($_REQUEST['cs']);
     $id_list = ssearch ($sword);
-    $search_keywords_filter = " AND `wp_product_list`.`id` in (".$id_list.") ";}else {$search_keywords_filter ="";
+    if (strlen($id_list)>4){
+    $search_keywords_filter = " AND `wp_product_list`.`id` in (".$id_list.") ";}
+    else {$search_keywords_filter ="";$searchdonebutnothingfound=true;}
+}
+    else {$search_keywords_filter ="";
 }
 
 // FINAL SQL
+
 $sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_categories`.`name` as kategoria, `wp_product_list`.`category` as category_id FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cartoonid_filter . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  $orderBy LIMIT ".$offset.",".$items_on_page; 
 
 // FINAL sql FOR ТЕМА ДНЯ
@@ -34,8 +40,10 @@ $sql="SELECT `wp_product_list`.*, `wp_product_brands`.`id` as brandid, `wp_produ
 
 // COUNT total number of images for this query
 $sql_count_total = "SELECT COUNT(`wp_product_list`.id) as count FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cartoonid_filter . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`"; 
+if (!$searchdonebutnothingfound){
 $count = $wpdb->get_results($sql_count_total,ARRAY_A);
 $totalitems = $count[0]['count'];
+}
 
 //output top of the page with main image
 $_bigpicstrip = '';
@@ -51,20 +59,26 @@ $_bottomstriptext = '';
 
 
 // output the complete page with pictures:
-echo product_display_paginated ($sql,$offset,$items_on_page);
 
+if (!$searchdonebutnothingfound){
+echo product_display_paginated ($sql,$offset,$items_on_page);
+}
+else{
+    echo "<div>По вашему поиску ничего не найдено. Пожалуйста, попробуйтие другие термины.</div>";
+}
 
 
 //test output
+/*
 var_dump($sql);
 echo "<br><br>";
 var_dump($sql_count_total);
-
-
-
-
-
 pokazh($sword);
+*/
+
+
+
+
 ?>
 
 
