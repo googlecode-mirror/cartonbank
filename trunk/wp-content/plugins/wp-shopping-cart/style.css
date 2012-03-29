@@ -2,7 +2,7 @@ img {
 border:none;
 }
 .highlight,
-.hilite { background: #FFCC33; padding-left: 1px; padding-left: 1px;}
+.hilite { background: #FFCC33; padding-left: 1px; padding-right: 1px;}
 
 div#categorydisplay{
 	display: block;
