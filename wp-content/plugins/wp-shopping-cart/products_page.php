@@ -96,3 +96,55 @@ get_share_this();
 });
 //-->
 </script>
+
+
+
+<?
+
+// bio    
+$_artist="художник";
+$bio = 'Автор исключительно талантливый художник. Больше нам про него пока ничего не известно.<br />Ведём бесконечные переговоры об обновлении этой информации.';
+// Get the Brand (author) data
+if (isset($brandid) && is_numeric($brandid)) 
+{
+    $brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
+    $brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
+
+    $_artist = $brand_result[0]['name'];
+    
+    if (isset($brand_result[0]['bio_post_id']))
+    {
+        $bio_sql = "SELECT `post_content` FROM `wp_posts` WHERE id = ".$brand_result[0]['bio_post_id'] ; // todo: use page ID!
+        $bio = $GLOBALS['wpdb']->get_results($bio_sql,ARRAY_A);
+        $bio = $bio[0]['post_content'];
+    }
+}
+?>
+
+<script src="http://cartoonbank.ru/ales/colorbox/jquery.colorbox-min.js"></script>
+<script>
+    jQuery(document).ready(function(){
+        jQuery("a[rel='slideshow']").colorbox({slideshow:true});
+        jQuery(".example8").colorbox({width:"50%", inline:true, href:"#hidden_bio"});
+        jQuery(".cb_emailform").colorbox({width:"50%", inline:true, href:"#emailform1"});
+    });
+</script>
+
+<div style='display:none'>
+    <div id='hidden_bio' style='text-align:left; padding:10px; background:#fff;'>
+        <? echo ($bio); ?>
+        <br>
+        <p><a class='cb_emailform' href="#">Отправить письмо</a></p>
+    </div>
+</div>
+
+<div style='display:none'>
+    <div id='emailform1' style='text-align:left; padding:10px; background:#fff;'>
+            <h1>Письмо автору Картунбанка</h1>
+            <form method='post' action='http://cartoonbank.ru/?page_id=29&amp;brand=<? echo $brandid;?>&amp;bio=1'>Email для обратной связи: <input name='email' type='text' style='width:100%;'/><br /><br />
+            <textarea style='width:100%;' name='message' rows='15' cols='30'>Уважаемый <? echo $_artist;?>!</textarea><br />
+            напишите любую цифру: <input type='text' name='klop' value=''>
+            <input type='submit' value='Отправить письмо' class='borders'/>
+            </form>
+    </div>
+</div>
