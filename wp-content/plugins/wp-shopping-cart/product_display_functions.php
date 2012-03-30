@@ -464,7 +464,7 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
         if (isset($filter_list)&&$filter_list=='')
             $pagination .= " Всего: ".$totalitems. "<div style='float:right;'>".$button_sort."</div></div>";
         else
-            $pagination .= " Всего: ".$totalitems. " рис.&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".$filter_list."</span><div style='float:right;'>".$button_sort."</div></div>";
+            $pagination .= " Всего: ".$totalitems. " рис.&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".stripslashes($filter_list)."</span><div style='float:right;'>".$button_sort."</div></div>";
     }//if($lastpage > 1)
     if ($totalitems < 20){
     if (isset($_REQUEST['cs'])&&$_REQUEST['cs']!=''){$filter_list = $_REQUEST['cs'];}else{$filter_list = '';}
