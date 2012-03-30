@@ -59,7 +59,6 @@ if (current_user_can('manage_options'))
 <style type="text/css" media="screen">
 <!-- @import url( <?php bloginfo('stylesheet_url'); ?> ); -->
 </style>
-href=".get_option('siteurl')."/wp-admin
 <script src="<?echo get_option('siteurl');?>/wp-includes/js/jquery/jquery.highlight-3.js" type="text/javascript"></script>
 <script type="text/javascript">
   var _gaq = _gaq || [];
