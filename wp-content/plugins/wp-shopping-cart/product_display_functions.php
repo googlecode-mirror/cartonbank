@@ -200,7 +200,8 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
     $get_favorite = ' get_fave(); ';
     
     if (isset($sword)&&$sword!=''){
-        $highlight = " highlight(\"".$sword."\"); ";
+        //$highlight = " highlight(\"".$sword."\"); ";
+         $highlight = " highlight(\"".htmlentities($sword, ENT_QUOTES)."\"); ";
     }
     else{$highlight = "";}
     
