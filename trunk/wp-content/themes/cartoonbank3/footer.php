@@ -54,22 +54,7 @@ else
 <?php do_action('wp_footer'); ?>
 <br /><br /><br /><br /><br />
 
-<!-- Yandex.Metrika counter -->
-<div style="display:none;"><script type="text/javascript">
-(function(w, c) {
-(w[c] = w[c] || []).push(function() {
-try {
-w.yaCounter5781658 = new Ya.Metrika(5781658);
-yaCounter5781658.clickmap(true);
-yaCounter5781658.trackLinks(true);
-
-} catch(e) { }
-});
-})(window, 'yandex_metrika_callbacks');
-</script></div>
-<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script>
-<noscript><div><img src="//mc.yandex.ru/watch/5781658" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+<!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter5781658 = new Ya.Metrika({id:5781658, clickmap:true, trackLinks:true, trackHash:true, webvisor:true}); } catch(e) {} }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/5781658" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
 
 <!--Openstat-->
 <span id="openstat2196559"></span>
