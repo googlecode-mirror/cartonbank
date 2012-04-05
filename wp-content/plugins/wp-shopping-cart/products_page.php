@@ -21,6 +21,7 @@ $approved_or_not= " AND `wp_product_list`.`approved`='1' ";
 //GET search id_list
 if (isset($_REQUEST['cs'])&&!empty($_REQUEST['cs'])){
     $sword = mysql_escape_string($_REQUEST['cs']);
+	save_search_terms($sword);
     $id_list = ssearch ($sword);
     if (strlen($id_list)>4){
     $search_keywords_filter = " AND `wp_product_list`.`id` in (".$id_list.") ";}
@@ -117,6 +118,39 @@ if (isset($brandid) && is_numeric($brandid))
         $bio_sql = "SELECT `post_content` FROM `wp_posts` WHERE id = ".$brand_result[0]['bio_post_id'] ; // todo: use page ID!
         $bio = $GLOBALS['wpdb']->get_results($bio_sql,ARRAY_A);
         $bio = $bio[0]['post_content'];
+    }
+}
+
+
+function save_search_terms($terms)
+{
+    if (isset($terms) && $terms!='')
+    {
+        $_header = $_SERVER['HTTP_USER_AGENT'];
+        $_remote_ip = $_SERVER['REMOTE_ADDR'];
+
+        if (!(strstr($_header,'bot') || strstr($_header,'Yahoo') || strstr($_header,'DotBot') || strstr($terms,'%') || strstr($_header,'search') ))
+        {
+            $terms = trim($terms);
+            if (substr($terms,-2)=='pt')
+            {
+                $terms = substr($terms,0,-2);
+            }
+            
+            $sql = "INSERT INTO  `search_terms` (
+                        `id` ,
+                        `term` ,
+                        `datetime`,
+                        `header`
+                        )
+                        VALUES (
+                        NULL ,  '".$terms."', 
+                        CURRENT_TIMESTAMP,
+                        '".$_remote_ip." ".$_header."'
+                        );";
+            
+            $result = $GLOBALS['wpdb']->get_results($sql,ARRAY_A);
+        }
     }
 }
 ?>
