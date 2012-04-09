@@ -61,7 +61,7 @@ if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_erro
 echo "<div style='vertical-align:top;width:500px;'><div><h3>Продажи работ с ноября 2010</h3></div>";
 echo "<div style='vertical-align:top;width:500px;'>На этой странице в реальном времени показываются все продажи по факту скачивания файлов. Количество ваших продаж на странице '<a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php'>Заработано</a>' обычно меньше, так как указывается с задержкой на время прихода денег в бухгалтерию Картунбанка.</div>";
 ?> 
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/spreadsheet/tq?key=0AtPperB2fdv5dDZDdEk2cEtNNkpWYXhfVWVHdFM0NUE&transpose=0&headers=0&merge=COLS&range=C3%3AC19%2CT3%3AT19&gid=0&pub=1","options":{"vAxes":[{"title":null,"minValue":null,"viewWindowMode":"pretty","viewWindow":{"min":null,"max":null},"maxValue":null},{"viewWindowMode":"pretty","viewWindow":{}}],"series":{"0":{"errorBars":{"errorType":"percent"},"color":"#a64d79"}},"booleanRole":"certainty","title":"\u041f\u0440\u043e\u0434\u0430\u0436\u0438, \u0448\u0442.","animation":{"duration":500},"legend":"none","vAxis":{"format":""},"theme":"maximized","hAxis":{"format":""},"isStacked":false,"width":600,"height":371},"state":{},"chartType":"ColumnChart","chartName":"Chart 5"} </script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/spreadsheet/tq?key=0AtPperB2fdv5dDZDdEk2cEtNNkpWYXhfVWVHdFM0NUE&transpose=0&headers=0&merge=COLS&range=C3%3AC20%2CT3%3AT20&gid=0&pub=1","options":{"vAxes":[{"title":null,"minValue":null,"viewWindowMode":"pretty","viewWindow":{"min":null,"max":null},"maxValue":null},{"viewWindowMode":"pretty","viewWindow":{}}],"series":{"0":{"errorBars":{"errorType":"percent"},"color":"#a64d79"}},"title":"\u041f\u0440\u043e\u0434\u0430\u0436\u0438, \u0448\u0442.","booleanRole":"certainty","animation":{"duration":500},"legend":"none","theme":"maximized","vAxis":{"format":""},"hAxis":{"format":""},"isStacked":false,"width":600,"height":234},"state":{},"chartType":"ColumnChart","chartName":"Chart 5"} </script>
 <?
 echo "<div><table style='width:500px;background-color:#E8E8E8;'>";
 echo "<tr><td style='text-align: center;'>автор</td><td style='text-align: center;'>продано штук</td><td style='text-align: center;'> % от работ автора</td><td style='text-align: center;'>всего работ автора</td></tr>";
@@ -77,7 +77,6 @@ foreach ($result as $row)
 		{	
 		if ($current_user->id == $row['user_id']) 
 			{
-				//echo "<td class='username' style='padding:4px;width:200px;'><a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php&brand=".$row['id']."'>".$row['name']."</a></td><td class='posts' style='padding:4px;wisth:200px;text-align:right;'>".$row['count'];
 				echo "<td class='username' style='padding:4px;width:200px;'>".$row['name']."</td><td class='posts' style='padding:4px;wisth:200px;text-align:right;'>".$row['cntr'];
 			}
 			else
@@ -87,7 +86,6 @@ foreach ($result as $row)
 
 		echo "</td>";
 	}
-	//echo "<td class='username' style='padding:4px;width:200px;'><a href='".get_option('site_url')."/cb/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php&brand=".$row['id']."'>".$row['name']."</a></td><td class='posts' style='padding:4px;wisth:200px;text-align:right;'>".$row['count']."</td>";
 
 	echo "</tr>";
 }
