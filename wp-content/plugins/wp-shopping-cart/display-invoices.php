@@ -291,7 +291,7 @@ if (isset($_GET['m']) && is_numeric($_GET['m']))
 						$count = count($product_list); // number of cartoons sold
 						$total = 0; // total price with discount
 						$the_list = ''; // html list of cartoons with row tags
-						$contract_period = $_month.".".date("Y");
+						$contract_period = $_month.".".$_year;
 
 						echo ("<div class='t' style='background-color:#CCD2FF;padding-left:4px;margin-top:8px;'>".$product['name']."</div>");
 						
