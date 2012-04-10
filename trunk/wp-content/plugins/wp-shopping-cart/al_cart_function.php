@@ -1,4 +1,17 @@
 <?
+function includeTrailingCharacter($string, $character)
+{
+    if (strlen($string) > 0) {
+        if (substr($string, -1) !== $character) {
+            return $string . $character;
+        } else {
+            return $string;
+        }
+    } else {
+        return $character;
+    }
+}
+
 function cart_product_list_string($licensecolumn)
 {
 	// the function is for displaying the list of products
@@ -64,7 +77,21 @@ function cart_product_list_string($licensecolumn)
 		   $wpdb->query("UPDATE `wp_download_status` SET `active`='1' WHERE `fileid`='".$product_list[0]['file']."' AND `purchid` = '".$check[0]['id']."' LIMIT 1");
 		   $download_data = $wpdb->get_results("SELECT * FROM `wp_download_status` WHERE `fileid`='".$product_list[0]['file']."' AND `purchid`='".$check[0]['id']."' AND `id` NOT IN (".make_csv($previous_download_ids).") LIMIT 1",ARRAY_A);
 		   $download_data = $download_data[0];
-		   $link = $siteurl."?downloadid=".$download_data['id'];
+		   
+		  /* 
+		   * for security reason add to url for hires images sid - last 6 simbols of idhash
+		   *
+		   */
+		   $sql = "SELECT `idhash` FROM `wp_product_files` WHERE `id`=" . $product_list[0]['file'] . " LIMIT 1";
+		   $idhash_data = $wpdb->get_results($sql, ARRAY_A);
+		   if($idhash_data != null) 
+		   {
+				$idhash = "&sid=" . substr($idhash_data[0]['idhash'], -6);
+		   }	
+
+		   $site_tmp = includeTrailingCharacter($siteurl, "/");
+		   
+		   $link = $site_tmp."?downloadid=".$download_data['id'] . $idhash;
 		   $previous_download_ids[] = $download_data['id'];
 		   }
 

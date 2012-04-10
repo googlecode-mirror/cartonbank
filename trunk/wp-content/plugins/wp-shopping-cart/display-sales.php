@@ -1,47 +1,11 @@
 <?php
-$abspath = 'z:/home/localhost/www/';
-$abspath_1 = "/home/www/cb/";
-$abspath_2 = "/home/www/cb3/";
 
-//pokazh($_SERVER['DOCUMENT_ROOT'],"DOCUMENT_ROOT");
-//[DOCUMENT_ROOT] => /home/www/cb3/
+include_once('../wp-config.php');
 
-if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
-{
-	$abspath = $abspath_2;
-	//$params['database'] = 'z58365_cbru3';
-	$params['database'] = 'cartoonbankru';
-}
-
-if (strstr($_SERVER['DOCUMENT_ROOT'],'cb3/'))
-{
-	$abspath = $abspath_2;
-	//$params['database'] = 'z58365_cbru3';
-	$params['database'] = 'cartoonbankru';
-}
-else if (strstr($_SERVER['DOCUMENT_ROOT'],'cb/')) 
-{
-	$abspath = $abspath_1;
-    //$params['database'] = 'z58365_cbru';
-	$params['database'] = 'cartoonbankru';
-}
-else if (strstr($_SERVER['DOCUMENT_ROOT'],'/home/www/')) 
-{
-	$abspath = $abspath_1;
-    //$params['database'] = 'z58365_cbru';
-	$params['database'] = 'cartoonbankru';
-}
-else
-{
-    //$params['database'] = 'z58365_cbru3';
-	$params['database'] = 'cartoonbankru';
-}
-
-    $params['hostname'] = 'localhost';
-    $params['username'] = 'z58365_cbru3';
-    $params['password'] = 'greenbat';
-
-
+$params['hostname'] = DB_HOST; 
+$params['username'] = DB_USER;
+$params['password'] = DB_PASSWORD;
+$params['database'] = DB_NAME;
 
 $year = date("Y");
 $month = date("m");
@@ -49,20 +13,22 @@ $month = date("m");
 $start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
 $end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
 
-$sql = "SELECT st.datetime, c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id,firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract
+$sql = "SELECT f.idhash, st.datetime, c.purchaseid,  p.id,  b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id,firstname, lastname, email, address, phone, s.name as processed, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
 		`wp_product_list` as p,
 		`wp_download_status` as st,
 		`wp_product_brands` as b,
-		`wp_users` as u
+		`wp_users` as u,
+		`wp_product_files` as f
 	WHERE	l.`processed`=s.`id` 
 		AND l.id=c.purchaseid 
 		AND p.id=c.prodid  
 		AND st.purchid=c.purchaseid
 		AND p.brand=b.id
 		AND u.id = l.user_id
+		AND p.file = f.id
 	GROUP BY c.license
 	ORDER BY c.purchaseid DESC";
 
@@ -73,7 +39,7 @@ $sql = "SELECT st.datetime, c.purchaseid,  p.id,  b.name as artist, p.name as ti
 
 	//pokazh($sql,"sql");
 
-    require_once($abspath.'wp-content/RGrid/RGrid.php');
+    require_once('../wp-content/RGrid/RGrid.php');
     
     $grid = RGrid::Create($params, $sql);
 
@@ -113,10 +79,10 @@ $sql = "SELECT st.datetime, c.purchaseid,  p.id,  b.name as artist, p.name as ti
     function RowCallback(&$row)
     {
 		//$row['date'] = date("jS M Y",$row['date']);
-		$row['date'] = date("d.m.y H:m:s",$row['date']);
+		$row['datetime'] = date("d.m.y H:m:s",strtotime($row['datetime']));
 		$row['title'] = "<a target='_blank' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$row['id']."'>".nl2br(stripslashes($row['title']))."</a>";
 		//$row['average'] = round($row['average'],2);
-		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."'>скачать</a>";
+		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."&sid=".substr($row['idhash'], -6)."&mode=go'>скачать</a>";
 		//$link = $siteurl."?downloadid=".$download_data['id'];
 
     }
