@@ -5,7 +5,7 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 define('FTP_HOST', 'stlrus.com');
 define('FTP_USER', 'u35514813-gena');
 define('FTP_PASS', 'u35514813-gena');
-define('IMGS_PATH', '/home/www/cb/wp-content/plugins/wp-shopping-cart/files/');
+define('IMGS_PATH', '/home/www/cb3/wp-content/plugins/wp-shopping-cart/files/');
 
 $con;
 
