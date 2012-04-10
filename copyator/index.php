@@ -4,7 +4,7 @@ error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 require_once('../wp-config.php');
 require_once('functions.php');
 
-printf("%s\r\n", date("m.d.y H:m:s"));
+printf("%s\r\n", date("m.d.y H:i:s"));
 
 $mcon = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
 
@@ -53,6 +53,6 @@ ftp_copy_end();
 
 mysql_close($mcon);
 
-printf("%s\r\n", date("m.d.y H.m.s"));
+printf("%s\r\n", date("m.d.y H.i.s"));
 
 ?>
