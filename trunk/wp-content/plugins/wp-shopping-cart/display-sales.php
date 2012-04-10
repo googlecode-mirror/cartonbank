@@ -76,6 +76,8 @@ $sql = "SELECT f.idhash, st.datetime, c.purchaseid,  p.id,  b.name as artist, p.
     
     $grid->rowcallback = 'RowCallback';
 
+	$grid->HideColumn('idhash');
+
     function RowCallback(&$row)
     {
 		//$row['date'] = date("jS M Y",$row['date']);
