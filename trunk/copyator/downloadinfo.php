@@ -107,7 +107,7 @@ if (isset($_GET['confirm']) and 'true' == ($_GET['confirm']))
 	$confirm = true;
 }
 
-$mode_go = "AND `active` = 1 AND `downloads` > 0";
+$mode_go = " AND `active` = 1 AND `downloads` > 0";
 if (isset($_GET['mode']) and $_GET['mode'] = 'go')
 {
 	$mode_go = "";
