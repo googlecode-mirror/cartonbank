@@ -810,8 +810,19 @@ function nzshpcrt_submit_ajax()
   */ 
   $sql = "SELECT * FROM `wp_product_list` WHERE `id`=$prodid LIMIT 1";
   $product_data = $wpdb->get_results($sql,ARRAY_A) ;
-
+  
   $product = $product_data[0];
+  
+  /* 
+   * for security reason add to url for hires images sid - last 6 simbols of idhash
+   *
+   */
+   $sql = "SELECT `idhash` FROM `wp_product_files` WHERE `id`=" . $product['file'];
+   $idhash_data = $wpdb->get_results($sql, ARRAY_A);
+   if($idhash_data != null) 
+   {
+		$idhash = "&sid=" . substr($idhash_data[0]['idhash'], -6);
+   }			
   
   $output = "<table>\n\r";
   $output .= "<tr>\n\r";
@@ -1013,7 +1024,7 @@ $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&amp;delet
 }
 
   $output .= "<a  href='admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$product['id']."' ><img src='".get_option('siteurl')."/img/reload.gif' title='Обновить иконку и слайд с водяными знаками'></a>";
-   $output .= "&nbsp;<a href='index.php?admin_preview=true&product_id=".$product['id']."' style='float: left;' ><img src='../wp-content/plugins/wp-shopping-cart/images/download.gif' title='Скачать оригинальный файл' /></a>";
+   $output .= "&nbsp;<a href='index.php?admin_preview=true&product_id=".$product['id'].$idhash."' style='float: left;' ><img src='../wp-content/plugins/wp-shopping-cart/images/download.gif' title='Скачать оригинальный файл' /></a>";
   
   $output .= "</td>\n\r";
   $output .= "</tr>\n\r";
@@ -2408,90 +2419,47 @@ function nzshpcrt_download_file()
   {
   global $wpdb,$user_level,$wp_rewrite;
   get_currentuserinfo();
-  if(isset($_GET['downloadid']) and is_numeric($_GET['downloadid']))
+  if(isset($_GET['downloadid']) and is_numeric($_GET['downloadid']) and
+     isset($_GET['sid']))
     {
     $id = $_GET['downloadid'];
-    $download_data = $wpdb->get_results("SELECT * FROM `wp_download_status` WHERE `id`='".$id."' AND `downloads` > '0' AND `active`='1' LIMIT 1",ARRAY_A) ;
+	$sid = $_GET['sid'];
+	if (strlen($_GET['sid']) != 6)
+	{
+	  $siteurl = get_option('siteurl');
+	  header("Location: " . $siteurl . "404.php");
+	  exit();
+	}
+	$skip_dowload_counter = false;
+	if (isset($_GET['mode']) && $_GET['mode'] = 'go')
+	{
+		$skip_dowload_counter = true;
+	}
+    $download_data = $wpdb->get_results("SELECT * FROM `wp_download_status` WHERE `id`='".$id."' LIMIT 1", ARRAY_A);
     isset($download_data[0])?$download_data = $download_data[0]:null;
     if($download_data != null)
-      {
-      $file_data = $wpdb->get_results("SELECT * FROM `wp_product_files` WHERE `id`='".$download_data['fileid']."' LIMIT 1",ARRAY_A) ;
-      $file_data = $file_data[0];
-      $wpdb->query("UPDATE `wp_download_status` SET `downloads` = '".($download_data['downloads']-1)."' WHERE `id` = '$id' LIMIT 1");
-
-	notify_artist($id);
-
-      $basepath =  getcwd();
-      $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
-      
-		header('Content-Description: File Transfer');
-		header('Content-Type: application/octet-stream');
-		header('Content-Type: '.$file_data['mimetype']);      
-		header('Content-Disposition: attachment; filename="'.$file_data['filename'].'"');
-		header('Content-Transfer-Encoding: binary');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-		header('Content-Length: '.filesize($filedir.$file_data['idhash']));
-		ob_clean();
-		flush();
-
-      readfile($filedir.$file_data['idhash']);
-
-      exit();
+     {
+	  $redirect_url = get_option('redirect_download_url');
+	  $add_to_url = ($skip_dowload_counter) ? "&mode=go" : "";
+	  header("Location: $redirect_url?downid=$id&sid=$sid" . $add_to_url);
+	  exit();
       }
     }
     else
       {
-      if(isset($_GET['admin_preview']) and ($_GET['admin_preview'] == "true") && is_numeric($_GET['product_id']))
+      if(isset($_GET['admin_preview']) and ($_GET['admin_preview'] == "true") && is_numeric($_GET['product_id'])and
+		 isset($_GET['sid']) and strlen($_GET['sid']) == 6)
         {
         $product_id = $_GET['product_id'];
+		$sid = $_GET['sid'];
         $product_data = $wpdb->get_results("SELECT * FROM `wp_product_list` WHERE `id` = '$product_id' LIMIT 1",ARRAY_A);
 
         if(is_numeric($product_data[0]['file']) && ($product_data[0]['file'] > 0))
           {
-          $file_data = $wpdb->get_results("SELECT * FROM `wp_product_files` WHERE `id`='".$product_data[0]['file']."' LIMIT 1",ARRAY_A) ;
-          $file_data = $file_data[0];
-          $basepath =  str_replace('/wp-admin','',getcwd());
-          $filedir = $basepath."/wp-content/plugins/wp-shopping-cart/files/";
-
-/*
-    header('Content-Description: File Transfer');
-    header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename='.basename($file));
-    header('Content-Transfer-Encoding: binary');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-    header('Pragma: public');
-    header('Content-Length: ' . filesize($file));
-    ob_clean();
-    flush();
-*/
-
-    header('Content-Description: File Transfer');
-    header('Content-Type: application/octet-stream');
-
-
-          header('Content-Type: '.$file_data['mimetype']);      
-          //header('Content-Length: '.filesize($filedir.$file_data['idhash']));
-          if($_GET['preview_track'] != 'true')
-            {
-            header('Content-Disposition: attachment; filename="'.$file_data['filename'].'"');
-            }
-            else
-            {
-            header('Content-Disposition: inline; filename="'.$file_data['filename'].'"');
-            }
-
-    header('Content-Transfer-Encoding: binary');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-    header('Pragma: public');
-
-    ob_clean();
-    flush();
-
-          readfile($filedir.$file_data['idhash']);
+		  $preview_track = isset($_GET['admin_preview']) ? $_GET['admin_preview'] : "";	  
+		  $redirect_url = get_option('redirect_download_url');
+		  $preview = ($preview_track != 'true') ? "" : "&preview_track=true";
+		  header("Location: $redirect_url?prodid=$product_id&sid=$sid$preview");
           exit();
           }
         }
@@ -3051,7 +3019,7 @@ function send_email_to_artist($price, $image_id, $filename, $cartoonname, $descr
 	// send email
 	mail($email, 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
 	// copy for control
-	mail("igor.aleshin@gmail.com", 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
+	mail("creasysee@yandex.ru", 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
 	return;		
 }
 ?>
