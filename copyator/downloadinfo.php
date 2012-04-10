@@ -73,7 +73,8 @@ function my_notify_artist($id, $max_down)
 		// send email
 		mail($email, 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
 		// copy for control
-		mail("creasysee@yandex.ru", 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);			
+		//mail("creasysee@yandex.ru", 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);			
+		mail("igor.aleshin@gmail.com", 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);			
 	}
 	
 	mysql_free_result($result);
