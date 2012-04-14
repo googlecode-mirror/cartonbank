@@ -59,7 +59,8 @@ function product_display_paginated($search_sql = '', $offset, $items_on_page)
     else {$_category_id = '';}
 
     $_author = "<a href=\'".$siteurl."/?page_id=29&brand=".$_brandid."\'>".$product['brand']."</a>";//$product['brand'];
-    $_name = hilite(nl2br(htmlspecialchars(stripslashes($product['name']),ENT_QUOTES)));
+	//$_name = hilite(nl2br(htmlspecialchars(stripslashes($product['name']),ENT_QUOTES)));
+	$_name = nl2br(stripslashes($product['name']));
 
     $_avatarurl = ""; //"<a href=\"".get_option('siteurl')."/?page_id=29&brand=$_brandid\"><img src=".$product['avatarurl']." width=32 height=32 align=top border=0></a>";
 
