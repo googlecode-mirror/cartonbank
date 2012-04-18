@@ -347,7 +347,7 @@ foreach($result as $r)
 			<input type='submit' value='скачать акт № ".$_invoice_number." выполненных работ (PDF)'>
 			<input type='hidden' name='html' value='".htmlspecialchars($out_nostamp)."'>
 			<input type='hidden' name='filename' value='acceptance_certificate_".$_invoice_number."'>
-		</form></div></div>");
+		</form></div>");
 		
 		$total_all = $total_all + $total;
 		$counter_sold_year = $counter_sold_year + $counter_sold_month;
