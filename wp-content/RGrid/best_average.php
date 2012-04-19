@@ -62,7 +62,6 @@
             WHERE wp_product_list.active =1
             AND wp_product_list.visible =1
             AND wp_product_list.brand = wp_product_brands.id
-            GROUP BY 1 
             ORDER BY 7 DESC , 5 DESC";
     
 //pokazh ($sql);
