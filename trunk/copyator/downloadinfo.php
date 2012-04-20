@@ -10,7 +10,7 @@ function my_notify_artist($id, $max_down)
 {
 	global $mcon;
 
-	$result = mysql_query("SELECT c.price, st.purchid as zakaz, st.downloads, " .
+$sql= "SELECT c.price, st.purchid as zakaz, st.downloads, " .
 						  "p.id as imageid, p.image as filename, p.name as cartoonname, " .
 						  "p.description as description, u.user_email as email, b.name as artist " .
 						  "FROM wp_download_status AS st, wp_product_list AS p, wp_users AS u, wp_product_brands AS b, wp_cart_contents as c " .
@@ -18,8 +18,11 @@ function my_notify_artist($id, $max_down)
 							"AND b.id = p.brand " .
 							"AND b.user_id = u.id " .
 							"AND c.purchaseid = st.purchid " .
-							"AND st.id =".$id);
+							"AND st.id =".$id." limit 1";
+
+	$result = mysql_query($sql);
 							
+
 	if (!$result)
 	{
 		printf("Could not run query: %s\n", mysql_error());
@@ -34,7 +37,7 @@ function my_notify_artist($id, $max_down)
 	
 	$row = mysql_fetch_assoc($result);
 	$downloads = $row["downloads"]; // actual downloads_left
-
+	$email = $row["email"]; // artist's email
 	if ($downloads == $max_down)
 	{
 		// get option return_email
@@ -131,6 +134,16 @@ if (!$db_select)
 
 // Extract max_uploads value
 $max_down = my_get_option($mcon, "max_downloads");
+
+if (isset($_GET['mail']) && $_GET['mail']==1)
+{
+	var_dump($downid);
+	var_dump($max_down);
+	var_dump($_GET['mail']);
+	
+	my_notify_artist($downid, $max_down);
+	exit;
+}
 
 if ($confirm)
 {
