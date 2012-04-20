@@ -2435,13 +2435,21 @@ function nzshpcrt_download_file()
 	{
 		$skip_dowload_counter = true;
 	}
-    $download_data = $wpdb->get_results("SELECT * FROM `wp_download_status` WHERE `id`='".$id."' LIMIT 1", ARRAY_A);
+	if (isset($_GET['mail']) && $_GET['mail'] = 1)
+	{
+		$addmail = 'mail=1&';
+	}
+	else
+		{$addmail = '';}
+
+	
+	$download_data = $wpdb->get_results("SELECT * FROM `wp_download_status` WHERE `id`='".$id."' LIMIT 1", ARRAY_A);
     isset($download_data[0])?$download_data = $download_data[0]:null;
     if($download_data != null)
      {
 	  $redirect_url = get_option('redirect_download_url');
 	  $add_to_url = ($skip_dowload_counter) ? "&mode=go" : "";
-	  header("Location: $redirect_url?downid=$id&sid=$sid" . $add_to_url);
+	  header("Location: $redirect_url?".$addmail."downid=$id&sid=$sid" . $add_to_url);
 	  exit();
       }
     }
@@ -3011,15 +3019,13 @@ function send_email_to_artist($price, $image_id, $filename, $cartoonname, $descr
 	$mess .= "<a href='".get_option('siteurl')."/?page_id=29&cartoonid=".$image_id."'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$filename."'></a>";
 
 	$mess .= "<br><br>Поздравляем вас и напоминаем, что всегда рады видеть ваши новые рисунки у нас на сайте! Полный отчёт об уже поступивших на ваше имя денежных средствах доступен в разделе <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php'>Заработано</a>.<br>";
-	
-
 
 	$mess .= "<br><div style='font-size:0.8em;'>Это письмо отправлено автоматически и не требует ответа.<br>Чтобы отписаться от сообщений о продаже снимите отметку в строке <i>'Получать сообщения о продаже лицензии'</i> <a href='".get_option('siteurl')."/wp-admin/profile.php'>вашего профиля</a>.</div>";
 
 	// send email
 	mail($email, 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
 	// copy for control
-	mail("creasysee@yandex.ru", 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
+	mail("igor.aleshin@gmail.com", 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
 	return;		
 }
 ?>
