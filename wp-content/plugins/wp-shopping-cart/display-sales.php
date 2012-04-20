@@ -29,6 +29,7 @@ $sql = "SELECT f.idhash, st.datetime, c.purchaseid,  p.id,  b.name as artist, p.
 		AND p.brand=b.id
 		AND u.id = l.user_id
 		AND p.file = f.id
+		AND st.fileid = f.id
 	GROUP BY c.license
 	ORDER BY c.purchaseid DESC";
 
@@ -84,7 +85,7 @@ $sql = "SELECT f.idhash, st.datetime, c.purchaseid,  p.id,  b.name as artist, p.
 		$row['datetime'] = date("d.m.y H:m:s",strtotime($row['datetime']));
 		$row['title'] = "<a target='_blank' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$row['id']."'>".nl2br(stripslashes($row['title']))."</a>";
 		//$row['average'] = round($row['average'],2);
-		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."&sid=".substr($row['idhash'], -6)."&mode=go'>скачать</a>";
+		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."&sid=".substr($row['idhash'], -6)."&mode=go'>скачать</a> <a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."&sid=".substr($row['idhash'], -6)."&mode=go&mail=1'>письмо</a>" ;
 		//$link = $siteurl."?downloadid=".$download_data['id'];
 
     }
