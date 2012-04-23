@@ -54,7 +54,7 @@
 <tr>
 <td width="15%">&nbsp;</td>
 <td width="40%">Включая "рабочий стол":</td>
-<td><input type="checkbox" name="666" checked></td></tr></tbody></table>
+<td><input type="checkbox" name="666"></td></tr></tbody></table>
 </td></tr>
 
 <tr bgcolor="#ffffff">
