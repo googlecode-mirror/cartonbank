@@ -690,19 +690,23 @@ function best_sales($content = '')
 			  $seperator ="&amp;";
 			  }
 
-
-//"SELECT b.id, b.name, p.id as ID, p.image as image, p.name AS title, b.name AS author, c.price 
-	$sql = "SELECT COUNT( c.prodid ) AS counter, c.prodid, p.id, p.name, p.image
-	FROM  `wp_cart_contents` AS c,  `wp_product_list` AS p, wp_download_status AS st
-	WHERE p.id = c.prodid
-	AND st.purchid = c.purchaseid
-	AND c.prodid = p.id
-	AND st.fileid = p.file
-	AND c.price >3
-	AND st.downloads <5
-	GROUP BY c.prodid
-	ORDER BY counter DESC 
-	LIMIT 100";
+	$sql = "SELECT * From (
+SELECT COUNT( c.prodid ) AS counter, c.prodid, p.id AS ID, p.name, p.image
+FROM  `wp_cart_contents` AS c,  `wp_product_list` AS p, wp_download_status AS st, wp_purchase_logs as pl
+WHERE p.id = c.prodid
+AND st.purchid = c.purchaseid
+AND c.prodid = p.id
+AND st.fileid = p.file
+AND pl.id = purchid
+AND c.price >3
+AND st.downloads <5
+AND pl.user_id!='106'
+GROUP BY c.prodid
+ORDER BY counter DESC 
+LIMIT 100
+) hundred
+where counter>1
+";
 
 		  $product_list = $wpdb->get_results($sql,ARRAY_A);
 
@@ -724,13 +728,15 @@ function best_sales($content = '')
 
 		  foreach((array)$product_list as $product)
 			{
-			$output .= "<div class='item_gift'>";
+			$output .= "<div class='item' style='position: relative;'>";
 			$output .= "<a href='".get_option('product_list_url').$seperator."cartoonid=".$product['ID']."'>";
 			if($product['image'] != '')
 			  {
 			  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='продаж: ".$product['counter']."' class='thumb'/>";
 			  }
 			$output .= "</a>";
+            $counter = $product['counter'];
+            $output .= "<div id='cntr' class='cntrsold'>продаж: $counter</div>";
 			$output .= "</div>\n\r";
 			}
 		  $output .= "</div>\n\r";

@@ -553,6 +553,20 @@ tr.tdfirstcol{
 	right: 10px; 
 	opacity:0.5;
 }
+.cntrsold {
+    text-align: center;
+    vertical-align: baseline;
+    padding-top: 4px;
+    width: 70px;
+    height: 20px;
+    background-color: yellow;
+    float: left;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    opacity: .7;
+    color: red;
+}
 .gift{
 position: relative; top: -138px; left: 4px; background-color: red; width: 60px; text-align: center; opacity: .5; padding:2px;
 }
