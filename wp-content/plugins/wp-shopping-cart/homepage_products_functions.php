@@ -659,8 +659,89 @@ function last_sales($content = '')
 		  $output .= "<br style='clear: left;'>\n\r";
 		  
 		  return preg_replace("/\[last_sales\]/", $output, $content);
+ }
 }
+
+function best_sales($content = '')
+{
+		 global $wpdb;
+
+		// page_id
+		if (isset($_GET['page_id']) && is_numeric($_GET['page_id']))
+		{
+			$_page_filter = "?page_id=".$_GET['page_id'];
+		}
+		else
+		{
+			$_page_filter = "";
+		}
+
+		$pageURL = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["PHP_SELF"].$_page_filter;
+
+
+
+		  $siteurl = get_option('siteurl');
+		  if(get_option('permalink_structure') != '')
+			{
+			$seperator ="?";
+			}
+			else
+			  {
+			  $seperator ="&amp;";
+			  }
+
+
+//"SELECT b.id, b.name, p.id as ID, p.image as image, p.name AS title, b.name AS author, c.price 
+	$sql = "SELECT COUNT( c.prodid ) AS counter, c.prodid, p.id, p.name, p.image
+	FROM  `wp_cart_contents` AS c,  `wp_product_list` AS p, wp_download_status AS st
+	WHERE p.id = c.prodid
+	AND st.purchid = c.purchaseid
+	AND c.prodid = p.id
+	AND st.fileid = p.file
+	AND c.price >3
+	AND st.downloads <5
+	GROUP BY c.prodid
+	ORDER BY counter DESC 
+	LIMIT 100";
+
+		  $product_list = $wpdb->get_results($sql,ARRAY_A);
+
+
+		  $output = "<div id='homepage_products' class='items'>";
+		$output = '';    
+		if (isset($product_list[0]))
+			  {
+				  $output .= "<div id='homepage_products' class='items'>";
+		  if (isset($product_list[0]) && $_br == 0)
+				  {
+					$output .= "<div><h1>";
+				  }
+				  else
+				  {
+					$output .= "<div><h1>".$product_list[0]['author'].".";
+				  }
+				  $output .= " Сто лучших продаж</h1></div>";
+
+		  foreach((array)$product_list as $product)
+			{
+			$output .= "<div class='item_gift'>";
+			$output .= "<a href='".get_option('product_list_url').$seperator."cartoonid=".$product['ID']."'>";
+			if($product['image'] != '')
+			  {
+			  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='продаж: ".$product['counter']."' class='thumb'/>";
+			  }
+			$output .= "</a>";
+			$output .= "</div>\n\r";
+			}
+		  $output .= "</div>\n\r";
+		  $output .= "<br style='clear: left;'>\n\r";
+		  
+		  return preg_replace("/\[best_sales\]/", $output, $content);
+ }
 }
+
+
+
 
 function all_artists($content = '')
 {
