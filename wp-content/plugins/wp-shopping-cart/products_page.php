@@ -15,7 +15,16 @@ if (isset($_REQUEST['category'])&&is_numeric($_REQUEST['category'])){$categoryid
 if (isset($_REQUEST['brand'])&&is_numeric($_REQUEST['brand'])){$brandid_filter = " AND `wp_product_list`.`brand` = '".mysql_escape_string($_REQUEST['brand'])."' "; $brandid=mysql_escape_string($_REQUEST['brand']);}else{$brandid_filter='';$brandid=0;};
 if (isset($_REQUEST['cartoonid'])&&is_numeric($_REQUEST['cartoonid'])){$cartoonid =$_REQUEST['cartoonid'];$cartoonid_filter=" AND `wp_product_list`.`id` = ".$cartoonid." ";}else{$cartoonid=2123;$cartoonid_filter="";};
 
-$exclude_category_sql ='';
+if (isset($_REQUEST['category']) && $_REQUEST['category']=='666')
+{
+	$exclude_category_sql ='';
+}
+else 
+{
+	$exclude_category_sql =" AND `wp_product_list`.category != '666' ";
+}
+
+//$exclude_category_sql ='';
 $approved_or_not= " AND `wp_product_list`.`approved`='1' "; 
 
 //GET search id_list
