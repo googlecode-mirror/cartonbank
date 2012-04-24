@@ -465,7 +465,7 @@ class WP_User {
     * @access private
     * @var float
     */
-    var $wallet = 0.00;
+    var $wallet = 3.00;
 
 	/**
 	 * PHP4 Constructor - Sets up the object properties.
