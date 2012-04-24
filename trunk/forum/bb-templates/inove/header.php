@@ -1,3 +1,11 @@
+<?php 
+if ( !bb_is_user_logged_in() )
+{
+	echo "<center><a href='http://cartoonbank.ru/wp-login.php'>Для входа на форум Картунбанка<br>Пожалуйста, залогиньтесь!</a></center>";
+exit();
+}
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"<?php bb_language_attributes( '1.1' ); ?>>
 <head>
@@ -33,16 +41,16 @@
 				<ul id="menus">
 				<li class="<?php if(is_front()) { ?>current_page_item <?php } ?>page_item"><a class="home" title="Главная" href="<?php bb_option('uri'); ?>">Главная</a></li>
 				<li class="<?php if(is_bb_search()) { ?>current_page_item <?php } ?>page_item"><a href="<?php bb_option('uri'); ?>search.php" title="Поиск">Поиск</a></li>
-				<li class="page_item"><a href="#">Подменю 1</a>
+				<li class="page_item"><a href="#">Банкир</a>
 				<ul>
-					<li class="page_item"><a href="#" title="Test">Подстраница 1</a></li>
-					<li class="page_item"><a href="#" title="Test 2">Подстраница 2</a></li>
+					<li class="page_item"><a href="http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display-items.php" title="Редактор базы">Редактор базы</a></li>
+					<li class="page_item"><a href="http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/allsales.php" title="Статистика продаж">Статистика продаж</a></li>
 				</ul>
 				</li>
-				<li class="page_item"><a href="#">Подменю 2</a>
+				<li class="page_item"><a href="#">Помощь</a>
 				<ul>
-					<li class="page_item"><a href="#" title="Test">Тест 1</a></li>
-					<li class="page_item"><a href="#" title="Test 2">Тест 2</a></li>
+					<li class="page_item"><a href="http://cartoonbank.ru/wp-admin/admin.php?page=lazyest-gallery/al-admin-panel.php" title="Подсказки и ответы на часто возникающие вопросы">Подсказки</a></li>
+					<li class="page_item"><a href="http://cartoonbank.ru/?page_id=95" title="О проекте">О проекте</a></li>
 				</ul>
 				</li>
 				<li><a class="lastmenu" href="javascript:void(0);"></a></li>

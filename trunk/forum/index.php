@@ -19,6 +19,7 @@ elseif ( !$bb_db_override ) :
 	}
 endif;
 
+if ( bb_is_user_logged_in() ) 
 bb_load_template( 'front-page.php', array('bb_db_override', 'super_stickies') );
 
 ?>
