@@ -724,7 +724,7 @@ where counter>1
 				  {
 					$output .= "<div><h1>".$product_list[0]['author'].".";
 				  }
-				  $output .= " Бестселлеры</h1></div>";
+				  $output .= " Бестселлеры</h1><h3>Изображения, приобретённые более одного раза</h3></div>";
 
 		  foreach((array)$product_list as $product)
 			{
@@ -736,7 +736,7 @@ where counter>1
 			  }
 			$output .= "</a>";
             $counter = $product['counter'];
-            $output .= "<div id='cntr' class='cntrsold'>продаж: $counter</div>";
+            $output .= "<div id='cntr' class='cntrsold'>$counter</div>";
 			$output .= "</div>\n\r";
 			}
 		  $output .= "</div>\n\r";
