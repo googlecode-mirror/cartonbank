@@ -407,13 +407,13 @@ function bb_since( $original, $args = '' )
 		if ( ( $count = floor( $seconds / $chunks[$i] ) ) || $caught ) {
 			if ( $count ) {
 				$trans = array(
-					_n( '%d year', '%d years', $count ),
-					_n( '%d month', '%d months', $count ),
-					_n( '%d week', '%d weeks', $count ),
-					_n( '%d day', '%d days', $count ),
-					_n( '%d hour', '%d hours', $count ),
-					_n( '%d minute', '%d minutes', $count ),
-					_n( '%d second', '%d seconds', $count )
+					_n( '%d год', '%d л.', $count ),
+					_n( '%d месяц', '%d мес.', $count ),
+					_n( '%d неделя', '%d нед.', $count ),
+					_n( '%d день', '%d дн.', $count ),
+					_n( '%d час', '%d час.', $count ),
+					_n( '%d минута', '%d мин.', $count ),
+					_n( '%d секунда', '%d сек.', $count )
 				);
 				$parts[] = sprintf( $trans[$i], $count );
 			}
@@ -426,7 +426,7 @@ function bb_since( $original, $args = '' )
 	}
 
 	if ( empty( $parts ) ) {
-		return sprintf( _n( '%d second', '%d seconds', 0 ), 0 );
+		return sprintf( _n( '%d сек.', '%d сек.', 0 ), 0 );
 	}
 
 	return join( $separator, $parts );
@@ -992,8 +992,8 @@ function bb_get_view_query_args( $view ) {
 
 function bb_register_default_views() {
 	// no posts (besides the first one), older than 2 hours
-	bb_register_view( 'no-replies', __('Topics with no replies'), array( 'post_count' => 1, 'started' => '<' . gmdate( 'YmdH', time() - 7200 ) ) );
-	bb_register_view( 'untagged'  , __('Topics with no tags')   , array( 'tag_count'  => 0 ) );
+	bb_register_view( 'no-replies', __('Темы без ответов'), array( 'post_count' => 1, 'started' => '<' . gmdate( 'YmdH', time() - 7200 ) ) );
+	bb_register_view( 'untagged'  , __('Темы без тэгов')   , array( 'tag_count'  => 0 ) );
 }
 
 /* Feeds */
