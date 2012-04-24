@@ -19,7 +19,7 @@ div#shoppingcart{
  padding: 0px;
  margin-left: 5px;
  }
- 
+
 div#shoppingcart img{
  position: absolute; 
  top: 5px;
@@ -554,18 +554,22 @@ tr.tdfirstcol{
 	opacity:0.5;
 }
 .cntrsold {
-    text-align: center;
-    vertical-align: baseline;
-    padding-top: 4px;
-    width: 70px;
-    height: 20px;
-    background-color: yellow;
+	display:block;
+	width: 20px;
+	height: 20px;
+	background-color: #F3E915;
     float: left;
     position: absolute;
     bottom: 10px;
     right: 10px;
-    opacity: .7;
-    color: red;
+	text-align:center;
+	font-size:1.5em;
+	color:#494949;
+	border-radius: 50%;
+	-moz-border-radius:50%;
+	-webkit-border-radius:50%;
+	-khtml-border-radius:50%;
+	line-height:100%;
 }
 .gift{
 position: relative; top: -138px; left: 4px; background-color: red; width: 60px; text-align: center; opacity: .5; padding:2px;
