@@ -1,9 +1,27 @@
 <?php
+include("config.php");
+
 if (isset($_GET['cid']) && is_numeric($_GET['cid']))
 {
-$_id = $_GET['cid'];
+	$_id = $_GET['cid'];
+}
+else
+{
+	$link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
+	mysql_set_charset('utf8',$link);
 
-include("config.php");
+	$sql = "SELECT id from wp_fsr_post where twitter_date='0000-00-00 00:00:00' ORDER BY points DESC LIMIT 1";
+	$res = mysql_query($sql);
+	if ($res){
+		$row=mysql_fetch_array($res);
+		$_id = $row['id'];
+		echo $_id;
+	}
+	else{
+		exit;
+		}
+}
+
 
 // Get the name
 $link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
@@ -38,13 +56,20 @@ $tweet = new TwitterOAuth($consumerKey, $consumerSecret, $oAuthToken, $oAuthSecr
  
 //send a tweet
 $tweet->post('statuses/update', array('status' => $_message));
-/*
-  $headers = "From: igor.aleshin@gmail.com\r\n" .
+
+
+// mark cartoon sent
+$update_sql = "update wp_fsr_post set twitter_date='".date("d.m.y H:m:s")."' where ID=".$_id;
+$res = mysql_query($update_sql);
+
+mysql_close($link);
+
+$headers = "From: igor.aleshin@gmail.com\r\n" .
 			   'X-Mailer: PHP/' . phpversion() . "\r\n" .
 			   "MIME-Version: 1.0\r\n" .
 			   "Content-Type: text/html; charset=utf-8\r\n" .
 			   "Content-Transfer-Encoding: 8bit\r\n\r\n";
-//mail("igor.aleshin@gmail.com", 'twit', $_message, $headers);
-*/
-}
+mail("igor.aleshin@gmail.com", 'twit', $_message, $headers);
+
+
 ?>
