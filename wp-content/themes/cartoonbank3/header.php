@@ -158,18 +158,18 @@ else
 
 <div id="navbarbottom">
 <ul> 
-<li><a href="?page_id=95"<? $_REQUEST['page_id']=='95'? selected_style():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
-<li><a href="?page_id=29&amp;offset=0&amp;new=0"<? $_REQUEST['page_id']=='29' & $_new==0? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
-<li><a href="?page_id=29&amp;offset=0&amp;new=1"<? $_REQUEST['page_id']=='29'& $_new==1 ? selected_style():"" ?> title='показать новые'>Новое</a></li>
-<li><a href="?page_id=73"<? $_REQUEST['page_id']=='73'? selected_style():"" ?> title='художникам'>Авторам</a></li>
-<li><a href="?page_id=97"<? $_REQUEST['page_id']=='97'? selected_style():"" ?> title='покупателям'>Клиентам</a></li>
-<li><a href="?page_id=907"<? $_REQUEST['page_id']=='907'? selected_style():"" ?> title='посетителям'>Зрителям</a></li>
-<li><a href="?page_id=1215"<? $_REQUEST['page_id']=='1215'? selected_style():"" ?> title='наши партнёры'>Партнёры</a></li>
-<li><a href="?page_id=1260"<? $_REQUEST['page_id']=='1260'? selected_style():"" ?> title='друзья и коллеги'>Друзья</a></li>
-<li><a href="?page_id=2"<? $_REQUEST['page_id']=='2'? selected_style():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
-<li><a href="?page_id=942"<? $_REQUEST['page_id']=='942'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
-<li><a href="?page_id=976"<? $_REQUEST['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
-<li><a href="?page_id=2041"<? $_REQUEST['page_id']=='2041'? selected_style():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
+<li><a href="/?page_id=95"<? $_REQUEST['page_id']=='95'? selected_style():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
+<li><a href="/?page_id=29&amp;offset=0&amp;new=0"<? $_REQUEST['page_id']=='29' & $_new==0? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
+<li><a href="/?page_id=29&amp;offset=0&amp;new=1"<? $_REQUEST['page_id']=='29'& $_new==1 ? selected_style():"" ?> title='показать новые'>Новое</a></li>
+<li><a href="/?page_id=73"<? $_REQUEST['page_id']=='73'? selected_style():"" ?> title='художникам'>Авторам</a></li>
+<li><a href="/?page_id=97"<? $_REQUEST['page_id']=='97'? selected_style():"" ?> title='покупателям'>Клиентам</a></li>
+<li><a href="/?page_id=907"<? $_REQUEST['page_id']=='907'? selected_style():"" ?> title='посетителям'>Зрителям</a></li>
+<li><a href="/?page_id=1215"<? $_REQUEST['page_id']=='1215'? selected_style():"" ?> title='наши партнёры'>Партнёры</a></li>
+<li><a href="/?page_id=1260"<? $_REQUEST['page_id']=='1260'? selected_style():"" ?> title='друзья и коллеги'>Друзья</a></li>
+<li><a href="/?page_id=2"<? $_REQUEST['page_id']=='2'? selected_style():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
+<li><a href="/?page_id=942"<? $_REQUEST['page_id']=='942'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
+<li><a href="/?page_id=976"<? $_REQUEST['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
+<li><a href="/?page_id=2041"<? $_REQUEST['page_id']=='2041'? selected_style():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
 <li><? echo $_edid;?></li>
 </ul>
 </div>
