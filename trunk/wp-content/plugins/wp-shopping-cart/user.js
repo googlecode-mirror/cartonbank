@@ -203,7 +203,7 @@ function zoom(url,ww,hh,id){
 
 function rokfor(brand){
 	if (confirm('Внимание! В категории «Рабочий стол» находятся работы автора, не вошедшие в основную базу Банка Изображений.\n\r\n\rПросьба к зрителям и клиентам отнестись с пониманием к праву автора держать в своем «Рабочем столе» изображения, которые Cartoonbank.ru или сам автор сочли невозможным для показа в общем поиске Банка Изображений. Это могут быть иллюстраторские опыты и эксперименты на различные темы, варианты обложек книг, сюжеты, несущие эротическое или иное содержание \"на грани фола\" и многое другое.\n\r\n\rЕсли вы не хотите видеть такие изображения - нажмите кнопку \"Отмена (Cancel)\".\n\r\n\rЕсли хотите видеть, несмотря на предупреждение - нажмите кнопку \"ОК\"'))
-		{var oorl = location.href.split('?');window.location = oorl[0]+'?page_id=29&category=666&brand='+brand;} 
+		{window.location = '/?page_id=29&category=666&brand='+brand;} 
 	else 
 		{window.location = '#';}
 }
@@ -223,8 +223,7 @@ function get_5stars()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-var oorl = location.href.split('?');
-var starurl = oorl[0]+"wp-content/plugins/five-star-rating/fsr-ajax-stars.php?p="+cuid+"&starType=star";
+var starurl = "/wp-content/plugins/five-star-rating/fsr-ajax-stars.php?p="+cuid+"&starType=star";
 jQuery("#star_rating").load(starurl,function(){jQuery(function(){jQuery("label[for^=fsr_star_]").click(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().attr("action"),d=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_");FSR_save_vote(a[2],a[3],b,d)});jQuery("label[for^=fsr_star_]").mouseover(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_")[3];FSR_star_over(this,a,b)})});FSR_current_post=null;FSR_isWorking=false;});
 });
 }
@@ -233,8 +232,7 @@ function get_dimensions()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-var oorl = location.href.split('?');
-var dimensionsurl = oorl[0]+"ales/get_dimensions.php?p="+cuid;
+var dimensionsurl = "/ales/get_dimensions.php?p="+cuid;
 var cuid = document.getElementById('cuid').innerHTML;
 jQuery("#dimensions").load(dimensionsurl);
 });
@@ -251,7 +249,7 @@ function get_share_this()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-jQuery("#share_this").html('<b>Поделиться:</b><br /><a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://twitter.com/share?url=\' + escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_twitter.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.facebook.com/sharer.php?t=cartoonbank.ru&u=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_facebook.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://vkontakte.ru/share.php?title=cartoonbank.ru&url=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_vkontakte.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.livejournal.com/update.bml?subject=cartoonbank.ru&event=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="img/s_livejournal.png" border="0"></a>&nbsp;<g:plusone size="small" count="false"></g:plusone>');
+jQuery("#share_this").html('<b>Поделиться::</b><br /><a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://twitter.com/share?url=\' + escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="http://cartoonbank.ru/img/s_twitter.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.facebook.com/sharer.php?t=cartoonbank.ru&u=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="http://cartoonbank.ru/img/s_facebook.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://vkontakte.ru/share.php?title=cartoonbank.ru&url=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="http://cartoonbank.ru/img/s_vkontakte.png" border="0"></a>&nbsp;<a href="#" onclick="cuid=document.getElementById(\'cuid\').innerHTML; uu=\'http://www.livejournal.com/update.bml?subject=cartoonbank.ru&event=\'+escape(\'http://cartoonbank.ru/?page_id=29&cartoonid=\'); window.open(uu+cuid);"><img src="http://cartoonbank.ru/img/s_livejournal.png" border="0"></a>&nbsp;<g:plusone size="small" count="false"></g:plusone>');
 });
 }
 
@@ -261,8 +259,7 @@ function fave_it()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-var oorl = location.href.split('?');
-var starurl = oorl[0]+"ales/faves/faves_update.php?upd=1&p="+cuid+"&uid="+getCookie('uid');
+var starurl = "/ales/faves/faves_update.php?upd=1&p="+cuid+"&uid="+getCookie('uid');
 jQuery("#thumb").load(starurl,function(){});
 });
 }
@@ -270,8 +267,7 @@ function get_fave()
 {
 jQuery(document).ready(function() {
 var cuid = document.getElementById('cuid').innerHTML;
-var oorl = location.href.split('?');
-var starurl = oorl[0]+"ales/faves/faves_update.php?p="+cuid+"&uid="+getCookie('uid');
+var starurl = "/ales/faves/faves_update.php?p="+cuid+"&uid="+getCookie('uid');
 jQuery("#thumb").load(starurl,function(){});
 });
 }
