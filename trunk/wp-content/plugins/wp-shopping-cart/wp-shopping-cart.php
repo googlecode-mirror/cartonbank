@@ -877,7 +877,7 @@ function nzshpcrt_submit_ajax()
   $output .= "Краткое описание: ";
   $output .= "</td>\n\r";
   $output .= "<td>";
-  $output .= "<textarea id='productdescredit' name='description' cols='45' rows='3' >".stripslashes($product['description'])."</textarea>";
+  $output .= "<textarea id='productdescredit' name='description' cols='50' rows='4' >".stripslashes($product['description'])."</textarea>";
   $output .= "</td>\n\r";
   $output .= "</tr>\n\r";
   
@@ -889,7 +889,7 @@ function nzshpcrt_submit_ajax()
 
   $output .= "</td>\n\r";
   $output .= "<td>";
-  $output .= "<textarea id='tagsedit' name='additional_description' cols='45' rows='4' >".stripslashes($product['additional_description'])."</textarea>";
+  $output .= "<textarea id='tagsedit' name='additional_description' cols='50' rows='4' >".stripslashes($product['additional_description'])."</textarea>";
   $output .= "</td>\n\r";
   $output .= "</tr>\n\r";
 
@@ -983,7 +983,8 @@ function nzshpcrt_submit_ajax()
   
   $output .= "</td>\n\r";
   $output .= "<td>\n\r";
-
+  $output .= categorylist($product['id']);
+/*
 if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
 	{
 		$output .= categorylist($product['id']);
@@ -993,6 +994,7 @@ else
 		$output .= "После утверждения рисунка модераторами Категория может быть изменена администратором";
 		$output .= "<div  style='display:none;'>".categorylist($product['id'])."</div>";
 	}
+*/
   $output .= "</td>\n\r";
   $output .= "</tr>\n\r";
 
@@ -1004,6 +1006,7 @@ else
   $output .= "<input type='checkbox' name='temadnya'".$temadnya."/> <span style='color:#999;'>считаю актуальной темой</span>";
   $output .= "</td>\n\r";
   $output .= "</tr>\n\r";
+if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1){
 	
   $output .= "<tr>\n\r";
   $output .= "<td class='r'>";
@@ -1013,7 +1016,7 @@ else
   $output .= "&nbsp;&nbsp;&nbsp;Огр:&nbsp;<input id='license1' type='checkbox' name='license1'".$license1checked.">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type='checkbox' name='license2'".$license2checked.">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type='checkbox' name='license3'".$license3checked."><br />";
   $output .= "</td>\n\r";
   $output .= "</tr>\n\r";
-	
+}	
 
   $output .= "<tr>\n\r";
   $output .= "<td colspan='2'>";
@@ -1132,7 +1135,7 @@ function nzshpcrt_getcategoryform($catid)
   $output .= TXT_WPSC_DESCRIPTION.": ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<textarea name='description' cols='40' rows='8' >".stripslashes($product['description'])."</textarea>";
+  $output .= "<textarea name='description' cols='50' rows='4' >".stripslashes($product['description'])."</textarea>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   $output .= "          </tr>\n\r";
@@ -1231,7 +1234,7 @@ function nzshpcrt_getbrandsform($catid)
   $output .= "описание: ";
   $output .= "            </td>\n\r";
   $output .= "            <td>\n\r";
-  $output .= "<textarea name='description' cols='40' rows='8' >".stripslashes($product['description'])."</textarea>";
+  $output .= "<textarea name='description' cols='50' rows='4' >".stripslashes($product['description'])."</textarea>";
   $output .= "            </td>\n\r";
   $output .= "          </tr>\n\r";
   $output .= "          </tr>\n\r";
