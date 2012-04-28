@@ -16,18 +16,18 @@ else
 ?>
 <div id="navbar">
 <ul> 
-<li><a href="?page_id=95"<? $_GET['page_id']=='95'? selected_style_footer():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
-<li><a href="?page_id=29&amp;offset=0&amp;new=0"<? $_GET['page_id']=='29' & $_new==0? selected_style_footer():"" ?> title='избранные работы'>Избранное</a></li>
-<li><a href="?page_id=29&amp;offset=0&amp;new=1"<? $_GET['page_id']=='29'& $_new==1 ? selected_style_footer():"" ?> title='показать новые'>Новое</a></li>
-<li><a href="?page_id=73"<? $_GET['page_id']=='73'? selected_style_footer():"" ?> title='художникам'>Авторам</a></li>
-<li><a href="?page_id=97"<? $_GET['page_id']=='97'? selected_style_footer():"" ?> title='покупателям'>Клиентам</a></li>
-<li><a href="?page_id=907"<? $_GET['page_id']=='907'? selected_style_footer():"" ?> title='посетителям'>Зрителям</a></li>
-<li><a href="?page_id=1215"<? $_GET['page_id']=='1215'? selected_style_footer():"" ?> title='наши партнёры'>Партнёры</a></li>
-<li><a href="?page_id=1260"<? $_GET['page_id']=='1260'? selected_style_footer():"" ?> title='друзья и коллеги'>Друзья</a></li>
-<li><a href="?page_id=2"<? $_GET['page_id']=='2'? selected_style_footer():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
-<li><a href="?page_id=942"<? $_GET['page_id']=='942'? selected_style_footer():"" ?> title='новости сайта'>Новости</a></li>
-<li><a href="?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
-<li><a href="?page_id=2041"<? $_GET['page_id']=='2041'? selected_style_footer():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
+<li><a href="/?page_id=95"<? $_GET['page_id']=='95'? selected_style_footer():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
+<li><a href="/?page_id=29&amp;offset=0&amp;new=0"<? $_GET['page_id']=='29' & $_new==0? selected_style_footer():"" ?> title='избранные работы'>Избранное</a></li>
+<li><a href="/?page_id=29&amp;offset=0&amp;new=1"<? $_GET['page_id']=='29'& $_new==1 ? selected_style_footer():"" ?> title='показать новые'>Новое</a></li>
+<li><a href="/?page_id=73"<? $_GET['page_id']=='73'? selected_style_footer():"" ?> title='художникам'>Авторам</a></li>
+<li><a href="/?page_id=97"<? $_GET['page_id']=='97'? selected_style_footer():"" ?> title='покупателям'>Клиентам</a></li>
+<li><a href="/?page_id=907"<? $_GET['page_id']=='907'? selected_style_footer():"" ?> title='посетителям'>Зрителям</a></li>
+<li><a href="/?page_id=1215"<? $_GET['page_id']=='1215'? selected_style_footer():"" ?> title='наши партнёры'>Партнёры</a></li>
+<li><a href="/?page_id=1260"<? $_GET['page_id']=='1260'? selected_style_footer():"" ?> title='друзья и коллеги'>Друзья</a></li>
+<li><a href="/?page_id=2"<? $_GET['page_id']=='2'? selected_style_footer():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
+<li><a href="/?page_id=942"<? $_GET['page_id']=='942'? selected_style_footer():"" ?> title='новости сайта'>Новости</a></li>
+<li><a href="/?page_id=976"<? $_GET['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
+<li><a href="/?page_id=2041"<? $_GET['page_id']=='2041'? selected_style_footer():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
 </ul>
 </div>
 
@@ -42,7 +42,7 @@ else
 </div>
 
 <div id="footer" style="background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;padding-bottom:100px;">
-<a href="?page_id=433">Copyright</a> &copy; 2010-2011 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a><br />
+<a href="/?page_id=433">Copyright</a> &copy; 2010-2011 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a><br />
 Следите за нами в 
 <a href="http://community.livejournal.com/cartoonbank/">Живом журнале <img src="http://cartoonbank.ru/img/s_livejournal.png" title="Follow us on LiveJournal" style="border:0;"></a>  
 <a href="http://twitter.com/#!/cartoonbankru">в Твиттере <img src="http://cartoonbank.ru/img/s_twitter.png" title="Follow us on Twitter" style="border:0;"></a>  
