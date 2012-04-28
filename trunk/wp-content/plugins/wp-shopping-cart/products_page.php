@@ -120,7 +120,8 @@ if (isset($brandid) && is_numeric($brandid))
     $brand_sql = "SELECT * FROM `wp_product_brands` where id = ". $brandid;
     $brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
 
-    $_artist = $brand_result[0]['name'];
+    $_artist = "";
+    if (isset($brand_result[0]['name'])){$_artist = $brand_result[0]['name'];}
     
     if (isset($brand_result[0]['bio_post_id']))
     {
