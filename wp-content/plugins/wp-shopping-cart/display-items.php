@@ -1,4 +1,26 @@
-
+<style>
+.tdc2{
+	text-align:center; 
+	line-height:1em;
+	background-color:#FFFFFF; 
+	padding:2px;
+}
+td.r{
+	text-align: right;
+	vertical-align: top;
+	width: 150px;
+}
+td.ralt{
+	text-align: right;
+	background-color:#FFFF00;
+	vertical-align: top;
+}
+td.lalt{
+	text-align: left;
+	background-color:#FFFF00;
+	vertical-align: top;
+}
+</style>
 <?php 
     // Filter for authors
     // pokazh($current_user->wp_capabilities['author'],"wp_capabilities"); // Автор 
@@ -784,27 +806,22 @@
 
     }
     $product_list = $wpdb->get_results($sql,ARRAY_A) ;
-    //pokazh($sql);
-
-    /*
-    * The product list is stored in $product_list now
-    */
 
     $items_count = $category_count[0]['count'];
-    //if ($items_count==0){$offset=0;}
 ?>
 
 <div class="wrap">
     <h2><?php echo TXT_WPSC_DISPLAYPRODUCTS;?></h2>
 
     <?php
+		echo "Фильтры: ";
         echo topcategorylist($offset);
         echo (" или ".al_brandslist());
 
     ?>
 
     №:<input type="text" value="000" id='editpicid' style="width:60px;">
-    <a href="#" class="button add-new-h2" onclick="var editpicid=document.getElementById('editpicid').value;filleditform(editpicid.replace(/(^\s+)|(\s+$)/g, ''));return false;">Редактировать по номеру</a>
+    <a href="#" class="button add-new-h2" onclick="var editpicid=document.getElementById('editpicid').value;filleditform(editpicid.replace(/(^\s+)|(\s+$)/g, ''));return false;">Редактировать по номеру</a><br />
 
     <script language='javascript' type='text/javascript'>
         function conf()
@@ -863,8 +880,8 @@
         echo "      <tr><td valign='top'>\n\r";
 
         // left table (item list)
-        echo "        <table id='itemlist' style='width:120px;background-color:#dfdfdf;'>\n\r";
-        echo "          <tr style='background-color:#dfdfdf;'>\n\r";
+        echo "        <table id='itemlist' style='width:120px;'>\n\r";
+        echo "          <tr>\n\r";
         // selection message:
         echo "            <td colspan='6' style='padding:4px; text-align:center;'>\n\r";
         $from_num = $offset+1;
@@ -875,7 +892,7 @@
             $diapazon = " (".$from_num."-".$to_num." из ".$items_count.")";
         }
         else{$diapazon = "<br />нет картинок для показа или у вас нет полномочий для просмотра";}
-        echo "Показаны работы $diapazon";
+        echo "Показаны $diapazon";
         echo $output; 
         echo "</td>\n\r";
         echo "</tr>\n\r";
@@ -892,24 +909,12 @@
         echo "<td>";
         echo "Имя";
         echo "</td>\n\r";
-
+/*
         echo "<td>";
         echo "Ред.";
         echo "</td>\n\r";
-
+*/
         echo "</tr>\n\r";
-
-    ?>
-    <style>
-        .td_category20{
-            text-align:center; 
-            line-height:1em;
-            background-color:#FFFFFF; 
-            padding:2px;
-        }
-    </style>
-    <?
-
 
         if($product_list != null)
         {
@@ -941,12 +946,20 @@
                     $classstyle = '';
                 }
 
-                echo "<tr>\n\r";
-                echo "<td class='td_category20'>";
-                echo $num+$offset;
-                echo "</td>\n\r";
+				if (isset($current_user->wp_capabilities['administrator']) &&    $current_user->wp_capabilities['administrator']==1) 
+                {
+                    $ed = "<br /><a href='#' onclick='filleditform(".$product['id'].");return false;'><img src='../img/edit.jpg' title='редактировать'></a><br /><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'><img src='../img/trash.gif' title='удалить'></a>";
+                }
+                else {
+                    $ed = "<br><a href='#' onclick='filleditform(".$product['id'].");return false;'><img src='../img/edit.jpg' title='редактировать'></a>";
+                }
 
-                echo "<td class='td_category20'$classstyle>";
+                echo "<tr>\n\r";
+                echo "<td class='tdc2'>";
+                echo $num+$offset;
+                echo $ed."</td>\n\r";
+
+                echo "<td class='tdc2'$classstyle>";
                 $imagedir = $basepath."/wp-content/plugins/wp-shopping-cart/images/";
                 if(file_exists($imagedir.$product['image']))
                 {
@@ -958,21 +971,15 @@
                 }
                 echo "</td>\n\r";
 
-                echo "<td class='td_category20'$classstyle>";
+                echo "<td class='tdc2'$classstyle>";
                 echo "№ ".$product['id']."<br />";
                 echo "<b>".stripslashes($product['name'])."</b><br />[".$category_data[$product['category_id']]."]";
                 echo "</td>\n\r";
-                echo "            <td class='td_category20'>\n\r";
+/*
+                echo "            <td class='tdc2'>\n\r";
                 echo "<a href='#' onclick='filleditform(".$product['id'].");return false;'><img src='../img/edit.jpg' title='редактировать'></a>";
-                if (isset($current_user->wp_capabilities['administrator']) &&    $current_user->wp_capabilities['administrator']==1) 
-                {
-                    echo "<br /><br /><a href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick='return conf();'><img src='../img/trash.gif' title='удалить'></a>";
-                }
-                else {
-                    echo "";
-                }
                 echo "            </td>\n\r";
-
+*/
                 echo "          </tr>\n\r";
                 $num ++;
             }
@@ -991,22 +998,6 @@
         echo "        </div>";
 
     ?>
-    <style type="text/css" media="all">
-        td.r{
-            text-align: right;
-            vertical-align: top;
-        }
-        td.ralt{
-            text-align: right;
-            background-color:#FFFF00;
-            vertical-align: top;
-        }
-        td.lalt{
-            text-align: left;
-            background-color:#FFFF00;
-            vertical-align: top;
-        }
-    </style>
 
     <div id='additem'>
         <form  id='editproductform' method='POST' enctype='multipart/form-data'>
@@ -1037,10 +1028,10 @@
                 </tr>
                 <tr>
                     <td class='r'>
-                        Краткое<br />описание:
+                        Краткое описание:
                     </td>
                     <td>
-                        <textarea id='picturedescription' name='description' cols='50' rows='3'></textarea><br />
+                        <textarea id='picturedescription' name='description' cols='50' rows='4'></textarea><br />
                     </td>
                 </tr>
                 <tr>
@@ -1091,6 +1082,9 @@
                         <input id='temadnya' type="checkbox" name="temadnya"> <span style="color:#999;">считаю актуальной темой</span>
                     </td>
                 </tr>
+<?
+if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1){
+?>
                 <tr>
                     <td class='ralt'>
                         Доступны лицензии:
@@ -1099,6 +1093,9 @@
                         &nbsp;&nbsp;&nbsp;Огр:&nbsp;<input id='license1' type="checkbox" name="license1" checked="checked">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type="checkbox" name="license2" checked="checked">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type="checkbox" name="license3" checked="checked"><br />
                     </td>
                 </tr>
+<?
+					}	
+?>
                 <tr>
                     <td>
                     </td>
