@@ -27,12 +27,12 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 ?>
 <div id="sidebar">
 <h2 style="margin-top:0;">Поиск</h2>
-<form method="post" id="searchform" action="?page_id=29">
+<form method="post" id="searchform" action="/?page_id=29">
 <input id="s" size="26" type="text" value="введите поисковое слово..." name="cs" onfocus="this.value='';" style='width:178px;' /><br />
 <input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
 <input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:6px;margin-bottom:4px;" />
 </form>
-<a href="?page_id=927">Расширенный поиск <img src="http://cartoonbank.ru/img/link.gif" style="border:0;"></a>
+<a href="/?page_id=927">Расширенный поиск <img src="http://cartoonbank.ru/img/link.gif" style="border:0;"></a>
 <?
 // Theme of the day
 	$thedate = date("Y.m.d");
@@ -299,15 +299,15 @@ echo "</div>";
 
 
 <br /><h2>Разное</h2>
-<div id='last_sales'><a href='?page_id=1299' title="свежие продажи">Сто продаж</a></div>
-<div id='best_sales'><a href='?page_id=2583' title="лидеры продаж">Бестселлеры</a></div>
-<div id='100_best'><a href='?page_id=1284&amp;ord=72&amp;br=0' title='результаты голосования'>Топ сто</a></div>
-<div id='themes'><a href='?page_id=1992' title='архив тем дня'>Темы дня</a></div>
-<div id='calend'><a href='?page_id=2254' title='календарь-газета'>Календарь</a></div>
-<div id='rating'><a href='?page_id=643' title='рейтинг карикатур'>Рейтинг</a></div>
-<div id='printed'><a href='?page_id=1459' title='вырезки из публикаций'>Публикации</a></div>
-<div id='rewards'><a href='?page_id=2132'  title='награды авторов'>Награды</a></div>
-<div id='lawers'><a href='?page_id=1565'  title='защита авторского права'>Защита прав</a></div>
+<div id='last_sales'><a href='/?page_id=1299' title="свежие продажи">Сто продаж</a></div>
+<div id='best_sales'><a href='/?page_id=2583' title="лидеры продаж">Бестселлеры</a></div>
+<div id='100_best'><a href='/?page_id=1284&amp;ord=72&amp;br=0' title='результаты голосования'>Топ сто</a></div>
+<div id='themes'><a href='/?page_id=1992' title='архив тем дня'>Темы дня</a></div>
+<div id='calend'><a href='/?page_id=2254' title='календарь-газета'>Календарь</a></div>
+<div id='rating'><a href='/?page_id=643' title='рейтинг карикатур'>Рейтинг</a></div>
+<div id='printed'><a href='/?page_id=1459' title='вырезки из публикаций'>Публикации</a></div>
+<div id='rewards'><a href='/?page_id=2132'  title='награды авторов'>Награды</a></div>
+<div id='lawers'><a href='/?page_id=1565'  title='защита авторского права'>Защита прав</a></div>
 <div style="float:right;width:180px;text-align:right;">
 	<br /><h2>Вход</h2>
 		<ul style="float:right;width:160px;text-align:right;">
