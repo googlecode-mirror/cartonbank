@@ -6,9 +6,17 @@
 
 // application settings
 		global $redirect_url, $app_id, $app_secret, $cartoon_id;
+
+		/* works for https://www.facebook.com/cartoonbank.of.russia !
 		$redirect_url = 'http://cartoonbank.ru/wp-content/plugins/fb-post-ales/fb_post_best.php';
 		$app_id = '264530743602'; //“YOUR_APP_ID”; Cartoonist.name app
 		$app_secret = '05e24c30ac95a33d726f6d087c3c00f4'; //"YOUR_APP_SECRET";
+		*/
+
+		$redirect_url = 'http://cartoonbank.ru/wp-content/plugins/fb-post-ales/fb_post_best.php';
+		$app_id = '264530743602'; //“YOUR_APP_ID”; Cartoonist.name app
+		$app_secret = '05e24c30ac95a33d726f6d087c3c00f4'; //"YOUR_APP_SECRET";
+
 
 // 1
 // get Authentication Code
@@ -43,7 +51,12 @@ function make_post_cartoonbank()
 
 	$cartoon_link = 'http://cartoonbank.ru/?page_id=29&cartoonid='. $cartoon_id;
 
+	  /* Works!
 	  $apprequest_url = "https://graph.facebook.com/cartoonbank.of.russia/feed";
+	  */
+	  $apprequest_url = "https://graph.facebook.com/cartoonbank.ru/feed";
+
+
 	  $parameters = "?" . $theAccessToken  . "&message=" . urlencode($cartoon_brand . ". " . $cartoon_kategoria). "&name=" . urlencode(stripslashes($cartoon_name)) ."&description=" . urlencode(stripslashes($cartoon_description) . " [" . stripslashes($cartoon_additional_description)."]")."&link=". urlencode($cartoon_link) . "&picture=http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". $cartoon_image ."&method=post" . "&caption=".urlencode("The best of Cartoonbank.ru");
 	  $myurl = $apprequest_url . $parameters;
 		
@@ -150,6 +163,12 @@ function get_code()
 		*/
 	//$code = 'SK7iwrSgPU-fYmXYLft9fBaevkadoEm0rtCsrGJCKYA.eyJpdiI6ImhSbzN1VW9QcjZWVVkyeExWc0hxMWcifQ.iGEzIiW6GhJXnxLfqaheqxroP3TOcQtHBKO7hjqi367gujkBZQ1DA9d8rOci4k7EH5qT6HBGhDp3zkhE0I6JFkrxykH3sLryrgR9-oyvK3irCYy_AmTfbmL3LuroQniA';
 	$code = 'AQDqQdE0izRrGrMOPJe-78OfGCRnWi9BDUjCvZxRz-vjoLrufFTfJjrgLsDxI_DlKnxLdEp3SyhAHewvT2E7W_xNtXO_W8lhC5STHraX6QOhSaRYFzlCrZv7nGuL-YjBkjANM1MJFIS78KSHHUQaYWwcKp7FmW9l_lS6s-2-DqA7VNp3deZvnTjde_1wNu9i7Ko';
+
+
+	//$code = 'AAAAAPZAdC0TIBABp2d5gJyEKo688xkvPSedMyAkz7ZCY11nGE5dZC1irnBZCcOEV1tZAjbZAFTjTVCfKZB68ZAfjZArIZA5PLFu3UZD';
+	// Error: Warning: file_get_contents(https://graph.facebook.com/cartoonbank.of.russia/feed?{"error":{"message":"Invalid verification code format.","type":"OAuthException","code":100}}&message=%D0%94%D0%B5%D1%80%D0%B3%D0%B0%D1%87%D1%91%D0%B2+%D0%9E%D0%BB%D0%B5%D0%B3.+Artoon&name=%D0%BA%D0%BB%D0%BE%D1%83%D0%BD&description=%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82+%D1%86%D0%B8%D1%80%D0%BA%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE+%D0%BA%D0%BB%D0%BE%D1%83%D0%BD%D0%B0+%5B%D0%A6%D0%B8%D1%80%D0%BA%2C+%D1%88%D0%BE%D1%83%2C+%D0%BA%D0%BB%D0%BE%D1%83%D0%BD%2C+%D0%B3%D1%80%D0%B8%D0%BC%2C+%D0%BB%D0%B8%D1%86%D0%BE%2C+%D0%BF%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%2C+%D0%BF%D0%B0%D1%80%D0%B8%D0%BA%2C+%D1%80%D0%B0%D0%B7%D0%B2%D0%BB%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%2C+%D1%82%D0%B5%D0%B0%D1%82%D1%80%5D&link=http%3A%2F%2Fcartoonbank.ru%2F%3Fpage_id%3D29%26cartoonid%3D16228&picture=http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/4f8621b4866cb6.67728458Clow in /home/www/cb3/wp-content/plugins/fb-post-ales/fb_post_best.php on line 54
+
+
 	//redirect to http://cartoonbank.ru/wp-content/plugins/fb-post-ales/fb_post_best.php?code=AQDqQdE0izRrGrMOPJe-78OfGCRnWi9BDUjCvZxRz-vjoLrufFTfJjrgLsDxI_DlKnxLdEp3SyhAHewvT2E7W_xNtXO_W8lhC5STHraX6QOhSaRYFzlCrZv7nGuL-YjBkjANM1MJFIS78KSHHUQaYWwcKp7FmW9l_lS6s-2-DqA7VNp3deZvnTjde_1wNu9i7Ko
 
 	return $code;
