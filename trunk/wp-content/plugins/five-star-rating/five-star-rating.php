@@ -105,9 +105,11 @@ function FSR_bests_of_month($star_type = "star") {
 	echo $FSR->getBestOfMonth($star_type);
 }
 
-wp_register_style('five-star-rating-CSS', WP_PLUGIN_URL . '/five-star-rating/assets/css/five-star-rating.min.css');
+//wp_register_style('five-star-rating-CSS', WP_PLUGIN_URL . '/five-star-rating/assets/css/five-star-rating.min.css');
+wp_register_style('five-star-rating-CSS', '/wp-content/plugins/five-star-rating/assets/css/five-star-rating.min.css');
 wp_enqueue_style('five-star-rating-CSS');
-wp_enqueue_script('five-star-rating-JS', WP_PLUGIN_URL . '/five-star-rating/assets/js/five-star-rating.min.js', array('jquery'), '0.1');
+//wp_enqueue_script('five-star-rating-JS', WP_PLUGIN_URL . '/five-star-rating/assets/js/five-star-rating.min.js', array('jquery'), '0.1');
+wp_enqueue_script('five-star-rating-JS', '/wp-content/plugins/five-star-rating/assets/js/five-star-rating.min.js', array('jquery'), '0.1');
 /* Assigning hooks to actions */
 $FSR =& new FSR();
 add_action('activate_five-star-rating/five-star-rating.php', array(&$FSR, 'install')); /* only works on WP 2.x*/

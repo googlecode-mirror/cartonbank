@@ -7,7 +7,7 @@
 // configuration
 include("config.php");
 
-$howmanyrows = 100; // how many rows to select from database
+$howmanyrows =400; // how many rows to select from database
 $howmanyemails = 9; // how many images to send (desired number plus number of ignored artists)
 $url = 'http://anekdot.ru/scripts/upload.php?t=e'; // destination url with form;
 //$url = 'http://cartoonbank.ru/ales/anekdotru_form_accept.php'; // destination url with form;

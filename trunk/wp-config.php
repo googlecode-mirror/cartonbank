@@ -16,7 +16,8 @@
 
 // ** Настройки MySQL: Эту информацию можно получить у вашего хостинг-провайдера ** //
 /** Имя базы данных для WordPress 
-define('DB_NAME', 'database_name_here');*/
+define('DB_NAME', 'database_name_here');
+define('DB_NAME', 'z58365_cbru3');*/
 define('DB_NAME', 'cartoonbankru');
 
 /** Имя пользователя MySQL 
@@ -80,8 +81,7 @@ define ('WPLANG', 'ru_RU');
  * Настоятельно рекомендуется, чтобы разработчики плагинов и тем использовали WP_DEBUG
  * в своём рабочем окружении.
  */
-define('WP_DEBUG', true);
-//define('SAVEQUERIES', true);
+define('WP_DEBUG', false);
 
 /* Это всё, дальше не редактируем. Успехов! */
 

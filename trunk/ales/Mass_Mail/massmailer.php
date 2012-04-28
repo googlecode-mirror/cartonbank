@@ -27,8 +27,8 @@ $databases = array(
                          "db"        => "cartoonbankru",    // MySQL DataBase
                          "user"      => "z58365_cbru3",    // MySQL user
                          "pass"      => "greenbat",      // MySQL Password
-                         //"query"     => "SELECT mail FROM mymailshort LIMIT 1000 OFFSET 0",// MySQL query
-                         "query"     => "SELECT mail FROM mymail where dont_send='0' and never='0' LIMIT 2000 OFFSET 0",// MySQL query
+                         "query"     => "SELECT mail FROM mymailshort LIMIT 1000 OFFSET 0",// MySQL query
+                         //"query"     => "SELECT mail FROM mymail where dont_send='0' and never='0' LIMIT 2000 OFFSET 0",// MySQL query
                          "imp_query" => "INSERT INTO mymail(mail)",
                          )
                  );
@@ -172,16 +172,6 @@ class phpmm {
               function selectDataBase($query, $dbfbasa){
 
                       switch($dbfbasa){
-
-                               case 'pgsql':
-                                    if(extension_loaded('pgsql')){
-                                            $this->connect_pg($this->host, $this->db, $this->user, $this->pass);
-                                            $this->query_pg($query);
-                                    } else {
-                                            print(nl2br("Functions pgsql are absent. \n"));
-                                    }
-                               break;
-
                                case 'mysql':
                                     if(extension_loaded('mysql')){
                                             $this->connect_mysql($this->host, $this->user, $this->pass, $this->db);
@@ -190,71 +180,6 @@ class phpmm {
                                             print(nl2br("Functions mysql are absent. \n"));
                                     }
                                break;
-
-                               case 'ibase':
-                                    if(extension_loaded('interbase')){
-                                            $this->connect_ib($this->host, $this->user, $this->pass);
-                                            $this->query_ib($query);
-                                    } else {
-                                            print(nl2br("Functions ibase are absent. \n"));
-                                    }
-                               break;
-
-                               case 'msql':
-                                    if(extension_loaded('msql')){
-                                            $this->connect_msql($this->host, $this->user, $this->pass, $this->db);
-                                            $this->query_msql($query);
-                                    } else {
-                                            print(nl2br("Functions msql are absent. \n"));
-                                    }
-                               break;
-
-                               case 'fbsql':
-                                    if(extension_loaded('fbsql')){
-                                            $this->connect_fbql($this->host, $this->user, $this->pass, $this->db);
-                                            $this->query_fbsql($this->query);
-                                    } else {
-                                            print(nl2br("Functions fbsql are absent. \n"));
-                                    }
-                               break;
-
-                               case 'sqli':
-                                    if(extension_loaded('sqli')){
-                                            $this->connect_sqli($this->db);
-                                            $this->query_sqli($query);
-                                    } else {
-                                            print(nl2br("Functions msql are absent. \n"));
-                                    }
-                               break;
-
-                               case 'oci':
-                                    if(extension_loaded('oracle')){
-                                            $this->connect_oci($this->user, $this->pass, $this->db);
-                                            $this->query_oci($query);
-                                    } else {
-                                            print(nl2br("Functions oracle are absent. \n"));
-                                    }
-                               break;
-
-                               case 'sybase':
-                                    if(extension_loaded('sybase_ct')){
-                                             $this->connect_sybase($this->user, $this->pass, $this->db);
-                                             $this->query_sybase($query);
-                                    } else {
-                                            print(nl2br("Functions sybase are absent. \n"));
-                                    }
-                               break;
-
-                               case 'ingres':
-                                     if(extension_loaded('ingres')){
-                                             $this->connect_ingres($db, $user, $pass);
-                                             $this->query_ingres($query);
-                                     } else {
-                                             print(nl2br("Functions ingres are absent. \n"));
-                                     }
-                               break;
-
-
                       }
 
 
@@ -293,284 +218,6 @@ class phpmm {
                       if($mysql_link) {
                               mysql_close($mysql_link);
                               $mysql_link = false;
-                      } else {
-                              return false;
-                      }
-              }
-
-              /*
-                 Functions for work with a database PostgreSQL.
-              */
-
-              function connect_pg($host, $db, $user, $pass) {
-                      $this->link_pg = pg_connect("host = $host dbname = $db user = $user password = $pass");
-                      if ($this->link_pg) {
-                              return $this->link_pg;
-                      } else {
-                              print(nl2br("Could not connect.\n"));
-                              return false;
-                      }
-
-              }
-
-
-              function query_pg($query) {
-                      if (!$this->link_pg) return false;
-                      $this->query_result = @pg_query($this->link_pg, $query);
-                      if($this->query_result) {
-                              return $this->query_result;
-                      } else {
-                              print(nl2br(pg_last_error()."\n"));
-                              return false;
-                      }
-              }
-
-              function disconnect_pg($link_pg) {
-                      if ($link_pg) {
-                              pg_close($link_pg);
-                              $link_pg = false;
-                      } else {
-                              return false;
-                      }
-              }
-
-              /*
-                 Functions for work with a database firebird.
-              */
-
-              function connect_ib($host, $user, $pass) {
-                      $this->link_ib = @ibase_connect($host, $user, $pass);
-                      if ($this->link_ib) {
-                              return $this->link_ib;
-                      } else {
-                              print(nl2br("ibase error: ".ibase_errmsg(). "\n"));
-                              return false;
-                      }
-
-              }
-
-              function query_ib($query) {
-                      if (!$this->link_ib) return false;
-                      $this->query_result = ibase_query($this->link_ib, $query);
-                      if ($this->query_result) {
-                              return $this->query_result;
-                      } else {
-                              print(nl2br("ibase error: " . ibase_errmsg()."\n"));
-                              return false;
-                      }
-
-              }
-
-              function disconnect_ib($link_ib){
-                      if($link_ib) {
-                              ibase_close($link_ib);
-                              $link_ib = false;
-                      } else {
-                              return false;
-                      }
-              }
-
-              // Functions for work with mSQL a server
-
-              function connect_msql($host, $user, $pass, $db) {
-                      $this->msql_link = msql_connect($host, $user, $pass);
-                      if ($this->msql_link == 0) {
-                              return false;
-                      }
-                      if (!msql_select_db($db, $this->msql_link)) {
-                              print("Database Error " . msql_error());
-                              return false;
-                      }
-                      return $this->msql_link;
-              }
-
-              function query_msql($query) {
-                       if (!$this->msql_link) return false;
-                       $this->query_result = msql_query($query, $this->msql_link);
-                       if ($this->query_result) {
-                               return $this->query_result;
-                       } else {
-                               print(nl2br("Error query. \n"));
-                               return false;
-                       }
-              }
-
-
-              function disconnect_msql($msql_link) {
-                      if($msql_link) {
-                              msql_close($msql_link);
-                              $msql_link = false;
-                      } else {
-                              return false;
-                      }
-              }
-
-              // Functions for work with fbSQL a server
-
-              function connect_fbql($host, $user, $pass, $db) {
-                      $this->fbsql_link = fbsql_pconnect($host, $user, $pass);
-                      if ($this->fbsql_link == 0) {
-                              return false;
-                      }
-                      if (!fbsql_select_db($db, $this->fbsql_link)) {
-                              print("Database Error " . msql_error(). "\n");
-                              return false;
-                      }
-                      return $this->fbsql_link;
-              }
-
-
-              function query_fbsql($query) {
-                       if (!$this->fbsql_link) return false;
-                       $this->query_result = fbsql_query($query, $this->fbsql_link);
-                       if ($this->query_result){
-                               return $this->query_result;
-                       } else {
-                               print(nl2br("Error query. \n"));
-                               return false;
-                       }
-              }
-
-
-              function disconnect_fbsql($fbsql_link) {
-                      if($fbsql_link) {
-                              msql_close($fbsql_link);
-                              $fbsql_link = false;
-                      } else {
-                              return false;
-                      }
-              }
-
-              // Functions for work with SQLi a server
-
-              function connect_sqli($db){
-                      $this->sqli_link = sqlite_open($db, SQLITE_ASSOC, $sqliteerror);
-                      if ($this->sqli_link){
-                              return $this->sqli_link;
-                      } else {
-                              return false;
-                      }
-              }
-
-              function query_sqli($query){
-                      if (!$this->sqli_link) return false;
-                      $this->query_result = sqlite_query($this->sqli_link, $query);
-                      if ($this->query_result){
-                              return $this->query_result;
-                      } else {
-                              print(nl2br("Error query. \n"));
-                              return false;
-                      }
-              }
-
-
-              function disconnect_sqli($sqli_link) {
-                      if($sqli_link) {
-                              sqlite_close($sqli_link);
-                              $sqli_link = false;
-                      } else {
-                              return false;
-                      }
-              }
-
-              // Functions for work with OCI a server
-
-              function connect_oci($user, $pass, $db){
-                      $this->oci_con = oci_connect($user, $pass, $db);
-                      if($this->oci_con){
-                              return $this->oci_con;
-                      } else {
-                              return false;
-                      }
-
-              }
-
-
-              function query_oci($query){
-                       if (!$this->oci_con) return false;
-                       $this->stmt = oci_parse($this->oci_con, $query);
-                       $this->query_result = oci_execute($this->stmt, OCI_COMMIT_ON_SUCCESS);
-                       if ($this->query_result) {
-                               return $this->query_result;
-                       } else {
-                               print(nl2br("Error query. \n"));
-                               return false;
-                       }
-              }
-
-
-              function disconnect_oci($oci_con){
-                      if($oci_con) {
-                              oci_commit($oci_con);
-                              $oci_con = false;
-                      } else {
-                              return false;
-                      }
-              }
-
-              // Functions for work with SYBASE a server
-
-              function connect_sybase($host, $user, $pass, $db){
-                      $this->sybase_link = sybase_connect($host, $user, $pass);
-                      if ($this->sybase_link == 0){
-                              return false;
-                      }
-                      if (!sybase_select_db($db, $this->sybase_link)){
-                              print("Database Error. \n");
-                              return false;
-                      }
-                      return $this->sybase_link;
-              }
-
-
-              function query_sybase($query){
-                       if (!$this->sybase_link) return false;
-                       $this->query_result = sybase_query($query, $this->sybase_link);
-                       if ($this->query_result) {
-                               return $this->query_result;
-                       } else {
-                               print(nl2br("Error query. \n"));
-                               return false;
-                       }
-              }
-
-
-              function disconnect_sybase($sybase_link){
-                      if($sybase_link) {
-                              sybase_close($sybase_link);
-                              $sybase_link = false;
-                      } else {
-                              return false;
-                      }
-              }
-
-              // Functions for work with Ingres a server
-
-              function connect_ingres($db, $user, $pass){
-                      $this->link_ingres = ingres_connect($db, $user, $pass);
-                      if($this->link_ingres){
-                              return $this->link_ingres;
-                      } else {
-                              print(nl2br("Could not connect. \n"));
-                              return false;
-                      }
-              }
-
-              function query_ingres($query){
-                      if (!$this->link_ingres) return false;
-                      $this->query_result = ingres_query($this->link_ingres, $query);
-                      if($this->query_result){
-                              return $this->query_result;
-                      } else {
-                              print(nl2br("Error query. \n"));
-                              return false;
-                      }
-              }
-
-              function disconnect_ingres($link_ingres){
-                      if ($link_ingres) {
-                              ingres_close($link_ingres);
-                              $link_ingres = false;
                       } else {
                               return false;
                       }
@@ -957,47 +604,36 @@ class phpmm {
 										$headers  = 'MIME-Version: 1.0' . "\r\n";
 										$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 										$headers .= 'From: CartoonBank <cartoonbank.ru@gmail.com>' . "\r\n";
-$subj = "Карикатуры о выборах и не только";
-$EmailBody = "Здравствуйте!
-  <br><br>
-Позвольте Вам представить веб-сайт CARTOONBANK.RU, разработанный специально для оперативного поиска и подбора карикатур и иллюстраций остросоциальной, политической и иронической направленности.
+$subj = "Торт в подарок к дню рождения";
+$EmailBody = "
+<br>
+<img src='http://cartoonbank.ru/wp-admin/images/cb-logo.gif' border='0' title='Картунбанк'>
+<br>
+<br>
+Ровно два года назад в Санкт-Петербурге была образована маленькая, но трудолюбивая компания «МедиаГрафика», у которой спустя некоторое время появился улыбчивый первенец. Счастливая мама назвала его гордым именем <a href='http://cartoonbank.ru/'>CartoonBank.ru</a>.
+<br>
+Малыш рос как на дрожжах, умнел, взрослел – и к настоящему времени превратился в любимца  самых взыскательных и строгих издательств страны.  Сегодня <i>Картунбанк</i> предлагает всем интересующимся юмористической графикой уже более 15.000 лицензионных изображений 43-х авторов из 8 стран мира. Попутно он разработал и реализовал целый ряд успешных проектов – от выставочных до издательских. Несмотря на свой малый возраст, <i>Картунбанк</i> известен федеральным и региональным СМИ как надежный партнер и товарищ.
 <br><br>
-Мы предлагаем огромный выбор изображений (около 15000 шт. на сегодняшний день), которые можно мгновенно приобрести с соблюдением авторских прав и использовать на газетных страницах, в социальных, агитационных, рекламных (не противоречащих Конституции РФ) целях, в качестве плакатов, листовок, постеров, открыток и т.д.
+В день нашего рождения мы хотим пригласить вас в гости на наш сайт <a href='http://cartoonbank.ru/'>CartoonBank.ru</a> и подарить торт. Почти в буквальном смысле. Это работа художника <i>Вячеслава Шилова</i> <a href='http://cartoonbank.ru/?page_id=29&cartoonid=1617'>«Торт»</a> вместе с лицензией на применение.
+<br>
+<img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/4c559cc81925a5.96165950shilov42-2.jpg' border='0' title='Торт - подарок юбиляру'>
 <br><br>
-Посмотрите, например, как будет выглядеть отбор иллюстраций, если в поисковой строке написать слово <a href='http://cartoonbank.ru/?page_id=29&cs=выборы'>«выборы»</a>.
+Получить рисунок «Торт» (файл высокого разрешения) и официальный лицензионный договор на свое имя несложно. Достаточно <a href='http://cartoonbank.ru/wp-login.php?action=register'>зарегистрироваться</a> на сайте, после чего вы получите полноправный доступ к своему аккаунту, где вам будут автоматически предоставлены средства, достаточные для покупки одной из двух лицензий (на ваше усмотрение) к изображению «Торт» и возможность скачать карикатуру вместе с правами на ее использование.
 <br>
+Подробные действия необходимые для получения изображения <a href='http://cartoonbank.ru/?page_id=1010'>описаны здесь</a> (начиная с пункта 4).
 <br>
+Если вы планируете использовать изображение в СМИ, рекомендуем указать его наименование при совершении покупки. В этом случае название СМИ будет отражено в тексте лицензии.
 <br>
-Примером может служить рисунок Владимира Степанова:<br>
-<img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/4d4ba46b0f40c8.58565783Vybory.jpg'>
-<br>
-Надеемся на ваш интерес к нашему Картунбанку.
+Возможность получить рисунок в подарок сохранится вплоть до 31 мая 2012 года.
 <br><br>
-Мы будем рады ответить на любые ваши вопросы!
-<br><br>
-С уважением, Татьяна Алешина,
-<br>
-зам. руководителя медиа-проекта 'CARTOONBANK.RU'
-<br>
 
-тел. +7-911-736-13-63, +7-921-782-05-83 с 11-00 до 19-00
-<br>
-факс +8-812-444-13-22 с 11-00 до 19-00
-<br>
-кроме субботы и воскресенья.
-<br>
+С уважением, 
+Картунбанк
 
-E-mail: cartoonbank.ru@gmail.com
-<br>
-Техническая поддержка: bankir@cartoonbank.ru
-<br>
-Skype: lyapustin
-<br>
 ";
 										
-
-									    mail($this->to, $subj, $EmailBody, $headers);
-										sleep(0.5);
+							mail($this->to, $subj, $EmailBody, $headers);
+							sleep(0.5);
 
                               }
                       }
@@ -1086,54 +722,6 @@ Skype: lyapustin
                                       case 'mysql':
                                             if(!$this->query_result) return false;
                                             while($this->tos = mysql_fetch_assoc($this->query_result)){
-                                                    $this->readData($this->tos);
-                                            }
-                                      break;
-                                      case 'pgsql':
-                                            if(!$this->query_result) return false;
-                                            while($this->tos = pg_fetch_assoc($this->query_result)){
-                                                    $this->readData($this->tos);
-                                            }
-                                      break;
-                                      case 'ibase':
-                                            if(!$this->query_result) return false;
-                                            while($this->tos = ibase_fetch_assoc($this->query_result)){
-                                                    $this->readData($this->tos);
-                                            }
-                                      break;
-                                      case 'msql':
-                                            if(!$this->query_result) return false;
-                                            while($this->tos = msql_fetch_array($this->query_result, MSQL_ASSOC)){
-                                                    $this->readData($this->tos);
-                                            }
-                                      break;
-                                      case 'fbsql':
-                                            if(!$this->query_result) return false;
-                                            while($this->tos = fbsql_fetch_assoc($this->query_result)){
-                                                    $this->readData($this->tos);
-                                            }
-                                      break;
-                                      case 'sqli':
-                                            if(!$this->query_result) return false;
-                                            while($this->tos = sqlite_fetch_array($this->query_result, SQLITE_ASSOC)){
-                                                    $this->readData($this->tos);
-                                            }
-                                      break;
-                                      case 'oci':
-                                            if(!$this->query_result) return false;
-                                            while($this->tos = oci_fetch_assoc($this->query_result)){
-                                                    $this->readData($this->tos);
-                                            }
-                                      break;
-                                      case 'sybase':
-                                            if(!$this->query_result) return false;
-                                            while($this->tos = sybase_fetch_assoc($this->query_result)){
-                                                    $this->readData($this->tos);
-                                            }
-                                      break;
-                                      case 'ingres':
-                                            if(!$this->query_result) return false;
-                                            while($this->tos = ingres_fetch_array($this->query_result, INGRES_ASSOC)){
                                                     $this->readData($this->tos);
                                             }
                                       break;
