@@ -1084,8 +1084,10 @@ td.lalt{
                 </tr>
 <?
 if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1){
+$stle =  "style='display:none;";}
+else{$stle = "";}
 ?>
-                <tr>
+                <tr <? echo $stle; ?>>
                     <td class='ralt'>
                         Доступны лицензии:
                     </td>
@@ -1093,9 +1095,6 @@ if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_
                         &nbsp;&nbsp;&nbsp;Огр:&nbsp;<input id='license1' type="checkbox" name="license1" checked="checked">&nbsp;&nbsp;&nbsp;Станд:&nbsp;<input id='license2' type="checkbox" name="license2" checked="checked">&nbsp;&nbsp;&nbsp;Расш:&nbsp;<input id='license3' type="checkbox" name="license3" checked="checked"><br />
                     </td>
                 </tr>
-<?
-					}	
-?>
                 <tr>
                     <td>
                     </td>
