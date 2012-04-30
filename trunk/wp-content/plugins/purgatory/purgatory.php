@@ -15,7 +15,7 @@ $Current_ID = $current_user->id;
 <b><a href="<?= $_SITEURL; ?>/?page_id=1148" target="_blank">Меморандум редактора</a></b><br />
 
 <?
-$result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U.display_name as author from wp_comments as C, wp_users as U where U.id = C.comment_author order by C.comment_date DESC LIMIT 50");
+$result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U.display_name as author from wp_comments as C, wp_users as U where U.id = C.comment_author order by C.comment_date DESC LIMIT 100");
     $comments_output = "";
     while($r = mysql_fetch_array($result)) {
         $_date = $r['comment_date'];
@@ -142,7 +142,7 @@ function deletecomment(id)
 <style type="text/css">
     #main
     {
-    height:240px; border:1px dashed #29ABE2;margin-bottom:7px;
+    height:210px; border:1px dashed #29ABE2;margin-bottom:7px;
     width:400px;
     padding:2px;
     padding-top:5px;
@@ -401,7 +401,7 @@ WHERE
     AND C.id = P.category
     AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))
 ORDER BY P.id DESC 
-Limit 40";
+Limit 150";
 
 //pokazh($sql);
 
