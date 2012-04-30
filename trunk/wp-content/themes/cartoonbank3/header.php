@@ -126,13 +126,15 @@ default:
 	//
 	//<td style="vertical-align:top;width:185px;height:45px;padding:0px;background-color:#3366CC;"><a href="http://cartoonbank.ru/?page_id=1782" target="_blank" style="font-size:0.8em;color:white;"><div>Международный<br>конкурс<br>«Осторожно, люди!»</div></a></td>
 	//<td style="vertical-align:top;width:185px;height:45px;padding:0px;background-color:#009900"><a href="http://cartoonbank.ru/?page_id=1351" target="_blank" style="font-size:0.8em;color:white;"><div>Спецпредложение:</div><div>ВАША ВЫСТАВКА —<br /> НАШИ РИСУНКИ</div></a></td>
+
+	//<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2420"><img src="http://cartoonbank.ru/img/b/2012gift.gif" style="width:185px;height:90px;border:0;"></a></div>
+
+	//<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a></div>
 ?>
 
-<!-- <div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2420"><img src="http://cartoonbank.ru/img/b/2012gift.gif" style="width:185px;height:90px;border:0;"></a>
-</div> -->
-
-<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a>
+<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2598"><img src="http://cartoonbank.ru/img/b/cake_gift.gif" style="width:185px;height:90px;border:0;"></a>
 </div>
+
 
 <!-- <div style="width:185px;height:90px;float:left;"><a href="http://karikashop.com/#ecwid:category=1620996&mode=category&offset=0&sort=normal" target="_blank"><img src="http://cartoonbank.ru/img/b/karikashop.gif" style="width:185px;height:90px;border:0;"></a>
 </div> -->
