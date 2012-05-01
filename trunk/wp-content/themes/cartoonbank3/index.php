@@ -1,3 +1,8 @@
+<?
+$current_user = wp_get_current_user();
+$_SESSION['uid']= $current_user->ID;
+setcookie('uid', $_SESSION['uid']);
+?>
 <?php get_header(); ?>
 
 <div id="content">

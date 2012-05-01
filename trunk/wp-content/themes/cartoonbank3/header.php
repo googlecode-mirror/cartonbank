@@ -32,9 +32,11 @@ if (isset($_SERVER['QUERY_STRING']))
 			$h = $h."".$brand.". ";
 		}
 }
+/*
 $current_user = wp_get_current_user();
 $_SESSION['uid']= $current_user->ID;
 setcookie('uid', $_SESSION['uid']);
+*/
 if (current_user_can('manage_options'))
 			{
 				$_edid = "<a href=".get_option('siteurl')."/wp-admin/post.php?post=".$_REQUEST['page_id']."&amp;action=edit target=_blank>edit</a>";
@@ -126,12 +128,14 @@ default:
 	//
 	//<td style="vertical-align:top;width:185px;height:45px;padding:0px;background-color:#3366CC;"><a href="http://cartoonbank.ru/?page_id=1782" target="_blank" style="font-size:0.8em;color:white;"><div>Международный<br>конкурс<br>«Осторожно, люди!»</div></a></td>
 	//<td style="vertical-align:top;width:185px;height:45px;padding:0px;background-color:#009900"><a href="http://cartoonbank.ru/?page_id=1351" target="_blank" style="font-size:0.8em;color:white;"><div>Спецпредложение:</div><div>ВАША ВЫСТАВКА —<br /> НАШИ РИСУНКИ</div></a></td>
-
-	//<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2420"><img src="http://cartoonbank.ru/img/b/2012gift.gif" style="width:185px;height:90px;border:0;"></a></div>
-
-	//<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a></div>
 ?>
 
+<!-- <div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2420"><img src="http://cartoonbank.ru/img/b/2012gift.gif" style="width:185px;height:90px;border:0;"></a>
+</div> -->
+<!--
+<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a>
+</div>
+-->
 <div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2598"><img src="http://cartoonbank.ru/img/b/cake_gift.gif" style="width:185px;height:90px;border:0;"></a>
 </div>
 
