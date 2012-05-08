@@ -74,7 +74,7 @@ if (!$searchdonebutnothingfound){
 echo product_display_paginated ($sql,$offset,$items_on_page);
 }
 else{
-    echo "<div>По вашему поиску ничего не найдено. Пожалуйста, попробуйтие другие термины.</div>";
+    echo "<div>По вашему поиску ничего не найдено. Пожалуйста, попробуйте другие термины.</div>";
 }
 
 
