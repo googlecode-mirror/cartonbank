@@ -117,7 +117,7 @@ $_br=0;
 		}
 		else
 		{
-			$_limit = " LIMIT 100 ";
+			$_limit = " LIMIT 250 ";
 		}
 
 	// Offset filter 
