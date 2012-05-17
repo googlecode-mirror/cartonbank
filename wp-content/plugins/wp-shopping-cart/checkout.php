@@ -28,8 +28,12 @@ else {$form_field_id = null;}
 
 $currenturl = get_option('checkout_url');
 
-if (isset($_GET['total']))       
+/*
+if (isset($_GET['total']))
+{
     $currenturl = get_option('checkout_url');// . $seperator .'total='.$_GET['total'];
+}
+*/
 if(!isset($_GET['result']))
   {
 ?><div class="wrap">
@@ -55,11 +59,20 @@ if (isset($_SESSION['wallet']))
 <!-- Table begins here -->
  <table>
  <form action='<?php echo  $currenturl;?>' method='POST'>
- <input type="hidden" name="total" value="<?echo $_SESSION['total'];?>">
+ <input type="hidden" name="total" value="<?
+if (isset($_SESSION['total'])){
+ echo $_SESSION['total'];
+ }
+ ?>">
 
  <?php
 
-$totalsum = (float) $_SESSION['total']; 
+if (isset($_SESSION['total'])){
+	$totalsum = (float) $_SESSION['total']; 
+}
+else{
+	$totalsum = 0;
+}
 //pokazh($userdata->wallet,"wallet");
 //pokazh($totalsum,"totalsum");
 //pokazh($userdata,"userdata");
@@ -157,7 +170,8 @@ $rooturl = get_option('siteurl');
 		<div style="float:left;height:100px;width:20px;"><input type="radio" name="payment_method" value="check" id="payment_method_4" /></div>
         <div style="margin-left:30px;">
 		<label for='payment_method_4'>Оплата через<br /><b>Сбербанк</b></label>
-		<br /><!-- <img src="<?php echo($rooturl);?>/img/gate_beznal.png"> -->
+		<br /><div style="color:#cc0066;font-size:0.8em;">Размер бланка Сбербанка ограничивает количество заказанных рисунков семью штуками. Пожалуйста, используйте несколько заказов, если вы покупает больше семи работ.</div>
+		<!-- <img src="<?php echo($rooturl);?>/img/gate_beznal.png"> -->
         </td>
 		<td style="font-size:.8em;border-top:1px silver solid;">
 		Распечатать бланк и оплатить его в любом отделении Сбербанка. Также возможен платёж из других российских банков. Будьте внимательны! Возврат внесённых средств не производится.
