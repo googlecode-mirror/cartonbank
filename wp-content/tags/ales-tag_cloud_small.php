@@ -23,7 +23,7 @@ function read_tags_to_browser_small()
 	fclose($handle);
 
 //pokazh($contents,"contents");
-	echo $contents;
+	echo urldecode($contents);
 
 	} else {
 		echo "The file $filename is not found";
@@ -249,7 +249,7 @@ function create_tag_cloud_small()
 					{
 						if($popularity > 50)
 								{
-									$return .= " <a class='size{$sizeRange}' href='?page_id=29&amp;cs={$word}' title='$popularity'>{$word}</a> ";
+									$return .= " <a class='size{$sizeRange}' href='/?page_id=29&amp;cs={$word}' title='$popularity'>{$word}</a> ";
 								}
 					}
 				}
