@@ -70,7 +70,8 @@ if (isset($_POST['temadnyaid']) && isset($_POST['temadnyadate']))
 		$comment = $_POST['comment'];
 		if (isset($_POST['comment_url']) && $_POST['comment_url']!='')
 		{
-			$comment = addslashes("<a href='".trim($_POST['comment_url'])."'>".$comment."</a>");
+			$comment_short = substr($comment,0,33).'...'; 
+			$comment = addslashes("<a title='".$comment."' href='".trim($_POST['comment_url'])."'>".$comment_short."</a>");
 		}
 	}
 	else
