@@ -17,8 +17,7 @@ function nszhpcrt_homepage_products($content = '')
 	{
 		$_brand = 1;
 	}
-
-	  $siteurl = get_option('siteurl');
+		  $siteurl = get_option('siteurl');
 	  if(get_option('permalink_structure') != '')
 		{
 		$seperator ="?";
@@ -413,12 +412,12 @@ $output .= "<div style='color:#666666;width:750px;height:80px;position: relative
 
 	if (isset($product_list[0]) && $_br == 0)
 	{
-		$output .= "<h1 style='float:left;position: absolute; bottom: 0; left: 0;'>Топ сто.<br>".$authors."</h1>"; // dropdown
+		$output .= "<h1 style='float:left;position: absolute; bottom: 0; left: 0;'>Топ 250.<br>".$authors."</h1>"; // dropdown
 	}
 	else
 	{
 		//$output .= "<div style='color:silver;'><h1>".$authors.$product_list[0]['author'].".";
-		$output .= "<h1 style='float:left;position: absolute; bottom: 0; left: 0;'>Топ сто.<br>".$authors."</h1>"; // dropdown
+		$output .= "<h1 style='float:left;position: absolute; bottom: 0; left: 0;'>Топ 250.<br>".$authors."</h1>"; // dropdown
 	}
 
 // titles
