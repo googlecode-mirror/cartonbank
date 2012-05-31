@@ -253,7 +253,7 @@ else
 	echo $avatar_url."<br />";
 	echo $authors;
 	echo "<br /><a class='example8' href='#'>Информация об авторе</a>";
-	echo "<br /><a href='".get_option('siteurl')."/?page_id=1284&amp;ord=82&amp;br=".$brandid."'>100 лучших работ</a>";
+	echo "<br /><a href='".get_option('siteurl')."/?page_id=1284&amp;ord=82&amp;br=".$brandid."'>250 лучших работ</a>";
 
 	if (isset($brand_result[0]['shop_url']) && $brand_result[0]['shop_owner']==1)
 	{
