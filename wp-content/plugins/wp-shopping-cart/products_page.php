@@ -32,7 +32,7 @@ if (isset($_REQUEST['cs'])&&!empty($_REQUEST['cs'])){
     $sword = mysql_escape_string($_REQUEST['cs']);
 	save_search_terms($sword);
     $id_list = ssearch ($sword);
-    if (strlen($id_list)>4){
+    if (strlen($id_list)>3){
     $search_keywords_filter = " AND `wp_product_list`.`id` in (".$id_list.") ";}
     else {$search_keywords_filter ="";$searchdonebutnothingfound=true;}
 }
