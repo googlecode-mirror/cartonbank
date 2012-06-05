@@ -31,6 +31,8 @@ else
 </ul>
 </div>
 
+<div id="bottomb"><a href="https://fbcdn-sphotos-a.akamaihd.net/hphotos-ak-ash3/600349_428127440554789_991773000_n.jpg" target="_blank"><img src="http://cartoonbank.ru/img/b/960_delovkusa.jpg" border="0"></a></div>
+
 <div style="clear:both;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;"><br /><br /></div>
 
 <div id="b" style="padding-bottom:20px;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;">
