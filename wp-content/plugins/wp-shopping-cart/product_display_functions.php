@@ -132,14 +132,14 @@ else
 
     if ($logged)
     {
-        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."&nbsp;$klop<span id=\'thumb\' onclick=\'fave_it();\'>$klop<img src=\'".$siteurl."/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/cartoon/".$_number."/\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."&nbsp;$klop<span id=\'thumb\' onclick=\'fave_it();\'>$klop<img src=\'".$siteurl."/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."/\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
     else
     {
-        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name." $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/cartoon/".$_number."/\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name." $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."/\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
 
-    $_bigpictext = "<b>Категория: </b><br />".$_category."<br /><br /><b>Описание: </b> ".$_description."<br /><br /><b>Тэги: </b><br />".$_tags."<br /><br /><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/cartoon/".$_number."/\'> №&nbsp;".$_number."</a><br /><br /><b>Размер:</b><br />".$_dimensions_html."<br /><br /><b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
+    $_bigpictext = "<b>Категория: </b><br />".$_category."<br /><br /><b>Описание: </b> ".$_description."<br /><br /><b>Тэги: </b><br />".$_tags."<br /><br /><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."/\'> №&nbsp;".$_number."</a><br /><br /><b>Размер:</b><br />".$_dimensions_html."<br /><br /><b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
     
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\' border=0 alt=\'".$_bigpicimgalt."\' />";
 
