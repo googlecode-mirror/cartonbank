@@ -95,15 +95,18 @@ $switcher = substr($cartoon_number,strlen($cartoon_number)-1,1);
 switch ($switcher)
 {
 case"1":
-	$license_text = "лицензионное<br />изображение";
+	//$license_text = "лицензионное<br />изображение";
+	$license_text = "лицензионная<br />карикатура";
 	break;
 case"2":
 case"3":
 case"4":
-	$license_text = "лицензионных<br />изображения";
+	//$license_text = "лицензионных<br />изображения";
+	$license_text = "лицензионных<br />карикатуры";
 	break;
 default:
-	$license_text = "лицензионных<br />изображений";
+	//$license_text = "лицензионных<br />изображений";
+	$license_text = "лицензионных<br />карикатур";
 	break;
 }
 ?>
@@ -133,10 +136,10 @@ default:
 <!-- <div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2420"><img src="http://cartoonbank.ru/img/b/2012gift.gif" style="width:185px;height:90px;border:0;"></a>
 </div> -->
 <!--
-<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a>
+<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2598"><img src="http://cartoonbank.ru/img/b/cake_gift.gif" style="width:185px;height:90px;border:0;"></a>
 </div>
 -->
-<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2598"><img src="http://cartoonbank.ru/img/b/cake_gift.gif" style="width:185px;height:90px;border:0;"></a>
+<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a>
 </div>
 
 
