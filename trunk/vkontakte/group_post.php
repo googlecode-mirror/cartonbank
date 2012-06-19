@@ -1,7 +1,8 @@
 <?php
 
 define("VK_APP_ID", '2925633');
-define("VK_ALBUM_ID", '143024983');
+//define("VK_ALBUM_ID", '143024983');//http://vk.com/album-30341883_143024983 - full error 300
+define("VK_ALBUM_ID", '158807507');
 define("VK_GROUP_ID", '30341883');
 define("USER_AGENT", 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.83 Safari/535.11');
 define("PATH_TO_UPLOAD", '/home/www/cb3/wp-content/plugins/wp-shopping-cart/product_images');
