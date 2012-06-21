@@ -79,11 +79,11 @@ if (!$author_section)
 	// include category 666 (rokfor)
 	$categories = $wpdb->get_results("SELECT * FROM `wp_product_categories` WHERE `active`='1' AND `category_parent` = '0' ORDER BY `order` ASC",ARRAY_A);
 
-	$category_count = $wpdb->get_results("SELECT `wp_product_list`.`category` as category_id, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`approved`='1' AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) GROUP BY `wp_product_list`.`category`;",ARRAY_A);
+	$category_count = $wpdb->get_results("SELECT `wp_product_list`.`category` as category_id, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.`approved`='1' AND `wp_product_list`.`category` != '0' AND `wp_product_list`.visible='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) GROUP BY `wp_product_list`.`category`;",ARRAY_A);
 
 
 	// number of bw cartoons
-	$bw_number = $wpdb->get_results("SELECT count(id) AS bw_number FROM `wp_product_list` WHERE color=0 AND `active`=1 AND `visible`=1 AND `approved`=1");
+	$bw_number = $wpdb->get_results("SELECT count(id) AS bw_number FROM `wp_product_list` WHERE color=0 AND category != '0' AND `active`=1 AND `visible`=1 AND `approved`=1");
 	$bw_number = $bw_number[0]->bw_number;
 }
 else
@@ -286,8 +286,6 @@ echo "</div>";
 	  }
 ?>
 
-<br /><br />
-<a href="http://cartoonbank.ru/?page_id=893" target="_blank"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:180px;border:0;"></a>
 <br /><br />
 <a href="http://cartoonbank.ru/?page_id=2440" target="_blank"><img src="http://cartoonbank.ru/img/b/tshirt-2.jpg" style="border:0;width:180px;"></a>
 <br /><br />
