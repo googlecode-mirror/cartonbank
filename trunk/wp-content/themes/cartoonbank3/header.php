@@ -84,11 +84,11 @@ if (current_user_can('manage_options'))
 //$cartoon_number = $wpdb->get_results("SELECT count( l.id ) AS cartoon_number FROM `wp_product_list` AS l WHERE l.active = 1 AND l.visible = 1 AND l.approved = 1 AND l.brand in (SELECT DISTINCT id FROM `wp_product_brands` where `wp_product_brands`.active = 1)");
 
 // speeden up but if the artist will be deactivated may be wrong calculation
-$cartoon_number = $wpdb->get_results("SELECT count( l.id ) AS cartoon_number FROM `wp_product_list` AS l WHERE l.active = 1 AND l.visible = 1 AND l.approved = 1 AND l.brand != '0'");
+$cartoon_number = $wpdb->get_results("SELECT count( l.id ) AS cartoon_number FROM `wp_product_list` AS l WHERE l.active = 1 AND l.visible = 1 AND l.approved = 1 AND l.brand != '0' AND l.category != '0'");
 
 
 $cartoon_number = $cartoon_number[0]->cartoon_number;
-$cartoon_number = $cartoon_number - 1; // strange difference??? strlen($cartoon_number-1)
+$cartoon_number = $cartoon_number; // strange difference??? strlen($cartoon_number-1)
 
 $switcher = substr($cartoon_number,strlen($cartoon_number)-1,1);
 
