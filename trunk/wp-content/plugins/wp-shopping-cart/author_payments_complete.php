@@ -88,6 +88,11 @@ $complete_payments_list = $wpdb->get_results($sql,ARRAY_A);
 
 if($complete_payments_list != null)
     {
+		$sold_cartoons_total = 0;
+		$topay_total = 0;
+		$payedout_total = 0;
+		$left_topay_total = 0;
+
         $out = "<div>";
 
             $out .= "<div>";
@@ -110,6 +115,11 @@ if($complete_payments_list != null)
                         $out .= "<div class='t'>".round($sales['reward_to_pay'])."</div>";//5
                         $out .= "<div class='t'>".round($sales['reward_payed'])."</div>";//6
                         
+						$sold_cartoons_total = $sold_cartoons_total+$sales['cartoons_sold'];
+						$topay_total = $topay_total + round($sales['reward_to_pay']);
+						$payedout_total = $payedout_total + round($sales['reward_payed']);
+						$left_topay_total = $left_topay_total+$reward_remains;
+
                         if ($reward_remains>=5000)
                             $out .= "<div class='t' style='color:red; font-weight:bold;background-color:#FDDE9D;'>".$reward_remains."</div>";
                         else
@@ -118,6 +128,17 @@ if($complete_payments_list != null)
                     $out .= "</div>";
                     
             }
+		// total row
+                    $out .= "<div>";
+                        $out .= "<br clear='left' />";
+                        $out .= "<div class='tt' style='border-top:4px solid #9999cc;background-color:#9999cc;'><b>ВСЕГО:</b></div>";
+                        $out .= "<div class='t' style='border-top:4px solid #9999cc;'>".$sold_cartoons_total."</div>";//2
+                        $out .= "<div class='t' style='border-top:4px solid #9999cc;'>".$topay_total."</div>";//5
+                        $out .= "<div class='t' style='border-top:4px solid #9999cc;'>".$payedout_total."</div>";//6
+                        $out .= "<div class='t' style='border-top:4px solid #9999cc;'>".$left_topay_total."</div>";
+
+                    $out .= "</div>";
+
         $out .= "</div>";
         echo ("<h1>Суммарные выплаты за всю историю</h1>");
         echo $out;
