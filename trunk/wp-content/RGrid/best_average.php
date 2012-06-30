@@ -61,6 +61,8 @@
             FROM wp_product_list, wp_product_brands
             WHERE wp_product_list.active =1
             AND wp_product_list.visible =1
+            AND wp_product_list.approved =1
+			AND wp_product_list.category >0
             AND wp_product_list.brand = wp_product_brands.id
             ORDER BY 7 DESC , 5 DESC";
     
