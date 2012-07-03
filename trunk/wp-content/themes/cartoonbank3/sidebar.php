@@ -121,7 +121,7 @@ else
         
 		if ($option['id']=='666')
 		{
-			$category_in_the_list = '<div style="padding-top:2px;color:red;font-size:0.8em;"><a style="color:#006600;" href="'.get_option('siteurl').'/?page_id=649" title="подробнее о категории">Что такое «Рабочий стол»</a></div>'.'<a href="'.get_option('product_list_url').$seperator."&amp;category=".$option['id'].'" title=\''.stripslashes($option['description']).'\'>'.stripslashes($option['name']).'';
+			$category_in_the_list = '<div style="padding-top:2px;color:red;font-size:0.8em;"><a style="color:#006600;" href="'.get_option('siteurl').'/?page_id=649" title="подробнее о категории">Что такое «Рабочий стол»</a></div>'.'<a href="'.get_option('product_list_url').$seperator."&amp;brand=".$brandid."&amp;category=".$option['id'].'" title=\''.stripslashes($option['description']).'\'>'.stripslashes($option['name']).'';
 		}
 		else
 		{
