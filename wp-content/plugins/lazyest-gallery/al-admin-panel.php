@@ -4,3 +4,16 @@
 3. <a href="http://cartoonbank.ru/img/help/May-2011-report.doc">Отчёт Картунбанка за май 2011</a><br>
 4. <a href="http://cartoonbank.ru/?page_id=1775">Заявление на налоговый вычет</a><br>
 5. <a href="http://cartoonbank.ru/img/help/report_september_2011.docx">Отчёт Картунбанка за сентябрь 2011</a><br>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+var disqus_shortname = 'cartoonbankru'; // required: replace example with your forum shortname
+
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
