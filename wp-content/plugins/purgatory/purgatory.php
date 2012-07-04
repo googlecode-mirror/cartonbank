@@ -528,8 +528,23 @@ if ($already_voted){$current_visibility_class = "radioSetOff";}else{$current_vis
 </div>
 </td>
 <td valign="top"> &nbsp;
-    <div class="box5"><br>
-    <b>50 последних комментариев редакторов:</b>
+<div class="box5">
+<div id="disqus" style="padding:1em;background-color:#ddf0ff">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+var disqus_shortname = 'cartoonbankru'; // required: replace example with your forum shortname
+
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+</div>
+	
+    <br><b>50 последних комментариев редакторов:</b>
         <div id="commentsform">
             <form action="<?= $_SITEURL; ?>/wp-content/plugins/purgatory/add_comment.php" method="post" id="commentform">
             пишите тут, нажмите кнопку:<br />
