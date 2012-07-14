@@ -119,7 +119,7 @@ default:
 </div>
 
 <div style="width:580px;height:90px;float:left;">
-<br><a href="<?php echo get_option('home'); ?>/"><img src="<?php echo get_option('home'); ?>/wp-admin/images/cb-logo.gif" style="border:0;"></a><br />
+<br><a href="http://cartoonbank.ru/?page_id=29&offset=0&new=0"><img src="<?php echo get_option('home'); ?>/wp-admin/images/cb-logo.gif" style="border:0;"></a><br />
 <?php bloginfo('description'); ?>
 </div>
 
