@@ -46,7 +46,7 @@ $tagsarray = get_cartoon($rate);
 
 <div id="login" class="login"><form id="name" action="savename.php"><p class="sm">назовите себя</p><input type="text" name="username" style="font-size: 1.2em; padding:2px; font-color:#808080;text-align:center;"><p class="sm">и придумайте секретное слово</p><input type="password" name="secret" style="font-size: 1.2em; padding:2px; font-color:#808080;text-align:center;"><p><input class="btn" type="submit" value="сохранить" onclick="onsave();return false;"><input type="hidden" value=""></p></form></div>
 
-<div class="footer"><span class="btn"><a href="#" onclick="jQuery.cookie('username',null);jQuery.cookie('cbrate',null);jQuery.cookie('cbclicks',null);addvote();loading();window.location.href = 'http://duel.cartoonbank.ru/index.php';">Обнулить всё</a></span> <span class="btn"><a href="#" onclick="loading();window.location.href = 'http://duel.cartoonbank.ru/index.php';">Следующая пара</a></span> <span class="btn"><a href="#" onclick="login();">Назовите себя</a></span>
+<div class="footer"><span class="btn"><a href="#" onclick="jQuery.cookie('username',null);jQuery.cookie('cbrate',null);jQuery.cookie('cbclicks',null);addvote();loading();window.location.href = 'http://duel.cartoonbank.ru/index.php';">Обнулить всё</a></span> <span class="btn"><a href="#" onclick="loading();window.location.href = 'http://duel.cartoonbank.ru/index.php';">Следующая пара</a></span> <!-- <span class="btn"><a href="#" onclick="login();savename();">Назовите себя</a></span> -->
 </div>
 
 <div id="popup" class="popup" onclick="jQuery('#popup').css('visibility', 'hidden');loading();window.location.href = 'http://duel.cartoonbank.ru/index.php';"></div>

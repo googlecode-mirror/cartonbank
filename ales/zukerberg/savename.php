@@ -13,7 +13,7 @@ $rate="";
 if (isset($_REQUEST['name']) && isset($_REQUEST['secret']))
 {
 	$name=mysql_real_escape_string($_REQUEST['name']);
-	$rate=mysql_real_escape_string($_REQUEST['rate']);
+	$rate=mysql_real_escape_string($_REQUEST['rating']);
     if ($rate=='NaN'){$rate=0;}
 	$secret=mysql_real_escape_string($_REQUEST['secret']);
 	$views=mysql_real_escape_string($_REQUEST['views']);
@@ -44,28 +44,29 @@ if ($count>0){
 	$oldguessed = $row[2];
 	$oldrate = $row[1];
 
-	if ($oldviews > 0){
+	if ($oldviews > 0 & $views<1){
 	// returning user with 0 views
 	$arr = array('views' => $oldviews, 'guessed' => $oldguessed, 'rate' => $oldrate);
 	$output = json_encode($arr);
 	echo $output;
 	exit;
 	}
+
+
 	//update returning user with views > 0
 		$sql_update = "UPDATE `comparerate` SET `rate`=$rate, `views`=$views, `guessed`=$guessed WHERE `name`='".$name."' AND `password`='".$secret."'";
 		mysql_query($sql_update);
-	}
+
+    //add vote
+    $sql="INSERT INTO comparerategraph (bestid, worstid, userid) VALUES ($bestid, $worstid, $userid)";
+    mysql_query($sql);
+}
 	else
 	{
 	//insert
 		$sql_insert = "INSERT ignore INTO `comparerate` (`name`, `password`, `rate`, `guessed`, `views`) VALUES ('".$name."', '".$secret."', $rate, $guessed, $views)";
 		mysql_query($sql_insert);
-		$userid = mysql_insert_id();
-
 }
-	//add vote
-	$sql="INSERT INTO comparerategraph (bestid, worstid, userid) VALUES ($bestid, $worstid, $userid)";
-	mysql_query($sql);
 
 mysql_close($link);
 {

@@ -94,11 +94,19 @@ function refreshStat(){
 	if (jQuery.cookie("username")!=null){
 		jQuery("#hi").html("Дуэлянт: <span class='y'>" + jQuery.cookie("username") + "</span>");
 	}
-	jQuery('#headerrate').append('. Ваше место: <span class="y">'+jQuery('#myplace').text() + '</span>');
+    jQuery('#rating').load('http://duel.cartoonbank.ru/getrating.php?u='+jQuery.cookie("username")+'&s='+jQuery.cookie("secret"),
+    function(){
+        if (myrate>0){
+        jQuery('#headerrate').append('. Ваше место: <span class="y">'+jQuery('#myplace').text() + '</span>');    
+        }
+    }
+    );
+	
 };
 
 function savename(){
-    var rate = jQuery.cookie("cbrate")/Math.sqrt(Math.sqrt(parseInt(jQuery.cookie("cbclicks"))));
+    //var rate = jQuery.cookie("cbrate")/Math.sqrt(Math.sqrt(parseInt(jQuery.cookie("cbclicks"))));
+	var rate = jQuery.cookie("cbrate")/Math.sqrt(Math.sqrt(parseInt(jQuery.cookie("cbclicks")))).toFixed(4);
 	var guessed = jQuery.cookie("cbrate");
 	var views = jQuery.cookie("cbclicks");
     var name = jQuery("#name input[name=username]").val();
@@ -123,14 +131,15 @@ jQuery.getJSON("http://duel.cartoonbank.ru/savename.php",
     }
 }
 function addvote(){
-    var rate = jQuery.cookie("cbrate")/Math.sqrt(Math.sqrt(parseInt(jQuery.cookie("cbclicks"))));
+    //var rate = jQuery.cookie("cbrate")/Math.sqrt(Math.sqrt(parseInt(jQuery.cookie("cbclicks"))));
+	var rate = (parseFloat(jQuery.cookie("cbrate"))/Math.sqrt(Math.sqrt(parseInt(jQuery.cookie("cbclicks"))))).toFixed(2);
 	var guessed = jQuery.cookie("cbrate");
 	var views = jQuery.cookie("cbclicks");
     var name = jQuery.cookie("username");
     var secret = jQuery.cookie("secret");
     var best = jQuery.cookie("best");
     var worst = jQuery.cookie("worst");
-    jQuery.post('http://duel.cartoonbank.ru/savename.php',{ name: name, rate: rate, secret: secret, guessed: guessed, views: views, best: best, worst: worst });
+    jQuery.post('http://duel.cartoonbank.ru/savename.php',{ rating: rate, name: escape(name), secret: escape(secret), guessed: guessed, views: views, best: best, worst: worst });
     jQuery('#login').css('visibility','hidden');
     if (jQuery.cookie("username")!=null){
         jQuery("#hi").html("Дуэлянт: " + jQuery.cookie("username") + "");
@@ -311,12 +320,7 @@ function addLoadEvent(func) {
 		jQuery.cookie("id2",jQuery('#image2').text());
 		
 		
-		if (jQuery.cookie("username")!=null){
-			jQuery("#hi").html("Дуэлянт: <span class='y'>" + jQuery.cookie("username") + "</span>");
-		}
-		
-		jQuery('#rating').load('http://duel.cartoonbank.ru/getrating.php?u='+jQuery.cookie("username")+'&s='+jQuery.cookie("secret"), function(){jQuery('#headerrate').append('. Ваше место: <span class="y">'+jQuery('#myplace').text() + '</span>')});
-
+        refreshStat();
 	var img1 = new Image();
 	var img2 = new Image();
 
