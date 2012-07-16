@@ -5,7 +5,7 @@ include("/home/www/cb3/ales/config.php");
 $link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
 mysql_set_charset('utf8',$link);
 
-$sql = "SELECT name, password, rate, guessed, views FROM `comparerate` ORDER BY rate DESC LIMIT 50";
+$sql = "SELECT name, password, rate, guessed, views FROM `comparerate` WHERE rate>0 ORDER BY rate DESC LIMIT 50";
 
 $link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
 mysql_set_charset('utf8',$link);
