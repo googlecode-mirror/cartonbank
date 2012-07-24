@@ -142,7 +142,7 @@ function deletecomment(id)
 <style type="text/css">
     #main
     {
-    height:210px; border:1px dashed #29ABE2;margin-bottom:7px;
+    height:230px; border:1px dashed #29ABE2;margin-bottom:7px;
     width:400px;
     padding:2px;
     padding-top:5px;
