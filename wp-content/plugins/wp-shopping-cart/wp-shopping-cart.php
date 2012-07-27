@@ -808,7 +808,8 @@ function nzshpcrt_submit_ajax()
   * makes the product form
   * has functions inside a function
   */ 
-  $sql = "SELECT * FROM `wp_product_list` WHERE `id`=$prodid LIMIT 1";
+  //$sql = "SELECT * FROM `wp_product_list` WHERE `id`=$prodid LIMIT 1";
+  $sql = "SELECT wp_product_list.*, wp_product_files.width, wp_product_files.height, wp_product_files.mimetype FROM wp_product_list, wp_product_files WHERE wp_product_files.id=wp_product_list.file AND wp_product_list.id=$prodid LIMIT 1";
   $product_data = $wpdb->get_results($sql,ARRAY_A) ;
   
   $product = $product_data[0];
@@ -979,6 +980,7 @@ function nzshpcrt_submit_ajax()
     $m_image_link = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/".$preview_location;
 
     $output .= "<a href='".$m_image_link."' target=_blank><img id='previewimage' src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/$icon_location' alt='".TXT_WPSC_PREVIEW."' title='".TXT_WPSC_PREVIEW."' /></a>";
+    $output .= "Ш х В: ".$product['width']."x".$product['height']."<br>".$product['mimetype'];
 
   
   $output .= "</td>\n\r";
