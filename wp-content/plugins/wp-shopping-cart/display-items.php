@@ -379,7 +379,12 @@ td.lalt{
                 $Current_ID = 41;
                 $votecontent = "<html><head><title>Please vote!</title></head><body><a href='".$_SITEURL."/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br /><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br />".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br />[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br /><img src='".$_SITEURL."/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br /><br /> <div> Проголосуйте за рисунок:<br/> <a style='display:block;padding:4px;margin:4px;size:24px;' href='".$_SITEURL."/wp-content/plugins/purgatory/moder_vote.php?ip=".$Current_ID."&id=".$new_id."&vote=5' target='_blank'>5 - отлично</a> <a style='display:block;padding:4px;margin:4px;size:24px;' href='".$_SITEURL."/wp-content/plugins/purgatory/moder_vote.php?ip=".$Current_ID."&id=".$new_id."&vote=4' target='_blank'>4 - хорошо</a> <a style='display:block;padding:4px;margin:4px;size:24px;' href='".$_SITEURL."/wp-content/plugins/purgatory/moder_vote.php?ip=".$Current_ID."&id=".$new_id."&vote=3' target='_blank'>3 - годится</a> <a style='display:block;padding:4px;margin:4px;size:24px;' href='".$_SITEURL."/wp-content/plugins/purgatory/moder_vote.php?ip=".$Current_ID."&id=".$new_id."&vote=2' target='_blank'>2 - слабо</a> <a style='display:block;padding:4px;margin:4px;size:24px;' href='".$_SITEURL."/wp-content/plugins/purgatory/moder_vote.php?ip=".$Current_ID."&id=".$new_id."&vote=1' target='_blank'>1 - плохо</a> </div> </body></html>";
                 mail("dbond2000@mail.ru","Новая картинка в Прихожей!",$votecontent,$headers);
-			
+
+                // dubinin
+                $Current_ID = 109;
+                $votecontent = "<html><head><title>Please vote!</title></head><body><a href='".$_SITEURL."/wp-admin/admin.php?page=purgatory/purgatory.php'>Пройти в Прихожую</a><br /><b>".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['name'])))."</b><br />".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['description'])))."<br />[".$wpdb->escape(removeCrLf(htmlspecialchars($_POST['additional_description'])))."]<br /><img src='".$_SITEURL."/wp-content/plugins/wp-shopping-cart/product_images/".$image."'> <br /><br /> <div> Проголосуйте за рисунок:<br/> <a style='display:block;padding:4px;margin:4px;size:24px;' href='".$_SITEURL."/wp-content/plugins/purgatory/moder_vote.php?ip=".$Current_ID."&id=".$new_id."&vote=5' target='_blank'>5 - отлично</a> <a style='display:block;padding:4px;margin:4px;size:24px;' href='".$_SITEURL."/wp-content/plugins/purgatory/moder_vote.php?ip=".$Current_ID."&id=".$new_id."&vote=4' target='_blank'>4 - хорошо</a> <a style='display:block;padding:4px;margin:4px;size:24px;' href='".$_SITEURL."/wp-content/plugins/purgatory/moder_vote.php?ip=".$Current_ID."&id=".$new_id."&vote=3' target='_blank'>3 - годится</a> <a style='display:block;padding:4px;margin:4px;size:24px;' href='".$_SITEURL."/wp-content/plugins/purgatory/moder_vote.php?ip=".$Current_ID."&id=".$new_id."&vote=2' target='_blank'>2 - слабо</a> <a style='display:block;padding:4px;margin:4px;size:24px;' href='".$_SITEURL."/wp-content/plugins/purgatory/moder_vote.php?ip=".$Current_ID."&id=".$new_id."&vote=1' target='_blank'>1 - плохо</a> </div> </body></html>";
+                mail("valdubinin@gmail.com","Новая картинка в Прихожей!",$votecontent,$headers);
+						
 			}
 
             if(isset ($_FILES['extra_image']) && ($_FILES['extra_image'] != null) && function_exists('edit_submit_extra_images'))
@@ -1097,6 +1102,7 @@ td.lalt{
 if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1){
 $stle =  "style='display:none;";}
 else{$stle = "";}
+$stle = "";
 ?>
                 <tr <? echo $stle; ?>>
                     <td class='ralt'>
