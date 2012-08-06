@@ -67,13 +67,33 @@
         //.. обновить facebook
 
 
-        if ($up_value == $limit) // 3 плюса - проходит, 3 минуса - не проходит
+        if ($up_value == $limit) 
         {
-            // approve it to the main collection
-            $sql = "update wp_product_list set approved=1 where id='$id'";
-            mysql_query( $sql);
 
-			send_mail1("Ваш рисунок прошёл в Картунбанк с начальным средним баллом.")
+			// email confirmation. the cartoon passed to the bank
+			$sql = "SELECT b.name as artist_name, u.user_email, l.name as cartoon_name, l.image, l.category FROM wp_product_list as l, wp_product_brands as b, wp_users as u WHERE b.id=l.brand AND l.id = ".$id." AND u.id = b.user_id";
+			$result=mysql_query($sql);
+			$row=mysql_fetch_array($result);
+			$artist_name=$row['artist_name'];
+			$artist_email=$row['user_email'];
+			$cartoon_name=$row['cartoon_name'];
+			$image=$row['image'];
+			$category=$row['category'];
+
+
+			if (($avgpoints < $block_limit) and ($category==11)){
+				// disapprove it to the main collection
+				$sql = "update wp_product_list set approved=0 where id='$id'";
+				mysql_query( $sql);
+				send_email_refused("Уважаемый $artist_name<br />Ваш рисунок № <b>".$id."</b> «".$cartoon_name."» не прошёл в Картунбанк так как его средний балл <b>".$avgpoints."</b> ниже установленного порога похождения в рубрику 'Разное'.<br /><a href='http://cartoonbank.ru/cartoon/".$id."/><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/'".$image."'></a>.",$artist_email);
+			}
+			else{
+				// approve it to the main collection
+				$sql = "update wp_product_list set approved=1 where id='$id'";
+				mysql_query( $sql);
+
+				send_email_passed("Уважаемый $artist_name<br />Ваш рисунок № <b>".$id."</b> «".$cartoon_name."» прошёл в Картунбанк с начальным средним баллом <b>".$avgpoints."</b>.<br /><a href='http://cartoonbank.ru/cartoon/".$id."/'><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."'></a>.",$artist_email);
+			}
 
             //send update to twitter
             //'http://cartoonbank.ru/wp-content/totwit/totwit.php?artist=Vasya&cid='.$id
@@ -207,12 +227,21 @@
         }
     }
 
-
-function send_mail1($content)
+function send_email_refused($content,$artist_email)
 {
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
-	mail("igor.aleshin@gmail.com","Картинка прошла в Картунбанк",$content,$headers);
+	//mail("igor.aleshin@gmail.com","[тест] Картинка не прошла в Картунбанк",$content . "<br /> Отправить на ".$artist_email,$headers);
+	mail("cartoonbank.ru@gmail.com","[тест] Картинка не прошла в Картунбанк",$content . "<br /> Отправить на ".$artist_email,$headers);
+}
+
+function send_email_passed($content,$artist_email)
+{
+	$headers  = 'MIME-Version: 1.0' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
+	//mail("igor.aleshin@gmail.com","[тест] Картинка прошла в Картунбанк",$content . "<br /> Отправить на ".$artist_email,$headers);
+	mail("cartoonbank.ru@gmail.com","[тест] Картинка прошла в Картунбанк",$content . "<br /> Отправить на ".$artist_email,$headers);
 }
 ?>
