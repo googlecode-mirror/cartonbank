@@ -73,6 +73,8 @@
             $sql = "update wp_product_list set approved=1 where id='$id'";
             mysql_query( $sql);
 
+			send_mail1("Ваш рисунок прошёл в Картунбанк с начальным средним баллом.")
+
             //send update to twitter
             //'http://cartoonbank.ru/wp-content/totwit/totwit.php?artist=Vasya&cid='.$id
             //$handle = fopen("http://cartoonbank.ru/wp-content/totwit/totwit.php?cid=".$id, "r");
@@ -204,4 +206,13 @@
             print "Reason: '".htmlspecialchars($r->faultString())."'\n";
         }
     }
+
+
+function send_mail1($content)
+{
+	$headers  = 'MIME-Version: 1.0' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
+	mail("igor.aleshin@gmail.com","Картинка прошла в Картунбанк",$content,$headers);
+}
 ?>
