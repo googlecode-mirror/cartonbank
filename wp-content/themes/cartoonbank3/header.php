@@ -112,7 +112,7 @@ default:
 ?>
 <!-- <center><div id="suphead" style="float:center;height:20px;width:960px;background-color:#668bb7;"><a href="http://cartoonbank.ru/?page_id=2440" style="color:white;font-size:1.2em;line-height:1.8;">футболки, кружки, календари, открытки, альбомы карикатур</a></div></center> -->
 
-<center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;">В помощь планирующим выпуски статей мы добавили на первую страницу удобный календарь.</div></center>
+<center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="scroll" direction="left">В помощь планирующим выпуски статей мы добавили на первую страницу удобный календарь.</marquee></div></center>
 
 <div id="header" style="height:90px;width:960px;">
 <div>
