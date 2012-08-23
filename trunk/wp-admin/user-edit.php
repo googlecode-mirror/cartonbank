@@ -282,6 +282,12 @@ if (current_user_can('author'))
 		<input type="checkbox" name="sell_notification" id="sell_notification" value="1" <?php if($profileuser->sell_notification == '1'){echo 'checked=checked';} ?> style="text-align:left;" />
 	<br /><span class="description"><?php _e("Отключите, чтобы отказаться от получения извещений о продаже лицензии."); ?></td>
 </tr>
+<tr>
+    <th><label for="accept_notification"><?php _e('Получать сообщения о моменте прохождения рисунка в коллекцию'); ?> </span></label></th>
+    <td>
+		<input type="checkbox" name="accept_notification" id="accept_notification" value="1" <?php if($profileuser->accept_notification == '1'){echo 'checked=checked';} ?> style="text-align:left;" />
+	<br /><span class="description"><?php _e("Отключите, чтобы отказаться от получения извещений о моменте приёмки изображения в Картунбанк"); ?></td>
+</tr>
 <?
 }
 ?>
