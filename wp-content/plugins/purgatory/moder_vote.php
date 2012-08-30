@@ -236,8 +236,8 @@ function send_email_refused($content,$artist_email)
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
-	//mail("igor.aleshin@gmail.com","[тест] Картинка не прошла в Картунбанк",$content . "<br /> Отправить на ".$artist_email,$headers);
-	mail("cartoonbank.ru@gmail.com","[тест] Картинка не прошла в Картунбанк",$content . "<br /> Отправить на ".$artist_email,$headers);
+	mail("cartoonbank.ru@gmail.com","Картинка не прошла в Картунбанк",$content . "<br /> Отправлено на ".$artist_email,$headers);
+	mail($artist_email,"Картинка не прошла в Картунбанк",$content,$headers);
 }
 
 function send_email_passed($content,$artist_email)
@@ -245,7 +245,7 @@ function send_email_passed($content,$artist_email)
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
-	//mail("igor.aleshin@gmail.com","[тест] Картинка прошла в Картунбанк",$content . "<br /> Отправить на ".$artist_email,$headers);
-	mail("cartoonbank.ru@gmail.com","[тест] Картинка прошла в Картунбанк",$content . "<br /> Отправить на ".$artist_email,$headers);
+	mail("cartoonbank.ru@gmail.com","Картинка прошла в Картунбанк",$content . "<br /> Отправлено на ".$artist_email,$headers);
+	mail($artist_email,"Картинка прошла в Картунбанк",$content,$headers);
 }
 ?>
