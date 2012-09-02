@@ -49,7 +49,7 @@ else
 {
 	//$start_timestamp = mktime(0, 0, 0, $month-12, 1, $year);
 	$start_timestamp = mktime(0, 0, 0, 11, 1, 2010);
-	$end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year);
+	$end_timestamp = mktime(0, 0, 0, ($month+1), 0, $year); 
 }
 
 $sql = "SELECT COUNT( * ) as cntr, temp.id, temp.name, temp.user_id, atotal FROM ( SELECT b.count as atotal, b.id, b.name, b.user_id FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b, `wp_users` AS u WHERE l.`processed` = s.`id`  AND l.id = c.purchaseid AND p.id = c.prodid AND st.purchid = c.purchaseid AND p.brand = b.id AND u.id = l.user_id AND l.user_id !=  '106' AND st.downloads !=  '5' AND date BETWEEN '$start_timestamp' AND '$end_timestamp' GROUP BY c.license ORDER BY b.name ) AS temp GROUP BY temp.id order by temp.name  
@@ -61,7 +61,7 @@ if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_erro
 echo "<div style='vertical-align:top;width:500px;'><div><h3>Продажи работ с ноября 2010</h3></div>";
 echo "<div style='vertical-align:top;width:500px;'>На этой странице в реальном времени показываются все продажи по факту скачивания файлов. Количество ваших продаж на странице '<a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php'>Заработано</a>' обычно меньше, так как указывается с задержкой на время прихода денег в бухгалтерию Картунбанка.</div>";
 ?> 
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/spreadsheet/tq?key=0AtPperB2fdv5dDZDdEk2cEtNNkpWYXhfVWVHdFM0NUE&transpose=0&headers=0&merge=COLS&range=C3%3AC24%2CR3%3AR23&gid=0&pub=1","options":{"vAxes":[{"useFormatFromData":true,"viewWindowMode":"pretty","viewWindow":{}},{"useFormatFromData":true,"viewWindowMode":"pretty","viewWindow":{}}],"booleanRole":"certainty","title":"\u041f\u0440\u043e\u0434\u0430\u0436\u0438 \u043f\u043e \u043c\u0435\u0441\u044f\u0446\u0430\u043c, \u0448\u0442.","animation":{"duration":0},"legend":"none","annotations":{"domain":{}},"hAxis":{"useFormatFromData":true,"viewWindowMode":"pretty","viewWindow":{}},"isStacked":false,"width":700,"height":427},"state":{},"chartType":"ColumnChart","chartName":"Chart 5"} </script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/spreadsheet/tq?key=0AtPperB2fdv5dDZDdEk2cEtNNkpWYXhfVWVHdFM0NUE&transpose=0&headers=0&merge=COLS&range=C3%3AC25%2CR3%3AR25&gid=0&pub=1","options":{"vAxes":[{"useFormatFromData":true,"viewWindowMode":"pretty","viewWindow":{}},{"useFormatFromData":true,"viewWindowMode":"pretty","viewWindow":{}}],"booleanRole":"certainty","title":"\u041f\u0440\u043e\u0434\u0430\u0436\u0438 \u043f\u043e \u043c\u0435\u0441\u044f\u0446\u0430\u043c, \u0448\u0442.","height":427,"animation":{"duration":0},"legend":"none","width":700,"annotations":{"domain":{}},"hAxis":{"useFormatFromData":true,"viewWindowMode":"pretty","viewWindow":{}},"isStacked":false},"state":{},"chartType":"ColumnChart","chartName":"Chart 5"} </script>
 <?
 echo "<div><table style='width:500px;background-color:#E8E8E8;'>";
 echo "<tr><td style='text-align: center;'>автор</td><td style='text-align: center;'>продано штук</td><td style='text-align: center;'> % от работ автора</td><td style='text-align: center;'>всего работ автора</td></tr>";
