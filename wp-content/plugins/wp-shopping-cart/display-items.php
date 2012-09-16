@@ -549,10 +549,19 @@ td.lalt{
             }
             //include("image_processing.php");
 
+				//pokazh($_FILES['file']['tmp_name'],"tmp_name");
+				//pokazh($imagedir.$_FILES['file']['name'],"name");
+
+			if(file_exists($imagedir.$_FILES['file']['name']))
+			{
+                $wpdb->query("UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `width` = '$file_w', `height` = '$file_h' WHERE `id` = '".$file_data[0]['id']."' LIMIT 1");
+			}
+/*
             if(move_uploaded_file($_FILES['file']['tmp_name'],($filedir.$idhash)))
             {
                 $wpdb->query("UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `width` = '$file_w', `height` = '$file_h' WHERE `id` = '".$file_data[0]['id']."' LIMIT 1");
             }
+*/
         }
 
         if(is_numeric($_POST['prodid']))
