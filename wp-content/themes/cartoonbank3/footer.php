@@ -31,7 +31,7 @@ else
 </ul>
 </div>
 
-<div id="bottomb"><a href="https://fbcdn-sphotos-a.akamaihd.net/hphotos-ak-ash3/600349_428127440554789_991773000_n.jpg" target="_blank"><img src="http://cartoonbank.ru/img/b/960_delovkusa.jpg" border="0"></a></div>
+<div id="bottomb"><a href="http://img-fotki.yandex.ru/get/6410/106659992.0/0_a3b51_5de9ee4d_XXL" target="_blank"><img src="http://cartoonbank.ru/img/b/sichenkotsenbakht.jpg" border="0"></a></div>
 
 <div style="clear:both;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;"><br /><br /></div>
 
