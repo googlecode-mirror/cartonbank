@@ -43,7 +43,7 @@ else
 </div>
 
 <div id="footer" style="background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;padding-bottom:100px;">
-<a href="/?page_id=433">Copyright</a> &copy; 2010-2011 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a><br />
+<a href="/?page_id=433">Copyright</a> &copy; 2010-2011 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a> <b>16+</b> <br />
 Следите за нами в 
 <a href="http://vk.com/club30341883">ВКонтакте <img src="http://cartoonbank.ru/img/s_vkontakte.png" title="Follow us VKontakte" style="border:0;"></a>  
 <a href="http://community.livejournal.com/cartoonbank/">Живом журнале <img src="http://cartoonbank.ru/img/s_livejournal.png" title="Follow us on LiveJournal" style="border:0;"></a>  
