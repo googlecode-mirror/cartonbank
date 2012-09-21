@@ -67,7 +67,7 @@
         //.. обновить facebook
 
 
-        if ($up_value == $limit) 
+        if ($up_value >= $limit) 
         {
 
 			// email confirmation. the cartoon passed to the bank
