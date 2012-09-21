@@ -6,7 +6,7 @@ $searchdonebutnothingfound = false;
 
 // Variables
 $items_on_page = 20;
-$min_points = 2.5;
+$min_points = 2.49;
 
 //FILTERS
 if (isset($_REQUEST['offset'])&&is_numeric($_REQUEST['offset'])){$offset=$_REQUEST['offset'];}else{$offset=0;}
