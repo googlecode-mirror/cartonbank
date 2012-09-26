@@ -87,14 +87,26 @@
 				mysql_query( $sql);
 
 				if ($notify_by_mail==1){
-					send_email_refused("Уважаемый $artist_name<br />Ваш рисунок № <b>".$id."</b> «".$cartoon_name."» не прошёл в Картунбанк, так как его стартовый рейтинговый балл <b>".$avgpoints."</b> ниже установленного порога похождения в рубрику 'Разное'.<br /><a href='http://cartoonbank.ru/cartoon/".$id."/><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/'".$image."'></a>.<br>Сообщаем вам, что согласно принятым с 1 сентября 2012 года правилам, работы в категорию \"разное\" принимаются только в том случае, если их стартовый рейтинговый балл составляет не менее +2,0. Надеемся, что вы с пониманием отнесётесь к правилам Картунбанка, регулирующим качество контента и напоминаем, что всегда рады видеть ваши новые рисунки у нас на сайте!<br>Это письмо отправлено автоматически и не требует ответа. Чтобы отписаться от этих сообщений снимите отметку в строке \"Получать сообщения о моменте приёмки изображения в Картунбанк\" вашего профиля.",$artist_email);
+					//send_email_refused("Уважаемый $artist_name<br />Ваш рисунок № <b>".$id."</b> «".$cartoon_name."» не прошёл в Картунбанк, так как его стартовый рейтинговый балл <b>".$avgpoints."</b> ниже установленного порога похождения в рубрику 'Разное'.<br /><a href='http://cartoonbank.ru/cartoon/".$id."/><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/'".$image."'></a>.<br>Сообщаем вам, что согласно принятым с 1 сентября 2012 года правилам, работы в категорию \"разное\" принимаются только в том случае, если их стартовый рейтинговый балл составляет не менее +2,0. Надеемся, что вы с пониманием отнесётесь к правилам Картунбанка, регулирующим качество контента и напоминаем, что всегда рады видеть ваши новые рисунки у нас на сайте!<br>Это письмо отправлено автоматически и не требует ответа. Чтобы отписаться от этих сообщений снимите отметку в строке \"Получать сообщения о моменте приёмки изображения в Картунбанк\" вашего профиля.",$artist_email);
 				}
 			}
 			else{
+					// check if already approved
+					$sql = "select approved from wp_product_list where id='$id'";
+					$result = mysql_query( $sql);
+					$row = mysql_fetch_array($result);
+					$is_approved = $row['approved'];
+
 					// approve it to the main collection
 					$sql = "update wp_product_list set approved=1 where id='$id'";
 					mysql_query( $sql);
-				if ($notify_by_mail==1){
+
+					$sql = "select approved from wp_product_list where id='$id'";
+					$result = mysql_query( $sql);
+					$row = mysql_fetch_array($result);
+					$is_approved = $row['approved'];
+
+				if ($notify_by_mail==1 && $is_approved!=1){
 					send_email_passed("Уважаемый $artist_name<br />Ваш рисунок № <b>".$id."</b> «".$cartoon_name."» поступил в коллекцию Картунбанка со стартовым рейтинговым баллом <b>".$avgpoints."</b>.<br /><a href='http://cartoonbank.ru/cartoon/".$id."/'><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."'></a>.<br>Поздравляем вас и напоминаем, что всегда рады видеть ваши новые рисунки у нас на сайте!<br>Это письмо отправлено автоматически и не требует ответа. Чтобы отписаться от этих сообщений снимите отметку в строке \"Получать сообщения о моменте приёмки изображения в Картунбанк\" вашего профиля.",$artist_email);
 				}
 			}
@@ -245,7 +257,7 @@ function send_email_passed($content,$artist_email)
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
-	mail("cartoonbank.ru@gmail.com","Картинка прошла в Картунбанк",$content . "<br /> Отправлено на ".$artist_email,$headers);
+	mail("bankir@cartoonbank.ru","Картинка прошла в Картунбанк (копия)",$content . "<br /> Отправлено на ".$artist_email,$headers);
 	mail($artist_email,"Картинка прошла в Картунбанк",$content,$headers);
 }
 ?>
