@@ -31,7 +31,7 @@ else
 </ul>
 </div>
 
-<div id="bottomb"><a href="http://img-fotki.yandex.ru/get/6410/106659992.0/0_a3b51_5de9ee4d_XXL" target="_blank"><img src="http://cartoonbank.ru/img/b/sichenkotsenbakht.jpg" border="0"></a></div>
+<div id="bottomb"></div>
 
 <div style="clear:both;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;"><br /><br /></div>
 
