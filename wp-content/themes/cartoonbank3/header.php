@@ -118,12 +118,12 @@ default:
 
 <div id="header" style="height:90px;width:960px;">
 <div>
-
+ 
 <div style="font-size:.8em;color:white;vertical-align:bottom;width:185px;height:90px;background-color:#668bb7;float:left;"><span style="color:#13223f;font-size:2em;"><br><b><? echo ($cartoon_number);?></b></span><br /><?echo ($license_text);?>
 </div>
 
 <div style="width:580px;height:90px;float:left;">
-<br><a href="http://cartoonbank.ru/?page_id=29&offset=0&new=0"><img src="<?php echo get_option('home'); ?>/wp-admin/images/cb-logo.gif" style="border:0;"></a><br />
+<br><a href="http://cartoonbank.ru/?page_id=29&offset=0&new=0"><img src="<?php echo get_option('home'); ?>/img/cb-logo-iq.png" style="border:0;"></a><br />
 <?php bloginfo('description'); ?>
 </div>
 
