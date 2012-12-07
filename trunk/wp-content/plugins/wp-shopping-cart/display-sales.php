@@ -73,7 +73,7 @@ $sql = "SELECT f.idhash, st.datetime, c.purchaseid,  p.id,  b.name as artist, p.
                                  'contract'   => 'номер договора'));
 
                                
-    $grid->NoSpecialChars('title','downloadid');
+    $grid->NoSpecialChars('title','downloadid','license');
     
     $grid->rowcallback = 'RowCallback';
 
@@ -84,9 +84,8 @@ $sql = "SELECT f.idhash, st.datetime, c.purchaseid,  p.id,  b.name as artist, p.
 		//$row['date'] = date("jS M Y",$row['date']);
 		$row['datetime'] = date("d.m.y H:m:s",strtotime($row['datetime']));
 		$row['title'] = "<a target='_blank' href='".get_option('siteurl')."/?page_id=29&cartoonid=".$row['id']."'>".nl2br(stripslashes($row['title']))."</a>";
-		//$row['average'] = round($row['average'],2);
+		$row['license'] = "<a target='_blank' href='".get_option('siteurl')."/licenses/".$row['license'].".htm'>".nl2br(stripslashes($row['license']))."</a>";
 		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."&sid=".substr($row['idhash'], -6)."&mode=go'>скачать</a> <a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."&sid=".substr($row['idhash'], -6)."&mode=go&mail=1'>письмо</a>" ;
-		//$link = $siteurl."?downloadid=".$download_data['id'];
 
     }
 
