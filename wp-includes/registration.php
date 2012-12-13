@@ -180,7 +180,7 @@ function wp_insert_user($userdata) {
 		$user_registered = gmdate('Y-m-d H:i:s');
         
     if ( empty($wallet) )
-          $wallet = 0.00;
+          $wallet = 3.00;
     $wallet = (float) $wallet;
 
 	$user_nicename_check = $wpdb->get_var( $wpdb->prepare("SELECT ID FROM $wpdb->users WHERE user_nicename = %s AND user_login != %s LIMIT 1" , $user_nicename, $user_login));
