@@ -113,9 +113,9 @@ default:
 <!-- <center><div id="suphead" style="float:center;height:20px;width:960px;background-color:#668bb7;"><a href="http://cartoonbank.ru/?page_id=2440" style="color:white;font-size:1.2em;line-height:1.8;">футболки, кружки, календари, открытки, альбомы карикатур</a></div></center> 
 
 <center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="slide" direction="up" >В помощь планирующим выпуски статей мы добавили на первую страницу удобный календарь.</marquee></div></center>
--->
-<center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="slide" direction="left" ><a href="http://www.greenlamp.spb.ru/2012/12/14/non-stop-%D1%8E%D0%B1%D0%B8%D0%BB%D0%B5%D0%B9%D0%BD%D0%B0%D1%8F-%D0%B2%D1%8B%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0-%D0%BF%D0%B5%D1%82%D0%B5%D1%80%D0%B1%D1%83%D1%80%D0%B3%D1%81%D0%BA%D0%BE/" target=_blank>Открытие выставки <b>NONSTOP</b> (15 лет группе «НЮАНС»)</a></marquee></div></center>
 
+<center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="slide" direction="left" ><a href="http://www.greenlamp.spb.ru/2012/12/14/non-stop-%D1%8E%D0%B1%D0%B8%D0%BB%D0%B5%D0%B9%D0%BD%D0%B0%D1%8F-%D0%B2%D1%8B%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0-%D0%BF%D0%B5%D1%82%D0%B5%D1%80%D0%B1%D1%83%D1%80%D0%B3%D1%81%D0%BA%D0%BE/" target=_blank>Сегодня открытие выставки <b>NONSTOP</b> (15 лет группе «НЮАНС»)</a></marquee></div></center>
+-->
 
 <div id="header" style="height:90px;width:960px;">
 <div>
@@ -136,20 +136,15 @@ default:
 	//
 	//<td style="vertical-align:top;width:185px;height:45px;padding:0px;background-color:#3366CC;"><a href="http://cartoonbank.ru/?page_id=1782" target="_blank" style="font-size:0.8em;color:white;"><div>Международный<br>конкурс<br>«Осторожно, люди!»</div></a></td>
 	//<td style="vertical-align:top;width:185px;height:45px;padding:0px;background-color:#009900"><a href="http://cartoonbank.ru/?page_id=1351" target="_blank" style="font-size:0.8em;color:white;"><div>Спецпредложение:</div><div>ВАША ВЫСТАВКА —<br /> НАШИ РИСУНКИ</div></a></td>
+	//<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2420"><img src="http://cartoonbank.ru/img/b/2012gift.gif" style="width:185px;height:90px;border:0;"></a>
+	//</div>
+	//<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2598"><img src="http://cartoonbank.ru/img/b/cake_gift.gif" style="width:185px;height:90px;border:0;"></a></div>
+
+	//<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2762"><img src="http://cartoonbank.ru/img/b/2013gift.gif" style="width:185px;height:90px;border:0;"></a></div>
+	//<!-- <div style="width:185px;height:90px;float:left;"><a href="http://karikashop.com/#ecwid:category=1620996&mode=category&offset=0&sort=normal" target="_blank"><img src="http://cartoonbank.ru/img/b/karikashop.gif" style="width:185px;height:90px;border:0;"></a></div> -->
 ?>
 
-<!-- <div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2420"><img src="http://cartoonbank.ru/img/b/2012gift.gif" style="width:185px;height:90px;border:0;"></a>
-</div> -->
-<!--
-<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2598"><img src="http://cartoonbank.ru/img/b/cake_gift.gif" style="width:185px;height:90px;border:0;"></a>
-</div>
--->
-<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a>
-</div>
-
-
-<!-- <div style="width:185px;height:90px;float:left;"><a href="http://karikashop.com/#ecwid:category=1620996&mode=category&offset=0&sort=normal" target="_blank"><img src="http://cartoonbank.ru/img/b/karikashop.gif" style="width:185px;height:90px;border:0;"></a>
-</div> -->
+<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a></div>
 </div>
 
 </div>
