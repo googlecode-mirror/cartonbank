@@ -1,6 +1,6 @@
 <?php
 if (isset($_REQUEST['prod']) && $_REQUEST['prod']=='1')
-{$sql = "SELECT id, mail FROM mymail where dont_send='0' and never='0' order by id desc LIMIT 10";} // production query
+{$sql = "SELECT id, mail FROM mymail where dont_send='0' and never='0' order by id desc LIMIT 100";} // production query
 else
 {$sql = "SELECT id, mail FROM mymailshort where dont_send='0' and never='0' order by id desc LIMIT 10";} //test query
 
@@ -11,32 +11,27 @@ $headers = "From: bankir@cartoonbank.ru\r\n" .
            "Content-Type: text/html; charset=utf-8\r\n" .
            "Content-Transfer-Encoding: 8bit\r\n\r\n";
 
-$subj = "Торт в подарок к дню рождения";
+$subj = "Новогодний рисунок из Картунбанка";
 $mess = "
+<h1>Новогодний подарок</h1>
+<br><br>
+<strong>Картунбанк </strong>дарит каждому зарегистрированному пользователю рисунок <em><a href='http://cartoonbank.ru/?page_id=29&brand=1'>Вячеслава Шилова</a></em> <a href='http://cartoonbank.ru/?page_id=29&cartoonid=19464'>Дедушка Змей</a>.
+<br>
+<br>
+<a href='http://cartoonbank.ru/?page_id=29&cartoonid=19464'><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/50c62e92ad3f17.725105209097.jpg'></a>
+
+<br>
+При регистрации каждый получает в подарок символическую сумму, достаточную для приобретения <a href='http://cartoonbank.ru/?page_id=238'>ограниченной</a> или <a href='http://cartoonbank.ru/?page_id=242'>стандартной</a> лицензии на этот рисунок. Лицензия даёт право на публикацию рисунка в СМИ.
+<br>
+<br>
+При выборе споcоба оплаты воспользуйтесь опцией 'Личный счёт'. (<a href='http://cartoonbank.ru/?page_id=1010'>Инструкция покупателя</a>)
+<br><br>
+С Новым годом, друзья!<br>
+Ваш Картунбанк.<br>
+
 <br>
 <img src='http://cartoonbank.ru/wp-admin/images/cb-logo.gif' border='0' title='Картунбанк'>
 <br>
-<br>
-Ровно два года назад в Санкт-Петербурге была образована маленькая, но трудолюбивая компания «МедиаГрафика», у которой спустя некоторое время появился улыбчивый первенец. Счастливая мама назвала его гордым именем <a href='http://cartoonbank.ru/'>CartoonBank.ru</a>.
-<br><br>
-Малыш рос как на дрожжах, умнел, взрослел – и к настоящему времени превратился в любимца  самых взыскательных и строгих издательств страны.  Сегодня <i>Картунбанк</i> предлагает всем интересующимся юмористической графикой уже более 15.000 лицензионных изображений 43-х авторов из 8 стран мира. Попутно он разработал и реализовал целый ряд успешных проектов – от выставочных до издательских. Несмотря на свой малый возраст, <i>Картунбанк</i> известен федеральным и региональным СМИ как надежный партнер и товарищ.
-<br><br>
-В день нашего рождения мы хотим пригласить вас в гости на наш сайт <a href='http://cartoonbank.ru/'>CartoonBank.ru</a> и подарить торт. Почти в буквальном смысле. Это работа художника <i>Вячеслава Шилова</i> <a href='http://cartoonbank.ru/?page_id=29&cartoonid=1617'>«Торт»</a> вместе с лицензией на применение.
-<br>
-<img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/4c559cc81925a5.96165950shilov42-2.jpg' border='0' title='Торт - подарок юбиляру'>
-<br><br>
-Скачать рисунок «Торт» (файл высокого разрешения) и официальный лицензионный договор на свое имя несложно. Достаточно <a href='http://cartoonbank.ru/wp-login.php?action=register'>зарегистрироваться</a> на сайте, после чего вы получите полноправный доступ к своему аккаунту, где вам будут автоматически предоставлены средства, достаточные для покупки одной из двух лицензий (на ваше усмотрение) к изображению «Торт» и возможность скачать карикатуру вместе с правами на ее использование.
-<br>
-Подробные действия необходимые для получения изображения <a href='http://cartoonbank.ru/?page_id=1010'>описаны здесь</a> (начиная с пункта 4).
-<br><br>
-Если вы планируете использовать изображение в СМИ, рекомендуем указать его наименование при совершении покупки. В этом случае название СМИ будет отражено в тексте лицензии.
-<br>
-Возможность получить рисунок в подарок сохранится вплоть до 31 мая 2012 года.
-<br><br>
-
-С уважением, 
-Картунбанк
-
 ";
 
 
@@ -62,8 +57,8 @@ while ($row = mysql_fetch_array($result))
         $id = $row['id'];  
         $email = $row['mail'];  
         // send mail
-        //mail($email, $subj, $mess, $headers);
-        echo $counter." ".$id.": ".$email."<br>";
+        mail($email, $subj, $mess, $headers);
+        echo $counter." id=".$id." email: ".$email."<br>";
 
         // update dont_send field:
         if (isset($_REQUEST['prod']) && $_REQUEST['prod']=='1')
@@ -77,7 +72,4 @@ while ($row = mysql_fetch_array($result))
 mysql_close($link);
 
 echo "<h1>Отправлено писем: $counter</h1>";
-
-
-
 ?>
