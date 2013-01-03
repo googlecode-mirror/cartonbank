@@ -11,11 +11,23 @@
 
  </head>
  <body>
-<h1>Список работ Аркадия Гурского</h1>
+<h1>Список работ Аркадия Гурского. Карикатуры</h1>
+<h3><a href="/?p=1">1000</a> <a href="/?p=2">2000</a> <a href="/?p=3">3000</a> <a href="/?p=4">4000</a> <a href="/?p=5">5000</a></h3>
 <?
 include("/home/www/cb3/ales/config.php");
 
-	$sql = "SELECT `id`,`name`,`description`,`additional_description` FROM `wp_product_list` where `active`=1 and `brand`= 23 order by id";
+$p=1000;
+if ($_REQUEST['p']==2)
+{$p=2000;}
+if ($_REQUEST['p']==3)
+{$p=3000;}
+if ($_REQUEST['p']==4)
+{$p=4000;}
+if ($_REQUEST['p']==5)
+{$p=5000;}
+
+
+	$sql = "SELECT `id`,`name`,`description`,`additional_description` FROM `wp_product_list` where `active`=1 and `brand`= 23 order by id LIMIT ".($p-1000)." , 1000";
 ///pokazh($sql);
 	$link = mysql_connect($mysql_hostname, $mysql_user, $mysql_password);
 	mysql_set_charset('utf8',$link);
@@ -26,7 +38,7 @@ include("/home/www/cb3/ales/config.php");
 	//$cartoons=mysql_fetch_array($result);
 	
 	//pokazh(count($cartoons));
-		$c = 1;
+		$c = $p-999;
 		$out ='';	
 		$out = $out . "<table>";
 			$out .= "<tr>";
