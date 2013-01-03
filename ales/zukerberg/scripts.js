@@ -25,6 +25,21 @@ function modal(){
     jQuery("body").append('<div class="modalOverlay">');
     jQuery('.modalOverlay').css("background-color","#2d2d2d");
 }
+function getpreview(num){
+	var src = jQuery('#'+num).attr('src')+"";
+	src = src.replace('product_images','images');
+	return(src);
+}
+function get_5stars(num)
+{
+var cuid = jQuery.cookie("id"+num);
+var starurl = "http://duel.cartoonbank.ru/five-star-rating/fsr-ajax-stars.php?p="+cuid+"&starType=star";
+jQuery("#star_rating"+num).load(starurl,function(){jQuery(function(){jQuery("label[for^=fsr_star_]").click(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().attr("action"),d=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_");FSR_save_vote(a[2],a[3],b,d)});jQuery("label[for^=fsr_star_]").mouseover(function(){var a=jQuery(this).attr("for"),b=jQuery(this).parent().children("input[name=starType]").val();a=a.split("_")[3];FSR_star_over(this,a,b)})});FSR_current_post=null;FSR_isWorking=false;});
+}
+function preview_thumbs(){
+    return '<div id="thumbs" style="display: inline-block;z-index:1999;"> <div id="preview1" style="float:left;font-size:small;"><a href="http://cartoonbank.ru/cartoon/'+jQuery.cookie("id1")+'/" target="_blank"><img id="thumb1" src="'+getpreview(1)+'" border="0"></a><div id="star_rating1"></div></div>  <div id="preview2" style="float:left;font-size:small;"><a href="http://cartoonbank.ru/cartoon/'+jQuery.cookie("id2")+'/" target="_blank"><img id="thumb1" src="'+getpreview(2)+'" border="0"></a><div id="star_rating2"></div></div> </div>';
+}
+
 function res(num1){
 	modal();
     if(num1==1){
@@ -51,7 +66,10 @@ function res(num1){
         jQuery('#'+num1).css("border", "solid thick green");
         jQuery('#popup').css("background-color", "#C0FFC0");
 		jQuery('#popup').css("background-image", "url('img/popal.jpg')");
-        jQuery('#popup').html('<p>Попал!</p><p>'+jQuery('#'+num1).attr('rate')+' больше, чем ' + jQuery('#'+num2).attr('rate') + '</p><p>Попаданий: '+(rate+1)+' из ' + (clicks+1) + '</p>');
+        jQuery('#popup').html(preview_thumbs() + '<p style="clear:both;">Попал!</p><p>'+jQuery('#'+num1).attr('rate')+' больше, чем ' + jQuery('#'+num2).attr('rate') + '</p><p>Попаданий: '+(rate+1)+' из ' + (clicks+1) + '</p>');
+        jQuery('#popup').append('<a href="#" onclick="jQuery(\'#popup\').css(\'visibility\', \'hidden\');loading();window.location.href = \'http://duel.cartoonbank.ru/index.php\';"><div style="padding:2em;background-color:silver;display:inline-block;">дальше</div></a>');
+        get_5stars(1);
+        get_5stars(2)
         jQuery('#popup').center();
 		jQuery('#popup').css("display","none");
         jQuery('#popup').css("visibility","visible");
@@ -64,7 +82,10 @@ function res(num1){
         jQuery('#'+num1).css("border", "solid thick red");
 		jQuery('#popup').css("background-image", "url('img/mimo.jpg')");
         jQuery('#popup').css("background-color", "#FFC0C0");
-        jQuery('#popup').html('<p>Мимо!(:</p><p>'+jQuery('#'+num1).attr('rate')+' меньше, чем ' + jQuery('#'+num2).attr('rate') + '</p><p>Попаданий: '+rate+' из ' + (clicks+1) + '</p>');
+        jQuery('#popup').html(preview_thumbs() + '<p style="clear:both;">Мимо!(:</p><p>'+jQuery('#'+num1).attr('rate')+' меньше, чем ' + jQuery('#'+num2).attr('rate') + '</p><p>Попаданий: '+rate+' из ' + (clicks+1) + '</p>');
+        jQuery('#popup').append('<a href="#" onclick="jQuery(\'#popup\').css(\'visibility\', \'hidden\');loading();window.location.href = \'http://duel.cartoonbank.ru/index.php\';"><div style="padding:2em;background-color:silver;display:inline-block;">дальше</div></a></a>');
+        get_5stars(1);
+		get_5stars(2);
         jQuery('#popup').center();
 		jQuery('#popup').css("display","none");
         jQuery('#popup').css("visibility","visible");
@@ -76,7 +97,8 @@ function res(num1){
         jQuery('#'+num1).css("border", "solid thick blue");
 		jQuery('#popup').css("background-image", "url('img/mimo.jpg')");
         jQuery('#popup').css("background-color", "#FFC0C0");
-        jQuery('#popup').html('<p>Осечка!</p><p>'+jQuery('#'+num1).attr('rate')+' равно ' + jQuery('#'+num2).attr('rate') + '</p><p>Попаданий: '+rate+' из ' + (clicks+1) + '</p>');
+        jQuery('#popup').html('<p style="clear:both;">Осечка!</p><p>'+jQuery('#'+num1).attr('rate')+' равно ' + jQuery('#'+num2).attr('rate') + '</p><p>Попаданий: '+rate+' из ' + (clicks+1) + '</p>');
+        jQuery('#popup').append('<a href="#" onclick="jQuery(\'#popup\').css(\'visibility\', \'hidden\');loading();window.location.href = \'http://duel.cartoonbank.ru/index.php\';"><div style="padding:2em;background-color:silver;display:inline-block;">дальше</div></a></a>');
         jQuery('#popup').center();
 		jQuery('#popup').css("display","none");
         jQuery('#popup').css("visibility","visible");

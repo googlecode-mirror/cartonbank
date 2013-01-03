@@ -1,4 +1,5 @@
 <?php 
+exit;
 include("/home/www/cb3/ales/config.php");
 global $imagepath;
 
@@ -19,7 +20,9 @@ $tagsarray = get_cartoon($rate);
   <script type="text/javascript" src="http://cartoonbank.ru/wp-includes/js/jquery/jquery.js"></script>
   <script type="text/javascript" src="http://cartoonbank.ru/wp-includes/js/jquery/jquery.cookie.js"></script>
   <script type="text/javascript" src="http://duel.cartoonbank.ru/scripts.js"></script>
+  <script type='text/javascript' src='http://duel.cartoonbank.ru/five-star-rating/assets/js/five-star-rating.min.js?ver=0.1'></script>
   <link rel="stylesheet" type="text/css" href="http://duel.cartoonbank.ru/styles.css">
+  <link rel='stylesheet' id='five-star-rating-CSS-css'  href='http://duel.cartoonbank.ru/five-star-rating/assets/css/five-star-rating.min.css?ver=3.0' type='text/css' media='all' />
   <title> Дуэль карикатур. </title>
 </head>
 
@@ -49,7 +52,7 @@ $tagsarray = get_cartoon($rate);
 <div class="footer"><span class="btn"><a href="#" onclick="jQuery.cookie('username',null);jQuery.cookie('cbrate',null);jQuery.cookie('cbclicks',null);addvote();loading();window.location.href = 'http://duel.cartoonbank.ru/index.php';">Обнулить всё</a></span> <span class="btn"><a href="#" onclick="loading();window.location.href = 'http://duel.cartoonbank.ru/index.php';">Следующая пара</a></span> <!-- <span class="btn"><a href="#" onclick="login();savename();">Назовите себя</a></span> -->
 </div>
 
-<div id="popup" class="popup" onclick="jQuery('#popup').css('visibility', 'hidden');loading();window.location.href = 'http://duel.cartoonbank.ru/index.php';"></div>
+<div id="popup" class="popup"><a href="#" onclick="jQuery('#popup').css('visibility', 'hidden');loading();window.location.href = 'http://duel.cartoonbank.ru/index.php';">дальше</a></div>
 
 <div id="loading" class="loading"><p>Перезаряжаем</p></div>
 

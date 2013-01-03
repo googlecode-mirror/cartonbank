@@ -69,7 +69,7 @@ function res(num1){
         jQuery('#'+num1).css("border", "solid thick green");
         jQuery('#popup').css("background-color", "#C0FFC0");
 		jQuery('#popup').css("background-image", "url('img/popal.jpg')");
-        jQuery('#popup').html('<p>Попал!</p><p>'+jQuery('#'+num1).attr('rate')+' больше, чем ' + jQuery('#'+num2).attr('rate') + '</p><p>Попаданий: '+(rate+1)+' из ' + (clicks+1) + '</p>');
+        jQuery('#popup').html('<p>Попал!!!</p><p>'+jQuery('#'+num1).attr('rate')+' больше, чем ' + jQuery('#'+num2).attr('rate') + '</p><p>Попаданий: '+(rate+1)+' из ' + (clicks+1) + '</p>');
         jQuery('#popup').center();
 		jQuery('#popup').css("display","none");
         jQuery('#popup').css("visibility","visible");
@@ -83,7 +83,7 @@ function res(num1){
         jQuery('#'+num1).css("border", "solid thick red");
 		jQuery('#popup').css("background-image", "url('img/mimo.jpg')");
         jQuery('#popup').css("background-color", "#FFC0C0");
-        jQuery('#popup').html('<p>Мимо!(:</p><p>'+jQuery('#'+num1).attr('rate')+' меньше, чем ' + jQuery('#'+num2).attr('rate') + '</p><p>Попаданий: '+rate+' из ' + (clicks+1) + '</p>');
+        jQuery('#popup').html('<p>Мимо!!!(:</p><p>'+jQuery('#'+num1).attr('rate')+' меньше, чем ' + jQuery('#'+num2).attr('rate') + '</p><p>Попаданий: '+rate+' из ' + (clicks+1) + '</p>');
         jQuery('#popup').center();
 		jQuery('#popup').css("display","none");
         jQuery('#popup').css("visibility","visible");
