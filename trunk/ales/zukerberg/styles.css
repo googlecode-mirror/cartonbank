@@ -40,6 +40,8 @@ img {
 .popup{
     height:360px;
     width:550px;
+    color: black;
+    font-size: medium;;
 }
 .loading{
     height:100px;
