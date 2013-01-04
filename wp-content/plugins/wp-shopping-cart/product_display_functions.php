@@ -150,7 +150,7 @@ else
 
 if (isset($product['not_for_sale']) && $product['not_for_sale']=='1')
 {
-    $_bottomstriptext = "Продажа лицензий на данное изображение не разрешена автором";
+    $_bottomstriptext = "Лицензии на это изображение временно недоступны";
 }
 else
 {
