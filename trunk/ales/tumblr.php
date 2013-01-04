@@ -12,11 +12,11 @@ $result = str_replace('\u00a0','&amp;nbsp;',$result);
 $jsondata = json_decode($result,true);
 $posts = $jsondata['posts'];
 
-echo '<div style="width:500px;>';
+echo '<div style="width:500px;">';
 foreach($posts as $post){
 $alttext=substr($post['photo-caption'],0,-4);
 $alttext=substr($alttext,4);
-echo '<a href="'.$post['photo-url-1280'].'" target="_blank"><img src="'.$post['photo-url-500'].'" border="0" alt="'.$alttext.'"/></a> ';
+echo '<div style="margin-top:1em;border:thin silver solid;width:500px;"><a href="'.$post['photo-url-1280'].'" target="_blank"><img src="'.$post['photo-url-500'].'" border="0" alt="'.$alttext.'"/></a></div>';
 }
 echo '</div>';
 ?>

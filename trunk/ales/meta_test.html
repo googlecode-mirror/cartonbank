@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+ <head>
+  <title> New Document </title>
+  <meta name="Generator" content="EditPlus">
+  <meta name="Author" content="Igor">
+  <meta name="Keywords" content="cartoon">
+  <meta name="Description" content="русское описание">
+
+	<script type='text/javascript' src='http://cartoonbank.ru/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script> 
+
+  <script language="JavaScript">
+  <!--
+	function get_meta()
+	{
+		var author = jQuery('meta[name=Author]').attr("content");
+		var keywords = jQuery('meta[name=Keywords]').attr("content");
+		var description = jQuery('meta[name=Description]').attr("content");
+
+		var ogtitle = jQuery('meta[property=og:title]').attr("content");
+		var ogtype = jQuery('meta[property=og:type]').attr("content");
+		var ogurl = jQuery('meta[property=og:url]').attr("content");
+		var ogimage = jQuery('meta[property=og:image]').attr("content");
+		var ogsite_name = jQuery('meta[property=og:site_name]').attr("content");
+		var fbadmins = jQuery('meta[property=fb:admins]').attr("content");
+		var title = jQuery(document).attr('title');
+
+		jQuery('.test').html('author='+author + '<br>keywords=' + keywords + '<br>description=' + description + '<br><br>ogtitle=' + ogtitle + '<br>ogtype=' + ogtype + '<br>ogurl=' + ogurl+ '<br>ogimage=' + ogimage+ '<br>ogsite_name=' + ogsite_name + '<br>fbadmins=' + fbadmins+ '<br><br>title=' + title);
+	}
+
+function setOgMeta()
+{
+	setOrCreateMetaTag('property', 'og:title', 'page_title');
+	setOrCreateMetaTag('property', 'og:type', 'product');
+	setOrCreateMetaTag('property', 'og:url', 'http://cartoonbank.ru/?page_id=29&amp;cartoonid=11527');
+	setOrCreateMetaTag('property', 'og:image', 'http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/4d9c5e9230c920.72878646017.jpg');
+	setOrCreateMetaTag('property', 'og:site_name', 'Cartoonbank');
+	setOrCreateMetaTag('property', 'fb:admins', '1021562104');
+}
+
+	function setOrCreateMetaTag(metaName, name, value) {
+        var t = 'meta['+metaName+'='+name+']';
+        var mt = jQuery(t);
+        if (mt.length === 0) {
+            t = '<meta '+metaName+'="'+name+'" />';
+            mt = jQuery(t).appendTo('head');
+        }
+        mt.attr('content', value);
+    }
+	function set_title()
+	{
+		document.title = 'my new title';
+	}
+
+  //-->
+  </script>
+ </head>
+
+ <body>
+  <div class='test' id='test'><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/4d9c5e9230c920.72878646017.jpg' alt='smth' id='cbig'></div>
+
+<a href="#" onclick="get_meta();">get meta</a>
+<br><br>
+<a href="#" onclick="setOgMeta();setOrCreateMetaTag('name', 'Author', 'Jack Vorobey');">set Or Create Meta Tag</a>
+<br><br>
+<a href="#" onclick="set_title();">set new title</a>
+<br><br>
+<a href="#" onclick="var src=jQuery('#cbig').attr('src');alert(src);">get img src</a>
+<br><br>
+<fb:like href="http://developers.facebook.com/" width="450" height="80"/>
+ </body>
+</html>
