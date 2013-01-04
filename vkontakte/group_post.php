@@ -7,7 +7,7 @@ define("VK_GROUP_ID", '30341883');
 define("USER_AGENT", 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.83 Safari/535.11');
 define("PATH_TO_UPLOAD", '/home/www/cb3/wp-content/plugins/wp-shopping-cart/product_images');
 define("VK_USER_NAME", 'igor.aleshin@gmail.com');
-define("VK_USER_PASS", 'basie5670659');
+define("VK_USER_PASS", 'Mds4pknvsz');
 define("PATH_TO_TEMP", '/home/www/cb3/vkontakte/temp');
 define("VK_REFERER", 'http://cartoonbank.ru');
 require "simple_html_dom.php";
