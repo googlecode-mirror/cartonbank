@@ -21,6 +21,9 @@ if (isset($current_user->wp_capabilities['administrator']) && ($current_user->wp
 	add_submenu_page('lazyest-gallery/al-admin-panel.php','Прихожая', 'Прихожая', 'read', 'purgatory/purgatory.php');
 
 if (isset($current_user->wp_capabilities['administrator']) && ($current_user->wp_capabilities['administrator']==1))
+	add_submenu_page('lazyest-gallery/al-admin-panel.php','Черные метки', 'Черные метки', 'read', 'purgatory/black-marks.php');
+
+if (isset($current_user->wp_capabilities['administrator']) && ($current_user->wp_capabilities['administrator']==1))
 	add_submenu_page('lazyest-gallery/al-admin-panel.php','Тема дня', 'Тема дня', 'read', 'wp-shopping-cart/themeoftheday.php');
 
 if (isset($current_user->wp_capabilities['editor']) && ($current_user->wp_capabilities['editor']==1))

@@ -109,13 +109,16 @@ default:
 	$license_text = "лицензионных<br />карикатур";
 	break;
 }
-?>
+/*
 <!-- <center><div id="suphead" style="float:center;height:20px;width:960px;background-color:#668bb7;"><a href="http://cartoonbank.ru/?page_id=2440" style="color:white;font-size:1.2em;line-height:1.8;">футболки, кружки, календари, открытки, альбомы карикатур</a></div></center> 
 
 <center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="slide" direction="up" >В помощь планирующим выпуски статей мы добавили на первую страницу удобный календарь.</marquee></div></center>
 
 <center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="slide" direction="left" ><a href="http://www.greenlamp.spb.ru/2012/12/14/non-stop-%D1%8E%D0%B1%D0%B8%D0%BB%D0%B5%D0%B9%D0%BD%D0%B0%D1%8F-%D0%B2%D1%8B%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0-%D0%BF%D0%B5%D1%82%D0%B5%D1%80%D0%B1%D1%83%D1%80%D0%B3%D1%81%D0%BA%D0%BE/" target=_blank>Сегодня открытие выставки <b>NONSTOP</b> (15 лет группе «НЮАНС»)</a></marquee></div></center>
 -->
+*/
+
+?>
 
 <div id="header" style="height:90px;width:960px;">
 <div>

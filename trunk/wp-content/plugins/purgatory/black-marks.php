@@ -1,4 +1,5 @@
 <?
+// made from the purgatory.php script
 if (isset($current_user->wp_capabilities['author']) && $current_user->wp_capabilities['author']==1)
 {
 echo ("<h3>Извините, у вас нет права доступа к этой странице</h3>");
@@ -8,22 +9,6 @@ require_once("../wp-config.php");
 include("config.php");
 $_SITEURL = get_option('siteurl');
 $Current_ID = $current_user->id;
-?>
-<br>Рисунок проходит в коллекцию после того как проголосуют <b><?echo $limit;?></b> модераторов. Начальный рейтинг рисунка определяется исходя из оценок модераторов. В дополнение, модераторы имеют право голосовать на самом сайте как обычные посетители. Таким образом, у модераторов есть два голоса для оценки рисунка. 
-Чёрная метка блокирует появление картинки в хранилище до выяснения обстоятельств. Просим сразу оставлять комментарий о причине блокировки.
-
-<b><a href="<?= $_SITEURL; ?>/?page_id=1148" target="_blank">Меморандум редактора</a></b><br />
-
-<?
-$result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U.display_name as author from wp_comments as C, wp_users as U where U.id = C.comment_author order by C.comment_date DESC LIMIT 100");
-    $comments_output = "";
-    while($r = mysql_fetch_array($result)) {
-        $_date = $r['comment_date'];
-        $_comment = nl2br(stripslashes($r['comment_content']));
-        $_author = $r['author'];
-        $_id = $r['comment_id'];
-        $comments_output .= "<div style='margin-top:4px;'><span class='gr' title='".$_date."'>".$_author.":&nbsp; </span><span class='c_body'>".$_comment."</span> [<a title='стереть комментарий' href='#' onclick='deletecomment(".$_id.");'>x</a>]</div>";
-    }
 ?>
 
 <script type="text/javascript" src="<?= $_SITEURL; ?>/wp-includes/js/jquery/jquery.js"></script>
@@ -134,9 +119,6 @@ function deletecomment(id)
 		"http://cartoonbank.ru/wp-content/plugins/purgatory/delete_comment.php?id="+id, 
 		function(reply){ jQuery('#divToUpdate').html(reply);});
    }
-   //jQuery('#divToUpdate').html('3<b>3</b>3')
-   //mydiv.innerHTML=reply;
-   // mydiv.textContent=reply; yes
 </script>
 
 <style type="text/css">
@@ -394,6 +376,28 @@ FROM
 WHERE 
     V.image_id = P.id 
     AND P.brand = B.id
+    AND P.active = 1
+    AND U.id = B.user_id
+    AND C.id != '777'
+    AND C.id = P.category
+    AND V.black >= '1'
+ORDER BY P.id DESC"; 
+/*
+SELECT 
+    V.image_id, V.black, 
+    P.name, P.image, P.description AS Description, P.color, P.approved,
+    B.name AS Artist,  
+    C.name AS Category, 
+    U.user_email AS email
+FROM 
+    al_editors_votes AS V, 
+    wp_product_list AS P, 
+    wp_product_brands AS B, 
+    wp_product_categories AS C, 
+    wp_users as U 
+WHERE 
+    V.image_id = P.id 
+    AND P.brand = B.id
     AND V.moderator_votes < ".$limit."
     AND U.id = B.user_id
     AND C.id != '777'
@@ -402,6 +406,7 @@ WHERE
     AND ((P.approved is NULL) OR (P.approved = '') OR (V.black >= '1'))
 ORDER BY P.id DESC 
 Limit 150";
+*/
 
 //pokazh($sql);
 
@@ -521,6 +526,7 @@ if ($already_voted){$current_visibility_class = "radioSetOff";}else{$current_vis
             <span class="gr">Описание: </span><? echo ($description);?>     
             <form method="post" action="<?= $_SITEURL; ?>/wp-admin/admin.php?page=wp-shopping-cart/display-items.php"> <input type="hidden" name="edid" value="<? echo ($mes_id);?>"> <input class="borders" type="submit" value="<? echo ($mes_id);?>"> </form>
             <a href="mailto:<? echo $email;?>?subject=По%20поводу%20рисунка №<? echo ($mes_id);?>. %20Картунбанк&bcc=cartoonbank.ru@gmail.com&body=Уважаемый%20<? echo ($artist);?>!%0A%0A<? echo ($previewpath); ?>%0A%0AСпасибо,%0AКартунбанк"><img src="../img/mail.gif"></a>
+			<a target="_blank" href="admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=<? echo ($mes_id);?>" onclick="return conf();"><img src="../img/trash.gif" title="удалить"></a>
         </div>
     </div>
 
@@ -528,77 +534,10 @@ if ($already_voted){$current_visibility_class = "radioSetOff";}else{$current_vis
 </div>
 </td>
 <td valign="top"> &nbsp;
-<div class="box5">
-<div id="disqus" style="padding:1em;background-color:#ddf0ff">
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-var disqus_shortname = 'cartoonbankru'; // required: replace example with your forum shortname
-
-/* * * DON'T EDIT BELOW THIS LINE * * */
-(function() {
-var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();
-</script>
-</div>
-	
-    <br><b>50 последних комментариев редакторов:</b>
-        <div id="commentsform">
-            <form action="<?= $_SITEURL; ?>/wp-content/plugins/purgatory/add_comment.php" method="post" id="commentform">
-            пишите тут, нажмите кнопку:<br />
-            <textarea id="comment" name="comment" id="comment" cols="60" rows="3" tabindex="4"></textarea>
-            <p>
-            <input name="submit" type="submit" value="послать">
-            <input type="hidden" name="cartoon_id" value="1000">
-            <input type="hidden" name="author_id" value="<? echo ($current_user->id); ?>">
-            </p>
-            <input type="hidden" id="_wp_unfiltered_html_comment" name="_wp_unfiltered_html_comment" value="5a3ab88268"><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="8bd460432a"></p>
-            </form>
-        </div>
-        <div id="divToUpdate" style="padding:2px;font-size:0.9em;background-color:#FFFFD7;"><? echo ($comments_output) ?></div>
-</div>
-
-    
     </div>
 </td>
 </tr>
 </table>
 
 <div>
-
-<?
-
-//echo("<pre>тестовый вывод, не обращайте внимания:".print_r($comments_output,true)."</pre>"); 
-
-?>
 </div>
-
-<script type="text/javascript">
-
-    jQuery(document).ready(function($){ 
-
-		// bind form using ajaxForm 
-        $('#commentform').ajaxForm({ 
-            // target identifies the element(s) to update with the server response 
-             target: '#divToUpdate', 
-     
-            // success identifies the function to invoke when the server response 
-            // has been received; here we apply a fade-in effect to the new content 
-            success: function() { 
-                $('#divToUpdate').fadeIn('slow'); 
-            }
-            //success: successResponse
-        });
-    });
-
-	function successResponse(text)
-    {
-        if (text!='')
-        {
-            $('#divToUpdate').fadeIn('slow');
-        }
-    }
-
-</script>
