@@ -4,6 +4,7 @@
 3. <a href="http://cartoonbank.ru/img/help/May-2011-report.doc">Отчёт Картунбанка за май 2011</a><br>
 4. <a href="http://cartoonbank.ru/?page_id=1775">Заявление на налоговый вычет</a><br>
 5. <a href="http://cartoonbank.ru/img/help/report_september_2011.docx">Отчёт Картунбанка за сентябрь 2011</a><br>
+6. <a href="http://cartoonbank.ru/img/help/august_2012.doc">Отчёт Картунбанка за август 2012</a><br>
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">
