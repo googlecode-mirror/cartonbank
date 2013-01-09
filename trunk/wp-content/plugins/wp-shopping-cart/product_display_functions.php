@@ -77,15 +77,17 @@ function product_display_paginated($search_sql = '', $offset, $items_on_page)
     
     //$_tags = hilite($product[0]['additional_description']);
 
-    $_bigpicimgalt = addslashes("Карикатура. ".$_name.". ".$_description.". ".$_tags);
+    $_bigpicimgalt = addslashes($_name.", ".$product['brand']);
+	$_bigpicimgtitle = addslashes($_name." в категории ".$product['kategoria'].", ".$product['brand']);
+		//."". ".$_description.". ".$_tags);
 
     $_tags_array = explode(',',$_tags);
         //$i=0;
         foreach ($_tags_array as $key => $value)
         {
-            $_tags_array[$key] = "<a href=\'".get_option('siteurl')."/?page_id=29&cs=".trim($_tags_array[$key])."\'>".trim($_tags_array[$key])."</a>";
+            $_tags_array[$key] = "<li><a href=\'".get_option('siteurl')."/?page_id=29&cs=".trim($_tags_array[$key])."\'>".trim($_tags_array[$key])."</a></li>";
         }
-    $_tags_imploded = implode(", ", $_tags_array);
+    $_tags_imploded = implode(" ", $_tags_array);
     $_tags = $_tags_imploded;
 
     $_sharethis_html = "<div id=\'share_this\' style=\'line-height:200%;\'></div>";
@@ -132,16 +134,16 @@ else
 
     if ($logged)
     {
-        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name."&nbsp;$klop<span id=\'thumb\' onclick=\'fave_it();\'>$klop<img src=\'".$siteurl."/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h1>" .$_name."</h1>&nbsp;$klop<span id=\'thumb\' onclick=\'fave_it();\'>$klop<img src=\'".$siteurl."/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
     else
     {
-        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b>" .$_name." $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h1>" .$_name."</h1> $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
 
-    $_bigpictext = "<b>Категория: </b><br />".$_category."<br /><br /><b>Описание: </b> ".$_description."<br /><br /><b>Тэги: </b><br />".$_tags."<br /><br /><b>Ссылка:</b><a title=\'уникальный адрес страницы с этим изображением\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><br /><b>Размер:</b><br />".$_dimensions_html."<br /><br /><b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
+    $_bigpictext = "<h2><b>Категория: </b>".$_category."</h2><h2><b>Описание: </b></h2> ".$_description."<br /><h2><b>Тэги: </b></h2><ul>".$_tags."</ul><h2><b>Ссылка:</b></h2><a title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><b>Размер:</b><br />".$_dimensions_html."<b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
     
-    $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\' border=0 alt=\'".$_bigpicimgalt."\' />";
+    $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\' border=0 alt=\'".$_bigpicimgalt."\' title=\'".$_bigpicimgtitle."\' />";
 
     if($product['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
     if($product['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
