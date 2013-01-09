@@ -13,6 +13,7 @@
  <body>
 <h1>Список работ Аркадия Гурского. Карикатуры</h1>
 <h3><a href="/?p=1">1000</a> <a href="/?p=2">2000</a> <a href="/?p=3">3000</a> <a href="/?p=4">4000</a> <a href="/?p=5">5000</a></h3>
+<h3><a href="/?p=1">1000</a> <a href="/?p=2">2000</a> <a href="/?p=3">3000</a> <a href="/?p=4">4000</a> <a href="/?p=5">5000</a></h3>
 <?
 include("/home/www/cb3/ales/config.php");
 

@@ -1,5 +1,5 @@
 <?php
-$time_start = microtime(true);
+//$time_start = microtime(true);
 
 /**
  * Front to the WordPress application. This file doesn't do anything, but loads
@@ -20,7 +20,7 @@ require('./wp-blog-header.php');
 ?>
 
 <?php
-$time_end = microtime(true);
-$time = $time_end - $time_start;
-echo "$time сек.";
+//$time_end = microtime(true);
+//$time = $time_end - $time_start;
+//echo "$time сек.";
 ?>
