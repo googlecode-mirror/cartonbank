@@ -180,8 +180,8 @@ function save_search_terms($terms)
         }
     }
 }
-?>
 
+?>
 <script src="http://cartoonbank.ru/ales/colorbox/jquery.colorbox-min.js"></script>
 <script>
     jQuery(document).ready(function(){
@@ -201,7 +201,7 @@ function save_search_terms($terms)
 
 <div style='display:none'>
     <div id='emailform1' style='text-align:left; padding:10px; background:#fff;'>
-            <h1>Письмо автору Картунбанка</h1>
+            <h3>Письмо автору Картунбанка</h3>
             <form method='post' action='http://cartoonbank.ru/?page_id=29&amp;brand=<? echo $brandid;?>&amp;bio=1'>Email для обратной связи: <input name='email' type='text' style='width:100%;'/><br /><br />
             <textarea style='width:100%;' name='message' rows='15' cols='30'>Уважаемый <? echo $_artist;?>!</textarea><br />
             напишите любую цифру: <input type='text' name='klop' value=''>
