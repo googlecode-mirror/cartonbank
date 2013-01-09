@@ -26,7 +26,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 
 ?>
 <div id="sidebar">
-<h2 style="margin-top:0;">Поиск</h2>
+<h3 style="margin-top:0;">Поиск</h3>
 <form method="post" id="searchform" action="/?page_id=29">
 <input id="s" size="26" type="text" value="введите поисковое слово..." name="cs" onfocus="this.value='';" style='width:178px;' /><br />
 <input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
@@ -67,7 +67,7 @@ if ($cartoon_of_the_day_id != 0){
 
 <?}?>
 
-<br /><h2>Категории</h2> 
+<br /><h3>Категории</h3> 
 
 <?
 $seperator = '';
@@ -183,7 +183,7 @@ if (!$author_section) // for not Author section (portfolio)
 {
 
 ?>
-<br /><h2><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы</a></h2>
+<br /><h3><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы</a></h3>
 <?
 
 // Authors
@@ -264,7 +264,7 @@ else
 echo "</div>";
 ?>
 
-<br /><h2>Разделы</h2>
+<br /><h3>Разделы</h3>
 
 <?
 	if($categories != null && $total_cartoons > 0)
@@ -298,7 +298,7 @@ echo "</div>";
 <a href="http://cartoonbank.ru/?page_id=2479" target="_blank"><img src="http://cartoonbank.ru/img/b/contests.gif" style="border:0;width:180px;"></a>
 
 
-<br /><h2>Разное</h2>
+<br /><h3>Разное</h3>
 <div id='last_sales'><a href='/?page_id=1299' title="свежие продажи">Сто продаж</a></div>
 <div id='best_sales'><a href='/?page_id=2583' title="лидеры продаж">Бестселлеры</a></div>
 <div id='100_best'><a href='/?page_id=1284&amp;ord=72&amp;br=0' title='результаты голосования'>Топ 250</a></div>
@@ -309,7 +309,7 @@ echo "</div>";
 <div id='rewards'><a href='/?page_id=2132'  title='награды авторов'>Награды</a></div>
 <div id='lawers'><a href='/?page_id=1565'  title='защита авторского права'>Защита прав</a></div>
 <div style="float:right;width:180px;text-align:right;">
-	<br /><h2>Вход</h2>
+	<br /><h3>Вход</h3>
 		<ul style="float:right;width:160px;text-align:right;">
 		<?php wp_register(); ?>
 		<li><?php wp_loginout(); ?></li>
