@@ -56,7 +56,7 @@ $count=mysql_num_rows($result);
 
 
 // exclude artist:
-$arrAuthors = array('Светозаров Георгий','Александров Василий');
+$arrAuthors = array('Светозаров Георгий','Александров Василий', 'Мельник Леонид');
 		
 		while($row=mysql_fetch_array($result))
 		{
