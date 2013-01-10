@@ -179,18 +179,18 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
     $_next_item = $counter + 1;
     if ($_next_item == 20)
         {
-            $vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующая страница > \" href=\"#pt\" onclick=\"next_page();return false;\">".$_bigpic."</a>';";
+            $vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующая страница > \" href=\"".get_option('siteurl')."/cartoon/".$_number."\" onclick=\"next_page();return false;\">".$_bigpic."</a>';";
         }
         else
         {
-            $vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующее изображение > \" href=\"#pt\" onclick=\"get_item". $_next_item ."();\">".$_bigpic."</a>';";
+            $vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующее изображение > \" href=\"".get_option('siteurl')."/cartoon/".$_number."\" onclick=\"get_item". $_next_item ."();return false;\">".$_bigpic."</a>';";
         }
 
     $vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
     $vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='".$_bigpicstrip."';";
     $vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
     
-    $output .= "<a href=\"#pt\"  onclick=\"get_item". ($_next_item - 1) ."();\">";
+    $output .= "<a href=\"".get_option('siteurl')."/cartoon/".$_number."\" onclick=\"get_item". ($_next_item - 1) ."();return false;\">";
 
     $jq_stars = ' get_5stars(); ';
 
@@ -209,7 +209,7 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
     else{$highlight = "";}
     
 
-    $javascript_functions .= " function get_item".$counter."() { ".$vstavka.$highlight.$jq_stars.$jq_dimensions.$get_favorite.$share_this.$add_hash_2url." } "; 
+    $javascript_functions .= " function get_item".$counter."() { $('pt').scrollIntoView(true);".$vstavka.$highlight.$jq_stars.$jq_dimensions.$get_favorite.$share_this.$add_hash_2url." } "; 
     $_offset = $offset + 20;
     $javascript_functions .=' function next_page(){window.location = "'.get_option('siteurl').'/?'.get_url_vars().'offset='.$_offset.'";    var cuid = document.getElementById("cuid").innerHTML; document.getElementById("navbar").innerHTML = cuid; window.location.hash = "bububu="+cuid;     }';
 
