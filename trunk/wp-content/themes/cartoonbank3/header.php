@@ -8,29 +8,66 @@ if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29
 
 // change the header
 $h = '';
+$kw = '';
 if (isset($_SERVER['QUERY_STRING']))
 {
 	// search word
 	if (isset($_REQUEST['cs']) && $_REQUEST['cs'])
 		{
-			$h = $h."(".$_REQUEST['cs'].") ";
+			$h = $h."Картинки на тему '".$_REQUEST['cs']."' ";
 		}
 	//category
-	if (isset($_REQUEST['category']) && $_REQUEST['category'] && is_numeric($_REQUEST['category']))
+	if (isset($_REQUEST['category']) && is_numeric($_REQUEST['category']))
 		{
 			$sql = "select name from wp_product_categories where id=".$_REQUEST['category'];
 			$c = $wpdb->get_results($sql);
 			$cat = $c[0]->name;
-			$h = $h."(".$cat.") ";
+			$h = $h."Изображения категории '".$cat."' ";
 		}
 	//brand
-	if (isset($_REQUEST['brand']) && $_REQUEST['brand'] && is_numeric($_REQUEST['brand']))
+	if (isset($_REQUEST['brand']) && is_numeric($_REQUEST['brand']))
 		{
 			$sql = "select name from wp_product_brands where id=".$_REQUEST['brand'];
 			$c = $wpdb->get_results($sql);
 			$brand = $c[0]->name;
-			$h = $h."".$brand.". ";
+			$h = $h."".$brand." ";
 		}
+    //new
+    if (isset($_REQUEST['new']) && is_numeric($_REQUEST['new']) && ($_REQUEST['new']=='1'))
+        {
+            $h = $h."Новые рисунки";
+        }
+    //best
+    if (isset($_REQUEST['new']) && is_numeric($_REQUEST['new']) && ($_REQUEST['new']=='0'))
+        {
+            $h = $h."Лучшие карикатуры";
+        }
+    //color
+    if (isset($_REQUEST['color']) && ($_REQUEST['color']=='color'))
+        {
+            $h = $h."Цветные иллюстрации";
+        }
+    //color
+    if (isset($_REQUEST['color']) && ($_REQUEST['color']=='bw'))
+        {
+            $h = $h."Чёрно-белые изображения";
+        }
+    //cartoonid
+    if (isset($_REQUEST['cartoonid']) && is_numeric($_REQUEST['cartoonid']))
+        {
+            $sql = "SELECT name, description, additional_description FROM wp_product_list WHERE id = ".$_REQUEST['cartoonid'];
+            $c = $wpdb->get_results($sql);
+            $cartoon_title = $c[0]->name;
+            $cartoon_description = $c[0]->description;
+            $cartoon_tags = $c[0]->additional_description;
+            $h = $h."Карикатура '".$cartoon_title."' — ". $cartoon_description;
+            $kw = $kw.$cartoon_tags;
+        }
+    //pages
+    if (isset($_REQUEST['page_id']) && is_numeric($_REQUEST['page_id']) && ($_REQUEST['page_id']!=29))
+        {
+            $h = $h.($post->post_title);
+        }
 }
 /*
 $current_user = wp_get_current_user();
@@ -51,9 +88,9 @@ if (current_user_can('manage_options'))
 <html><head>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <meta name="robots" content="all" />
-<meta name="description" content="Лицензионные карикатуры для газет, журналов и электронных СМИ" />
-<meta name="keywords" content="картунбанк, cartoonbank, карикатуры, скачать, приколы, смешные, картинки, комиксы,  карикатура, ру, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, ru, comics, comix" />
-<title><?echo $h;?>Картунбанк<?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.  Карикатуры</title>
+<meta name="description" content="<?echo $h;?> — Лицензионные карикатуры для газет, журналов и электронных СМИ" />
+<meta name="keywords" content="<?echo $kw;?> картунбанк, cartoonbank, карикатуры, скачать, приколы, смешные, картинки, комиксы,  карикатура, ру, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, ru, comics, comix" />
+<title><?echo $h;?> — Картунбанк <?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.</title>
 <meta name="generator" content="cartoonbank" />
 <link media="screen" rel="stylesheet" href="http://cartoonbank.ru/ales/colorbox/example2/colorbox.css" />
 <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
