@@ -2836,7 +2836,9 @@ add_filter('the_content', 'nzshpcrt_products_page');
 add_filter('the_content', 'nzshpcrt_shopping_cart');
 add_filter('the_content', 'nzshpcrt_transaction_results');
 add_filter('the_content', 'nzshpcrt_checkout');
-add_filter('the_content', 'nszhpcrt_homepage_products');
+//add_filter('the_content', 'nszhpcrt_homepage_products');
+//ales replace functions include
+require_once('homepage_products_functions.php');
 //add_filter('the_content', 'top_votes');
 
 //add_filter('wp_list_pages', 'nzshpcrt_hidepages');
@@ -2859,7 +2861,8 @@ add_action('init', 'nzshpcrt_display_preview_image');
 
 //this adds all the admin pages, before the code was a mess, now it is slightly less so.
 add_action('admin_menu', 'nzshpcrt_displaypages');
-
+/*
+//ales empty cycle
 switch(get_option('cart_location'))
   {
   case 1:
@@ -2883,7 +2886,7 @@ switch(get_option('cart_location'))
   add_action('the_content', 'nzshpcrt_shopping_basket');
   break;
   }
-
+*/
 function rus2uni($str,$isTo = true)
     {
         $arr = array('?'=>'&#x451;','?'=>'&#x401;');
