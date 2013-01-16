@@ -204,7 +204,7 @@ function populate_options() {
 	'admin_email' => 'you@example.com',
 	'start_of_week' => 1,
 	'use_balanceTags' => 0,
-	'use_smilies' => 1,
+	'use_smilies' => 0,
 	'require_name_email' => 1,
 	'comments_notify' => 1,
 	'posts_per_rss' => 10,
