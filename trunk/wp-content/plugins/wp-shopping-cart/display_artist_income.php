@@ -322,7 +322,10 @@ foreach($result as $r)
 
 
 		// Print acceptance certificate PDF
-		$invoice_date = date('d-m-Y',strtotime('-1 second',strtotime('+1 month',strtotime($_month.'/01/'.date('Y').' 00:00:00'))));
+		//$invoice_date = date('d-m-Y',strtotime('-1 second',strtotime('+1 month',strtotime($_month.'/01/'.date('Y').' 00:00:00'))));
+		$invoice_date = date('d-m-Y',strtotime('-1 second',strtotime('+1 month',strtotime($_month.'/01/'.$_year.' 00:00:00'))));
+
+		
 
 		$_bank_attributes = '';
 		if (isset($product['bank_attributes']))
