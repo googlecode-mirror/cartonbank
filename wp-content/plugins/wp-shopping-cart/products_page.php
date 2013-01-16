@@ -79,7 +79,7 @@ $_bigpic='';
 $_bottomstriptext = '';
                echo "<div id='bigpictopstrip'>".$_bigpicstrip."</div>";
                echo "<div id='bigpictext'>".$_bigpictext."</div>";
-               echo "<div id='bigpic'><a href='#pt' onclick=\"get_item1();\">".$_bigpic."</a></div>";
+               echo "<div id='bigpic'><a href='http://cartoonbank.ru/cartoon/".$cartoonid."#pt' onclick=\"get_item1();\">".$_bigpic."</a></div>";
                echo "<div style='clear:both;'></div>";
                echo "<div id='bigpicbottomstrip' style='float:right;margin-bottom:6px;'>".$_bottomstriptext."</div>";
 
