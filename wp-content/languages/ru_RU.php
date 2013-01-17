@@ -1,5 +1,5 @@
 <?php
-$wp_default_secret_key = 'впишите сюда уникальную фразу';
+$wp_default_secret_key = 'впишите сюдауникальную фразу';
 
 // Make the menu wider and correct some overlapping issues
 function ru_accomodate_markup() {
