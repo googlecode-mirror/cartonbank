@@ -81,7 +81,8 @@ define ('WPLANG', 'ru_RU');
  * Настоятельно рекомендуется, чтобы разработчики плагинов и тем использовали WP_DEBUG
  * в своём рабочем окружении.
  */
-define('WP_DEBUG', false);
+define('WP_DEBUG', true);
+define('SAVEQUERIES', true);
 
 /* Это всё, дальше не редактируем. Успехов! */
 
@@ -89,6 +90,11 @@ define('WP_DEBUG', false);
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');
 
+define('SITEURL','http://test.cartoonbank.ru/');
+define('SHOPPINGCARTURL','http://test.cartoonbank.ru/wp-content/plugins/wp-shopping-cart/');
+define('ROOTDIR','/home/www/cb/');
+    
+    
 /** Инициализирует переменные WordPress и подключает файлы. */
 require_once(ABSPATH . 'wp-settings.php');
 ?>
