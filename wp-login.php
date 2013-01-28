@@ -360,6 +360,11 @@ switch ($action) {
 case 'logout' :
 	check_admin_referer('log-out');
 	wp_logout();
+    
+    //ales clear cookie
+    setcookie('uid', '');
+    setcookie('username', '');
+    
 
 	$redirect_to = !empty( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : 'wp-login.php?loggedout=true';
 	wp_safe_redirect( $redirect_to );
@@ -522,6 +527,20 @@ default:
 			}
 		}
 	}
+    
+//ales
+if (isset($user) && !is_null($user)){
+    $_SESSION['uid']= $user->ID;
+    if(isset($user->user_nicename)){
+        $_SESSION['username']= $user->display_name;
+    }
+    else{
+        $_SESSION['username']= 'xxx';
+    }
+    setcookie('uid', $_SESSION['uid']);
+    setcookie('username', $_SESSION['username']);
+    }
+///ales    
 
 	if ( isset( $_REQUEST['redirect_to'] ) ) {
 		$redirect_to = $_REQUEST['redirect_to'];

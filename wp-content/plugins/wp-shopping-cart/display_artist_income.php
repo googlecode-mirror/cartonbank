@@ -1,10 +1,10 @@
 <h2>Заработано</h2>
 <?php
 $abspath = 'z:/home/localhost/www/';
-$abspath_1 = "/home/www/cb/";
-$abspath_2 = "/home/www/cb3/";
-$filename_acceptance_certificate_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/artist_acceptance_certificate_pdf.html";
-$filename_acceptance_certificate_nostamp_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/artist_acceptance_certificate_nostamp_pdf.html";
+$abspath_1 = ROOTDIR;
+$abspath_2 = ROOTDIR;
+$filename_acceptance_certificate_pdf = ROOTDIR."wp-content/plugins/wp-shopping-cart/artist_acceptance_certificate_pdf.html";
+$filename_acceptance_certificate_nostamp_pdf = ROOTDIR."wp-content/plugins/wp-shopping-cart/artist_acceptance_certificate_nostamp_pdf.html";
 $total_all = 0; // all artists total summ
 $counter_sold_year = 0; // how many items sold in a year
 $counter_sold_month = 0; // how many sold in a month

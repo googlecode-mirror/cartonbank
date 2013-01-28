@@ -8,6 +8,8 @@ Author: Thomas Howard of Instinct Entertainment
 Author URI: http://www.instinct.co.nz
 */
 
+
+/*
 if(get_option('language_setting') != '')
   {
   include_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/languages/'.get_option('language_setting'));
@@ -16,6 +18,8 @@ if(get_option('language_setting') != '')
     {
     include_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/languages/EN_en.php');
     }
+*/
+include_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/languages/RU_ru.php');
     
 require_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/classes/variations.class.php');
 require_once(ABSPATH.'wp-content/plugins/wp-shopping-cart/classes/cart.class.php');
@@ -157,13 +161,13 @@ class wp_shopping_cart
 function nzshpcrt_style()
     {
   ?>
-<link href='<?php echo get_option('siteurl'); ?>/wp-content/plugins/wp-shopping-cart/style.css' rel="stylesheet" type="text/css" />
+<link href='<?php echo SITEURL; ?>/wp-content/plugins/wp-shopping-cart/style.css' rel="stylesheet" type="text/css" />
   <?php
     }
     
 function nzshpcrt_javascript()
     {
-$siteurl = get_option('siteurl');
+$siteurl = SITEURL;
 ?><script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/ajax.js"></script>
 <script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/user.js"></script>
 <?php
@@ -171,13 +175,13 @@ $siteurl = get_option('siteurl');
 
 function nzshpcrt_css()
     {
-  $siteurl = get_option('siteurl'); 
+  $siteurl = SITEURL; 
     ?>
 <script language='JavaScript' type='text/javascript'>
 var base_url = "<?php echo $siteurl; ?>";
 <?
-$loadgif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/loading.gif";
-$closegif = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
+$loadgif = SITEURL."/wp-content/plugins/wp-shopping-cart/images/loading.gif";
+$closegif = SITEURL."/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
 ?>
 var fileLoadingImage = "<?php echo $loadgif; ?>";    
 var fileBottomNavCloseImage = "<?php echo $closegif; ?>";
@@ -441,7 +445,8 @@ function nzshpcrt_submit_ajax()
       {
       $_SESSION['nzshpcrt_cart'] = Array();
 	  $cart = $_SESSION['nzshpcrt_cart'];
-      echo nzshpcrt_shopping_basket_internals($cart);
+      //ales cart
+      //echo nzshpcrt_shopping_basket_internals($cart);
       exit();
       }
 
@@ -595,7 +600,7 @@ function nzshpcrt_submit_ajax()
 
     $output .= "  <channel>\n\r";
     $output .= "    <title>Cartoonbank new images</title>\n\r";
-    $output .= "    <link>http://cartoonbank.ru/</link>\n\r";
+    $output .= "    <link><? echo SITEURL;?></link>\n\r";
     $output .= "    <description>This is the Russian Cartoon Bank RSS feed</description>\n\r";
     $output .= "    <generator>Cartoonbank.ru</generator>\n\r";
     foreach($product_list as $product)
@@ -603,10 +608,10 @@ function nzshpcrt_submit_ajax()
       $purchase_link = get_option('product_list_url')."&cartoonid=".stripslashes($product['id']);
       $output .= "    <item>\n\r";
       $output .= "      <title>".stripslashes($product['name'])."</title>\n\r";
-	  $output .= "      <link>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</link>\n\r";
-      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."'><br /><img title='". stripslashes($product['name']) ."' src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
+	  $output .= "      <link><? echo SITEURL;?>?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</link>\n\r";
+      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='<? echo SITEURL;?>?page_id=29&amp;cartoonid=".stripslashes($product['id'])."'><br /><img title='". stripslashes($product['name']) ."' src='<? echo SITEURL;?>wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
       $output .= "      <pubDate>".date("r")."</pubDate>\n\r";
-      $output .= "      <guid>http://cartoonbank.ru/?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</guid>\n\r";
+      $output .= "      <guid><? echo SITEURL;?>?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</guid>\n\r";
 	  $output .= '    ';
       $output .= "    </item>\n\r";
       }
@@ -869,7 +874,7 @@ function nzshpcrt_submit_ajax()
   $output .= "Название рисунка: ";
   $output .= "</td>\n\r";
   $output .= "<td>";
-  $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' /> # <a href='".get_option('siteurl')."/?page_id=29&cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>";
+  $output .= "<input id='productnameedit' type='text' style='width:300px;' name='title' value='".stripslashes($product['name'])."' /> # <a href='".SITEURL."/?page_id=29&cartoonid=".$product['id']."' target=_blank>".$product['id']."</a>";
   $output .= "</td>\n\r";
   $output .= "</tr>\n\r";
   
@@ -886,7 +891,7 @@ function nzshpcrt_submit_ajax()
   $output .= "<td class='r'>";
   $output .= "Ключевые слова,<br />разделённые запятыми:<br>";
 
-  $output .= "<a href='".get_option('siteurl')."/ales/wordassociations/words.php?id=".$product['id']."' target=_blank>добавить<br>ассоциаций</a>";
+  $output .= "<a href='".SITEURL."/ales/wordassociations/words.php?id=".$product['id']."' target=_blank>добавить<br>ассоциаций</a>";
 
   $output .= "</td>\n\r";
   $output .= "<td>";
@@ -977,9 +982,9 @@ function nzshpcrt_submit_ajax()
     $preview_location = "product_images/".$product['image'];
     $icon_location = "images/".$product['image'];
 
-    $m_image_link = get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/".$preview_location;
+    $m_image_link = SITEURL."/wp-content/plugins/wp-shopping-cart/".$preview_location;
 
-    $output .= "<a href='".$m_image_link."' target=_blank><img id='previewimage' src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/$icon_location' alt='".TXT_WPSC_PREVIEW."' title='".TXT_WPSC_PREVIEW."' /></a>";
+    $output .= "<a href='".$m_image_link."' target=_blank><img id='previewimage' src='".SITEURL."/wp-content/plugins/wp-shopping-cart/$icon_location' alt='".TXT_WPSC_PREVIEW."' title='".TXT_WPSC_PREVIEW."' /></a>";
     $output .= "Ш х В: ".$product['width']."x".$product['height']."<br>".$product['mimetype'];
 
   
@@ -1028,7 +1033,7 @@ if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_
 $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&amp;deleteid=".$product['id']."' onclick='return conf();'><img src='../img/trash.gif' title='удалить'></a>";
 }
 
-  $output .= "<a  href='admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$product['id']."' ><img src='".get_option('siteurl')."/img/reload.gif' title='Обновить иконку и слайд с водяными знаками'></a>";
+  $output .= "<a  href='admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$product['id']."' ><img src='".SITEURL."/img/reload.gif' title='Обновить иконку и слайд с водяными знаками'></a>";
    $output .= "&nbsp;<a href='index.php?admin_preview=true&product_id=".$product['id'].$idhash."' style='float: left;' ><img src='../wp-content/plugins/wp-shopping-cart/images/download.gif' title='Скачать оригинальный файл' /></a>";
   
   $output .= "</td>\n\r";
@@ -1069,12 +1074,12 @@ $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&amp;delet
 
 if ($product['approved'] != '1' && isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabilities['editor']==1)
 	{
-		$output .= "<br /><br /><br /><br /><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение!</a>";
+		$output .= "<br /><br /><br /><br /><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".SITEURL."/img/trash.gif'> стереть изображение!</a>";
 	}
 
 if ($product['approved'] == '1' && isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
 	{
-		$output .= "<br /><br /><br /><br /><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".get_option('siteurl')."/img/trash.gif'> стереть изображение</a>";
+		$output .= "<br /><br /><br /><br /><a class='button' href='admin.php?page=wp-shopping-cart/display-items.php&deleteid=".$product['id']."' onclick=\"return conf();\" ><img src='".SITEURL."/img/trash.gif'> стереть изображение</a>";
 	}
 
   
@@ -1299,7 +1304,7 @@ function nzshpcrt_getvariationform($variation_id)
     $output .= "<input type='text' name='variation_values[".$variation_value['id']."]' value='".stripslashes($variation_value['name'])."' />";
     if($variation_value_count > 1)
       {
-      $output .= " <a  class='image_link' onclick='remove_variation_value(\"variation_value_".$num."\",".$variation_value['id'].")' href='#'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/trash.gif' alt='".TXT_WPSC_DELETE."' title='".TXT_WPSC_DELETE."' /></a>";
+      $output .= " <a  class='image_link' onclick='remove_variation_value(\"variation_value_".$num."\",".$variation_value['id'].")' href='#'><img src='".SITEURL."/wp-content/plugins/wp-shopping-cart/images/trash.gif' alt='".TXT_WPSC_DELETE."' title='".TXT_WPSC_DELETE."' /></a>";
       }
     $output .= "<br />";
     $output .= "</span>";
@@ -2136,6 +2141,21 @@ function nzshpcrt_shopping_basket($input = null)
   {
   global $wpdb;
   $dont_add_input = null;
+  
+        if (isset ($_SESSION['nzshpcrt_cart'])){
+            $cart = $_SESSION['nzshpcrt_cart'];
+        }
+        else{
+            $cart = null;
+        }
+
+        echo "<div id='shoppingcartcontents'>";
+          $basket = nzshpcrt_shopping_basket_internals($cart);
+          echo $basket;
+        echo "</div>";
+  
+  
+  /*
   if(get_option('cart_location') == 1)
     {
     if($input != '')
@@ -2190,7 +2210,7 @@ function nzshpcrt_shopping_basket($input = null)
           echo "</div></div>";
           }
         }
-  
+  */
   if($dont_add_input !== true)
     {
     if($input != '')
@@ -2203,7 +2223,7 @@ function nzshpcrt_shopping_basket($input = null)
  function nzshpcrt_specials($input = null)
    {
    global $wpdb;
-   $siteurl = get_option('siteurl');
+   $siteurl = SITEURL;
    $sql = "SELECT * FROM `wp_product_list` WHERE `special` = '1'  LIMIT 1";
    $product = $wpdb->get_results($sql,ARRAY_A) ;
    if($product != null)
@@ -2250,36 +2270,13 @@ function nzshpcrt_shopping_basket($input = null)
    echo $input.$output;
    }
 
-function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $title='')
-  {
-
+function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $title=''){
   global $wpdb;
   //global $current_user;
   $output = '';
   $current_url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-  switch(get_option('cart_location'))
-    {
-    case 1:
-    $output .= "<h2>Корзина заказов</h2>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
-    $output .="<span id='alt_loadingindicator'><img id='alt_loadingimage' src='". get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/indicator.gif' alt='Loading' title='Loading' /> Идёт загрузка...</span></strong><br />";
-    $spacing = "<br/>";
-    break;
-    
-    case 3:
-    $output .= "<strong>Корзина заказов</strong>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
-    $spacing = "<br/>";
-    break;
-    
-    case 4:
-    $spacing = "";
-    break;
-    
-    default:
-    $output .= "<strong>Корзина заказов</strong>&nbsp;<img src='".get_option('siteurl')."/img/cart.gif'>";
-    $spacing = "<br/>";
-    break;
-    }  
-  
+  $output .= "<strong>Корзина заказов</strong>&nbsp;<img src='".SITEURL."/img/cart.gif'>";
+  $spacing = "<br/>";
   $current_user = wp_get_current_user();   
 
   $_wallet = $current_user->wallet;
@@ -2288,18 +2285,14 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
   else
 		$_discount = 0;
 
-
-
   if($cart != null)
     {
     $output .= $spacing;
-    if($quantity_limit == true)
-      {
+    if($quantity_limit == true){
       $output .= TXT_WPSC_NUMBEROFITEMS.": &nbsp;&nbsp;".count($cart)."<br /><br />";
       $output .= TXT_WPSC_NOMOREAVAILABLE."<br /><br />";
       }
-      else
-        {
+      else{
         $output .= TXT_WPSC_NUMBEROFITEMS.": &nbsp;&nbsp;".count($cart)."<br /><br />";
         }
 
@@ -2309,8 +2302,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
     $output .= "<tr><td style='border-bottom: 1px solid #FF9966'>№</td><td style='border-bottom: 1px solid #FF9966'>Название</td><td  style='border-bottom: 1px solid #FF9966' align='right'>Цена</td></tr>"; 
     $total = 0;
 	$discount = 0;
-
-		
+	
 	foreach($cart as $cart_item)
       {
       $product_id = $cart_item->product_id;
@@ -2326,8 +2318,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
 
 		if (isset($_POST['license']) && ($cart_item->product_id == $_POST['prodid']) && !isset($_POST['Buy']))
 		  {
-			switch($_POST['license'])
-					{
+			switch($_POST['license']){
 					case 'l1_price':
 					$price = $product[0]['l1_price'];
 					$cart_item->price = $price;
@@ -2352,11 +2343,8 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
 					break;
 					}
 		  } 
-		  else
-		  {
-			  //if (isset($_POST['prodid']) && !isset($_POST['license']) && ($cart_item->product_id == $_POST['prodid']) && isset($_POST['Buy']))
-			  if (isset($_POST['prodid']) && ($cart_item->product_id == $_POST['prodid']))
-			  {
+		  else{
+			  if (isset($_POST['prodid']) && ($cart_item->product_id == $_POST['prodid'])){
 					$price = $product[0]['l1_price'];
 					$cart_item->price = $price;
 					$cart_item->license = 'l1_price';
@@ -2367,51 +2355,44 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
 	  $output .= "<tr><td style='border-bottom: 1px solid #CCCC99'>".$product[0]['id']."</td><td  style='border-bottom: 1px solid #CCCC99'>".stripslashes($product[0]['name'])."</td><td align='right' style='border-bottom: 1px solid #CCCC99'>".round($cart_item->price)."</td></tr>";
       }
 
-	if ($_discount>0)
-		{
+	if ($_discount>0){
 			$output .= "<tr><td>&nbsp;</td><td>ваша cкидка</td><td align='right'>".$_discount."%</td></tr>";
 			$output .= "<tr><td>&nbsp;</td><td style='border-top: 1px solid #FF9966'>Итого без скидки: </td><td align='right' style='vertical-align:bottom;border-top: 1px solid #FF9966'><strike>".round($total)."</strike></td></tr>";
 			$output .= "<tr><td>&nbsp;</td><td style='border-top: 1px solid #FF9966'>Итого со скидкой: </td><td align='right' style='vertical-align:bottom;border-top: 1px solid #FF9966'><b>".round($total*(100-$_discount)/100)."</b></td></tr>";
 		}
-		else
-		{
+		else{
 			$output .= "<tr><td>&nbsp;</td><td style='border-top: 1px solid #FF9966'>Итого: </td><td align='right' style='border-top: 1px solid #FF9966'><b>".round($total)."</b></td></tr>";
 		}
     
     $output .= "</table>";
 
-$_SESSION['total'] = round($total*(100-$_discount)/100);
+    $_SESSION['total'] = round($total*(100-$_discount)/100);
 
 	$output .= "На Личном счёте <b>".round($_wallet)."</b> р.<br />";
 
 if (($total > $_wallet) && ($_wallet!=0))
-	$output .= "<div style='color:#CC0000;'>Не хватает средств для покупки выбранных изображений.</div>";
+	$output .= "<span style='color:#CC0000;'>Не хватает средств для покупки выбранных изображений через личный счёт.</span>";
 
-    if(get_option('permalink_structure') != '')
-      {
+    if(get_option('permalink_structure') != ''){
       $seperator ="?";
       }
-      else
-         {
+      else{
          $seperator ="&";
-         }
+      }
 	$output .= "<a class='button' href='".get_option('product_list_url')."?cart=empty' onclick='emptycart();return false;'>x Очистить корзину</a><br />";
 
-global $user_identity;
-if ($user_identity == '')
-{
-	$output .= "<div style='color:#CC0000;'><b>Оплата возможна только после входа</b></div>";
-}
-else
-{
-	if (isset($_GET['page_id']) && ($_GET['page_id']==30 || $_GET['page_id']==31))
-	{$output .= "";}
-	else
-	{$output .= "<a class='button' href='".get_option('shopping_cart_url')."'>Оплатить и скачать</a><br />";}
-}
+    global $user_identity;
+    if ($user_identity == ''){
+	    $output .= "<span style='color:#CC0000;'><b>Оплата возможна только после входа</b></span>";
+    }
+    else{
+	    if (isset($_GET['page_id']) && ($_GET['page_id']==30 || $_GET['page_id']==31))
+	    {$output .= "";}
+	    else
+	    {$output .= "<a class='button' href='".get_option('shopping_cart_url')."'>Оплатить и скачать</a><br />";}
+    }
 	}
-    else
-      {
+    else{
       $output .= $spacing;
       //$output .= "Корзина заказов пуста.<br />";
       $output .= "На Личном счёте <b>".round($_wallet)."</b> р.<br />";
@@ -2420,8 +2401,7 @@ else
   return $output;
   }
 
-function nzshpcrt_download_file()
-  {
+function nzshpcrt_download_file(){
   global $wpdb,$user_level,$wp_rewrite;
   get_currentuserinfo();
   if(isset($_GET['downloadid']) and is_numeric($_GET['downloadid']) and
@@ -2431,7 +2411,7 @@ function nzshpcrt_download_file()
 	$sid = $_GET['sid'];
 	if (strlen($_GET['sid']) != 6)
 	{
-	  $siteurl = get_option('siteurl');
+	  $siteurl = SITEURL;
 	  header("Location: " . $siteurl . "404.php");
 	  exit();
 	}
@@ -2479,8 +2459,7 @@ function nzshpcrt_download_file()
       }
   }
 
-function nzshpcrt_display_preview_image()
-  {
+function nzshpcrt_display_preview_image(){
   global $wpdb;
   if(isset($_GET['productid']) and is_numeric($_GET['productid']))
     {
@@ -2555,12 +2534,12 @@ function nzshpcrt_product_rating($prodid)
       $output .= "  <span class='votetext'>";
       for($l=1; $l<=$average; ++$l)
         {
-        $output .= "<img class='goldstar' src='". get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/gold-star.gif' alt='$l' title='$l' />";
+        $output .= "<img class='goldstar' src='". SITEURL."/wp-content/plugins/wp-shopping-cart/images/gold-star.gif' alt='$l' title='$l' />";
         }
       $remainder = 5 - $average;
       for($l=1; $l<=$remainder; ++$l)
         {
-        $output .= "<img class='goldstar' src='". get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/grey-star.gif' alt='$l' title='$l' />";
+        $output .= "<img class='goldstar' src='". SITEURL."/wp-content/plugins/wp-shopping-cart/images/grey-star.gif' alt='$l' title='$l' />";
         }
       $output .=  "<span class='vote_total'>&nbsp;(<span id='vote_total_$prodid'>".$count."</span>)</span> \r\n";
       $output .=  "</span> \r\n";
@@ -2594,12 +2573,12 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
        
       if(($browsername == 'MSIE') && ($browserversion < 7.0))
         {
-        $starimg = ''. get_option('siteurl').'/wp-content/plugins/wp-shopping-cart/images/star.gif';
+        $starimg = ''. SITEURL.'/wp-content/plugins/wp-shopping-cart/images/star.gif';
         $ie_javascript_hack = "onmouseover='ie_rating_rollover(this.id,1)' onmouseout='ie_rating_rollover(this.id,0)'";
         }
         else 
           {
-          $starimg = ''. get_option('siteurl').'/wp-content/plugins/wp-shopping-cart/images/24bit-star.png';
+          $starimg = ''. SITEURL.'/wp-content/plugins/wp-shopping-cart/images/24bit-star.png';
           $ie_javascript_hack = '';
           }
        
@@ -2629,7 +2608,7 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
         $style = '';
         if($k <= $rating)
           {
-          $style = "style='background: url(". get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/gold-star.gif)'";
+          $style = "style='background: url(". SITEURL."/wp-content/plugins/wp-shopping-cart/images/gold-star.gif)'";
           }
         $output .= "      <a name='' id='".$prodid."and".$k."_link' onclick='rate_item(".$prodid.",".$k.")' class='star$k' $style $ie_javascript_hack ><img id='".$prodid."and".$k."' class='starimage' src='$starimg' alt='$k' title='$k' /></a>\r\n";
         }
@@ -2779,13 +2758,13 @@ function make_csv($array)
   
 function nzshpcrt_product_log_rss_feed()
   {
-  //echo "<link type='application/rss+xml' href='".get_option('siteurl')."/index.php?rss=true&rss_key=key&action=purchase_log&type=rss' title='Cartoonbank new images RSS' rel='alternate'/>";
+  //echo "<link type='application/rss+xml' href='".SITEURL."/index.php?rss=true&rss_key=key&action=purchase_log&type=rss' title='Cartoonbank new images RSS' rel='alternate'/>";
   }
   
 function nzshpcrt_product_list_rss_feed()
   {
   // our custom rss feed
-  echo "<link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='".get_option('siteurl')."/index.php?rss=true&amp;action=product_list&amp;type=rss'/>";
+  echo "<link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='".SITEURL."/index.php?rss=true&amp;action=product_list&amp;type=rss'/>";
   }
     
 require_once('processing_functions.php');
@@ -2838,7 +2817,8 @@ add_filter('the_content', 'nzshpcrt_transaction_results');
 add_filter('the_content', 'nzshpcrt_checkout');
 //add_filter('the_content', 'nszhpcrt_homepage_products');
 //ales replace functions include
-require_once('homepage_products_functions.php');
+add_filter('the_content', 'nszhpcrt_homepage_products');
+//require_once('homepage_products_functions.php');
 //add_filter('the_content', 'top_votes');
 
 //add_filter('wp_list_pages', 'nzshpcrt_hidepages');
@@ -2846,10 +2826,12 @@ require_once('homepage_products_functions.php');
 add_action('wp_head', 'nzshpcrt_style');
 
 add_action('admin_head', 'nzshpcrt_css');
+/*
 if(isset($_GET['page']) and $_GET['page'] == "wp-shopping-cart/display-log.php")
   {
   //add_action('admin_head', 'nzshpcrt_product_log_rss_feed');
   }
+*/
 add_action('wp_head', 'nzshpcrt_javascript');
 add_action('wp_head', 'nzshpcrt_product_list_rss_feed');
 
@@ -2861,32 +2843,7 @@ add_action('init', 'nzshpcrt_display_preview_image');
 
 //this adds all the admin pages, before the code was a mess, now it is slightly less so.
 add_action('admin_menu', 'nzshpcrt_displaypages');
-/*
-//ales empty cycle
-switch(get_option('cart_location'))
-  {
-  case 1:
-  add_action('wp_list_pages','nzshpcrt_shopping_basket');
-  break;
-  
-  case 2:
-  add_action('the_content', 'nzshpcrt_shopping_basket');
-  break;
-  
-  case 4:
-  add_action('plugins_loaded', 'widget_wp_shopping_cart_init');
-  break;
-  
-  case 3:
-  //add_action('the_content', 'nzshpcrt_shopping_basket');
-  //<?php nzshpcrt_shopping_basket(); ?/>   
-  break;
-  
-  default:
-  add_action('the_content', 'nzshpcrt_shopping_basket');
-  break;
-  }
-*/
+
 function rus2uni($str,$isTo = true)
     {
         $arr = array('?'=>'&#x451;','?'=>'&#x401;');
@@ -3024,11 +2981,11 @@ function send_email_to_artist($price, $image_id, $filename, $cartoonname, $descr
 	$mess = "";
 	$mess .= "<br>Уважаемый ".$nice_artistname."!<br><br>";
 	$mess .= $lic_type." лицензия на использование вашего изображения была только что передана Картунбанком заказчику.<br>Название рисунка: <b>\"".stripslashes($cartoonname)."\"</b> (".stripslashes($description).")<br>";
-	$mess .= "<a href='".get_option('siteurl')."/?page_id=29&cartoonid=".$image_id."'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$filename."'></a>";
+	$mess .= "<a href='".SITEURL."/?page_id=29&cartoonid=".$image_id."'><img src='".SITEURL."/wp-content/plugins/wp-shopping-cart/product_images/".$filename."'></a>";
 
-	$mess .= "<br><br>Поздравляем вас и напоминаем, что всегда рады видеть ваши новые рисунки у нас на сайте! Полный отчёт об уже поступивших на ваше имя денежных средствах доступен в разделе <a href='".get_option('siteurl')."/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php'>Заработано</a>.<br>";
+	$mess .= "<br><br>Поздравляем вас и напоминаем, что всегда рады видеть ваши новые рисунки у нас на сайте! Полный отчёт об уже поступивших на ваше имя денежных средствах доступен в разделе <a href='".SITEURL."/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php'>Заработано</a>.<br>";
 
-	$mess .= "<br><div style='font-size:0.8em;'>Это письмо отправлено автоматически и не требует ответа.<br>Чтобы отписаться от сообщений о продаже снимите отметку в строке <i>'Получать сообщения о продаже лицензии'</i> <a href='".get_option('siteurl')."/wp-admin/profile.php'>вашего профиля</a>.</div>";
+	$mess .= "<br><div style='font-size:0.8em;'>Это письмо отправлено автоматически и не требует ответа.<br>Чтобы отписаться от сообщений о продаже снимите отметку в строке <i>'Получать сообщения о продаже лицензии'</i> <a href='".SITEURL."/wp-admin/profile.php'>вашего профиля</a>.</div>";
 
 	// send email
 	mail($email, 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);

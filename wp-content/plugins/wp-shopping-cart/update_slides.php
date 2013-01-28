@@ -1,11 +1,11 @@
 <?php
  echo "\nstarting the game";
 
- $imagedir = "/home/www/cb/wp-content/plugins/wp-shopping-cart/images/";
- $product_images = "/home/www/cb/wp-content/plugins/wp-shopping-cart/product_images/";
- $filedir = "/home/www/cb/wp-content/plugins/wp-shopping-cart/files/";
- $export_dir = "/home/www/cb/wp-content/plugins/wp-shopping-cart/product_images/";
- $wm = "/home/www/cb/img/watermark.png";
+ $imagedir = ROOTDIR."wp-content/plugins/wp-shopping-cart/images/";
+ $product_images = ROOTDIR."wp-content/plugins/wp-shopping-cart/product_images/";
+ $filedir = ROOTDIR."wp-content/plugins/wp-shopping-cart/files/";
+ $export_dir = ROOTDIR."wp-content/plugins/wp-shopping-cart/product_images/";
+ $wm = ROOTDIR."img/watermark.png";
  $chwidth = $chheight = 600;
  
  // get the list of files
@@ -64,7 +64,7 @@
                 if(file_exists($export_dir.$slidename))
                 {
                     wtrmark($export_dir.$slidename,$wm);
-					echo "\n>>>> http://cartoonbank.ru/cb/wp-content/plugins/wp-shopping-cart/product_images/".$slidename;
+					echo "\n>>>>".SITEURL."wp-content/plugins/wp-shopping-cart/product_images/".$slidename;
                 }
 				else
                 {
@@ -83,8 +83,8 @@
 echo "\n ==== done! =====\n";
  // functions
  function wtrmark($sourcefile, $watermarkfile) {
-    $logopath = "/home/www/cb/img/cb-logo-300.png";
-    $watermarkfile = "/home/www/cb/img/watermark.png";
+    $logopath = ROOTDIR."img/cb-logo-300.png";
+    $watermarkfile = ROOTDIR."img/watermark.png";
 
     $logofile_id = imagecreatefrompng($logopath);
   
@@ -181,7 +181,7 @@ echo "\n ==== done! =====\n";
  {
     // Default thumbs creation
     $img_location = $file;
-    $export_dir = "/home/www/cb/wp-content/plugins/wp-shopping-cart/product_images/";
+    $export_dir = ROOTDIR."wp-content/plugins/wp-shopping-cart/product_images/";
  
     // Creating a resource image
     $path = pathinfo($img_location);

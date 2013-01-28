@@ -449,8 +449,8 @@ function loadFile($sFilename, $sCharset = 'UTF-8')
 
 function save_license($content,$filename)
 {
-	$abspath = '/home/www/cb3/licenses/'; 
-	$abspath_1 = "/home/www/cb/licenses/";
+	$abspath = ROOTDIR.'licenses/'; 
+	$abspath_1 = ROOTDIR."licenses/";
 	$abspath_2 = "Z:/home/localhost/www/licenses/";
 
 

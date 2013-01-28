@@ -1,11 +1,11 @@
 <?
 //header("Location: http://cartoonbank.ru");
-
+/*
 if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == "cartoonbank.ru/?page_id=29" && !isset($_POST['cs']))
 {
 	header("Location: http://cartoonbank.ru/?page_id=29&offset=".rand(0,380));
 }
-
+*/
 // change the header
 $h = '';
 $kw = '';
@@ -74,9 +74,15 @@ $current_user = wp_get_current_user();
 $_SESSION['uid']= $current_user->ID;
 setcookie('uid', $_SESSION['uid']);
 */
+if (isset($_REQUEST['page_id'])&&is_numeric($_REQUEST['page_id'])){
+$pageid=$_REQUEST['page_id'];
+}
+else{
+$pageid=29;
+}
 if (current_user_can('manage_options'))
 			{
-				$_edid = "<a href=".get_option('siteurl')."/wp-admin/post.php?post=".$_REQUEST['page_id']."&amp;action=edit target=_blank>edit</a>";
+				$_edid = "<a href=".get_option('siteurl')."/wp-admin/post.php?post=".$pageid."&amp;action=edit target=_blank>edit</a>";
 			}
 			else
 			{
@@ -92,7 +98,7 @@ if (current_user_can('manage_options'))
 <meta name="keywords" content="<?echo $kw;?> картунбанк, cartoonbank, карикатуры, скачать, приколы, смешные, картинки, комиксы,  карикатура, ру, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, ru, comics, comix" />
 <title><?echo $h;?> — Картунбанк <?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.</title>
 <meta name="generator" content="cartoonbank" />
-<link media="screen" rel="stylesheet" href="http://cartoonbank.ru/ales/colorbox/example2/colorbox.css" />
+<link media="screen" rel="stylesheet" href="<? echo SITEURL;?>ales/colorbox/example2/colorbox.css" />
 <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
 <?php wp_head(); ?>
 <style type="text/css" media="screen">
@@ -164,7 +170,7 @@ default:
 </div>
 
 <div style="width:580px;height:90px;float:left;">
-<br><a href="http://cartoonbank.ru/?page_id=29&offset=0&new=0"><img src="<?php echo get_option('home'); ?>/img/cb-logo-iq.png" style="border:0;"></a><br />
+<br><a href="<?echo get_option('siteurl');?>/?page_id=29&offset=0&new=0"><img src="<?php echo get_option('home'); ?>/img/cb-logo-iq.png" style="border:0;"></a><br />
 <?php bloginfo('description'); ?>
 </div>
 
@@ -184,7 +190,7 @@ default:
 	//<!-- <div style="width:185px;height:90px;float:left;"><a href="http://karikashop.com/#ecwid:category=1620996&mode=category&offset=0&sort=normal" target="_blank"><img src="http://cartoonbank.ru/img/b/karikashop.gif" style="width:185px;height:90px;border:0;"></a></div> -->
 ?>
 
-<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a></div>
+<div style="width:185px;height:90px;float:left;"><a href="<? echo SITEURL;?>?page_id=893"><img src="<?echo get_option('siteurl');?>/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a></div>
 </div>
 
 </div>
@@ -207,18 +213,18 @@ else
 
 <div id="navbarbottom">
 <ul> 
-<li><a href="/?page_id=95"<? $_REQUEST['page_id']=='95'? selected_style():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
-<li><a href="/?page_id=29&amp;offset=0&amp;new=0"<? $_REQUEST['page_id']=='29' & $_new==0? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
-<li><a href="/?page_id=29&amp;offset=0&amp;new=1"<? $_REQUEST['page_id']=='29'& $_new==1 ? selected_style():"" ?> title='показать новые'>Новое</a></li>
-<li><a href="/?page_id=73"<? $_REQUEST['page_id']=='73'? selected_style():"" ?> title='художникам'>Авторам</a></li>
-<li><a href="/?page_id=97"<? $_REQUEST['page_id']=='97'? selected_style():"" ?> title='покупателям'>Клиентам</a></li>
-<li><a href="/?page_id=907"<? $_REQUEST['page_id']=='907'? selected_style():"" ?> title='посетителям'>Зрителям</a></li>
-<li><a href="/?page_id=1215"<? $_REQUEST['page_id']=='1215'? selected_style():"" ?> title='наши партнёры'>Партнёры</a></li>
-<li><a href="/?page_id=1260"<? $_REQUEST['page_id']=='1260'? selected_style():"" ?> title='друзья и коллеги'>Друзья</a></li>
-<li><a href="/?page_id=2"<? $_REQUEST['page_id']=='2'? selected_style():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
-<li><a href="/?page_id=942"<? $_REQUEST['page_id']=='942'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
-<li><a href="/?page_id=976"<? $_REQUEST['page_id']=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
-<li><a href="/?page_id=2041"<? $_REQUEST['page_id']=='2041'? selected_style():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
+<li><a href="/?page_id=95"<? $pageid=='95'? selected_style():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
+<li><a href="/?page_id=29&amp;offset=0&amp;new=0"<? $pageid=='29' & $_new==0? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
+<li><a href="/?page_id=29&amp;offset=0&amp;new=1"<? $pageid=='29'& $_new==1 ? selected_style():"" ?> title='показать новые'>Новое</a></li>
+<li><a href="/?page_id=73"<? $pageid=='73'? selected_style():"" ?> title='художникам'>Авторам</a></li>
+<li><a href="/?page_id=97"<? $pageid=='97'? selected_style():"" ?> title='покупателям'>Клиентам</a></li>
+<li><a href="/?page_id=907"<? $pageid=='907'? selected_style():"" ?> title='посетителям'>Зрителям</a></li>
+<li><a href="/?page_id=1215"<? $pageid=='1215'? selected_style():"" ?> title='наши партнёры'>Партнёры</a></li>
+<li><a href="/?page_id=1260"<? $pageid=='1260'? selected_style():"" ?> title='друзья и коллеги'>Друзья</a></li>
+<li><a href="/?page_id=2"<? $pageid=='2'? selected_style():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
+<li><a href="/?page_id=942"<? $pageid=='942'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
+<li><a href="/?page_id=976"<? $pageid=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
+<li><a href="/?page_id=2041"<? $pageid=='2041'? selected_style():"" ?> title='English'><img src="<? echo SITEURL;?>img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
 <li><? echo $_edid;?></li>
 </ul>
 </div>

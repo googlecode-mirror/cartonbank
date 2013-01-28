@@ -1,7 +1,7 @@
 <?php
 $abspath = 'z:/home/localhost/www/';
-$abspath_1 = "/home/www/cb/";
-$abspath_2 = "/home/www/cb3/";
+$abspath_1 = ROOTDIR;
+$abspath_2 = ROOTDIR;
 
 global $wpdb;
 

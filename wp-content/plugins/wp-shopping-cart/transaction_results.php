@@ -152,8 +152,8 @@ function send_email_multi_attachments($email, $content='')
 	global $license_names_array;
 	$files = $license_names_array;
 
-	$abspath = '/home/www/cb3/licenses/'; 
-	$abspath_1 = "/home/www/cb/licenses/";
+	$abspath = ROOTDIR.'licenses/'; 
+	$abspath_1 = ROOTDIR."licenses/";
 	$abspath_2 = "Z:/home/localhost/www/licenses/";
 
 	if (strstr($_SERVER['SCRIPT_FILENAME'],'Z:/home'))
