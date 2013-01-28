@@ -31,7 +31,7 @@ if ($_GET['page_id']!=31) {
 
     $url = $_SERVER['QUERY_STRING'];
     if ($url == ''){
-        $url = 'page_id=29';
+        $url = 'page_id=29&offset=0&new=0';
     }
     $cache_file_to_include = 'index_'.$url;
     include('top-cache.php'); 
