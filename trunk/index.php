@@ -35,7 +35,7 @@ if ($_GET['page_id']!=31) {
     }
     $cache_file_to_include = 'index_'.$url;
     include('top-cache.php'); 
-    $cachefile = ROOTDIR.'mycache/cached-'.$cache_file_to_include.'.html';
+    $cachefile = dirname(__FILE__).'/mycache/cached-'.$cache_file_to_include.'.html';
     
     if ($_GET['page_id']!=30 && $_GET['page_id']!=31 && count($_POST)==0 && file_exists($cachefile) && time() - $cachetime < filemtime($cachefile)) {
         return;
