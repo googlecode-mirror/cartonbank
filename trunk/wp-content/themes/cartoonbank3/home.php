@@ -1,4 +1,7 @@
 <?php
+$redirecturl = SITEURL."?page_id=29&offset=0&new=0";
+header("Location: $redirecturl"); 
+
 $current_user = wp_get_current_user();
 $_SESSION['uid']= $current_user->ID;
 if(isset($current_user->user_nicename)){
@@ -10,8 +13,7 @@ else{
 setcookie('uid', $_SESSION['uid']);
 setcookie('username', $_SESSION['username']);
 
-$redirecturl = SITEURL."?page_id=29";
-   header("Location: $redirecturl"); 
+
 ?> 
 
 <?php get_header(); ?>

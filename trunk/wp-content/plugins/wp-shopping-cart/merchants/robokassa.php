@@ -18,7 +18,7 @@ function gateway_robokassa($seperator, $sessionid)
 	else{$purchaseid = '0';}
 
 //pokazh($purchase_log,"purchase_log");
-	$cart_sql = "SELECT * FROM `wp_cart_contents` WHERE `purchaseid`='".$purchase_log[0]['id']."'";
+	$cart_sql = "SELECT id,prodid,purchaseid,price,quantity,license,cart_discount FROM `wp_cart_contents` WHERE `purchaseid`='".$purchase_log[0]['id']."'";
 	$cart = $wpdb->get_results($cart_sql,ARRAY_A) ; 
 	$cart_description = json_encode($cart);
 
