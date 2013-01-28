@@ -70,7 +70,7 @@ $pageid=29;
         var nnn = "Здравствуйте, <a href='/wp-admin/profile.php'>"+getCookie('username');
         }
         else{
-            var nnn = "Вам надо <a href='/wp-login.php'>залогиниться</a>, чтобы добавлять товары в корзину.";
+            var nnn = "Вам надо <a href='/wp-login.php?redirect_to="+encodeURIComponent(document.URL)+"'>залогиниться</a>, чтобы добавлять товары в корзину.";
         }
         jQuery('#username').html(nnn);
     });
