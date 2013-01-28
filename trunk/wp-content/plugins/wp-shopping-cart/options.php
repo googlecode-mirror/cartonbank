@@ -376,30 +376,10 @@ function country_list($selected_country = null)
       </td>
       <td>
       <?php
-$cart_location = get_option('cart_location');
-$cart1 = "";
-$cart2 = "";
-$cart3 = "";
-$cart4 = "";
-switch($cart_location)
-  {
-  case 1:
-  $cart1 = "checked ='true'";
-  break;
-  
-  case 2:
-  $cart2 = "checked ='true'";
-  break;
-  
-  case 3:
+
   $cart3 = "checked ='true'";
-  break;
-  
-  case 4:
-  $cart4 = "checked ='true'";
-  break;
-  }
-      ?>
+
+	  ?>
       <input type='radio' value='1' name='cart_location' id='cart1' <?php echo $cart1; ?> /> <label for='cart1'><?php echo TXT_WPSC_SIDEBAR;?></label> &nbsp;
       <input type='radio' value='2' name='cart_location' id='cart2' <?php echo $cart2; ?> /> <label for='cart2'><?php echo TXT_WPSC_PAGE;?></label> &nbsp;
       <?php

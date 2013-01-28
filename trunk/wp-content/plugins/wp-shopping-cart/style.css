@@ -5,29 +5,30 @@ border:none;
 .hilite { background: #FFCC33; padding-left: 1px; padding-right: 1px;}
 
 div#categorydisplay{
-	display: block;
-	}
+    display: block;
+    }
 
 div#branddisplay{
-	display: block;
-	}
+    display: block;
+    }
 
 div#shoppingcart{
  float: right;
- width: 148px;
+ width: 92%;
  margin: 0px;
  padding: 0px;
  margin-left: 5px;
  }
 
+div#user_info{
+    margin-bottom: 0.5em;;
+}
+ 
 div#shoppingcart img{
- position: absolute; 
- top: 5px;
- left: 5px;
  }
  
 div#shoppingcart div{
- font-size: 9pt;
+ font-size: 7pt;
  border: 1px solid #999999;
  background-color: #efefef;
  height: 100%;
@@ -137,13 +138,13 @@ div.producttext{
  }
 
 div.item{
-	width:142px;
-	float:left;
-	margin: 2px;
-	padding-top:0;
-	padding-right:4px;
-	padding-bottom: 2px;
-	text-align: left;
+    width:142px;
+    float:left;
+    margin: 2px;
+    padding-top:0;
+    padding-right:4px;
+    padding-bottom: 2px;
+    text-align: left;
 }
 div.item_gift{
     width:142px;
@@ -156,9 +157,9 @@ div.item_gift{
     text-align: left;
 }
 img.thumb{
-	border: 1px solid #b2b2b2;
-	margin-top: 2px;
-	text-align: center;
+    border: 1px solid #b2b2b2;
+    margin-top: 2px;
+    text-align: center;
 }
 
 input.buy {
@@ -507,69 +508,69 @@ div.pagination {
 }
 
 div.pagination a {
-	padding: 2px 5px 2px 5px;
-	margin: 2px;
-	border: 1px solid rgb(192, 192, 255);
-	text-decoration: none; 
-	color: #333399;
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid rgb(192, 192, 255);
+    text-decoration: none; 
+    color: #333399;
 }
 div.pagination a:hover, div.pagination a:active {
-	border: 1px solid #000099;
+    border: 1px solid #000099;
 
-	color: #000;
+    color: #000;
 }
 div.pagination span.current {
-	padding: 2px 5px 2px 5px;
-	margin: 2px;
-		border: 5px solid #668bb7;
-		
-		font-weight: bold;
-		background-color: rgb(199, 199, 255);
-		color: #000099;
-	}
-	div.pagination span.disabled {
-		padding: 2px 5px 2px 5px;
-		margin: 2px;
-		border: 1px solid #EEE;
-		color: #DDD;
-	}
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+        border: 5px solid #668bb7;
+        
+        font-weight: bold;
+        background-color: rgb(199, 199, 255);
+        color: #000099;
+    }
+    div.pagination span.disabled {
+        padding: 2px 5px 2px 5px;
+        margin: 2px;
+        border: 1px solid #EEE;
+        color: #DDD;
+    }
 
 tr.tdfirstcol{ 
-	font-size: 6pt; 
-	width: 140px !important; 
-	vertical-align: top; 
-	}
+    font-size: 6pt; 
+    width: 140px !important; 
+    vertical-align: top; 
+    }
 
 .cntr{
-	text-align:center; 
-	vertical-align:baseline; 
-	padding-top:4px; 
-	width:20px; 
-	height:20px; 
-	background-color:white; 
-	float:left; 
-	position: absolute; 
-	bottom: 10px; 
-	right: 10px; 
-	opacity:0.5;
+    text-align:center; 
+    vertical-align:baseline; 
+    padding-top:4px; 
+    width:20px; 
+    height:20px; 
+    background-color:white; 
+    float:left; 
+    position: absolute; 
+    bottom: 10px; 
+    right: 10px; 
+    opacity:0.5;
 }
 .cntrsold {
-	display:block;
-	width: 20px;
-	height: 20px;
-	background-color: #F3E915;
+    display:block;
+    width: 20px;
+    height: 20px;
+    background-color: #F3E915;
     float: left;
     position: absolute;
     bottom: 10px;
     right: 10px;
-	text-align:center;
-	font-size:1.5em;
-	color:#494949;
-	border-radius: 50%;
-	-moz-border-radius:50%;
-	-webkit-border-radius:50%;
-	-khtml-border-radius:50%;
-	line-height:100%;
+    text-align:center;
+    font-size:1.5em;
+    color:#494949;
+    border-radius: 50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    -khtml-border-radius:50%;
+    line-height:100%;
 }
 .gift{
 position: relative; top: -138px; left: 4px; background-color: red; width: 60px; text-align: center; opacity: .5; padding:2px;

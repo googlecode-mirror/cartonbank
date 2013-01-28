@@ -5,8 +5,8 @@
 //exit;
 //echo "<br>";
 
-$abspath = '/home/www/cb3/'; 
-$abspath_1 = "/home/www/cb/";
+$abspath = ROOTDIR; 
+$abspath_1 = ROOTDIR;
 $abspath_2 = "Z:/home/localhost/www/";
 
 

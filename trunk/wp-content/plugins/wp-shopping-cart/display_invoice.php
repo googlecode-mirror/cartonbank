@@ -8,7 +8,7 @@ require_once('../../../wp-config.php');
 <title>Счет от Картунбанка</title>
 </head>
 <body>
-<a href="http://cartoonbank.ru/"><img src="http://cartoonbank.ru/wp-admin/images/cb-logo.gif" style="border:0;margin-left:20px;"></a>
+<a href="<? echo SITEURL;?>"><img src="<? echo SITEURL;?>wp-admin/images/cb-logo.gif" style="border:0;margin-left:20px;"></a>
 <div style="margin-left:20px;">Скачайте и распечатайте счёт, нажав кнопку внизу страницы.<br>Для возврата нажмите кнопку "назад" браузера или логотип вверху страницы.</div>
 <?php
 /*
@@ -68,21 +68,20 @@ if (!isset($_SESSION['nzshpcrt_cart']) || count($_SESSION['nzshpcrt_cart'])<1)
 echo "В корзине нет товаров. Счёт выписать невозможно.";
 exit;
 }
-//pokazh($_SESSION);
+/*
 foreach ($_SESSION['nzshpcrt_cart'] as $it)
 {
-	/*
+
 	pokazh($it->product_id);
 	pokazh($it->name);
 	pokazh($it->price);
 	pokazh($it->license);
 	pokazh($it->author);
-	*/
 }
-
+*/
 $abspath = 'z:/home/localhost/www/';
-	$abspath_1 = "/home/www/cb/";
-	$abspath_2 = "/home/www/cb3/";
+	$abspath_1 = ROOTDIR;
+	$abspath_2 = ROOTDIR;
 	$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice_x.html";
 	$filename_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice_pdf_x.html";
 global $wpdb;
@@ -317,7 +316,7 @@ foreach ($_SESSION['nzshpcrt_cart'] as $it)
 
 	$out = fill_invoice($filename, "x".$_invoice_x_number, $_invoice_date,  "", "", $the_list, $total, $count, $contract_period, "" ,$this_date,$_discount);
 
-		echo "<div id='invoice' style='background: white url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat; background-size: 21%; background-position: 87% 100%; margin:20px; padding:8px;width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>";
+		echo "<div id='invoice' style='background: white url(<? echo SITEURL;?>img/mg_stamp.gif) no-repeat; background-size: 21%; background-position: 87% 100%; margin:20px; padding:8px;width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>";
 		echo $out;
 		echo "</div>";
 
@@ -325,7 +324,7 @@ foreach ($_SESSION['nzshpcrt_cart'] as $it)
 
 	// Print invoice PDF
 	$out = fill_invoice($filename_pdf, "x".$_invoice_x_number, $_invoice_date, "", "", $the_list, $total, $count, $contract_period, "",$this_date,$_discount);
-			echo ("<div style='margin-left:20px;'><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
+			echo ("<div style='margin-left:20px;'><form method=post action='<? echo SITEURL;?>ales/tcpdf/examples/ales.php'>
 					<input type='submit' value='скачать счёт в формате PDF для распечатывания' style='padding:8px;background-color:#FFFF99;'>
 					<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
 					<input type='hidden' name='filename' value='invoice_".$_invoice_x_number."'>

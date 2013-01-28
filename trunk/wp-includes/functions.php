@@ -22,6 +22,23 @@
  * @param bool $translate Optional. Default is true. Will switch format to locale.
  * @return string Date formated by $dateformatstring or locale (if available).
  */
+function top_cache($cache_file_to_include)
+{
+    include(ROOTDIR.'top-cache.php'); 
+    $cachefile = ROOTDIR.'mycache/cached-'.$cache_file_to_include.'.html';
+    if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile)) {
+        return;
+    }
+}
+
+function bottom_cache($cachefile){
+    $cached = fopen(ROOTDIR.'mycache/cached-'.$cachefile.'.html', 'w');
+    fwrite($cached, ob_get_contents());
+    fclose($cached);
+    ob_end_flush(); // Send the output to the browser
+}
+
+
 function echolog($str) {
 	$log_file="preview.log";
 	$f=fopen($log_file,"a+");

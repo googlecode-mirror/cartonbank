@@ -1,12 +1,12 @@
 <?php
 $abspath = 'z:/home/localhost/www/';
-	$abspath_1 = "/home/www/cb/";
-	$abspath_2 = "/home/www/cb3/";
-	$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice.html";
-	$filename_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice_pdf.html";
-	$filename_nostamp_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/invoice_nostamp_pdf.html";
-	$filename_acceptance_certificate_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/acceptance_certificate_pdf.html";
-	$filename_acceptance_certificate_nostamp_pdf = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/acceptance_certificate_nostamp_pdf.html";
+	$abspath_1 = ROOTDIR;
+	$abspath_2 = ROOTDIR;
+	$filename = ROOTDIR."wp-content/plugins/wp-shopping-cart/invoice.html";
+	$filename_pdf = ROOTDIR."wp-content/plugins/wp-shopping-cart/invoice_pdf.html";
+	$filename_nostamp_pdf = ROOTDIR."wp-content/plugins/wp-shopping-cart/invoice_nostamp_pdf.html";
+	$filename_acceptance_certificate_pdf = ROOTDIR."wp-content/plugins/wp-shopping-cart/acceptance_certificate_pdf.html";
+	$filename_acceptance_certificate_nostamp_pdf = ROOTDIR."wp-content/plugins/wp-shopping-cart/acceptance_certificate_nostamp_pdf.html";
 
 global $wpdb;
 

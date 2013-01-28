@@ -79,7 +79,7 @@ $_bigpic='';
 $_bottomstriptext = '';
                echo "<div id='bigpictopstrip'>".$_bigpicstrip."</div>";
                echo "<div id='bigpictext'>".$_bigpictext."</div>";
-               echo "<div id='bigpic'><a href='http://cartoonbank.ru/cartoon/".$cartoonid."#pt' onclick=\"get_item1();\">".$_bigpic."</a></div>";
+               echo "<div id='bigpic'><a href='<? echo SITEURL;?>cartoon/".$cartoonid."#pt' onclick=\"get_item1();\">".$_bigpic."</a></div>";
                echo "<div style='clear:both;'></div>";
                echo "<div id='bigpicbottomstrip' style='float:right;margin-bottom:6px;'>".$_bottomstriptext."</div>";
 
@@ -182,15 +182,14 @@ function save_search_terms($terms)
 }
 
 ?>
-<script src="http://cartoonbank.ru/ales/colorbox/jquery.colorbox-min.js"></script>
+<script src="<? echo SITEURL;?>ales/colorbox/jquery.colorbox-min.js"></script>
 <script>
     jQuery(document).ready(function(){
         jQuery("a[rel='slideshow']").colorbox({slideshow:true});
         jQuery(".example8").colorbox({width:"50%", inline:true, href:"#hidden_bio"});
-        jQuery(".cb_emailform").colorbox({width:"50%", inline:true, href:"#emailform1"});
-    });
+        jQuery(".cb_emailform").colorbox({width:"50%", inline:true, href:"#emailform1"});})
 </script>
-
+    
 <div style='display:none'>
     <div id='hidden_bio' style='text-align:left; padding:10px; background:#fff;'>
         <? echo ($bio); ?>
@@ -202,7 +201,7 @@ function save_search_terms($terms)
 <div style='display:none'>
     <div id='emailform1' style='text-align:left; padding:10px; background:#fff;'>
             <h3>Письмо автору Картунбанка</h3>
-            <form method='post' action='http://cartoonbank.ru/?page_id=29&amp;brand=<? echo $brandid;?>&amp;bio=1'>Email для обратной связи: <input name='email' type='text' style='width:100%;'/><br /><br />
+            <form method='post' action='<? echo SITEURL;?>?page_id=29&amp;brand=<? echo $brandid;?>&amp;bio=1'>Email для обратной связи: <input name='email' type='text' style='width:100%;'/><br /><br />
             <textarea style='width:100%;' name='message' rows='15' cols='30'>Уважаемый <? echo $_artist;?>!</textarea><br />
             напишите любую цифру: <input type='text' name='klop' value=''>
             <input type='submit' value='Отправить письмо' class='borders'/>

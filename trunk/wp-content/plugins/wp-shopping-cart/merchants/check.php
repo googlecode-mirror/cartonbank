@@ -152,8 +152,8 @@ $arr1 = array_slice($arrContent, 0, 3);
 	
 	header( "Content-type: image/png" );
 	imagepng( $my_img );
-	imagecolordeallocate( $line_color );
-	imagecolordeallocate( $text_color );
+	//imagecolordeallocate( $line_color );
+	//imagecolordeallocate( $text_color );
 	imagedestroy( $my_img );
 
 }

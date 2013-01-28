@@ -32,7 +32,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 <input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
 <input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:6px;margin-bottom:4px;" />
 </form>
-<a href="/?page_id=927">Расширенный поиск <img src="http://cartoonbank.ru/img/link.gif" style="border:0;"></a>
+<a href="/?page_id=927">Расширенный поиск <img src="<? echo SITEURL;?>img/link.gif" style="border:0;"></a>
 <?
 // Theme of the day
 	$thedate = date("Y.m.d");
@@ -183,7 +183,7 @@ if (!$author_section) // for not Author section (portfolio)
 {
 
 ?>
-<br /><h3><a href="http://cartoonbank.ru/?page_id=1427" title="Все авторы на одной странице">Авторы</a></h3>
+<br /><h3><a href="<? echo SITEURL;?>?page_id=1427" title="Все авторы на одной странице">Авторы</a></h3>
 <?
 
 // Authors
@@ -287,32 +287,37 @@ echo "</div>";
 ?>
 
 <br /><br />
-<a href="http://cartoonbank.ru/?page_id=2440" target="_blank"><img src="http://cartoonbank.ru/img/b/tshirt-2.jpg" style="border:0;width:180px;"></a>
+<a href="<? echo SITEURL;?>?page_id=2440" target="_blank"><img src="<? echo SITEURL;?>img/b/tshirt-2.jpg" style="border:0;width:180px;"></a>
 <br /><br />
-<a href="http://cartoonbank.ru/?page_id=1351" target="_blank"><img src="http://cartoonbank.ru/img/b/exhibition_package2.gif" style="border:0;width:180px;"></a>
+<a href="<? echo SITEURL;?>?page_id=1351" target="_blank"><img src="<? echo SITEURL;?>img/b/exhibition_package2.gif" style="border:0;width:180px;"></a>
 <br /><br />
-<a href="http://cartoonbank.ru/?page_id=1857" target="_blank"><img src="http://cartoonbank.ru/img/b/postard_project2.gif" style="border:0;width:180px;"></a>
+<a href="<? echo SITEURL;?>?page_id=1857" target="_blank"><img src="<? echo SITEURL;?>img/b/postard_project2.gif" style="border:0;width:180px;"></a>
 <br /><br />
-<!-- <a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:180x;border:0;"></a>
+<!-- <a href="<? echo SITEURL;?>?page_id=893"><img src="<? echo SITEURL;?>img/b/on-line.gif" style="width:180x;border:0;"></a>
 <br /><br /> -->
-<a href="http://cartoonbank.ru/?page_id=2479" target="_blank"><img src="http://cartoonbank.ru/img/b/contests.gif" style="border:0;width:180px;"></a>
+<a href="<? echo SITEURL;?>?page_id=2479" target="_blank"><img src="<? echo SITEURL;?>img/b/contests.gif" style="border:0;width:180px;"></a>
 
 
 <br /><h3>Разное</h3>
-<div id='last_sales'><a href='/?page_id=1299' title="свежие продажи">Сто продаж</a></div>
-<div id='best_sales'><a href='/?page_id=2583' title="лидеры продаж">Бестселлеры</a></div>
-<div id='100_best'><a href='/?page_id=1284&amp;ord=72&amp;br=0' title='результаты голосования'>Топ 250</a></div>
-<div id='themes'><a href='/?page_id=1992' title='архив тем дня'>Темы дня</a></div>
-<div id='calend'><a href='/?page_id=2254' title='календарь-газета'>Календарь</a></div>
+<div id='last_sales'><a href='<?echo get_option('siteurl');?>/?page_id=1299' title="свежие продажи">Сто продаж</a></div>
+<div id='best_sales'><a href='<?echo get_option('siteurl');?>/?page_id=2583' title="лидеры продаж">Бестселлеры</a></div>
+<div id='100_best'><a href='<?echo get_option('siteurl');?>/?page_id=1284&amp;ord=72&amp;br=0' title='результаты голосования'>Топ 250</a></div>
+<div id='themes'><a href='<?echo get_option('siteurl');?>/?page_id=1992' title='архив тем дня'>Темы дня</a></div>
+<div id='calend'><a href='<?echo get_option('siteurl');?>/?page_id=2254' title='календарь-газета'>Календарь</a></div>
 <!-- <div id='rating'><a href='/?page_id=643' title='рейтинг карикатур'>Рейтинг</a></div> -->
-<div id='printed'><a href='/?page_id=1459' title='вырезки из публикаций'>Публикации</a></div>
-<div id='rewards'><a href='/?page_id=2132'  title='награды авторов'>Награды</a></div>
-<div id='lawers'><a href='/?page_id=1565'  title='защита авторского права'>Защита прав</a></div>
+<div id='printed'><a href='<?echo get_option('siteurl');?>/?page_id=1459' title='вырезки из публикаций'>Публикации</a></div>
+<div id='rewards'><a href='<?echo get_option('siteurl');?>/?page_id=2132'  title='награды авторов'>Награды</a></div>
+<div id='lawers'><a href='<?echo get_option('siteurl');?>/?page_id=1565'  title='защита авторского права'>Защита прав</a></div>
 <div style="float:right;width:180px;text-align:right;">
 	<br /><h3>Вход</h3>
 		<ul style="float:right;width:160px;text-align:right;">
 		<?php wp_register(); ?>
-		<li><?php wp_loginout(); ?></li>
+		<li><?php 
+        $rurl = '';
+        if (isset($_SERVER['REQUEST_URI'])){
+                    $rurl = mysql_real_escape_string($_SERVER['REQUEST_URI']);
+                }
+        wp_loginout($redirect=$rurl); ?></li>
 		<?php //wp_meta(); ?>
 		</ul>
 </div>
