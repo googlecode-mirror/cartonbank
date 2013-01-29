@@ -37,16 +37,18 @@ function submitform(frm)
 
 function emptycart()
   {
-  myurl = base_url+'/wp-content/plugins/wp-shopping-cart/clear_shopping_cart.php';
-  ajax.post(myurl,getresults,"ajax=true&user=true&emptycart=true");
+	var l = window.location;
+	var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
+	var myurl = base_url+'wp-content/plugins/wp-shopping-cart/clear_shopping_cart.php';
+	ajax.post(myurl,getresults,"ajax=true&user=true&emptycart=true");
   if(document.getElementById('loadingimage') != null)
     {
-    document.getElementById('loadingimage').src = base_url+'/wp-content/plugins/wp-shopping-cart/images/indicator.gif';
+    document.getElementById('loadingimage').src = base_url+'wp-content/plugins/wp-shopping-cart/images/indicator.gif';
     document.getElementById('loadingindicator').style.visibility = 'visible';
     } 
     else if(document.getElementById('alt_loadingimage') != null)
     {
-    document.getElementById('alt_loadingimage').src = base_url+'/wp-content/plugins/wp-shopping-cart/images/indicator.gif';
+    document.getElementById('alt_loadingimage').src = base_url+'wp-content/plugins/wp-shopping-cart/images/indicator.gif';
     document.getElementById('alt_loadingindicator').style.visibility = 'visible';
     } 
     
