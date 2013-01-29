@@ -37,7 +37,8 @@ function submitform(frm)
 
 function emptycart()
   {
-  ajax.post("index.php",getresults,"ajax=true&user=true&emptycart=true");
+  myurl = base_url+'/wp-content/plugins/wp-shopping-cart/clear_shopping_cart.php';
+  ajax.post(myurl,getresults,"ajax=true&user=true&emptycart=true");
   if(document.getElementById('loadingimage') != null)
     {
     document.getElementById('loadingimage').src = base_url+'/wp-content/plugins/wp-shopping-cart/images/indicator.gif';
