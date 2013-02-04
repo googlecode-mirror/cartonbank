@@ -105,6 +105,11 @@
 					//$result = mysql_query( $sql);
 					//$row = mysql_fetch_array($result);
 					//$is_approved = $row['approved'];
+                    
+                    //clear mycache flag rise
+                    // update flag, set 1
+                    $sql = "UPDATE wp_options SET `option_value`=1 WHERE `option_name` = 'clearmycache'";
+                    $result = mysql_query($sql);
 
 				if ($notify_by_mail==1 && $is_approved!=1){
 					send_email_passed("Уважаемый $artist_name<br />Ваш рисунок № <b>".$id."</b> «".$cartoon_name."» поступил в коллекцию Картунбанка со стартовым рейтинговым баллом <b>".$avgpoints."</b>.<br /><a href='http://cartoonbank.ru/cartoon/".$id."/'><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."'></a>.<br>Поздравляем вас и напоминаем, что всегда рады видеть ваши новые рисунки у нас на сайте!<br>Это письмо отправлено автоматически и не требует ответа. Чтобы отписаться от этих сообщений снимите отметку в строке \"Получать сообщения о моменте приёмки изображения в Картунбанк\" вашего профиля.",$artist_email);

@@ -315,7 +315,7 @@ echo "</div>";
 		<li><?php 
         $rurl = '';
         if (isset($_SERVER['REQUEST_URI'])){
-                    $rurl = mysql_real_escape_string($_SERVER['REQUEST_URI']);
+                    //$rurl = mysql_real_escape_string($_SERVER['REQUEST_URI']);
                 }
         wp_loginout($redirect=$rurl); ?></li>
 		<?php //wp_meta(); ?>
