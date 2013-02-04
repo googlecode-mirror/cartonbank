@@ -82,7 +82,7 @@ $pageid=29;
 }
 if (current_user_can('manage_options'))
 			{
-				$_edid = "<a href=".get_option('siteurl')."/wp-admin/post.php?post=".$pageid."&amp;action=edit target=_blank>edit</a>";
+				$_edid = "<a href='".get_option('siteurl')."/wp-admin/post.php?post=".$pageid."&amp;action=edit' target='_blank'>Edit</a>";
 			}
 			else
 			{
@@ -166,11 +166,11 @@ default:
 <div id="header" style="height:90px;width:960px;">
 <div>
  
-<div style="font-size:.8em;color:white;vertical-align:bottom;width:185px;height:90px;background-color:#668bb7;float:left;"><span style="color:#13223f;font-size:2em;"><br><b><? echo ($cartoon_number);?></b></span><br /><?echo ($license_text);?>
+<div style="font-size:.8em;color:white;vertical-align:bottom;width:185px;height:90px;background-color:#668bb7;float:left;"><span style="color:#13223f;font-size:2em;"><br /><b><? echo ($cartoon_number);?></b></span><br /><?echo ($license_text);?>
 </div>
 
 <div style="width:580px;height:90px;float:left;">
-<br><a href="<?echo get_option('siteurl');?>/?page_id=29&offset=0&new=0"><img src="<?php echo get_option('home'); ?>/img/cb-logo-iq.png" style="border:0;"></a><br />
+<br /><a href="<?echo get_option('siteurl');?>/?page_id=29&offset=0&new=0"><img src="<?php echo get_option('home'); ?>/img/cb-logo-iq.png" style="border:0;"></a><br />
 <?php bloginfo('description'); ?>
 </div>
 
@@ -180,7 +180,7 @@ default:
 	//<td style="font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#668bb7">Рисунки художников<br />из семи<br />стран мира</td>
 	//<td style="vertical-align:middle;width:185px;height:45px;padding:0px;background-color:#43742C"><a href="http://cartoonbank.ru/?page_id=1302" target="_blank" style="font-size:0.8em;color:white;">12-30 АПРЕЛЯ 2011 ГОДА<br /><b>В КОСМИЧЕСКОМ МАСШТАБЕ</b></a></td>
 	//
-	//<td style="vertical-align:top;width:185px;height:45px;padding:0px;background-color:#3366CC;"><a href="http://cartoonbank.ru/?page_id=1782" target="_blank" style="font-size:0.8em;color:white;"><div>Международный<br>конкурс<br>«Осторожно, люди!»</div></a></td>
+	//<td style="vertical-align:top;width:185px;height:45px;padding:0px;background-color:#3366CC;"><a href="http://cartoonbank.ru/?page_id=1782" target="_blank" style="font-size:0.8em;color:white;"><div>Международный<br />конкурс<br />«Осторожно, люди!»</div></a></td>
 	//<td style="vertical-align:top;width:185px;height:45px;padding:0px;background-color:#009900"><a href="http://cartoonbank.ru/?page_id=1351" target="_blank" style="font-size:0.8em;color:white;"><div>Спецпредложение:</div><div>ВАША ВЫСТАВКА —<br /> НАШИ РИСУНКИ</div></a></td>
 	//<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2420"><img src="http://cartoonbank.ru/img/b/2012gift.gif" style="width:185px;height:90px;border:0;"></a>
 	//</div>

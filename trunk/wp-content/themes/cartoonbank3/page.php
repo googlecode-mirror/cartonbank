@@ -14,10 +14,11 @@ setcookie('username', $_SESSION['username']);
 
 <div id="content">
 <div id="contentmiddle">
-	<?php if (have_posts()) : while (have_posts()) : the_post();?>
-	<?php the_content(__('Читать дальше'));?>
-	<?php endwhile; else: ?>
-	<?php _e('<br />Извините, здесь пока ничего нет.<br />'); ?><?php endif;?>
+<?php if (have_posts()) : while (have_posts()) : the_post();?>
+<?php the_content(__('Читать дальше'));?>
+<?php endwhile; else: ?>
+<?php _e('<br />Извините, здесь пока ничего нет.<br />'); ?>
+<?php endif;?>
 </div>
 <div id="contentright">
 
@@ -37,11 +38,11 @@ setcookie('username', $_SESSION['username']);
 <?
 // Calendar
 if (isset($_GET['page_id']) && $_GET['page_id']=='29'){
-    ?>
-    <div id="navbarbottom" style="border-top:5px solid #658DB5;">
-	    <iframe src="https://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;height=400&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=9ats0457qmvp1mv5kecdut2uhs%40group.calendar.google.com&amp;color=%23182C57&amp;ctz=Europe%2FMoscow" style=" border-width:0 " width="960" height="400" frameborder="0" scrolling="no"></iframe>
-    </div>
-    <?
+?>
+<div id="navbarbottom" style="border-top:5px solid #658DB5;">
+<iframe src="https://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;height=400&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=9ats0457qmvp1mv5kecdut2uhs%40group.calendar.google.com&amp;color=%23182C57&amp;ctz=Europe%2FMoscow" style=" border-width:0 " width="960" height="400" frameborder="0" scrolling="no"></iframe>
+</div>
+<?
 }
 /// Calendar
 ?>
@@ -69,9 +70,9 @@ if (isset($_GET['page_id']) && $_GET['page_id']=='29'){
 <!-- The main column ends  -->
 <?php get_footer(); ?>
 <script>
-    jQuery(document).ready(function() {
-    var getshoppingcarturl = '<? echo SHOPPINGCARTURL.'get_shopping_cart.php'; ?>';
-    jQuery('#shoppingcart').load(getshoppingcarturl);
+jQuery(document).ready(function() {
+var getshoppingcarturl = '<? echo SHOPPINGCARTURL.'get_shopping_cart.php'; ?>';
+jQuery('#shoppingcart').load(getshoppingcarturl);
 });
 
 </script>
