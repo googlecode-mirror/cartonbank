@@ -32,7 +32,11 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 <input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
 <input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:6px;margin-bottom:4px;" />
 </form>
+
 <a href="/?page_id=927">Расширенный поиск <img src="<? echo SITEURL;?>img/link.gif" style="border:0;"></a>
+<br /><br />
+<!-- webim button --><a href="http://cartoonbank.ru/webim/client.php?locale=ru" target="_blank" onclick="if(navigator.userAgent.toLowerCase().indexOf('opera') != -1 &amp;&amp; window.event.preventDefault) window.event.preventDefault();this.newWindow = window.open('http://cartoonbank.ru/webim/client.php?locale=ru&amp;url='+escape(document.location.href)+'&amp;referrer='+escape(document.referrer), 'webim', 'toolbar=0,scrollbars=0,location=0,status=1,menubar=0,width=640,height=480,resizable=1');this.newWindow.focus();this.newWindow.opener=window;return false;"><img src="http://cartoonbank.ru/webim/b.php?i=mblue&amp;lang=ru" border="0" width="180" height="61" alt=""/></a><!-- / webim button -->
+
 <?
 // Theme of the day
 	$thedate = date("Y.m.d");
