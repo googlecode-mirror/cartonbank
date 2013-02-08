@@ -1,0 +1,1 @@
+ $($slider.children('li')[2]).attr('style').split('product_images/')[1].split('"); background-repeat')[0]
