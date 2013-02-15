@@ -600,7 +600,7 @@ function nzshpcrt_submit_ajax()
 
     $output .= "  <channel>\n\r";
     $output .= "    <title>Cartoonbank new images</title>\n\r";
-    $output .= "    <link><? echo SITEURL;?></link>\n\r";
+    $output .= "    <link>".SITEURL."</link>\n\r";
     $output .= "    <description>This is the Russian Cartoon Bank RSS feed</description>\n\r";
     $output .= "    <generator>Cartoonbank.ru</generator>\n\r";
     foreach($product_list as $product)
@@ -608,10 +608,10 @@ function nzshpcrt_submit_ajax()
       $purchase_link = get_option('product_list_url')."&cartoonid=".stripslashes($product['id']);
       $output .= "    <item>\n\r";
       $output .= "      <title>".stripslashes($product['name'])."</title>\n\r";
-	  $output .= "      <link><? echo SITEURL;?>?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</link>\n\r";
-      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='<? echo SITEURL;?>?page_id=29&amp;cartoonid=".stripslashes($product['id'])."'><br /><img title='". stripslashes($product['name']) ."' src='<? echo SITEURL;?>wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
+	  $output .= "      <link>".SITEURL."?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</link>\n\r";
+      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='".SITEURL."?page_id=29&amp;cartoonid=".stripslashes($product['id'])."'><br /><img title='". stripslashes($product['name']) ."' src='".SITEURL."wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
       $output .= "      <pubDate>".date("r")."</pubDate>\n\r";
-      $output .= "      <guid><? echo SITEURL;?>?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</guid>\n\r";
+      $output .= "      <guid>".SITEURL."?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</guid>\n\r";
 	  $output .= '    ';
       $output .= "    </item>\n\r";
       }
