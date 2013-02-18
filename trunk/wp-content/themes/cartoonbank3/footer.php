@@ -41,13 +41,15 @@ $pageid=29;
 <div id="bottomb"></div>
 
 <div style="clear:both;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;"><br /><br /></div>
-
+<?
+/*
 <div id="b" style="padding-bottom:20px;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;">
  <a href="http://www.redburda.ru/" target="_blank"><img title="Красная Бурда" src="<? echo (get_option('siteurl').'/img/b/kb88x31.gif');?>" style="border:0;"></a>
  <a href="http://anekdot.ru/" target="_blank"><img title="Анекдоты из России" src="<? echo (get_option('siteurl').'/img/b/anek88x31.gif');?>" style="border:0;"></a>
  <a href="http://www.spbdnevnik.ru/" target="_blank"><img title="Петербургский дневник" src="<? echo (get_option('siteurl').'/img/b/pd88x31.gif');?>" style="border:0;"></a>
  <a href="http://spbsj.ru/" target="_blank"><img title="Союз журналистов" src="<? echo (get_option('siteurl').'/img/b/sjr88x31.jpg');?>" style="border:0;"></a>
 </div>
+
 
 <div id="footer" style="background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;padding-bottom:100px;">
 <a href="/?page_id=433">Copyright</a> &copy; 2010-2011 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a> <b>16+</b> <br />
@@ -59,6 +61,10 @@ $pageid=29;
 <a href="http://friendfeed.com/cartoonbank">в Френдфиде <img src="<? echo SITEURL;?>img/s_friendfeed.png" title="Follow us on Frienfeed" style="border:0;"></a>
 <br><a href="http://feedburner.google.com/fb/a/mailverify?uri=Cartoonbankru&amp;loc=ru_RU" title="Подпишитесь на доставку новых рисунков по почте">Email-подписка</a>
 </div>
+*/
+?>
+<div id="footer" style="background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;padding-bottom:100px;"><a href="/?page_id=433">Copyright</a> &copy; 2010-2013 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a> <b>16+</b> <br /></div>
+
 
 <?php do_action('wp_footer'); ?>
 <br /><br /><br /><br /><br />
