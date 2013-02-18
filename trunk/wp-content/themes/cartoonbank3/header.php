@@ -94,7 +94,7 @@ if (current_user_can('manage_options'))
 <html><head>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <meta name="robots" content="all" />
-<meta name="description" content="<?echo $h;?>  Лицензионные карикатуры для газет, журналов и электронных СМИ" />
+<meta name="description" content="<?echo $h;?>  Смешные карикатуры для газет, журналов и электронных СМИ. Лицензии." />
 <meta name="keywords" content="<?echo $kw;?> картунбанк, cartoonbank, карикатуры, сток, скачать, приколы, смешные, картинки, комиксы,  карикатура, ру, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, ru, comics, comix, стоковые картинки, стоковые изображения" />
 <title><?echo $h;?> — Картунбанк <?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.</title>
 <meta name="generator" content="cartoonbank" />
@@ -211,7 +211,7 @@ else
 }
 ?>
 
-<div id="navbarbottom">
+<div id="navbar">
 <ul> 
 <li><a href="/?page_id=95"<? $pageid=='95'? selected_style():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
 <li><a href="/?page_id=29&amp;offset=0&amp;new=0"<? $pageid=='29' & $_new==0? selected_style():"" ?> title='избранные работы'>Избранное</a></li>
