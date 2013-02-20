@@ -82,7 +82,8 @@ $pageid=29;
 }
 if (current_user_can('manage_options'))
 			{
-				$_edid = "<a href=".get_option('siteurl')."/wp-admin/post.php?post=".$pageid."&amp;action=edit target=_blank>edit</a>";
+				$_edid = "";
+				//$_edid = "<a href=".get_option('siteurl')."/wp-admin/post.php?post=".$pageid."&amp;action=edit target=_blank>edit</a>";
 			}
 			else
 			{
