@@ -40,7 +40,7 @@ if (isset($_SERVER['QUERY_STRING']))
     //best
     if (isset($_REQUEST['new']) && is_numeric($_REQUEST['new']) && ($_REQUEST['new']=='0'))
         {
-            $h = $h."Смешные карикатуры. Лучшие.";
+            $h = $h."Смешные карикатуры. Лучшие карикатуры.";
         }
     //color
     if (isset($_REQUEST['color']) && ($_REQUEST['color']=='color'))
