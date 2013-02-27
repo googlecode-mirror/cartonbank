@@ -35,12 +35,12 @@ if (isset($_SERVER['QUERY_STRING']))
     //new
     if (isset($_REQUEST['new']) && is_numeric($_REQUEST['new']) && ($_REQUEST['new']=='1'))
         {
-            $h = $h."Новые рисунки";
+            $h = $h."Новые смешные рисунки";
         }
     //best
     if (isset($_REQUEST['new']) && is_numeric($_REQUEST['new']) && ($_REQUEST['new']=='0'))
         {
-            $h = $h."Лучшие карикатуры";
+            $h = $h."Смешные карикатуры. Лучшие.";
         }
     //color
     if (isset($_REQUEST['color']) && ($_REQUEST['color']=='color'))
@@ -97,7 +97,7 @@ if (current_user_can('manage_options'))
 <meta name="robots" content="all" />
 <meta name="description" content="<?echo $h;?>  Смешные карикатуры для газет, журналов и электронных СМИ. Лицензии." />
 <meta name="keywords" content="<?echo $kw;?> картунбанк, cartoonbank, карикатуры, сток, скачать, приколы, смешные, картинки, комиксы,  карикатура, ру, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, ru, comics, comix, стоковые картинки, стоковые изображения" />
-<title><?echo $h;?> — Картунбанк <?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.</title>
+<title><?echo $h;?> Картунбанк <?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.</title>
 <meta name="generator" content="cartoonbank" />
 <link media="screen" rel="stylesheet" href="<? echo SITEURL;?>ales/colorbox/example2/colorbox.css" />
 <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
