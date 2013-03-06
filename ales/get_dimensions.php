@@ -2,7 +2,7 @@
 
 if (!isset($_GET['p']) || !is_numeric($_GET['p']))
 {
-    echo ("sorry, no parameters provided");
+    //echo ("sorry, no parameters provided");
     exit;
 }
 
