@@ -163,7 +163,6 @@ default:
 */
 
 ?>
-
 <div id="header" style="height:90px;width:960px;">
 <div>
  
@@ -223,7 +222,8 @@ else
 <li><a href="/?page_id=1215"<? $pageid=='1215'? selected_style():"" ?> title='наши партнёры'>Партнёры</a></li>
 <li><a href="/?page_id=1260"<? $pageid=='1260'? selected_style():"" ?> title='друзья и коллеги'>Друзья</a></li>
 <li><a href="/?page_id=2"<? $pageid=='2'? selected_style():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
-<li><a href="/?page_id=942"<? $pageid=='942'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
+<li><a href="/?page_id=2860"<? $pageid=='2860'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
+<li><a href="/?page_id=2870"<? $pageid=='2870'? selected_style():"" ?> title='видео'>Видео</a></li>
 <li><a href="/?page_id=976"<? $pageid=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
 <li><a href="/?page_id=2041"<? $pageid=='2041'? selected_style():"" ?> title='English'><img src="<? echo SITEURL;?>img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
 <li><? echo $_edid;?></li>
