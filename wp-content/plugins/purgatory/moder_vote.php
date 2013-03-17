@@ -57,9 +57,10 @@
         $avgpoints=$row['avgpoints'];
         $summpoints=$row['summpoints'];
 
-        $result=mysql_query("select `moderator_votes` from al_editors_votes where image_id='$id'");
+        $result=mysql_query("select `moderator_votes`,black from al_editors_votes where image_id='$id'");
         $row=mysql_fetch_array($result);
         $up_value=$row['moderator_votes'];
+		$has_black = $row['black'];
 
         // убрать из прихожей
         //.. обновить твиттер
@@ -67,7 +68,7 @@
         //.. обновить facebook
 
 
-        if ($up_value >= $limit) 
+        if ($up_value >= $limit && $has_black == 0) 
         {
 
 			// email confirmation. the cartoon passed to the bank
