@@ -222,7 +222,7 @@ foreach($result as $r)
 	$start_timestamp = date('y-m-d',mktime(0, 0, 0, $_month, 1, $_year));
 	$end_timestamp = date('y-m-d',mktime(0, 0, 0, ($_month+1), 0, $_year));
 
-	$sql = "SELECT cust.name as smi, date, st.datetime, c.purchaseid,  p.id as picture_id,  s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, c.actual_money, st.downloads, st.active,  st.id as downloadid, u.wallet 
+	$sql = "SELECT cust.name as smi, date, st.datetime, c.purchaseid,  p.id as picture_id,  s.name as processed, processed as processed_id, b.name as artist, b.rezident, p.name as title, c.price, totalprice, u.discount, u.display_name, l.user_id, firstname, lastname, email, address, phone, gateway, c.license, c.actual_money, st.downloads, st.active,  st.id as downloadid, u.wallet 
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 
 		`wp_cart_contents` as c, 
@@ -368,14 +368,37 @@ foreach($result as $r)
 	$result = $wpdb->get_results($sql,ARRAY_A);
 	 foreach($result as $r)
 		{
+			if ($sales['rezident']==1){
+				$ndfl = round($r['payout'] * 0.13,0);
+			}
+			else{
+				$ndfl = round($r['payout'] * 0.3,0);
+			}
+
 			$payout = $r['payout'];
-			$topay = $total_all-$payout;
-			$payout_message = "Уже выплачено: <b>$payout</b> руб.<br>Новые начисления: <b>$topay</b> руб.";
+			$topay = $total_all-$ndfl-$payout;
+			$payout_message = "Уже выплачено: <b>$payout</b> руб.<br>К выплате: <b>$topay</b> руб.";
 		}
+
+if ($sales['rezident']==1){
+	$total_ndfl = round($total_all * 0.13,0);
+}
+else{
+	$total_ndfl = round($total_all * 0.3,0);
+}
+
 
 ?>
 <div style="margin-top:12px; padding:6px;background-color:#B7FF6F">
-Общая сумма авторских начислений: <b><?echo $total_all;?></b> руб.<br>Продано рисунков: <?echo $counter_sold_year;?> (деньги получены Картунбанком).<br><? echo $payout_message;?>
+Продано рисунков: <b><?echo $counter_sold_year;?></b> (деньги получены Картунбанком).<br>
+Общая сумма авторских начислений: <b><?echo $total_all;?></b> руб.<br>
+Удержан и перечислен в бюджет НДФЛ <b><?echo $total_ndfl;?></b> руб.<br>
+Итого за минусом налога НДФЛ <b><?echo ($total_all - $total_ndfl);?></b> руб.<br>
+Уже выплачено: <b><? echo round($payout,0); ?></b> руб.<br>
+К выплате: <b><?echo ($total_all - $total_ndfl - $payout);?></b> руб.;
+
+
+<? //echo $payout_message;?>
 </div>
 <?
 function fill_invoice($filename, $invoice_number='', $invoice_date='', $smi='', $client_details='', $product_list='', $total='', $count='', $invoice_period='', $contract_number='', $contract_date='')
