@@ -210,6 +210,9 @@ echo ("<div class='t' style='padding:4px;font-size:1.1em;font-weight:bold;backgr
 	/// get dates for payment acts
 	$sql = "select payment_date, artist_id, act_number from artist_payments where artist_id=".$_brand." and cartoons_sold !=0 order by payment_date desc";
 	$result = $wpdb->get_results($sql,ARRAY_A);
+
+	$total_ndfl = 0; // complete NDFL
+
 foreach($result as $r)
 	{
 			$payday = $r['payment_date'];
@@ -317,8 +320,30 @@ foreach($result as $r)
 		}//foreach($product_list as $sales)
 
 		//$_invoice_number = $_invoice_start_number + $customer_number;
+
+		if ($sales['rezident'] == '1' && $_year=='2010')
+		{
+			$ndfl = round($total * 0.13); // проф вычет с резидентов
+		}
+		elseif ($sales['rezident'] == '0' && $_year=='2010')
+		{
+			$ndfl = round($total * 0.3); // проф вычет с нерезидентов
+		}
+		elseif ($sales['rezident'] == '1' && $_year!='2010')
+		{
+			$ndfl = round(($total * 0.7) * 0.13); // проф вычет с резидентов
+		}
+		else
+		{
+			$ndfl = round($total * 0.3); // проф вычет с нерезидентов
+		}
+
 		$customer_number ++;
-		echo "<div style='color:#9900CC;margin-bottom:10px;'>Всего продано $counter_sold_month шт. на сумму: <b>".$total."</b> руб.</div>";
+		echo "<div style='color:#9900CC;margin-bottom:10px;'>Всего продано $counter_sold_month шт. на сумму: <b>".$total."</b> руб.<br>
+		Удержан и перечислен в бюджет НДФЛ <b>".$ndfl."</b> руб.
+		</div>";
+
+		$total_ndfl = $total_ndfl + $ndfl;
 
 
 		// Print acceptance certificate PDF
@@ -368,29 +393,16 @@ foreach($result as $r)
 	$result = $wpdb->get_results($sql,ARRAY_A);
 	 foreach($result as $r)
 		{
-			if ($sales['rezident']==1){
-				$ndfl = round($r['payout'] * 0.13,0);
-			}
-			else{
-				$ndfl = round($r['payout'] * 0.3,0);
-			}
-
 			$payout = $r['payout'];
 			$topay = $total_all-$ndfl-$payout;
 			$payout_message = "Уже выплачено: <b>$payout</b> руб.<br>К выплате: <b>$topay</b> руб.";
 		}
 
-if ($sales['rezident']==1){
-	$total_ndfl = round($total_all * 0.13,0);
-}
-else{
-	$total_ndfl = round($total_all * 0.3,0);
-}
-
 
 ?>
-<div style="margin-top:12px; padding:6px;background-color:#B7FF6F">
-Продано рисунков: <b><?echo $counter_sold_year;?></b> (деньги получены Картунбанком).<br>
+<div style="margin-top:12px; padding:6px;background-color:#B7FF6F"><b>
+<? echo $product['name']; ?>
+</b><br>Продано рисунков: <b><?echo $counter_sold_year;?></b> (деньги получены Картунбанком).<br>
 Общая сумма авторских начислений: <b><?echo $total_all;?></b> руб.<br>
 Удержан и перечислен в бюджет НДФЛ <b><?echo $total_ndfl;?></b> руб.<br>
 Итого за минусом налога НДФЛ <b><?echo ($total_all - $total_ndfl);?></b> руб.<br>
