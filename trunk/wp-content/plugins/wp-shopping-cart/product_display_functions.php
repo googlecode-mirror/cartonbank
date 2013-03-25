@@ -135,7 +135,8 @@ else
 
     if ($logged)
     {
-        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h1>" .$_name."</h1>&nbsp;$klop<span id=\'thumb\' onclick=\'fave_it();\'>$klop<img src=\'".$siteurl."/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+        //$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h1>" .$_name."</h1>&nbsp;$klop<span id=\'thumb\' onclick=\'fave_it();\'>$klop<img src=\'".$siteurl."/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+		$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h1>" .$_name."</h1>&nbsp;$klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
     else
     {
