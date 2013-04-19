@@ -303,9 +303,14 @@ blockquote{
 #contentmiddle ul li {
 	margin: 0px;
 	padding: 5px 0px 0px 0px;
-	display: inline;
 	}
-	
+
+#bigpictext ul li {
+	margin: 0px;
+	padding: 5px 0px 0px 0px;
+	display: inline;
+}	
+
 #contentmiddle ul li a {
 	color: #507AA5;
 	text-decoration: none;
