@@ -28,6 +28,12 @@ td.lalt{
 
     global $user_brand;
 
+	if ($product['id'] != $current_user->id & $current_user->wp_user_level < 10)
+	{
+		echo ('Извините, у вас недостаточно полномочий для доступа к этой странице.');
+		exit();
+	}
+
     $_SITEURL = get_option('siteurl');
 
     if (isset($current_user->ID) && is_numeric($current_user->ID))
@@ -324,6 +330,8 @@ td.lalt{
 
             if (get_option('editors_notification_send')=='1') 
             {
+				
+
 
 				// aleshin
                 $Current_ID = 16;
