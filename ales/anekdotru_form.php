@@ -7,8 +7,8 @@
 // configuration
 include("config.php");
 
-$howmanyrows =400; // how many rows to select from database
-$howmanyemails = 9; // how many images to send (desired number plus number of ignored artists)
+$howmanyrows =500; // how many rows to select from database
+$howmanyemails = 10; // how many images to send (desired number plus number of ignored artists)
 $url = 'http://www.anekdot.ru/scripts/upload.php?t=e'; // destination url with form;
 //$url = 'http://cartoonbank.ru/ales/anekdotru_form_accept.php'; // destination url with form;
 $mailto = 'igor.aleshin@gmail.com'; // destination email box
@@ -31,7 +31,8 @@ $sql = "SELECT	post as ID,
 	AVG(wp_fsr_user.points)*SQRT(COUNT(*)) AS average,
 	wp_product_files.idhash,
 	wp_product_list.brand AS brand,
-	wp_product_files.mimetype
+	wp_product_files.mimetype,
+    wp_product_files.date
 		FROM wp_fsr_user,  wp_fsr_post, wp_product_list, wp_product_brands, wp_product_files 
 		WHERE wp_fsr_user.post = wp_product_list.id 
 		AND wp_fsr_user.post =  wp_fsr_post.ID 
@@ -46,7 +47,7 @@ $sql = "SELECT	post as ID,
 		ORDER BY 7 DESC, 5 DESC
 		LIMIT ".$howmanyrows;
 
-$result = mysql_query("$sql");
+$result = mysql_query($sql);
 
 if (!$result) {die('Invalid query: ' . mysql_error());}
 
@@ -101,6 +102,48 @@ $arrAuthors = array('Светозаров Георгий','Александро�
 
 				//image 
 				$filename = "/home/www/cb3/wp-content/plugins/wp-shopping-cart/product_images/".$image;
+                
+                
+
+                //
+                //download the image from 1and1.com
+                //
+                $darray = split('/',date('d/m/Y', $row['date']));  
+                $monthName = date("F", mktime(0, 0, 0, $darray[1], 10));
+                $filedir = "/cartoonbankimages" . "/" . $darray[2] . "/" . $monthName . "/";
+
+                $ftp_location = 'stlrus.com'; 
+                $location_login = 'u35514813';
+                $location_pwd = 'greenbat';
+                $conn_id = ftp_connect($ftp_location);
+                $login_result = ftp_login($conn_id, $location_login, $location_pwd);
+
+                if ((!$conn_id) || (!$login_result)) {
+                    echo " FTP connection has failed! ";
+                    exit;
+                } else {
+                    echo " FTP Connected. ";
+                }
+
+                $remotefile = $filedir.$idhash;
+
+                // get the file
+                // change products.csv to the file you want
+                $local = fopen("/home/www/cb3/wp-content/plugins/wp-shopping-cart/files/".$idhash,"w");
+                $result2 = ftp_fget($conn_id, $local,$remotefile, FTP_BINARY);
+                fwrite($local, $result2); fclose($local); 
+
+                // check upload status
+                if (!$result2) {
+                    echo " FTP download has failed! ";
+                } else {
+                    echo " FTP file Downloaded. ";    
+                }
+
+                // close the FTP stream
+                ftp_close($conn_id);                
+                
+                
 
 				//resize the image
 					$chwidth=500;
@@ -173,6 +216,7 @@ $arrAuthors = array('Светозаров Георгий','Александро�
 
 
 					// Mark image as sent to the Anekdot.ru
+
 					$update_sql = "update wp_fsr_post set anekdotru_date='".date("d.m.y H:m:s")."' where ID=".$ID;
 						$res = mysql_query($update_sql);
 						if (!$res) {die('<br />'.$update_sql.'<br />Invalid delete query: ' . mysql_error());}
@@ -241,9 +285,9 @@ function mail_attachment($filename, $path, $mailto, $from_mail, $from_name, $rep
     $header .= $content."\r\n\r\n";
     $header .= "--".$uid."--";
     if (mail($mailto, $subject, "", $header)) {
-        echo "mail send ... OK"; // or use booleans here
+        echo " mail send ... OK. "; // or use booleans here
     } else {
-        echo "mail send ... ERROR!";
+        echo " mail send ... ERROR! ";
     }
 }
 
