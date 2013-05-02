@@ -73,6 +73,13 @@ function product_display_paginated($search_sql = '', $offset, $items_on_page)
  
  $_tags = hilite(nl2br($product['additional_description']));
  
+ if ($product['sold']==0){
+     $_sold="";
+ }
+ else{
+    $_sold = "<h2><b>Продажи:</b> <span class=\'sold\'>".$product['sold']."</span></h2><br />";
+ }
+ 
     //$_tags = hilite(nl2br(htmlspecialchars(stripslashes($product['additional_description']))));
     
     //$_tags = hilite($product[0]['additional_description']);
@@ -143,7 +150,7 @@ else
         $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h1>" .$_name."</h1> $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
 
-    $_bigpictext = "<h2><b>Категория: </b>".$_category."</h2><h2><b>Описание: </b></h2> ".$_description."<br /><h2><b>Тэги: </b></h2><ul>".$_tags."</ul><h2><b>Ссылка:</b></h2><a title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><b>Размер:</b><br />".$_dimensions_html."<b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
+    $_bigpictext = "<h2><b>Категория: </b>".$_category."</h2><h2><b>Описание: </b></h2> ".$_description."<br /><h2><b>Тэги: </b></h2><ul>".$_tags."</ul><h2><b>Ссылка:</b></h2><a title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><b>Размер:</b><br />".$_dimensions_html.$_sold."<b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
     
     $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\' border=0 alt=\'".$_bigpicimgalt."\' title=\'".$_bigpicimgtitle."\' />";
 
@@ -151,7 +158,15 @@ else
     if($product['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
     if($product['l3_price']=='0') {$l3_disabled = 'disabled=true';} else {$l3_disabled = '';}
 
-
+    if($product['sold']==0){
+        $_soldd = '';
+    }
+    else{
+        $_soldd = '<div class="cntrsold" title="продажи">'.$product['sold'].'</div>';
+    }
+    
+    
+    
 if (isset($product['not_for_sale']) && $product['not_for_sale']=='1')
 {
     $_bottomstriptext = "Лицензии на это изображение временно недоступны";
@@ -228,7 +243,7 @@ $_bottomstriptext = $_size_warning."<div style=\'width:450px;float:right;\'><for
                     }
                       $output .= "</a>";
 
-                    $output .= "</div>"; // stop item
+                    $output .= $_soldd."</div>"; // stop item
                 }
                 $counter = $counter + 1;
           }
