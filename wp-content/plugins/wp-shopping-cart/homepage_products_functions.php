@@ -450,7 +450,7 @@ $counter = 1;
 $output .= "<div id='allicons' style=''>";
 		  foreach((array)$product_list as $product)
 			{
-			$output .= "<div class='item' style='position: relative;'>";
+			$output .= "<div class='item'>";
 			$output .= "<a href='".get_option('product_list_url').$seperator."cartoonid=".$product['ID']."'>";
 			if($product['image'] != '')
 			  {
@@ -617,7 +617,19 @@ function last_sales($content = '')
 			break;
 	}
 
-	$sql = "SELECT b.id, b.name, p.id as ID, p.image as image, p.name AS title, b.name AS author, c.price FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b, `wp_users` AS u WHERE l.`processed` = s.`id`  AND l.id = c.purchaseid AND p.id = c.prodid AND st.purchid = c.purchaseid AND p.brand = b.id AND u.id = l.user_id AND l.user_id !=  '106' AND st.downloads !=  '5' GROUP BY c.license ORDER BY datetime DESC LIMIT 100";
+		if(isset($_GET['br']) && is_numeric($_GET['br']))
+			{
+				$_brand_filter = " AND b.id=".$_GET['br'];
+				$_limit = "";
+			}
+			else
+			{	
+				$_brand_filter = '';
+				$_limit = "LIMIT 100";
+			}
+
+
+	$sql = "SELECT b.id, b.name, p.id as ID, p.image as image, p.name AS title, b.name AS author, c.price FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b, `wp_users` AS u WHERE l.`processed` = s.`id`  AND l.id = c.purchaseid AND p.id = c.prodid AND st.purchid = c.purchaseid AND p.brand = b.id AND u.id = l.user_id AND l.user_id !=  '106' AND st.downloads !=  '5' ".$_brand_filter." GROUP BY c.license ORDER BY datetime DESC ".$_limit;
 
 		  $product_list = $wpdb->get_results($sql,ARRAY_A);
 
@@ -635,7 +647,7 @@ function last_sales($content = '')
 				  {
 					$output .= "<div><h1>".$product_list[0]['author'].".";
 				  }
-				  $output .= " Сто последних продаж</h1></div>";
+				  $output .= " Последние продажи</h1></div>";
 
 		  foreach((array)$product_list as $product)
 			{
@@ -727,7 +739,7 @@ where counter>1
 
 		  foreach((array)$product_list as $product)
 			{
-			$output .= "<div class='item' style='position: relative;'>";
+			$output .= "<div class='item'>";
 			$output .= "<a href='".get_option('product_list_url').$seperator."cartoonid=".$product['ID']."'>";
 			if($product['image'] != '')
 			  {
