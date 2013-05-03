@@ -40,6 +40,7 @@ $sql = "SELECT	post as ID,
 		AND wp_product_list.brand = wp_product_brands.id 
 		AND wp_product_list.brand != 3 
 		AND wp_product_list.brand != 13 
+		AND wp_product_list.category != 666 
 		AND wp_product_list.active = 1
 		AND wp_product_list.visible = 1
 		AND wp_fsr_post.anekdotru_date is NULL
