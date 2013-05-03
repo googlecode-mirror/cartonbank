@@ -556,15 +556,15 @@ tr.tdfirstcol{
 }
 .cntrsold {
     display:block;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     background-color: #F3E915;
     float: left;
     position: absolute;
     bottom: 10px;
     right: 10px;
     text-align:center;
-    font-size:1.5em;
+    font-size:1.2em;
     color:#494949;
     border-radius: 50%;
     -moz-border-radius:50%;
@@ -578,10 +578,11 @@ tr.tdfirstcol{
     -moz-border-radius:50%;
     -webkit-border-radius:50%;
     -khtml-border-radius:50%; 
-    font-size: 1.5em; 
+    font-size: 1.2em; 
     line-height: 100%; 
     text-align: center; 
-    padding: 2px 4px 2px 6px;
+    padding: 0px 3px 2px 4px;
+	font-weight: normal;
 }
 .gift{
 position: relative; top: -138px; left: 4px; background-color: red; width: 60px; text-align: center; opacity: .5; padding:2px;
