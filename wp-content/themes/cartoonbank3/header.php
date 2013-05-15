@@ -141,6 +141,9 @@ switch ($switcher)
 case"1":
 	//$license_text = "лицензионное<br />изображение";
 	$license_text = "лицензионная<br />карикатура";
+	$switcher2 = substr($cartoon_number,strlen($cartoon_number)-2,2);
+	if ($switcher2==11)
+	$license_text = "лицензионных<br />карикатур";
 	break;
 case"2":
 case"3":
