@@ -141,9 +141,6 @@ switch ($switcher)
 case"1":
 	//$license_text = "лицензионное<br />изображение";
 	$license_text = "лицензионная<br />карикатура";
-	$switcher2 = substr($cartoon_number,strlen($cartoon_number)-2,2);
-	if ($switcher2==11)
-	$license_text = "лицензионных<br />карикатур";
 	break;
 case"2":
 case"3":
@@ -156,6 +153,11 @@ default:
 	$license_text = "лицензионных<br />карикатур";
 	break;
 }
+
+$switcher2 = substr($cartoon_number,strlen($cartoon_number)-2,2);
+	if ($switcher2>=10 && $switcher2<=19){$license_text = "лицензионных<br />карикатур";}
+
+
 /*
 <!-- <center><div id="suphead" style="float:center;height:20px;width:960px;background-color:#668bb7;"><a href="http://cartoonbank.ru/?page_id=2440" style="color:white;font-size:1.2em;line-height:1.8;">футболки, кружки, календари, открытки, альбомы карикатур</a></div></center> 
 
@@ -166,6 +168,8 @@ default:
 */
 
 ?>
+<center><div id="suphead" style="float:center;height:20px;width:960px;background-color:#668bb7;"><a href="http://www.shm-surgut.ru/publ/karikaturum/karikaturum_7/1-1-0-97" style="color:white;font-size:1.2em;line-height:1.8;">Международный форум визуального юмора КАРИКАТУРУМ-7</a></div></center>
+
 <div id="header" style="height:90px;width:960px;">
 <div>
  
