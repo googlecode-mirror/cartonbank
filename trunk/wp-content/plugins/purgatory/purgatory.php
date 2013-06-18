@@ -15,6 +15,7 @@ $Current_ID = $current_user->id;
 <b><a href="<?= $_SITEURL; ?>/?page_id=1148" target="_blank">Меморандум редактора</a></b><br />
 
 <?
+/*
 $result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U.display_name as author from wp_comments as C, wp_users as U where U.id = C.comment_author order by C.comment_date DESC LIMIT 100");
     $comments_output = "";
     while($r = mysql_fetch_array($result)) {
@@ -24,6 +25,7 @@ $result = mysql_query("select C.comment_id, C.comment_content, C.comment_date, U
         $_id = $r['comment_id'];
         $comments_output .= "<div style='margin-top:4px;'><span class='gr' title='".$_date."'>".$_author.":&nbsp; </span><span class='c_body'>".$_comment."</span> [<a title='стереть комментарий' href='#' onclick='deletecomment(".$_id.");'>x</a>]</div>";
     }
+*/
 ?>
 
 <script type="text/javascript" src="<?= $_SITEURL; ?>/wp-includes/js/jquery/jquery.js"></script>
@@ -543,7 +545,8 @@ dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
 })();
 </script>
 </div>
-	
+
+	<!--
     <br><b>50 последних комментариев редакторов:</b>
         <div id="commentsform">
             <form action="<?= $_SITEURL; ?>/wp-content/plugins/purgatory/add_comment.php" method="post" id="commentform">
@@ -557,7 +560,8 @@ dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
             <input type="hidden" id="_wp_unfiltered_html_comment" name="_wp_unfiltered_html_comment" value="5a3ab88268"><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="8bd460432a"></p>
             </form>
         </div>
-        <div id="divToUpdate" style="padding:2px;font-size:0.9em;background-color:#FFFFD7;"><? echo ($comments_output) ?></div>
+	-->
+        <div id="divToUpdate" style="padding:2px;font-size:0.9em;background-color:#FFFFD7;"><? //echo ($comments_output) ?></div>
 </div>
 
     
