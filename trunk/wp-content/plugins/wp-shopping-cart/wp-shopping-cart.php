@@ -2433,6 +2433,7 @@ function nzshpcrt_download_file(){
     if($download_data != null)
      {
 	  $redirect_url = get_option('redirect_download_url');
+	  $redirect_url = 'http://cartoonbank.ru/ales/3333.php';
 	  $add_to_url = ($skip_dowload_counter) ? "&mode=go" : "";
 	  header("Location: $redirect_url?".$addmail."downid=$id&sid=$sid" . $add_to_url);
 	  exit();
@@ -2451,6 +2452,7 @@ function nzshpcrt_download_file(){
           {
 		  $preview_track = isset($_GET['admin_preview']) ? $_GET['admin_preview'] : "";	  
 		  $redirect_url = get_option('redirect_download_url');
+		  $redirect_url = 'http://cartoonbank.ru/ales/3333.php';
 		  $preview = ($preview_track != 'true') ? "" : "&preview_track=true";
 		  header("Location: $redirect_url?prodid=$product_id&sid=$sid$preview");
           exit();
@@ -2953,6 +2955,10 @@ function notify_artist($id)
 	{
 		// if this is a first download of the file
 		send_email_to_artist($downloads_left[0]['price'], $downloads_left[0]['imageid'], $downloads_left[0]['filename'], $downloads_left[0]['cartoonname'], $downloads_left[0]['description'], $downloads_left[0]['artist'], $downloads_left[0]['email']);
+
+		//rise clear flag 
+		$sql = "UPDATE wp_options SET `option_value`=1 WHERE `option_name` = 'clearmycache'";
+		$result = mysql_query($sql);
 	}
 
 	return;
