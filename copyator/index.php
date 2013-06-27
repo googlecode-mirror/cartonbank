@@ -34,6 +34,7 @@ ftp_copy_init();
 
 while ($row = mysql_fetch_array($result, MYSQL_ASSOC))
 {
+	echo "<br />";
     printf("\nid: %s\nfilename: %s\nmimetype: %s\nidhash: %s\ndate: %s\n", $row["id"], $row["filename"], $row["mimetype"], $row["idhash"], $row["date"]);
     $darray = getdate($row["date"]);
     $res = copy_file_to_ftp($row["idhash"], $darray['year'], $darray['month']);
@@ -54,5 +55,5 @@ ftp_copy_end();
 mysql_close($mcon);
 
 printf("%s\r\n", date("m.d.y H.i.s"));
-
+echo "<br>";
 ?>
