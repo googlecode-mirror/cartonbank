@@ -77,7 +77,12 @@ $sql = "SELECT f.idhash, st.datetime, c.purchaseid,  p.id,  b.name as artist, p.
     
     $grid->rowcallback = 'RowCallback';
 
-	$grid->HideColumn('idhash');
+    $grid->SetPerPage(100);
+
+	//$grid->HideColumn('email');
+	//$grid->HideColumn('lastname');
+	//$grid->HideColumn('idhash');
+	$grid->HideColumn('display_name', 'email', 'lastname','idhash','user_id');
 
     function RowCallback(&$row)
     {
@@ -87,9 +92,10 @@ $sql = "SELECT f.idhash, st.datetime, c.purchaseid,  p.id,  b.name as artist, p.
 		$row['license'] = "<a target='_blank' href='".get_option('siteurl')."/licenses/".$row['license'].".htm'>".nl2br(stripslashes($row['license']))."</a>";
 		$row['downloadid'] = "<a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."&sid=".substr($row['idhash'], -6)."&mode=go'>скачать</a> <a href='".get_option('siteurl')."/?downloadid=".$row['downloadid']."&sid=".substr($row['idhash'], -6)."&mode=go&mail=1'>письмо</a>" ;
 
+		$row['firstname'] = $row['user_id']. ' ' . $row['display_name']. ' ' . $row['firstname']. ' ' .$row['lastname'] . ' ' . $row['email'];
     }
 
-    $grid->SetPerPage(100);
+
 ?>
 	<style type="text/css">
     <!--

@@ -28,7 +28,7 @@ td.lalt{
 
     global $user_brand;
 
-	if ($product['id'] != $current_user->id & $current_user->wp_user_level < 10)
+	if ($product['id'] != $current_user->id & $current_user->wp_user_level < 2)
 	{
 		echo ('Извините, у вас недостаточно полномочий для доступа к этой странице.');
 		exit();
