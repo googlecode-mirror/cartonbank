@@ -32,7 +32,7 @@ $pageid=29;
 <li><a href="/?page_id=1215"<? $pageid=='1215'? selected_style_footer():"" ?> title='наши партнёры'>Партнёры</a></li>
 <li><a href="/?page_id=1260"<? $pageid=='1260'? selected_style_footer():"" ?> title='друзья и коллеги'>Друзья</a></li>
 <li><a href="/?page_id=2"<? $pageid=='2'? selected_style_footer():"" ?> title='ответы на часто задаваемые вопросы'>Ответы</a></li>
-<li><a href="/?page_id=942"<? $pageid=='942'? selected_style_footer():"" ?> title='новости сайта'>Новости</a></li>
+<li><a href="/?page_id=2860"<? $pageid=='2860'? selected_style_footer():"" ?> title='новости сайта'>Новости</a></li>
 <li><a href="/?page_id=976"<? $pageid=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
 <li><a href="/?page_id=2041"<? $pageid=='2041'? selected_style_footer():"" ?> title='English'><img src="<? echo SITEURL;?>img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
 </ul>
@@ -63,7 +63,7 @@ $pageid=29;
 </div>
 */
 ?>
-<div id="footer" style="background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;padding-bottom:100px;"><a href="/?page_id=433">Copyright</a> &copy; 2010-2013 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a> <b>16+</b> <br /></div>
+<div id="footer" style="background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;padding-bottom:100px;"><a href="/?page_id=433">Copyright</a> &copy; 2010-2013 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a> <b>16+</b> <a href="http://cartoonbank.ru/?page_id=95#otv">Обратная связь</a> <br /></div>
 
 
 <?php do_action('wp_footer'); ?>
