@@ -100,6 +100,7 @@ class wp_shopping_cart
 
       
       add_submenu_page($base_page,'Каталог', 'Каталог', 8, 'wp-shopping-cart/display-items.php');
+      add_submenu_page($base_page,'Editor', 'Editor', 8, 'wp-shopping-cart/display-items-en.php');
       //add_submenu_page($base_page,'Категории', 'Категории', 8, 'wp-shopping-cart/display-category.php');
       add_submenu_page($base_page,'Авторы', 'Авторы', 8, 'wp-shopping-cart/display-brands.php');
       
