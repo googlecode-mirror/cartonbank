@@ -61,7 +61,9 @@ if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_erro
 echo "<div style='vertical-align:top;width:500px;'><div><h3>Продажи работ с ноября 2010</h3></div>";
 echo "<div style='vertical-align:top;width:500px;'>На этой странице в реальном времени показываются все продажи по факту скачивания файлов. Количество ваших продаж на странице '<a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php'>Заработано</a>' обычно меньше, так как указывается с задержкой на время прихода денег в бухгалтерию Картунбанка.</div>";
 ?> 
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/spreadsheet/tq?key=0AtPperB2fdv5dDZDdEk2cEtNNkpWYXhfVWVHdFM0NUE&transpose=0&headers=0&merge=COLS&range=C3%3AC30%2CT3%3AT30%2CAC3%3AAC30&gid=0&pub=1","options":{"series":[{"type":"bars"}],"animation":{"duration":500},"backgroundColor":{"fill":"#efefef"},"theme":"maximized","type":"line","hAxis":{"title":"","useFormatFromData":true,"minValue":null,"viewWindow":{"min":null,"max":null},"maxValue":null},"vAxes":[{"useFormatFromData":true,"minValue":null,"viewWindow":{"min":null,"max":null},"maxValue":null},{"useFormatFromData":true,"minValue":null,"viewWindow":{"min":null,"max":null},"maxValue":null}],"booleanRole":"certainty","title":"\u041f\u0440\u043e\u0434\u0430\u0436\u0438 \u043f\u043e \u043c\u0435\u0441\u044f\u0446\u0430\u043c, \u0448\u0442.","interpolateNulls":false,"domainAxis":{"direction":1},"legend":"none","annotations":{"domain":{}},"tooltip":{},"width":800,"height":490},"state":{},"view":{},"chartType":"ComboChart","chartName":"Chart 5"} </script>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/spreadsheet/tq?key=0AtPperB2fdv5dDZDdEk2cEtNNkpWYXhfVWVHdFM0NUE&transpose=0&headers=0&merge=COLS&range=C3%3AC36%2CT3%3AT36%2CAC3%3AAC36&gid=0&pub=1","options":{"series":[{"type":"bars"}],"animation":{"duration":500},"backgroundColor":{"fill":"#efefef"},"theme":"maximized","type":"line","hAxis":{"title":"","useFormatFromData":true,"minValue":null,"viewWindow":{"min":null,"max":null},"maxValue":null},"vAxes":[{"useFormatFromData":true,"minValue":null,"viewWindow":{"min":null,"max":null},"maxValue":null},{"useFormatFromData":true,"minValue":null,"viewWindow":{"min":null,"max":null},"maxValue":null}],"booleanRole":"certainty","title":"\u041f\u0440\u043e\u0434\u0430\u0436\u0438 \u043f\u043e \u043c\u0435\u0441\u044f\u0446\u0430\u043c, \u0448\u0442.","interpolateNulls":false,"domainAxis":{"direction":1},"legend":"none","annotations":{"domain":{}},"tooltip":{},"width":700,"height":432},"state":{},"view":{},"isDefaultVisualization":true,"chartType":"ComboChart","chartName":"Chart 5"} </script>
+
 
 
 <?
@@ -73,7 +75,7 @@ foreach ($result as $row)
 	//todo
 	if ($current_user->wp_user_level >1)
 	{	
-		echo "<td class='username' style='padding:4px;width:200px;'><a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php&brand=".$row['id']."'>".$row['name']."</a></td><td class='posts' style='padding:4px;text-align:right;'>".$row['cntr']."</td><td style='padding:4px;text-align:right;'>".round($row['cntr']*100/$row['atotal'],2)."%</td><td style='padding:4px;text-align:right;'>".$row['atotal']."</td>";
+		echo "<td class='username' style='padding:4px;width:200px;'><a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php&brand=".$row['id']."'>".$row['name']."</a></td><td class='posts' style='padding:4px;text-align:right;'><a href='http://cartoonbank.ru/?page_id=1299&br=".$row['id']."' target='_blank'>".$row['cntr']."</a></td><td style='padding:4px;text-align:right;'>".round($row['cntr']*100/$row['atotal'],2)."%</td><td style='padding:4px;text-align:right;'>".$row['atotal']."</td>";
 	}
 	else
 		{	
