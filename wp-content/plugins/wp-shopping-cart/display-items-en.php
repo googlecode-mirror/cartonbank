@@ -1101,7 +1101,7 @@ if (isset($current_user->wp_capabilities['administrator']))
                         Don't sell, just display:
                     </td>
                     <td>
-                        <input id='not_for_sale' type="checkbox" name="not_for_sale"> <span style="color:#999;">uncheck to remove sell option</span>
+                        <input id='not_for_sale' type="checkbox" name="not_for_sale"> <span style="color:#999;">check to remove sell option</span>
                     </td>
                 </tr>
                 <tr>
