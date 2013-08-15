@@ -98,17 +98,17 @@ if ($canpay==false or $totalsum == 0)
  echo "<tr><td style='padding-bottom:5px;border-bottom: 6px solid #c8c8c8;' colspan='2'><h1>1. Подтвердите информацию о себе:</h1></td></tr>";
 
 ?>
-	<tr><td style="padding-bottom: 5px; width:350px;"><b>Имя</b>*</td>
+	<tr><td style="padding-bottom: 5px; width:350px;"><b>* Имя</b></td>
 		<td style="padding: 2px;">
 		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="<?if (isset($userdata->user_firstname)){echo $userdata->user_firstname;}?>" name="collected_data[1]" type="text">
 		</td>
 	</tr>
-	<tr><td style="padding-bottom: 5px;"><b>Фамилия</b>* (Ваши имя и фамилимя будут указано в лицензии, гарантирующей право на публикацию)</td>
+	<tr><td style="padding-bottom: 5px;"><b>* Фамилия</b> (Ваши имя и фамилимя будут указано в лицензии, гарантирующей право на публикацию)</td>
 		<td style="padding: 2px;">
 		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="<?if (isset($userdata->user_lastname)){echo $userdata->user_lastname;}?>" name="collected_data[2]" type="text">
 		</td>
 	</tr>
-	<tr><td style="padding-bottom: 5px;"><b>Email</b>* (укажите ваш адрес для письма со ссылками на файлы)</td>
+	<tr><td style="padding-bottom: 5px;"><b>* Email</b> (укажите адрес куда выслать письмо со ссылками на файлы)</td>
 		<td style="padding: 2px;">
 		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="<?if (isset($userdata->user_email)){echo $userdata->user_email;}?>" name="collected_data[3]" type="text">
 		</td>
@@ -118,7 +118,7 @@ if ($canpay==false or $totalsum == 0)
 		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);" value="" name="collected_data[4]" type="text">
 		</td>
 	</tr>
-	<tr><td style="padding-bottom: 5px;"><b>Указать СМИ или иную организацию, если лицензия приобретается в ее интересах</b></td>
+	<tr><td style="padding-bottom: 5px;"><b>* Указать СМИ или иную организацию, если лицензия приобретается в ее интересах. Если вы частное лицо, просим написать цель покупки.</b></td>
 		<td style="padding: 2px;">
 		<input style="width: 300px; padding: 2px; border: 1px solid rgb(200, 200, 200);"value="<?if (isset($userdata->description)){echo $userdata->description;}?>" name="collected_data[5]" type="text">
 		</td>
