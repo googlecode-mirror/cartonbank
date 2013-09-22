@@ -33,11 +33,14 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 <input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:6px;margin-bottom:4px;" />
 </form>
 
-<a href="/?page_id=927">Расширенный поиск <img src="<? echo SITEURL;?>img/link.gif" style="border:0;"></a>
-<br /><br />
-<!-- webim button --><a href="http://cartoonbank.ru/webim/client.php?locale=ru" target="_blank" onclick="if(navigator.userAgent.toLowerCase().indexOf('opera') != -1 &amp;&amp; window.event.preventDefault) window.event.preventDefault();this.newWindow = window.open('http://cartoonbank.ru/webim/client.php?locale=ru&amp;url='+escape(document.location.href)+'&amp;referrer='+escape(document.referrer), 'webim', 'toolbar=0,scrollbars=0,location=0,status=1,menubar=0,width=640,height=480,resizable=1');this.newWindow.focus();this.newWindow.opener=window;return false;"><img src="http://cartoonbank.ru/webim/b.php?i=mblue&amp;lang=ru" border="0" width="180" height="61" alt=""/></a><!-- / webim button -->
+<a href="/?page_id=927">Расширенный поиск <img src="<? echo SITEURL;?>img/link.gif" style="border:0;" alt="расширенный поиск"></a>
+
 
 <?
+//<!-- webim button --><a href="http://cartoonbank.ru/webim/client.php?locale=ru" target="_blank" onclick="if(navigator.userAgent.toLowerCase().indexOf('opera') != -1 &amp;&amp; window.event.preventDefault) window.event.preventDefault();this.newWindow = window.open('http://cartoonbank.ru/webim/client.php?locale=ru&amp;url='+escape(document.location.href)+'&amp;referrer='+escape(document.referrer), 'webim', 'toolbar=0,scrollbars=0,location=0,status=1,menubar=0,width=640,height=480,resizable=1');this.newWindow.focus();this.newWindow.opener=window;return false;"><img src="http://cartoonbank.ru/webim/b.php?i=mblue&amp;lang=ru" border="0" width="180" height="61" alt=""/></a><!-- / webim button -->
+
+
+
 // Theme of the day
 	$thedate = date("Y.m.d");
 
@@ -187,14 +190,14 @@ if (!$author_section) // for not Author section (portfolio)
 {
 
 ?>
-<br /><h3><a href="<? echo SITEURL;?>?page_id=1427" title="Все авторы на одной странице">Авторы</a></h3>
+<br /><h3><a href="<? echo SITEURL;?>?page_id=1427" title="Все авторы на одной странице"  onclick="_gaq.push(['_trackEvent', 'Sidebar link', 'Click', 'Авторы']);">Авторы</a></h3>
 <?
 
 // Authors
 
 		$_selected = "";
 		if (!isset($_GET['brand'])) {$_selected = ' selected ';}
-		$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&amp;brand='+options[selectedIndex].value\" style=\"width:180px;margin-top:2px;\"><option ".$_selected." value=''>&nbsp;все авторы&nbsp;</option>";
+		$authors = "<select name='authors' onchange=\"if(!options[selectedIndex].defaultSelected) location='".get_option('siteurl')."/?page_id=29&amp;brand='+options[selectedIndex].value; _gaq.push(['_trackEvent', 'Sidebar link', 'Select option', 'Автор']);\" style=\"width:180px;margin-top:2px;\"><option ".$_selected." value=''>&nbsp;все авторы&nbsp;</option>";
 		$_selected = "";
 
 		foreach ($brands as $brand)
@@ -291,15 +294,15 @@ echo "</div>";
 ?>
 
 <br /><br />
-<a href="<? echo SITEURL;?>?page_id=2440" target="_blank"><img src="<? echo SITEURL;?>img/b/tshirt-2.jpg" style="border:0;width:180px;"></a>
+<a href="<? echo SITEURL;?>?page_id=2440" target="_blank"><img src="<? echo SITEURL;?>img/b/tshirt-2.jpg" style="border:0;width:180px;" alt="сувениры"></a>
 <br /><br />
-<a href="<? echo SITEURL;?>?page_id=1351" target="_blank"><img src="<? echo SITEURL;?>img/b/exhibition_package2.gif" style="border:0;width:180px;"></a>
+<a href="<? echo SITEURL;?>?page_id=1351" target="_blank"><img src="<? echo SITEURL;?>img/b/exhibition_package2.gif" style="border:0;width:180px;" alt="выставки"></a>
 <br /><br />
-<a href="<? echo SITEURL;?>?page_id=1857" target="_blank"><img src="<? echo SITEURL;?>img/b/postard_project2.gif" style="border:0;width:180px;"></a>
+<a href="<? echo SITEURL;?>?page_id=1857" target="_blank"><img src="<? echo SITEURL;?>img/b/postard_project2.gif" style="border:0;width:180px;" alt="открытки"></a>
 <br /><br />
 <!-- <a href="<? echo SITEURL;?>?page_id=893"><img src="<? echo SITEURL;?>img/b/on-line.gif" style="width:180x;border:0;"></a>
 <br /><br /> -->
-<a href="<? echo SITEURL;?>?page_id=2479" target="_blank"><img src="<? echo SITEURL;?>img/b/contests.gif" style="border:0;width:180px;"></a>
+<a href="<? echo SITEURL;?>?page_id=2479" target="_blank"><img src="<? echo SITEURL;?>img/b/contests.gif" style="border:0;width:180px;" alt="конкурсы"></a>
 
 
 <br /><h3>Разное</h3>

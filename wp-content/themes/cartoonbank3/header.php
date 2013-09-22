@@ -14,7 +14,7 @@ if (isset($_SERVER['QUERY_STRING']))
 	// search word
 	if (isset($_REQUEST['cs']) && $_REQUEST['cs'])
 		{
-			$h = $h."Картинки на тему '".$_REQUEST['cs']."' ";
+			$h = $h."Карикатуры на тему '".$_REQUEST['cs']."'. ";
 		}
 	//category
 	if (isset($_REQUEST['category']) && is_numeric($_REQUEST['category']))
@@ -30,7 +30,7 @@ if (isset($_SERVER['QUERY_STRING']))
 			$sql = "select name from wp_product_brands where id=".$_REQUEST['brand'];
 			$c = $wpdb->get_results($sql);
 			$brand = $c[0]->name;
-			$h = $h."".$brand." ";
+			$h = $h."".$brand.". ";
 		}
     //new
     if (isset($_REQUEST['new']) && is_numeric($_REQUEST['new']) && ($_REQUEST['new']=='1'))
@@ -68,6 +68,13 @@ if (isset($_SERVER['QUERY_STRING']))
         {
             $h = $h.($post->post_title);
         }
+    //offset
+    if (isset($_REQUEST['offset']) && is_numeric($_REQUEST['offset']))
+        {
+			$page = $_REQUEST['offset']/20;
+            $h = $h."Страница ".$page.".";
+        }
+
 }
 /*
 $current_user = wp_get_current_user();
@@ -93,19 +100,20 @@ if (current_user_can('manage_options'))
 ?>
 <!doctype html>
 <html><head>
-<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="robots" content="all" />
 <meta name="description" content="<?echo $h;?>  Смешные карикатуры для газет, журналов и электронных СМИ. Лицензии." />
 <meta name="keywords" content="<?echo $kw;?> картунбанк, cartoonbank, карикатуры, сток, скачать, приколы, смешные, картинки, комиксы,  карикатура, ру, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, ru, comics, comix, стоковые картинки, стоковые изображения" />
 <title><?echo $h;?> Картунбанк <?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?>.</title>
 <meta name="generator" content="cartoonbank" />
-<link media="screen" rel="stylesheet" href="<? echo SITEURL;?>ales/colorbox/example2/colorbox.css" />
 <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
-<?php wp_head(); ?>
+<link media="screen" rel="stylesheet" href="<? echo SITEURL;?>ales/colorbox/example2/colorbox.min.css" />
+<link href='<?php echo SITEURL; ?>wp-content/plugins/wp-shopping-cart/style.min.css' rel="stylesheet" type="text/css" />
 <style type="text/css" media="screen">
-<!-- @import url( <?php bloginfo('stylesheet_url'); ?> ); -->
+<!-- @import url( http://cartoonbank.ru/wp-content/themes/cartoonbank3/style.min.css ); -->
 </style>
-<script src="<?echo get_option('siteurl');?>/wp-includes/js/jquery/jquery.highlight-3.js" type="text/javascript"></script>
+<?php wp_head(); ?>
+<script src="<?echo get_option('siteurl');?>/wp-includes/js/jquery/jquery.highlight-3.min.js" type="text/javascript"></script>
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-127981-7']);
@@ -168,8 +176,6 @@ $switcher2 = substr($cartoon_number,strlen($cartoon_number)-2,2);
 */
 
 ?>
-<center><div id="suphead" style="float:center;height:20px;width:960px;background-color:#668bb7;"><a href="http://www.shm-surgut.ru/publ/karikaturum/karikaturum_7/1-1-0-97" style="color:white;font-size:1.2em;line-height:1.8;">Международный форум визуального юмора КАРИКАТУРУМ-7</a></div></center>
-
 <div id="header" style="height:90px;width:960px;">
 <div>
  
@@ -177,7 +183,7 @@ $switcher2 = substr($cartoon_number,strlen($cartoon_number)-2,2);
 </div>
 
 <div style="width:580px;height:90px;float:left;">
-<br><a href="<?echo get_option('siteurl');?>/?page_id=29&offset=0&new=0"><img src="<?php echo get_option('home'); ?>/img/cb-logo-iq.png" style="border:0;"></a><br />
+<br><a href="<?echo get_option('siteurl');?>/?page_id=29&amp;offset=0&amp;new=2"><img src="<?php echo get_option('home'); ?>/img/cb-logo-iq.png" style="border:0;" alt="Cartoonbank"></a><br />
 <?php bloginfo('description'); ?>
 </div>
 
@@ -197,7 +203,7 @@ $switcher2 = substr($cartoon_number,strlen($cartoon_number)-2,2);
 	//<!-- <div style="width:185px;height:90px;float:left;"><a href="http://karikashop.com/#ecwid:category=1620996&mode=category&offset=0&sort=normal" target="_blank"><img src="http://cartoonbank.ru/img/b/karikashop.gif" style="width:185px;height:90px;border:0;"></a></div> -->
 ?>
 
-<div style="width:185px;height:90px;float:left;"><a href="<? echo SITEURL;?>?page_id=893"><img src="<?echo get_option('siteurl');?>/img/b/on-line.gif" style="width:185px;height:90px;border:0;"></a></div>
+<div style="width:185px;height:90px;float:left;"><a href="<? echo SITEURL;?>?page_id=893"><img src="<?echo get_option('siteurl');?>/img/b/on-line.gif" style="width:185px;height:90px;border:0;" alt="продажа карикатур онлайн"></a></div>
 </div>
 
 </div>

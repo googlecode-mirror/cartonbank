@@ -20,7 +20,7 @@ $pageid=$_REQUEST['page_id'];
 else{
 $pageid=29;
 }
-?>
+/*
 <div id="navbar">
 <ul> 
 <li><a href="/?page_id=95"<? $pageid=='95'? selected_style_footer():"" ?> title='коротко о сайте Картунбанк'>О проекте</a></li>
@@ -37,7 +37,8 @@ $pageid=29;
 <li><a href="/?page_id=2041"<? $pageid=='2041'? selected_style_footer():"" ?> title='English'><img src="<? echo SITEURL;?>img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
 </ul>
 </div>
-
+*/
+?>
 <div id="bottomb"></div>
 
 <div style="clear:both;background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;"><br /><br /></div>
@@ -107,21 +108,6 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 <img src="http://dc.ce.b2.a2.top.mail.ru/counter?id=2288702" style="border:0;" height="1" width="1" alt="Рейтинг@Mail.ru" /></div>
 <!-- //Rating@Mail.ru counter -->
 
-<script type="text/javascript">
-window.___gcfg = {lang: 'ru'};
-(function() {
-var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-po.src = 'https://apis.google.com/js/plusone.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-})();
-</script>
-
-<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
-</script>
-<script type="text/javascript">
-_uacct = "UA-127981-4";
-urchinTracker();
-</script>
 
 <script>
     jQuery(document).ready(function(){
@@ -135,5 +121,11 @@ urchinTracker();
     });
 </script>
 
+<script>
+    jQuery(document).ready(function() {
+    var getshoppingcarturl = '<? echo SHOPPINGCARTURL.'get_shopping_cart.php'; ?>';
+    jQuery('#shoppingcart').load(getshoppingcarturl);
+});
+</script>
 
 </body></html>
