@@ -306,7 +306,7 @@ function pagination($offset,$totalitems,$items_on_page){
     
     //$_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?page_id=29".$newfilter.$brand_group_sql."&amp;color=".$color.$__category.$_url_cs.$_url_cs_exact.$_url_cs_any.$_url_cs_exclude.$_url_666."&amp;offset=", $filter_list, $new, $brand_group_sql,$_category,$color_url);
     
-    $_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?".get_url_vars()."offset=");
+    $_pages_navigation = getPaginationString($page, $totalitems, $limit, $adjacents = 1, $targetpage = get_option('siteurl'), $pagestring = "?".get_url_vars_amp2()."offset=");
     
 
     if (isset($_GET['cartoonid']) && is_numeric($_GET['cartoonid']))
@@ -321,6 +321,17 @@ function pagination($offset,$totalitems,$items_on_page){
 }
 
 function get_url_vars(){
+    $output = '';
+    foreach($_REQUEST as $key=>$val)
+    {
+        if ($key!='offset')
+        $output .= $key."=".urlencode($val)."&";
+    }
+    return $output;
+    //return htmlentities($output);
+}
+
+function get_url_vars_amp2(){
     $output = '';
     foreach($_REQUEST as $key=>$val)
     {
