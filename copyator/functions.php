@@ -16,7 +16,7 @@ function ftp_copy_init()
     
     if (!$con)
     {
-	prinf("Could not connect to: %s\r\n", FTP_HOST);
+	printf("Could not connect to: %s\r\n", FTP_HOST);
 	die();
     }
     
