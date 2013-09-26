@@ -35,7 +35,7 @@ if (isset($_SERVER['QUERY_STRING']))
     //new
     if (isset($_REQUEST['new']) && is_numeric($_REQUEST['new']) && ($_REQUEST['new']=='1'))
         {
-            $h = $h."Новые смешные рисунки";
+            $h = $h."Новые смешные рисунки ";
         }
     //best
     if (isset($_REQUEST['new']) && is_numeric($_REQUEST['new']) && ($_REQUEST['new']=='0'))
