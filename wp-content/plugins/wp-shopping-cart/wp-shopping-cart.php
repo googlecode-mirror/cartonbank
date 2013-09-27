@@ -162,15 +162,15 @@ class wp_shopping_cart
 function nzshpcrt_style()
     {
   ?>
-<link href='<?php echo SITEURL; ?>/wp-content/plugins/wp-shopping-cart/style.css' rel="stylesheet" type="text/css" />
+<link href='<?php echo SITEURL; ?>wp-content/plugins/wp-shopping-cart/style.min.css' rel="stylesheet" type="text/css" />
   <?php
     }
     
 function nzshpcrt_javascript()
     {
 $siteurl = SITEURL;
-?><script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/ajax.js"></script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/user.js"></script>
+?><script src="<?php echo $siteurl; ?>wp-content/plugins/wp-shopping-cart/ajax.min.js"></script>
+<script src="<?php echo $siteurl; ?>wp-content/plugins/wp-shopping-cart/user.min.js"></script>
 <?php
   }
 
@@ -189,7 +189,7 @@ var fileBottomNavCloseImage = "<?php echo $closegif; ?>";
 var resizeSpeed = 9;  
 var borderSize = 10;
 <?php
-require_once('ajax.js');
+require_once('ajax.min.js');
 echo "var TXT_WPSC_DELETE = '".TXT_WPSC_DELETE."';\n\r";
 echo "var TXT_WPSC_TEXT = '".TXT_WPSC_TEXT."';\n\r";
 echo "var TXT_WPSC_EMAIL = '".TXT_WPSC_EMAIL."';\n\r";
@@ -207,13 +207,13 @@ echo "<option value='delivery_country'>".TXT_WPSC_DELIVERY_COUNTRY."</option>";
 echo "<option value='textarea' >".TXT_WPSC_TEXTAREA."</option>";
 echo "<option value='heading' >".TXT_WPSC_HEADING."</option>\";\n\r";
 
-require_once('admin.js');
+require_once('admin.min.js');
 ?>
 </script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/prototype.js" language='JavaScript' type="text/javascript"></script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/scriptaculous.js?load=effects" language='JavaScript' type="text/javascript"></script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/scriptaculous.js?load=dragdrop" language='JavaScript' type="text/javascript"></script>
-<script src="<?php echo $siteurl; ?>/wp-content/plugins/wp-shopping-cart/js/lightbox.js" language='JavaScript' type="text/javascript"></script>
+<script src="<?php echo $siteurl; ?>wp-content/plugins/wp-shopping-cart/js/prototype.min.js" language='JavaScript' type="text/javascript"></script>
+<script src="<?php echo $siteurl; ?>wp-content/plugins/wp-shopping-cart/js/scriptaculous.min.js?load=effects" language='JavaScript' type="text/javascript"></script>
+<script src="<?php echo $siteurl; ?>wp-content/plugins/wp-shopping-cart/js/scriptaculous.min.js?load=dragdrop" language='JavaScript' type="text/javascript"></script>
+<script src="<?php echo $siteurl; ?>wp-content/plugins/wp-shopping-cart/js/lightbox.min.js" language='JavaScript' type="text/javascript"></script>
 <?php
     }
 
@@ -2276,7 +2276,7 @@ function nzshpcrt_shopping_basket_internals($cart,$quantity_limit = false, $titl
   //global $current_user;
   $output = '';
   $current_url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-  $output .= "<strong>Корзина заказов</strong>&nbsp;<img src='".SITEURL."/img/cart.gif'>";
+  $output .= "<strong>Корзина заказов</strong>&nbsp;<img src='".SITEURL."img/cart.gif' alt='shopping cart'>";
   $spacing = "<br/>";
   $current_user = wp_get_current_user();   
 
@@ -2442,10 +2442,16 @@ function nzshpcrt_download_file(){
     }
     else
       {
-      if(isset($_GET['admin_preview']) and ($_GET['admin_preview'] == "true") && is_numeric($_GET['product_id'])and
-		 isset($_GET['sid']) and strlen($_GET['sid']) == 6)
+      if((isset($_GET['admin_preview']) and ($_GET['admin_preview'] == "true") && is_numeric($_GET['product_id'])and
+		 isset($_GET['sid']) and strlen($_GET['sid']) == 6) || (isset($_GET['admin_preview']) and ($_GET['admin_preview'] == "true") && is_numeric($_GET['prod_id'])and
+		 isset($_GET['sid']) and strlen($_GET['sid']) == 6))
         {
-        $product_id = $_GET['product_id'];
+		  if (isset($_GET['product_id'])){
+			$product_id = $_GET['product_id'];
+		  }
+		  if (isset($_GET['prod_id'])){
+			$product_id = $_GET['prod_id'];
+		  }
 		$sid = $_GET['sid'];
         $product_data = $wpdb->get_results("SELECT * FROM `wp_product_list` WHERE `id` = '$product_id' LIMIT 1",ARRAY_A);
 
@@ -2826,7 +2832,7 @@ add_filter('the_content', 'nszhpcrt_homepage_products');
 
 //add_filter('wp_list_pages', 'nzshpcrt_hidepages');
  
-add_action('wp_head', 'nzshpcrt_style');
+//add_action('wp_head', 'nzshpcrt_style');
 
 add_action('admin_head', 'nzshpcrt_css');
 /*
