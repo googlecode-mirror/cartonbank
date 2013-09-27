@@ -109,23 +109,11 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 <!-- //Rating@Mail.ru counter -->
 
 
-<script>
-    jQuery(document).ready(function(){
-        if(getCookie('username')!='' && getCookie('username')!=null && getCookie('username')!='xxx'){
-        var nnn = "Здравствуйте, <a href='/wp-admin/profile.php'>"+getCookie('username');
-        }
-        else{
-            var nnn = "Вам надо <a href='/wp-login.php?redirect_to="+encodeURIComponent(document.URL)+"'>залогиниться</a>, чтобы добавлять товары в корзину.";
-        }
-        jQuery('#username').html(nnn);
-    });
-</script>
+<script src="http://cartoonbank.ru/wp-includes/js/jquery/jquery.highlight-3.min.js" type="text/javascript"></script>
+<script src='http://cartoonbank.ru/wp-content/plugins/five-star-rating/assets/js/five-star-rating.min.js?ver=0.1' type='text/javascript'></script>
 
 <script>
-    jQuery(document).ready(function() {
-    var getshoppingcarturl = '<? echo SHOPPINGCARTURL.'get_shopping_cart.php'; ?>';
-    jQuery('#shoppingcart').load(getshoppingcarturl);
-});
+jQuery(document).ready(function(){if(getCookie('username')!='' && getCookie('username')!=null && getCookie('username')!='xxx'){var nnn = "Здравствуйте, <a href='/wp-admin/profile.php'>"+getCookie('username');}else{var nnn = "Вам надо <a href='/wp-login.php?redirect_to="+encodeURIComponent(document.URL)+"'>залогиниться</a>, чтобы добавлять товары в корзину.";}jQuery('#username').html(nnn);var getshoppingcarturl = '<? echo SHOPPINGCARTURL.'get_shopping_cart.php'; ?>';jQuery('#shoppingcart').load(getshoppingcarturl);});
 </script>
 
 </body></html>
