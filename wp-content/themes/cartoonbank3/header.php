@@ -69,7 +69,7 @@ if (isset($_SERVER['QUERY_STRING']))
             $h = $h.($post->post_title);
         }
     //offset
-    if (isset($_REQUEST['offset']) && is_numeric($_REQUEST['offset']))
+    if (isset($_REQUEST['offset']) && is_numeric($_REQUEST['offset']) && $_REQUEST['offset']!=0)
         {
 			$page = $_REQUEST['offset']/20 + 1;
             $h = $h." Стр. ".$page.".";
@@ -99,24 +99,32 @@ if (current_user_can('manage_options'))
 
 ?>
 <!doctype html>
-<html>
+<html lang="ru">
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-      <meta name="robots" content="all" />
       <meta name="description" content="<?echo $h;?> Смешные карикатуры для газет, журналов и электронных СМИ. Лицензии." />
-      <meta name="keywords" content="<?echo $kw;?> картунбанк, cartoonbank, карикатуры, сток, скачать, приколы, смешные, картинки, комиксы, карикатура, ру, комикс, коллаж, шарж, стрип, caricatura, caricature, cartoon, ru, comics, comix, стоковые картинки, стоковые изображения" />
+      <meta name="keywords" content="<?echo $kw;?> картунбанк, cartoonbank, карикатуры, смешные, картинки, комиксы, карикатура, шарж, caricature, cartoon, comics" />
       <title><?echo $h;?> Картунбанк, <?php if(wp_title('', false)) { echo ' '; } ?> <?php bloginfo('name'); ?>.</title>
       <meta name="generator" content="cartoonbank" />
       <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
 	  <link rel='index' title='Банк изображений' href='http://cartoonbank.ru' />
 	  <link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='http://cartoonbank.ru//index.php?rss=true&amp;action=product_list&amp;type=rss'/>
-      <link media="screen" rel="stylesheet" href="<? echo SITEURL;?>ales/colorbox/example2/colorbox.min.css" />
-      <link href='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/style.min.css?11' rel="stylesheet" type="text/css" />
-	  <link href='http://cartoonbank.ru/wp-content/themes/cartoonbank3/style.min.css?22' rel="stylesheet" type="text/css" />
-	  <link rel='stylesheet' id='five-star-rating-CSS-css'  href='http://cartoonbank.ru/wp-content/plugins/five-star-rating/assets/css/five-star-rating.min.css?ver=3.0' type='text/css' media='all' />
-	  <script type='text/javascript' src='http://cartoonbank.ru/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
-<script src="http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/ajax.min.js"></script>
-<script src="http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/user.min.js"></script>
+      <link rel="stylesheet" href='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/style.min.css?r2' type="text/css" />
+	  <link rel="stylesheet" href='http://cartoonbank.ru/wp-content/themes/cartoonbank3/style.min.css?r4' type="text/css" />
+	  <link rel="stylesheet" id='five-star-rating-CSS-css' href='http://cartoonbank.ru/wp-content/plugins/five-star-rating/assets/css/five-star-rating.min.css?ver=3.0' type='text/css' media='all' />
+	  <?/*
+	  //<script type='text/javascript' src='http://cartoonbank.ru/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+      //<link rel="stylesheet" type="text/css" media="screen" href="<? echo SITEURL;?>ales/colorbox/example2/colorbox.min.css" />
+	  //<script src="<? echo SITEURL;?>ales/colorbox/jquery.colorbox-min.js"></script>
+	  //<script type='text/javascript' src='http://codeorigin.jquery.com/jquery-1.10.2.min.js'></script>
+	  */
+	  ?>
+		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+		<script type="text/javascript" src="http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/ajax.min.js"></script>
+		<script type="text/javascript" src="http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/user.min.js"></script>
+		<script src="http://cartoonbank.ru/wp-includes/js/jquery/jquery.highlight-3.min.js" type="text/javascript"></script>
+		<script src='http://cartoonbank.ru/wp-content/plugins/five-star-rating/assets/js/five-star-rating.min.js?ver=0.1' type='text/javascript'></script>
+		
 
       <?php 
 	  /*
@@ -256,7 +264,9 @@ else
       <li><a href="/?page_id=2870"<? $pageid=='2870'? selected_style():"" ?> title='видео'>Видео</a></li>
       <li><a href="/?page_id=976"<? $pageid=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
       <li><a href="/?page_id=2041"<? $pageid=='2041'? selected_style():"" ?> title='English'><img src="<? echo SITEURL;?>img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
-      <li><? echo $_edid;?></li>
+      <?/*
+	  <li><? echo $_edid;?></li>
+	  */?>
    </ul>
 </div>
 <div id="pt"></div>
