@@ -173,7 +173,7 @@ td.lalt{
                 $thatdir = $product_images; //destination dir
                 $ifolder = ''; //subfolder for artist
                 $file = $_FILES['file']['name']; //
-                $resample_quality = 100; //image quality
+                $resample_quality = 85; //image quality
 
                 al_create_resized_file($chwidth, $chheight, $thatdir, $ifolder, $file, $resample_quality);    
                 $wm = $basepath."/wp-content/plugins/wp-shopping-cart/images/watermark.png";
@@ -207,7 +207,12 @@ td.lalt{
 
             if(move_uploaded_file($_FILES['file']['tmp_name'],($filedir.$idhash)))
             {
-                $wpdb->query("UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `idhash` = '$idhash', `width` = '$file_w', `height` = '$file_h' WHERE `id` = '$fileid' LIMIT 1");
+                $sql = "UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `width` = '$file_w', `height` = '$file_h', `uploaded` = 0, `idhash` = '$idhash' WHERE `id` = '".$fileid."' LIMIT 1";
+                $wpdb->query($sql);
+            }
+            if (file_exists($filedir.$idhash)){
+                $sql = "UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `width` = '$file_w', `height` = '$file_h', `uploaded` = 0, `idhash` = '$idhash' WHERE `id` = '".$fileid."' LIMIT 1";
+                $wpdb->query($sql);
             }
             $file = $fileid;
         }
@@ -498,6 +503,9 @@ td.lalt{
             $fileid = $fileid_data[0]['file'];
             $file_data = $wpdb->get_results("SELECT `id`,`idhash` FROM `wp_product_files` WHERE `id` = '$fileid' LIMIT 1",ARRAY_A);
             $idhash = $file_data[0]['idhash'];
+            if (strlen($idhash)==0){
+                $idhash = sha1($fileid);
+            }
             $mimetype = $_FILES['file']['type'];
 
             $filename = $_FILES['file']['name'];
@@ -520,6 +528,18 @@ td.lalt{
                         $width  = get_option('product_image_width');
                         break;
                 }
+                
+                if (isset($idhash) && strlen($idhash)>0)
+                {
+                    if (copy($_FILES['file']['tmp_name'], $filedir.$idhash)){
+                        echo "copied";
+                    }
+                    else{
+                        echo "not copied";
+                    }
+                }
+                
+                
                 copy($_FILES['file']['tmp_name'], $product_images.$_FILES['file']['name']);
                 copy($_FILES['file']['tmp_name'], $imagedir.$_FILES['file']['name']);
 
@@ -562,7 +582,8 @@ td.lalt{
 
 			if(file_exists($imagedir.$_FILES['file']['name']))
 			{
-                $wpdb->query("UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `width` = '$file_w', `height` = '$file_h' WHERE `id` = '".$file_data[0]['id']."' LIMIT 1");
+                $sql="UPDATE `wp_product_files` SET `filename` = '".$filename."', `mimetype` = '$mimetype', `idhash` = '$idhash', `width` = '$file_w', `height` = '$file_h', `uploaded` = 0 WHERE `id` = '".$file_data[0]['id']."' LIMIT 1";
+                $wpdb->query($sql);
 			}
 /*
             if(move_uploaded_file($_FILES['file']['tmp_name'],($filedir.$idhash)))
@@ -1484,8 +1505,8 @@ $stle = "";
         //                   $watermarkfile_width, $watermarkfile_height);
 
 
-        $opacity = 10;
-        $opacity_logo = 60;
+        $opacity = 5;
+        $opacity_logo = 35;
 
         ImageCopyMerge($sourcefile_id, $watermarkfile_id, $dest_x, $dest_y, 0, 0, $watermarkfile_width, $watermarkfile_height, $opacity);
 
