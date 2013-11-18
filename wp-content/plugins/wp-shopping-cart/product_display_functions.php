@@ -99,12 +99,12 @@ function product_display_paginated($search_sql = '', $offset, $items_on_page)
 
     $_sharethis_html = "<div id=\'share_this\' style=\'line-height:200%;\'></div>";
 
-    $_dimensions_html = "<div id='dimensions'><img src='".get_option('siteurl')."/img/ldng.gif'></div>";
+    $_dimensions_html = "<div id='dimensions'><img src='".get_option('siteurl')."/img/ldng.gif' alt='loading'></div>";
     $_dimensions_html = str_replace("\"","\'",$_dimensions_html);
     $_dimensions_html = str_replace("'","\'",$_dimensions_html);
 
 
-    $_rating_html = "<div id='star_rating'><img src='".get_option('siteurl')."/img/ldng.gif'></div>";
+    $_rating_html = "<div id='star_rating'><img src='".get_option('siteurl')."/img/ldng.gif' alt='loading'></div>";
     $_rating_html = str_replace("\"","\'",$_rating_html);
     $_rating_html = str_replace("'","\'",$_rating_html);
 
@@ -143,11 +143,11 @@ else
     if ($logged)
     {
         //$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h1>" .$_name."</h1>&nbsp;$klop<span id=\'thumb\' onclick=\'fave_it();\'>$klop<img src=\'".$siteurl."/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
-        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h1>" .$_name."</h1>&nbsp;$klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h3>" .$_name."</h3>&nbsp;$klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
     else
     {
-        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h1>" .$_name."</h1> $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h3>" .$_name."</h3> $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
 
     $_bigpictext = "<h2><b>Категория: </b>".$_category."</h2><h2><b>Описание: </b></h2> ".$_description."<br /><h2><b>Тэги: </b></h2><ul>".$_tags."</ul><h2><b>Ссылка:</b></h2><a title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><b>Размер:</b><br />".$_dimensions_html.$_sold."<b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
@@ -190,13 +190,13 @@ else
         {$l3_price_text = "<td style=\'vertical-align:middle;text-align:right;\'>не доступна</td>";}
 if ($_brandid==1 || $_brandid==6 || $_brandid==8){
     //$printdirect = "<div class=\'prdrrdr\'>.</div>";
-	$printdirect = "<div style=\'float:left;\'><a onclick=\"prdrrdr(".$product['id'].");\";);\" rel=\'nofollow\' href=\'#\'><img src=\'/img/tshirt.jpg\' title=\'Закажите этот рисунок на кружке, футболке или другом сувенире\'></a></div><div style=\'float:left;text-align:left;padding-left:6px;padding-top: 6px;font-size:10px;font-weight:bold;line-height:1.5;\'><a onclick=\"prdrrdr(".$product['id'].");\";);\" rel=\'nofollow\' href=\'#\'>Заказать сувенир<br>с этим рисунком</a>.</div>";
+	$printdirect = "<div style=\'float:left;\'><a onclick=\"prdrrdr(".$product['id'].");\";);\" rel=\'nofollow\' href=\'#\'><img src=\'/img/tshirt.jpg\' title=\'Закажите этот рисунок на кружке, футболке или другом сувенире\' alt=\'t-shirt\'></a></div><div style=\'float:left;text-align:left;padding-left:6px;padding-top: 6px;font-size:10px;font-weight:bold;line-height:1.5;\'><a onclick=\"prdrrdr(".$product['id'].");\";);\" rel=\'nofollow\' href=\'#\'>Заказать сувенир<br>с этим рисунком</a>.</div>";
 }
 else{
     $printdirect = "";
 }
 
-$_bottomstriptext = $printdirect.$_size_warning."<div style=\'width:450px;float:right;\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'><table class=\'licenses\'> <tr> <td class=\'wh\' style=\'width:80px;vertical-align:bottom;\'><b>Выбор</b></td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l1_disabled value=\'l1_price\'></td> ".$l1_price_text." <td rowspan=\'2\' style=\'width:20px;\'>&nbsp;</td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l2_disabled value=\'l2_price\'></td> ".$l2_price_text." <td rowspan=\'2\' style=\'width:20px;\'>&nbsp;</td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l3_disabled value=\'l3_price\'></td> ".$l3_price_text." <td rowspan=\'2\' class=\'wh\' style=\'width:80px; text-align:right; vertical-align:bottom;\'><input id=\'searchsubmit\' value=\'заказать\' type=\'submit\' class=\'borders\' style=\'cursor:pointer;background-color:#FFFF99;padding:6px;margin-bottom:2px;\' title=\'Добавить рисунок в корзину заказов\'></td> </tr> <tr> <td class=\'wh\' style=\'vertical-align:top;\'><b>лицензии:</b></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=238\' title=\'подробнее об ограниченной лицензии\'>ограниченная</a></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=242\' title=\'подробнее о стандартной лицензии\'>стандартная</a></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=245\' title=\'подробнее об расширенной лицензии\'>расширенная</a></td> </tr> </table><input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> </form></div>";
+$_bottomstriptext = $printdirect.$_size_warning."<div style=\'width:450px;float:right;\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'><table class=\'licenses\'> <tr> <td class=\'wh\' style=\'width:80px;vertical-align:bottom;\'><b>Выбор</b></td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l1_disabled value=\'l1_price\'></td> ".$l1_price_text." <td rowspan=\'2\' style=\'width:20px;\'>&nbsp;</td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l2_disabled value=\'l2_price\'></td> ".$l2_price_text." <td rowspan=\'2\' style=\'width:20px;\'>&nbsp;</td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l3_disabled value=\'l3_price\'></td> ".$l3_price_text." <td rowspan=\'2\' class=\'wh\' style=\'width:80px; text-align:right; vertical-align:bottom;\'><input id=\'searchsubmit\' value=\'заказать\' type=\'submit\' class=\'buy\' title=\'Добавить рисунок в корзину заказов\'></td> </tr> <tr> <td class=\'wh\' style=\'vertical-align:top;\'><b>лицензии:</b></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=238\' title=\'подробнее об ограниченной лицензии\'>ограниченная</a></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=242\' title=\'подробнее о стандартной лицензии\'>стандартная</a></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=245\' title=\'подробнее об расширенной лицензии\'>расширенная</a></td> </tr> </table><input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> </form></div>";
 }
 
     $_next_item = $counter + 1;
@@ -211,8 +211,9 @@ $_bottomstriptext = $printdirect.$_size_warning."<div style=\'width:450px;float:
 
     $vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
     $vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='".$_bigpicstrip."';";
+	$vstavka .= "jQuery('#hone').html('<h1>Карикатура «".$_name."», ".$_author."</h1>');";
     $vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
-    
+
     $output .= "<a href=\"".get_option('siteurl')."/cartoon/".$_number."\" onclick=\"get_item". ($_next_item - 1) ."();return false;\">";
 
     $jq_stars = ' get_5stars(); ';
@@ -484,11 +485,11 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
         //next button
         if (isset($_REQUEST['new']) && $_REQUEST['new']==1)
         {
-            $button_sort = "<a href='".$siteurl."/?".add_or_change_parameter('new','0')."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>показать избранное</a>";
+            $button_sort = "<a href='".$siteurl."/".add_or_change_parameter('new','0')."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>показать избранное</a>";
         }
         else
         {
-            $button_sort = "<a href='".$siteurl."/?".add_or_change_parameter('new','1')."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>сортировать по дате</a>";
+            $button_sort = "<a href='".$siteurl."/".add_or_change_parameter('new','1')."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>сортировать по дате</a>";
         }
 
 

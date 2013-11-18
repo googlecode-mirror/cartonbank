@@ -316,7 +316,7 @@ foreach ($_SESSION['nzshpcrt_cart'] as $it)
 
 	$out = fill_invoice($filename, "x".$_invoice_x_number, $_invoice_date,  "", "", $the_list, $total, $count, $contract_period, "" ,$this_date,$_discount);
 
-		echo "<div id='invoice' style='background: white url(<? echo SITEURL;?>img/mg_stamp.gif) no-repeat; background-size: 21%; background-position: 87% 100%; margin:20px; padding:8px;width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>";
+		echo "<div id='invoice' style='background: white url(http://cartoonbank.ru/img/mg_stamp.gif) no-repeat; background-size: 21%; background-position: 87% 100%; margin:20px; padding:8px;width: 210mm; border: 1px #D6D6D6 solid; font-size: 11pt;'>";
 		echo $out;
 		echo "</div>";
 
@@ -324,7 +324,7 @@ foreach ($_SESSION['nzshpcrt_cart'] as $it)
 
 	// Print invoice PDF
 	$out = fill_invoice($filename_pdf, "x".$_invoice_x_number, $_invoice_date, "", "", $the_list, $total, $count, $contract_period, "",$this_date,$_discount);
-			echo ("<div style='margin-left:20px;'><form method=post action='<? echo SITEURL;?>ales/tcpdf/examples/ales.php'>
+			echo ("<div style='margin-left:20px;'><form method=post action='http://cartoonbank.ru/ales/tcpdf/examples/ales.php'>
 					<input type='submit' value='скачать счёт в формате PDF для распечатывания' style='padding:8px;background-color:#FFFF99;'>
 					<input type='hidden' name='html' value='".htmlspecialchars($out)."'>
 					<input type='hidden' name='filename' value='invoice_".$_invoice_x_number."'>

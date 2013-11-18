@@ -309,3 +309,10 @@ var _url = 'http://www.google.com/calendar/event?src=9ats0457qmvp1mv5kecdut2uhs%
 window.location = _url;
 return false;
 }
+
+function prdrrdr(id){
+var x=window.confirm('Вы будете перенаправлены на сайт нашего партнера, где сможете оформить заказ.');
+var _url = 'http://cartoonbank.ru/ales/prindirect.php?id='+id;
+if(x){document.location.href = _url;}
+return false;
+}
