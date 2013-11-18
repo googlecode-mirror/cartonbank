@@ -383,7 +383,7 @@ $sql ="SELECT date, st.datetime,  c.purchaseid, p.id, s.name as processed, proce
 			 type      : 'textarea',
 			 cancel    : 'Cancel',
 			 submit    : 'OK',
-			 indicator : '<img src="/img/ldng.gif">',
+			 indicator : '<img src="/img/ldng.gif" alt="loading">',
 			 tooltip   : 'Нажмите для редактирования...'
 		 });
 	});

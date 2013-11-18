@@ -714,7 +714,7 @@ AND st.downloads <5
 AND pl.user_id!='106'
 GROUP BY c.prodid
 ORDER BY counter DESC 
-LIMIT 250
+LIMIT 500
 ) hundred
 where counter>1
 ";
