@@ -83,14 +83,14 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
 })(document, "script", document.location.protocol);
 </script>
 <!--/Openstat-->
-
+<?/*
 <!-- begin of Top100 code -->
 <script id="top100Counter" type="text/javascript" src="http://counter.rambler.ru/top100.jcn?2529853"></script>
 <noscript><a href="http://top100.rambler.ru/navi/2529853/">
 <img src="http://counter.rambler.ru/top100.cnt?2529853" alt="Rambler's Top100" />
 </a></noscript>
 <!-- end of Top100 code -->
-
+*/?>
 <!--LiveInternet counter--><script type="text/javascript"><!--
 document.write("<a href='http://www.liveinternet.ru/click' "+
 "target=_blank><img src='//counter.yadro.ru/hit?t26.6;r"+
@@ -109,8 +109,6 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 <!-- //Rating@Mail.ru counter -->
 
 
-<script src="http://cartoonbank.ru/wp-includes/js/jquery/jquery.highlight-3.min.js" type="text/javascript"></script>
-<script src='http://cartoonbank.ru/wp-content/plugins/five-star-rating/assets/js/five-star-rating.min.js?ver=0.1' type='text/javascript'></script>
 
 <script>
 jQuery(document).ready(function(){if(getCookie('username')!='' && getCookie('username')!=null && getCookie('username')!='xxx'){var nnn = "Здравствуйте, <a href='/wp-admin/profile.php'>"+getCookie('username');}else{var nnn = "Вам надо <a href='/wp-login.php?redirect_to="+encodeURIComponent(document.URL)+"'>залогиниться</a>, чтобы добавлять товары в корзину.";}jQuery('#username').html(nnn);var getshoppingcarturl = '<? echo SHOPPINGCARTURL.'get_shopping_cart.php'; ?>';jQuery('#shoppingcart').load(getshoppingcarturl);});
