@@ -59,15 +59,15 @@ if (isset($_REQUEST['cs'])&&!empty($_REQUEST['cs'])){
 
 // FINAL SQL
 
-$sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_categories`.`name` as kategoria, `wp_product_list`.`category` as category_id FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cartoonid_filter . $latest . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not .  $min_points_filter . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  $orderBy LIMIT ".$offset.",".$items_on_page; 
-
+//$sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`name` as brand, `wp_product_brands`.`id` as brandid, `wp_product_categories`.`name` as kategoria, `wp_product_list`.`category` as category_id FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cartoonid_filter . $latest . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not .  $min_points_filter . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`  $orderBy LIMIT ".$offset.",".$items_on_page; 
+$sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`name` AS brand,  `wp_product_brands`.`id` AS brandid,  `wp_product_categories`.`name` AS kategoria,  `wp_product_list`.`category` AS category_id FROM  `wp_product_list` LEFT JOIN  `wp_product_brands` ON  `wp_product_list`.`brand` =  `wp_product_brands`.`id` LEFT JOIN  `wp_product_categories` ON  `wp_product_list`.`category` =  `wp_product_categories`.`id` WHERE  `wp_product_list`.`active` =  '1' " . $search_keywords_filter . $cartoonid_filter . $latest . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not .  $min_points_filter . " AND  `wp_product_list`.`visible` =  '1' $orderBy LIMIT ".$offset.",".$items_on_page;
 // FINAL sql FOR ТЕМА ДНЯ
 if ($category=='777'){
 $sql="SELECT `wp_product_list`.*, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`id` = `wp_item_category_associations`.`product_id`  AND `wp_product_list`.`tema_dnya_approved` = '1'  AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` AND  wp_product_list.id = (select id from tema_dnya where DATETIME = DATE( NOW( ) ) ) LIMIT 1 UNION SELECT `wp_product_list`.*, `wp_product_brands`.`id` as brandid, `wp_product_brands`.`name` as brand, `wp_item_category_associations`.`category_id`, `wp_product_categories`.`name` as kategoria FROM `wp_product_list`,`wp_item_category_associations`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1'  AND `wp_item_category_associations`.`category_id` != '666'  AND `wp_product_list`.`approved` = '1'  AND `wp_product_list`.`tema_dnya_approved` = '1'  AND `wp_product_list`.`visible`='1' AND `wp_product_list`.`id` = `wp_item_category_associations`.`product_id` AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_item_category_associations`.`category_id` = `wp_product_categories`.`id` AND `wp_item_category_associations`.`category_id`='777'  AND `wp_product_categories`.`id`=777 and wp_product_list.id not in (SELECT id FROM tema_dnya WHERE DATETIME = DATE( NOW( ) ) )";
 }
 
 // COUNT total number of images for this query
-$sql_count_total = "SELECT COUNT(`wp_product_list`.id) as count FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cartoonid_filter . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter." AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`"; 
+$sql_count_total = "SELECT COUNT(`wp_product_list`.id) as count FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cartoonid_filter . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter."  AND votes_sum / votes > 2.49 AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`"; 
 if (!$searchdonebutnothingfound){
 $count = $wpdb->get_results($sql_count_total,ARRAY_A);
 $totalitems = $count[0]['count'];
@@ -81,7 +81,7 @@ $_bottomstriptext = '';
 	echo "<div id='bigpictopstrip'>".$_bigpicstrip."</div>";
 	echo "<div id='bigpictext'>".$_bigpictext."</div>";
 	echo "<div id='bigpic'><a href='".SITEURL."cartoon/".$cartoonid."#pt' onclick=\"get_item1();\">".$_bigpic."</a></div>";
-	echo "<div style='clear:both;'></div>";
+	echo "<div class='clrb'></div>";
 	echo "<div id='hone' style='float:right;'></div>";
 	echo "<div id='bigpicbottomstrip' style='float:right;margin-bottom:6px;'>".$_bottomstriptext."</div>";
 
@@ -114,12 +114,8 @@ pokazh($sword);
 jQuery(document).ready(function() {
 on_start();
 <?if (isset($sword)&&$sword!=''){
-?>highlight('<?echo $sword;?>');<?
-}
-?>
-get_5stars();
-get_dimensions();
-get_share_this();
+?>highlight('<?echo $sword;?>');<?}?>
+scrpts();
 });
 //-->
 </script>
@@ -205,8 +201,8 @@ function save_search_terms($terms)
 <div style='display:none'>
     <div id='emailform1' style='text-align:left; padding:10px; background:#fff;'>
             <h3>Письмо автору Картунбанка</h3>
-            <form method='post' action='<? echo SITEURL;?>?page_id=29&amp;brand=<? echo $brandid;?>&amp;bio=1'>Email для обратной связи: <input name='email' type='text' style='width:100%;'/><br /><br />
-            <textarea style='width:100%;' name='message' rows='15' cols='30'>Уважаемый <? echo $_artist;?>!</textarea><br />
+            <form method='post' action='<? echo SITEURL;?>?page_id=29&amp;brand=<? echo $brandid;?>&amp;bio=1'>Email для обратной связи: <input name='email' type='text' class='w100'/><br /><br />
+            <textarea class='w100' name='message' rows='15' cols='30'>Уважаемый <? echo $_artist;?>!</textarea><br />
             напишите любую цифру: <input type='text' name='klop' value=''>
             <input type='submit' value='Отправить письмо' class='borders'/>
             </form>
