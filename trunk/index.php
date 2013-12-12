@@ -1,4 +1,7 @@
 <?php
+if (!isset($_GET['page_id'])){
+	$_GET['page_id']='29';
+}
 if (count($_POST)==0 && $_GET['page_id']!=31) {
 
     $url = $_SERVER['QUERY_STRING'];
