@@ -89,11 +89,9 @@ define('WP_DEBUG', false);
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');
 
-	define('SITEURL','http://cartoonbank.ru/');
-
-	define('SHOPPINGCARTURL','http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/');
-
-	define('ROOTDIR','/home/www/cb3/');
+define('SITEURL','http://cartoonbank.ru/');
+define('SHOPPINGCARTURL','http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/');
+define('ROOTDIR','/home/www/cb3/');
     
 /** Инициализирует переменные WordPress и подключает файлы. */
 require_once(ABSPATH . 'wp-settings.php');
