@@ -538,7 +538,9 @@ if (isset($user) && !is_null($user)){
         $_SESSION['username']= 'xxx';
     }
     setcookie('uid', $_SESSION['uid']);
-    setcookie('username', $_SESSION['username']);
+    //setcookie('username', $_SESSION['username']);
+    setrawcookie('username', rawurlencode($_SESSION['username']));
+    //setrawcookie('cookie_name', rawurlencode($value), time()+60*60*24*365); 
     }
 ///ales    
 
