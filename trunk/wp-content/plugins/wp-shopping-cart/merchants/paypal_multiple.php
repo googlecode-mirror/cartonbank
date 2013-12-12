@@ -4,7 +4,16 @@ $nzshpcrt_gateways[$num]['internalname'] = 'paypal_multiple';
 $nzshpcrt_gateways[$num]['function'] = 'gateway_paypal_multiple';
 $nzshpcrt_gateways[$num]['form'] = "form_paypal_multiple";
 $nzshpcrt_gateways[$num]['submit_function'] = "submit_paypal_multiple";
+/*
+$current_user = wp_get_current_user();
+if (isset($current_user->discount))
+		$_discount = $current_user->discount;
+  else
+		$_discount = 0;
 
+pokazh($current_user);
+exit;
+*/
 function gateway_paypal_multiple($seperator, $sessionid)
   {
   global $wpdb;
@@ -18,7 +27,8 @@ function gateway_paypal_multiple($seperator, $sessionid)
   //$transact_url = "http://cartoonbank.ru/?page_id=32";
   // paypal connection variables
   // ales $data['business'] = get_option('paypal_multiple_business');
-  $data['business'] = "igor.aleshin@gmail.com"; // ales
+  //$data['business'] = "igor.aleshin@gmail.com"; // ales
+  $data['business'] = "cartoonbank.ru@gmail.com"; // 
   $data['return'] = $transact_url.$seperator."sessionid=".$sessionid."&gateway=paypal";
   $data['cancel_return'] = $transact_url;
   $data['notify_url'] = $transact_url;
@@ -26,17 +36,20 @@ function gateway_paypal_multiple($seperator, $sessionid)
   //$data['image'] = 'src=\"http://www.paypal.com/en_US/i/btn/x-click-but01.gif\" name=\"submit\" alt=\"Make payments with PayPal - its fast, free and secure!\"';  // ales
   
    // look up the currency codes and local price
-  $currency_code = $wpdb->get_results("SELECT `code` FROM `wp_currency_list` WHERE `id`='".get_option(currency_type)."' LIMIT 1",ARRAY_A);
-  $local_currency_code = $currency_code[0]['code'];
+  //$currency_code = $wpdb->get_results("SELECT `code` FROM `wp_currency_list` WHERE `id`='".get_option(currency_type)."' LIMIT 1",ARRAY_A);
+  //$local_currency_code = $currency_code[0]['code'];
+  $local_currency_code = "RUB";
   //ales $paypal_currency_code = get_option('paypal_curcode');
-  $paypal_currency_code = "USD";
+  //$paypal_currency_code = "USD";
+  $paypal_currency_code = "RUB";
 
   // Stupid paypal only accepts payments in one of 5 currencies. Convert from the currency of the users shopping cart to the curency which the user has specified in their paypal preferences.
   $curr=new CURRENCYCONVERTER();
 
   
   $data['currency_code'] = $paypal_currency_code;
-  $data['Ic'] = 'US';
+  //$data['Ic'] = 'US';
+  $data['Ic'] = 'RU';
   $data['bn'] = 'toolkit-php';
   $data['no_shipping'] = '1';
   $data['no_note'] = '1';
@@ -58,9 +71,13 @@ function gateway_paypal_multiple($seperator, $sessionid)
   $i = 1;
   foreach($cart as $item)
     {
-    $product_data = $wpdb->get_results("SELECT * FROM `wp_product_list` WHERE `id`='".$item['prodid']."' LIMIT 1",ARRAY_A);
+    $sql = "SELECT * FROM `wp_product_list` WHERE `id`='".$item['prodid']."' LIMIT 1";
+    //SELECT * FROM `wp_product_list` WHERE `id`='5900' LIMIT 1
+    //pokazh($sql);
+    $product_data = $wpdb->get_results($sql,ARRAY_A);
     $product_data = $product_data[0];
     //exit("<pre>" . print_r($item,true) ."</pre>");
+    /*
     $variation_count = count($product_variations);
     
     $variation_sql = "SELECT * FROM `wp_cart_item_variations` WHERE `cart_id`='".$item['id']."'";
@@ -88,7 +105,8 @@ function gateway_paypal_multiple($seperator, $sessionid)
         {
         $variation_list = '';
         }
-    
+    */
+    /*
     if($product_data['special']==1)
       {
       $price_modifier = $product_data['special_price'];
@@ -97,34 +115,52 @@ function gateway_paypal_multiple($seperator, $sessionid)
         {
         $price_modifier = 0;
         }
-    $local_currency_productprice = ($product_data['price'] - $price_modifier) * get_option('gst_rate');
+    */
     
-    $local_currency_shipping = nzshpcrt_determine_item_shipping($item['prodid'], $item['quantity'], $_SESSION['selected_country']);
+    ///$local_currency_productprice = ($product_data['price'] - $price_modifier) * get_option('gst_rate');
+    
+    if (isset($_POST['disc'])){
+        $discount = $_POST['disc'];
+    }
+    else{
+        $discount = 0;
+    }
+    
+	//echo("<pre>" . print_r($item,true) ."</pre>");
+
+    $local_currency_productprice = ceil($item['price']*(100-$discount)/100);
+    
+    //pokazh($discount);
+    //pokazh($local_currency_productprice);
+    
+    
+    //$local_currency_shipping = nzshpcrt_determine_item_shipping($item['prodid'], $item['quantity'], $_SESSION['selected_country']);
     if($paypal_currency_code != $local_currency_code)
       {
       $paypal_currency_productprice = $curr->convert($local_currency_productprice,$paypal_currency_code,$local_currency_code);
-      $paypal_currency_shipping = $curr->convert($local_currency_shipping,$paypal_currency_code,$local_currency_code);
+      //$paypal_currency_shipping = $curr->convert($local_currency_shipping,$paypal_currency_code,$local_currency_code);
       //exit("bad");
       }
       else
         {
         $paypal_currency_productprice = $local_currency_productprice;
-        $paypal_currency_shipping = $local_currency_shipping;
+        //$paypal_currency_shipping = $local_currency_shipping;
         //exit("good");
         }
-    $data['item_name_'.$i] = $product_data['name'].$variation_list;
-// ales     $data['amount_'.$i] = number_format(sprintf("%01.2f", $paypal_currency_productprice),$decimal_places,'.','');
-    $data['amount_'.$i] = '10'; // ales
+    $data['item_name_'.$i] = $product_data['name']; //.$variation_list;
+    $data['amount_'.$i] = number_format(sprintf("%01.2f", $paypal_currency_productprice),$decimal_places,'.','');
+    //$data['amount_'.$i] = '10'; // ales
     $data['quantity_'.$i] = $item['quantity'];
     $data['item_number_'.$i] = $product_data['id'];
     //exit($paypal_currency_shipping);
-    $data['shipping_'.$i] = number_format($paypal_currency_shipping,$decimal_places,'.','');
+    $data['shipping_'.$i] = ''; //number_format($paypal_currency_shipping,$decimal_places,'.','');
     $data['handling_'.$i] = '';
     $i++;
     }
   
   $data['tax'] = '';
   
+  /*
   $base_shipping = nzshpcrt_determine_base_shipping(0, $_SESSION['selected_country']);
   
   if($base_shipping > 0)
@@ -137,7 +173,7 @@ function gateway_paypal_multiple($seperator, $sessionid)
     $data['handling_'.$i] = '';
     }
     
-  
+  */
   
   $data['custom'] = '';
   $data['invoice'] = $sessionid;
@@ -179,15 +215,17 @@ function gateway_paypal_multiple($seperator, $sessionid)
   //$data['country'] = $_POST['address'];
   
   // Change suggested by waxfeet@gmail.com, if email to be sent is not there, dont send an email address
-  if($_POST['collected_data'][get_option('email_form_field')] != null)
+  /*if($_POST['collected_data'][get_option('email_form_field')] != null)
     {
     $data['email'] = $_POST['collected_data'][get_option('email_form_field')];
     }
+    */
   $data['upload'] = '1';
   $data['cmd'] = "_ext-enter";
   $data['redirect_cmd'] = "_cart";
   $datacount = count($data);
   $num = 0;
+  $output = "";
   foreach($data as $key=>$value)
     {
     $amp = '&';
@@ -196,11 +234,15 @@ function gateway_paypal_multiple($seperator, $sessionid)
       {
       $amp = '';
       }
+    //$output .= $key.'='.urlencode($value).$amp;
     $output .= $key.'='.urlencode($value).$amp;
     }
-  //exit("<pre>" . print_r($_POST,true) ."</pre>"); 
-  //exit("<pre>" . print_r($_SESSION,true) ."</pre>");
-  //exit("<pre>" . print_r($data,true) ."</pre>");
+  /*  
+  echo("<pre>" . print_r($_POST,true) ."</pre>"); 
+  echo("<pre>" . print_r($_SESSION,true) ."</pre>");
+  exit("<pre>" . print_r($data,true) ."</pre>");
+  */
+  //header("Content-Type: text/html; charset=utf-8");
   header("Location: ".get_option('paypal_multiple_url')."?".$output);
   exit();
   }
@@ -269,4 +311,103 @@ $output .= "      </td>
    </tr>";
   return $output;
   }
+  
+  
+  
+  /*
+  * 
+  Array
+(
+    [total] => 13
+    [collected_data] => Array
+        (
+            [1] => Игорь
+            [2] => Алёшин
+            [3] => igor.aleshin@dataart.com
+            [4] => 
+            [5] => Картунбанк
+        )
+
+    [agree] => yes
+    [payment_method] => paypal_multiple
+    [submitwpcheckout] => true
+    [submit] =>  Оплатить заказ и скачать файлы 
+)
+Array
+(
+    [uid] => 1
+    [username] => Igor
+    [cart_paid] => 
+    [nzshpcrt_cart] => Array
+        (
+            [1] => cart_item Object
+                (
+                    [product_id] => 5900
+                    [product_variations] => 
+                    [quantity] => 1
+                    [name] => Каникулы Бонифация
+                    [price] => 250.00
+                    [license] => l1_price
+                    [author] => Алёшин Игорь
+                )
+
+        )
+
+    [total] => 13
+    [nzshpcrt_serialized_cart] => a:1:{i:1;O:9:"cart_item":7:{s:10:"product_id";s:4:"5900";s:18:"product_variations";N;s:8:"quantity";i:1;s:4:"name";s:35:"Каникулы Бонифация";s:5:"price";s:6:"250.00";s:7:"license";s:8:"l1_price";s:6:"author";s:23:"Алёшин Игорь";}}
+    [collected_data] => Array
+        (
+            [1] => Игорь
+            [2] => Алёшин
+            [3] => igor.aleshin@dataart.com
+            [4] => 
+            [5] => Картунбанк
+        )
+
+    [checkoutdata] => Array
+        (
+            [total] => 13
+            [collected_data] => Array
+                (
+                    [1] => Игорь
+                    [2] => Алёшин
+                    [3] => igor.aleshin@dataart.com
+                    [4] => 
+                    [5] => Картунбанк
+                )
+
+            [agree] => yes
+            [payment_method] => paypal_multiple
+            [submitwpcheckout] => true
+            [submit] =>  Оплатить заказ и скачать файлы 
+        )
+
+)
+Array
+(
+    [business] => cartoonbank.ru@gmail.com
+    [return] => http://test.cartoonbank.ru/?page_id=32&sessionid=1341385130836&gateway=paypal
+    [cancel_return] => http://test.cartoonbank.ru/?page_id=32
+    [notify_url] => http://test.cartoonbank.ru/?page_id=32
+    [rm] => 2
+    [currency_code] => RUB
+    [Ic] => RU
+    [bn] => toolkit-php
+    [no_shipping] => 1
+    [no_note] => 1
+    [item_name_1] => Каникулы Бонифация
+    [amount_1] => 9.00
+    [quantity_1] => 1
+    [item_number_1] => 5900
+    [shipping_1] => 
+    [handling_1] => 
+    [tax] => 
+    [custom] => 
+    [invoice] => 1341385130836
+    [upload] => 1
+    [cmd] => _ext-enter
+    [redirect_cmd] => _cart
+)* 
+  */
+  
   ?>

@@ -376,7 +376,7 @@ FROM
 WHERE 
     V.image_id = P.id 
     AND P.brand = B.id
-    AND P.active = 1
+    AND P.active = '1'
     AND U.id = B.user_id
     AND C.id != '777'
     AND C.id = P.category

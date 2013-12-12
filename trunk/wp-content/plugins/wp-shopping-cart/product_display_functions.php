@@ -31,7 +31,8 @@ function product_display_paginated($search_sql = '', $offset, $items_on_page)
 
     $output .= "<div id='item".$counter."' class='item'>"; // start item
 
-    $vstavka = "document.getElementById('bigpic').innerHTML = '<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>';";
+    //$vstavka = "jQuery('#bigpic').html('<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>');";
+    $vstavka = "jQuery('#bigpic').html('<img src=\'http://sl.cartoonbank.ru/".$product['image']."\'>');";
 
     // here we prepare data for the BIGPIC preview
 
@@ -73,11 +74,18 @@ function product_display_paginated($search_sql = '', $offset, $items_on_page)
  
  $_tags = hilite(nl2br($product['additional_description']));
  
- if ($product['sold']==0){
+ if (isset($product['sold'])){
+     $psold = $product['sold'];
+ }
+ else{
+     $psold = 0;
+ }
+ 
+ if ($psold==0){
      $_sold="";
  }
  else{
-    $_sold = "<h2><b>Продажи:</b> <span class=\'sold\'>".$product['sold']."</span></h2><br />";
+    $_sold = "<h2><b>Продажи:</b> <span class=\'sold\'>".$psold."</span></h2><br />";
  }
  
     //$_tags = hilite(nl2br(htmlspecialchars(stripslashes($product['additional_description']))));
@@ -97,7 +105,7 @@ function product_display_paginated($search_sql = '', $offset, $items_on_page)
     $_tags_imploded = implode(" ", $_tags_array);
     $_tags = $_tags_imploded;
 
-    $_sharethis_html = "<div id=\'share_this\' style=\'line-height:200%;\'></div>";
+    $_sharethis_html = "<div id=\'share_this\' class=\'lh2\'></div>";
 
     $_dimensions_html = "<div id='dimensions'><img src='".get_option('siteurl')."/img/ldng.gif' alt='loading'></div>";
     $_dimensions_html = str_replace("\"","\'",$_dimensions_html);
@@ -143,26 +151,27 @@ else
     if ($logged)
     {
         //$_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h1>" .$_name."</h1>&nbsp;$klop<span id=\'thumb\' onclick=\'fave_it();\'>$klop<img src=\'".$siteurl."/img/thumbupp.jpg\' border=0 title=\'добавить в любимое\'></span></div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
-        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h3>" .$_name."</h3>&nbsp;$klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+        $_bigpicstrip = "<div class=\'fll\'><b>Название: </b><h3>" .$_name."</h3>&nbsp;$klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
     else
     {
-        $_bigpicstrip = "<div style=\'float:left;\'><b>Название: </b><h3>" .$_name."</h3> $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
+        $_bigpicstrip = "<div class=\'fll\'><b>Название: </b><h3>" .$_name."</h3> $klop</div> "."<div>№&nbsp;<a id=\'cuid\' title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'>".$_number."</a>&nbsp;<b>".$_author."</a></b></div>";
     }
 
     $_bigpictext = "<h2><b>Категория: </b>".$_category."</h2><h2><b>Описание: </b></h2> ".$_description."<br /><h2><b>Тэги: </b></h2><ul>".$_tags."</ul><h2><b>Ссылка:</b></h2><a title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><b>Размер:</b><br />".$_dimensions_html.$_sold."<b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
     
-    $_bigpic =  "<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\' border=0 alt=\'".$_bigpicimgalt."\' title=\'".$_bigpicimgtitle."\' />";
+    $_bigpic =  "<img src=\'http://sl.cartoonbank.ru/".$product['image']."\' border=0 alt=\'".$_bigpicimgalt."\' title=\'".$_bigpicimgtitle."\' />";
 
     if($product['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
     if($product['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
     if($product['l3_price']=='0') {$l3_disabled = 'disabled=true';} else {$l3_disabled = '';}
 
-    if($product['sold']==0){
+    
+    if($psold==0){
         $_soldd = '';
     }
     else{
-        $_soldd = '<div class="cntrsold" title="продажи">'.$product['sold'].'</div>';
+        $_soldd = '<div class="cntrsold" title="продажи">'.$psold.'</div>';
     }
     
     
@@ -175,44 +184,44 @@ else
 {
     // отключить лицензию
     if(isset($product['l1_price']) && $product['l1_price'] != 0)
-        {$l1_price_text = "<td style=\'vertical-align:middle;text-align:right;\'><b>".round($product['l1_price'])."&nbsp;руб.</b></td>";}
+        {$l1_price_text = "<td class=\'vamtar\'><b>".round($product['l1_price'])."&nbsp;руб.</b></td>";}
     else
-        {$l1_price_text = "<td style=\'vertical-align:middle;text-align:right;\'>не доступна</td>";}
+        {$l1_price_text = "<td class=\'vamtar\'>не доступна</td>";}
 
     if(isset($product['l2_price']) && $product['l2_price'] != 0)
-        {$l2_price_text = "<td style=\'vertical-align:middle;text-align:right;\'><b>".round($product['l2_price'])."&nbsp;руб.</b></td>";}
+        {$l2_price_text = "<td class=\'vamtar\'><b>".round($product['l2_price'])."&nbsp;руб.</b></td>";}
     else
-        {$l2_price_text = "<td style=\'vertical-align:middle;text-align:right;\'>не доступна</td>";}
+        {$l2_price_text = "<td class=\'vamtar\'>не доступна</td>";}
 
     if(isset($product['l3_price']) && $product['l3_price'] != 0)
-        {$l3_price_text = "<td style=\'vertical-align:middle;text-align:right;\'><b>".round($product['l3_price'])."&nbsp;руб.</b></td>";}
+        {$l3_price_text = "<td class=\'vamtar\'><b>".round($product['l3_price'])."&nbsp;руб.</b></td>";}
     else
-        {$l3_price_text = "<td style=\'vertical-align:middle;text-align:right;\'>не доступна</td>";}
+        {$l3_price_text = "<td class=\'vamtar\'>не доступна</td>";}
 if ($_brandid==1 || $_brandid==6 || $_brandid==8){
     //$printdirect = "<div class=\'prdrrdr\'>.</div>";
-	$printdirect = "<div style=\'float:left;\'><a onclick=\"prdrrdr(".$product['id'].");\";);\" rel=\'nofollow\' href=\'#\'><img src=\'/img/tshirt.jpg\' title=\'Закажите этот рисунок на кружке, футболке или другом сувенире\' alt=\'t-shirt\'></a></div><div style=\'float:left;text-align:left;padding-left:6px;padding-top: 6px;font-size:10px;font-weight:bold;line-height:1.5;\'><a onclick=\"prdrrdr(".$product['id'].");\";);\" rel=\'nofollow\' href=\'#\'>Заказать сувенир<br>с этим рисунком</a>.</div>";
+	$printdirect = "<div class=\'fll\'><a onclick=\"prdrrdr(".$product['id'].");\";);\" rel=\'nofollow\' href=\'#\'><img src=\'/img/tshirt.jpg\' title=\'Закажите этот рисунок на кружке, футболке или другом сувенире\' alt=\'t-shirt\'></a></div><div class=\'mrktimg\'><a onclick=\"prdrrdr(".$product['id'].");\";);\" rel=\'nofollow\' href=\'#\'>Заказать сувенир<br>с этим рисунком</a>.</div>";
 }
 else{
     $printdirect = "";
 }
 
-$_bottomstriptext = $printdirect.$_size_warning."<div style=\'width:450px;float:right;\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'><table class=\'licenses\'> <tr> <td class=\'wh\' style=\'width:80px;vertical-align:bottom;\'><b>Выбор</b></td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l1_disabled value=\'l1_price\'></td> ".$l1_price_text." <td rowspan=\'2\' style=\'width:20px;\'>&nbsp;</td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l2_disabled value=\'l2_price\'></td> ".$l2_price_text." <td rowspan=\'2\' style=\'width:20px;\'>&nbsp;</td> <td class=\'wh\' style=\'text-align:left;\'><input type=\'radio\' name=\'license\' $l3_disabled value=\'l3_price\'></td> ".$l3_price_text." <td rowspan=\'2\' class=\'wh\' style=\'width:80px; text-align:right; vertical-align:bottom;\'><input id=\'searchsubmit\' value=\'заказать\' type=\'submit\' class=\'buy\' title=\'Добавить рисунок в корзину заказов\'></td> </tr> <tr> <td class=\'wh\' style=\'vertical-align:top;\'><b>лицензии:</b></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=238\' title=\'подробнее об ограниченной лицензии\'>ограниченная</a></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=242\' title=\'подробнее о стандартной лицензии\'>стандартная</a></td> <td colspan=\'2\' style=\'padding-left:6px;\'><a target=\'_blank\'href=\'".get_option('siteurl')."/?page_id=245\' title=\'подробнее об расширенной лицензии\'>расширенная</a></td> </tr> </table><input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> </form></div>";
+$_bottomstriptext = $printdirect.$_size_warning."<div class=\'w4fr\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'><table class=\'licenses\'> <tr> <td class=\'wh w8vb\'><b>Выбор</b></td> <td class=\'wh tal\'><input type=\'radio\' name=\'license\' $l1_disabled value=\'l1_price\'></td> ".$l1_price_text." <td rowspan=\'2\' class=\'w20\'>&nbsp;</td> <td class=\'wh\' class=\'tal\'><input type=\'radio\' name=\'license\' $l2_disabled value=\'l2_price\'></td> ".$l2_price_text." <td rowspan=\'2\' class=\'w20\'>&nbsp;</td> <td class=\'wh\' class=\'tal\'><input type=\'radio\' name=\'license\' $l3_disabled value=\'l3_price\'></td> ".$l3_price_text." <td rowspan=\'2\' class=\'wh\' class=\'w8tarvab\'><input id=\'searchsubmit\' value=\'заказать\' type=\'submit\' class=\'buy\' title=\'Добавить рисунок в корзину заказов\'></td> </tr> <tr> <td class=\'wh vat\'><b>лицензии:</b></td> <td colspan=\'2\' class=\'pl6\'><a target=\'_blank\' href=\'".get_option('siteurl')."/?page_id=238\' title=\'подробнее об ограниченной лицензии\'>ограниченная</a></td> <td colspan=\'2\' class=\'pl6\'><a target=\'_blank\' href=\'".get_option('siteurl')."/?page_id=242\' title=\'подробнее о стандартной лицензии\'>стандартная</a></td> <td colspan=\'2\' class=\'pl6\'><a target=\'_blank\' href=\'".get_option('siteurl')."/?page_id=245\' title=\'подробнее об расширенной лицензии\'>расширенная</a></td> </tr> </table><input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> </form></div>";
 }
 
     $_next_item = $counter + 1;
     if ($_next_item == 20)
         {
-            $vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующая страница > \" href=\"".get_option('siteurl')."/cartoon/".$_number."\" onclick=\"next_page();return false;\">".$_bigpic."</a>';";
+            $vstavka = "jQuery('#bigpic').html('<a title=\"следующая страница > \" href=\"".get_option('siteurl')."/cartoon/".$_number."\" onclick=\"next_page();return false;\">".$_bigpic."</a>');";
         }
         else
         {
-            $vstavka = "document.getElementById('bigpic').innerHTML ='<a title=\"следующее изображение > \" href=\"".get_option('siteurl')."/cartoon/".$_number."\" onclick=\"get_item". $_next_item ."();return false;\">".$_bigpic."</a>';";
+            $vstavka = "jQuery('#bigpic').html('<a title=\"следующее изображение > \" href=\"".get_option('siteurl')."/cartoon/".$_number."\" onclick=\"get_item". $_next_item ."();return false;\">".$_bigpic."</a>');";
         }
 
-    $vstavka .= "document.getElementById('bigpictext').innerHTML ='".$_bigpictext."';";
-    $vstavka .= "document.getElementById('bigpictopstrip').innerHTML ='".$_bigpicstrip."';";
+    $vstavka .= "jQuery('#bigpictext').html('".$_bigpictext."');";
+    $vstavka .= "jQuery('#bigpictopstrip').html ('".$_bigpicstrip."');";
 	$vstavka .= "jQuery('#hone').html('<h1>Карикатура «".$_name."», ".$_author."</h1>');";
-    $vstavka .= "document.getElementById('bigpicbottomstrip').innerHTML ='".$_bottomstriptext."';";
+    $vstavka .= "jQuery('#bigpicbottomstrip').html ('".$_bottomstriptext."');";
 
     $output .= "<a href=\"".get_option('siteurl')."/cartoon/".$_number."\" onclick=\"get_item". ($_next_item - 1) ."();return false;\">";
 
@@ -233,20 +242,20 @@ $_bottomstriptext = $printdirect.$_size_warning."<div style=\'width:450px;float:
     else{$highlight = "";}
     
 
-    $javascript_functions .= " function get_item".$counter."() { $('pt').scrollIntoView(true);".$vstavka.$highlight.$jq_stars.$jq_dimensions.$get_favorite.$share_this.$add_hash_2url." } "; 
+    $javascript_functions .= " function get_item".$counter."() { jQuery('#pt')[0].scrollIntoView(true);".$vstavka.$highlight." scrpts(); } "; 
     $_offset = $offset + 20;
-    $javascript_functions .=' function next_page(){window.location = "'.get_option('siteurl').'/?'.get_url_vars().'offset='.$_offset.'";    var cuid = document.getElementById("cuid").innerHTML; document.getElementById("navbar").innerHTML = cuid; window.location.hash = "bububu="+cuid;     }';
+    $javascript_functions .=' function next_page(){window.location = "'.get_option('siteurl').'/?'.get_url_vars().'offset='.$_offset.'";    var cuid = jQuery("#cuid").html(); jQuery("#navbar").html(cuid);}';
 
     
     $fiilename =ABSPATH.'/wp-content/plugins/wp-shopping-cart/images/'.$product['image'];
 
                     if (file_exists($fiilename))
                     {
-                              $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['name']."' alt='".$_bigpicimgalt."' class='thumb' />";
+                              $output .= "<img src='http://th.cartoonbank.ru/".$product['image']."' title='".$product['name']."' alt='".$_bigpicimgalt."' width='140' height='140' class='thumb' />";
                     }
                     else
                     {
-                              $output .= "<img src='".$siteurl."/wp-content/plugins/wp-shopping-cart/images/icon-rest.gif' class='thumb' />";
+                              $output .= "<img src='http://th.cartoonbank.ru/icon-rest.gif' width='140' height='140' class='thumb' />";
                     }
                       $output .= "</a>";
 
@@ -500,9 +509,9 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
         else
             $pagination .= "<span class=\"disabled\">»</span>";
         if (isset($filter_list)&&$filter_list=='')
-            $pagination .= " Всего: ".$totalitems. "<div style='float:right;'>".$button_sort."</div></div>";
+            $pagination .= " Всего: ".$totalitems. "<div class='flr'>".$button_sort."</div></div>";
         else
-            $pagination .= " Всего: ".$totalitems. " рис.&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".stripslashes($filter_list)."</span><div style='float:right;'>".$button_sort."</div></div>";
+            $pagination .= " Всего: ".$totalitems. " рис.&nbsp;<b>Фильтр</b>: <span style='color:#CC3399;'>".stripslashes($filter_list)."</span><div class='flr'>".$button_sort."</div></div>";
     }//if($lastpage > 1)
     if ($totalitems < 20){
     if (isset($_REQUEST['cs'])&&$_REQUEST['cs']!=''){$filter_list = $_REQUEST['cs'];}else{$filter_list = '';}

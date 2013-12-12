@@ -133,7 +133,7 @@ $earliest_year = date("Y",$earliest_timestamp);
                   $status_state = "collapse";
                   $status_style = "style='display: block;'";
                   }
-                echo "<img class='log_expander_icon' id='log_expander_icon_".$purchase['id']."' src='../wp-content/plugins/wp-shopping-cart/images/icon_window_$status_state.gif' alt='' title='' />";
+                echo "<img class='log_expander_icon' id='log_expander_icon_".$purchase['id']."' src='http://th.cartoonbank.ru/icon_window_$status_state.gif' alt='' title='' />";
                 if($stage_data[0]['colour'] != '')
                   {
                   $colour = "style='color: #".$stage_data[0]['colour'].";'";
@@ -234,7 +234,7 @@ $earliest_year = date("Y",$earliest_timestamp);
               echo "<tr>";
               echo " <td colspan='$col_count'>";
               echo "<strong>Total:</strong> ".nzshpcrt_currency_display($subtotal ,1);
-              echo "<br /><a class='admin_download' href='index.php?purchase_log_csv=true&rss_key=key&start_timestamp=$start_timestamp&end_timestamp=$end_timestamp' ><img align='absmiddle' src='../wp-content/plugins/wp-shopping-cart/images/download.gif' alt='' title='' /><span>".TXT_WPSC_DOWNLOAD_CSV."</span></a>";
+              echo "<br /><a class='admin_download' href='index.php?purchase_log_csv=true&rss_key=key&start_timestamp=$start_timestamp&end_timestamp=$end_timestamp' ><img align='absmiddle' src='http://th.cartoonbank.ru/download.gif' alt='' title='' /><span>".TXT_WPSC_DOWNLOAD_CSV."</span></a>";
               echo " </td>";      
               echo "</tr>";
               }

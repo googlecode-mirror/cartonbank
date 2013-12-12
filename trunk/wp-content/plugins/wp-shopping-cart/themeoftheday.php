@@ -228,7 +228,7 @@ $is_approved = false;
 		//<input type='submit' value='сохранить подпись' style='background-color:#CC99CC;color:white;'>
 	  if ($cartoon_of_the_day_id == $product['id'])
 	  {
-		echo "<div class='item' style='text-align:center; background-color:#FFCCFF; width:160px; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1'  title='".$product['id']."'></a>";
+		echo "<div class='item' style='text-align:center; background-color:#FFCCFF; width:160px; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='http://sl.cartoonbank.ru/".$product['image']."' target='_blank'><img src='http://th.cartoonbank.ru/".$product['image']."' width='140' height='140' class='thumb1'  title='".$product['id']."'></a>";
 	  echo "<form method=post action=''>
 
 		<div style='text-align:center;font-size:0.8em;'>Подпись:<br>
@@ -249,7 +249,7 @@ $is_approved = false;
 	  }
 	  else
 	  {
-		echo "<div class='item' style='width:160px; background-color:#E6E6E6; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb' title='".$product['id']."'></a>";
+		echo "<div class='item' style='width:160px; background-color:#E6E6E6; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='http://sl.cartoonbank.ru/".$product['image']."' target='_blank'><img src='http://th.cartoonbank.ru/".$product['image']."' width='140' height='140' class='thumb' title='".$product['id']."'></a>";
 	  echo "<form method=post action=''>
 		<input type='hidden' name='temadnyaid' value='".$product['id']."'>
 		<input type='hidden' name='temadnyadate' value='".$sqlthedate."'>
@@ -313,7 +313,7 @@ $is_approved = false;
 
 	  if ($cartoon_of_tomorrow_id == $product['id'])
 	  {
-		echo "<div class='item' style='text-align:center; background-color:#FFCCFF; width:160px; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb1' title='".$product['id']."'></a>";
+		echo "<div class='item' style='text-align:center; background-color:#FFCCFF; width:160px; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='http://sl.cartoonbank.ru/".$product['image']."' target='_blank'><img src='http://th.cartoonbank.ru/".$product['image']."' width='140' height='140' class='thumb1' title='".$product['id']."'></a>";
 	  echo "<form method=post action=''>
 
 		<div style='text-align:center;font-size:0.8em;'>Подпись:<br>
@@ -334,7 +334,7 @@ $is_approved = false;
 	  }
 	  else
 	  {
-		echo "<div class='item' style='width:160px; background-color:#E6E6E6; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' target='_blank'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' class='thumb'  title='".$product['id']."'></a>";
+		echo "<div class='item' style='width:160px; background-color:#E6E6E6; margin:2px;padding:4px; border: 1px solid #b2b2b2;'><a href='http://sl.cartoonbank.ru/".$product['image']."' target='_blank'><img src='http://th.cartoonbank.ru/".$product['image']."' width='140' height='140' class='thumb'  title='".$product['id']."'></a>";
 		echo "<form method=post action=''>
 
 		<input type='hidden' name='temadnyaid' value='".$product['id']."'>

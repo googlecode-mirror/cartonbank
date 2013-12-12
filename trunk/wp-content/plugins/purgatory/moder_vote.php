@@ -35,7 +35,7 @@
             // обновить средний балл и количество голосов
             $sql = "INSERT IGNORE INTO `wp_fsr_post` (`id`, `votes` ,`points`) VALUES ($id, $votescount,  $avgpoints)";
             mysql_query( $sql);
-            $sql = "UPDATE `wp_fsr_post` set `votes`= $votescount,`points`=$avgpoints WHERE id=$id";
+            $sql = "UPDATE `wp_fsr_post` set `votes`= $votescount,`points`=$avgpoints WHERE id='$id'";
             $r = mysql_query($sql) or die(mysql_error());
 
             // отметить, что голосовал
@@ -82,9 +82,9 @@
 			$category=$row['category'];
 			$notify_by_mail = $row['accept_notification'];
 
-			if (($avgpoints < $block_limit) and ($category==11)){
+			if (($avgpoints < $block_limit) and ($category=='11')){
 				// disapprove it to the main collection
-				$sql = "update wp_product_list set approved=0 where id='$id'";
+				$sql = "update wp_product_list set approved='0' where id='$id'";
 				mysql_query( $sql);
 
 				if ($notify_by_mail==1){
@@ -99,7 +99,7 @@
 					$is_approved = $row['approved'];
 
 					// approve it to the main collection
-					$sql = "update wp_product_list set approved=1 where id='$id'";
+					$sql = "update wp_product_list set approved='1' where id='$id'";
 					mysql_query( $sql);
 
 					//$sql = "select approved from wp_product_list where id='$id'";
@@ -112,7 +112,7 @@
                     $sql = "UPDATE wp_options SET `option_value`=1 WHERE `option_name` = 'clearmycache'";
                     $result = mysql_query($sql);
 
-				if ($notify_by_mail==1 && $is_approved!=1){
+				if ($notify_by_mail==1 && $is_approved!='1'){
 					send_email_passed("Уважаемый $artist_name<br />Ваш рисунок № <b>".$id."</b> «".$cartoon_name."» поступил в коллекцию Картунбанка со стартовым рейтинговым баллом <b>".$avgpoints."</b>.<br /><a href='http://cartoonbank.ru/cartoon/".$id."/'><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/".$image."'></a>.<br>Поздравляем вас и напоминаем, что всегда рады видеть ваши новые рисунки у нас на сайте!<br>Это письмо отправлено автоматически и не требует ответа. Чтобы отписаться от этих сообщений снимите отметку в строке \"Получать сообщения о моменте приёмки изображения в Картунбанк\" вашего профиля.",$artist_email);
 				}
 			}

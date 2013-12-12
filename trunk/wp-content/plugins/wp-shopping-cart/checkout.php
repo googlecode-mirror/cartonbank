@@ -207,7 +207,7 @@ $rooturl = get_option('siteurl');
 		Для вас будет сформирован счёт на оплату. Вы можете его распечатать и оплатить в течение 5 банковских дней. Для ускорения процесса сообщите нам о факте оплаты счета письмом на адрес cartoonbank.ru@gmail.com. Когда счет будет оплачен изображения и лицензии к ним будут отправлены на указанный вами при регистрации e-mail.
 		</td>
 	  </tr>
-	  <?if (WP_DEBUG) {?>
+	  <?//if (WP_DEBUG) {?>
 
 	  <tr><td width='270' style="border-top:1px silver solid;">
 		<input type="radio" name="payment_method" value="paypal_multiple" id="payment_method_1"  <? echo ($disabled); ?>>
@@ -219,7 +219,7 @@ $rooturl = get_option('siteurl');
 		</td>
 	  </tr>
 
-	  <?} ?>
+	  <?//} ?>
 
 
     <tr>

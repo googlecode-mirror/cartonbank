@@ -19,7 +19,7 @@
 
         mysql_select_db("z58365_cbru3", $con);
 
-        $sql = "SELECT *, f.filename, f.idhash, f.mimetype FROM `wp_product_files` as f,`wp_product_list` as l WHERE l.active=1 and f.id=l.file ORDER BY l.id ASC";  
+        $sql = "SELECT *, f.filename, f.idhash, f.mimetype FROM `wp_product_files` as f,`wp_product_list` as l WHERE l.active='1' and f.id=l.file ORDER BY l.id ASC";  
         $result = mysql_query($sql);
 
             if (!$result) {

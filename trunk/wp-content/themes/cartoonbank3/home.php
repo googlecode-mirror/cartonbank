@@ -1,6 +1,6 @@
 <?php
-$redirecturl = SITEURL."?page_id=29&offset=0&new=0";
-header("Location: $redirecturl"); 
+//$redirecturl = SITEURL."?page_id=29&offset=0&new=0";
+//header("Location: $redirecturl"); 
 
 $current_user = wp_get_current_user();
 $_SESSION['uid']= $current_user->ID;

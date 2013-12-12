@@ -1,7 +1,15 @@
 <?php
 global $wpdb, $result_no_license_text;
+$message_html = '';
+$check = '';
+$_total = '';
 $curgateway = get_option('payment_gateway');
-$sessionid = $_GET['sessionid'];
+if (isset($_GET['sessionid'])){
+    $sessionid = $_GET['sessionid'];
+}
+else{
+    $sessionid = '';
+}
 $errorcode = '';
 $transactid = '';
 
@@ -19,6 +27,8 @@ if($sessionid != null)
 
 	$cart_content = cart_product_list_string($license);
 	
+    $message_html = '';
+    
 	if ($cart_content!='')
 		{$message = $message.$cart_content;}
 	else {$message = 'Корзина пуста';}
@@ -50,6 +60,13 @@ if($sessionid != null)
   $email = $email_address[0]['value'];
   }
 } //if($sessionid != null)
+    else
+    {
+        echo '<div class="wrap">';
+        echo '<h3>Произошла ошибка. Приносим извинения. Сообщите нам по адресу bankir@cartoonbank.ru</h3>';
+        echo '</div>';
+        return;
+    }  
 
 	$siteurl = get_option('siteurl');
 	  
