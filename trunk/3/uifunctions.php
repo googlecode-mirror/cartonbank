@@ -169,6 +169,67 @@ function add_or_change_parameter($parameter='', $value='') {
   return htmlentities($output); 
 } ///add_or_change_parameter
 
+function get_results ($sql,$key_column=null){
+    $result = mysql_query($sql);
+
+    for ($array = array(); $row = mysql_fetch_assoc($result); isset($row[$key_column]) ? $array[$row[$key_column]] = $row : $array[] = $row);
+
+
+    return $array;
+} ///get_results 
+
+
+function prepare_tags($tags_row){
+    $_tags = hilite(nl2br(stripslashes($tags_row)));
+    $_tags_array = explode(',',$_tags);
+    foreach ($_tags_array as $key => $value){
+        $_tags_array[$key] = "<li><a href='?cs=".trim($_tags_array[$key])."'>".trim($_tags_array[$key])."</a></li>";
+    }
+    $_tags_imploded = implode(" ", $_tags_array);
+    $_tags = $_tags_imploded;
+    return '<ul>'.$_tags.'</ul>';
+}///prepare_tags
+
+function hilite($string)
+{
+    global $aKeywords;
+    if (count($aKeywords)==0)
+    {return $string;}
+    foreach ($aKeywords as $key => $value)
+    {
+        $string = preg_replace('/('.$value.')/ui', '<span class="hilite">$1</span>', $string); 
+    }
+    return $string;
+}///hilite
+
+function ssearch($words){
+    $host = "127.0.0.1:9306";
+    $usr = "mysql";
+
+    $bd = mysql_connect($host, $usr) or die("Could not connect database. ". mysql_error());
+
+    $searchQuery = "select id from wp1i where match('$words') LIMIT 15000 OPTION  ranker=matchany, max_matches=1000";
+
+    $result = mysql_query($searchQuery);
+        if (!$result) {die('Invalid query: ' . mysql_error());}
+   
+    $id_list = "";
+       
+    while ($row = mysql_fetch_array ($result)) {
+        $id_list .= $row['id'].", ";
+    }
+
+    if (strlen($id_list>2))
+    $id_list = substr($id_list,0,-2);
+    
+    mysql_close($bd);
+$bd = mysql_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Could not connect database");
+mysql_select_db($mysql_database, $bd) or die("Could not select database");
+mysql_set_charset('utf8',$bd);
+
+    return $id_list;
+} ///ssearch
+
 
 
 ?>

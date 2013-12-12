@@ -1,6 +1,7 @@
 <?
 //include_once("/home/www/cb3/wp-config.php");
 include_once("/home/www/cb3/ales/config.php");
+include_once("config.php");//constants
 require("uifunctions.php");//php functions for UI
 
 include_once("head.php");//html header

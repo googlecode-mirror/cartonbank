@@ -488,7 +488,13 @@
 				//$('ul.bjqs li:nth-child(2)').attr('id') - child by index
 				// var id=$('li.active-marker').attr('id').split('_')[1];$('ul.bjqs li:nth-child('+id+')').attr('id');
 
-				var marker = $('<li id="id_'+slidenum+'"><a href="#" style="background-image:url(http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/'+ $($slider.children('li')[key]).attr('style').split('product_images/')[1].split('"); background-repeat')[0]+');background-repeat:no-repeat;" class="140">&nbsp;</a></li>');
+var line = $($slider.children('li')[key]).attr('style');
+var linesplit1 = line.split('product_images/')[1];
+var linesplit2 = linesplit1.split('"); background-repeat')[0]
+
+var marker = $('<li id="id_'+slidenum+'"><a href="#" style="background-image:url(http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/'+ linesplit2+');background-repeat:no-repeat;" class="140">&nbsp;</a></li>');
+
+                //var marker = $('<li id="id_'+slidenum+'"><a href="#" style="background-image:url(http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/'+ $($slider.children('li')[key]).attr('style').split('product_images/')[1].split('"); background-repeat')[0]+');background-repeat:no-repeat;" class="s140">&nbsp;</a></li>');
 
 				$(marker).find('a').css('width','');
 				$(marker).find('a').css('height','');
