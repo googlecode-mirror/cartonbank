@@ -33,7 +33,7 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 <input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:6px;margin-bottom:4px;" />
 </form>
 
-<a href="/?page_id=927">Расширенный поиск <img src="<? echo SITEURL;?>img/link.gif" style="border:0;" alt="расширенный поиск"></a>
+<a href="/?page_id=927" onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Link click', 'Advanced Search']);">Расширенный поиск <img src="http://cartoonbank.ru/img/link.gif" style="border:0;" alt="расширенный поиск карикатур"></a>
 
 
 <?
@@ -90,7 +90,7 @@ if (!$author_section)
 
 
 	// number of bw cartoons
-	$bw_number = $wpdb->get_results("SELECT count(id) AS bw_number FROM `wp_product_list` WHERE color=0 AND category != '0' AND `active`=1 AND `visible`=1 AND `approved`=1");
+	$bw_number = $wpdb->get_results("SELECT count(id) AS bw_number FROM `wp_product_list` WHERE color='0' AND category != '0' AND `active`='1' AND `visible`='1' AND `approved`='1'");
 	$bw_number = $bw_number[0]->bw_number;
 }
 else
@@ -105,7 +105,7 @@ else
 		$category_count = $wpdb->get_results("SELECT `wp_product_list`.`category` as category_id, COUNT(`wp_product_list`.`id`) as count FROM `wp_product_list` WHERE `wp_product_list`.`active`='1' AND `wp_product_list`.brand=".$brand." AND `wp_product_list`.visible='1' AND `wp_product_list`.approved='1' AND `wp_product_list`.`brand` in (SELECT DISTINCT id FROM `wp_product_brands`) GROUP BY `wp_product_list`.`category`;",ARRAY_A);
 
 		// number of bw cartoons
-		$bw_number = $wpdb->get_results("SELECT count(id) AS bw_number FROM `wp_product_list` WHERE color=0 AND brand=".$brand." AND `active`=1 AND `visible`=1  AND `approved`=1");
+		$bw_number = $wpdb->get_results("SELECT count(id) AS bw_number FROM `wp_product_list` WHERE color='0' AND brand=".$brand." AND `active`='1' AND `visible`='1'  AND `approved`='1'");
 		$bw_number = $bw_number[0]->bw_number;
 	}
 }
@@ -182,7 +182,7 @@ else
 		$options ='';
 		$seperator = '';
 		$brands = $wpdb->get_results("SELECT * FROM `wp_product_brands` WHERE `active`='1' ORDER BY `name` ASC",ARRAY_A);
-		$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( p.id ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` =1 AND `p`.`active` = 1 AND `p`.`approved` = 1 AND `p`.`visible` = 1 AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
+		$cartoons_count = $wpdb->get_results("SELECT `b`.`id` , COUNT( p.id ) AS count FROM `wp_product_list` AS p, `wp_product_brands` AS b WHERE `b`.`active` ='1' AND `p`.`active` = '1' AND `p`.`approved` = '1' AND `p`.`visible` = '1' AND `p`.`brand` = `b`.`id` GROUP BY `p`.`brand` ",ARRAY_A);
 
 echo "<div id='branddisplay1'>";
 
@@ -218,7 +218,7 @@ else
 	$brand_sql = "SELECT `name`, `description`, `active`, `order`, `avatar_url`, `contact`, `bio_post_id`, `user_id`, `count`, `count_bw`, `count_color`, `contract`, `contract_date`, `rezident`, pr.shop_owner, pr.image_link, pr.shop_url FROM `wp_product_brands` as b LEFT JOIN  `printdirect` as pr on b.id=pr.brand_id where b.id = ". $brandid;
 	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
 
-	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = 1 order by name";
+	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = '1' order by name";
 	$brands_result  = $GLOBALS['wpdb']->get_results($brands_sql,ARRAY_A);
 
 	// avatar url
@@ -259,7 +259,7 @@ else
 	<?
 	echo $avatar_url."<br />";
 	echo $authors;
-	echo "<br /><a class='example8' href='#'>Информация об авторе</a>";
+	echo "<br /><a class='example8' href='#' onclick='jQuery(\"#hidden_bio\").parent().addClass(\"divc\").show()'>Информация об авторе</a>";
 	echo "<br /><a href='".get_option('siteurl')."/?page_id=1284&amp;ord=82&amp;br=".$brandid."'>250 лучших работ</a>";
 
 	if (isset($brand_result[0]['shop_url']) && $brand_result[0]['shop_owner']==1)
@@ -294,39 +294,40 @@ echo "</div>";
 ?>
 
 <br /><br />
-<a href="<? echo SITEURL;?>?page_id=2440" target="_blank"><img src="<? echo SITEURL;?>img/b/tshirt-2.jpg" style="border:0;width:180px;" alt="сувениры"></a>
+<a href="<? echo SITEURL;?>?page_id=2440" target="_blank" onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Ad click', 'Shops']);"><img src="<? echo SITEURL;?>img/b/tshirt-2.jpg" style="border:0;width:180px;" alt="сувениры"></a>
 <br /><br />
-<a href="<? echo SITEURL;?>?page_id=1351" target="_blank"><img src="<? echo SITEURL;?>img/b/exhibition_package2.gif" style="border:0;width:180px;" alt="выставки"></a>
+<a href="<? echo SITEURL;?>?page_id=1351" target="_blank" onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Ad click', 'Exhibitions']);"><img src="<? echo SITEURL;?>img/b/exhibition_package2.gif" style="border:0;width:180px;" alt="выставки"></a>
 <br /><br />
-<a href="<? echo SITEURL;?>?page_id=1857" target="_blank"><img src="<? echo SITEURL;?>img/b/postard_project2.gif" style="border:0;width:180px;" alt="открытки"></a>
+<a href="<? echo SITEURL;?>?page_id=1857" target="_blank" onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Ad click', 'Postcards']);"><img src="<? echo SITEURL;?>img/b/postard_project2.gif" style="border:0;width:180px;" alt="открытки" width="180" height="84"></a>
 <br /><br />
 <!-- <a href="<? echo SITEURL;?>?page_id=893"><img src="<? echo SITEURL;?>img/b/on-line.gif" style="width:180x;border:0;"></a>
 <br /><br /> -->
-<a href="<? echo SITEURL;?>?page_id=2479" target="_blank"><img src="<? echo SITEURL;?>img/b/contests.gif" style="border:0;width:180px;" alt="конкурсы"></a>
+<a href="<? echo SITEURL;?>?page_id=2479" target="_blank" onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Ad click', 'Contests']);"><img src="<? echo SITEURL;?>img/b/contests.gif" style="border:0;width:180px;" alt="конкурсы" width="180" height="84"></a>
 
 
 <br /><h3>Разное</h3>
-<div id='last_sales'><a href='<?echo get_option('siteurl');?>/?page_id=1299' title="свежие продажи">Сто продаж</a></div>
-<div id='best_sales'><a href='<?echo get_option('siteurl');?>/?page_id=2583' title="лидеры продаж">Бестселлеры</a></div>
-<div id='100_best'><a href='<?echo get_option('siteurl');?>/?page_id=1284&amp;ord=72&amp;br=0' title='результаты голосования'>Топ 250</a></div>
-<div id='themes'><a href='<?echo get_option('siteurl');?>/?page_id=1992' title='архив тем дня'>Темы дня</a></div>
-<div id='calend'><a href='<?echo get_option('siteurl');?>/?page_id=2254' title='календарь-газета'>Календарь</a></div>
+<div id='last_sales'><a href='<?echo get_option('siteurl');?>/?page_id=1299' title="свежие продажи" onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Link click', '100 purchases page']);">Сто продаж</a></div>
+<div id='best_sales'><a href='<?echo get_option('siteurl');?>/?page_id=2583' title="лидеры продаж" onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Link click', 'Bestsellers page']);">Бестселлеры</a></div>
+<div id='100_best'><a href='<?echo get_option('siteurl');?>/?page_id=1284&amp;ord=72&amp;br=0' title='результаты голосования' onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Link click', 'Top 250 page']);">Топ 250</a></div>
+<div id='themes'><a href='<?echo get_option('siteurl');?>/?page_id=1992' title='архив тем дня' onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Link click', 'Themes of the day page']);">Темы дня</a></div>
+<div id='calend'><a href='<?echo get_option('siteurl');?>/?page_id=2254' title='календарь-газета' onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Link click', 'Calendar page']);">Календарь</a></div>
 <!-- <div id='rating'><a href='/?page_id=643' title='рейтинг карикатур'>Рейтинг</a></div> -->
-<div id='printed'><a href='<?echo get_option('siteurl');?>/?page_id=1459' title='вырезки из публикаций'>Публикации</a></div>
-<div id='rewards'><a href='<?echo get_option('siteurl');?>/?page_id=2132'  title='награды авторов'>Награды</a></div>
-<div id='lawers'><a href='<?echo get_option('siteurl');?>/?page_id=1565'  title='защита авторского права'>Защита прав</a></div>
+<div id='printed'><a href='<?echo get_option('siteurl');?>/?page_id=1459' title='вырезки из публикаций' onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Link click', 'Publications page']);">Публикации</a></div>
+<div id='rewards'><a href='<?echo get_option('siteurl');?>/?page_id=2132'  title='награды авторов' onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Link click', 'Honors page']);">Награды</a></div>
+<div id='lawers'><a href='<?echo get_option('siteurl');?>/?page_id=1565'  title='защита авторского права' onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Link click', 'Rights protection page']);">Защита прав</a></div>
 <div style="float:right;width:180px;text-align:right;">
 	<br /><h3>Вход</h3>
 		<ul style="float:right;width:160px;text-align:right;">
 		<?php wp_register(); ?>
 		<li><?php 
         $rurl = '';
-        if (isset($_SERVER['REQUEST_URI'])){
+		if (isset($_SERVER['REQUEST_URI'])){
                     //$rurl = mysql_real_escape_string($_SERVER['REQUEST_URI']);
                 }
-        wp_loginout($redirect=$rurl); ?></li>
+
+		wp_loginout($redirect=$rurl); ?></li>
 		<?php //wp_meta(); ?>
 		</ul>
 </div>
 </div>
-<!-- sidebar end -->
+<!-- ///sidebar -->

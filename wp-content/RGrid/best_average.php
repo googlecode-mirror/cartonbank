@@ -135,7 +135,7 @@
     function RowCallback(&$row)
     {
 		//pokazh($row);
-		$row['image'] = "<a href='?page_id=29&cartoonid=".$row['ID']."'><img src='".get_option('siteurl')."/wp-content/plugins/wp-shopping-cart/images/".$row['image']."' width='140' height='140' style='border:1px solid black;margin:1px;'></a>";
+		$row['image'] = "<a href='?page_id=29&cartoonid=".$row['ID']."'><img src='http://th.cartoonbank.ru/".$row['image']."' width='140' height='140' style='border:1px solid black;margin:1px;'></a>";
 		$row['ID'] = "<a href='?page_id=29&cartoonid=".$row['ID']."'>".$row['ID']."</a>";
 		$row['title'] = nl2br(stripslashes($row['title']));
 		$row['average'] = round($row['average'],2);

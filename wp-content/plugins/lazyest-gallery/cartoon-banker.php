@@ -88,6 +88,10 @@ if (isset($current_user->wp_capabilities['author']) && ($current_user->wp_capabi
 
 //add_submenu_page('lazyest-gallery/al-admin-panel.php','Прихожая', 'Прихожая', 'read', 'purgatory/purgatory.php');
 add_submenu_page('lazyest-gallery/al-admin-panel.php','Редактор базы изображений', 'Редактор базы', 'read', 'wp-shopping-cart/display-items.php');
+
+add_submenu_page('lazyest-gallery/al-admin-panel.php','Image upload', 'Image upload', 'read', 'wp-shopping-cart/display-items-en.php');
+
+
 /*
 if (isset($current_user->wp_capabilities['editor']) && $current_user->wp_capabilities['editor']==1)
 	add_submenu_page('lazyest-gallery/al-admin-panel.php','Прихожая', 'Прихожая', 'read', 'purgatory/purgatory.php');

@@ -181,8 +181,8 @@ function nzshpcrt_css()
 <script language='JavaScript' type='text/javascript'>
 var base_url = "<?php echo $siteurl; ?>";
 <?
-$loadgif = SITEURL."/wp-content/plugins/wp-shopping-cart/images/loading.gif";
-$closegif = SITEURL."/wp-content/plugins/wp-shopping-cart/images/closelabel.gif";
+$loadgif = "http://th.cartoonbank.ru/loading.gif";
+$closegif = "http://th.cartoonbank.ru/closelabel.gif";
 ?>
 var fileLoadingImage = "<?php echo $loadgif; ?>";    
 var fileBottomNavCloseImage = "<?php echo $closegif; ?>";
@@ -583,7 +583,7 @@ function nzshpcrt_submit_ajax()
        
   if(isset($_GET['rss']) and ($_GET['rss'] == "true") && ($_GET['action'] == "product_list"))
     {
-    $sql = "SELECT id, name, description, image FROM `wp_product_list` WHERE active=1 and approved=1 and visible=1 Order by id DESC LIMIT 40";
+    $sql = "SELECT id, name, description, image FROM `wp_product_list` WHERE active='1' and approved='1' and visible='1' Order by id DESC LIMIT 40";
     $product_list = $wpdb->get_results($sql,ARRAY_A);
     header("Content-Type: application/xml; charset=utf-8"); 
     header('Content-Disposition: inline; filename="cartoonbank.rss"');
@@ -610,7 +610,7 @@ function nzshpcrt_submit_ajax()
       $output .= "    <item>\n\r";
       $output .= "      <title>".stripslashes($product['name'])."</title>\n\r";
 	  $output .= "      <link>".SITEURL."?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</link>\n\r";
-      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='".SITEURL."?page_id=29&amp;cartoonid=".stripslashes($product['id'])."'><br /><img title='". stripslashes($product['name']) ."' src='".SITEURL."wp-content/plugins/wp-shopping-cart/product_images/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
+      $output .= "      <description>".stripslashes($product['description'])."<![CDATA[<a href='".SITEURL."?page_id=29&amp;cartoonid=".stripslashes($product['id'])."'><br /><img title='". stripslashes($product['name']) ."' src='http://sl.cartoonbank.ru/". stripslashes($product['image'])."' alt='". stripslashes($product['name'])."' /></a>]]></description>\n\r";
       $output .= "      <pubDate>".date("r")."</pubDate>\n\r";
       $output .= "      <guid>".SITEURL."?page_id=29&amp;cartoonid=".stripslashes($product['id'])."</guid>\n\r";
 	  $output .= '    ';
@@ -1035,7 +1035,7 @@ $output .= "<a href='admin.php?page=wp-shopping-cart/display-items.php&amp;delet
 }
 
   $output .= "<a  href='admin.php?page=wp-shopping-cart/display-items.php&updateimage=".$product['id']."' ><img src='".SITEURL."/img/reload.gif' title='Обновить иконку и слайд с водяными знаками'></a>";
-   $output .= "&nbsp;<a href='index.php?admin_preview=true&product_id=".$product['id'].$idhash."' style='float: left;' ><img src='../wp-content/plugins/wp-shopping-cart/images/download.gif' title='Скачать оригинальный файл' /></a>";
+   $output .= "&nbsp;<a href='index.php?admin_preview=true&product_id=".$product['id'].$idhash."' style='float: left;' ><img src='http://th.cartoonbank.ru/download.gif' title='Скачать оригинальный файл' /></a>";
   
   $output .= "</td>\n\r";
   $output .= "</tr>\n\r";
@@ -1305,7 +1305,7 @@ function nzshpcrt_getvariationform($variation_id)
     $output .= "<input type='text' name='variation_values[".$variation_value['id']."]' value='".stripslashes($variation_value['name'])."' />";
     if($variation_value_count > 1)
       {
-      $output .= " <a  class='image_link' onclick='remove_variation_value(\"variation_value_".$num."\",".$variation_value['id'].")' href='#'><img src='".SITEURL."/wp-content/plugins/wp-shopping-cart/images/trash.gif' alt='".TXT_WPSC_DELETE."' title='".TXT_WPSC_DELETE."' /></a>";
+      $output .= " <a  class='image_link' onclick='remove_variation_value(\"variation_value_".$num."\",".$variation_value['id'].")' href='#'><img src='http://th.cartoonbank.ru/trash.gif' alt='".TXT_WPSC_DELETE."' title='".TXT_WPSC_DELETE."' /></a>";
       }
     $output .= "<br />";
     $output .= "</span>";
@@ -2235,7 +2235,7 @@ function nzshpcrt_shopping_basket($input = null)
        $output .= "<strong>".$special['name']."</strong><br /> ";
        if($special['image'] != null)
          {
-        $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$special['image']."' title='".$special['name']."' alt='".$special['name']."' /><br />";
+        $output .= "<img src='http://th.cartoonbank.ru/".$special['image']."' title='".$special['name']."' alt='".$special['name']."' /><br />";
         }
        $output .= $special['description']."<br />";
        $output .= "<span class='oldprice'>".nzshpcrt_currency_display($special['price'], $special['notax'],false)."</span><br />";
@@ -2543,12 +2543,12 @@ function nzshpcrt_product_rating($prodid)
       $output .= "  <span class='votetext'>";
       for($l=1; $l<=$average; ++$l)
         {
-        $output .= "<img class='goldstar' src='". SITEURL."/wp-content/plugins/wp-shopping-cart/images/gold-star.gif' alt='$l' title='$l' />";
+        $output .= "<img class='goldstar' src='http://th.cartoonbank.ru/gold-star.gif' alt='$l' title='$l' />";
         }
       $remainder = 5 - $average;
       for($l=1; $l<=$remainder; ++$l)
         {
-        $output .= "<img class='goldstar' src='". SITEURL."/wp-content/plugins/wp-shopping-cart/images/grey-star.gif' alt='$l' title='$l' />";
+        $output .= "<img class='goldstar' src='http://th.cartoonbank.ru/grey-star.gif' alt='$l' title='$l' />";
         }
       $output .=  "<span class='vote_total'>&nbsp;(<span id='vote_total_$prodid'>".$count."</span>)</span> \r\n";
       $output .=  "</span> \r\n";
@@ -2582,12 +2582,12 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
        
       if(($browsername == 'MSIE') && ($browserversion < 7.0))
         {
-        $starimg = ''. SITEURL.'/wp-content/plugins/wp-shopping-cart/images/star.gif';
+        $starimg = 'http://th.cartoonbank.ru/star.gif';
         $ie_javascript_hack = "onmouseover='ie_rating_rollover(this.id,1)' onmouseout='ie_rating_rollover(this.id,0)'";
         }
         else 
           {
-          $starimg = ''. SITEURL.'/wp-content/plugins/wp-shopping-cart/images/24bit-star.png';
+          $starimg = 'http://th.cartoonbank.ru/24bit-star.png';
           $ie_javascript_hack = '';
           }
        
@@ -2617,7 +2617,7 @@ function nzshpcrt_product_vote($prodid, $starcontainer_attributes = '')
         $style = '';
         if($k <= $rating)
           {
-          $style = "style='background: url(". SITEURL."/wp-content/plugins/wp-shopping-cart/images/gold-star.gif)'";
+          $style = "style='background: url(http://th.cartoonbank.ru/gold-star.gif)'";
           }
         $output .= "      <a name='' id='".$prodid."and".$k."_link' onclick='rate_item(".$prodid.",".$k.")' class='star$k' $style $ie_javascript_hack ><img id='".$prodid."and".$k."' class='starimage' src='$starimg' alt='$k' title='$k' /></a>\r\n";
         }
@@ -2994,7 +2994,7 @@ function send_email_to_artist($price, $image_id, $filename, $cartoonname, $descr
 	$mess = "";
 	$mess .= "<br>Уважаемый ".$nice_artistname."!<br><br>";
 	$mess .= $lic_type." лицензия на использование вашего изображения была только что передана Картунбанком заказчику.<br>Название рисунка: <b>\"".stripslashes($cartoonname)."\"</b> (".stripslashes($description).")<br>";
-	$mess .= "<a href='".SITEURL."/?page_id=29&cartoonid=".$image_id."'><img src='".SITEURL."/wp-content/plugins/wp-shopping-cart/product_images/".$filename."'></a>";
+	$mess .= "<a href='".SITEURL."/?page_id=29&cartoonid=".$image_id."'><img src='http://sl.cartoonbank.ru/".$filename."'></a>";
 
 	$mess .= "<br><br>Поздравляем вас и напоминаем, что всегда рады видеть ваши новые рисунки у нас на сайте! Полный отчёт об уже поступивших на ваше имя денежных средствах доступен в разделе <a href='".SITEURL."/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php'>Заработано</a>.<br>";
 

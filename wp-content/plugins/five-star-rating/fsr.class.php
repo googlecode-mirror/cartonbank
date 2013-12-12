@@ -69,7 +69,8 @@ class FSR {
 			$user = $wpdb->escape($this->_user);
 			$table_name = $table_prefix . "fsr_user";
 			//$rated = (bool) $wpdb->get_var("SELECT COUNT(*) FROM {$table_name} WHERE user='{$user}' AND post={$picture_id}");
-			$rated = (bool) $wpdb->get_var("SELECT COUNT(*) FROM {$table_name} WHERE ip='{$ip}' AND post={$picture_id}"); //ales
+            $sql = "SELECT COUNT(*) FROM {$table_name} WHERE ip='{$ip}' AND post={$picture_id}";
+			$rated = (bool) $wpdb->get_var($sql); //ales
 		}
 
 
@@ -124,7 +125,8 @@ class FSR {
 	function _getPoints() {
 		global $picture_id, $wpdb, $table_prefix;
 		$table_name = $table_prefix . "fsr_post";
-		return $wpdb->get_row("SELECT votes, points FROM {$table_name} WHERE ID={$picture_id}");
+        $sql = "SELECT votes, points FROM {$table_name} WHERE ID={$picture_id}";
+		return $wpdb->get_row($sql);
 	}
 	
 	/**

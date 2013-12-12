@@ -40,8 +40,8 @@ function nszhpcrt_homepage_products($content = '')
 			wp_fsr_user.vote_date 
 			FROM wp_product_list, wp_fsr_user, wp_product_brands 
 			WHERE 
-			wp_product_list.active = 1 
-			AND wp_product_list.visible = 1 
+			wp_product_list.active = '1' 
+			AND wp_product_list.visible = '1' 
 			AND wp_fsr_user.post = wp_product_list.id  
 			AND wp_product_list.brand = wp_product_brands.id  
 			AND wp_product_list.brand = ".$_brand." 
@@ -68,7 +68,7 @@ function nszhpcrt_homepage_products($content = '')
 		if($product['image'] != '')
 		  {
 		  //$output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' />\n\r";
-		  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['author'].". &quot;".$product['title']."&quot;. Голосов: ".$product['votes'].". Баллов: " . $product['points'] . ". Рейт: " . $product['average'] . "' class='thumb'/>";
+		  $output .= "<img src='http://th.cartoonbank.ru/".$product['image']."' width='140' height='140' title='".$product['author'].". &quot;".$product['title']."&quot;. Голосов: ".$product['votes'].". Баллов: " . $product['points'] . ". Рейт: " . $product['average'] . "' class='thumb'/>";
 		  }
 		$output .= "</a>";
 		$output .= "</div>\n\r";
@@ -233,7 +233,7 @@ $_br=0;
 	// Get the Brand (author) data
 		if ($_br==0)
 			{
-				$brand_sql = "SELECT * FROM `wp_product_brands` where active=1 order by name";
+				$brand_sql = "SELECT * FROM `wp_product_brands` where active='1' order by name";
 			}
 		else
 			{
@@ -242,7 +242,7 @@ $_br=0;
 	
 	$brand_result  = $GLOBALS['wpdb']->get_results($brand_sql,ARRAY_A);
 			//pokazh($brand_result);
-	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = 1 order by name";
+	$brands_sql = "SELECT id, name FROM `wp_product_brands` where active = '1' order by name";
 	$brands_result  = $GLOBALS['wpdb']->get_results($brands_sql,ARRAY_A);
 			//pokazh($brands_result);
 
@@ -355,10 +355,10 @@ $sql = "SELECT
 			wp_product_list.votes_rate as rate, 
 			wp_fsr_user.vote_date  
 				FROM  wp_product_list, wp_fsr_user, wp_product_brands 
-				WHERE wp_product_list.active = 1
-				AND wp_product_list.category != 666
-				AND wp_product_list.visible = 1
-				AND wp_product_list.approved = 1
+				WHERE wp_product_list.active = '1'
+				AND wp_product_list.category != '666'
+				AND wp_product_list.visible = '1'
+				AND wp_product_list.approved = '1'
 				AND wp_fsr_user.post = wp_product_list.id 
 				AND wp_product_list.brand = wp_product_brands.id 
 				".$_br_filter."
@@ -455,7 +455,7 @@ $output .= "<div id='allicons' style=''>";
 			if($product['image'] != '')
 			  {
 			  //$output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' />\n\r";
-			  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$counter.". ".$product['author'].". &quot;".$product['title']."&quot;. Голосов: ".$product['votes'].". Баллов: " . $product['points'] . ". Средний балл: " . round($product['average'],3) .". Рейт: " . round($product['rate'],3) . "' class='thumb'/>";
+			  $output .= "<img src='http://th.cartoonbank.ru/".$product['image']."' width='140' height='140' title='".$counter.". ".$product['author'].". &quot;".$product['title']."&quot;. Голосов: ".$product['votes'].". Баллов: " . $product['points'] . ". Средний балл: " . round($product['average'],3) .". Рейт: " . round($product['rate'],3) . "' class='thumb'/>";
 			  }
 			$output .= "</a>";
 			$output .= "<div id='cntr' class='cntr'>$counter</div>";
@@ -661,7 +661,7 @@ function last_sales($content = '')
 			if($product['image'] != '')
 			  {
 			  //$output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."' title='".$product['name']."' alt='".$product['name']."' />\n\r";
-			  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['author'].". ".$product['title']."' class='thumb'/>";
+			  $output .= "<img src='http://th.cartoonbank.ru/".$product['image']."' title='".$product['author'].". ".$product['title']."' width='140' height='140' class='thumb'/>";
 			  }
 			$output .= "</a>";
 			$output .= $gift."</div>\n\r";
@@ -743,7 +743,7 @@ where counter>1
 			$output .= "<a href='".get_option('product_list_url').$seperator."cartoonid=".$product['ID']."'>";
 			if($product['image'] != '')
 			  {
-			  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='продаж: ".$product['counter']."' class='thumb'/>";
+			  $output .= "<img src='http://th.cartoonbank.ru/".$product['image']."' title='продаж: ".$product['counter']."' width='140' height='140' class='thumb'/>";
 			  }
 			$output .= "</a>";
             $counter = $product['counter'];
@@ -779,7 +779,7 @@ function all_artists($content = '')
 		  {
 		  $seperator ="&amp;";
 		  }
-	  $sql = "SELECT `id`, `name`, `avatar_url`, `bio_post_id`, `count` FROM `wp_product_brands` WHERE active=1 ORDER BY name";
+	  $sql = "SELECT `id`, `name`, `avatar_url`, `bio_post_id`, `count` FROM `wp_product_brands` WHERE active='1' ORDER BY name";
 	  $product_list = $wpdb->get_results($sql,ARRAY_A);
 		
 	  $output = "<div id='homepage_products' class='items'>";
@@ -875,7 +875,7 @@ LIMIT 0, 100";
 			$output .= "<a href='".get_option('product_list_url').$seperator."cartoonid=".$product['ID']."'>";
 			if($product['image'] != '')
 			  {
-			  $output .= "<img src='$siteurl/wp-content/plugins/wp-shopping-cart/images/".$product['image']."' title='".$product['author'].". ".$product['title']."' class='thumb'/>";
+			  $output .= "<img src='http://th.cartoonbank.ru/".$product['image']."' title='".$product['author'].". ".$product['title']."' width='140' height='140' class='thumb'/>";
 			  }
 			$output .= "</a>";
 			$output .= "</div>\n\r";

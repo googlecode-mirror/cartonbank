@@ -104,7 +104,8 @@ if(isset($_REQUEST['id']))
                 }
                 
                 //$rating_value = ($up_value*5+$down_value*1)/$limit;
-                $sql = "update wp_product_list set approved=1, votes=$current_votes+$limit, votes_sum=($current_points+$up_value*5+$down_value), vote_date_last='".date("Y-m-d H:i:s")."' where id='$id'";
+                //$sql = "update wp_product_list set approved=1, votes=$current_votes+$limit, votes_sum=($current_points+$up_value*5+$down_value), vote_date_last='".date("Y-m-d H:i:s")."' where id='$id'";
+				$sql = "update wp_product_list set approved='1', votes=$current_votes+$limit, votes_sum=($current_points+$up_value*5+$down_value) where id='$id'";
                 $result = mysql_query($sql);// or die("Could not insert rating data into wp_product_list");
                 
                 // send update to Facebook

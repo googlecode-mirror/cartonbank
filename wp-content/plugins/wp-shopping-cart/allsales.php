@@ -60,10 +60,20 @@ if (!$result) {die('<br />'.$del_sql.'<br />Invalid select query: ' . mysql_erro
 
 echo "<div style='vertical-align:top;width:500px;'><div><h3>Продажи работ с ноября 2010</h3></div>";
 echo "<div style='vertical-align:top;width:500px;'>На этой странице в реальном времени показываются все продажи по факту скачивания файлов. Количество ваших продаж на странице '<a href='http://cartoonbank.ru/wp-admin/admin.php?page=wp-shopping-cart/display_artist_income.php'>Заработано</a>' обычно меньше, так как указывается с задержкой на время прихода денег в бухгалтерию Картунбанка.</div>";
+
+
+//"height":320
+//"width":700
+//"tooltip":{"trigger":"yes"}
+/*
+
+"domainAxis":{"direction":1},"legend":"none","annotations":{"domain":{}},"tooltip":{"trigger":"yes"}},"state":{},"view":{},"isDefaultVisualization":true,"chartType":"ComboChart","chartName":"Chart 5"} </script>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/spreadsheet/tq?key=0AtPperB2fdv5dDZDdEk2cEtNNkpWYXhfVWVHdFM0NUE&transpose=0&headers=0&merge=COLS&range=C3%3AC39%2CT3%3AT39%2CAC3%3AAC39&gid=0&pub=1","options":{"series":[{"type":"bars"}],"animation":{"duration":500},"backgroundColor":{"fill":"#efefef"},"width":700,"theme":"maximized","type":"line","hAxis":{"title":"","useFormatFromData":true,"minValue":null,"viewWindow":{"max":null,"min":null},"maxValue":null},"vAxes":[{"useFormatFromData":true,"minValue":null,"viewWindow":{"max":null,"min":null},"maxValue":null},{"useFormatFromData":true,"minValue":null,"viewWindow":{"max":null,"min":null},"maxValue":null}],"booleanRole":"certainty","title":"\u041f\u0440\u043e\u0434\u0430\u0436\u0438 \u043f\u043e \u043c\u0435\u0441\u044f\u0446\u0430\u043c, \u0448\u0442.","height":320,"interpolateNulls":false,"domainAxis":{"direction":1},"legend":"none","annotations":{"domain":{}},"tooltip":{"trigger":"yes"}},"state":{},"view":{},"isDefaultVisualization":true,"chartType":"ComboChart","chartName":"Chart 5"} </script>*/
 ?> 
 
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/spreadsheet/tq?key=0AtPperB2fdv5dDZDdEk2cEtNNkpWYXhfVWVHdFM0NUE&transpose=0&headers=0&merge=COLS&range=C3%3AC39%2CT3%3AT39%2CAC3%3AAC39&gid=0&pub=1","options":{"series":[{"type":"bars"}],"animation":{"duration":500},"backgroundColor":{"fill":"#efefef"},"width":700,"theme":"maximized","type":"line","hAxis":{"title":"","useFormatFromData":true,"minValue":null,"viewWindow":{"max":null,"min":null},"maxValue":null},"vAxes":[{"useFormatFromData":true,"minValue":null,"viewWindow":{"max":null,"min":null},"maxValue":null},{"useFormatFromData":true,"minValue":null,"viewWindow":{"max":null,"min":null},"maxValue":null}],"booleanRole":"certainty","title":"\u041f\u0440\u043e\u0434\u0430\u0436\u0438 \u043f\u043e \u043c\u0435\u0441\u044f\u0446\u0430\u043c, \u0448\u0442.","height":320,"interpolateNulls":false,"domainAxis":{"direction":1},"legend":"none","annotations":{"domain":{}},"tooltip":{"trigger":"yes"}},"state":{},"view":{},"isDefaultVisualization":true,"chartType":"ComboChart","chartName":"Chart 5"} </script>
 
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/spreadsheet/tq?key=0AtPperB2fdv5dDZDdEk2cEtNNkpWYXhfVWVHdFM0NUE&transpose=0&headers=0&merge=COLS&range=C3%3AC40%2CT3%3AT40%2CAC3%3AAC40&gid=0&pub=1","options":{"series":[{"type":"bars"}],"animation":{"duration":500},"backgroundColor":{"fill":"#efefef"},"width":700,"theme":"maximized","type":"line","hAxis":{"title":"","useFormatFromData":true,"minValue":null,"viewWindow":{"max":null,"min":null},"maxValue":null},"vAxes":[{"useFormatFromData":true,"minValue":null,"viewWindow":{"max":null,"min":null},"maxValue":null},{"useFormatFromData":true,"minValue":null,"viewWindow":{"max":null,"min":null},"maxValue":null}],"booleanRole":"certainty","title":"\u041f\u0440\u043e\u0434\u0430\u0436\u0438 \u043f\u043e \u043c\u0435\u0441\u044f\u0446\u0430\u043c, \u0448\u0442.","height":320,"interpolateNulls":false,"domainAxis":{"direction":1},"legend":"none","annotations":{"domain":{}},"tooltip":{"trigger":"yes"}},"state":{},"view":{},"isDefaultVisualization":true,"chartType":"ComboChart","chartName":"Chart 5"} </script>
 
 
 

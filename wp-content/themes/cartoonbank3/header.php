@@ -109,8 +109,8 @@ if (current_user_can('manage_options'))
       <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
 	  <link rel='index' title='Банк изображений' href='http://cartoonbank.ru' />
 	  <link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='http://cartoonbank.ru//index.php?rss=true&amp;action=product_list&amp;type=rss'/>
-      <link rel="stylesheet" href='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/style.min.css?r2' type="text/css" />
-	  <link rel="stylesheet" href='http://cartoonbank.ru/wp-content/themes/cartoonbank3/style.min.css?r4' type="text/css" />
+      <link rel="stylesheet" href='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/style.min.css?r2564' type="text/css" />
+	  <link rel="stylesheet" href='http://cartoonbank.ru/wp-content/themes/cartoonbank3/style.min.css?r3252' type="text/css" />
 	  <link rel="stylesheet" id='five-star-rating-CSS-css' href='http://cartoonbank.ru/wp-content/plugins/five-star-rating/assets/css/five-star-rating.min.css?ver=3.0' type='text/css' media='all' />
 	  <?/*
 	  //<script type='text/javascript' src='http://cartoonbank.ru/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
@@ -124,6 +124,7 @@ if (current_user_can('manage_options'))
 		<script type="text/javascript" src="http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/user.min.js"></script>
 		<script src="http://cartoonbank.ru/wp-includes/js/jquery/jquery.highlight-3.min.js" type="text/javascript"></script>
 		<script src='http://cartoonbank.ru/wp-content/plugins/five-star-rating/assets/js/five-star-rating.min.js?ver=0.1' type='text/javascript'></script>
+        <script type='text/javascript'>function scrpts(){get_5stars();get_dimensions();get_share_this();get_fave();change_url();}</script>
 		
 
       <?php 
@@ -164,7 +165,7 @@ if (current_user_can('manage_options'))
 //$cartoon_number = $wpdb->get_results("SELECT count( l.id ) AS cartoon_number FROM `wp_product_list` AS l WHERE l.active = 1 AND l.visible = 1 AND l.approved = 1 AND l.brand in (SELECT DISTINCT id FROM `wp_product_brands` where `wp_product_brands`.active = 1)");
 
 // speeden up but if the artist will be deactivated may be wrong calculation
-$cartoon_number = $wpdb->get_results("SELECT count( l.id ) AS cartoon_number FROM `wp_product_list` AS l WHERE l.active = 1 AND l.visible = 1 AND l.approved = 1 AND l.brand != '0' AND l.category != '0'");
+$cartoon_number = $wpdb->get_results("SELECT count( l.id ) AS cartoon_number FROM `wp_product_list` AS l WHERE l.active = '1' AND l.visible = '1' AND l.approved = '1' AND l.brand != '0' AND l.category != '0'");
 
 
 $cartoon_number = $cartoon_number[0]->cartoon_number;
@@ -208,7 +209,7 @@ $switcher2 = substr($cartoon_number,strlen($cartoon_number)-2,2);
 <div>
 <div style="font-size:.8em;color:white;vertical-align:bottom;width:185px;height:90px;background-color:#668bb7;float:left;"><span style="color:#13223f;font-size:2em;"><br><b><? echo ($cartoon_number);?></b></span><br /><?echo ($license_text);?></div>
 <div style="width:580px;height:90px;float:left;">
-   <br><a href="<?echo get_option('siteurl');?>/?page_id=29&amp;offset=0&amp;new=2"><img src="<?php echo get_option('home'); ?>/img/cb-logo-iq.png" style="border:0;" alt="Cartoonbank"></a><br />
+   <br><a href="http://cartoonbank.ru/?page_id=29&amp;offset=0&amp;new=2"><img src="<?php echo get_option('home'); ?>/img/cb-logo-iq.png" style="border:0;" alt="Cartoonbank" width="558" height="58"></a><br />
    <?php bloginfo('description'); ?>
 </div>
 
@@ -228,7 +229,7 @@ $switcher2 = substr($cartoon_number,strlen($cartoon_number)-2,2);
 	//<!-- <div style="width:185px;height:90px;float:left;"><a href="http://karikashop.com/#ecwid:category=1620996&mode=category&offset=0&sort=normal" target="_blank"><img src="http://cartoonbank.ru/img/b/karikashop.gif" style="width:185px;height:90px;border:0;"></a></div> -->
 ?>
 
-<div style="width:185px;height:90px;float:left;"><a href="<? echo SITEURL;?>?page_id=893"><img src="<?echo get_option('siteurl');?>/img/b/on-line.gif" style="width:185px;height:90px;border:0;" alt="продажа карикатур онлайн"></a></div>
+<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;" alt="продажа карикатур онлайн" width="185" height="86"></a></div>
 </div>
 
 </div>
@@ -263,7 +264,7 @@ else
       <li><a href="/?page_id=2860"<? $pageid=='2860'? selected_style():"" ?> title='новости сайта'>Новости</a></li>
       <li><a href="/?page_id=2870"<? $pageid=='2870'? selected_style():"" ?> title='видео'>Видео</a></li>
       <li><a href="/?page_id=976"<? $pageid=='976'? selected_style():"" ?> title='как нас найти'>Контакты</a></li>
-      <li><a href="/?page_id=2041"<? $pageid=='2041'? selected_style():"" ?> title='English'><img src="<? echo SITEURL;?>img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
+      <li><a href="/?page_id=2041"<? $pageid=='2041'? selected_style():"" ?> title='English'><img src="http://cartoonbank.ru/img/eng.gif" style="width:20px;border:0;" alt="English"></a></li>
       <?/*
 	  <li><? echo $_edid;?></li>
 	  */?>
