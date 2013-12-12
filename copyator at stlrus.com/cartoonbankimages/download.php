@@ -1,13 +1,14 @@
 <?php
-
 require_once('JSON.php');
-define('CB_URL_QUERY', 'http://109.120.143.27/cb3/copyator/downloadinfo.php?');
+
+//define('CB_URL_QUERY', 'http://109.120.143.27/cb3/copyator/downloadinfo.php?');
 define('CB_URL_404', 'http://cartoonbank.ru/404.php');
 define('ERR_EML_FROM', 'admin@cartoonbank.ru');
 $admin_emails = array(
 					"creasysee@yandex.ru",
 					"igor.aleshin@gmail.com"
 					);
+
 
 if( !function_exists('json_decode') ) {
     function json_decode($data) {
@@ -80,6 +81,8 @@ function track_error_info($error_text)
 	}
 }
 
+/*
+
 if (isset($_GET['downid']) and is_numeric($_GET['downid']))
 {
 	$downid = $_GET['downid'];
@@ -132,6 +135,7 @@ if (!$decrement)
 	$mode_go = "&mode=go";
 }
 
+
 $ret = file_get_contents(CB_URL_QUERY . $request_param . $mode_go);
 
 if (!$ret)
@@ -141,21 +145,31 @@ if (!$ret)
 }
 
 track_error_info($ret);
+*/
 
-$return_data = json_decode($ret);
+if (isset($_GET['j']))
+{
+	$j = $_GET['j'];
+}
 
+$return_data = json_decode($j);
+
+/*
 if (substr($return_data->idhash, -6) != $sid)
 {
 	track_error("Error: sid is not valid.");
 	exit;
 }
+*/
 
-$darray = getdate($return_data->date);
+//date_default_timezone_set('Europe/Moscow');
+
+$darray = getdate((int)$return_data->date + 28800);
 $basepath =  getcwd();
 $filedir = $basepath . "/" . $darray['year'] . "/" . $darray['month'] . "/";
 if (!file_exists($filedir.$return_data->idhash))
 {
-	track_error("Error: file not exist.");
+	track_error("Error: file not exist. ret=".$ret."   filedir=".$filedir. " filedir.return_data->idhash=".$filedir.$return_data->idhash);
 	exit;
 }
 
@@ -177,7 +191,7 @@ header('Pragma: public');
 ob_clean();
 flush();
 
-$darray = getdate($return_data->date);
+$darray = getdate((int)$return_data->date + 28800);
 $basepath =  getcwd();
 $filedir = $basepath . "/" . $darray['year'] . "/" . $darray['month'] . "/";
 $res = readfile($filedir.$return_data->idhash);

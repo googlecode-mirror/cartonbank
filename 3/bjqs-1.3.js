@@ -478,7 +478,14 @@
 
                 //var marker = $('<li style="background-image:url(http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/'+ $($slider.children('li')[key]).attr('style').split('product_images/')[1].split('"); background-repeat')[0]+');background-repeat:no-repeat;"><a href="#">'+ slidenum +'</a></li>');
 
-				var marker = $('<li><a href="#" style="background-image:url(http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/'+ $($slider.children('li')[key]).attr('style').split('product_images/')[1].split('"); background-repeat')[0]+');background-repeat:no-repeat;" class="140">&nbsp;</a></li>');
+				var line = $($slider.children('li')[key]).attr('style');
+var linesplit1 = line.split('product_images/')[1];
+var linesplit2 = linesplit1.split('"); background-repeat')[0]
+
+var marker = $('<li id="id_'+slidenum+'"><a href="#" style="background-image:url(http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/'+ linesplit2+');background-repeat:no-repeat;" class="140">&nbsp;</a></li>');
+
+                //var marker = $('<li id="id_'+slidenum+'"><a href="#" style="background-image:url(http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/images/'+ $($slider.children('li')[key]).attr('style').split('product_images/')[1].split('"); background-repeat')[0]+');background-repeat:no-repeat;" class="140">&nbsp;</a></li>');
+
 
                 // set the first marker to be active
                 if(slidenum === state.currentslide){ marker.addClass('active-marker'); }
