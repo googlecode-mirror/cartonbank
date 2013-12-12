@@ -11,7 +11,7 @@ $min_points = 2.49;
 //FILTERS
 if (isset($_REQUEST['offset'])&&is_numeric($_REQUEST['offset'])){$offset=$_REQUEST['offset'];}else{$offset=0;}
 if (isset($_REQUEST['new'])&&$_REQUEST['new']==1){$orderBy=' ORDER BY id DESC ';}else{$orderBy=' ORDER BY votes_rate DESC ';}
-if (isset($_REQUEST['new'])&&$_REQUEST['new']==2){$latest=' AND  `wp_product_list`.id > ( SELECT MAX( id ) FROM  `wp_product_list` ) - 10000 ';}else{$latest='';}
+if (isset($_REQUEST['new'])&&$_REQUEST['new']==2){$latest=' AND  `wp_product_list`.id > ( SELECT MAX( id ) FROM  `wp_product_list` ) - 1000 ';}else{$latest='';}
 if (isset($_REQUEST['color'])&&$_REQUEST['color']=='color'){$colorfilter=" AND color=1 ";}elseif(isset($_REQUEST['color'])&&$_REQUEST['color']=='bw'){$colorfilter=" AND color = '0'";}else{$colorfilter="";}
 if (isset($_REQUEST['category'])&&is_numeric($_REQUEST['category'])){$categoryid_filter = " AND `wp_product_list`.`category` = '".mysql_escape_string($_REQUEST['category'])."' "; $category=$_REQUEST['category'];}else{$categoryid_filter = '';$category='5';}
 if (isset($_REQUEST['brand'])&&is_numeric($_REQUEST['brand'])){$brandid_filter = " AND `wp_product_list`.`brand` = '".mysql_escape_string($_REQUEST['brand'])."' "; $brandid=mysql_escape_string($_REQUEST['brand']);}else{$brandid_filter=' AND `wp_product_list`.`brand` != 36 ';$brandid=0;}
@@ -67,7 +67,7 @@ $sql="SELECT `wp_product_list`.*, `wp_product_brands`.`id` as brandid, `wp_produ
 }
 
 // COUNT total number of images for this query
-$sql_count_total = "SELECT COUNT(`wp_product_list`.id) as count FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cartoonid_filter . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter."  AND votes_sum / votes > 2.49 AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`"; 
+$sql_count_total = "SELECT COUNT(`wp_product_list`.id) as count FROM `wp_product_list`, `wp_product_brands`, `wp_product_categories` WHERE `wp_product_list`.`active`='1' " . $cartoonid_filter . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not . " AND `wp_product_list`.`visible`='1' ".$search_keywords_filter.$min_points_filter." AND `wp_product_brands`.`id` = `wp_product_list`.`brand` AND `wp_product_list`.`category` = `wp_product_categories`.`id`"; 
 if (!$searchdonebutnothingfound){
 $count = $wpdb->get_results($sql_count_total,ARRAY_A);
 $totalitems = $count[0]['count'];
@@ -190,14 +190,18 @@ function save_search_terms($terms)
 
 
 
-<div style='display:none'>
-    <div id='hidden_bio' style='text-align:left; padding:10px; background:#fff;'>
-        <? echo ($bio); ?>
-        <br>
+<div style='display:none;background-color:f0f0f0;padding:20px;'>
+	<a href="" onclick="jQuery('.divc').hide();return false;" style="padding-left: 506px;">X закрыть окно</a><br>
+    <div id='hidden_bio' style='text-align:left; padding:10px; background-color:#f0f0f0;'>
+        <? echo ($bio); 
+		/*
+		<br>
         <p><a class='cb_emailform' href="#">Отправить письмо</a></p>
+		*/?>
     </div>
 </div>
 
+<?/*
 <div style='display:none'>
     <div id='emailform1' style='text-align:left; padding:10px; background:#fff;'>
             <h3>Письмо автору Картунбанка</h3>
@@ -208,3 +212,5 @@ function save_search_terms($terms)
             </form>
     </div>
 </div>
+*/
+?>
