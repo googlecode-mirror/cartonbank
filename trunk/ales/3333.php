@@ -22,7 +22,10 @@ function track_error($error_text)
 	{
 		$message = "Добрый день администратор.\n" .
 				   "При скачивании изображения получена ошибка:\n" .
-				   $error_text . " (URI='" . $_SERVER["REQUEST_URI"] . "')"; 
+				   $error_text . " (URI='" . $_SERVER["REQUEST_URI"] . "')\n query_string:" .
+				   $_SERVER["QUERY_STRING"] . "\n get:" .
+				   $_GET . "\n post:" .
+				   $_POST . "\n"; 
 		$headers = "From: " . ERR_EML_FROM . "\n" . 
 				   "X-Mailer: PHP/" . phpversion() . "\n" . 
 				   "MIME-Version: 1.0\n" . 
@@ -39,42 +42,42 @@ function track_error_info($error_text)
 {
 	if (strstr($error_text, "Could not run query"))
 	{
-		track_error($error_text);
+		track_error("1. ".$error_text);
 		exit;
 	}
 	if (strstr($error_text, "Download data not found"))
 	{
-		track_error($error_text);
+		track_error("2. ".$error_text);
 		exit;
 	}
 	if (strstr($error_text, "Error parameters list"))
 	{
-		track_error($error_text);
+		track_error("3. ".$error_text);
 		exit;
 	}
 	if (strstr($error_text, "Could not connect"))
 	{
-		track_error($error_text);
+		track_error("4. ".$error_text);
 		exit;
 	}
 	if (strstr($error_text, "Could not select db"))
 	{
-		track_error($error_text);
+		track_error("5. ".$error_text);
 		exit;
 	}
 	if (strstr($error_text, "Could not decrement downloads"))
 	{
-		track_error($error_text);
+		track_error("6. ".$error_text);
 		exit;
 	}
 	if (strstr($error_text, "Could not run option value query"))
 	{
-		track_error($error_text);
+		track_error("7. ".$error_text);
 		exit;
 	}
 	if (strstr($error_text, "Could not get option value 'max_downloads'"))
 	{
-		track_error($error_text);
+		track_error("8. ".$error_text);
 		exit;
 	}
 }
@@ -103,14 +106,14 @@ if (isset($_GET['sid']) and strlen($_GET['sid']) == 6)
 else
 {
 	echo $_GET['sid'];
-	track_error("Error: sid is not valid.");
+	track_error("9. "."Error: sid is not valid.");
 	exit;
 }
 
 
 if (!isset($request_param) or !isset($sid))
 {
-	track_error("Error: parameters invalid.");
+	track_error("10. "."Error: parameters invalid.");
 	exit;
 }
 
@@ -136,7 +139,7 @@ $ret = file_get_contents(CB_URL_QUERY . $request_param . $mode_go);
 
 if (!$ret)
 {
-	track_error("Error: download info returns false. CB_URL_QUERY.request_parsm.mode_go: ".CB_URL_QUERY .$request_param . $mode_go);
+	track_error("11. "."Error: download info returns false. CB_URL_QUERY.request_parsm.mode_go: ".CB_URL_QUERY .$request_param . $mode_go);
 	exit;
 }
 
@@ -165,7 +168,9 @@ header('Content-Transfer-Encoding: binary');
 header('Expires: 0');
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
-ob_clean();
+if(ob_get_contents()){
+	ob_clean();
+}
 echo $retamerica;
 flush();
 
