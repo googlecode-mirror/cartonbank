@@ -489,7 +489,8 @@ function send_mail($votecontent)
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 	$headers .= 'From: CartoonBank Robot <cartoonbank.ru@gmail.com>' . "\r\n";
-	mail("igor.aleshin@gmail.com","Новый счёт от Картунбанка",$votecontent,$headers);
+	mail("igor.aleshin@gmail.com","Новый счёт от Картунбанка (копия)",$votecontent,$headers);
+	mail("juliusik@gmail.com","Новый счёт от Картунбанка (копия)",$votecontent,$headers);
 }
 function ru_month ($month, $sklon=false)
 {
