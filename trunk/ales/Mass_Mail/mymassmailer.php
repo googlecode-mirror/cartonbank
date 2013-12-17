@@ -1,42 +1,44 @@
 <?php
 if (isset($_REQUEST['prod']) && $_REQUEST['prod']=='1')
-{$sql = "SELECT id, mail FROM mymail where dont_send='0' and never='0' order by id desc LIMIT 100";} // production query
+{$sql = "SELECT id, mail FROM mymail where dont_send='0' and never='0' LIMIT 100";} // production query
 else
 {$sql = "SELECT id, mail FROM mymailshort where dont_send='0' and never='0' order by id desc LIMIT 10";} //test query
 
-//$email = "igor.aleshin@gmail.com";
+$myemail = "igor.aleshin@gmail.com";
+//$myemail = "vfshilov@gmail.com";
+
 $headers = "From: bankir@cartoonbank.ru\r\n" .
            "X-Mailer: Cartoonbank.ru\r\n" .
            "MIME-Version: 1.0\r\n" .
            "Content-Type: text/html; charset=utf-8\r\n" .
            "Content-Transfer-Encoding: 8bit\r\n\r\n";
 
-$subj = "Новогодний рисунок из Картунбанка";
-$mess = "
-<h1>Новогодний подарок</h1>
-<br><br>
-<strong>Картунбанк </strong>дарит каждому зарегистрированному пользователю рисунок <em><a href='http://cartoonbank.ru/?page_id=29&brand=1'>Вячеслава Шилова</a></em> <a href='http://cartoonbank.ru/?page_id=29&cartoonid=19464'>Дедушка Змей</a>.
+$subj = "C новым годом!";
+$mess= "
 <br>
+<a href='http://cartoonbank.ru/?a=1'><img src='http://cartoonbank.ru/wp-admin/images/cb-logo.gif' border='0' title='Картунбанк'></a>
 <br>
-<a href='http://cartoonbank.ru/?page_id=29&cartoonid=19464'><img src='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/product_images/50c62e92ad3f17.725105209097.jpg'></a>
+<p>Новогодний подарок.</p>
+<p>Картунбанк дарит каждому <a href='http://cartoonbank.ru/wp-login.php?action=register&gift'>зарегистрированному пользователю</a> рисунок <a href='http://cartoonbank.ru/brand/5/?gift'>Игоря Кийко</a> «<a href='http://cartoonbank.ru/cartoon/9263/?gift'>Подарок от Деда Мороза</a>».</p>
 
-<br>
-При регистрации каждый получает в подарок символическую сумму, достаточную для приобретения <a href='http://cartoonbank.ru/?page_id=238'>ограниченной</a> или <a href='http://cartoonbank.ru/?page_id=242'>стандартной</a> лицензии на этот рисунок. Лицензия даёт право на публикацию рисунка в СМИ.
-<br>
-<br>
-При выборе споcоба оплаты воспользуйтесь опцией 'Личный счёт'. (<a href='http://cartoonbank.ru/?page_id=1010'>Инструкция покупателя</a>)
-<br><br>
-С Новым годом, друзья!<br>
-Ваш Картунбанк.<br>
+<img src='http://sl.cartoonbank.ru/4d185b8f05e4e5.54470753Na_D.Moroza_nadeysya.jpg' alt='Подарок от Деда Мороза '>
 
-<br>
-<img src='http://cartoonbank.ru/wp-admin/images/cb-logo.gif' border='0' title='Картунбанк'>
-<br>
+<p>При регистрации каждый получает в подарок на свой личный счет сумму, достаточную
+для приобретения <a href='http://cartoonbank.ru/?page_id=238&gift'>ограниченной</a> или <a href='http://cartoonbank.ru/?page_id=242&gift'>стандартной</a> лицензии на этот рисунок.
+Ранее зарегистрированные пользователи получают эту возможность автоматически.
+Лицензия даёт вам официальное право на публикацию рисунка в СМИ.</p>
+ 
+<p>При выборе споcоба оплаты воспользуйтесь опцией  «Личный счёт».
+(См. <a href='http://cartoonbank.ru/?page_id=1010'>Инструкцию покупателя</a>).</p>
+ 
+<p>С Новым годом, друзья!</p>
+ 
+<p><a href='http://cartoonbank.ru/?gift'>Ваш Картунбанк</a></p>
 ";
 
 
-
-
+//mail($myemail, $subj, $mess, $headers);
+//exit;
 
 // configuration
 include("/home/www/cb3/ales/config.php");
