@@ -26,6 +26,9 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 
 ?>
 <div id="sidebar">
+
+<a href="http://cartoonbank.ru/?page_id=893#paypal"><img src="http://cartoonbank.ru/img/b/ppal.gif" width=180 height=84 border=0 alt=PayPal title="Оплата Пейпал"></a>
+
 <h3 style="margin-top:0;">Поиск</h3>
 <form method="post" id="searchform" action="/?page_id=29">
 <input id="s" size="26" type="text" value="введите поисковое слово..." name="cs" onfocus="this.value='';" style='width:178px;' /><br />

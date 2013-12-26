@@ -92,52 +92,27 @@ echo "<br>";
 
 $itogo = get_itogo($start_timestamp2, $end_timestamp2);
 
-/*
-$sql = "SELECT date,  c.purchaseid, p.id, s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, c.cart_discount, c.actual_money, u.display_name, l.user_id, l.payment_arrived_date, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
-	FROM `wp_purchase_logs` as l, 
-		`wp_purchase_statuses` as s, 
-		`wp_cart_contents` as c, 
-		`wp_product_list` as p,
-		`wp_download_status` as st,
-		`wp_product_brands` as b,
-		`wp_users` as u,
-		`wp_usermeta` as um
-	WHERE	l.`processed`=s.`id` 
-		AND l.id=c.purchaseid 
-		AND p.id=c.prodid  
-		AND st.purchid=c.purchaseid
-		AND p.brand=b.id
-		AND u.id = l.user_id
-		AND u.id = um.user_id
-		AND um.meta_key = 'description'
-		AND l.user_id != '106'
-        AND st.downloads != '5'
-		AND date BETWEEN '$start_timestamp' AND '$end_timestamp'
-	GROUP BY c.license
-	ORDER BY `date` DESC";
-*/
-$sql ="SELECT date, st.datetime,  c.purchaseid, p.id, s.name as processed, processed as processed_id, b.name as artist, p.name as title, c.price, totalprice, u.discount, c.cart_discount, c.actual_money, u.display_name, l.user_id, l.payment_arrived_date, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active,  st.id as downloadid, u.contract, u.wallet, um.meta_value as smi
-	FROM `wp_purchase_logs` as l, 
-		`wp_purchase_statuses` as s, 
-		`wp_cart_contents` as c, 
-		`wp_product_list` as p,
-		`wp_download_status` as st,
-		`wp_product_brands` as b,
-		`wp_users` as u,
-		`wp_usermeta` as um
-	WHERE	l.`processed`=s.`id` 
-		AND l.id=c.purchaseid 
-		AND p.id=c.prodid  
-		AND st.purchid=c.purchaseid
-		AND p.brand=b.id
-		AND u.id = l.user_id
-		AND u.id = um.user_id
-		AND um.meta_key = 'description'
-		AND l.user_id != '106'
-		AND st.downloads != '5'
-		AND datetime BETWEEN '$start_timestamp2' AND '$end_timestamp2'
-	GROUP BY c.license
-	ORDER BY `datetime` DESC";
+$sql ="
+SELECT t1.*, cust.contract FROM (
+SELECT DATE, st.datetime, c.purchaseid, p.id, s.name AS processed, processed AS processed_id, b.name AS artist, p.name AS title, c.price, totalprice, u.discount, c.cart_discount, c.actual_money, u.display_name, l.user_id, l.payment_arrived_date, firstname, lastname, email, address, phone, gateway, c.license, st.downloads, st.active, st.id AS downloadid, u.wallet, um.meta_value AS smi, u.ID as uid
+FROM  `wp_purchase_logs` AS l,  `wp_purchase_statuses` AS s,  `wp_cart_contents` AS c,  `wp_product_list` AS p,  `wp_download_status` AS st,  `wp_product_brands` AS b,  `wp_users` AS u,  `wp_usermeta` AS um
+WHERE l.`processed` = s.`id` 
+AND l.id = c.purchaseid
+AND p.id = c.prodid
+AND st.purchid = c.purchaseid
+AND p.brand = b.id
+AND u.id = l.user_id
+AND u.id = um.user_id
+AND um.meta_key =  'description'
+AND l.user_id !=  '106'
+AND st.downloads !=  '5'
+AND datetime BETWEEN '$start_timestamp2' AND '$end_timestamp2'
+GROUP BY c.license
+ORDER BY  `datetime` DESC 
+) as t1
+LEFT JOIN al_customers as cust
+ON t1.uid = cust.user_id
+";
 
 		///pokazh($sql,"sql");
 
@@ -218,7 +193,7 @@ $sql ="SELECT date, st.datetime,  c.purchaseid, p.id, s.name as processed, proce
 
 		//robokassa
 		//actual_money
-		if ($row['gateway']=='robokassa')
+		if ($row['gateway']=='robokassa' || $row['gateway']=='paypal_multiple')
 		{
 			if ($row['actual_money']=='')
 			{
@@ -457,29 +432,7 @@ function get_itogo($start_timestamp, $end_timestamp)
 	global $wpdb;
 
 	$itogo = 0;
-/*
-	$sql ="SELECT c.price, totalprice, u.discount as discount, c.cart_discount as cart_discount
-			FROM `wp_purchase_logs` as l, 
-				`wp_purchase_statuses` as s, 
-				`wp_cart_contents` as c, 
-				`wp_product_list` as p,
-				`wp_download_status` as st,
-				`wp_product_brands` as b,
-				`wp_users` as u,
-				`wp_usermeta` as um
-			WHERE	l.`processed`=s.`id` 
-				AND l.id=c.purchaseid 
-				AND p.id=c.prodid  
-				AND st.purchid=c.purchaseid
-				AND p.brand=b.id
-				AND u.id = l.user_id
-				AND u.id = um.user_id
-				AND um.meta_key = 'description'
-				AND l.user_id != '106'
-				AND st.downloads != '5'
-				AND date BETWEEN $start_timestamp AND $end_timestamp
-			GROUP BY c.license";
-*/
+
 $sql ="SELECT c.price,st.datetime, totalprice, u.discount as discount, c.cart_discount as cart_discount
 	FROM `wp_purchase_logs` as l, 
 		`wp_purchase_statuses` as s, 

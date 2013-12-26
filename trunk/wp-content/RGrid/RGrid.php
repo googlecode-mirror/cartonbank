@@ -453,13 +453,34 @@
             <?php endif?>
 			<?
 
-				if (isset($row['display_name']) && $row['display_name']=='demo')
-					{echo("<tr style='background-color:#999999'>");}
-				else if (isset ($row['contract']) && $row['contract']!='')
-					if ($row['gateway']!='wallet')
-					{echo("<tr style='background-color:#CCFF66;'>");}
-					else
-					{echo("<tr style='background-color:#E1FFC4;'>");}
+				/*if (isset($row['display_name']) && $row['display_name']=='demo')
+					{
+                        echo("<tr style='background-color:#999999'>");
+                    }*/
+				if ($row['gateway']=='wallet')
+					{
+                        echo("<tr style='background-color:#E1FFC4;'>");}
+			                            
+                else if ($row['gateway']=='robokassa')
+                    {
+                        echo("<tr style='background-color:#FFC0FF;'>");
+                    }
+                else if ($row['gateway']=='Акция')
+                    {
+                        echo("<tr style='background-color:#FFFFC0;'>");
+                    }
+                else if ($row['gateway']=='Сбербанк')
+                    {
+                        echo("<tr style='background-color:#C0FFFF;'>");
+                    }
+                else if ($row['gateway']=='invoice')
+                    {
+                        echo("<tr style='background-color:#C0FFC0;'>");
+                    }
+                else if ($row['gateway']=='paypal_multiple')
+                    {
+                        echo("<tr style='background-color:#FFC0C0;'>");
+                    }
 				else
 					{echo('<tr>');}
 			?>

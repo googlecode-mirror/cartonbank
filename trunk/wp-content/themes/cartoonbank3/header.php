@@ -200,11 +200,12 @@ $switcher2 = substr($cartoon_number,strlen($cartoon_number)-2,2);
 
 <center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="slide" direction="up" >В помощь планирующим выпуски статей мы добавили на первую страницу удобный календарь.</marquee></div></center>
 
-<center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="slide" direction="left" ><a href="http://www.greenlamp.spb.ru/2012/12/14/non-stop-%D1%8E%D0%B1%D0%B8%D0%BB%D0%B5%D0%B9%D0%BD%D0%B0%D1%8F-%D0%B2%D1%8B%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0-%D0%BF%D0%B5%D1%82%D0%B5%D1%80%D0%B1%D1%83%D1%80%D0%B3%D1%81%D0%BA%D0%BE/" target=_blank>Сегодня открытие выставки <b>NONSTOP</b> (15 лет группе «НЮАНС»)</a></marquee></div></center>
 -->
 */
-
 ?>
+
+<center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="slide" direction="left" ><a href="http://cartoonbank.ru/?page_id=893#paypal" target=_blank>Мы теперь принимаем оплату через PayPal. Оплата с кошелька Пейпал и любыми картами.</a></marquee></div></center>
+
 <div id="header" style="height:90px;width:960px;">
 <div>
 <div style="font-size:.8em;color:white;vertical-align:bottom;width:185px;height:90px;background-color:#668bb7;float:left;"><span style="color:#13223f;font-size:2em;"><br><b><? echo ($cartoon_number);?></b></span><br /><?echo ($license_text);?></div>
