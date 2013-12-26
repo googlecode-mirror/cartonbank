@@ -32,7 +32,7 @@ function product_display_paginated($search_sql = '', $offset, $items_on_page)
     $output .= "<div id='item".$counter."' class='item'>"; // start item
 
     //$vstavka = "jQuery('#bigpic').html('<img src=\'".$siteurl."/wp-content/plugins/wp-shopping-cart/product_images/".$product['image']."\'>');";
-    $vstavka = "jQuery('#bigpic').html('<img src=\'http://sl.cartoonbank.ru/".$product['image']."\'>');";
+    $vstavka = "jQuery('#bigpic').html('<img src=http://sl.cartoonbank.ru/".$product['image'].">');";
 
     // here we prepare data for the BIGPIC preview
 
@@ -160,7 +160,7 @@ else
 
     $_bigpictext = "<h2><b>Категория: </b>".$_category."</h2><h2><b>Описание: </b></h2> ".$_description."<br /><h2><b>Тэги: </b></h2><ul>".$_tags."</ul><h2><b>Ссылка:</b></h2><a title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><b>Размер:</b><br />".$_dimensions_html.$_sold."<b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
     
-    $_bigpic =  "<img src=\'http://sl.cartoonbank.ru/".$product['image']."\' border=0 alt=\'".$_bigpicimgalt."\' title=\'".$_bigpicimgtitle."\' />";
+    $_bigpic =  "<img src=http://sl.cartoonbank.ru/".$product['image']." border=0 alt=\'".$_bigpicimgalt."\' title=\'".$_bigpicimgtitle."\' />";
 
     if($product['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
     if($product['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
@@ -220,7 +220,7 @@ $_bottomstriptext = $printdirect.$_size_warning."<div class=\'w4fr\'><form name=
 
     $vstavka .= "jQuery('#bigpictext').html('".$_bigpictext."');";
     $vstavka .= "jQuery('#bigpictopstrip').html ('".$_bigpicstrip."');";
-	$vstavka .= "jQuery('#hone').html('<h1>Карикатура «".$_name."», ".$_author."</h1>');";
+	//$vstavka .= "jQuery('#hone').html('<h1>Карикатура «".$_name."», ".$_author."</h1>');";
     $vstavka .= "jQuery('#bigpicbottomstrip').html ('".$_bottomstriptext."');";
 
     $output .= "<a href=\"".get_option('siteurl')."/cartoon/".$_number."\" onclick=\"get_item". ($_next_item - 1) ."();return false;\">";
