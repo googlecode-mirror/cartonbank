@@ -159,6 +159,8 @@ else
     }
 
     $_bigpictext = "<h2><b>Категория: </b>".$_category."</h2><h2><b>Описание: </b></h2> ".$_description."<br /><h2><b>Тэги: </b></h2><ul>".$_tags."</ul><h2><b>Ссылка:</b></h2><a title=\'".$product['kategoria'].", ".$_name.", ".$product['brand']."\' href=\'".get_option('siteurl')."/?page_id=29&cartoonid=".$_number."\'> №&nbsp;".$_number."</a><br /><b>Размер:</b><br />".$_dimensions_html.$_sold."<b>Оценка:</b><br />".$_rating_html.$_sharethis_html.$_edid;
+
+	$_bigpictext .= '<br><a title="Заказать печать у нашего партнера" class="btn-s btn-blue" target=_blank href="http://www.artwall.ru/products/upload?url=http://sl.cartoonbank.ru/'.$product['image'].'">Печатать в раме</a><br>';
     
     $_bigpic =  "<img src=http://sl.cartoonbank.ru/".$product['image']." border=0 alt=\'".$_bigpicimgalt."\' title=\'".$_bigpicimgtitle."\' />";
 
@@ -205,7 +207,7 @@ else{
     $printdirect = "";
 }
 
-$_bottomstriptext = $printdirect.$_size_warning."<div class=\'w4fr\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'><table class=\'licenses\'> <tr> <td class=\'wh w8vb\'><b>Выбор</b></td> <td class=\'wh tal\'><input type=\'radio\' name=\'license\' $l1_disabled value=\'l1_price\'></td> ".$l1_price_text." <td rowspan=\'2\' class=\'w20\'>&nbsp;</td> <td class=\'wh\' class=\'tal\'><input type=\'radio\' name=\'license\' $l2_disabled value=\'l2_price\'></td> ".$l2_price_text." <td rowspan=\'2\' class=\'w20\'>&nbsp;</td> <td class=\'wh\' class=\'tal\'><input type=\'radio\' name=\'license\' $l3_disabled value=\'l3_price\'></td> ".$l3_price_text." <td rowspan=\'2\' class=\'wh\' class=\'w8tarvab\'><input id=\'searchsubmit\' value=\'заказать\' type=\'submit\' class=\'buy\' title=\'Добавить рисунок в корзину заказов\'></td> </tr> <tr> <td class=\'wh vat\'><b>лицензии:</b></td> <td colspan=\'2\' class=\'pl6\'><a target=\'_blank\' href=\'".get_option('siteurl')."/?page_id=238\' title=\'подробнее об ограниченной лицензии\'>ограниченная</a></td> <td colspan=\'2\' class=\'pl6\'><a target=\'_blank\' href=\'".get_option('siteurl')."/?page_id=242\' title=\'подробнее о стандартной лицензии\'>стандартная</a></td> <td colspan=\'2\' class=\'pl6\'><a target=\'_blank\' href=\'".get_option('siteurl')."/?page_id=245\' title=\'подробнее об расширенной лицензии\'>расширенная</a></td> </tr> </table><input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> </form></div>";
+$_bottomstriptext = $printdirect.$_size_warning."<div class=\'w4fr\'><form name=\'licenses\' id=\'licenses\' onsubmit=\'submitform(this);return false;\' action=\'".get_option('siteurl')."/?page_id=29\' method=\'POST\'><table class=\'licenses\'> <tr> <td class=\'wh w8vb\'><b>Выбор</b></td> <td class=\'wh tal\'><input type=\'radio\' name=\'license\' $l1_disabled value=\'l1_price\'></td> ".$l1_price_text." <td rowspan=\'2\' class=\'w20\'>&nbsp;</td> <td class=\'wh\' class=\'tal\'><input type=\'radio\' name=\'license\' $l2_disabled value=\'l2_price\'></td> ".$l2_price_text." <td rowspan=\'2\' class=\'w20\'>&nbsp;</td> <td class=\'wh\' class=\'tal\'><input type=\'radio\' name=\'license\' $l3_disabled value=\'l3_price\'></td> ".$l3_price_text." <td rowspan=\'2\' class=\'wh\' class=\'w8tarvab\'><input id=\'searchsubmit\' value=\'Купить\' type=\'submit\' class=\'btn-s\' title=\'Добавить рисунок в корзину заказов\'></td> </tr> <tr> <td class=\'wh vat\'><b>лицензии:</b></td> <td colspan=\'2\' class=\'pl6\'><a target=\'_blank\' href=\'".get_option('siteurl')."/?page_id=238\' title=\'подробнее об ограниченной лицензии\'>ограниченная</a></td> <td colspan=\'2\' class=\'pl6\'><a target=\'_blank\' href=\'".get_option('siteurl')."/?page_id=242\' title=\'подробнее о стандартной лицензии\'>стандартная</a></td> <td colspan=\'2\' class=\'pl6\'><a target=\'_blank\' href=\'".get_option('siteurl')."/?page_id=245\' title=\'подробнее об расширенной лицензии\'>расширенная</a></td> </tr> </table><input type=\'hidden\' value=\'".$_number."\' name=\'prodid\'> </form></div>";
 }
 
     $_next_item = $counter + 1;
@@ -491,18 +493,27 @@ function getPaginationString($page = 1, $totalitems, $limit = 20, $adjacents = 1
         }
         
 
+        if (isset($_REQUEST['cs'])&&$_REQUEST['cs']!=''){
+			$filter_list = $_REQUEST['cs'];
+			$searchparam = '&cs='.trim($_REQUEST['cs']);
+			}
+		else{
+			$filter_list = '';
+			$searchparam = '';}
+
+
         //next button
         if (isset($_REQUEST['new']) && $_REQUEST['new']==1)
         {
-            $button_sort = "<a href='".$siteurl."/".add_or_change_parameter('new','0')."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>показать избранное</a>";
+            $button_sort = "<a href='".$siteurl."/".add_or_change_parameter('new','0').$searchparam."' class='btn-s btn-blue'>показать избранное</a>";
         }
         else
         {
-            $button_sort = "<a href='".$siteurl."/".add_or_change_parameter('new','1')."' style='border:0px; padding:4px; color:#6C6C6C; background-color:#bfccf8;'>сортировать по дате</a>";
+            $button_sort = "<a href='".$siteurl."/".add_or_change_parameter('new','1').$searchparam."' class='btn-s btn-blue'>сортировать по дате</a>";
         }
 
 
-        if (isset($_REQUEST['cs'])&&$_REQUEST['cs']!=''){$filter_list = $_REQUEST['cs'];}else{$filter_list = '';}
+
         
         if ($page < $counter - 1) 
             $pagination .= "<a href=\"" . $targetpage . $pagestring . ($next*$limit - $limit) . "\">»</a>";
