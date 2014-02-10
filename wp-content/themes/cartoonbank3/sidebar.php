@@ -31,9 +31,9 @@ if (isset($_GET['brand']) && is_numeric($_GET['brand']))
 
 <h3 style="margin-top:0;">Поиск</h3>
 <form method="post" id="searchform" action="/?page_id=29">
-<input id="s" size="26" type="text" value="введите поисковое слово..." name="cs" onfocus="this.value='';" style='width:178px;' /><br />
+<input id="s" size="26" type="text" value="введите поисковое слово..." name="cs" onfocus="this.value='';" style='width:172px;' /><br />
 <input type="hidden" id="brand" name="brand" value="<?echo $brandid;?>" />
-<input type="submit" id="searchsubmit" class='borders' value="Искать" style="margin-top:6px;margin-bottom:4px;" />
+<input type="submit" id="searchsubmit" class="btn-s btn-blue" value="Искать" style="margin-top:6px;margin-bottom:4px;" />
 </form>
 
 <a href="/?page_id=927" onclick="_gaq.push(['_trackEvent', 'Sidebar', 'Link click', 'Advanced Search']);">Расширенный поиск <img src="http://cartoonbank.ru/img/link.gif" style="border:0;" alt="расширенный поиск карикатур"></a>
