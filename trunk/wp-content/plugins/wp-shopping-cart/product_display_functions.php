@@ -162,7 +162,7 @@ else
 
 	$_bigpictext .= '<br><a title="Заказать печать у нашего партнера" class="btn-s btn-blue" target=_blank href="http://www.artwall.ru/products/upload?url=http://sl.cartoonbank.ru/'.$product['image'].'">Печатать в раме</a><br>';
     
-    $_bigpic =  "<img src=http://sl.cartoonbank.ru/".$product['image']." border=0 alt=\'".$_bigpicimgalt."\' title=\'".$_bigpicimgtitle."\' />";
+    $_bigpic =  "<img src=http://sl.cartoonbank.ru/".rawurlencode($product['image'])." border=0 alt=\'".$_bigpicimgalt."\' title=\'".$_bigpicimgtitle."\' />";
 
     if($product['l1_price']=='0') {$l1_disabled = 'disabled=true';} else {$l1_disabled = '';}
     if($product['l2_price']=='0') {$l2_disabled = 'disabled=true';} else {$l2_disabled = '';}
