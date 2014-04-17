@@ -108,7 +108,7 @@ if (current_user_can('manage_options'))
       <meta name="generator" content="cartoonbank" />
       <link rel="Shortcut Icon" href="<?php echo get_option('home'); ?>/wp-content/themes/cartoonbank3/images/favicon.ico" type="image/x-icon" />
 	  <link rel='index' title='Банк изображений' href='http://cartoonbank.ru' />
-	  <link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='http://cartoonbank.ru//index.php?rss=true&amp;action=product_list&amp;type=rss'/>
+	  <link rel='alternate' type='application/rss+xml' title='Cartoonbank RSS' href='http://cartoonbank.ru/index.php?rss=true&amp;action=product_list&amp;type=rss'/>
       <link rel="stylesheet" href='http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/style.min.css?r2564' type="text/css" />
 	  <link rel="stylesheet" href='http://cartoonbank.ru/wp-content/themes/cartoonbank3/style.min.css?r3252' type="text/css" />
 	  <link rel="stylesheet" id='five-star-rating-CSS-css' href='http://cartoonbank.ru/wp-content/plugins/five-star-rating/assets/css/five-star-rating.min.css?ver=3.0' type='text/css' media='all' />
@@ -121,7 +121,7 @@ if (current_user_can('manage_options'))
 	  ?>
 		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
 		<script type="text/javascript" src="http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/ajax.min.js"></script>
-		<script type="text/javascript" src="http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/user.min.js"></script>
+		<script type="text/javascript" src="http://cartoonbank.ru/wp-content/plugins/wp-shopping-cart/user.min.js?675"></script>
 		<script src="http://cartoonbank.ru/wp-includes/js/jquery/jquery.highlight-3.min.js" type="text/javascript"></script>
 		<script src='http://cartoonbank.ru/wp-content/plugins/five-star-rating/assets/js/five-star-rating.min.js?ver=0.1' type='text/javascript'></script>
         <script type='text/javascript'>function scrpts(){get_5stars();get_dimensions();get_share_this();get_fave();change_url();}</script>
@@ -201,20 +201,21 @@ $switcher2 = substr($cartoon_number,strlen($cartoon_number)-2,2);
 <center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="slide" direction="up" >В помощь планирующим выпуски статей мы добавили на первую страницу удобный календарь.</marquee></div></center>
 
 -->
+<center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="slide" direction="left" ><a href="http://cartoonbank.ru/?page_id=893#paypal" target=_blank>Мы теперь принимаем оплату через PayPal. Оплата с кошелька Пейпал и любыми картами.</a></marquee></div></center>
+
 */
 ?>
 
-<center><div id="suphead" style="float:center;height:20px;width:960px;background-color:white;color:#9d0000;padding-top: 0.4em;"><marquee behavior="slide" direction="left" ><a href="http://cartoonbank.ru/?page_id=893#paypal" target=_blank>Мы теперь принимаем оплату через PayPal. Оплата с кошелька Пейпал и любыми картами.</a></marquee></div></center>
 
 <div id="header" style="height:90px;width:960px;">
 <div>
 <div style="font-size:.8em;color:white;vertical-align:bottom;width:185px;height:90px;background-color:#668bb7;float:left;"><span style="color:#13223f;font-size:2em;"><br><b><? echo ($cartoon_number);?></b></span><br /><?echo ($license_text);?></div>
 <div style="width:580px;height:90px;float:left;">
-   <br><a href="http://cartoonbank.ru/?page_id=29&amp;offset=0&amp;new=2"><img src="<?php echo get_option('home'); ?>/img/cb-logo-iq.png" style="border:0;" alt="Cartoonbank" width="558" height="58"></a><br />
+   <br><a href="http://cartoonbank.ru/?page_id=29&amp;offset=0&amp;new=2" title="Картунбанк"><img src="<?php echo get_option('home'); ?>/img/cb-logo-iq.png" style="border:0;" alt="Cartoonbank" width="558" height="58"></a><br />
    <?php bloginfo('description'); ?>
 </div>
 
-<?
+<?/*
 	//<td style="font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#990000">Во вторник утром<br />возможны перерывы<br />в работе сайта</td>
 	//<td style="vertical-align:middle;width:185px;height:45px;padding:0px;background-color:#990000"><a href="http://spbsj.ru/last-news/138-vistavki/1678-yumor.html" target="_blank" style="font-size:0.8em;color:white;">1-10 АПРЕЛЯ 2011 ГОДА<br /><b>ЮМОР<br />ГОРЯЧЕГО КОПЧЕНИЯ</b></a></td>
 	//<td style="font-size:.8em;color:white;vertical-align:middle;width:185px;height:45px;padding:4px;background-color:#668bb7">Рисунки художников<br />из семи<br />стран мира</td>
@@ -228,9 +229,12 @@ $switcher2 = substr($cartoon_number,strlen($cartoon_number)-2,2);
 
 	//<div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=2762"><img src="http://cartoonbank.ru/img/b/2013gift.gif" style="width:185px;height:90px;border:0;"></a></div>
 	//<!-- <div style="width:185px;height:90px;float:left;"><a href="http://karikashop.com/#ecwid:category=1620996&mode=category&offset=0&sort=normal" target="_blank"><img src="http://cartoonbank.ru/img/b/karikashop.gif" style="width:185px;height:90px;border:0;"></a></div> -->
-?>
 
 <div style="width:185px;height:90px;float:left;"><a href="http://cartoonbank.ru/?page_id=893"><img src="http://cartoonbank.ru/img/b/on-line.gif" style="width:185px;height:90px;border:0;" alt="продажа карикатур онлайн" width="185" height="86"></a></div>
+*/
+?>
+
+<div style="width:185px;height:90px;float:left;"><a href="http://www.redburda.ru/shop/2/300" target="_blank" title="Журнал «Красная бурда - Новосибирск» №1 в интернет-магазине «Красной бурды»"><img src="http://cartoonbank.ru/img/b/kburda.gif" style="width:185px;height:90px;border:0;" alt="Журнал «Красная бурда - Новосибирск» №1 в интернет-магазине «Красной бурды»" width="185" height="86"></a></div>
 </div>
 
 </div>
