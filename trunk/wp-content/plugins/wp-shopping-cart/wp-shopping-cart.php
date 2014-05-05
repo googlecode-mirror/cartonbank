@@ -907,6 +907,10 @@ function nzshpcrt_submit_ajax()
   $output .= "<tr>\n\r";
   $output .= "</tr>\n\r";
 
+
+if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
+{
+
   $output .= "<tr>\n\r";
   $output .= "<td class='r'>";
   $output .= "Видно всем:";
@@ -916,10 +920,11 @@ function nzshpcrt_submit_ajax()
   $output .= "</td>\n\r";
   $output .= "</tr>\n\r";
 
+}
+
   $colored = "";
   if ($product['color'] == '1')
     $colored = " checked='checked' ";
-
 
   $temadnya = "";
 
@@ -1423,7 +1428,7 @@ Array
     
             case TXT_WPSC_ADDRESS1:
             case TXT_WPSC_ADDRESS2:
-            $bad_input_message .= TXT_WPSC_PLEASEENTERAVALIDADDRESS . "";
+            $bad_input_message .= "Пожалуйста, укажите цель покупки.<br />";
             break;
     
             case TXT_WPSC_CITY:
@@ -1439,7 +1444,8 @@ Array
             break;
     
             default:
-            $bad_input_message .= TXT_WPSC_PLEASEENTERAVALID . " " . strtolower($form_data['name']) . ".";
+			$bad_input_message .= "Пожалуйста, укажите цель покупки.<br />";
+            //$bad_input_message .= TXT_WPSC_PLEASEENTERAVALID . " " . strtolower($form_data['name']) . ".";
             break;
             }
           }
@@ -2988,7 +2994,7 @@ function send_email_to_artist($price, $image_id, $filename, $cartoonname, $descr
 	{$lic_type = "Ограниченная";}
 	elseif (round($price) == 500)
 	{$lic_type = "Стандартная";}
-	elseif (round($price) == 500)
+	elseif (round($price) == 2500)
 	{$lic_type = "Расширенная";}
 	
 	$mess = "";
@@ -3002,8 +3008,17 @@ function send_email_to_artist($price, $image_id, $filename, $cartoonname, $descr
 
 	// send email
 	mail($email, 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
+	
 	// copy for control
-	mail("igor.aleshin@gmail.com", 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
-	return;		
+	$admin_mess = '';
+	if (isset($_REQUEST)){
+		$admin_mess .= var_dump($_REQUEST,true); 
+	}
+	if (isset($_COOKIE)){
+		$admin_mess .= var_dump($_COOKIE,true); 
+	}
+
+	mail("igor.aleshin@gmail.com", 'Сообщение о продаже изображения на сайте Картунбанк', "Price = ".$price."\r\n <br><br>".$mess.$admin_mess, $headers);
+	return;				
 }
 ?>
