@@ -1114,7 +1114,11 @@ td.lalt{
                         <textarea id='tags' name='additional_description' cols='50' rows='4'></textarea><br />
                     </td>
                 </tr>
-                <tr>
+<?
+if (isset($current_user->wp_capabilities['administrator']) && $current_user->wp_capabilities['administrator']==1)
+{
+?>
+				<tr>
                     <td class='r'>
                         Всем видно:
                     </td>
@@ -1122,7 +1126,8 @@ td.lalt{
                         <input id='visible' type="checkbox" name="visible" checked="checked"> <span style="color:#999;">Если выключить — не будет видно покупателям</span>
                     </td>
                 </tr>
-                <tr>
+<?}?>
+				<tr>
                     <td class='r' style="background-color:#FFFF33;">
                         Цветной рисунок:
                     </td>
