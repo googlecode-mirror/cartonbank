@@ -77,7 +77,7 @@ $sql= "SELECT c.price, st.purchid as zakaz, st.downloads, " .
 		mail($email, 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);
 		// copy for control
 		//mail("creasysee@yandex.ru", 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);			
-		mail("igor.aleshin@gmail.com", 'Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);			
+		mail("igor.aleshin@gmail.com", '[Admin copyator] Сообщение о продаже изображения на сайте Картунбанк', $mess, $headers);			
 	}
 	
 	mysql_free_result($result);
