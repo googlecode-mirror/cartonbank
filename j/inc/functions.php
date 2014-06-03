@@ -5,8 +5,14 @@ function ssearch($words){
 
     $bd2 = mysql_connect($hostname2, $user2) or die("Could not connect database. ". mysql_error());
 
+	if (LANGUAGE == 'en'){
+		$table = 'wp2engi';
+	}else{
+		$table = 'wp1i';
+	}
+
     //$searchQuery = "select id from wp1i where match('$words') OPTION  ranker=matchany, max_matches=1000";
-    $searchQuery = "select id from wp1i where match('$words') LIMIT 15000 OPTION  ranker=matchany, max_matches=1000";
+    $searchQuery = "select id from ".$table." where match('$words') LIMIT 15000 OPTION  ranker=matchany, max_matches=1000";
 
     $result = mysql_query($searchQuery);
         if (!$result) {die('Invalid query: ' . mysql_error());}
