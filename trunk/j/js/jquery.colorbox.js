@@ -33,6 +33,7 @@
 		title: false,
 		rel: false,
         artist:false,
+		tags:false,
 		opacity: 0.9,
 		preloading: true,
 		className: false,
@@ -111,6 +112,7 @@
 	$loadingOverlay,
 	$title,
     $artist,
+	$tags,
 	$current,
 	$slideshow,
 	$next,
@@ -218,6 +220,7 @@
 		settings.rel = settings.rel || element.rel || $(element).data('rel') || 'nofollow';
 		settings.href = settings.href || $(element).attr('href');
 		settings.title = settings.title || element.title;
+		settings.tags = settings.tags || $(element).attr('tags');
 		
 		if (typeof settings.href === "string") {
 			settings.href = $.trim(settings.href);
@@ -397,6 +400,8 @@
                 
                 $groupControls.add($artist).hide();
 
+                $groupControls.add($tags).hide();
+
 				$box.focus();
 				
 				if (settings.trapFocus) {
@@ -441,6 +446,7 @@
 			$content = $tag(div, "Content").append(
 				$title = $tag(div, "Title"),
                 $artist = $tag(div, "Artist"),
+				$tags = $tag(div, "Tags"),
 				$current = $tag(div, "Current"),
 				$prev = $('<button type="button"/>').attr({id:prefix+'Previous'}),
 				$next = $('<button type="button"/>').attr({id:prefix+'Next'}),
@@ -787,6 +793,7 @@
 			
 			$title.html(settings.title).add($loaded).show();
 			$artist.html(settings.artist).add($loaded).show();
+			$tags.html(settings.tags).add($loaded).show();
             
 			if (total > 1) { // handle grouping
 				if (typeof settings.current === "string") {

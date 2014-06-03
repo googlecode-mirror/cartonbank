@@ -1,9 +1,22 @@
 <?php
+//$lang = 'ru';
+$lang = 'en';
+
+if ($lang == 'en'){
+	require_once 'terms.en';
+	define('LANGUAGE', 'en');
+	define('PRODUCT_TABLE', '`wp_product_list_en`');
+}else{
+	require_once 'terms.ru';
+	define('LANGUAGE', 'ru');
+	define('PRODUCT_TABLE', '`wp_product_list`');
+}
+define('ITEMS_ON_PAGE', '40');
+
 $mysql_hostname = "localhost";
 $mysql_user = "z58365_cbru3";
 $mysql_password = "greenbat";
 $mysql_database = "cartoonbankru";
-//$mysql_database = "z58365_cbru";
 
 
 $bd = mysql_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Could not connect database");

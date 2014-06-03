@@ -16,18 +16,30 @@ li{
 #sidebar{
     float:left;
     width: 300px;
-    padding-top:60px;
+    padding-top:32px;
     padding-left:5px;
+}
+#search{
+	position:relative;
+	margin-top:2em;
 }
 #s{
     padding-left: 4px;
-    width: 98%;
+    width: 85%;
     font-size: 21px;font-family: 'Times New Roman';
 }
 #tags{
     margin-top: 15px;
 }
-
+#clearsearch{
+	position:absolute;
+	right:86px;
+	top:5px;
+}
+.btn{
+	margin-left:5px;
+	font-size:14px;
+}
 .th{
     float:left;
     margin:2px;

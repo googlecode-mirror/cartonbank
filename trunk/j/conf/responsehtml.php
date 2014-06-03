@@ -38,9 +38,9 @@ $orderBy = "";
   
   
     if (isset($brand_id) && is_numeric($brand_id)){
-        $brandid_filter = " AND `wp_product_list`.`brand` = '".$brand_id."' "; }
+        $brandid_filter = " AND ".PRODUCT_TABLE.".`brand` = '".$brand_id."' "; }
     else{
-        $brandid_filter=' AND `wp_product_list`.`brand` != 36 ';
+        $brandid_filter=' AND '.PRODUCT_TABLE.'.`brand` != 36 ';
     }
     if (isset($search_terms)&&!empty($search_terms)){
         //avoid minimal points barrier:
@@ -49,11 +49,11 @@ $orderBy = "";
         //save_search_terms($sword);
         $id_list = ssearch ($sword);
         if (strlen($id_list)>3){
-        $search_keywords_filter = " AND `wp_product_list`.`id` in (".$id_list.") ";}
+        $search_keywords_filter = " AND ".PRODUCT_TABLE.".`id` in (".$id_list.") ";}
         else {$search_keywords_filter ="";$searchdonebutnothingfound=true;}}
     else {$search_keywords_filter ="";}
 
-    $sql = "SELECT `wp_product_list`.*, `wp_product_brands`.`name` AS brand,  `wp_product_brands`.`id` AS brandid,  `wp_product_categories`.`name` AS kategoria,  `wp_product_list`.`category` AS category_id FROM  `wp_product_list` LEFT JOIN  `wp_product_brands` ON  `wp_product_list`.`brand` =  `wp_product_brands`.`id` LEFT JOIN  `wp_product_categories` ON  `wp_product_list`.`category` =  `wp_product_categories`.`id` WHERE  `wp_product_list`.`active` =  '1' " . $search_keywords_filter . $cartoonid_filter . $latest . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not .  $min_points_filter . " AND  `wp_product_list`.`visible` =  '1' $orderBy LIMIT ".$offset.",".$items_on_page;
+    $sql = "SELECT ".PRODUCT_TABLE.".*, `wp_product_brands`.`name` AS brand,  `wp_product_brands`.`id` AS brandid,  `wp_product_categories`.`name` AS kategoria,  ".PRODUCT_TABLE.".`category` AS category_id FROM  ".PRODUCT_TABLE." LEFT JOIN  `wp_product_brands` ON  ".PRODUCT_TABLE.".`brand` =  `wp_product_brands`.`id` LEFT JOIN  `wp_product_categories` ON  ".PRODUCT_TABLE.".`category` =  `wp_product_categories`.`id` WHERE  ".PRODUCT_TABLE.".`active` =  '1' " . $search_keywords_filter . $cartoonid_filter . $latest . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not .  $min_points_filter . " AND  ".PRODUCT_TABLE.".`visible` =  '1' $orderBy LIMIT ".$offset.",".$items_on_page;
   
     $bd = mysql_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Could not connect database");
     mysql_select_db($mysql_database, $bd) or die("Could not select database");

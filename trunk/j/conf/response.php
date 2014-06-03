@@ -6,7 +6,7 @@ $value = json_decode($HTTP_RAW_POST_DATA, true);
 $arr = implode(',',$value);
 
 $offset = 0;
-$items_on_page = 12;
+$items_on_page = ITEMS_ON_PAGE;
 
 $search_keywords_filter = "";
 $cartoonid_filter = "";
@@ -25,9 +25,9 @@ if (isset($value['offset']) && is_numeric($value['offset'])){$offset=mysql_escap
 if (isset($value['brand']) && $value['brand']==1){$orderBy=' ORDER BY id DESC ';}else{$orderBy=' ORDER BY votes_rate DESC ';}
 
 if (isset($value['brand']) && is_numeric($value['brand']) && $value['brand']!=0 ){
-    $brandid_filter = " AND `wp_product_list`.`brand` = '".mysql_escape_string($value['brand'])."' "; }
+    $brandid_filter = " AND ".PRODUCT_TABLE.".`brand` = '".mysql_escape_string($value['brand'])."' "; }
 else{
-    $brandid_filter=' AND `wp_product_list`.`brand` != 36 ';
+    $brandid_filter=' AND '.PRODUCT_TABLE.'.`brand` != 36 ';
 }
 
 
@@ -38,11 +38,11 @@ if (isset($value['term'])&&!empty($value['term'])){
     //save_search_terms($sword);
     $id_list = ssearch ($sword);
     if (strlen($id_list)>3){
-    $search_keywords_filter = " AND `wp_product_list`.`id` in (".$id_list.") ";}
+    $search_keywords_filter = " AND ".PRODUCT_TABLE.".`id` in (".$id_list.") ";}
     else {$search_keywords_filter ="";$searchdonebutnothingfound=true;}}
 else {$search_keywords_filter ="";}
 
-$sql = "SELECT  SQL_CALC_FOUND_ROWS `wp_product_list`.*, `wp_product_brands`.`name` AS brand,  `wp_product_brands`.`id` AS brandid,  `wp_product_categories`.`name` AS kategoria,  `wp_product_list`.`category` AS category_id FROM  `wp_product_list` LEFT JOIN  `wp_product_brands` ON  `wp_product_list`.`brand` =  `wp_product_brands`.`id` LEFT JOIN  `wp_product_categories` ON  `wp_product_list`.`category` =  `wp_product_categories`.`id` WHERE  `wp_product_list`.`active` =  '1' " . $search_keywords_filter . $cartoonid_filter . $latest . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not .  $min_points_filter . " AND  `wp_product_list`.`visible` =  '1' $orderBy LIMIT ".$offset.",".$items_on_page;
+$sql = "SELECT  SQL_CALC_FOUND_ROWS ".PRODUCT_TABLE.".*, `wp_product_brands`.`name` AS brand,  `wp_product_brands`.`id` AS brandid,  `wp_product_categories`.`name` AS kategoria,  ".PRODUCT_TABLE.".`category` AS category_id FROM  ".PRODUCT_TABLE." LEFT JOIN  `wp_product_brands` ON  ".PRODUCT_TABLE.".`brand` =  `wp_product_brands`.`id` LEFT JOIN  `wp_product_categories` ON  ".PRODUCT_TABLE.".`category` =  `wp_product_categories`.`id` WHERE  ".PRODUCT_TABLE.".`active` =  '1' " . $search_keywords_filter . $cartoonid_filter . $latest . $brandid_filter . $categoryid_filter . $exclude_category_sql . $colorfilter . $approved_or_not .  $min_points_filter . " AND  ".PRODUCT_TABLE.".`visible` =  '1' $orderBy LIMIT ".$offset.",".$items_on_page;
 
 $sql_found = "SELECT FOUND_ROWS()";
 
