@@ -64,11 +64,22 @@ $pageid=29;
 </div>
 */
 ?>
-<div id="footer" style="background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;padding-bottom:100px;"><a href="/?page_id=433">Copyright</a> &copy; 2010-2013 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a> <b>16+</b> <a href="http://cartoonbank.ru/?page_id=95#otv">Обратная связь</a> <br /></div>
+<div id="footer" style="background: #FFFFFF url(<? echo (get_option('siteurl').'/img/w.png');?>) top center repeat;padding-bottom:10px;"><a href="/?page_id=433">Copyright</a> &copy; 2010-2013 <a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a> <b>16+</b> <a href="http://cartoonbank.ru/?page_id=95#otv">Обратная связь</a> <br /></div>
 
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- banner bottom -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3404757698403369"
+     data-ad-slot="4259577138"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 <?php do_action('wp_footer'); ?>
-<br /><br /><br /><br /><br />
+<a href="http://karikashop.com/" target="_blank" title="Альбомы карикатур"><img src="http://cartoonbank.ru/img/b/albums.jpg" style="width:960px;height:164px;border:0;" alt="Альбомы карикатур"></a>
+<br /><br /><br />
 
 <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter5781658 = new Ya.Metrika({id:5781658, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/5781658" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
 
@@ -108,7 +119,11 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 <img src="http://dc.ce.b2.a2.top.mail.ru/counter?id=2288702" style="border:0;" height="1" width="1" alt="Рейтинг@Mail.ru" /></div>
 <!-- //Rating@Mail.ru counter -->
 
-
+<?
+/*
+<script type='text/javascript' src='http://records.cartoonbank.ru/wp-content/plugins/TimelineJS-Wordpress-Plugin-master/js/storyjs-embed.js?ver=3.8'></script>
+*/
+?>
 
 <script>
 jQuery(document).ready(function(){if(getCookie('username')!='' && getCookie('username')!=null && getCookie('username')!='xxx'){var nnn = "Здравствуйте, <a href='/wp-admin/profile.php'>"+getCookie('username');}else{var nnn = "Вам надо <a href='/wp-login.php?redirect_to="+encodeURIComponent(document.URL)+"'>залогиниться</a>, чтобы добавлять товары в корзину.";}jQuery('#username').html(nnn);var getshoppingcarturl = '<? echo SHOPPINGCARTURL.'get_shopping_cart.php'; ?>';jQuery('#shoppingcart').load(getshoppingcarturl);});
