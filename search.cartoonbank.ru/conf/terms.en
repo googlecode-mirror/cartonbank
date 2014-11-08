@@ -1,0 +1,26 @@
+<?
+function _L($term){
+static $_L = array(
+	'CLEAR_SEARCH' => 'Clear search field',
+	'PAGE_TITLE' => 'Cartoon search',
+	'DISPLAYING' => 'Displaying',
+	'OF' => 'of',
+	'CARTOONS' => 'cartoons',
+	'CARTOONSOF' => 'cartoons',
+	'CARTOON' => 'cartoon',
+	'MORE' => 'more cartoons',
+	'ENTER_SEARCH_WORD' => 'enter search term...',
+	'ALL_ARTISTS' => 'No filter for artists',
+	'SEARCH_BTN' => 'Search',
+	'EXTEND_YOUR_SEARCH' => 'Extend your search with these tags',
+
+
+	'NO_PHOTO' => 'No photo\'s available',
+    'NEW_MEMBER' => 'This user is new'
+
+
+);
+return (!array_key_exists($term,$_L)) ? $term : $_L[$term];
+}
+
+?>
